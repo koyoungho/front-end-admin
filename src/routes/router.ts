@@ -114,7 +114,7 @@ export default new Router({
                 // {path:'issueViewingCancel',component: IssueViewingCancel }, //가맹점 정보변경/해지 상세
                 {path:'noticeList',component: NoticeList }, //공지사항 리스트
                 {path:'noticeDetl',component: NoticeDetl, name:'noticeDetl' }, //공지사항 상세
-                {path:'regNotice',component: RegNotice }, //공지사항 등록
+                {path:'regNotice',component: RegNotice, name: 'regNotice' }, //공지사항 등록/수정
                 // {path:'Faq',component: Faq }, //자주묻는질문
                 // {path:'camera',component: Camera }, //카메라
                 // {path:'kt',component: Kt }, //사업자 소개(KT)
