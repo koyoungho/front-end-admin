@@ -94,9 +94,7 @@
                     {id: 'IssueViewingCancel', name: '고객지원', value: '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'공지사항', value: '',on: 'sub'},
-                            {name:'공지사항 관리', value: '',on: 'sub'},
                             {name:'자주 묻는 질문', value: '',on: 'sub'},
-                            {name:'자주 묻는 질문 관리', value: '',on: 'sub'},
                             {name:'메일 발송', value: '',on: 'sub'},
                         ]
                     },
