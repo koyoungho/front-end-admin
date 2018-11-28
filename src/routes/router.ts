@@ -70,31 +70,27 @@ export default new Router({
             name: "home",
             component: Home,
             children : [
-                {path:'main',component: Main }, //메인
+                {path:'main', name:'main', component: Main }, //메인
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
-                {path:'phoneAuth',component: PhoneAuth }, //핸드폰 인증
-                {path:'searchIdInput',component: SearchIdInput }, //아이디 찾기
-                {path:'searchIdResult',component: SearchIdResult }, //아이디 찾기 결과
-                {path:'initPass',component: InitPass }, //비밀번호 초기화
+                {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth }, //핸드폰 인증
+                {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput }, //아이디 찾기
+                {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult }, //아이디 찾기 결과
+                {path:'initPass', name:'initPass',component: InitPass }, //비밀번호 초기화
                 {path:'policy', name:'policy', component: Policy }, //이용약관 및 개인보호처리방침
 
                 {path:'franchiseList', name:'franchiseList', component: FranchiseList }, //가맹점관리-가맹점관리 리스트
                 {path:'franchiseDetl', name:'franchiseDetl', component: FranchiseDetl }, //가맹점관리-가맹점 상세
                 {path:'franchiseReg', name:'franchiseReg', component: FranchiseReg }, //가맹점관리-가맹점 등록
                 {path:'franchiseRegCmpl', name:'franchiseRegCmpl', component: FranchiseRegCmpl }, //가맹점관리-가맹점 등록 완료
-
                 {path:'branchList', name:'branchList', component: BranchList }, //가맹점관리-지점관리 리스트
                 {path:'branchDetl', name:'branchDetl', component: BranchDetl }, //가맹점관리-지점 상세
                 {path:'branchReg', name:'branchReg', component: BranchReg }, //가맹점관리-지점 등록
                 {path:'branchRegCmpl', name:'branchRegCmpl', component: BranchRegCmpl }, //가맹점관리-지점 등록 완료
-
                 {path:'storeList', name:'storeList', component: StoreList }, //가맹점관리-매장관리 리스트
                 {path:'storeDetl', name:'storeDetl', component: StoreDetl }, //가맹점관리-매장 상세
                 {path:'storeReg', name:'storeReg', component: StoreReg }, //가맹점관리-매장 등록
                 {path:'storeRegCmpl', name:'storeRegCmpl', component: StoreRegCmpl }, //가맹점관리-매장 등록 완료
-
                 {path:'storeRegBulk', name:'storeRegBulk', component: StoreRegBulk }, //가맹점관리-매장 일괄 등록 완료
-
                 {path:'approvalBandList', name:'approvalBandList', component: ApprovalBandList }, //가맹점관리-승인대역 리스트
                 {path:'approvalBandReg', name:'approvalBandList', component: ApprovalBandReg }, //가맹점관리-승인대역 신청
 
