@@ -1,0 +1,11 @@
+#
+**/node_modules*
+**/test*
+**/dist*
+.DS_Store
+*.log
+.idea
+*.bak
+.vscodegit statu
+*.iml
+package-lock.json

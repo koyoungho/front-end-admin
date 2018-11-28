@@ -1,0 +1,10 @@
+{
+  "/api/*": {
+    "target": "http://211.39.150.112",
+    "secure": false,
+    "logLevel": "info",
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

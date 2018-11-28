@@ -1,0 +1,39 @@
+{
+  "name": "lottecash",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --proxy-config proxy.config.json   ",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "auth0-js": "^9.0.0-beta.5",
+    "axios": "^0.16.1",
+    "date-fns": "^1.29.0",
+    "jquery": "^3.3.1",
+    "jwt-decode": "^2.2.0",
+    "mocha": "^5.2.0",
+    "mocha-loader": "^2.0.0",
+    "moment": "^2.22.2",
+    "npm": "^6.4.1",
+    "sass-loader": "^7.1.0",
+    "stylus-loader": "^3.0.2",
+    "vue": "^2.5.17",
+    "vue-airbnb-style-datepicker": "^2.1.0",
+    "vue-class-component": "^6.0.0",
+    "vue-cli": "^2.9.6",
+    "vue-progressbar": "^0.7.5",
+    "vue-property-decorator": "^7.0.0",
+    "vue-resize": "^0.4.4",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.4",
+    "@vue/cli-plugin-typescript": "^3.0.4",
+    "@vue/cli-service": "^3.0.4",
+    "expose-loader": "^0.7.5",
+    "typescript": "^3.0.0",
+    "vue-template-compiler": "^2.5.17"
+  }
+}
