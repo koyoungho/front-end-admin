@@ -47,8 +47,9 @@ import ApprovalBandReg from "../components/contents/franchiseManage/ApprovalBand
 // import AccountCancelCompl from "../components/contents/franchiseModityCancel/AccountCancelCompl.vue" //가맹점 계정 해지 완료
 // import FranchiseCancelCompl from "../components/contents/franchiseModityCancel/FranchiseCancelCompl.vue" //가맹점 해지 신청 완료
 //
-// import NoticeList from "../components/contents/notice/NoticeList.vue" //공지사항 리스트
-// import NoticeDetl from "../components/contents/notice/NoticeDetl.vue" //공지사항 상세
+import NoticeList from "../components/contents/notice/NoticeList.vue" //공지사항 리스트
+import NoticeDetl from "../components/contents/notice/NoticeDetl.vue" //공지사항 상세
+import RegNotice from "../components/contents/notice/RegNotice.vue" //공지사항 상세
 // import Faq from "../components/contents/faq/Faq.vue" //자주묻는질문
 // import Camera from "../components/contents/Camera.vue" //공지사항 상세
 // import FranchiseRegStep1Result from "../components/contents/cashReceiptSystem/FranchiseRegStep1Result.vue" //공지사항 상세
@@ -111,8 +112,9 @@ export default new Router({
                 // {path:'accountCancelCompl',component: AccountCancelCompl }, //가맹점 정보변경/해지
                 // {path:'franchiseCancelCompl',component: FranchiseCancelCompl }, //가맹점 정보변경/해지 상세
                 // {path:'issueViewingCancel',component: IssueViewingCancel }, //가맹점 정보변경/해지 상세
-                // {path:'noticeList',component: NoticeList }, //공지사항 리스트
-                // {path:'noticeDetl',component: NoticeDetl }, //공지사항 상세
+                {path:'noticeList',component: NoticeList }, //공지사항 리스트
+                {path:'noticeDetl',component: NoticeDetl, name:'noticeDetl' }, //공지사항 상세
+                {path:'regNotice',component: RegNotice }, //공지사항 등록
                 // {path:'Faq',component: Faq }, //자주묻는질문
                 // {path:'camera',component: Camera }, //카메라
                 // {path:'kt',component: Kt }, //사업자 소개(KT)
