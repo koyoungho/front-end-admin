@@ -24,11 +24,16 @@
                     <tr>
                         <th scope="row">구분</th>
                         <td>
-                            <select  name="" class="select form_notice">
+                            <!--<select  name="" class="select form_notice" v-model="section">-->
+                            <select  name="" class="select form_notice" >
                                 <option>사용자</option>
+                                <option>관리자</option>
+                                <option>공통</option>
                             </select>
                             <span class="form_area">
-                            <span class="chk_box right"><input type="checkbox" id="aa01"><label for="aa01">중요공지</label></span>
+                            <span class="chk_box right">
+                                <input type="checkbox" id="aa01" v-model="importantYn" v-on:click="changeYn"><label for="aa01">중요공지</label>
+                            </span>
                         </span>
                         </td>
                     </tr>
@@ -41,19 +46,13 @@
                                         <a href="#">가이드.pdf</a>
                                         <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
                                     </li>
-                                    <li>
-                                        <a href="#">가이드가이드가이드가이드가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                        <!--src/assets/images/btn_file_close01.png-->
-                                    </li>
-                                    <li>
-                                        <a href="#">가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                    </li>
+                                    <template v-if="attachFile != null">
+                                        <li>
+                                            <a>가이드2.pdf</a>
+                                            <a  class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
+                                        </li>
+                                    </template>
+
                                 </ul>
                                 <span class="btn_file_area"><button type="button"  class="btn_m01 bg03">파일추가</button></span>
                             </div>
@@ -94,12 +93,12 @@
         }
     })
     export default class RegNotice extends Vue {
-        seq: string= this.$route.params.seq; // 글번호 시퀀스
+        seq: string="";
         div: string="";
         listData:any =[];
 
         mounted(){
-            alert(this.seq);
+            this.seq=this.$route.params.seq; // 글번호 시퀀스
             if(this.seq == null && this.seq == '') {
                 this.div="등록";
             }else {
@@ -109,6 +108,11 @@
 
         }
 
+title:string="";
+section:string="";
+content:string="";
+attachFile : string ="";
+importantYn : boolean =false;
 
 
 
@@ -122,7 +126,13 @@
                     let result: any = response.data;
 
                     if (result !=null) {
-                        this.listData = result;
+                       this.title = result.title;
+                       this.section = result.section;
+                       this.content = result.content;
+                       this.attachFile = result.attFiles;
+                       if(result.importantYn =='Y'){
+                           this.importantYn = true;
+                       }
                     }
                 }
                 , (error) => {
@@ -130,5 +140,15 @@
                 }   ).catch();
 
         }
+
+
+        changeYn(){
+            if(this.importantYn==false){
+                this.importantYn = true;
+            }else{
+                this.importantYn = false
+            }
+        }
+
     }
     </script>

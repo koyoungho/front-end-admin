@@ -16,10 +16,16 @@
 
             <!-- search box -->
             <div class="search_box page_customer02">
-                <ul class="search_list col0201">
+                <ul class="search_list col0301">
                     <li>
                         <label for="">등록일</label>
-                        <span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
+                        <span class="form_cal">
+                            <input type="text" title="날짜 입력" class="input date">
+                        </span>
+                        <span class="period_cal">-</span>
+                        <span class="form_cal">
+                            <input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a>
+                        </span>
                     </li>
                     <li>
                         <label for="">구분</label>
@@ -70,15 +76,19 @@
 
                         <template v-if="listData.length > 0">
                             <tr v-for="datas in listData" v-on:click="goNoticeDetl(datas.seq)" v-bind:class="{'data_top': (datas.importantYn == 'Y') } ">
-                                <td class="left"><span v-bind:class="{'sub icon_new': (datas.newYn != null) }" >
-                                    <template v-if="datas.importantYn == 'Y'">[중요] </template>{{datas.title}}</span>
-
+                                <td class="left">
+                                    <span class="sub" >
+                                        <template v-if="datas.importantYn == 'Y'"> <i class="icon notice">공지</i></template>
+                                         {{datas.title}}
+                                    </span>
+                                    <template v-bind:class="{'sub icon_new': (datas.newYn == 'Y') }">
+                                        <i class="icon new">new</i>
+                                    </template>
                                 </td>
                                 <td><i v-bind:class="{'icon_file': (datas.attFileYn =='Y') } "/></td>
                                 <td>{{formatDates(datas.updDt)}}</td>
                                 <td >{{datas.regRoll}}</td>
                                 <td></td>
-
                             </tr>
                         </template>
                         <template v-else>
@@ -197,6 +207,7 @@
          * @param date
          */
         formatDates(date) {
+
             let formattedDates = '';
             formattedDates = moment(date.substr(0,8)).format( "YYYY.MM.DD");
             return formattedDates
