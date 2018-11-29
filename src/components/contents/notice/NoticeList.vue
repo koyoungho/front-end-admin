@@ -17,27 +17,27 @@
             <!-- search box -->
             <div class="search_box page_customer02">
                 <ul class="search_list col0301">
-                    <!--<li>-->
-                        <!--<label for="">등록일</label>-->
-                        <!--<span class="form_cal">-->
-                            <!--<input type="text" title="날짜 입력" class="input date">-->
-                        <!--</span>-->
-                        <!--<span class="period_cal">-</span>-->
-                        <!--<span class="form_cal">-->
-                            <!--<input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a>-->
-                        <!--</span>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<label for="">구분</label>-->
-                        <!--<select  name="" class="select sch_w100" title="구분">-->
-                            <!--<option>01</option>-->
-                            <!--<option>02</option>-->
-                            <!--<option>03</option>-->
-                            <!--<option>01</option>-->
-                            <!--<option>02</option>-->
-                            <!--<option>03</option>-->
-                        <!--</select>-->
-                    <!--</li>-->
+                    <li>
+                        <label for="">등록일</label>
+                        <span class="form_cal">
+                            <input type="text" title="날짜 입력" class="input date">
+                        </span>
+                        <span class="period_cal">-</span>
+                        <span class="form_cal">
+                            <input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a>
+                        </span>
+                    </li>
+                    <li>
+                        <label for="">구분</label>
+                        <select  name="" class="select sch_w100" title="구분">
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                        </select>
+                    </li>
                     <li>
                         <label for="">검색어</label>
                         <input type="text" class="input sch_notice" v-model="searchKey" placeholder="제목+내용" title="검색어 입력" v-on:keyup.enter="searchNotice()">
