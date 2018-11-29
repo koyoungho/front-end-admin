@@ -65,7 +65,7 @@ export default new Router({
     base: '',
     routes: [
         {
-            path: "/home",
+            path: "/admin/home",
             name: "home",
             component: Home,
             children : [
@@ -126,10 +126,10 @@ export default new Router({
                 {path:'manageShop',name:"manageShop", component: ManageShopList }, //매장관리 목록
             ]
         },
-        { path: "/login", name: "login",  component: LoginComponent},
+        { path: "/admin/login", name: "login",  component: LoginComponent},
         // {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
 
-        { path: '/',  redirect: "/login" },
+        { path: '/',  redirect: "/admin/login" },
         // { path: '/',  redirect: "/home/main" },
         {
             path: "/secure",
@@ -138,10 +138,10 @@ export default new Router({
         },
         {
             // path: '', redirect: "/home/main"
-            path: '', redirect: "/login"
+            path: '', redirect: "/admin/login"
         },
         {
-            path: "**", redirect: "/login"
+            path: "**", redirect: "/admin/login"
             // path: "**", redirect: "/home/main"
 
         },
