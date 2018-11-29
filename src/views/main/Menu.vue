@@ -10,7 +10,7 @@
           <div>
           <div class="depth02" v-bind:style="menuStyle" >
             <ul>
-              <li v-for="sub in menu.subMenu" ><a href="04_01_store.html" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenu" ><a href="04_01_store.html" v-on:mouseover="menuOver" v-bind:id="menu.id"><span class="sub" >{{sub.name}}</span></a></li>
             </ul>
           </div>
           </div>
