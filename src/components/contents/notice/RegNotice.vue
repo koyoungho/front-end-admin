@@ -5,7 +5,7 @@
         <div class="content">
             <h2 class="blind">고객지원</h2>
 
-            <h3>공지사항 등록</h3>
+            <h3>공지사항 {{div}}</h3>
 
             <!-- tbl view box -->
             <div class="bbs_write_box">
@@ -19,7 +19,7 @@
                     <tbody>
                     <tr>
                         <th scope="row">제목</th>
-                        <td><input type="text" class="input form_w100" title="제목"></td>
+                        <td><input type="text" class="input form_w100" title="제목" v-model="title" > </td>
                     </tr>
                     <tr>
                         <th scope="row">구분</th>
@@ -86,6 +86,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+    import {CommonBoardService} from "../../../api/common.service";
 
     @Component({
         components: {
@@ -93,7 +94,41 @@
         }
     })
     export default class RegNotice extends Vue {
-        
+        seq: string= this.$route.params.seq; // 글번호 시퀀스
+        div: string="";
+        listData:any =[];
+
+        mounted(){
+            alert(this.seq);
+            if(this.seq == null && this.seq == '') {
+                this.div="등록";
+            }else {
+                this.div="수정";
+                this.getNoticeDetail();
+            }
+
+        }
+
+
+
+
+        /**
+         * 상세정보 호출
+         */
+        getNoticeDetail(){
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas('notices', this.seq, null ).then((response) => {
+                    let result: any = response.data;
+
+                    if (result !=null) {
+                        this.listData = result;
+                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                }   ).catch();
+
+        }
     }
-    
     </script>

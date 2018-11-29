@@ -139,8 +139,8 @@
         name: 'login',
         data() {
             return {
-                id: "",
-                password: "",
+                id: "111",
+                password: "111",
             }
         },
         methods: {
@@ -192,65 +192,65 @@
                 //console.log("login auth check!!!!!!")
                 //this.$router.push('home/ioc')
 
-                if(localStorage.code == '000'){
-                    //console.log('로그인 성공 | code :: ' + localStorage.code)
-                    nextPage = 'phoneAuth'
+                // if(localStorage.code == '000'){
+                //     //console.log('로그인 성공 | code :: ' + localStorage.code)
+                //     nextPage = 'phoneAuth'
+                //
+                //     alert('최종 접속정보\n접속 IP 주소 : '+ localStorage.lastIp +'\n최종접속 시간 : '+ localStorage.lastConnDt)
+                // }else if(localStorage.code == '001'){ // 비밀번호 변경 페이지 이동
+                //     //console.log('90일동안 비밀번호 변경 않음 | code :: ' + localStorage.code)
+                //     nextPage = 'chgPass'
+                //
+                // }else if(localStorage.code == '002'){ //4번 -> 휴대폰 화면 이동
+                //     //console.log('휴면계정 | code :: ' + localStorage.code)
+                //     nextPage = 'phoneAuth'
+                //
+                //     if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
+                //
+                //     }else{
+                //         return;
+                //     }
+                // }else if(localStorage.code == '003'){ //2번
+                //     //console.log('비밀번호 틀림 | code :: ' + localStorage.code)
+                //     nextPage = 'notPass'
+                //
+                //     alert('로그인 정보가 맞지 않습니다.\n' + localStorage.failCnt + '회 실패. 5회 실패시에는 해당 계정의 접속이 차단됩니다.')
+                //     return;
+                // }else if(localStorage.code == '004'){
+                //     //console.log('잠긴계정 | code :: ' + localStorage.code)
+                //     nextPage = 'phoneAuth'
+                //
+                //     if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
+                //
+                //     }else{
+                //         return;
+                //     }
+                // }else if(localStorage.code == '005') {
+                //     nextPage = 'bussinessLogin'
+                //     //console.log('사업자등록번호 로그인 | code :: ' + localStorage.code)
+                // }else if(localStorage.code == '006') {
+                //
+                // }else if(localStorage.code == '007') { //다른 곳에서 계정이 사용중 입니다
+                //     alert('다른 곳에서 계정이 사용중 입니다.')
+                //     return;
+                // }
+                // /*
+                // else if((localStorage.code == ){ //TODO 로그인 5회이상 실패시
+                //   alert('로그인을 5회 실패하여 계정 접속을 차단합니다. 아이디 찾기, 비밀번호 초기화로 계정 로그인 정보를 확인하시기 바랍니다.');
+                //   retrurn;
+                // }else if (localStorage.code ==){//TODO 승인대기
+                //     alert('승인대기중입니다..')
+                //     return;
+                // }
+                //  */
+                //
+                // else {
+                //     //console.log('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요')
+                //     return;
+                // }
+                // //console.log(localStorage.code)
 
-                    alert('최종 접속정보\n접속 IP 주소 : '+ localStorage.lastIp +'\n최종접속 시간 : '+ localStorage.lastConnDt)
-                }else if(localStorage.code == '001'){ // 비밀번호 변경 페이지 이동
-                    //console.log('90일동안 비밀번호 변경 않음 | code :: ' + localStorage.code)
-                    nextPage = 'chgPass'
-
-                }else if(localStorage.code == '002'){ //4번 -> 휴대폰 화면 이동
-                    //console.log('휴면계정 | code :: ' + localStorage.code)
-                    nextPage = 'phoneAuth'
-
-                    if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
-
-                    }else{
-                        return;
-                    }
-                }else if(localStorage.code == '003'){ //2번
-                    //console.log('비밀번호 틀림 | code :: ' + localStorage.code)
-                    nextPage = 'notPass'
-
-                    alert('로그인 정보가 맞지 않습니다.\n' + localStorage.failCnt + '회 실패. 5회 실패시에는 해당 계정의 접속이 차단됩니다.')
-                    return;
-                }else if(localStorage.code == '004'){
-                    //console.log('잠긴계정 | code :: ' + localStorage.code)
-                    nextPage = 'phoneAuth'
-
-                    if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
-
-                    }else{
-                        return;
-                    }
-                }else if(localStorage.code == '005') {
-                    nextPage = 'bussinessLogin'
-                    //console.log('사업자등록번호 로그인 | code :: ' + localStorage.code)
-                }else if(localStorage.code == '006') {
-
-                }else if(localStorage.code == '007') { //다른 곳에서 계정이 사용중 입니다
-                    alert('다른 곳에서 계정이 사용중 입니다.')
-                    return;
-                }
-                /*
-                else if((localStorage.code == ){ //TODO 로그인 5회이상 실패시
-                  alert('로그인을 5회 실패하여 계정 접속을 차단합니다. 아이디 찾기, 비밀번호 초기화로 계정 로그인 정보를 확인하시기 바랍니다.');
-                  retrurn;
-                }else if (localStorage.code ==){//TODO 승인대기
-                    alert('승인대기중입니다..')
-                    return;
-                }
-                 */
-
-                else {
-                    //console.log('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요')
-                    return;
-                }
-                //console.log(localStorage.code)
-
-                this.redirect(nextPage)
+                this.redirect('main')
             },
             loginFail() {
                 alert('로그인 정보를 확인하세요.')
