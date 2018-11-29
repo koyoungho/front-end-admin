@@ -18,34 +18,34 @@ export default new Vuex.Store({
     },
     mutations: {
         LOGIN (state, accessToken) {
-            console.log('######## store.ts ########')
-            console.log(accessToken)
-
-            state.accessToken = accessToken
-            localStorage.setItem("data", accessToken)
-            localStorage.accessToken = accessToken.accesstoken //token
-            localStorage.code = accessToken.code //결과코드
-            localStorage.message = accessToken.message //결과메시지
-            localStorage.failCnt = accessToken.failCnt //실패카운트
-            localStorage.lastIp = accessToken.lastIp //최종접속IP
-            localStorage.lastConnDt = accessToken.lastConnDt //최종접속 시간
+            // console.log('######## store.ts ########')
+            // console.log(accessToken)
+            //
+            // state.accessToken = accessToken
+            // sessionStorage.setItem("data", accessToken)
+            // sessionStorage.accessToken = accessToken.accesstoken //token
+            // sessionStorage.code = accessToken.code //결과코드
+            // sessionStorage.message = accessToken.message //결과메시지
+            // sessionStorage.failCnt = accessToken.failCnt //실패카운트
+            // sessionStorage.lastIp = accessToken.lastIp //최종접속IP
+            // sessionStorage.lastConnDt = accessToken.lastConnDt //최종접속 시간
         },
         LOGOUT (state) {
             //state.accessToken = null
-            localStorage.clear();
+            sessionStorage.clear();
         }
     },
     actions: {
         LOGIN ({commit}, {id, password}) {
             // 로그인결과 리턴해줌
-            return axios.post(`${resourceHost}`, {id, password})
-                 .then(({data}) => {
-                     commit('LOGIN', data)
-                     axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-                     //console.log("//===== store.ts =====")
-                     //console.log(data)
-                     //console.log("===== store.ts =====//")
-                 })
+            // return axios.post(`${resourceHost}`, {id, password})
+            //      .then(({data}) => {
+            //          commit('LOGIN', data)
+            //          // axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+            //          //console.log("//===== store.ts =====")
+            //          //console.log(data)
+            //          //console.log("===== store.ts =====//")
+            //      })
              return "ok"
         },
         LOGOUT ({commit}) {
