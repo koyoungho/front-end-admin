@@ -36,11 +36,15 @@
 
         menuClick(menuId: string) {
 
+            if(menuId == ''){
+                return;
+            }
             /* 로그인 필수 메뉴
              *  cashReceiptIssue        현금영수증 발급
              *  ioc                     발급 조회 및 취소
              *  IssueViewingCancel      가맹점 정보변경/해지
              */
+            /*
             if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
                 if (localStorage.accessToken) {
                     this.menuSelected(menuId);
@@ -52,8 +56,9 @@
                 this.menuSelected(menuId);
                 this.$emit('parentEvent', menuId);
             }
-            //this.menuSelected(menuId);
-            //this.$emit('parentEvent', menuId);
+            */
+            this.menuSelected(menuId);
+            this.$emit('parentEvent', menuId);
         }
 
         @Watch('setMenu') oncahnge(){
@@ -63,18 +68,18 @@
         created() {
             if (this.menuItem == null) {
                 this.menuItem = [
-                    {id:'cashInstitution', name: '가맹점관리',   dept: '', auth: '', on: 'sub'
+                    {id:'franchiseList', name: '가맹점관리',   dept: '', auth: '', on: 'sub'
                         ,subMenu:[
-                        {name:'가맹점 관리',id:'gamang',on: 'sub'},
-                        {name:'지점 관리', id:'jijum',on: 'sub'},
-                        {name:'매장 관리', id:'shop',on: 'sub'},
-                        {name:'매장 일괄 등록', id:'',on: 'sub'},
-                        {name:'승인 대역 관리', id : '',on: 'sub'}
+                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'},
+                            {name:'지점 관리', id:'branchList',on: 'sub'},
+                            {name:'매장 관리', id:'storeList',on: 'sub'},
+                            {name:'매장 일괄 등록', id:'storeRegBulk',on: 'sub'},
+                            {name:'승인 대역 관리', id : 'approvalBandList',on: 'sub'}
                         ]
                     },
                     {id:'cashReceiptIssue', name: '현금영수증 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
-                            {name:'현금영수증 발급', id : '',on: 'sub'},
+                            {name:'현금영수증 발급', id : 'cashReceiptIssue',on: 'sub'},
                             {name:'발급 내역 조회/취소', id : '',on: 'sub'},
                             {name:'오류 내역 조회', id : '',on: 'sub'},
                             {name:'승인 파일 전송', id : '',on: 'sub'},
