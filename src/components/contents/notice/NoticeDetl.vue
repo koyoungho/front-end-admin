@@ -63,10 +63,11 @@
         }
     })
     export default class NoticeDetl extends Vue {
-        seq: string ="";
+        seq:string ="";
         listData:any=[];
 
         mounted() {
+            this.seq = this.$route.params.seq; // 글번호 시퀀스
             this.getNoticeDetail()
         }
 
@@ -75,14 +76,13 @@
          */
         getNoticeDetail(){
 
-            this.seq = this.$route.params.seq; // 글번호 시퀀스
-
             // api 데이터 호출
             CommonBoardService.getListDatas('notices', this.seq, null ).then((response) => {
                 let result: any = response.data;
 
                 if (result !=null) {
                     this.listData = result;
+
                 }
             }
             , (error) => {
@@ -96,8 +96,10 @@
          * @param date
          */
         formatDates(date) {
+
+            let date_str = ''+date;
             let formattedDates = '';
-            formattedDates = moment(date.substr(0,8)).format( "YYYY.MM.DD");
+            formattedDates = moment(date_str.substr(0, 8)).format("YYYY.MM.DD");
             return formattedDates
         }
         /**
@@ -110,6 +112,7 @@
          * 이동 - 수정
          */
         goRegNotice(){
+            alert("this.seq="+this.seq);
             this.$router.push({name:'regNotice',  params:{seq:this.seq}});
         }
 

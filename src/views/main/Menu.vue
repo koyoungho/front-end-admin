@@ -10,7 +10,7 @@
           <div>
           <div class="depth02" v-bind:style="menuStyle" >
             <ul>
-              <li v-for="sub in menu.subMenu" ><a href="04_01_store.html" v-on:mouseover="menuOver" v-bind:id="menu.id"><span class="sub" >{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenu" ><a v-on:click="menuClick(sub.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
             </ul>
           </div>
           </div>
@@ -93,7 +93,7 @@
                     },
                     {id: 'IssueViewingCancel', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
-                            {name:'공지사항', id : '',on: 'sub'},
+                            {name:'공지사항', id : 'noticeList',on: 'sub'},
                             {name:'자주 묻는 질문', id : '',on: 'sub'},
                             {name:'메일 발송', id : '',on: 'sub'},
                         ]
