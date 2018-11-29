@@ -44,6 +44,19 @@
              *  ioc                     발급 조회 및 취소
              *  IssueViewingCancel      가맹점 정보변경/해지
              */
+            // if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
+            //     if (localStorage.accessToken) {
+            //         this.menuSelected(menuId);
+            //         this.$emit('parentEvent', menuId);
+            //     } else {
+            //         this.$router.push('/login');
+            //     }
+            // } else {
+            //     this.menuSelected(menuId);
+            //     this.$emit('parentEvent', menuId);
+            // }
+            this.menuSelected(menuId);
+            this.$emit('parentEvent', menuId);
             /*
             if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
                 if (localStorage.accessToken) {

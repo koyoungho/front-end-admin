@@ -138,7 +138,7 @@ export default new Router({
         },
         {
             // path: '', redirect: "/home/main"
-            path: '', redirect: "/login"
+            path: '', redirect: "/admin/login"
         },
         {
             path: "**", redirect: "/login"
