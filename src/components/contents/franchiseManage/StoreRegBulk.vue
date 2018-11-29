@@ -10,7 +10,7 @@
 
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg02">매장 개별 등록</button>
+                <button type="button" id="" class="btn_m01 bg02" v-on:click="indivReg">매장 개별 등록</button>
             </div>
 
             <!-- search box -->
@@ -168,6 +168,10 @@
         mounted() {
         }
 
+        indivReg(){
+            this.$router.push('/home/storeReg')
+        }
+
         //엑셀파일 등록
         excelChk(){
 
@@ -175,7 +179,7 @@
 
         //대량 등록
         excelReg(){
-
+            alert('등록되었습니다.')
         }
 
         //가맹점 등록

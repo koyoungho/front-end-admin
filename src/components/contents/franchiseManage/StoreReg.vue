@@ -12,7 +12,7 @@
 
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg02">매장 일괄 등록</button>
+                <button type="button" id="" class="btn_m01 bg02" v-on:click="bulkReg">매장 일괄 등록</button>
             </div>
 
             <!-- search reg box -->
@@ -379,6 +379,10 @@
 
         //돔렌더링완료시 진행
         mounted() {
+        }
+
+        bulkReg(){
+            this.$router.push('/home/storeRegBulk')
         }
 
         //등록
