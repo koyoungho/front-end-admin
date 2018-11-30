@@ -88,6 +88,13 @@
                             {name:'사업자 정산관리', id : '',on: 'sub'}
                         ]
                     },
+                    {id: 'noticeList', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
+                        ,subMenu:[
+                            {name:'공지사항', id : 'noticeList',on: 'sub'},
+                            {name:'자주 묻는 질문', id : 'fnqList',on: 'sub'},
+                            {name:'메일 발송', id : 'sendMail',on: 'sub'},
+                        ]
+                    },
                     {id: 'ioc', name: '통계 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'회사코드별 거래현황', id : '',on: 'sub'},
@@ -98,14 +105,7 @@
                             {name:'가맹점수 현황 조회', id : '',on: 'sub'}
                         ]
                     },
-                    {id: 'noticeList', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                            {name:'공지사항', id : 'noticeList',on: 'sub'},
-                            {name:'자주 묻는 질문', id : 'fnqList',on: 'sub'},
-                            {name:'메일 발송', id : 'sendMail',on: 'sub'},
-                        ]
-                    },
-                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: '', on: 'sub'
+                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenu:[
                             {name:'약관 관리', id : '',on: 'sub'},
                             {name:'개인정보처리방침', id : '',on: 'sub'},
