@@ -46,15 +46,15 @@ import CashReceiptIssueView from "../components/contents/issuanceOfCashReceipt/C
 // import AccountCancelCompl from "../components/contents/franchiseModityCancel/AccountCancelCompl.vue" //가맹점 계정 해지 완료
 // import FranchiseCancelCompl from "../components/contents/franchiseModityCancel/FranchiseCancelCompl.vue" //가맹점 해지 신청 완료
 //
+//고객지원
 import NoticeList from "../components/contents/notice/NoticeList.vue" //공지사항 리스트
 import NoticeDetl from "../components/contents/notice/NoticeDetl.vue" //공지사항 상세
-import RegNotice from "../components/contents/notice/RegNotice.vue" //공지사항 상세
-// import Faq from "../components/contents/faq/Faq.vue" //자주묻는질문
-// import Camera from "../components/contents/Camera.vue" //공지사항 상세
-// import FranchiseRegStep1Result from "../components/contents/cashReceiptSystem/FranchiseRegStep1Result.vue" //공지사항 상세
-//
-// import Kt from "../components/common/introduce/Kt.vue" //사업자 소개(KT)
-// import Lotte from "../components/common/introduce/Lotte.vue" //사업자 소개(LOTTE)
+import RegNotice from "../components/contents/notice/RegNotice.vue" //공지사항 등록
+import FnqList from "../components/contents/fnq/FnqList.vue" //자주묻는질문리스트
+import RegFnq from "../components/contents/fnq/RegFnq.vue" //자주묻는질문등록
+import SendMail from "../components/contents/sendMail/SendMail.vue" //메일발송
+
+//시스템관리
 
 import ManageShopList from "../components/contents/manageFranchise/ManageShopList.vue" //매장관리
 
@@ -114,10 +114,27 @@ export default new Router({
                 // {path:'accountCancelCompl',component: AccountCancelCompl }, //가맹점 정보변경/해지
                 // {path:'franchiseCancelCompl',component: FranchiseCancelCompl }, //가맹점 정보변경/해지 상세
                 // {path:'issueViewingCancel',component: IssueViewingCancel }, //가맹점 정보변경/해지 상세
-                {path:'noticeList',component: NoticeList }, //공지사항 리스트
+
+                //고객지원>공지사항
+                {path:'noticeList',component: NoticeList, name:'noticeList' }, //공지사항 리스트
                 {path:'noticeDetl',component: NoticeDetl, name:'noticeDetl' }, //공지사항 상세
                 {path:'regNotice',component: RegNotice, name: 'regNotice' }, //공지사항 등록/수정
-                // {path:'Faq',component: Faq }, //자주묻는질문
+                //고객지원>자주묻는질문
+                {path:'fnqList',component: FnqList, name:'fnqList' }, //자주묻는질문리스트
+                {path:'regFnq',component: RegFnq, name:'regFnq'}, //자주묻는질문 등록
+                //고객지원>메일발송
+                {path:'sendMail',component: SendMail, name:'sendMail'}, //자주묻는질문 등록
+
+                //시스템관리>약관처리
+                //시스템관리>개인정보처리방침
+                //시스템관리>계정 권한 관리
+                //시스템관리>메뉴 권한 관리
+                //시스템관리>시스템 모니터링
+
+
+
+
+
                 // {path:'camera',component: Camera }, //카메라
                 // {path:'kt',component: Kt }, //사업자 소개(KT)
                 // {path:'lotte',component: Lotte }, //사업자 소개(LOTTE)

@@ -75,7 +75,7 @@
                         <tbody>
 
                         <template v-if="listData.length > 0">
-                            <tr v-for="datas in listData" v-on:click="goNoticeDetl(datas.seq)" v-bind:class="{'data_top': (datas.importantYn == 'Y') } ">
+                            <tr v-for="(datas, index) in listData" v-on:click="goNoticeDetl(datas.seq)" v-bind:class="{'data_top': (datas.importantYn == 'Y') } ">
                                 <td class="left">
                                     <span class="sub" >
                                         <template v-if="datas.importantYn == 'Y'"> <i class="icon notice">공지</i></template>
@@ -88,7 +88,7 @@
                                 <td><i v-bind:class="{'icon_file': (datas.attFileYn =='Y') } "/></td>
                                 <td>{{formatDates(datas.updDt)}}</td>
                                 <td >{{datas.regRoll}}</td>
-                                <td></td>
+                                <td>공통</td>
                             </tr>
                         </template>
                         <template v-else>

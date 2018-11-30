@@ -44,19 +44,7 @@
              *  ioc                     발급 조회 및 취소
              *  IssueViewingCancel      가맹점 정보변경/해지
              */
-            // if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
-            //     if (localStorage.accessToken) {
-            //         this.menuSelected(menuId);
-            //         this.$emit('parentEvent', menuId);
-            //     } else {
-            //         this.$router.push('/login');
-            //     }
-            // } else {
-            //     this.menuSelected(menuId);
-            //     this.$emit('parentEvent', menuId);
-            // }
-            this.menuSelected(menuId);
-            this.$emit('parentEvent', menuId);
+
             /*
             if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
                 if (localStorage.accessToken) {
@@ -97,25 +85,27 @@
                             {name:'승인 파일 전송', id : '',on: 'sub'},
                             {name:'전문 오류 체크', id : '',on: 'sub'},
                             {name:'전송파일 처리결과', id : '',on: 'sub'},
-                        ]
-                    },
-                    {id: 'IssueViewingCancel', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                            {name:'공지사항', id : 'noticeList',on: 'sub'},
-                            {name:'자주 묻는 질문', id : '',on: 'sub'},
-                            {name:'메일 발송', id : '',on: 'sub'},
+                            {name:'사업자 정산관리', id : '',on: 'sub'}
                         ]
                     },
                     {id: 'ioc', name: '통계 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'회사코드별 거래현황', id : '',on: 'sub'},
                             {name:'사업자번호별 거래현황', id : '',on: 'sub'},
-                            {name:'현금영수증 사업자별 정산', id : '',on: 'sub'},
+                            {name:'현금영수증 사업자 정산', id : '',on: 'sub'},
+                            {name:'사업자 정산관리', id : '',on: 'sub'},
                             {name:'가맹점 증감 현황', id : '',on: 'sub'},
                             {name:'가맹점수 현황 조회', id : '',on: 'sub'}
                         ]
                     },
-                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: ''
+                    {id: 'noticeList', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
+                        ,subMenu:[
+                            {name:'공지사항', id : 'noticeList',on: 'sub'},
+                            {name:'자주 묻는 질문', id : 'fnqList',on: 'sub'},
+                            {name:'메일 발송', id : 'sendMail',on: 'sub'},
+                        ]
+                    },
+                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'약관 관리', id : '',on: 'sub'},
                             {name:'개인정보처리방침', id : '',on: 'sub'},
