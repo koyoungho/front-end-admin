@@ -105,9 +105,9 @@
                             {name:'가맹점수 현황 조회', id : '',on: 'sub'}
                         ]
                     },
-                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: ''
+                    {id:'policyList', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenu:[
-                            {name:'약관 관리', id : '',on: 'sub'},
+                            {name:'약관 관리', id : 'policyList',on: 'sub'},
                             {name:'개인정보처리방침', id : '',on: 'sub'},
                             {name:'계정 권한 관리', id : '',on: 'sub'},
                             {name:'메뉴 권한 관리', id : '',on: 'sub'},
