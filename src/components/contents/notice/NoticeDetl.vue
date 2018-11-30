@@ -112,7 +112,6 @@
          * 이동 - 수정
          */
         goRegNotice(){
-            alert("this.seq="+this.seq);
             this.$router.push({name:'regNotice',  params:{seq:this.seq}});
         }
 

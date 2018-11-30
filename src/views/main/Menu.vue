@@ -84,7 +84,7 @@
             if (this.menuItem == null) {
                 this.menuItem = [
                     {id:'franchiseList', name: '가맹점관리' , on: 'sub',subMenu:[
-                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'},
+                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'}  ,
                             {name:'지점 관리', id:'branchList',on: 'sub'},
                             {name:'매장 관리', id:'storeList',on: 'sub'},
                             {name:'매장 일괄 등록', id:'storeRegBulk',on: 'sub'},
@@ -94,37 +94,37 @@
                     {id:'cashReceiptIssue', name: '현금영수증 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'현금영수증 발급', id : 'cashReceiptIssue',on: 'sub'},
-                            {name:'발급 내역 조회/취소', id : '',on: 'sub'},
-                            {name:'오류 내역 조회', id : '',on: 'sub'},
-                            {name:'승인 파일 전송', id : '',on: 'sub'},
-                            {name:'전문 오류 체크', id : '',on: 'sub'},
-                            {name:'전송파일 처리결과', id : '',on: 'sub'},
+                            {name:'발급 내역 조회/취소', id : 'ReceiptViewCancel',on: 'sub'},
+                            {name:'오류 내역 조회', id : 'errorList',on: 'sub'},
+                            {name:'승인 파일 전송', id : 'approvalFileSend',on: 'sub'},
+                            {name:'전문 오류 체크', id : 'errorCheck',on: 'sub'},
+                            {name:'전송파일 처리결과', id : 'sendFileResult',on: 'sub'},
                         ]
                     },
-                    {id: 'IssueViewingCancel', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
+                    {id: 'noticeList', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'공지사항', id : 'noticeList',on: 'sub'},
-                            {name:'자주 묻는 질문', id : '',on: 'sub'},
-                            {name:'메일 발송', id : '',on: 'sub'},
+                            {name:'자주 묻는 질문', id : 'fnqList',on: 'sub'},
+                            {name:'메일 발송', id : 'sendMail',on: 'sub'},
                         ]
                     },
                     {id: 'ioc', name: '통계 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'회사코드별 거래현황', id : '',on: 'sub'},
                             {name:'사업자번호별 거래현황', id : '',on: 'sub'},
-                            {name:'현금영수증 사업자별 정산', id : '',on: 'sub'},
+                            {name:'현금영수증 사업자 정산', id : '',on: 'sub'},
                             {name:'가맹점 증감 현황', id : '',on: 'sub'},
                             {name:'가맹점수 현황 조회', id : '',on: 'sub'}
                         ]
                     },
-                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: ''
+                    {id:'policyList', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenu:[
-                            {name:'약관 관리', id : '',on: 'sub'},
-                            {name:'개인정보처리방침', id : '',on: 'sub'},
-                            {name:'계정 권한 관리', id : '',on: 'sub'},
-                            {name:'메뉴 권한 관리', id : '',on: 'sub'},
-                            {name:'코드관리', id : '',on: 'sub'},
-                            {name:'시스템 모니터링', id : '',on: 'sub'}
+                            {name:'약관 관리', id : 'policyList',on: 'sub'},
+                            {name:'개인정보처리방침', id : 'personalList',on: 'sub'},
+                            {name:'계정 권한 관리', id : 'mnUser',on: 'sub'},
+                            {name:'메뉴 권한 관리', id : 'mnMenu',on: 'sub'},
+                            {name:'코드관리', id : '',on: 'mnCode'},
+                            {name:'시스템 모니터링', id : 'systemMonitoring',on: 'sub'}
                         ]}
                 ];
             } else {

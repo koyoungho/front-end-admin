@@ -46,7 +46,7 @@
                                         <a href="#">가이드.pdf</a>
                                         <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
                                     </li>
-                                    <template v-if="attachFile != null">
+                                    <template v-if="attFileYn == 'Y' ">
                                         <li>
                                             <a>가이드2.pdf</a>
                                             <a  class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
@@ -61,7 +61,7 @@
                     <tr>
                         <th scope="row">내용</th>
                         <td class="con_write">
-                            <img src="images/img_write01.png" alt="" style="width:860px">
+                            <textarea class="form_write" >{{content}}</textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -71,10 +71,11 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" class="btn_b01 bg02">취소</button>
-                <button type="button" class="btn_b01 bg03">수정</button>
-                <button type="button" class="btn_b01 bg03">삭제</button>
-                <button type="button" class="btn_b01 bg01">등록</button>
+                <button type="button" class="btn_b01 bg02" v-on:click="toList()">취소</button>
+                <template v-if="div == '수정' ">
+                    <button type="button" class="btn_b01 bg03">삭제</button>
+                </template>
+                <button type="button" class="btn_b01 bg01">{{div}}</button>
             </div>
 
         </div>
@@ -96,25 +97,23 @@
         seq: string="";
         div: string="";
         listData:any =[];
+        title:string="";
+        section:string="";
+        content:string="";
+        attFileYn : string ="";
+        importantYn : boolean =false;
 
         mounted(){
             this.seq=this.$route.params.seq; // 글번호 시퀀스
-            if(this.seq == null && this.seq == '') {
-                this.div="등록";
-            }else {
+            if(this.seq != null && this.seq != 'undefinded') {
                 this.div="수정";
                 this.getNoticeDetail();
+            }else {
+
+                this.div="등록";
             }
 
         }
-
-title:string="";
-section:string="";
-content:string="";
-attachFile : string ="";
-importantYn : boolean =false;
-
-
 
         /**
          * 상세정보 호출
@@ -129,7 +128,7 @@ importantYn : boolean =false;
                        this.title = result.title;
                        this.section = result.section;
                        this.content = result.content;
-                       this.attachFile = result.attFiles;
+                       this.attFileYn = result.attFileYn;
                        if(result.importantYn =='Y'){
                            this.importantYn = true;
                        }
@@ -141,13 +140,22 @@ importantYn : boolean =false;
 
         }
 
-
+        /**
+         * 체크박스 제어
+         */
         changeYn(){
             if(this.importantYn==false){
                 this.importantYn = true;
             }else{
                 this.importantYn = false
             }
+        }
+
+        /**
+         * 취소(목록으로)
+         */
+        toList(){
+            this.$router.push({name:'noticeList'})
         }
 
     }
