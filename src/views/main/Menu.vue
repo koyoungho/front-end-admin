@@ -9,7 +9,7 @@
         <li><a href="" title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-bind:class="menu.on">{{menu.name}}</a>
           <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
-              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(sub.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(menu.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
             </ul>
           </div>
         </li>
@@ -56,6 +56,8 @@
             //     this.$emit('parentEvent', menuId);
             // }
             this.menuSelected(menuId);
+            this.menuStyle = "display : none;"
+            this.subMenuStyle = "display : none;"
             this.$emit('parentEvent', menuId);
             /*
             if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
@@ -156,8 +158,8 @@
         }
 
         menuOver(e){
-            // e.target.class='sub on'
-            // e.target.style = ''
+            e.target.class='sub on'
+
 
             this.menuSelected(e.target.id)
             this.menuStyle='display:block ; height : '+this.subHeigth+'px';
@@ -181,11 +183,7 @@
                 if (e.id == menuId) {
                     e.on = 'sub on';
                 }else {
-                    if(e.id == this.$route.path.split('/')[2]){
-                        e.on = 'sub on';
-                    }else{
                         e.on = 'sub';
-                    }
                 }
             });
         }
