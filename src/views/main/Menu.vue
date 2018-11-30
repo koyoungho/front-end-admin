@@ -80,11 +80,11 @@
                     {id:'cashReceiptIssue', name: '현금영수증 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'현금영수증 발급', id : 'cashReceiptIssue',on: 'sub'},
-                            {name:'발급 내역 조회/취소', id : '',on: 'sub'},
-                            {name:'오류 내역 조회', id : '',on: 'sub'},
-                            {name:'승인 파일 전송', id : '',on: 'sub'},
-                            {name:'전문 오류 체크', id : '',on: 'sub'},
-                            {name:'전송파일 처리결과', id : '',on: 'sub'},
+                            {name:'발급 내역 조회/취소', id : 'ReceiptViewCancel',on: 'sub'},
+                            {name:'오류 내역 조회', id : 'errorList',on: 'sub'},
+                            {name:'승인 파일 전송', id : 'approvalFileSend',on: 'sub'},
+                            {name:'전문 오류 체크', id : 'errorCheck',on: 'sub'},
+                            {name:'전송파일 처리결과', id : 'sendFileResult',on: 'sub'},
                         ]
                     },
                     {id: 'noticeList', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
