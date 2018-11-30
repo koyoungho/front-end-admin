@@ -82,7 +82,7 @@
             if (this.menuItem == null) {
                 this.menuItem = [
                     {id:'franchiseList', name: '가맹점관리' , on: 'sub',subMenu:[
-                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'}  ,
+                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'},
                             {name:'지점 관리', id:'branchList',on: 'sub'},
                             {name:'매장 관리', id:'storeList',on: 'sub'},
                             {name:'매장 일괄 등록', id:'storeRegBulk',on: 'sub'},
@@ -160,7 +160,6 @@
             // e.target.style = ''
 
             this.menuSelected(e.target.id)
-            console.log(this.menuItem['noticeList'])
             this.menuStyle='display:block ; height : '+this.subHeigth+'px';
             this.subMenuStyle='display:none';
             // this.subHeigth = 'heigth : '+ (40 * .subMenu.length)+'px';

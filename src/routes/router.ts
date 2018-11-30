@@ -114,6 +114,7 @@ export default new Router({
                 // {path:'accountCancelCompl',component: AccountCancelCompl }, //가맹점 정보변경/해지
                 // {path:'franchiseCancelCompl',component: FranchiseCancelCompl }, //가맹점 정보변경/해지 상세
                 // {path:'issueViewingCancel',component: IssueViewingCancel }, //가맹점 정보변경/해지 상세
+
                 {path:'noticeList',component: NoticeList }, //공지사항 리스트
                 {path:'noticeDetl',component: NoticeDetl, name:'noticeDetl' }, //공지사항 상세
                 {path:'regNotice',component: RegNotice, name: 'regNotice' }, //공지사항 등록/수정
