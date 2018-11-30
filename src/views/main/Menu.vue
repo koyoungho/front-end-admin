@@ -7,12 +7,10 @@
         <!--<li v-for="menu in menuItem" v-bind:class="menu.on"><a >{{menu.name}}</a></li>-->
         <template v-for="menu in menuItem" >
         <li><a href="" title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-bind:class="menu.on">{{menu.name}}</a>
-          <div>
-          <div class="depth02" v-bind:style="menuStyle" >
+          <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
-              <li v-for="sub in menu.subMenu" ><a href="04_01_store.html" v-on:mouseover="menuOver" v-bind:id="menu.id"><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(sub.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
             </ul>
-          </div>
           </div>
         </li>
         </template>
@@ -33,14 +31,33 @@
         @Prop() setMenu !: string;
         menuItem: any = null;
         menuStyle : any = "display: none;";
+        subMenuStyle : any = "display: none;";
+        subHeigth : any = "";
 
         menuClick(menuId: string) {
 
+            if(menuId == ''){
+                return;
+            }
             /* 로그인 필수 메뉴
              *  cashReceiptIssue        현금영수증 발급
              *  ioc                     발급 조회 및 취소
              *  IssueViewingCancel      가맹점 정보변경/해지
              */
+            // if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
+            //     if (localStorage.accessToken) {
+            //         this.menuSelected(menuId);
+            //         this.$emit('parentEvent', menuId);
+            //     } else {
+            //         this.$router.push('/login');
+            //     }
+            // } else {
+            //     this.menuSelected(menuId);
+            //     this.$emit('parentEvent', menuId);
+            // }
+            this.menuSelected(menuId);
+            this.$emit('parentEvent', menuId);
+            /*
             if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
                 if (localStorage.accessToken) {
                     this.menuSelected(menuId);
@@ -52,8 +69,9 @@
                 this.menuSelected(menuId);
                 this.$emit('parentEvent', menuId);
             }
-            //this.menuSelected(menuId);
-            //this.$emit('parentEvent', menuId);
+            */
+            this.menuSelected(menuId);
+            this.$emit('parentEvent', menuId);
         }
 
         @Watch('setMenu') oncahnge(){
@@ -63,23 +81,29 @@
         created() {
             if (this.menuItem == null) {
                 this.menuItem = [
-                    {id:'cashInstitution', name: '가맹점관리',   dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                        {name:'가맹점 관리',id:'gamang',on: 'sub'},
-                        {name:'지점 관리', id:'jijum',on: 'sub'},
-                        {name:'매장 관리', id:'shop',on: 'sub'},
-                        {name:'매장 일괄 등록', id:'',on: 'sub'},
-                        {name:'승인 대역 관리', id : '',on: 'sub'}
+                    {id:'franchiseList', name: '가맹점관리' , on: 'sub',subMenu:[
+                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'}  ,
+                            {name:'지점 관리', id:'branchList',on: 'sub'},
+                            {name:'매장 관리', id:'storeList',on: 'sub'},
+                            {name:'매장 일괄 등록', id:'storeRegBulk',on: 'sub'},
+                            {name:'승인 대역 관리', id : 'approvalBandList',on: 'sub'}
                         ]
                     },
                     {id:'cashReceiptIssue', name: '현금영수증 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
-                            {name:'현금영수증 발급', id : '',on: 'sub'},
+                            {name:'현금영수증 발급', id : 'cashReceiptIssue',on: 'sub'},
                             {name:'발급 내역 조회/취소', id : '',on: 'sub'},
                             {name:'오류 내역 조회', id : '',on: 'sub'},
                             {name:'승인 파일 전송', id : '',on: 'sub'},
                             {name:'전문 오류 체크', id : '',on: 'sub'},
-                            {name:'전송파일 처리결과', id : '',on: 'sub'}
+                            {name:'전송파일 처리결과', id : '',on: 'sub'},
+                        ]
+                    },
+                    {id: 'IssueViewingCancel', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
+                        ,subMenu:[
+                            {name:'공지사항', id : 'noticeList',on: 'sub'},
+                            {name:'자주 묻는 질문', id : '',on: 'sub'},
+                            {name:'메일 발송', id : '',on: 'sub'},
                         ]
                     },
                     {id: 'ioc', name: '통계 관리', value : '', dept: '', auth: '', on: 'sub'
@@ -91,14 +115,7 @@
                             {name:'가맹점수 현황 조회', id : '',on: 'sub'}
                         ]
                     },
-                    {id: 'IssueViewingCancel', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                            {name:'공지사항', id : '',on: 'sub'},
-                            {name:'자주 묻는 질문', id : '',on: 'sub'},
-                            {name:'메일 발송', id : '',on: 'sub'},
-                        ]
-                    },
-                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: '', on: 'sub'
+                    {id:'noticeList', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenu:[
                             {name:'약관 관리', id : '',on: 'sub'},
                             {name:'개인정보처리방침', id : '',on: 'sub'},
@@ -114,23 +131,39 @@
                 //     }
                 // ).catch();
             }
-
+            this.menuHeight();
         }
 
         mounted() {
-
-
             this.menuChangeed()
+        }
+
+        menuHeight(){
+            let count = 0;
+            this.menuItem.filter(e=>{
+
+                if(count < e.subMenu.length){
+                    count = e.subMenu.length;
+                }
+
+            })
+            this.subHeigth = count * 40 + 20;
         }
 
         menuLeave(e){
             this.menuStyle='display:none';
+            this.subMenuStyle='display:none';
         }
 
         menuOver(e){
-            e.target.class = 'sub on';
+            // e.target.class='sub on'
+            // e.target.style = ''
+
             this.menuSelected(e.target.id)
-            this.menuStyle='display:block';
+            console.log(this.menuItem['noticeList'])
+            this.menuStyle='display:block ; height : '+this.subHeigth+'px';
+            this.subMenuStyle='display:none';
+            // this.subHeigth = 'heigth : '+ (40 * .subMenu.length)+'px';
         }
 
         menuChangeed(){

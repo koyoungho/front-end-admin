@@ -23,7 +23,7 @@
 .gnb .gnb_list > li > a:hover {color:#fff; background:#da291c;}
 .gnb .gnb_list > li > a.on {display: inline-block; color: #fff; background:#da291c; height: 40px; line-height: 40px;}
 .gnb .gnb_list > li > a:hover:after, .gnb .gnb_list li > a.on:after {content: ''; display: block; width: 194px; height: 0; color:#fff; bottom: 0; left: 0; background:transparent;}
-.depth02 {position: relative; display:none ; width:195px; padding:0 0; min-height:300px; background: #fff; border-bottom:1px solid #dfdfdf; /*background:url('images/bg_menu01.png') repeat-y 0px 0px;*/ z-index: 120;} /* display: none; */
+.depth02 {position: relative; display:none ; width:195px; padding:0 0;  background: #fff; border-bottom:1px solid #dfdfdf; /*background:url('images/bg_menu01.png') repeat-y 0px 0px;*/ z-index: 120;} /* display: none; */
 .depth02 > ul {overflow:hidden; background:#fff; padding-top:3px; border-top:1px solid #dfdfdf; border-left:0px solid #dfdfdf;}
 .depth02 > ul > li {line-height:40px;}
 .gnb .gnb_list > li:first-child > .depth02 > ul {width:197px; border-left:0px solid #dfdfdf; margin-left:0px;}
