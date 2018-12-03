@@ -6,15 +6,6 @@
 
             <h3>{{titleNm}}</h3>
 
-            <!-- terms info -->
-            <div class="terms_info">
-                <span class="sub">현행 시행 일자 : <em>{{currentDate}}</em></span>
-                <select class="select form_history" title="계정이력 선택" v-model ="policyHistory" v-on:change="historyChange">
-                    <option value="">개정이력 보기</option>
-                    <option v-for="policyList in policyList" v-bind:value="policyList.hisSeq">{{policyList.hisTitle}}</option>
-                </select>
-            </div>
-
             <!-- cont_mobile -->
             <div class="cont_mobile">
                 <!-- terms box -->
@@ -164,14 +155,6 @@
 
             }
 
-        }
-
-
-        /**
-         * 셀렉트박스 이벤트 - 개정이력
-         */
-        historyChange(){
-            this.bindContent(this.policyHistory);
         }
 
     }

@@ -12,7 +12,6 @@ import PhoneAuth from "../components/contents/login/PhoneAuth.vue" //휴대폰 �
 import SearchIdInput from "../components/contents/login/SearchIdInput.vue" //아이디 찾기 입력
 import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //아이디 찾기 결과
 import InitPass from "../components/contents/login/InitPass.vue" //비밀번호 초기화
-import Policy from "../components/contents/policy/Policy.vue" //이용약관
 
 //가맹점 관리
 import FranchiseList from "../components/contents/franchiseManage/FranchiseList.vue" //매장관리 리스트
@@ -55,6 +54,18 @@ import RegFnq from "../components/contents/fnq/RegFnq.vue" //자주묻는질문�
 import SendMail from "../components/contents/sendMail/SendMail.vue" //메일발송
 
 //시스템관리
+import PolicyList from "../components/contents/policy/PolicyList.vue" //약관관리/개인정보처리
+import Policy from "../components/contents/policy/Policy.vue" //이용약관
+import MnUserList from "../components/contents/mnUser/MmUserList.vue"//계정관리
+import RegUser from "../components/contents/mnUser/RegUser.vue"//계정등록
+import ModUser from "../components/contents/mnUser/ModUser.vue"//계정수정
+import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
+import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
+import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
+import SystemMonitoring from "../components/contents/systemMonitoring/ApprovalStatus.vue"// 승인현황
+import BatchFileProc from "../components/contents/systemMonitoring/BatchFileProc.vue"//배치파일처리현황
+import ResourceSystem from "../components/contents/systemMonitoring/ResourceSystem.vue"//시스템자원
+import ServiceStatus from "../components/contents/systemMonitoring/ServiceStatus.vue"//서비스 상태
 
 import ManageShopList from "../components/contents/manageFranchise/ManageShopList.vue" //매장관리
 
@@ -126,20 +137,25 @@ export default new Router({
                 {path:'sendMail',component: SendMail, name:'sendMail'}, //자주묻는질문 등록
 
                 //시스템관리>약관처리
+                {path:'policyList',component: PolicyList, name:'policyList'}, //자주묻는질문 등록
+                {path:'policy',component: Policy, name:'policy'}, //자주묻는질문 등록
                 //시스템관리>개인정보처리방침
-                //시스템관리>계정 권한 관리
+                {path:'personalList',component: PolicyList, name:'policyList'}, //개인정보처리방침
+                // 시스템관리>계정 권한 관리,
+                {path:'mnUser',component: MnUserList, name:'mnUserList'}, //계정리스트
+                {path:'regUser',component: RegUser, name:'regUser'}, //계정 등록
+                {path:'modUser',component: ModUser, name:'modUser'}, //계정수정
                 //시스템관리>메뉴 권한 관리
-                //시스템관리>시스템 모니터링
+                {path:'mnMenu',component: MnMenuList, name:'mnMenuList'}, //
+                {path:'regMenu',component: RegMenu, name:'regMenu'}, //
+                //시스템관리>코드관리
+                {path:'mnCode',component: MnCode, name:'mnCode'}, //
+                //시스템관리>시스템 모니터링,
+                {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring'}, //승인현황
+                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc'}, //배치파일처리현환
+                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem'}, //배치파일처리현환
+                {path:'serviceStatus',component: ServiceStatus, name:'serviceStatus'}, //배치파일처리현황
 
-
-
-
-
-                // {path:'camera',component: Camera }, //카메라
-                // {path:'kt',component: Kt }, //사업자 소개(KT)
-                // {path:'lotte',component: Lotte }, //사업자 소개(LOTTE)
-
-                // {path: '', redirect: "/home/main"},
                 {path:'manageShop',name:"manageShop", component: ManageShopList }, //매장관리 목록
             ]
         },
@@ -155,7 +171,7 @@ export default new Router({
         },
         {
             // path: '', redirect: "/home/main"
-            path: '', redirect: "/admin/login"
+            path: '', redirect: "/login"
         },
         {
             path: "**", redirect: "/login"

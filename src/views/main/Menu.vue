@@ -44,17 +44,6 @@
              *  ioc                     발급 조회 및 취소
              *  IssueViewingCancel      가맹점 정보변경/해지
              */
-            // if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
-            //     if (localStorage.accessToken) {
-            //         this.menuSelected(menuId);
-            //         this.$emit('parentEvent', menuId);
-            //     } else {
-            //         this.$router.push('/login');
-            //     }
-            // } else {
-            //     this.menuSelected(menuId);
-            //     this.$emit('parentEvent', menuId);
-            // }
             this.menuSelected(menuId);
             this.menuStyle = "display : none;"
             this.subMenuStyle = "display : none;"
@@ -72,8 +61,6 @@
                 this.$emit('parentEvent', menuId);
             }
             */
-            this.menuSelected(menuId);
-            this.$emit('parentEvent', menuId);
         }
 
         @Watch('setMenu') oncahnge(){
@@ -117,13 +104,13 @@
                             {name:'가맹점수 현황 조회', id : '',on: 'sub'}
                         ]
                     },
-                    {id:'policyList', name: '시스템관리', value : '', dept: '', auth: ''
+                    {id:'policyList', name: '시스템관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
                             {name:'약관 관리', id : 'policyList',on: 'sub'},
                             {name:'개인정보처리방침', id : 'personalList',on: 'sub'},
                             {name:'계정 권한 관리', id : 'mnUser',on: 'sub'},
                             {name:'메뉴 권한 관리', id : 'mnMenu',on: 'sub'},
-                            {name:'코드관리', id : '',on: 'mnCode'},
+                            {name:'코드관리', id : 'mnCode',on: 'sub'},
                             {name:'시스템 모니터링', id : 'systemMonitoring',on: 'sub'}
                         ]}
                 ];
