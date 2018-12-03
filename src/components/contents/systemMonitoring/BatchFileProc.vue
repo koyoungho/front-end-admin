@@ -36,6 +36,9 @@
 
                 <h4 class="blind">배치 파일 처리 현황</h4>
 
+              <div v-show="buttonShow"> 버튼버튼!!!!!!!!!!!!!!!!!!!!!!</div>
+
+
                 <!-- system box -->
                 <div class="system_box">
                     <ul class="system_list">
@@ -120,6 +123,25 @@
         }
     })
     export default class BatchFileProc extends Vue {
+
+        vWebType:string="";
+        buttonShow:boolean=false;
+
+        mounted(){
+            let filter = "win16|win32|win64|mac";
+            this.vWebType = "";
+
+            //모바일/PC 구분
+            if (navigator.platform ) {
+                if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                    this.vWebType = "MOBILE";
+                    this.buttonShow = false;
+                } else {
+                    this.vWebType = "PC";
+                    this.buttonShow = true;
+                }
+            }
+        }
 
     }
 </script>

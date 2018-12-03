@@ -5,11 +5,11 @@
         <div class="content">
             <h2 class="blind">시스템 관리</h2>
 
-            <h3>이용약관 관리</h3>
+            <h3>{{titleNm}} 관리</h3>
 
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" class="btn_m01 bg02"  v-on:click="regPolicy">약관 등록</button>
+                <button type="button" class="btn_m01 bg02"  v-on:click="regPolicy">{{titleNm}} 등록</button>
             </div>
 
             <!-- search box -->
@@ -77,9 +77,11 @@
                         <td>전체저장</td>
                         <td>관리자</td>
                     </tr>
-                    <tr>
-                        <td colspan="5" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
+                    <!--<template v-else>-->
+                        <!--<tr>-->
+                            <!--<td colspan="4" class="no_data">조회된 내용이 없습니다.</td>-->
+                        <!--</tr>-->
+                    <!--</template>-->
                     </tbody>
                 </table>
             </div>
@@ -99,7 +101,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Watch} from "vue-property-decorator";
 
     @Component({
         components: {
@@ -107,11 +109,31 @@
         }
     })
     export default class PolicyList extends Vue {
+        titleNm:string="";
 
+        mounted(){
+            this.pageDiv();
+        }
+
+        pageDiv(){
+            let routeNm = this.$route.name;
+            if(routeNm == 'policyList' ) {
+                this.titleNm = '이용약관'
+            }else if(routeNm == 'personalList' ){
+                this.titleNm ='개인보호처리방침'
+            }
+        }
 
         regPolicy(){
             this.$router.push({name:'policy'})
         }
+
+
+        // 라우터 경로 변경시 이벤트 발생
+        @Watch('$route') onChange(){
+            this.pageDiv();
+        }
+
 
     }
 </script>

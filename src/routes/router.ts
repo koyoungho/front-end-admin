@@ -70,6 +70,7 @@ import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
 import SystemMonitoring from "../components/contents/systemMonitoring/ApprovalStatus.vue"// 승인현황
 import BatchFileProc from "../components/contents/systemMonitoring/BatchFileProc.vue"//배치파일처리현황
+import BatchFileProcList from "../components/contents/systemMonitoring/BatchFileProcList.vue"//배치파일처리현황
 import ResourceSystem from "../components/contents/systemMonitoring/ResourceSystem.vue"//시스템자원
 import ServiceStatus from "../components/contents/systemMonitoring/ServiceStatus.vue"//서비스 상태
 
@@ -133,10 +134,11 @@ export default new Router({
                 {path:'sendMail',component: SendMail, name:'sendMail'}, //자주묻는질문 등록
 
                 //시스템관리>약관처리
-                {path:'policyList',component: PolicyList, name:'policyList'}, //자주묻는질문 등록
-                {path:'policy',component: Policy, name:'policy'}, //자주묻는질문 등록
+                {path:'policyList',component: PolicyList, name:'policyList'}, //약관목록
+                {path:'policy',component: Policy, name:'policy'}, //약관등록/수정
                 //시스템관리>개인정보처리방침
-                {path:'personalList',component: PolicyList, name:'policyList'}, //개인정보처리방침
+                {path:'personalList',component: PolicyList, name:'personalList', }, //개인정보처리방침 목록
+                {path:'personal',component:Policy, name:'personal'}, //개인정보처리방침 등록/수정
                 // 시스템관리>계정 권한 관리,
                 {path:'mnUser',component: MnUserList, name:'mnUserList'}, //계정리스트
                 {path:'regUser',component: RegUser, name:'regUser'}, //계정 등록
@@ -148,8 +150,9 @@ export default new Router({
                 {path:'mnCode',component: MnCode, name:'mnCode'}, //
                 //시스템관리>시스템 모니터링,
                 {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring'}, //승인현황
-                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc'}, //배치파일처리현환
-                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem'}, //배치파일처리현환
+                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc'}, //배치파일처리현황
+                {path:'batchFileProcList', component: BatchFileProcList, name:'batchFileProcList'}, //배치파일처리현황리스트
+                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem'}, //배치파일처리현황
                 {path:'serviceStatus',component: ServiceStatus, name:'serviceStatus'}, //배치파일처리현황
 
                 {path:'manageShop',name:"manageShop", component: ManageShopList }, //매장관리 목록

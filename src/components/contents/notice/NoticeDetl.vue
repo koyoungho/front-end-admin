@@ -14,7 +14,14 @@
                 <div class="bbs_view_box">
                     <!-- bbs view -->
                     <dl class="bbs_view">
-                        <dt><template v-if="listData.importantYn == 'Y'">[중요] </template>{{listData.title}}
+                        <dt>
+                            <span class="sub" >
+                                <template v-if="listData.importantYn == 'Y'"> <i class="icon notice">공지</i></template>
+                                {{listData.title}}
+                            </span>
+                            <template v-bind:class="{'sub icon_new': (listData.newYn == 'Y') }">
+                                <i class="icon new">new</i>
+                            </template>
                             <span class="col_date"><strong class="sub">등록일 : </strong>{{formatDates(listData.updDt)}}</span>
                         </dt>
                         <dd class="row_sub">
@@ -25,7 +32,7 @@
                                     <!--<a href="#" class="icon_file">{{listData.attFiles}}</a>-->
                                 </span>
 							</span>
-                            <span class="col_right"><strong class="sub">등록자 : </strong>{{listData.regRoll}} </span>
+                            <span class="col_right"><strong class="sub">등록일 : </strong>{{listData.regRoll}} </span>
                         </dd>
                         <dd class="row_cont">
                             <div class="cont_data">{{listData.content}}</div>
