@@ -327,8 +327,7 @@
 
     @Component({
         components: {
-            name: "ResourceSystem"
-
+            ResourceSystem
         }
     })
     export default class ResourceSystem extends Vue {

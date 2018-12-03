@@ -169,7 +169,7 @@
 
     @Component({
         components: {
-            name: "ServiceStatus"
+            ServiceStatus
 
         }
     })

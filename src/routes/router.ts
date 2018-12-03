@@ -34,6 +34,12 @@ import ApprovalBandReg from "../components/contents/franchiseManage/ApprovalBand
 import CashReceiptIssue from "../components/contents/issuanceOfCashReceipt/CashReceiptIssue.vue" //현금영수증 발급
 import CashReceiptBulkIssue from "../components/contents/issuanceOfCashReceipt/CashReceiptBulkIssue.vue" //현금영수증 발급(대량)
 import CashReceiptIssueView from "../components/contents/issuanceOfCashReceipt/CashReceiptIssueView.vue" //현금영수증 발급(출력)
+import ReceiptViewCancel from "../components/contents/issuanceOfCashReceipt/ReceiptViewCancel.vue" //발급내역 조회및 취소
+import ReceiptViewCancelDetl from "../components/contents/issuanceOfCashReceipt/ReceiptViewCancelDetl.vue" //현금영수증 발급 조회 및 취소
+import ErrorList from "../components/contents/issuanceOfCashReceipt/ErrorList.vue" //오류내역 조회
+import ApprovalFileSend from "../components/contents/issuanceOfCashReceipt/ApprovalFileSend.vue" //승인파일 전송
+import ErrorCheck from "../components/contents/issuanceOfCashReceipt/ErrorCheck.vue" //전문 오류 체크
+import SendFileResult from "../components/contents/issuanceOfCashReceipt/SendFileResult.vue" //전송파일 처리 결과
 
 // import CashIntstitution from "../components/contents/cashReceiptSystem/CashInstitution.vue" //현금영수증 제도 안내
 // import FranchiseRegStep1 from "../components/contents/cashReceiptSystem/FranchiseRegStep1.vue" //가맹점 가입
@@ -109,22 +115,12 @@ export default new Router({
                 {path:'cashReceiptIssue', name:'cashReceiptIssue', component: CashReceiptIssue }, //현금영수증 발급
                 {path:'cashReceiptIssueView', name:'cashReceiptIssueView', component: CashReceiptIssueView }, //현금영수증 발급(출력)
                 {path:'cashReceiptBulkIssue', name:'cashReceiptBulkIssue', component: CashReceiptBulkIssue }, //현금영수증 발급(대량)
-
-                // {path:'cashReceiptBulkIssue',component: CashReceiptBulkIssue }, //현금영수증 발급 조회 및 취소
-                // {path:'cashInstitution',component: CashIntstitution }, //현금영수증 제도 안내
-                // {path:'franchiseRegStep1',component: FranchiseRegStep1 }, //가맹점 약관 동의
-                // {path:'franchiseRegStep1Result',component: FranchiseRegStep1Result }, //가맹점 약관 동의
-                // {path:'franchiseRegStep2',component: FranchiseRegStep2 }, //가맹점 신청
-                // {path:'franchiseRegStep3',component: FranchiseRegStep3 }, //가맹점 가입 완료
-                // {path:'cashReceiptIssue',component: CashReceiptIssue }, //현금영수증 발급
-                // {path:'cashReceiptBulkIssue',component: CashReceiptBulkIssue }, //현금영수증 발급(대량)
-                // {path:'cashReceiptIssueView',component: CashReceiptIssueView }, //현금영수증 발급(출력)
-                // {path:'cashReceiptBulkIssue',component: CashReceiptBulkIssue }, //현금영수증 발급 조회 및 취소
-                // {path:'ioc',component: ioc }, //현금영수증 발급 조회 및 취소
-                // //{path:'cashReceiptIssueView',component: CashReceiptIssueView }, //현금영수증 발급 조회 및 취소 상세
-                // {path:'accountCancelCompl',component: AccountCancelCompl }, //가맹점 정보변경/해지
-                // {path:'franchiseCancelCompl',component: FranchiseCancelCompl }, //가맹점 정보변경/해지 상세
-                // {path:'issueViewingCancel',component: IssueViewingCancel }, //가맹점 정보변경/해지 상세
+                {path:'receiptViewCancel', name:'receiptViewCancel', component: ReceiptViewCancel }, //발급 내역 조회/취소
+                {path:'receiptViewCancelDetl', name:'receiptViewCancelDetl', component: ReceiptViewCancelDetl }, //현금영수증 발급 조회 및 취소
+                {path:'errorList', name:'errorList', component: ErrorList }, //오류 내역 조회
+                {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend }, //전문 오류 체크
+                {path:'errorCheck', name:'errorCheck', component: ErrorCheck }, //승인파일전송
+                {path:'sendFileResult', name:'sendFileResult', component: SendFileResult }, //전송 파일 처리결과
 
                 //고객지원>공지사항
                 {path:'noticeList',component: NoticeList, name:'noticeList' }, //공지사항 리스트

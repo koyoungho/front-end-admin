@@ -116,8 +116,7 @@
 
     @Component({
         components: {
-            name: "BatchFileProc"
-
+            BatchFileProc
         }
     })
     export default class BatchFileProc extends Vue {

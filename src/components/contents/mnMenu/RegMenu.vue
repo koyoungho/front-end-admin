@@ -138,8 +138,7 @@
 
     @Component({
         components: {
-            name: "RegMenu"
-
+            RegMenu
         }
     })
     export default class RegMenu extends Vue {
