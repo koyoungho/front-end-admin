@@ -9,7 +9,7 @@
         <li><a href="" title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-bind:class="menu.on">{{menu.name}}</a>
           <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
-              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(menu.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(sub.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
             </ul>
           </div>
         </li>
