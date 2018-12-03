@@ -142,7 +142,7 @@
 
     @Component({
         components: {
-            name: "BatchFileProcList"
+            BatchFileProcList
 
         }
     })
