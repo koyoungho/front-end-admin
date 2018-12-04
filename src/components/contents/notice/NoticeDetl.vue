@@ -25,11 +25,12 @@
                             <span class="col_date"><strong class="sub">등록일 : </strong>{{formatDates(listData.updDt)}}</span>
                         </dt>
                         <dd class="row_sub">
-							<span class="col_left" v-if="listData.attFileYn =='Y' ">
+							<span class="col_left" v-if="listData.attFileYn == 'Y' ">
                                 <strong class="sub">첨부파일 : </strong>
                                 <span class="file_area">
-                                    <a href="#" class="icon_file">{{listData.attFiles}}</a>
-                                    <!--<a href="#" class="icon_file">{{listData.attFiles}}</a>-->
+                                    <template v-for="attFiles in listData.attFiles">
+                                        <a v-on:click="download(attFiles.fileOrigin)" class="icon_file">{{attFiles.fileName}}</a>
+                                    </template>
                                 </span>
 							</span>
                             <span class="col_right"><strong class="sub">등록일 : </strong>{{listData.regRoll}} </span>
@@ -61,6 +62,7 @@
 
     import {Component, Vue} from "vue-property-decorator";
     import {CommonBoardService} from "../../../api/common.service";
+    import {environment} from '@/utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
@@ -72,6 +74,7 @@
     export default class NoticeDetl extends Vue {
         seq:string ="";
         listData:any=[];
+        attachFiles:any=[];
 
         mounted() {
             this.seq = this.$route.params.seq; // 글번호 시퀀스
@@ -89,7 +92,7 @@
 
                 if (result !=null) {
                     this.listData = result;
-
+console.log( result.attFiles.length);
                 }
             }
             , (error) => {
@@ -121,6 +124,15 @@
         goRegNotice(){
             this.$router.push({name:'regNotice',  params:{seq:this.seq}});
         }
+
+        /**
+         * 파일다운로드
+         * @param fileNm
+         */
+        download(fileNm){
+            window.open( environment.apiUrl+"/file/"+fileNm);
+        }
+
 
 
 
