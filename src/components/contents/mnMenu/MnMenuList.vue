@@ -38,7 +38,7 @@
                     <tbody>
                     <tr>
                         <td>50</td>
-                        <td>가맹점관리</td>
+                        <td v-on:click="regMenu">가맹점관리</td>
                         <td>가맹점관리</td>
                         <td>0002</td>
                         <td>Y</td>
@@ -71,6 +71,7 @@
     export default class MnMenuList extends Vue {
 
         regMenu(){
+            //seq여부
             this.$router.push({name:'regMenu'})
         }
 

@@ -130,7 +130,7 @@
         listData: any = [];
         columControl: any = [];
         searchType: string = '';
-        searchKey: string = '';mo
+        searchKey: string = '';
         totalCount: any = '';
         startPage: any = '';
         //searchKey: any;

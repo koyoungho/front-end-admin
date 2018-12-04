@@ -106,8 +106,8 @@
                     },
                     {id:'policyList', name: '시스템관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
-                            {name:'약관 관리', id : 'policyList',on: 'sub'},
-                            {name:'개인정보처리방침', id : 'personalList',on: 'sub'},
+                            {name:'약관 관리', id : 'policyHistoryList',on: 'sub'},
+                            {name:'개인정보처리방침', id : 'personalHistoryList',on: 'sub'},
                             {name:'계정 권한 관리', id : 'mnUser',on: 'sub'},
                             {name:'메뉴 권한 관리', id : 'mnMenu',on: 'sub'},
                             {name:'코드관리', id : 'mnCode',on: 'sub'},

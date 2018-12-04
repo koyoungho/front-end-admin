@@ -20,7 +20,7 @@
                     <!-- code col -->
                     <div class="code_col">
                         <!-- sub -->
-                        <div class="sub">회사 코드 그룹</div>
+                        <div class="sub">회사 메인코드 그룹</div>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
                             <button type="button" id="" class="btn_s01 bg03 add">추가</button>

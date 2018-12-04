@@ -147,11 +147,11 @@
 
         mounted(){
             this.seq=this.$route.params.seq; // 글번호 시퀀스
-            if(this.seq != null && this.seq != 'undefinded') {
+            if(this.seq == null && this.seq == 'undefinded') {
+                this.div="등록";
+            }else {
                 this.div="조회";
                 this.getMenuDetail();
-            }else {
-                this.div="등록";
             }
 
         }

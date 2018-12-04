@@ -6,13 +6,13 @@
         <div class="content">
             <h2 class="blind">고객지원</h2>
 
-            <h3>자주묻는 질문 등록</h3>
+            <h3>자주묻는 질문 {{div_str}}</h3>
 
             <!-- tbl view box -->
             <div class="bbs_write_box">
                 <!-- tbl view01 -->
                 <table class="bbs_write">
-                    <caption>자주묻는 질문 {{div_str}}</caption>
+                    <caption>자주묻는 질문 </caption>
                     <colgroup>
                         <col width="10%">
                         <col width="90%">
@@ -77,11 +77,13 @@
         content : string ="";
 
         mounted(){
-            if(this.seq != null && this.seq != 'undefinded') {
+            this.seq = this.$route.params.seq;
+
+            if(this.seq == null || this.seq == 'undefinded') {
+                this.div_str="등록";
+            }else {
                 this.div_str="수정";
                 this.getFnqDetail();
-            }else {
-                this.div_str="등록";
             }
         }
 
