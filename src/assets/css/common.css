@@ -1079,11 +1079,14 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .bbs_view_box .bbs_view > dd.row_sub .col_left {float:left; position: relative;}
 .bbs_view_box .bbs_view > dd.row_sub .col_left .sub {float:left; display: inline-block; }
 .bbs_view_box .bbs_view > dd.row_sub .col_left .file_area {float:left; display: inline-block; padding-left:10px;}
+.bbs_view_box .bbs_view > dd.row_sub .col_left .file_area > a {display:block; text-decoration:underline;}
 .bbs_view_box .bbs_view > dd.row_sub .col_right {float:right; position: relative;}
 .bbs_view_box .bbs_view > dd.row_sub .col_right .sub {display: none;}
-.bbs_view_box .bbs_view > dd.row_sub .icon_file {position: relative; display:block; width:auto; padding-right:20px; text-indent:0em; background: none; font-size: 13px;vertical-align:middle; text-decoration:underline; }
+.bbs_view_box .bbs_view > dd.row_sub .icon_file {position: relative; display:inline-block; width:auto; padding-right:20px; text-indent:0em; background: none; font-size: 13px;vertical-align:middle; text-decoration:underline; }
 .bbs_view_box .bbs_view > dd.row_sub .icon_file:after {content:''; position:absolute; top:0px; right:0px; width:20px; height:22px; background:url('../images/icon.png') no-repeat -23px -74px;}
+.bbs_view_box .bbs_view > dd.row_sub .col_left .file_area > a {display:block; text-decoration:underline;}
 .bbs_view_box .bbs_view > dd.row_cont .cont_data {overflow-x: hidden; overflow-y: auto; height:300px; padding:20px;}
+
 
 .icon_file{display:inline-block; width:20px; height:22px; text-indent:-999em; background:url('../images/icon.png') no-repeat -23px -74px;}
 

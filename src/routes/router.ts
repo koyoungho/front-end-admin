@@ -68,6 +68,7 @@ import PolicyList from "../components/contents/policy/PolicyList.vue" //이력�
 import MnUserList from "../components/contents/mnUser/MmUserList.vue"//계정관리
 import RegUser from "../components/contents/mnUser/RegUser.vue"//계정등록
 import ModUser from "../components/contents/mnUser/ModUser.vue"//계정수정
+// import PreviewBizLicense from "../components/contents/mnUser/PreviewBizLicense.vue"//사업자등록증 미리보기
 import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
@@ -150,6 +151,7 @@ export default new Router({
                 {path:'mnUser',component: MnUserList, name:'mnUserList'}, //계정리스트
                 {path:'regUser',component: RegUser, name:'regUser'}, //계정 등록
                 {path:'modUser',component: ModUser, name:'modUser'}, //계정수정
+                // {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense'}, //사업자 등록증 미리보기
                 //시스템관리>메뉴 권한 관리
                 {path:'mnMenu',component: MnMenuList, name:'mnMenuList'}, //
                 {path:'regMenu',component: RegMenu, name:'regMenu'}, //
