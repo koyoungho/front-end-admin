@@ -53,7 +53,7 @@
 .util_wrap .btn_area .page_list li > a:hover {color: #fff; background:#da291c; border-radius: 3px;}
 .util_wrap .btn_area .page_list.on {display:block; background:#fff;}
 
-#container {position: relative; width:984px; min-height:800px; padding:125px 0px 0 0px; margin:0 auto; background:#ffffff; z-index:100}
+#container {position: relative; width:984px; min-height:800px; padding:125px 0px 0 0px; margin:0 auto; background:#ffffff;}
 #container:after {display:block;clear:both;content:''}
 #container .content {width:100%; padding:0 0 150px 0;}
 

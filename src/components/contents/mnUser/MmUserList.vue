@@ -146,7 +146,7 @@
 
             <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01">승인</button>
+                <button type="button"  class="btn_m01 bg01">승인</button>
             </div>
 
             <!-- pagination -->
@@ -167,21 +167,27 @@
 
         </div>
         <!-- //content -->
+        <previewBusinessLicense ></previewBusinessLicense>
     </section>
     <!-- //container -->
-    
+
+
 </template>
 
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import PreviewBusinessLicense from "@/components/contents/mnUser/previewBizLicense.vue";
 
     @Component({
         components: {
-            MmUserList
+            MmUserList, PreviewBusinessLicense
         }
     })
     export default class MmUserList extends Vue {
+        showModalBiz: boolean = false; // 사업자 사본확인
+        postText : any = '';
+
 
         regUser(){
             this.$router.push({name:'regUser'});
@@ -192,6 +198,7 @@
         }
 
         popComfirm(){
+            // this.showModalBiz=true;
             alert("사업자등록증 팝업");
         }
 

@@ -29,7 +29,7 @@
                                 <strong class="sub">첨부파일 : </strong>
                                 <span class="file_area">
                                     <template v-for="attFiles in listData.attFiles">
-                                        <a v-on:click="download(attFiles.fileOrigin)" class="icon_file">{{attFiles.fileName}}</a>
+                                        <a v-on:click="download(attFiles.fileOrigin)" >{{attFiles.fileName}}<i class="icon_file"></i></a>
                                     </template>
                                 </span>
 							</span>

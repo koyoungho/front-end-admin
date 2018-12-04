@@ -65,12 +65,15 @@ import PolicyReg from "../components/contents/policy/PolicyReg.vue" // 약관 �
 import Policy from "../components/contents/policy/Policy.vue" //약관,개인 뷰
 import PolicyDetail from "../components/contents/policy/PolicyDetail.vue" //이용약관 상세
 import PolicyList from "../components/contents/policy/PolicyList.vue" //이력에 따른 약관관리/개인정보처리 목록
+
 import MnUserList from "../components/contents/mnUser/MmUserList.vue"//계정관리
 import RegUser from "../components/contents/mnUser/RegUser.vue"//계정등록
 import ModUser from "../components/contents/mnUser/ModUser.vue"//계정수정
-// import PreviewBizLicense from "../components/contents/mnUser/PreviewBizLicense.vue"//사업자등록증 미리보기
+import PreviewBizLicense from "../components/contents/mnUser/previewBizLicense.vue"//사업자등록증 미리보기
+
 import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
+
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
 import SystemMonitoring from "../components/contents/systemMonitoring/ApprovalStatus.vue"// 승인현황
 import BatchFileProc from "../components/contents/systemMonitoring/BatchFileProc.vue"//배치파일처리현황
@@ -151,7 +154,7 @@ export default new Router({
                 {path:'mnUser',component: MnUserList, name:'mnUserList'}, //계정리스트
                 {path:'regUser',component: RegUser, name:'regUser'}, //계정 등록
                 {path:'modUser',component: ModUser, name:'modUser'}, //계정수정
-                // {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense'}, //사업자 등록증 미리보기
+                {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense'}, //사업자 등록증 미리보기
                 //시스템관리>메뉴 권한 관리
                 {path:'mnMenu',component: MnMenuList, name:'mnMenuList'}, //
                 {path:'regMenu',component: RegMenu, name:'regMenu'}, //
