@@ -5,7 +5,7 @@
     <!-- //tbl search box -->
 
     <!-- tbl list box -->
-    <DataGrid v-bind:dataGridDetail=searchItems v-on:dataToPaging="dataEvent" v-on:rowClick="viewEvent"></DataGrid>
+    <DataGrid v-bind:dataGridDetail="searchItems" v-bind:listOnLoad ="listOnLoad" v-on:dataToPaging="dataEvent" v-on:rowClick="viewEvent"></DataGrid>
     <!-- //tbl list box -->
 
     <!-- pagination -->
@@ -35,12 +35,28 @@
 
     export default class ListComponent extends Vue {
         @Prop() listObject  !: any;
+        @Prop() onLoadList !: boolean ;
+
+        listOnLoad : boolean = false;
         searchItems : any =  this.listObject;
 
+        @Watch('onLoadList') onChange(){
+            if(this.onLoadList==true){
+                this.listOnLoad = true;
+            }
+            else{
+                this.listOnLoad = false;
+            }
+        }
 
         //돔생성전 호출자
         created() {
-
+            if(this.onLoadList==true){
+                this.listOnLoad = true;
+            }
+            else{
+                this.listOnLoad = false;
+            }
         }
         //돔렌더링완료시 진행
         mounted(){
@@ -62,6 +78,11 @@
             this.$children['1'].getCommonListData();
         }
         searchEvent(es){
+            // 로컬스토리지에 해당하는 검색정보를 담고 쓴다.
+            // let Value = this.$route.name+''
+            // console.log(search);
+            // localStorage.removeItem(Value)
+            // localStorage.setItem(Value, JSON.stringify(es))
             this.$children['1'].getCommonListData();
         }
         updated () {

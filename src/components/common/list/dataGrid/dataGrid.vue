@@ -1,32 +1,60 @@
 <template>
 
-  <div>
+  <div class="cont_mobile">
 
     <!-- tbl info top -->
     <div class="tbl_info_top">
       <vue-progress-bar></vue-progress-bar>
       <span class="total">총 <strong>{{totalCount}} </strong>건</span>
     </div>
+    <!-- 20181112 수정 추가 -->
+    <!-- grid total box -->
+      <!-- 20181112 수정 추가 -->
+      <div class="cash_total_box" v-if="dataGridDetail.dataGrid.mTotal">
+        <dl class="cash_total">
+          <dt>합계금액</dt>
+          <dd>
+            <input type="text"  v-model="mTotalCount" value="5,000" class="input form_price" title="합계금액" readonly=""> 원
+          </dd>
+          <dt>봉사료</dt>
+          <dd>
+            <input type="text"  v-model="mServiceCharge" class="input form_price" title="봉사료" readonly=""> 원
+          </dd>
+          <dt>공급가액</dt>
+          <dd>
+            <input type="text"  v-model="mSupplyValue" class="input form_price" title="공급가액" readonly=""> 원
+          </dd>
+          <dt>부가세</dt>
+          <dd>
+            <input type="text"  v-model="mSurtax" class="input form_price" title="부가세" readonly=""> 원
+          </dd>
+        </dl>
+      </div>
 
-    <!-- tbl list box -->
+     <div class="tbl_scroll_box">
+    <!-- tbl list01 -->
 
-    <div class="tbl_list_box">
-      <!-- tbl list01 -->
-
-      <table class="tbl_list01 mb_list01" v-on:change="windowSize">
-        <caption>계정 목록</caption>
+      <table class="tbl_list01 page_inquiry" v-on:change="windowSize">
+        <caption></caption>
         <colgroup>
-          <col v-for="columNames in dataGridDetail.dataGrid.columControl" v-bind:width="columNames.width">
+          <template v-for="columNames in dataGridDetail.dataGrid.columControl">
+            <col  v-bind:width="columNames.width">
+          </template>
         </colgroup>
         <thead>
         <tr>
-          <th scope="col" v-for="columNames in dataGridDetail.dataGrid.columControl">{{columNames.columName}}</th>
+          <template v-for="columNames in dataGridDetail.dataGrid.columControl">
+            <th >{{columNames.columName}}</th>
+          </template>
+
         </tr>
         </thead>
         <tbody>
-        <template v-if="listData.length > 1">
+        <template v-if="listData.length > 0">
           <tr v-for="datas in listData">
-            <td v-for="rows in datas" v-on:click="rowView(datas)">{{rows}}</td>
+            <template v-for="rows in datas">
+            <td  v-on:click="rowView(datas,publicPageing)">{{rows}}</td>
+            </template>
           </tr>
         </template>
         <template v-if="listData.length < 1">
@@ -45,8 +73,10 @@
 
 <script lang="ts">
     import {ListData} from '@/model/list';
+    import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -55,26 +85,41 @@
     })
     export default class DataGrid extends Vue {
         @Prop() dataGridDetail  !: any;
+        @Prop() listOnLoad !: boolean;
         gridData: any = this.dataGridDetail;
         listOragin :any = [];
         listData: any = [];
-        totalCount: any = '';
+        totalCount: any = '0';
         $Progress: any;
         windowSize : any = "";
+        publicPageing  : any = "";
+
+        // 토탈합계
+        mTotalCount : number = 0;
+        mServiceCharge : number = 0;
+        mSupplyValue : number = 0;
+        mSurtax : number = 0;
 
 
+        @Watch('listOnLoad') onChange(){
+                this.getCommonListData();
+        }
         //돔생성전 호출자
         created() {
+            if(this.listOnLoad==true){
+                this.getCommonListData();
+            }
+            else{
+
+            }
         }
 
         //돔렌더링완료시 진행
         mounted() {
-            this.getCommonListData();
 
         }
 
         getCommonListData() {
-
             this.listData = [];
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.
             // 넣어진 페이지 데이터에 의해 페이징 페이지 생성 이벤트는 페이지번호 옴겨와야한다
@@ -109,42 +154,48 @@
                 searchData['perPage'] = this.dataGridDetail.paging.perPage;
                 searchData['viewPageSize'] = this.dataGridDetail.paging.viewPageSize;
 
+                this.publicPageing = searchData;
             });
-
 
             // 로딩바
             this.$Progress.start();
-
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
                     let result: any = response.data;
                     let menuHeader: any = {};
 
+                    // 토탈금액 인풋
+                    if(this.dataGridDetail.dataGrid.mTotal==true){
+                    this.mTotalCount =  result.extra.totalAmt
+                    this.mServiceCharge = result.extra.bong
+                    this.mSupplyValue = result.extra.amt
+                    this.mSurtax  = result.extra.vat;
+                    }
+
                     this.dataGridDetail.dataGrid.columControl.filter(e => {
                         menuHeader[e.id] = e.id;
                     });
+
                     this.listOragin = result.data;
 
-                    if (result.data.length > 0)
-                        result.data.filter(e => {
+                    if (result.data.length > 0) {
+                        result.data.filter(e => { // 받은데이터 돌리면서
                             let Objects: any = {};
-                            Object.keys(e).forEach(key => {
+                            Object.keys(e).forEach((key) => {
                                 if (menuHeader[key] == key) {
-                                     Objects[key]=e[key]
+                                    menuHeader[key] = e[key]
                                 }
                             });
-                            this.listData.push(Objects)
-
-                            console.log(this.listOragin)
-                            console.log(Objects)
+                            this.listData.push(menuHeader);
                         });
+                    }
                     else {
 
                     }
-
                     this.totalCount = result.totalRecords;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
                     this.$Progress.finish();
+
                 }
                 , (error) => {
                     this.$Progress.finish();
@@ -152,13 +203,14 @@
             ).catch();
         }
 
-        rowView(row){
+        rowView(row,searchData){
                 this.listOragin.filter(data=>{
                     if(data.id==row.id){
                         row = data;
                     }
                 })
-            this.$emit('rowClick' , row);
+            let publicDatas ={ row : row , searchOption : searchData };
+            this.$emit('rowClick' , publicDatas );
         }
 
         pageSet(froms, to, lastPage, perPage, totalRecords, viewPageSize) {

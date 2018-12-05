@@ -44,15 +44,15 @@
             <!-- post scroll -->
             <div class="post_scroll">
               <!-- post list -->
-                    <ul class="post_list">
-                      <li v-for="address in responseAddressData">
-                        <a href="#">
-                          <dl class="post_data" v-on:click="selectedAddr(address.roadAddr, address.zipNo)">
-                            <dt><span class="sub01">도로명</span></dt>
-                            <dd>{{address.roadAddr}}</dd>
-                            <dt><span class="sub02">지번</span></dt>
-                            <dd>{{address.jibunAddr}}</dd>
-                          </dl>
+              <ul class="post_list">
+                <li v-for="address in responseAddressData">
+                  <a href="#">
+                    <dl class="post_data" v-on:click="selectedAddr(address.roadAddr, address.zipNo)">
+                      <dt><span class="sub01">도로명</span></dt>
+                      <dd>{{address.roadAddr}}</dd>
+                      <dt><span class="sub02">지번</span></dt>
+                      <dd>{{address.jibunAddr}}</dd>
+                    </dl>
                     <span class="post_code">{{address.zipNo}}</span>
                   </a>
                 </li>
@@ -79,11 +79,11 @@
         <!-- //popup content -->
         <!-- bottom area -->
         <!--<div class="bottom_area">-->
-          <!--&lt;!&ndash; btn &ndash;&gt;-->
-          <!--<div class="btn_bot">-->
-            <!--<button type="button" class="btn_b01 bg02">닫기</button>-->
-            <!--<button type="button" class="btn_b01 bg01">주소입력</button>-->
-          <!--</div>-->
+        <!--&lt;!&ndash; btn &ndash;&gt;-->
+        <!--<div class="btn_bot">-->
+        <!--<button type="button" class="btn_b01 bg02">닫기</button>-->
+        <!--<button type="button" class="btn_b01 bg01">주소입력</button>-->
+        <!--</div>-->
         <!--</div>-->
       </div>
       <!-- //popup body -->
@@ -133,22 +133,19 @@
         //돔생성전 호출자
         created() {
 
-        // test.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;')
-        // test.setAttribute('aria-hidden', 'true')
-        // test.setAttribute('tabindex', -1)
         }
 
         //돔렌더링완료시 진행
         mounted() {
-            let documentHeader : any = document.getElementById('header');
-            documentHeader.attributes.item(0).value=this.originId;
+            // let documentHeader : any = document.getElementById('header');
+            // documentHeader.attributes.item(0).value=this.originId;
         }
 
         closeAddr(){
             this.$emit('close');
-            let documentHeader : any = document.getElementById('header2');
-            this.originId = 'header'
-            documentHeader.attributes.item(0).value=this.originId
+            // let documentHeader : any = document.getElementById('header2');
+            // this.originId = 'header'
+            // documentHeader.attributes.item(0).value=this.originId
         }
 
         getAddressLoding() {
@@ -162,7 +159,7 @@
             this.pageMake();
 
             // api 데이터 호출
-            axios.get(this.addressUrl + searchData)
+            axios.get(this.addressUrl+searchData )
                 .then((response) => {
                         this.responseAddressData = response.data.results.juso;
                         this.total = parseInt(response.data.results['common'].totalCount);
@@ -210,9 +207,9 @@
             this.$emit('close')
 
             //header2 를 header로 바꿈
-            let test : any = document.getElementById('header2');
-            this.originId = 'header'
-            test.attributes.item(0).value=this.originId
+            // let header : any = document.getElementById('header2');
+            // this.originId = 'header'
+            // header.attributes.item(0).value=this.originId
         }
 
         prePages() {

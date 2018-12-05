@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="cont_mobile">
+    <!--<resize-observer @notify="handleResize"/>-->
   <!-- tbl search box -->
-  <div class="search_box">
+    <div class="search_box page_issueinq" v-if="searchItem.length > 0">
     <!--{{searchItemDetail}}-->
-    <ul class="search_list page_issueinq">
-      <!--<div v-html="HTMLcontent"></div>-->
-      <div v-for="item in searchItem">
+      <ul class="search_list col03">
+      <template v-for="item in searchItem">
            <template v-if="item.type=='date'" >
             <li class="sch_col01">
               <label for="aa">{{item.title}}</label>
@@ -19,7 +19,7 @@
                             <a href="#" class="btn_cal" id="datepicker-trigger">달력</a>
                           </span>
               </template>
-              <template v-else="item.caleanderCount">
+              <template v-else="item.caleanderCount==1">
                 <span class="form_cal">
                             <input type="text" v-model="item.searchEndDate=formatDates(dateOne)"  class="input date" title="날짜 입력">
                             <a href="#" class="btn_cal" id="datepicker-trigger">달력</a>
@@ -32,7 +32,7 @@
           <template v-if="item.type=='input'">
               <li>
                 <template v-if="item.title !=''"><label for="aa">{{item.title}}</label></template>
-                <input type="text"  v-model="item.value"   class="input sch_appuser"  title="고객명 입력" >
+                <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appuser"  title="고객명 입력" ></template>
               </li>
           </template>
 
@@ -45,6 +45,15 @@
                 </select>
               </li>
           </template>
+        <template v-if="item.type=='selectCode'">
+          <li>
+            <label for="aa">{{item.title}}</label>
+            <select v-model="item.value"  class="select form_w100" title="발급용도 선택">
+              <option value="">선택</option>
+              <option v-for="tt in item.option" v-bind:value="tt.code" >{{tt.codeName}}</option>
+            </select>
+          </li>
+        </template>
           <template v-if="item.type=='radio'">
             <li>
               <label for="aa">{{item.title}}</label>
@@ -61,7 +70,7 @@
             </span>
           </li>
         </template>
-      </div>
+      </template>
     </ul>
   <!--</div>-->
   <!-- //tbl search box -->
@@ -73,13 +82,14 @@
           v-bind:date-one="dateOne"
           v-bind:date-two="dateTwo"
           v-bind:months-to-show="1"
+          v-bind:style="dateStyle"
           @date-one-selected="val => { dateOne = val }"
           @date-two-selected="val => { dateTwo = val }"
       />
     </template>
   </div>
   <!-- btn mid -->
-  <div class="btn_mid">
+  <div class="btn_mid" v-if="searchItem.length > 0">
     <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
   </div>
   </div>
@@ -90,6 +100,7 @@
 <script lang="ts">
     import format from 'date-fns/format'
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+    import {CommonBoardService} from '../../../../api/common.service';
     // see docs for available options
 
 
@@ -109,6 +120,7 @@
 
         // 달력용
         dateFormat:any =  'YYYYMMDD';
+        dateStyle : any = '';
         dateOne: any =  new Date();
         dateTwo: any =  new Date();
         showMode : string = "single";
@@ -129,18 +141,37 @@
                         }
                 }else if(e.type=='input'){
 
-                }else if(e.type=='select'){
+                }else if(e.type=='selectCode'){
 
                     if(e.api ==''){
                         this.selectObjects[e.name] = e.option;
                     }
                     else{
+                        CommonBoardService.getListDatas('pcodes/'+e.api+'/codes', null, '').then((response) => {
+                                let result: any = response.data;
+                                //console.log(result)
+                                if (result.length > 0) {
+                                    e.option = result;
+                                } else {
+                                }
+                            }
+                            , (error) => {
+                            }
+                        ).catch();
                     //api 호출한다
-                    // CommonBoardService.getListDatas('/receipt','10').then(response => (this.listData = response.data)).catch();
-                        this.selectObjects = ''
                     }
-
-
+                }else if(e.type=='selectObject'){
+                    CommonBoardService.getListDatas('pcodes/'+e.api+'/codes', null, '').then((response) => {
+                            let result: any = response.data;
+                            //console.log(result)
+                            if (result.length > 0) {
+                                e.option = result;
+                            } else {
+                            }
+                        }
+                        , (error) => {
+                        }
+                    ).catch();
 
                 }else if(e.type=='radio'){
 
@@ -157,6 +188,14 @@
                 this.$emit('SearchToList', this.searchItem);
         }
 
+
+        handleResize() {
+            if(window.innerWidth < 482){
+                this.dateStyle = '';
+            }else{
+                this.dateStyle = 'left : 350px';
+            }
+        }
 
     }
 

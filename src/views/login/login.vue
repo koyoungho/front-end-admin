@@ -41,8 +41,8 @@
 
         <!-- login info -->
         <div class="login_info">
-          <a href="#" v-on:click="searchId()" class="id">아이디 찾기</a> |
-          <a href="#" v-on:click="initPass()" class="pw">비밀번호 초기화</a>
+          <a v-on:click="searchId()" class="id">아이디 찾기</a> |
+          <a v-on:click="initPass()" class="pw">비밀번호 초기화</a>
         </div>
       </div>
       <!-- //login_box -->
@@ -135,149 +135,133 @@
 
 <script >
 
-    export default {
-        name: 'login',
-        data() {
-            return {
-                id: "111",
-                password: "111",
-            }
-        },
-        methods: {
-            top(){
-                window.scrollTo(0,0);
-            },
-            onSubmit(id, password) {
-
-                if(id == ''){
-                    alert("아이디를 입력하세요.")
-                    return;
-                }else if(password == ''){
-                    alert("비밀번호를 입력하세요.")
-                    return;
-                }
-
-                // if(this.id != "" && this.password != "") {
-                //     this.$emit("authenticated", true);
-                //보안로직포함할곳
-                this.$store.dispatch('LOGIN', {id, password})
-                //.then(() => this.redirect())
-                    .then(() => this.loginChk())
-                    .catch(({message}) => this.loginFail())
-                // this.$router.replace('secure');
-                // this.$router.replace({ name: "home" });
-                // } else {
-                //   console.log("A id and password must be present");
-                //   this.$router.replace({ name: "home" });
-                // }
-            },
-            redirect(nextPage) {
-                //console.log('====='+nextPage+'=====')
-                const {search} = window.location
-                const tokens = search.replace(/^\?/, '').split('&')
-                const {returnPath} = tokens.reduce((qs, tkn) => {
-                    const pair = tkn.split('=')
-                    qs[pair[0]] = decodeURIComponent(pair[1])
-                    return qs
-                }, {})
-
-                // 리다이렉트 처리
-                this.$router.push('home/'+nextPage)
-                //this.$router.push(nextPage)
-            },
-            vueRecaptchaApiLoaded() {
-            },
-            loginChk() { //로그인 코드별 화면 분기
-                var nextPage = ''
-                //console.log("login auth check!!!!!!")
-                //this.$router.push('home/ioc')
-
-                // if(localStorage.code == '000'){
-                //     //console.log('로그인 성공 | code :: ' + localStorage.code)
-                //     nextPage = 'phoneAuth'
-                //
-                //     alert('최종 접속정보\n접속 IP 주소 : '+ localStorage.lastIp +'\n최종접속 시간 : '+ localStorage.lastConnDt)
-                // }else if(localStorage.code == '001'){ // 비밀번호 변경 페이지 이동
-                //     //console.log('90일동안 비밀번호 변경 않음 | code :: ' + localStorage.code)
-                //     nextPage = 'chgPass'
-                //
-                // }else if(localStorage.code == '002'){ //4번 -> 휴대폰 화면 이동
-                //     //console.log('휴면계정 | code :: ' + localStorage.code)
-                //     nextPage = 'phoneAuth'
-                //
-                //     if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
-                //
-                //     }else{
-                //         return;
-                //     }
-                // }else if(localStorage.code == '003'){ //2번
-                //     //console.log('비밀번호 틀림 | code :: ' + localStorage.code)
-                //     nextPage = 'notPass'
-                //
-                //     alert('로그인 정보가 맞지 않습니다.\n' + localStorage.failCnt + '회 실패. 5회 실패시에는 해당 계정의 접속이 차단됩니다.')
-                //     return;
-                // }else if(localStorage.code == '004'){
-                //     //console.log('잠긴계정 | code :: ' + localStorage.code)
-                //     nextPage = 'phoneAuth'
-                //
-                //     if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
-                //
-                //     }else{
-                //         return;
-                //     }
-                // }else if(localStorage.code == '005') {
-                //     nextPage = 'bussinessLogin'
-                //     //console.log('사업자등록번호 로그인 | code :: ' + localStorage.code)
-                // }else if(localStorage.code == '006') {
-                //
-                // }else if(localStorage.code == '007') { //다른 곳에서 계정이 사용중 입니다
-                //     alert('다른 곳에서 계정이 사용중 입니다.')
-                //     return;
-                // }
-                // /*
-                // else if((localStorage.code == ){ //TODO 로그인 5회이상 실패시
-                //   alert('로그인을 5회 실패하여 계정 접속을 차단합니다. 아이디 찾기, 비밀번호 초기화로 계정 로그인 정보를 확인하시기 바랍니다.');
-                //   retrurn;
-                // }else if (localStorage.code ==){//TODO 승인대기
-                //     alert('승인대기중입니다..')
-                //     return;
-                // }
-                //  */
-                //
-                // else {
-                //     //console.log('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요')
-                //     return;
-                // }
-                // //console.log(localStorage.code)
-
-                this.redirect('main')
-            },
-            loginFail() {
-                alert('로그인 정보를 확인하세요.')
-                return;
-            },
-            searchId() { //아이디 찾기
-                //console.log('아이디 찾기')
-                this.$router.push('home/searchIdInput')
-            },
-            initPass() { //비밀번호 초기화
-                //console.log('비밀번호 초기화')
-                //TODO OTP페이지로 이동
-                this.$router.push('home/initPass')
-            },
-            goMain() {
-                this.$router.push('home/main')
-            }
+  // import captcha from '@/views/login/botcaptcha.vue';
 
 
-        }, created() {
+  export default {
+    name: 'login',
+    // components: {captcha},
+    components: '',
+    data() {
+      return {
+        id: "",
+        password: "",
+        score: 0
+      }
+    },
+    methods: {
+      onSubmit(id, password) {
 
-
-
-        }, mounted() {
-
+        if(id == ''){
+          alert("아이디를 입력하세요.")
+          return;
+        }else if(password == ''){
+          alert("비밀번호를 입력하세요.")
+          return;
         }
+        if(this.$children['0'].$el.children['2'].value == ''){
+          alert("캡차 보안문자를 입력하세요")
+          return;
+        }
+
+        let captcha = this.$children['0'].$el.children['2'].value;
+        //보안로직포함할곳
+        this.$store.dispatch('LOGIN', {id, password, captcha})
+            .then((result) =>{
+              if(result=='success'){
+                this.loginChk()
+              }
+              else{
+                this.loginFail()
+              }
+            })
+            .catch(({message}) => this.loginFail())
+      },
+      vueRecaptchaApiLoaded() {
+      },
+      loginChk() { //로그인 코드별 화면 분기
+        var nextPage = ''
+
+        //비밀번호 5회 틀릴시 계점 잠긴 상태
+        if(sessionStorage.failCnt > 4){
+          alert('비밀번호를 5회이상 틀려서 계정이 잠긴 상태입니다.\n고객센터에 문의하세요.');
+          return;
+        }
+
+        if(sessionStorage.code == '000'){ // 로그인 성공 -> 메인화면 이동
+          nextPage = ''
+
+          alert('최종 접속정보\n접속 IP 주소 : '+ sessionStorage.lastIp +'\n최종접속 시간 : '+ sessionStorage.lastConnDt)
+        }else if(sessionStorage.code == '001'){ // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
+          nextPage = 'chgPass'
+
+        }else if(sessionStorage.code == '002'){ //휴면계정 -> 비밀번호 초기화 화면 이동
+          //nextPage = 'phoneAuth'
+
+          if(confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')){
+            nextPage = 'initPass';
+          }else{
+            return;
+          }
+        }else if(sessionStorage.code == '003'){ //비밀번호 불일치
+          nextPage = 'notPass'
+
+          alert('로그인 정보가 맞지 않습니다.\n' + sessionStorage.failCnt + '회 실패. 5회 실패시에는 해당 계정의 접속이 차단됩니다.')
+          return;
+        }else if(sessionStorage.code == '004'){ //비밀번호 5회이상 틀린 틀림 -> 비밀번호 초기화
+          nextPage = 'initPass'
+
+          alert('로그인을 5회 실패하여 계정 접속을 차단합니다. 아이디 찾기, 비밀번호 초기화로 계정 로그인 정보를 확인하시기 바랍니다.')
+          //return;
+        }else if(sessionStorage.code == '005') { //사업자등록번호로 로그인
+          sessionStorage.saupYn = "Y"; //가맹점 신규 등록화면에서 사업장정보 조회시 필요
+          nextPage = 'saupLogin'
+        }else if(sessionStorage.code == '006') { //동일IP로 로그인
+          alert('다른 기기로 접속하여 접속을 해제합니다.')
+          return;
+        }else if(sessionStorage.code == '007') { //IP 불일치
+          alert('다른 곳에서 계정이 사용중 입니다. 기존 접속 계정을 로그아웃 후 다시 시도해 주기시 바랍니다.')
+          return;
+        }else if(sessionStorage.code == '008') { //해지
+          alert('계정이 해지된 사용자 입니다.')
+          return;
+        }else if(sessionStorage.code == '009') { //승인 대기
+          alert('승인 대기 중 입니다.')
+          return;
+        }else {
+          alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.')
+          return;
+        }
+
+        this.$router.push('/home/'+nextPage)
+
+      },
+      loginFail() {
+        alert('로그인 정보를 확인하세요.')
+        return;
+      },
+      regFranchise() { //가맹점 가입
+        this.$router.push('home/cashInstitution')
+      },
+      searchId() { //아이디 찾기
+        this.$router.push('home/searchIdInput')
+      },
+      initPass() { //비밀번호 초기화
+        this.$router.push('home/initPass')
+      },
+      goMain() { //메인이동
+        this.$router.push('home/main')
+      },
+
+    }, created() {
+
+
+
+    }, mounted() {
+
     }
+
+  }
 
 
 </script>

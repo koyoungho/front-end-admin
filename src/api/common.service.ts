@@ -13,17 +13,17 @@ export class CommonListService extends WebApi<ApiData>{
 
     // 등록
     postListDatas(api,id , param){
-          return this.postListData(api,id , param);
-      }
+        return this.postListData(api,id , param);
+    }
 
     // 수정
     updateListData(api, id, param) {
-        return this.postListData(api, id, param);
+        return this.putListData(api, id, param);
     }
 
     // 삭제
-    deleteListData(api, id, param) {
-        return this.postListData(api, id, param);
+    deleteListDatas(api, id, param) {
+        return this.deleteListData(api, id, param);
     }
 }
 
