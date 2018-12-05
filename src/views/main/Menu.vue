@@ -55,7 +55,7 @@
             //     this.menuSelected(menuId);
             //     this.$emit('parentEvent', menuId);
             // }
-
+            this.menuSelected(menuId);
             this.menuStyle = "display : none;"
             this.subMenuStyle = "display : none;"
             this.$emit('parentEvent', subId);
@@ -163,7 +163,6 @@
         }
 
         menuSelected(menuId) {
-            console.log(menuId);
             this.menuItem.filter(e => {
                 if (e.id == menuId) {
                     e.on = 'sub on';

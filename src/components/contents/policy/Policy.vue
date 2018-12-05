@@ -8,7 +8,6 @@
 
             <!-- terms info -->
             <div class="terms_info">
-                <span class="sub">현행 시행 일자 : <em>{{currentDate}}</em></span>
                 <select class="select form_history" title="계정이력 선택" v-model ="policyHistory" v-on:change="historyChange">
                     <option value="">개정이력 보기</option>
                     <option v-for="policyList in policyList" v-bind:value="policyList.hisSeq">{{policyList.hisTitle}}</option>
@@ -79,25 +78,25 @@
 
             // api 데이터 호출 -  개정이력 보기 리스트
             CommonBoardService.getListDatas('terms/'+params+'/history', null, null).then((response) => {
-                let resultList: any = response.data;
-                this.hisSeq ="";
-                this.policyHistory="";
+                    let resultList: any = response.data;
+                    this.hisSeq ="";
+                    this.policyHistory="";
 
-                if (resultList.length > 0) {
-                    this.policyList = resultList;
-                    this.currentDate =this.formatDates(this.policyList[0].regDt);
+                    if (resultList.length > 0) {
+                        this.policyList = resultList;
+                        this.currentDate =this.formatDates(this.policyList[0].regDt);
 
-                    this.hisSeq =this.policyList[0].hisSeq;
+                        this.hisSeq =this.policyList[0].hisSeq;
 
-                    this.bindContent( this.hisSeq);//본문호출
+                        this.bindContent( this.hisSeq);//본문호출
 
-                } else {
-                    console.log("개정이력리스트가  없습니다.");
+                    } else {
+                        console.log("개정이력리스트가  없습니다.");
+                    }
                 }
-            }
-            , (error) => {
-                //this.$Progress.finish();
-            } ).catch();
+                , (error) => {
+                    //this.$Progress.finish();
+                } ).catch();
         }
 
         /**
@@ -107,21 +106,21 @@
         bindContent(hisSeq){
             CommonBoardService.getListDatas('terms/history', hisSeq, null).then((response) => {
 
-                let resultDetail: any = response.data;
+                    let resultDetail: any = response.data;
 
-                if (resultDetail.length > 0) {
-                    this.policyDetail = resultDetail;
-                } else {
-                    console.log("개정이력이 없습니다.");
+                    if (resultDetail.length > 0) {
+                        this.policyDetail = resultDetail;
+                    } else {
+                        console.log("개정이력이 없습니다.");
+                    }
                 }
-            }
-            , (error) => {
-                //this.$Progress.finish();
-            } ).catch();
+                , (error) => {
+                    //this.$Progress.finish();
+                } ).catch();
         }
 
         /**
-         * 데이트 포맷 변경
+         * 날짜 포맷 변경
          * @param date
          */
         formatDates(date) {
@@ -136,7 +135,7 @@
          * @param str
          * @constructor
          */
-         ConvertSystemSourcetoHtml(str){
+        ConvertSystemSourcetoHtml(str){
             str = str.replace(/</g,"&lt;");
             str = str.replace(/>/g,"&gt;");
             str = str.replace(/\"/g,"&quot;");
@@ -157,8 +156,6 @@
 
             if(this.isActive == true){
                 this.rownum = index;
-                this.arrow="on";
-                console.log("click");
             }else{
                 this.arrow="";
 

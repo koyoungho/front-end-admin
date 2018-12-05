@@ -80,7 +80,7 @@
                         <template v-if="listData.length > 0">
                             <template v-for="(datas, index) in listData">
                                 <tr>
-                                    <td>{{index}}</td>
+                                    <td>{{totalCount - startPage -index }}</td>
                                     <td class="left" v-on:click="toDetail(datas.seq)"> {{datas.title}} </td>
                                     <td>{{formatDates(datas.updDt)}}</td>
                                     <td>{{datas.updId}}</td>
@@ -153,7 +153,7 @@
         searchType: string = '';
         searchKey: string = '';
         totalCount: any = '';
-        //searchKey: any;
+        startPage: any = '';
         isActive:boolean=false;
         arrow:string="";
         rownum:number=999;
@@ -188,10 +188,10 @@
 
                     if (result.data.length > 0) {
                         this.listData=result.data;
-
                      }
 
                     this.totalCount = result.totalRecords;
+                    this.startPage= (result.currentPage -1) * result.perPage;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
                     //this.$Progress.finish();
                 }

@@ -12,7 +12,6 @@ import PhoneAuth from "../components/contents/login/PhoneAuth.vue" //휴대폰 �
 import SearchIdInput from "../components/contents/login/SearchIdInput.vue" //아이디 찾기 입력
 import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //아이디 찾기 결과
 import InitPass from "../components/contents/login/InitPass.vue" //비밀번호 초기화
-import Policy from "../components/contents/policy/Policy.vue" //이용약관
 
 //가맹점 관리
 import FranchiseList from "../components/contents/franchiseManage/FranchiseList.vue" //매장관리 리스트
@@ -35,6 +34,12 @@ import ApprovalBandReg from "../components/contents/franchiseManage/ApprovalBand
 import CashReceiptIssue from "../components/contents/issuanceOfCashReceipt/CashReceiptIssue.vue" //현금영수증 발급
 import CashReceiptBulkIssue from "../components/contents/issuanceOfCashReceipt/CashReceiptBulkIssue.vue" //현금영수증 발급(대량)
 import CashReceiptIssueView from "../components/contents/issuanceOfCashReceipt/CashReceiptIssueView.vue" //현금영수증 발급(출력)
+import ReceiptViewCancel from "../components/contents/issuanceOfCashReceipt/ReceiptViewCancel.vue" //발급내역 조회및 취소
+import ReceiptViewCancelDetl from "../components/contents/issuanceOfCashReceipt/ReceiptViewCancelDetl.vue" //현금영수증 발급 조회 및 취소
+import ErrorList from "../components/contents/issuanceOfCashReceipt/ErrorList.vue" //오류내역 조회
+import ApprovalFileSend from "../components/contents/issuanceOfCashReceipt/ApprovalFileSend.vue" //승인파일 전송
+import ErrorCheck from "../components/contents/issuanceOfCashReceipt/ErrorCheck.vue" //전문 오류 체크
+import SendFileResult from "../components/contents/issuanceOfCashReceipt/SendFileResult.vue" //전송파일 처리 결과
 
 // import CashIntstitution from "../components/contents/cashReceiptSystem/CashInstitution.vue" //현금영수증 제도 안내
 // import FranchiseRegStep1 from "../components/contents/cashReceiptSystem/FranchiseRegStep1.vue" //가맹점 가입
@@ -55,6 +60,26 @@ import RegFnq from "../components/contents/fnq/RegFnq.vue" //자주묻는질문�
 import SendMail from "../components/contents/sendMail/SendMail.vue" //메일발송
 
 //시스템관리
+import PolicyHistoryList from "../components/contents/policy/PolicyHistoryList.vue" //약관관리/개인정보처리 이력목록
+import PolicyReg from "../components/contents/policy/PolicyReg.vue" // 약관 등록/수정
+import Policy from "../components/contents/policy/Policy.vue" //약관,개인 뷰
+import PolicyDetail from "../components/contents/policy/PolicyDetail.vue" //이용약관 상세
+import PolicyList from "../components/contents/policy/PolicyList.vue" //이력에 따른 약관관리/개인정보처리 목록
+
+import MnUserList from "../components/contents/mnUser/MmUserList.vue"//계정관리
+import RegUser from "../components/contents/mnUser/RegUser.vue"//계정등록
+import ModUser from "../components/contents/mnUser/ModUser.vue"//계정수정
+import PreviewBizLicense from "../components/contents/mnUser/previewBizLicense.vue"//사업자등록증 미리보기
+
+import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
+import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
+
+import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
+import SystemMonitoring from "../components/contents/systemMonitoring/ApprovalStatus.vue"// 승인현황
+import BatchFileProc from "../components/contents/systemMonitoring/BatchFileProc.vue"//배치파일처리현황
+import BatchFileProcList from "../components/contents/systemMonitoring/BatchFileProcList.vue"//배치파일처리현황
+import ResourceSystem from "../components/contents/systemMonitoring/ResourceSystem.vue"//시스템자원
+import ServiceStatus from "../components/contents/systemMonitoring/ServiceStatus.vue"//서비스 상태
 
 import ManageShopList from "../components/contents/manageFranchise/ManageShopList.vue" //매장관리
 
@@ -75,7 +100,7 @@ export default new Router({
                 {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput }, //아이디 찾기
                 {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult }, //아이디 찾기 결과
                 {path:'initPass', name:'initPass',component: InitPass }, //비밀번호 초기화
-                {path:'policy', name:'policy', component: Policy }, //이용약관 및 개인보호처리방침
+                {path:'policy', name:'policy', component:Policy }, //이용약관 및 개인보호처리방침
 
                 //가맹점관리
                 {path:'franchiseList', name:'franchiseList', component: FranchiseList }, //가맹점관리 리스트
@@ -98,22 +123,12 @@ export default new Router({
                 {path:'cashReceiptIssue', name:'cashReceiptIssue', component: CashReceiptIssue }, //현금영수증 발급
                 {path:'cashReceiptIssueView', name:'cashReceiptIssueView', component: CashReceiptIssueView }, //현금영수증 발급(출력)
                 {path:'cashReceiptBulkIssue', name:'cashReceiptBulkIssue', component: CashReceiptBulkIssue }, //현금영수증 발급(대량)
-
-                // {path:'cashReceiptBulkIssue',component: CashReceiptBulkIssue }, //현금영수증 발급 조회 및 취소
-                // {path:'cashInstitution',component: CashIntstitution }, //현금영수증 제도 안내
-                // {path:'franchiseRegStep1',component: FranchiseRegStep1 }, //가맹점 약관 동의
-                // {path:'franchiseRegStep1Result',component: FranchiseRegStep1Result }, //가맹점 약관 동의
-                // {path:'franchiseRegStep2',component: FranchiseRegStep2 }, //가맹점 신청
-                // {path:'franchiseRegStep3',component: FranchiseRegStep3 }, //가맹점 가입 완료
-                // {path:'cashReceiptIssue',component: CashReceiptIssue }, //현금영수증 발급
-                // {path:'cashReceiptBulkIssue',component: CashReceiptBulkIssue }, //현금영수증 발급(대량)
-                // {path:'cashReceiptIssueView',component: CashReceiptIssueView }, //현금영수증 발급(출력)
-                // {path:'cashReceiptBulkIssue',component: CashReceiptBulkIssue }, //현금영수증 발급 조회 및 취소
-                // {path:'ioc',component: ioc }, //현금영수증 발급 조회 및 취소
-                // //{path:'cashReceiptIssueView',component: CashReceiptIssueView }, //현금영수증 발급 조회 및 취소 상세
-                // {path:'accountCancelCompl',component: AccountCancelCompl }, //가맹점 정보변경/해지
-                // {path:'franchiseCancelCompl',component: FranchiseCancelCompl }, //가맹점 정보변경/해지 상세
-                // {path:'issueViewingCancel',component: IssueViewingCancel }, //가맹점 정보변경/해지 상세
+                {path:'receiptViewCancel', name:'receiptViewCancel', component: ReceiptViewCancel }, //발급 내역 조회/취소
+                {path:'receiptViewCancelDetl', name:'receiptViewCancelDetl', component: ReceiptViewCancelDetl }, //현금영수증 발급 조회 및 취소
+                {path:'errorList', name:'errorList', component: ErrorList }, //오류 내역 조회
+                {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend }, //전문 오류 체크
+                {path:'errorCheck', name:'errorCheck', component: ErrorCheck }, //승인파일전송
+                {path:'sendFileResult', name:'sendFileResult', component: SendFileResult }, //전송 파일 처리결과
 
                 //고객지원>공지사항
                 {path:'noticeList',component: NoticeList, name:'noticeList' }, //공지사항 리스트
@@ -126,20 +141,32 @@ export default new Router({
                 {path:'sendMail',component: SendMail, name:'sendMail'}, //자주묻는질문 등록
 
                 //시스템관리>약관처리
+                {path:'policyHistoryList',component: PolicyHistoryList, name:'policyHistoryList'}, //약관이력목록
+                {path:'policyReg',component: PolicyReg, name:'policyReg'}, //약관 등록/수정
+                {path:'policyList',component: PolicyList, name:'policyList'}, //약관목록
+                {path:'policyDetail',component: PolicyDetail, name:'policyDetail'}, //약관상세
                 //시스템관리>개인정보처리방침
-                //시스템관리>계정 권한 관리
+                {path:'personalHistoryList',component: PolicyHistoryList, name:'personalHistoryList' }, //개인정보처리방침 이력 목록
+                {path:'personalReg',component: PolicyReg, name:'personalReg', }, //개인정보처리방침 등록/수정
+                {path:'personalList',component:PolicyList, name:'personalList'}, //개인정보처리방침 목록
+                {path:'personalDetail',component:PolicyDetail, name:'personalDetail'}, //개인정보처리방침 상세
+                // 시스템관리>계정 권한 관리,
+                {path:'mnUser',component: MnUserList, name:'mnUserList'}, //계정리스트
+                {path:'regUser',component: RegUser, name:'regUser'}, //계정 등록
+                {path:'modUser',component: ModUser, name:'modUser'}, //계정수정
+                {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense'}, //사업자 등록증 미리보기
                 //시스템관리>메뉴 권한 관리
-                //시스템관리>시스템 모니터링
+                {path:'mnMenu',component: MnMenuList, name:'mnMenuList'}, //
+                {path:'regMenu',component: RegMenu, name:'regMenu'}, //
+                //시스템관리>코드관리
+                {path:'mnCode',component: MnCode, name:'mnCode'}, //
+                //시스템관리>시스템 모니터링,
+                {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring'}, //승인현황
+                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc'}, //배치파일처리현황
+                {path:'batchFileProcList', component: BatchFileProcList, name:'batchFileProcList'}, //배치파일처리현황리스트
+                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem'}, //배치파일처리현황
+                {path:'serviceStatus',component: ServiceStatus, name:'serviceStatus'}, //배치파일처리현황
 
-
-
-
-
-                // {path:'camera',component: Camera }, //카메라
-                // {path:'kt',component: Kt }, //사업자 소개(KT)
-                // {path:'lotte',component: Lotte }, //사업자 소개(LOTTE)
-
-                // {path: '', redirect: "/home/main"},
                 {path:'manageShop',name:"manageShop", component: ManageShopList }, //매장관리 목록
             ]
         },
@@ -155,7 +182,7 @@ export default new Router({
         },
         {
             // path: '', redirect: "/home/main"
-            path: '', redirect: "/admin/login"
+            path: '', redirect: "/login"
         },
         {
             path: "**", redirect: "/login"

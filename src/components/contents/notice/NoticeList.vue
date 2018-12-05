@@ -130,8 +130,9 @@
         listData: any = [];
         columControl: any = [];
         searchType: string = '';
-        searchKey: string = '';mo
+        searchKey: string = '';
         totalCount: any = '';
+        startPage: any = '';
         //searchKey: any;
 
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -161,6 +162,8 @@
                         this.listData=result.data;
                     }
                     this.totalCount = result.totalRecords;
+                    this.startPage= (result.currentPage -1) * result.perPage;
+
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
                     //this.$Progress.finish();
                 }

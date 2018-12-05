@@ -14,18 +14,26 @@
                 <div class="bbs_view_box">
                     <!-- bbs view -->
                     <dl class="bbs_view">
-                        <dt><template v-if="listData.importantYn == 'Y'">[중요] </template>{{listData.title}}
+                        <dt>
+                            <span class="sub" >
+                                <template v-if="listData.importantYn == 'Y'"> <i class="icon notice">공지</i></template>
+                                {{listData.title}}
+                            </span>
+                            <template v-bind:class="{'sub icon_new': (listData.newYn == 'Y') }">
+                                <i class="icon new">new</i>
+                            </template>
                             <span class="col_date"><strong class="sub">등록일 : </strong>{{formatDates(listData.updDt)}}</span>
                         </dt>
                         <dd class="row_sub">
-							<span class="col_left" v-if="listData.attFileYn =='Y' ">
+							<span class="col_left" v-if="listData.attFileYn == 'Y' ">
                                 <strong class="sub">첨부파일 : </strong>
                                 <span class="file_area">
-                                    <a href="#" class="icon_file">{{listData.attFiles}}</a>
-                                    <!--<a href="#" class="icon_file">{{listData.attFiles}}</a>-->
+                                    <template v-for="attFiles in listData.attFiles">
+                                        <a v-on:click="download(attFiles.fileOrigin)" >{{attFiles.fileName}}<i class="icon_file"></i></a>
+                                    </template>
                                 </span>
 							</span>
-                            <span class="col_right"><strong class="sub">등록자 : </strong>{{listData.regRoll}} </span>
+                            <span class="col_right"><strong class="sub">등록일 : </strong>{{listData.regRoll}} </span>
                         </dd>
                         <dd class="row_cont">
                             <div class="cont_data">{{listData.content}}</div>
@@ -54,6 +62,7 @@
 
     import {Component, Vue} from "vue-property-decorator";
     import {CommonBoardService} from "../../../api/common.service";
+    import {environment} from '@/utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
@@ -65,6 +74,7 @@
     export default class NoticeDetl extends Vue {
         seq:string ="";
         listData:any=[];
+        attachFiles:any=[];
 
         mounted() {
             this.seq = this.$route.params.seq; // 글번호 시퀀스
@@ -82,7 +92,7 @@
 
                 if (result !=null) {
                     this.listData = result;
-
+console.log( result.attFiles.length);
                 }
             }
             , (error) => {
@@ -114,6 +124,15 @@
         goRegNotice(){
             this.$router.push({name:'regNotice',  params:{seq:this.seq}});
         }
+
+        /**
+         * 파일다운로드
+         * @param fileNm
+         */
+        download(fileNm){
+            window.open( environment.apiUrl+"/file/"+fileNm);
+        }
+
 
 
 
