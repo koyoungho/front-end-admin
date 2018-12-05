@@ -84,7 +84,7 @@
                     <thead>
                     <tr>
                         <th scope="col" class="form_chk">
-                            <span class="chk_box"><input type="checkbox" id=""><label for=""><span class="blind">전체선택</span></label></span>
+                            <span class="chk_box"><input type="checkbox" v-on:change="checkAll"><label for=""><span class="blind">전체선택</span></label></span>
                         </th>
                         <th scope="col">순번</th>
                         <th scope="col">아이디</th>
@@ -167,7 +167,7 @@
 
         </div>
         <!-- //content -->
-        <previewBusinessLicense ></previewBusinessLicense>
+        <previewBusinessLicense v-if="showModalBiz"  @close="showModalBiz = false"></previewBusinessLicense>
     </section>
     <!-- //container -->
 
@@ -186,21 +186,31 @@
     })
     export default class MmUserList extends Vue {
         showModalBiz: boolean = false; // 사업자 사본확인
-        postText : any = '';
 
+        isCheck:boolean = false;
 
+        /**
+         * 계정등록
+         */
         regUser(){
             this.$router.push({name:'regUser'});
         }
 
+        /**
+         * 상세보기
+         */
         modUser(){
             this.$router.push({name:'modUser'});
         }
 
+        /**
+         * 모달팝업호출
+         */
         popComfirm(){
-            // this.showModalBiz=true;
-            alert("사업자등록증 팝업");
+            this.showModalBiz=true;
         }
+
+
 
     }
 </script>
