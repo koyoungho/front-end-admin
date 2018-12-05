@@ -31,7 +31,7 @@
               <input type="text" name="" size="" v-model="id" maxlength="" placeholder="아이디" class="id" title="아이디 입력">
             </li>
             <li class="form_pw">
-              <input type="password" name="" size="" v-model="password" maxlength="" placeholder="비밀번호" class="pw" title="비밀번호 입력">
+              <input type="password" name="" size="" v-model="password" maxlength="" placeholder="비밀번호" class="pw" title="비밀번호 입력" >
             </li>
           </ul>
 
