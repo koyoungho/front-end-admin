@@ -9,7 +9,7 @@
         <li><a href="" title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-bind:class="menu.on">{{menu.name}}</a>
           <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
-              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(menu.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(sub.id,menu.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
             </ul>
           </div>
         </li>
@@ -34,9 +34,9 @@
         subMenuStyle : any = "display: none;";
         subHeigth : any = "";
 
-        menuClick(menuId: string) {
+        menuClick(subId: string , menuId) {
 
-            if(menuId == ''){
+            if(subId == ''){
                 return;
             }
             /* 로그인 필수 메뉴
@@ -55,10 +55,11 @@
             //     this.menuSelected(menuId);
             //     this.$emit('parentEvent', menuId);
             // }
-            this.menuSelected(menuId);
+
             this.menuStyle = "display : none;"
             this.subMenuStyle = "display : none;"
-            this.$emit('parentEvent', menuId);
+            this.$emit('parentEvent', subId);
+            this.menuSelected(menuId);
             /*
             if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
                 if (localStorage.accessToken) {
@@ -72,12 +73,9 @@
                 this.$emit('parentEvent', menuId);
             }
             */
-            this.menuSelected(menuId);
-            this.$emit('parentEvent', menuId);
         }
 
         @Watch('setMenu') oncahnge(){
-            this.menuChangeed()
         }
 
         created() {
@@ -137,7 +135,6 @@
         }
 
         mounted() {
-            this.menuChangeed()
         }
 
         menuHeight(){
@@ -159,31 +156,19 @@
 
         menuOver(e){
             e.target.class='sub on'
-
-
             this.menuSelected(e.target.id)
             this.menuStyle='display:block ; height : '+this.subHeigth+'px';
             this.subMenuStyle='display:none';
             // this.subHeigth = 'heigth : '+ (40 * .subMenu.length)+'px';
         }
 
-        menuChangeed(){
-
-            if (this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1) == 'main') {
-                this.menuSelected('main');
-            }else {
-                this.menuSelected(this.$route.path.slice(this.$route.path.lastIndexOf('/') + 1));
-            }
-            // this.$route.path.split('/')[this.$route.path.lastIndexOf('/')]
-        }
-
         menuSelected(menuId) {
-
+            console.log(menuId);
             this.menuItem.filter(e => {
                 if (e.id == menuId) {
                     e.on = 'sub on';
                 }else {
-                        e.on = 'sub';
+                    e.on = 'sub';
                 }
             });
         }
