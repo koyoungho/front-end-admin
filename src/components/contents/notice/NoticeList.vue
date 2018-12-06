@@ -20,11 +20,12 @@
                     <li>
                         <label for="">등록일</label>
                         <span class="form_cal">
-                            <input type="text" title="날짜 입력" class="input date">
+                            <input type="text" title="날짜 입력" class="input date"  >
                         </span>
                         <span class="period_cal">-</span>
                         <span class="form_cal">
-                            <input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a>
+                            <input type="text" title="날짜 입력" class="input date">
+                            <a href="#" id="datepicker-trigger" class="btn_cal" >달력</a>
                         </span>
                     </li>
                     <li>
@@ -43,15 +44,32 @@
                         <input type="text" class="input sch_notice" v-model="searchKey" placeholder="제목+내용" title="검색어 입력" v-on:keyup.enter="searchNotice()">
                     </li>
                 </ul>
+                <!-- //search box -->
+                <template class="datepicker-trigger">
+                    <AirbnbStyleDatepicker
+                            v-bind:trigger-element-id="'datepicker-trigger'"
+                            v-bind:mode=showMode
+                            v-bind:fullscreen-mobile="true"
+                            v-bind:date-one="dateOne"
+                            v-bind:date-two="dateTwo"
+                            v-bind:months-to-show="1"
+                            v-bind:style="dateStyle"
+                            v-bind:offset-x="0"
+                            @date-one-selected="val => { dateOne = val }"
+                            @date-two-selected="val => { dateTwo = val }"
+                    />
+                </template>
             </div>
-            <!-- //search box -->
+
 
             <!-- btn mid -->
             <div class="btn_mid">
                 <button type="button" class="btn_m01 bg01">조회</button>
             </div>
 
-                <!-- bbs list box -->
+
+
+            <!-- bbs list box -->
                 <div class="bbs_list_box">
                     <!-- tbl list01 -->
                     <table class="bbs_list page_notice">
@@ -107,10 +125,12 @@
                 <!-- //pagination -->
 
 
+
         </div>
         <!-- //content -->
     </section>
     <!-- //container -->
+
 
 </template>
 
@@ -134,6 +154,14 @@
         totalCount: any = '';
         startPage: any = '';
         //searchKey: any;
+
+        // 달력용
+        dateFormat:any =  'YYYYMMDD';
+        dateStyle : any = 'left:332px';
+        dateOne: any =  new Date();
+        dateTwo: any =  new Date();
+        showMode : string = "single";
+
 
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {

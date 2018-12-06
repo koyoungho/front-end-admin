@@ -210,6 +210,10 @@
             this.showModalBiz=true;
         }
 
+        checkAll(){
+
+        }
+
 
 
     }
