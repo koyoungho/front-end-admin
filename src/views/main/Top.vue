@@ -15,9 +15,9 @@
 		</ul>
 		<!-- btn_area -->
 		<span class="btn_area">
-			<a class="btn_util bg01 infochg" id="topInfoUpd" v-on:click="infoModity">정보변경</a>
-			<a class="btn_util bg01 logout" id="topLogout" v-on:click="loginOut">로그아웃</a>
-			<a class="btn_util bg01 login" id="topLogin" v-on:click="loginPage">로그인</a>
+			<a class="btn_util bg01 " id="topInfoUpd" v-on:click="infoModity">정보변경</a>
+			<a class="btn_util bg01 " id="topLogout" v-on:click="loginOut">로그아웃</a>
+			<a class="btn_util bg01 " id="topLogin" v-on:click="loginPage">로그인</a>
 		</span>
     </div>
   </div>
@@ -44,13 +44,13 @@
 		loginBusinessNo : any = ''; //로그인 사용자 사업장등록번호
 
         mounted() {
-            console.log(localStorage);
+            console.log(sessionStorage);
             let infoUpd = document.getElementById('topInfoUpd'); //정보수정
             let logout = document.getElementById('topLogout'); //로그아웃
             let login = document.getElementById('topLogin'); //로그인
 			let loginInfo = document.getElementById('topLoginInfo'); //로그인 사용자 정보
 
-            if(localStorage.accessToken){ //로그인 상태
+            if(sessionStorage.accessToken){ //로그인 상태
                 //localStore 값으로 보여줌
                 this.loginName = '김현금';
                 this.loginCompany = '롯데백화점';
@@ -82,8 +82,8 @@
 		}
 
         loginOut() {
-            //localStorage.accessToken = null;
-			//localStorage.clear();
+            //sessionStorage.accessToken = null;
+			//sessionStorage.clear();
             //this.$router.push('/login');
             this.$store.dispatch('LOGOUT')
                 .then(() => this.$router.push('/login') )

@@ -185,16 +185,16 @@
             searchData['viewType'] = 'USR';
 
             // api 데이터 호출
-            CommonBoardService.getListDatas('notices', null, searchData).then((response) => {
-                    let result: any = response.data;
-
-                    if (result.data.length > 0) {
-                        this.noticeList=result.data;
-                    }
-                }
-                , (error) => {
-                    //this.$Progress.finish();
-                }  ).catch();
+            // CommonBoardService.getListDatas('notices', null, searchData).then((response) => {
+            //         let result: any = response.data;
+            //
+            //         if (result.data.length > 0) {
+            //             this.noticeList=result.data;
+            //         }
+            //     }
+            //     , (error) => {
+            //         //this.$Progress.finish();
+            //     }  ).catch();
         }
 
         /**

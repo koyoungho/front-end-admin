@@ -15,10 +15,10 @@ export default class WebApi<T>{
             error=>{
                 if(error.code=401){
                     sessionStorage.clear()
-                    window.location.href='/#/login'
+                    // window.location.href='/#/login'
                 }
                 else{
-                    window.location.href='/#/error'
+                    // window.location.href='/#/error'
                 }
                 return Promise.reject(error.response);
             })
@@ -34,7 +34,7 @@ export default class WebApi<T>{
         this.newApi();
         let currentAction = id != null ?  "/"+id : "";
         let currentPath = path != null ?  "/"+path : "";
-        return axios.delete(`${this.ApiUrl+currentPath+currentAction}` , listData  );
+        return axios.delete(`${this.ApiUrl+currentPath+currentAction}` , {headers: this.headers , params : listData});
     }
     //리스트 API
     getListData(path,id , param) {

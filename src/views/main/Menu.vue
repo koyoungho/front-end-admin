@@ -6,7 +6,7 @@
       <ul class="gnb_list" >
         <!--<li v-for="menu in menuItem" v-bind:class="menu.on"><a >{{menu.name}}</a></li>-->
         <template v-for="menu in menuItem" >
-        <li><a href="" title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-on:click="menuClick(sub.id,menu.id)" v-bind:class="menu.on">{{menu.name}}</a>
+        <li><a  title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-on:click="menuClick(sub.id,menu.id)" v-bind:class="menu.on">{{menu.name}}</a>
           <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
               <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(sub.id,menu.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
@@ -39,6 +39,10 @@
             if(subId == ''){
                 return;
             }
+
+            if(menuId ==''){
+                return;
+            }
             /* 로그인 필수 메뉴
              *  cashReceiptIssue        현금영수증 발급
              *  ioc                     발급 조회 및 취소
@@ -55,7 +59,6 @@
             //     this.menuSelected(menuId);
             //     this.$emit('parentEvent', menuId);
             // }
-            this.menuSelected(menuId);
             this.menuStyle = "display : none;"
             this.subMenuStyle = "display : none;"
             this.$emit('parentEvent', subId);

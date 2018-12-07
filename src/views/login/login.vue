@@ -32,7 +32,7 @@
             </li>
             <form>
             <li class="form_pw">
-              <input v-bind:type="pwdType"  v-model="password" maxlength="50" placeholder="비밀번호" class="pw" title="비밀번호 입력" autocomplete="username pwd">
+              <input type="password"  v-model="password" maxlength="50" placeholder="비밀번호" class="pw" title="비밀번호 입력" autocomplete="username pwd">
             </li>
             </form>
           </ul>
@@ -140,8 +140,8 @@
         name: 'login',
         data() {
             return {
-                id: "111",
-                password: "111",
+                id: "",
+                password: "",
             }
         },
         methods: {
@@ -182,7 +182,7 @@
         }
 
         if(sessionStorage.code == '000'){ // 로그인 성공 -> 메인화면 이동
-          nextPage = ''
+          nextPage = 'main'
 
           alert('최종 접속정보\n접속 IP 주소 : '+ sessionStorage.lastIp +'\n최종접속 시간 : '+ sessionStorage.lastConnDt)
         }else if(sessionStorage.code == '001'){ // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
@@ -225,7 +225,6 @@
           alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.')
           return;
         }
-
         this.$router.push('/home/'+nextPage)
 
       },

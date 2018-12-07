@@ -65,7 +65,6 @@ export default new Vuex.Store({
                         return 'fail'
                     }
                 )
-            // return "ok"
         },
         LOGOUT ({commit}) {
             commit('LOGOUT')
