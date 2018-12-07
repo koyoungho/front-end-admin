@@ -14,7 +14,7 @@
             <!-- popup content -->
             <div class="popup_content">
                 <p class="receipt">
-                    <!--<img src="images/img_receipt01.png" alt="사업자등록증 사본">-->
+                    <img src="images/img_receipt01.png" alt="사업자등록증 사본">
                 </p>
             </div>
             <!-- //popup content -->
@@ -22,7 +22,7 @@
             <div class="bottom_area">
                 <!-- btn -->
                 <div class="btn_bot">
-                    <button type="button" class="btn_b01 bg02">닫기</button>
+                    <button type="button" class="btn_b01 bg02" v-on:click="closePop">닫기</button>
                 </div>
             </div>
         </div>
@@ -43,6 +43,10 @@
         }
     })
     export default class previewBizLicense extends Vue {
+
+        closePop(){
+            this.$emit('close');
+        }
 
     }
 

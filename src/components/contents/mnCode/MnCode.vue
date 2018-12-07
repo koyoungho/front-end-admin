@@ -23,8 +23,8 @@
                         <div class="sub">회사 메인코드 그룹</div>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
-                            <button type="button" id="" class="btn_s01 bg03 add">추가</button>
-                            <button type="button" id="" class="btn_s01 bg03 del">삭제</button>
+                            <button type="button" v-on:click="viewPop('add','main')" class="btn_s01 bg03 add">추가</button>
+                            <button type="button" v-on:click="viewPop('del','main')" class="btn_s01 bg03 del">삭제</button>
                         </div>
 
                         <!-- code list box -->
@@ -78,8 +78,8 @@
                         <div class="sub">회사 서브 코드</div>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
-                            <button type="button" id="" class="btn_s01 bg03 add">추가</button>
-                            <button type="button" id="" class="btn_s01 bg03 del">삭제</button>
+                            <button type="button" v-on:click="viewPop('add','sub')" class="btn_s01 bg03 add">추가</button>
+                            <button type="button" v-on:click="viewPop('del', 'sub')" class="btn_s01 bg03 del">삭제</button>
                         </div>
 
                         <!-- code list box -->
@@ -115,15 +115,9 @@
 
             </div>
 
-
-            <!-- btn bot -->
-            <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02">초기화</button>
-                <button type="button" id="" class="btn_b01 bg01">저장</button>
-            </div>
-
         </div>
         <!-- //content -->
+        <codePop v-if="popupYn" @close="popupYn=false" v-bind:dataObject="data"></codePop>
     </section>
     <!-- //container -->
     
@@ -133,13 +127,30 @@
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import CodePop from "@/components/contents/mnCode/CodePop.vue";
 
     @Component({
         components: {
-            MnCode
+            MnCode, CodePop
         }
     })
     export default class MnCode extends Vue {
+        popupYn:boolean =false;
+        data:any=[]
+
+        /**
+         * 팝업기능
+         * @param fc
+         */
+        viewPop(fc, div){
+            this.data.push({'fc': fc, 'div':div});
+
+            console.log( this.data);
+            console.log( this.data[0]);
+
+            this.popupYn = true;
+
+        }
 
 
     }

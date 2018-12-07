@@ -42,8 +42,8 @@
 
         <!-- login info -->
         <div class="login_info">
-          <a v-on:click="searchId()" class="id">아이디 찾기</a> |
-          <a v-on:click="initPass()" class="pw">비밀번호 초기화</a>
+          <a href="#" v-on:click="searchId()" class="id">아이디 찾기</a> |
+          <a href="#" v-on:click="initPass()" class="pw">비밀번호 초기화</a>
         </div>
       </div>
       <!-- //login_box -->
@@ -106,11 +106,11 @@
       <div class="quick">
         <span class="sub">고객센터</span>
         <p class="cont">
-          <strong>02-2074-0340</strong>
+          <span class="tel">(02)<strong>2074-0340</strong></span>
           <span class="text">평일 09:30~18:00</span>
         </p>
       </div>
-      <span class="page_top" ><a href="typeScript:void()">TOP</a></span>
+      <span class="page_top" v-on:click="top"><a href="typeScript:void()">TOP</a></span>
 
     </div>
 
@@ -136,17 +136,19 @@
 
 <script >
 
-  export default {
-    name: 'login',
-    data() {
-      return {
-        id: "111",
-        password: "111",
-        pwdType : 'password'
-      }
-    },
-    methods: {
-      onSubmit(id, password) {
+    export default {
+        name: 'login',
+        data() {
+            return {
+                id: "111",
+                password: "111",
+            }
+        },
+        methods: {
+            top(){
+                window.scrollTo(0,0);
+            },
+            onSubmit(id, password) {
 
         if(id == ''){
           alert("아이디를 입력하세요.")

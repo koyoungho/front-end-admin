@@ -48,6 +48,6 @@
 <style>
    @import "assets/css/default.css";
    @import "assets/css/common.css";
-
+   @import "assets/css/vue-airbnb-style-datepicker.css";
 </style>
 

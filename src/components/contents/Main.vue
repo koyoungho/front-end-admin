@@ -59,7 +59,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="https://www.nts.go.kr/">
                                 <i class="icon_main m08"></i>
                                 <span class="sub">국세청<br>현금영수증</span>
                             </a>
@@ -76,28 +76,17 @@
             <div class="notice_box">
                 <h2>공지사항</h2>
                 <ul class="notice_list">
-                    <li>
-                        <a href="#">현금영수증 시스템 정기 점검 및 작업 안내현금영수증 시스템 정기 점검 및 작업 안내</a>
-                        <span class="date">2018.04.04</span>
-                    </li>
-                    <li>
-                        <a href="#">현금영수증 시스템 정기 점검 및 작업 안내</a>
-                        <span class="date">2018.04.04</span>
-                    </li>
-                    <li>
-                        <a href="#">현금영수증 시스템 정기 점검 및 작업 안내</a>
-                        <span class="date">2018.04.04</span>
-                    </li>
-                    <li>
-                        <a href="#">현금영수증 시스템 정기 점검 및 작업 안내</a>
-                        <span class="date">2018.04.04</span>
-                    </li>
-                    <li>
-                        <a href="#">현금영수증 시스템 정기 점검 및 작업 안내</a>
-                        <span class="date">2018.04.04</span>
-                    </li>
+                    <template v-if="noticeList.length > 0">
+                        <li v-for="noticeList in noticeList" v-on:click="goNoticeDetl(noticeList.seq)" >
+                            <a href="typescript:void();">{{noticeList.title}}</a>
+                            <span class="date">{{formatDates(noticeList.updDt)}}</span>
+                        </li>
+                    </template>
+                    <template v-else>
+                        <li>조회된 내용이 없습니다.</li>
+                    </template>
                 </ul>
-                <a href="#" class="btn_more">더보기</a>
+                <a href="#" class="btn_more" v-on:click="toNotice">더보기</a>
             </div>
 
             <!-- main info box -->
@@ -120,7 +109,7 @@
                     </dl>
                 </div>
                 <div class="info_right">
-                    <a href="#">
+                    <a v-on:click="manual">
                         <dl class="manual">
                             <dt>매뉴얼 다운로드</dt>
                             <dd><span class="text">가맹점 가입안내와 사이트 이용안내서</span></dd>
@@ -140,6 +129,10 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {CommonBoardService} from "../../api/common.service";
+    import moment from 'moment'
+    Vue.prototype.moment = moment;
+
 
     @Component({
          components : {
@@ -147,8 +140,13 @@
          }
     })
     export default class Main extends Vue{
+        noticeList: any = [];
         created(){
 
+        }
+
+        mounted(){
+            this.searchNotice();
         }
 
         menuChk(menuId: string) {
@@ -173,6 +171,65 @@
             }
 
         }
+
+        /**
+         *  리스트 조회
+         * */
+        searchNotice() {
+            let searchData: any = {};
+
+            // 페이징요청건
+            searchData['currentPage'] ="1";
+            searchData['perPage'] = "5";
+
+            searchData['viewType'] = 'USR';
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas('notices', null, searchData).then((response) => {
+                    let result: any = response.data;
+
+                    if (result.data.length > 0) {
+                        this.noticeList=result.data;
+                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                }  ).catch();
+        }
+
+        /**
+         * 날짜 포맷 변경
+         * @param date
+         */
+        formatDates(date) {
+            let formattedDates = '';
+            formattedDates = moment(date.substr(0,8)).format( "YYYY.MM.DD");
+            return formattedDates
+        }
+
+
+        /**
+         * 공지사항메뉴로 이동
+         */
+        toNotice(){
+            this.$router.push({path:'noticeList'});
+        }
+
+        /**
+         * 공지사항 상세화면으로 이동
+         * @param seq
+         */
+        goNoticeDetl(seq) {
+            this.$router.push({name:'noticeDetl', params:{seq:seq}})
+        }
+
+        /**
+         * 매뉴얼다운로드
+         */
+        manual(){
+            this.$router.push({name:'noticeDetl', params:{seq:'29'}})
+        }
+
     };
 </script>
 
