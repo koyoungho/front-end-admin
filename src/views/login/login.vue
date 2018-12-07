@@ -28,13 +28,14 @@
           <!-- login -->
           <ul class="login">
             <li class="form_id">
-              <input type="text" name="" size="" v-model="id" maxlength="" placeholder="아이디" class="id" title="아이디 입력">
+              <input type="text" v-model="id" maxlength="50" placeholder="아이디" class="id" title="아이디 입력">
             </li>
+            <form>
             <li class="form_pw">
-              <input type="password" name="" size="" v-model="password" maxlength="" placeholder="비밀번호" class="pw" title="비밀번호 입력">
+              <input v-bind:type="pwdType"  v-model="password" maxlength="50" placeholder="비밀번호" class="pw" title="비밀번호 입력" autocomplete="username pwd">
             </li>
+            </form>
           </ul>
-
           <!-- btn -->
           <button type="button" id="" class="btn_b01 bg01" v-on:click="onSubmit(id, password)">로그인</button>
         </fieldset>
@@ -109,7 +110,7 @@
           <span class="text">평일 09:30~18:00</span>
         </p>
       </div>
-      <span class="page_top" v-on:click="top"><a href="typeScript:void()">TOP</a></span>
+      <span class="page_top" ><a href="typeScript:void()">TOP</a></span>
 
     </div>
 
@@ -135,18 +136,13 @@
 
 <script >
 
-  // import captcha from '@/views/login/botcaptcha.vue';
-
-
   export default {
     name: 'login',
-    // components: {captcha},
-    components: '',
     data() {
       return {
-        id: "",
-        password: "",
-        score: 0
+        id: "111",
+        password: "111",
+        pwdType : 'password'
       }
     },
     methods: {
@@ -159,14 +155,9 @@
           alert("비밀번호를 입력하세요.")
           return;
         }
-        if(this.$children['0'].$el.children['2'].value == ''){
-          alert("캡차 보안문자를 입력하세요")
-          return;
-        }
 
-        let captcha = this.$children['0'].$el.children['2'].value;
         //보안로직포함할곳
-        this.$store.dispatch('LOGIN', {id, password, captcha})
+        this.$store.dispatch('LOGIN', {id, password})
             .then((result) =>{
               if(result=='success'){
                 this.loginChk()
@@ -253,11 +244,11 @@
         this.$router.push('home/main')
       },
 
-    }, created() {
+    }
+    , created() {
 
-
-
-    }, mounted() {
+    }
+    , mounted() {
 
     }
 

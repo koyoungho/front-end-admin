@@ -1,3 +1,4 @@
+import {CommonBoardService} from '@/api/common.service';
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -15,7 +16,6 @@ export default new Vuex.Store({
         accessToken: null
     },
     getters: {
-
     },
     mutations: {
         LOGIN (state, accessToken) {
@@ -50,9 +50,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        LOGIN ({commit}, {id, password, captcha}) {
+        LOGIN ({commit}, {id, password}) {
             // 로그인결과 리턴해줌
-            return axios.post('auth', {id, password, captcha})
+            return CommonBoardService.postListDatas('auth', null,{id, password})
                 .then(({data}) => {
                     if(data.code=='000'){
                         commit('LOGIN', data)

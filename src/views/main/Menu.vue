@@ -108,11 +108,11 @@
                     },
                     {id: 'ioc', name: '통계 관리', value : '', dept: '', auth: '', on: 'sub'
                         ,subMenu:[
-                            {name:'회사코드별 거래현황', id : '',on: 'sub'},
-                            {name:'사업자번호별 거래현황', id : '',on: 'sub'},
-                            {name:'현금영수증 사업자 정산', id : '',on: 'sub'},
-                            {name:'가맹점 증감 현황', id : '',on: 'sub'},
-                            {name:'가맹점수 현황 조회', id : '',on: 'sub'}
+                            {name:'회사코드별 거래현황', id : 'compCodeChart',on: 'sub'},
+                            {name:'사업자번호별 거래현황', id : 'saupNumberChart',on: 'sub'},
+                            {name:'현금영수증 사업자 정산', id : 'receipSaupCount',on: 'sub'},
+                            {name:'가맹점 증감 현황', id : 'gajumChart',on: 'sub'},
+                            {name:'가맹점수 현황 조회', id : 'gajumTotal',on: 'sub'}
                         ]
                     },
                     {id:'policyList', name: '시스템관리', value : '', dept: '', auth: ''

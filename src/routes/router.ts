@@ -117,7 +117,7 @@ export default new Router({
                 {path:'storeRegCmpl', name:'storeRegCmpl', component: StoreRegCmpl }, //매장 등록 완료
                 {path:'storeRegBulk', name:'storeRegBulk', component: StoreRegBulk }, //매장 일괄 등록 완료
                 {path:'approvalBandList', name:'approvalBandList', component: ApprovalBandList }, //승인대역 리스트
-                {path:'approvalBandReg', name:'approvalBandList', component: ApprovalBandReg }, //승인대역 신청
+                {path:'approvalBandReg', name:'approvalBandReg', component: ApprovalBandReg }, //승인대역 신청
 
                 //현금영수증 관리
                 {path:'cashReceiptIssue', name:'cashReceiptIssue', component: CashReceiptIssue }, //현금영수증 발급
