@@ -5,7 +5,7 @@
     <!-- //tbl search box -->
 
     <!-- tbl list box -->
-    <DataGrid v-bind:dataGridDetail="searchItems" v-bind:listOnLoad ="listOnLoad" v-on:dataToPaging="dataEvent" v-on:rowClick="viewEvent"></DataGrid>
+    <DataGrid v-bind:dataGridDetail="searchItems" v-bind:listOnLoad ="listOnLoad" v-on:dataToPaging="dataEvent" v-on:checkBoxEvent="checkEvent" v-on:rowClick="viewEvent"></DataGrid>
     <!-- //tbl list box -->
 
     <!-- pagination -->
@@ -70,11 +70,16 @@
             }
         }
 
+        checkEvent(data){
+            this.$emit('listCheckEvent' , data)
+        }
+
         viewEvent(row){
             this.$emit('listView' , row)
         }
 
         pagingEvent(page) {
+            // this.searchItems.paging.currentPage=page
             this.$children['1'].getCommonListData();
         }
         searchEvent(es){

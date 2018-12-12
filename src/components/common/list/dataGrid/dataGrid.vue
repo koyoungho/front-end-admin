@@ -9,51 +9,74 @@
     </div>
     <!-- 20181112 수정 추가 -->
     <!-- grid total box -->
-      <!-- 20181112 수정 추가 -->
-      <div class="cash_total_box" v-if="dataGridDetail.dataGrid.mTotal">
-        <dl class="cash_total">
-          <dt>합계금액</dt>
-          <dd>
-            <input type="text"  v-model="mTotalCount" value="5,000" class="input form_price" title="합계금액" readonly=""> 원
-          </dd>
-          <dt>봉사료</dt>
-          <dd>
-            <input type="text"  v-model="mServiceCharge" class="input form_price" title="봉사료" readonly=""> 원
-          </dd>
-          <dt>공급가액</dt>
-          <dd>
-            <input type="text"  v-model="mSupplyValue" class="input form_price" title="공급가액" readonly=""> 원
-          </dd>
-          <dt>부가세</dt>
-          <dd>
-            <input type="text"  v-model="mSurtax" class="input form_price" title="부가세" readonly=""> 원
-          </dd>
-        </dl>
-      </div>
+    <!-- 20181112 수정 추가 -->
+    <template v-if="dataGridDetail.dataGrid.mTotal">
+    <div class="cash_total_box" >
+      <dl class="cash_total">
+        <dt>합계금액</dt>
+        <dd>
+          <input type="text" v-model="mTotalCount" value="5,000" class="input form_price" title="합계금액" readonly=""> 원
+        </dd>
+        <dt>봉사료</dt>
+        <dd>
+          <input type="text" v-model="mServiceCharge" class="input form_price" title="봉사료" readonly=""> 원
+        </dd>
+        <dt>공급가액</dt>
+        <dd>
+          <input type="text" v-model="mSupplyValue" class="input form_price" title="공급가액" readonly=""> 원
+        </dd>
+        <dt>부가세</dt>
+        <dd>
+          <input type="text" v-model="mSurtax" class="input form_price" title="부가세" readonly=""> 원
+        </dd>
+      </dl>
+    </div>
+    </template>
 
-     <div class="tbl_scroll_box">
-    <!-- tbl list01 -->
+    <div class="tbl_scroll_box">
+      <!-- tbl list01 -->
 
       <table class="tbl_list01 page_inquiry" v-on:change="windowSize">
         <caption></caption>
         <colgroup>
-          <template v-for="columNames in dataGridDetail.dataGrid.columControl">
-            <col  v-bind:width="columNames.width">
+          <template v-for="columNames,index in dataGridDetail.dataGrid.columControl">
+            <col v-bind:width="columNames.width">
           </template>
         </colgroup>
         <thead>
         <tr>
-          <template v-for="columNames in dataGridDetail.dataGrid.columControl">
-            <th >{{columNames.columName}}</th>
+
+          <template v-for="columNames,index in dataGridDetail.dataGrid.columControl">
+            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
+              <th scope="col" class="form_chk" >
+                <span class="chk_box"><input type="checkbox" @click="{checkAll}"><label><span class="blind">전체선택</span></label></span>
+              </th>
+            </template>
+            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
+              <th>{{columNames.columName}}</th>
+            </template>
+            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
+            <th>{{columNames.columName}}</th>
+            </template>
           </template>
 
         </tr>
         </thead>
         <tbody>
-        <template v-if="listData.length > 0">
-          <tr v-for="datas in listData">
-            <template v-for="rows in datas">
-            <td  v-on:click="rowView(datas,publicPageing)">{{rows}}</td>
+        <template v-if="listData.length > 0" >
+          <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" >
+            <template v-for="(rows,key,indexs) in datas">
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='checkBox'">
+                <td>
+                  <span class="chk_box"><input type="checkbox" v-bind:value="{id:key,value:rows}" v-model="checkBoxDatas"><label for=""></label></span>
+                </td>
+              </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='number'">
+                <td>{{rows}}</td>
+              </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='text'">
+              <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
+              </template>
             </template>
           </tr>
         </template>
@@ -64,7 +87,6 @@
         </template>
         </tbody>
       </table>
-
     </div>
     <!-- //tbl list box -->
   </div>
@@ -72,11 +94,10 @@
 
 
 <script lang="ts">
+
     import {ListData} from '@/model/list';
-    import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
-    import moment from 'moment'
 
     @Component({
         components: {
@@ -87,40 +108,88 @@
         @Prop() dataGridDetail  !: any;
         @Prop() listOnLoad !: boolean;
         gridData: any = this.dataGridDetail;
-        listOragin :any = [];
+        listOragin: any = [];
         listData: any = [];
         totalCount: any = '0';
         $Progress: any;
-        windowSize : any = "";
-        publicPageing  : any = "";
+        windowSize: any = '';
+        publicPageing: any = '';
+        menuHeader: any = {};
+        bgColor : any = "";
+        trColor : any = "";
+        lineColumName : string="";
+        lineColumIndex :  number = 10000;
+        checkBoxDatas :any[]= [];
+        allChecked : boolean =false;
+
 
         // 토탈합계
-        mTotalCount : number = 0;
-        mServiceCharge : number = 0;
-        mSupplyValue : number = 0;
-        mSurtax : number = 0;
+        mTotalCount: number = 0;
+        mServiceCharge: number = 0;
+        mSupplyValue: number = 0;
+        mSurtax: number = 0;
 
 
-        @Watch('listOnLoad') onChange(){
-                this.getCommonListData();
+        @Watch('listOnLoad') onChange() {
+            this.getCommonListData();
         }
+        @Watch('checkBoxDatas') onChangeCheckBox() {
+            this.$emit('checkBoxEvent', this.checkBoxDatas)
+        }
+
+
+
         //돔생성전 호출자
         created() {
-            if(this.listOnLoad==true){
-                this.getCommonListData();
-            }
-            else{
+        }
 
+        numberFormatCount(index){
+            let nowPage = Number(this.dataGridDetail.paging.currentPage)
+            let nowTotal = Number(this.dataGridDetail.paging.totalRecords) ;
+            let viewPageSize = Number(this.dataGridDetail.paging.viewPageSize)
+            let nowNumber = nowTotal-(nowPage-1) * viewPageSize-index
+            return nowNumber
+        }
+
+        rowColor(index) {
+            if (this.lineColumIndex != 10000) {
+                if (this.listData[index][this.lineColumName] == this.dataGridDetail.dataGrid.columControl[this.lineColumIndex].lineValue) {
+                    return "date_del"
+                }
             }
+        }
+        fontColor(index,rows){
+            if(rows == this.dataGridDetail.dataGrid.columControl[index].textValue){
+                return this.dataGridDetail.dataGrid.columControl[index].fontColors
+            }
+        }
+        colColor(index){
+            return this.dataGridDetail.dataGrid.columControl[index].colColors
+        }
+
+
+        allCheck(){
+          console.log(this.allChecked);
         }
 
         //돔렌더링완료시 진행
         mounted() {
+            this.dataGridDetail.dataGrid.columControl.filter((e,index)=>{
+                if(e.lineValue){
+                    this.lineColumName = e.id;
+                    this.lineColumIndex = index ;
+                }
+            })
 
+            if (this.listOnLoad == true) {
+                this.getCommonListData();
+            }
+            else {
+
+            }
         }
 
         getCommonListData() {
-            this.listData = [];
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.
             // 넣어진 페이지 데이터에 의해 페이징 페이지 생성 이벤트는 페이지번호 옴겨와야한다
             // 검색데이터
@@ -162,38 +231,67 @@
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
                     let result: any = response.data;
-                    let menuHeader: any = {};
-
+                    this.listData = [];
                     // 토탈금액 인풋
-                    if(this.dataGridDetail.dataGrid.mTotal==true){
-                    this.mTotalCount =  result.extra.totalAmt
-                    this.mServiceCharge = result.extra.bong
-                    this.mSupplyValue = result.extra.amt
-                    this.mSurtax  = result.extra.vat;
+                    if (this.dataGridDetail.dataGrid.mTotal == true) {
+                        this.mTotalCount = result.extra.totalAmt;
+                        this.mServiceCharge = result.extra.bong;
+                        this.mSupplyValue = result.extra.amt;
+                        this.mSurtax = result.extra.vat;
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => {
-                        menuHeader[e.id] = e.id;
+                            this.menuHeader[e.id] = e.id;
                     });
-
                     this.listOragin = result.data;
 
-                    if (result.data.length > 0) {
-                        result.data.filter(e => { // 받은데이터 돌리면서
-                            let Objects: any = {};
+                    this.totalCount = result.totalRecords;
+                    this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
+
+                    if (result.data.length > 0) { // 데이터 키맵에 맞게 매핑하기
+                        result.data.filter((e,indexs) => {
+                            let Objects = {};
                             Object.keys(e).forEach((key) => {
-                                if (menuHeader[key] == key) {
-                                    menuHeader[key] = e[key]
+                                if (this.menuHeader[key] == key) {
+                                    Objects[key] = e[key];
                                 }
                             });
-                            this.listData.push(menuHeader);
+
+                            let numberObject = {};
+                            Object.keys(this.menuHeader).forEach((menuHeaderkey,index) => {
+                                if(this.dataGridDetail.dataGrid.columControl[index].type=='number'){
+                                    numberObject[menuHeaderkey] = this.numberFormatCount(indexs)
+                                }
+                                else{
+                                Object.keys(Objects).forEach((Objectskey) => {
+                                    if (menuHeaderkey == Objectskey) {
+                                        let option = this.dataGridDetail.dataGrid.columControl[index].options
+                                        if(option){
+                                            option.filter(e=>{
+                                                if(e.value==Objectskey){
+                                                    numberObject[menuHeaderkey] = e.change;
+                                                }
+                                                else{
+                                                    numberObject[menuHeaderkey] = e.change;
+                                                }
+                                            })
+
+                                        }else{
+                                            numberObject[menuHeaderkey] = Objects[Objectskey];
+                                        }
+                                    }
+                                });
+                                }
+                            });
+                            this.listData.push(numberObject);
                         });
+
+
                     }
                     else {
 
                     }
-                    this.totalCount = result.totalRecords;
-                    this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
+
                     this.$Progress.finish();
 
                 }
@@ -203,30 +301,26 @@
             ).catch();
         }
 
-        rowView(row,searchData){
-                this.listOragin.filter(data=>{
-                    if(data.id==row.id){
-                        row = data;
-                    }
-                })
-            let publicDatas ={ row : row , searchOption : searchData };
-            this.$emit('rowClick' , publicDatas );
+        rowView(row, searchData, index, key) {
+            let rowData = this.listOragin[index];
+            let publicDatas = {row: rowData, searchOption: searchData, key: key};
+            this.$emit('rowClick', publicDatas);
         }
 
         pageSet(froms, to, lastPage, perPage, totalRecords, viewPageSize) {
-            this.dataGridDetail.paging.from = froms;
-            this.dataGridDetail.paging.to = to;
-            this.dataGridDetail.paging.lastPage = lastPage;
-            this.dataGridDetail.paging.perPage = perPage;
-            this.dataGridDetail.paging.totalRecords = totalRecords;
-            this.dataGridDetail.paging.viewPageSize = viewPageSize;
+            this.dataGridDetail.paging.from = Number(froms);
+            this.dataGridDetail.paging.to = Number(to);
+            this.dataGridDetail.paging.lastPage = Number(lastPage);
+            this.dataGridDetail.paging.perPage = Number(perPage);
+            this.dataGridDetail.paging.totalRecords = Number(totalRecords);
+            this.dataGridDetail.paging.viewPageSize = Number(viewPageSize);
             this.$emit('dataToPaging', this.dataGridDetail.paging);
         }
 
 
-
         updated() {
             this.$nextTick(function () {
+
             });
             // data 값 변조하면됨 Y / N   1,2? 이런값들 변경시 필요함
         }

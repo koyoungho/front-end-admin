@@ -4,50 +4,81 @@
 <template>
   <div >
     <div >
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace></router-link>
+      <router-link v-if="authenticated" to="/login" replace></router-link>
     </div>
-    <router-view @authenticated="setAuthenticated" />
+    <router-view/>
   </div>
 </template>
 
 <script>
 
+  import {CommonBoardService} from '../src/api/common.service';
+  import Router from 'vue-router'
 
-    export default {
-        name: 'App',
-        data() {
-            return {
-                authenticated: false,
-                mockAccount: {
-                    username: "111",
-                    password: "111"
-                }
+  export default {
+    name: 'App',
+    data() {
+      return {
+        authenticated: false,
+        mockAccount: {
+          username: "",
+          password: ""
+        }
+      }
+    },
+    created() {
+      // 세션이 존재할때
+
+      this.$router.beforeEach(function(to, from, next) {
+        // to: 이동할 url에 해당하는 라우팅 객체
+        let menuName = "";
+        let loginOk = to.matched.some(function(routeInfo) {
+          menuName = routeInfo.name
+          return routeInfo.meta.authRequired;
+        })
+        if (sessionStorage.accessToken) {
+          if(menuName =='error' || menuName=='login' ){ // 공용페이지 접근시 통과
+            next()
+          }
+          else{ // 권한필요한페이지 접근시 체크
+            if (loginOk) {
+              // CommonBoardService.getListDatas('menu', null, null).then(response => {
+              //   let datas = response.data;
+              //   if (datas) { // 해당 메뉴 결과값받아서 비교후 접근가능일시
+              //     // TODO 체크로직넣어야함f
+              //     sessionStorage.setItem('authMenu',JSON.stringify(datas))
+              //     next()
+              //   } else { // 접근권한 없을시
+              //     alert('메뉴 접근권한이 없습니다');
+              //   }
+              // }).catch(e=>{
+              //   // window.location.href='/#/error'
+              // })
+              next();
+            } else {
+              next(); // 페이지 전환
             }
-        },
-        mounted() {
-            // 최초 접근시 로그인정보 있을경우 없을경우 해당 이동페이지 설정
-             if(!this.authenticated) {
-               // alert('login N');
-               // this.$router.replace('/login');
-            }
-        },
-        methods: {
-            setAuthenticated(status) {
-                this.authenticated = status;
-            },
-            logout() {
-                this.authenticated = false;
-            },
-        },
-    }
+          }
+        }else{
+          window.location.href='/'
+        }
+
+      })
+    },
+    mounted() {
+
+    },
+    methods: {
+    },
+  }
 </script>
 
 
 
 
 <style>
-   @import "assets/css/default.css";
-   @import "assets/css/common.css";
-   @import "assets/css/vue-airbnb-style-datepicker.css";
+  @import "assets/css/default.css";
+  @import "assets/css/common.css";
+  @import "assets/css/vue-airbnb-style-datepicker.css";
 </style>
 

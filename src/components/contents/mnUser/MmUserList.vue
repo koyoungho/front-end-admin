@@ -13,160 +13,9 @@
             </div>
 
             <!-- search box -->
-            <div class="search_box page_system03">
-                <ul class="search_list">
-                    <li>
-						<span class="form_area">
-							<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa110" checked="checked"><label for="aa110">최종접속일</label></span>
-							<span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-						</span>
-                        <span class="form_area">
-							<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa110" checked="checked"><label for="aa110">등록일</label></span>
-							<span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-						</span>
-                    </li>
-                    <li>
-                        <label for="">등급</label>
-                        <select id="" name="" class="select sch_w100" title="등급">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">상태</label>
-                        <select id="" name="" class="select sch_w100" title="상태">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">검색</label>
-                        <select id="" name="" class="select sch_appnum" title="아이디">
-                            <option>아이디</option>
-                        </select>
-                    </li>
-                    <li>
-                        <input type="text" class="input sch_appuser" title="고객명">
-                    </li>
-                </ul>
-            </div>
-            <!-- //search box -->
-
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <button type="button" class="btn_m01 bg01">조회</button>
-            </div>
-
-            <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01">
-                    <caption>계정 목록</caption>
-                    <colgroup>
-                        <col width="5%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="12%">
-                        <col width="13%">
-                        <col width="13%">
-                        <col width="11%">
-                        <col width="9%">
-                        <col width="*">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" class="form_chk">
-                            <span class="chk_box"><input type="checkbox" v-on:change="checkAll"><label for=""><span class="blind">전체선택</span></label></span>
-                        </th>
-                        <th scope="col">순번</th>
-                        <th scope="col">아이디</th>
-                        <th scope="col">이름</th>
-                        <th scope="col">등급</th>
-                        <th scope="col">소속</th>
-                        <th scope="col">상태</th>
-                        <th scope="col">등록일</th>
-                        <th scope="col">최종접속</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="form_chk">
-                            <span class="chk_box"><input type="checkbox" id=""><label for=""><span class="blind">선택</span></label></span>
-                        </td>
-                        <td>100</td>
-                        <td v-on:click="modUser">Ab***</td>
-                        <td>홍길*</td>
-                        <td>시스템관리자</td>
-                        <td>롯데정보통신</td>
-                        <td><span class="fc_use01" v-on:click="popComfirm">승인대기<em class="cf_text">(사업자사본확인)</em></span></td>
-                        <td>2017.10.12</td>
-                        <td>2017.10.12 05:22:16</td>
-                    </tr>
-                    <tr>
-                        <td class="form_chk">
-                            <span class="chk_box"><input type="checkbox" id=""><label for=""><span class="blind">선택</span></label></span>
-                        </td>
-                        <td>100</td>
-                        <td>Ab***</td>
-                        <td>홍길*</td>
-                        <td>시스템관리자</td>
-                        <td>롯데정보통신</td>
-                        <td>정상</td>
-                        <td>2017.10.12</td>
-                        <td>2017.10.12 05:22:16</td>
-                    </tr>
-                    <tr>
-                        <td class="form_chk">
-                            <span class="chk_box"><input type="checkbox" id=""><label for=""><span class="blind">선택</span></label></span>
-                        </td>
-                        <td>100</td>
-                        <td>Ab***</td>
-                        <td>홍길*</td>
-                        <td>시스템관리자</td>
-                        <td>롯데정보통신</td>
-                        <td>사용중지</td>
-                        <td>2017.10.12</td>
-                        <td>2017.10.12 05:22:16</td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //tbl list box -->
-
-            <!-- btn tbl bot -->
-            <div class="btn_tbl_bot">
-                <button type="button"  class="btn_m01 bg01">승인</button>
-            </div>
-
-            <!-- pagination -->
-            <div class="pagination">
-                <a href="#" class="btn_fprev">맨앞</a>
-                <a href="#" class="btn_prev">이전</a>
-                <span class="num">
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<strong>3</strong>
-					<a href="#">4</a>
-					<a href="#">5</a>
-				</span>
-                <a href="#" class="btn_next">다음</a>
-                <a href="#" class="btn_enext">맨뒤</a>
-            </div>
-            <!-- //pagination -->
-
-        </div>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
         <!-- //content -->
+        </div>
         <previewBusinessLicense v-if="showModalBiz"  @close="showModalBiz = false"></previewBusinessLicense>
     </section>
     <!-- //container -->
@@ -178,17 +27,116 @@
 
     import {Component, Vue} from "vue-property-decorator";
     import PreviewBusinessLicense from "@/components/contents/mnUser/previewBizLicense.vue";
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
 
     @Component({
         components: {
-            MmUserList, PreviewBusinessLicense
+            MmUserList, PreviewBusinessLicense,ListComponent
         }
     })
     export default class MmUserList extends Vue {
         showModalBiz: boolean = false; // 사업자 사본확인
-
         isCheck:boolean = false;
 
+
+        listOn : boolean = true;
+        titles: string = '발급조회 및 취소'; // 제목
+        subTitle: string = '현금영수증 발급'; //서브타이틀
+        windowResize : boolean = false; // 리사이즈
+        originItem : any = {} // 오리지널데이터
+        exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
+        listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            {
+                dataGrid: {
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '체크박스' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '이름' ,id : 'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등급' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '소속' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '상태' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
+                        {columName : '등록일' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '최종접속' ,id : 'storeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
+                    ],
+                    totalColum: 9, // 체크박스시 +1 순번추가시 +1
+                    apiUrl : 'gajum',
+                    onLoadList : true,  // onLoad 로딩 유무
+                    // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                    // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                    //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    // {type: 'choiseDate', title :'최종접속일', id: 'date1' , name:'date1', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    // {type: 'choiseDate', title :'등록일', id: 'date2' , name:'date2', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'selectCode' , title :'등급',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '0034' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
+                    {type: 'selectCode' , title :'상태',id: 'dealType', name:'dealType' , value: '' ,  api : '0035' , option : [{ codeName : '승인' , code: '0' },{codeName : '취소' , code: '1' }]},
+
+                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'confirm' },{name : '고객명' , value: 'custName' }]},
+                    {type: 'input', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
+                    // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
+                    // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
+                ],
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                goSearch : "iocSearch"
+            }
+
+        created(){
+            this.originItem  = this.listItem.dataGrid.columControl
+            // if( window.innerWidth < 482){
+            //     this.handleResize()
+            // }else{
+            //     this.windowResize = false;
+            //     this.handleResize()
+            // }
+        }
+
+
+        mounted(){
+
+        }
+
+        checkBoxEvent(data){
+            console.log(data); // 체크한데이터 받는다
+        }
+
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            alert('로우클릭')
+            console.log(row)
+            //this.$router.push({ name:'iocView' , params: { current : row.searchOption , objectKey : row.row.oriAprv } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        }
+
+        // 와이드 창줄어들시 모바일용으로 윈도우 사이즈 재는곳
+        // handleResize(){
+        // if(window.innerWidth < 482){
+        //     if(this.windowResize ==true){
+        //
+        //     }else{
+        //         // this.listItem.dataGrid.columControl= this.listItem.dataGrid.columControl.filter(e=>{
+        //         //        return this.exceptColum.find(s=>{
+        //         //         if(e.id !=s.id){
+        //         //             return e
+        //         //         }
+        //         //     })
+        //         // })
+        //         this.windowResize =true
+        //     }
+        // }else{
+        //     if(this.windowResize==false){
+        //     }else{
+        //     this.listItem.dataGrid.columControl = this.originItem;
+        //     this.windowResize =false;
+        //     }
+        // }
+
+        // }
+        updated(){
+        }
         /**
          * 계정등록
          */
@@ -218,7 +166,3 @@
 
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -1,7 +1,7 @@
 <template>
   <!-- top header -->
   <div class="top_header">
-    <h1 class="logo" v-on:click="mainPage" ><a href="#" >현금영수증</a></h1>
+    <h1 class="logo" v-on:click="mainPage" ><a >현금영수증</a></h1>
     <!-- util wrap -->
     <div class="util_wrap">
 		<ul class="util" id="topLoginInfo">
@@ -44,7 +44,6 @@
 		loginBusinessNo : any = ''; //로그인 사용자 사업장등록번호
 
         mounted() {
-            console.log(sessionStorage);
             let infoUpd = document.getElementById('topInfoUpd'); //정보수정
             let logout = document.getElementById('topLogout'); //로그아웃
             let login = document.getElementById('topLogin'); //로그인
@@ -74,22 +73,19 @@
         }
 
         mainPage() { //메인
-            this.$router.push('/home/main');
+                this.$router.replace({name:'main'});
         }
 
         infoModity() {
             this.$router.replace('/home/IssueViewingCancel');
-		}
+				}
 
         loginOut() {
-            //sessionStorage.accessToken = null;
-			//sessionStorage.clear();
-            //this.$router.push('/login');
             this.$store.dispatch('LOGOUT')
-                .then(() => this.$router.push('/login') )
-                .catch(({message}) => console.log('asdfas') )
+                .then(() =>
+										this.$router.push({name: 'login'}) )
+                .catch()
 		}
-
     }
 
 </script>
