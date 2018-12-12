@@ -49,14 +49,13 @@
         // 라우터 경로 변경시 이벤트 발생
         @Watch('$route') onChange(){
             window.scrollTo(0,0);
+
             if(this.$route.path.slice(this.$route.path.lastIndexOf('/')+1) =='main'){
                 this.routerMenuChange = 'main';
             }
             else{
                 this.routerMenuChange = this.$route.path.slice(this.$route.path.lastIndexOf('/')+1);
             }
-
-
         }
 
         created() {

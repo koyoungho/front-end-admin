@@ -73,6 +73,7 @@ import PreviewBizLicense from "../components/contents/mnUser/previewBizLicense.v
 
 import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
+import FranchiseRegStep1Result from "../components/common/kmc/FranchiseRegStep1Result.vue"
 
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
 import CodePop from "../components/contents/mnCode/CodePop.vue"//코드관리
@@ -94,85 +95,85 @@ export default new Router({
             name: "home",
             component: Home,
             children : [
-                {path:'main', name:'main', component: Main }, //메인
+                {path:'main', name:'main', component: Main ,meta: {authRequired: true} }, //메인
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
-                {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth }, //핸드폰 인증
-                {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput }, //아이디 찾기
-                {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult }, //아이디 찾기 결과
-                {path:'initPass', name:'initPass',component: InitPass }, //비밀번호 초기화
-                {path:'policy', name:'policy', component:Policy }, //이용약관 및 개인보호처리방침
+                {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth ,meta: {authRequired: true} }, //핸드폰 인증
+                {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: true}}, //아이디 찾기
+                {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: true}}, //아이디 찾기 결과
+                {path:'initPass', name:'initPass',component: InitPass ,meta: {authRequired: true}}, //비밀번호 초기화
+                {path:'policy', name:'policy', component:Policy ,meta: {authRequired: true}}, //이용약관 및 개인보호처리방침
 
                 //가맹점관리
-                {path:'franchiseList', name:'franchiseList', component: FranchiseList }, //가맹점관리 리스트
-                {path:'franchiseDetl', name:'franchiseDetl', component: FranchiseDetl }, //가맹점 상세
-                {path:'franchiseReg', name:'franchiseReg', component: FranchiseReg }, //가맹점 등록
-                {path:'franchiseRegCmpl', name:'franchiseRegCmpl', component: FranchiseRegCmpl }, //가맹점 등록 완료
-                {path:'branchList', name:'branchList', component: BranchList }, //지점관리 리스트
-                {path:'branchDetl', name:'branchDetl', component: BranchDetl }, //지점 상세
-                {path:'branchReg', name:'branchReg', component: BranchReg }, //지점 등록
-                {path:'branchRegCmpl', name:'branchRegCmpl', component: BranchRegCmpl }, //지점 등록 완료
-                {path:'storeList', name:'storeList', component: StoreList }, //매장관리 리스트
-                {path:'storeDetl', name:'storeDetl', component: StoreDetl }, //매장 상세
-                {path:'storeReg', name:'storeReg', component: StoreReg }, //매장 등록
-                {path:'storeRegCmpl', name:'storeRegCmpl', component: StoreRegCmpl }, //매장 등록 완료
-                {path:'storeRegBulk', name:'storeRegBulk', component: StoreRegBulk }, //매장 일괄 등록 완료
-                {path:'approvalBandList', name:'approvalBandList', component: ApprovalBandList }, //승인대역 리스트
-                {path:'approvalBandReg', name:'approvalBandReg', component: ApprovalBandReg }, //승인대역 신청
+                {path:'franchiseList', name:'franchiseList', component: FranchiseList ,meta: {authRequired: true}}, //가맹점관리 리스트
+                {path:'franchiseDetl', name:'franchiseDetl', component: FranchiseDetl ,meta: {authRequired: true}}, //가맹점 상세
+                {path:'franchiseReg', name:'franchiseReg', component: FranchiseReg ,meta: {authRequired: true}}, //가맹점 등록
+                {path:'franchiseRegCmpl', name:'franchiseRegCmpl', component: FranchiseRegCmpl,meta: {authRequired: true} }, //가맹점 등록 완료
+                {path:'branchList', name:'branchList', component: BranchList ,meta: {authRequired: true}}, //지점관리 리스트
+                {path:'branchDetl', name:'branchDetl', component: BranchDetl,meta: {authRequired: true} }, //지점 상세
+                {path:'branchReg', name:'branchReg', component: BranchReg ,meta: {authRequired: true}}, //지점 등록
+                {path:'branchRegCmpl', name:'branchRegCmpl', component: BranchRegCmpl ,meta: {authRequired: true}}, //지점 등록 완료
+                {path:'storeList', name:'storeList', component: StoreList ,meta: {authRequired: true}}, //매장관리 리스트
+                {path:'storeDetl', name:'storeDetl', component: StoreDetl ,meta: {authRequired: true}}, //매장 상세
+                {path:'storeReg', name:'storeReg', component: StoreReg ,meta: {authRequired: true}}, //매장 등록
+                {path:'storeRegCmpl', name:'storeRegCmpl', component: StoreRegCmpl ,meta: {authRequired: true}}, //매장 등록 완료
+                {path:'storeRegBulk', name:'storeRegBulk', component: StoreRegBulk ,meta: {authRequired: true}}, //매장 일괄 등록 완료
+                {path:'approvalBandList', name:'approvalBandList', component: ApprovalBandList ,meta: {authRequired: true}}, //승인대역 리스트
+                {path:'approvalBandReg', name:'approvalBandReg', component: ApprovalBandReg ,meta: {authRequired: true}}, //승인대역 신청
 
                 //현금영수증 관리
-                {path:'cashReceiptIssue', name:'cashReceiptIssue', component: CashReceiptIssue }, //현금영수증 발급
-                {path:'cashReceiptIssueView', name:'cashReceiptIssueView', component: CashReceiptIssueView }, //현금영수증 발급(출력)
-                {path:'cashReceiptBulkIssue', name:'cashReceiptBulkIssue', component: CashReceiptBulkIssue }, //현금영수증 발급(대량)
-                {path:'receiptViewCancel', name:'receiptViewCancel', component: ReceiptViewCancel }, //발급 내역 조회/취소
-                {path:'receiptViewCancelDetl', name:'receiptViewCancelDetl', component: ReceiptViewCancelDetl }, //현금영수증 발급 조회 및 취소
-                {path:'errorList', name:'errorList', component: ErrorList }, //오류 내역 조회
-                {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend }, //전문 오류 체크
-                {path:'errorCheck', name:'errorCheck', component: ErrorCheck }, //승인파일전송
-                {path:'sendFileResult', name:'sendFileResult', component: SendFileResult }, //전송 파일 처리결과
+                {path:'cashReceiptIssue', name:'cashReceiptIssue', component: CashReceiptIssue ,meta: {authRequired: true}}, //현금영수증 발급
+                {path:'cashReceiptIssueView', name:'cashReceiptIssueView', component: CashReceiptIssueView ,meta: {authRequired: true}}, //현금영수증 발급(출력)
+                {path:'cashReceiptBulkIssue', name:'cashReceiptBulkIssue', component: CashReceiptBulkIssue ,meta: {authRequired: true}}, //현금영수증 발급(대량)
+                {path:'receiptViewCancel', name:'receiptViewCancel', component: ReceiptViewCancel ,meta: {authRequired: true}}, //발급 내역 조회/취소
+                {path:'receiptViewCancelDetl', name:'receiptViewCancelDetl', component: ReceiptViewCancelDetl ,meta: {authRequired: true}}, //현금영수증 발급 조회 및 취소
+                {path:'errorList', name:'errorList', component: ErrorList ,meta: {authRequired: true}}, //오류 내역 조회
+                {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend ,meta: {authRequired: true}}, //전문 오류 체크
+                {path:'errorCheck', name:'errorCheck', component: ErrorCheck ,meta: {authRequired: true}}, //승인파일전송
+                {path:'sendFileResult', name:'sendFileResult', component: SendFileResult ,meta: {authRequired: true}}, //전송 파일 처리결과
 
                 //고객지원>공지사항
-                {path:'noticeList',component: NoticeList, name:'noticeList' }, //공지사항 리스트
-                {path:'noticeDetl',component: NoticeDetl, name:'noticeDetl' }, //공지사항 상세
-                {path:'regNotice',component: RegNotice, name: 'regNotice' }, //공지사항 등록/수정
+                {path:'noticeList',component: NoticeList, name:'noticeList' ,meta: {authRequired: true}}, //공지사항 리스트
+                {path:'noticeDetl',component: NoticeDetl, name:'noticeDetl' ,meta: {authRequired: true}}, //공지사항 상세
+                {path:'regNotice',component: RegNotice, name: 'regNotice' ,meta: {authRequired: true}}, //공지사항 등록/수정
                 //고객지원>자주묻는질문
-                {path:'fnqList',component: FnqList, name:'fnqList' }, //자주묻는질문리스트
-                {path:'regFnq',component: RegFnq, name:'regFnq'}, //자주묻는질문 등록
+                {path:'fnqList',component: FnqList, name:'fnqList' ,meta: {authRequired: true}}, //자주묻는질문리스트
+                {path:'regFnq',component: RegFnq, name:'regFnq' ,meta: {authRequired: true}}, //자주묻는질문 등록
                 //고객지원>메일발송
-                {path:'sendMail',component: SendMail, name:'sendMail'}, //자주묻는질문 등록
+                {path:'sendMail',component: SendMail, name:'sendMail' ,meta: {authRequired: true}}, //자주묻는질문 등록
 
                 //시스템관리>약관처리
-                {path:'policyHistoryList',component: PolicyHistoryList, name:'policyHistoryList'}, //약관이력목록
-                {path:'policyReg',component: PolicyReg, name:'policyReg'}, //약관 등록/수정
-                {path:'policyList',component: PolicyList, name:'policyList'}, //약관목록
-                {path:'policyDetail',component: PolicyDetail, name:'policyDetail'}, //약관상세
+                {path:'policyHistoryList',component: PolicyHistoryList, name:'policyHistoryList' ,meta: {authRequired: true}}, //약관이력목록
+                {path:'policyReg',component: PolicyReg, name:'policyReg' ,meta: {authRequired: true}}, //약관 등록/수정
+                {path:'policyList',component: PolicyList, name:'policyList' ,meta: {authRequired: true}}, //약관목록
+                {path:'policyDetail',component: PolicyDetail, name:'policyDetail' ,meta: {authRequired: true}}, //약관상세
                 //시스템관리>개인정보처리방침
-                {path:'personalHistoryList',component: PolicyHistoryList, name:'personalHistoryList' }, //개인정보처리방침 이력 목록
-                {path:'personalReg',component: PolicyReg, name:'personalReg', }, //개인정보처리방침 등록/수정
-                {path:'personalList',component:PolicyList, name:'personalList'}, //개인정보처리방침 목록
-                {path:'personalDetail',component:PolicyDetail, name:'personalDetail'}, //개인정보처리방침 상세
+                {path:'personalHistoryList',component: PolicyHistoryList, name:'personalHistoryList' ,meta: {authRequired: true}}, //개인정보처리방침 이력 목록
+                {path:'personalReg',component: PolicyReg, name:'personalReg' ,meta: {authRequired: true} }, //개인정보처리방침 등록/수정
+                {path:'personalList',component:PolicyList, name:'personalList' ,meta: {authRequired: true}}, //개인정보처리방침 목록
+                {path:'personalDetail',component:PolicyDetail, name:'personalDetail' ,meta: {authRequired: true}}, //개인정보처리방침 상세
                 // 시스템관리>계정 권한 관리,
-                {path:'mnUser',component: MnUserList, name:'mnUserList'}, //계정리스트
-                {path:'regUser',component: RegUser, name:'regUser'}, //계정 등록
-                {path:'modUser',component: ModUser, name:'modUser'}, //계정수정
-                {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense'}, //사업자 등록증 미리보기
+                {path:'mnUser',component: MnUserList, name:'mnUserList' ,meta: {authRequired: true}}, //계정리스트
+                {path:'regUser',component: RegUser, name:'regUser' ,meta: {authRequired: true}}, //계정 등록
+                {path:'modUser',component: ModUser, name:'modUser' ,meta: {authRequired: true}}, //계정수정
+                {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense' ,meta: {authRequired: true}}, //사업자 등록증 미리보기
                 //시스템관리>메뉴 권한 관리
-                {path:'mnMenu',component: MnMenuList, name:'mnMenuList'}, //
-                {path:'regMenu',component: RegMenu, name:'regMenu'}, //
+                {path:'mnMenu',component: MnMenuList, name:'mnMenuList' ,meta: {authRequired: true}}, //
+                {path:'regMenu',component: RegMenu, name:'regMenu' ,meta: {authRequired: true}}, //
                 //시스템관리>코드관리
-                {path:'mnCode',component: MnCode, name:'mnCode'}, //
-                {path:'codePop',component: CodePop, name:'codePop'}, //
+                {path:'mnCode',component: MnCode, name:'mnCode' ,meta: {authRequired: true}}, //
+                {path:'codePop',component: CodePop, name:'codePop' ,meta: {authRequired: true}}, //
                 //시스템관리>시스템 모니터링,
-                {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring'}, //시스템모니터링
-                {path:'approvalStatus',component: ApprovalStatus, name:'approvalStatus'}, //승인현황
-                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc'}, //배치파일처리현황
-                {path:'batchFileProcList', component: BatchFileProcList, name:'batchFileProcList'}, //배치파일처리현황리스트
-                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem'}, //배치파일처리현황
-                {path:'serviceStatus',component: ServiceStatus, name:'serviceStatus'}, //배치파일처리현황
+                {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: true}}, //시스템모니터링
+                {path:'approvalStatus',component: ApprovalStatus, name:'approvalStatus' ,meta: {authRequired: true}}, //승인현황
+                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc' ,meta: {authRequired: true}}, //배치파일처리현황
+                {path:'batchFileProcList', component: BatchFileProcList, name:'batchFileProcList' ,meta: {authRequired: true}}, //배치파일처리현황리스트
+                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem' ,meta: {authRequired: true}}, //배치파일처리현황
+                {path:'serviceStatus',component: ServiceStatus, name:'serviceStatus' ,meta: {authRequired: true}}, //배치파일처리현황
 
             ]
         },
         { path: "/login", name: "login",  component: LoginComponent},
-        // {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
+        {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
 
         { path: '/',  redirect: "/login" },
         // { path: '/',  redirect: "/home/main" },
@@ -194,4 +195,6 @@ export default new Router({
 
     ]
 })
+
+
 

@@ -6,10 +6,10 @@
       <ul class="gnb_list" >
         <!--<li v-for="menu in menuItem" v-bind:class="menu.on"><a >{{menu.name}}</a></li>-->
         <template v-for="menu in menuItem" >
-        <li><a  title="페이지 이동"  v-bind:id="menu.id" v-on:mouseover="menuOver" v-on:click="menuClick(sub.id,menu.id)" v-bind:class="menu.on">{{menu.name}}</a>
+        <li><a  title="페이지 이동"  v-bind:id="menu.groupCode" v-on:mouseover="menuOver" v-on:click="menuClick(sub.groupCode,menu.groupCode)" v-bind:class="menu.sub">{{menu.name}}</a>
           <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
-              <li v-for="sub in menu.subMenu"><a v-on:click="menuClick(sub.id,menu.id)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.id">{{sub.name}}</span></a></li>
+              <li v-for="sub in menu.subMenuDtos"><a v-on:click="menuClick(sub.progId,menu.groupCode)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.groupCode">{{sub.name}}</span></a></li>
             </ul>
           </div>
         </li>
@@ -34,105 +34,70 @@
         subMenuStyle : any = "display: none;";
         subHeigth : any = "";
 
-        menuClick(subId: string , menuId) {
-
+        menuClick(subId: string , menuId : string) {
             if(subId == ''){
                 return;
             }
-
             if(menuId ==''){
                 return;
             }
-            /* 로그인 필수 메뉴
-             *  cashReceiptIssue        현금영수증 발급
-             *  ioc                     발급 조회 및 취소
-             *  IssueViewingCancel      가맹점 정보변경/해지
-             */
-            // if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
-            //     if (localStorage.accessToken) {
-            //         this.menuSelected(menuId);
-            //         this.$emit('parentEvent', menuId);
-            //     } else {
-            //         this.$router.push('/login');
-            //     }
-            // } else {
-            //     this.menuSelected(menuId);
-            //     this.$emit('parentEvent', menuId);
-            // }
             this.menuStyle = "display : none;"
             this.subMenuStyle = "display : none;"
             this.$emit('parentEvent', subId);
             this.menuSelected(menuId);
-            /*
-            if (menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel') {
-                if (localStorage.accessToken) {
-                    this.menuSelected(menuId);
-                    this.$emit('parentEvent', menuId);
-                } else {
-                    this.$router.push('/login');
-                }
-            } else {
-                this.menuSelected(menuId);
-                this.$emit('parentEvent', menuId);
-            }
-            */
         }
 
         @Watch('setMenu') oncahnge(){
         }
 
         created() {
+            // this.menuItem = JSON.parse(sessionStorage.authMenu)
             if (this.menuItem == null) {
                 this.menuItem = [
-                    {id:'franchiseList', name: '가맹점관리' , on: 'sub',subMenu:[
-                            {name:'가맹점 관리',id:'franchiseList',on: 'sub'}  ,
-                            {name:'지점 관리', id:'branchList',on: 'sub'},
-                            {name:'매장 관리', id:'storeList',on: 'sub'},
-                            {name:'매장 일괄 등록', id:'storeRegBulk',on: 'sub'},
-                            {name:'승인 대역 관리', id : 'approvalBandList',on: 'sub'}
+                    {progId:'franchiseList',groupCode : '0001', name: '가맹점관리' , sub: 'sub',subMenuDtos:[
+                            {name:'가맹점 관리',progId:'franchiseList',sub: 'sub'}  ,
+                            {name:'지점 관리', progId:'branchList',sub: 'sub'},
+                            {name:'매장 관리', progId:'storeList',sub: 'sub'},
+                            {name:'매장 일괄 등록', progId:'storeRegBulk',sub: 'sub'},
+                            {name:'승인 대역 관리', progId : 'approvalBandList',sub: 'sub'}
                         ]
                     },
-                    {id:'cashReceiptIssue', name: '현금영수증 관리', value : '', dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                            {name:'현금영수증 발급', id : 'cashReceiptIssue',on: 'sub'},
-                            {name:'발급 내역 조회/취소', id : 'ReceiptViewCancel',on: 'sub'},
-                            {name:'오류 내역 조회', id : 'errorList',on: 'sub'},
-                            {name:'승인 파일 전송', id : 'approvalFileSend',on: 'sub'},
-                            {name:'전문 오류 체크', id : 'errorCheck',on: 'sub'},
-                            {name:'전송파일 처리결과', id : 'sendFileResult',on: 'sub'},
+                    {progId:'cashReceiptIssue' ,groupCode : '0002' ,name: '현금영수증 관리', value : '', dept: '', auth: '', sub: 'sub'
+                        ,subMenuDtos:[
+                            {name:'현금영수증 발급', progId : 'cashReceiptIssue',sub: 'sub'},
+                            {name:'발급 내역 조회/취소', progId : 'ReceiptViewCancel',sub: 'sub'},
+                            {name:'오류 내역 조회', progId : 'errorList',sub: 'sub'},
+                            {name:'승인 파일 전송', progId : 'approvalFileSend',sub: 'sub'},
+                            {name:'전문 오류 체크', progId : 'errorCheck',sub: 'sub'},
+                            {name:'전송파일 처리결과', progId : 'sendFileResult',sub: 'sub'},
                         ]
                     },
-                    {id: 'noticeList', name: '고객지원', value : '', dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                            {name:'공지사항', id : 'noticeList',on: 'sub'},
-                            {name:'자주 묻는 질문', id : 'fnqList',on: 'sub'},
-                            {name:'메일 발송', id : 'sendMail',on: 'sub'},
+                    {progId: 'noticeList',groupCode : '0003', name: '고객지원', value : '', dept: '', auth: '', sub: 'sub'
+                        ,subMenuDtos:[
+                            {name:'공지사항', progId : 'noticeList',sub: 'sub'},
+                            {name:'자주 묻는 질문', progId : 'fnqList',sub: 'sub'},
+                            {name:'메일 발송', progId : 'sendMail',sub: 'sub'},
                         ]
                     },
-                    {id: 'ioc', name: '통계 관리', value : '', dept: '', auth: '', on: 'sub'
-                        ,subMenu:[
-                            {name:'회사코드별 거래현황', id : 'compCodeChart',on: 'sub'},
-                            {name:'사업자번호별 거래현황', id : 'saupNumberChart',on: 'sub'},
-                            {name:'현금영수증 사업자 정산', id : 'receipSaupCount',on: 'sub'},
-                            {name:'가맹점 증감 현황', id : 'gajumChart',on: 'sub'},
-                            {name:'가맹점수 현황 조회', id : 'gajumTotal',on: 'sub'}
+                    {progId: 'ioc',groupCode : '0004',name: '통계 관리', value : '', dept: '', auth: '', sub: 'sub'
+                        ,subMenuDtos:[
+                            {name:'회사코드별 거래현황', progId : 'compCodeChart',sub: 'sub'},
+                            {name:'사업자번호별 거래현황', progId : 'saupNumberChart',sub: 'sub'},
+                            {name:'현금영수증 사업자 정산', progId : 'receipSaupCount',sub: 'sub'},
+                            {name:'가맹점 증감 현황', progId : 'gajumChart',sub: 'sub'},
+                            {name:'가맹점수 현황 조회', progId : 'gajumTotal',sub: 'sub'}
                         ]
                     },
-                    {id:'policyList', name: '시스템관리', value : '', dept: '', auth: ''
-                        ,subMenu:[
-                            {name:'약관 관리', id : 'policyList',on: 'sub'},
-                            {name:'개인정보처리방침', id : 'personalList',on: 'sub'},
-                            {name:'계정 권한 관리', id : 'mnUser',on: 'sub'},
-                            {name:'메뉴 권한 관리', id : 'mnMenu',on: 'sub'},
-                            {name:'코드관리', id : '',on: 'mnCode'},
-                            {name:'시스템 모니터링', id : 'systemMonitoring',on: 'sub'}
+                    {progId:'policyList',groupCode : '0005', name: '시스템관리', value : '', dept: '', auth: ''
+                        ,subMenuDtos:[
+                            {name:'약관 관리', progId : 'policyList',sub: 'sub'},
+                            {name:'개인정보처리방침', progId : 'perssubalList',sub: 'sub'},
+                            {name:'계정 권한 관리', progId : 'mnUser',sub: 'sub'},
+                            {name:'메뉴 권한 관리', progId : 'mnMenu',sub: 'sub'},
+                            {name:'코드관리', progId : '',sub: 'mnCode'},
+                            {name:'시스템 모니터링', progId : 'systemMsubitoring',sub: 'sub'}
                         ]}
                 ];
-            } else {
-                // CommonBoardService.getListDatas('/receipt','/10').then(response => {
-                //
-                //     }
-                // ).catch();
             }
             this.menuHeight();
         }
@@ -144,8 +109,8 @@
             let count = 0;
             this.menuItem.filter(e=>{
 
-                if(count < e.subMenu.length){
-                    count = e.subMenu.length;
+                if(count < e.subMenuDtos.length){
+                    count = e.subMenuDtos.length;
                 }
 
             })
@@ -162,15 +127,14 @@
             this.menuSelected(e.target.id)
             this.menuStyle='display:block ; height : '+this.subHeigth+'px';
             this.subMenuStyle='display:none';
-            // this.subHeigth = 'heigth : '+ (40 * .subMenu.length)+'px';
         }
 
         menuSelected(menuId) {
             this.menuItem.filter(e => {
-                if (e.id == menuId) {
-                    e.on = 'sub on';
+                if (e.groupCode == menuId) {
+                    e.sub = 'sub on';
                 }else {
-                    e.on = 'sub';
+                    e.sub = 'sub';
                 }
             });
         }

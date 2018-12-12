@@ -1,4 +1,5 @@
 import {CommonBoardService} from '@/api/common.service';
+import router from '@/routes/router';
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -37,6 +38,7 @@ export default new Vuex.Store({
             sessionStorage.saupId = accessToken.saupId; //사업장번호
             sessionStorage.upJong = accessToken.upJong; //업종코드
             sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
+
             return "ok"
         },
         LOGOUT (state) {
@@ -55,6 +57,7 @@ export default new Vuex.Store({
             return CommonBoardService.postListDatas('auth', null,{id, password})
                 .then(({data}) => {
                     if(data.code=='000'){
+
                         commit('LOGIN', data)
                         return "success"
                     }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌

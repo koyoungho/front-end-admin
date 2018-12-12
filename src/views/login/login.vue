@@ -6,7 +6,7 @@
     <header id="header">
       <!-- top header -->
       <div class="top_header mobile">
-        <h1 class="logo" v-on:click="goMain"><a href="#">현금영수증</a></h1>
+        <h1 class="logo" v-on:click="goMain"><a>현금영수증</a></h1>
       </div>
       <!-- //top header -->
     </header>
@@ -42,8 +42,8 @@
 
         <!-- login info -->
         <div class="login_info">
-          <a href="#" v-on:click="searchId()" class="id">아이디 찾기</a> |
-          <a href="#" v-on:click="initPass()" class="pw">비밀번호 초기화</a>
+          <a href="" v-on:click="searchId()" class="id">아이디 찾기</a> |
+          <a href="" v-on:click="initPass()" class="pw">비밀번호 초기화</a>
         </div>
       </div>
       <!-- //login_box -->
@@ -54,19 +54,19 @@
           <h2>공지사항</h2>
           <ul class="notice_list">
             <li>
-              <a href="#">현금영수증 시스템 정기 점검 및 작업 안내현금영수증 시스템 정기 점검 및 작업 안내</a>
+              <a href="">현금영수증 시스템 정기 점검 및 작업 안내현금영수증 시스템 정기 점검 및 작업 안내</a>
               <span class="date">2018.04.04</span>
             </li>
             <li>
-              <a href="#">현금영수증 시스템 정기 점검 및 작업 안내</a>
+              <a href="">현금영수증 시스템 정기 점검 및 작업 안내</a>
               <span class="date">2018.04.04</span>
             </li>
             <li>
-              <a href="#">현금영수증 시스템 정기 점검 및 작업 안내</a>
+              <a href="">현금영수증 시스템 정기 점검 및 작업 안내</a>
               <span class="date">2018.04.04</span>
             </li>
           </ul>
-          <a href="#" class="btn_more">더보기</a>
+          <a href="" class="btn_more">더보기</a>
         </div>
 
         <!-- login info box -->
@@ -225,7 +225,8 @@
           alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.')
           return;
         }
-        this.$router.push('/home/'+nextPage)
+
+        this.$router.push({name:nextPage})
 
       },
       loginFail() {
@@ -247,7 +248,9 @@
 
     }
     , created() {
-
+        if(sessionStorage.accessToken){
+          this.goMain()
+        }
     }
     , mounted() {
 
