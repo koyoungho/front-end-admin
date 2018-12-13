@@ -128,11 +128,11 @@
                                         <option v-bind:value=datas.code>{{datas.name}}</option>
                                     </template>-->
                                 </select>
-                                <input type="text" id="companyCode" class="input form_comcode" title="회사코드" v-model="apro.companyCode">
+                                <input type="text" id="companyCode" class="input form_comcode" title="회사코드" v-model="apro.companyCode" disabled="disabled">
                             </td>
                             <th scope="row">점코드</th>
                             <td>
-                                <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh($event)" maxlength="10">
+                                <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10">
                                 <input type="hidden" v-model="apro.jumCodeYn">
                                 <!--<button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode($event)">중복확인</button>-->
                                 <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)">중복확인</button>
@@ -270,7 +270,7 @@
     export default class FranchiseReg extends Vue {
         message: any = '';
 
-        soluId: any = '0001'; //현금영수증 사업자(KT로 초기화)
+        soluId: any = ''; //현금영수증 사업자
 
         saupId: any = ''; //사업자등록번호
         saupIdYn: any = '' //사업자등록번호 중복확인 여부
@@ -390,15 +390,17 @@
 
             if(this.approvalList.length > 0){
                 for(let j=0; j<this.approvalList.length; j++){
-                    aproData = []; //초기화 안하면 값이 이상하게 들어감
-                    aproData['saupId'] = this.saupId; //사업자등록번호
-                    aproData['subSaup'] = this.approvalList[j].companyCode; //회사코드
-                    aproData['aprvPermFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작
-                    aproData['aprvPermTo'] = this.approvalList[j].aproBandTo; //승인대역 끝
-                    aproData['aprvCode'] = this.approvalList[j].aproCode; //승인코드
-                    aproData['aprvCount'] = this.approvalList[j].aproCnt; //건수
-                    aproData['jumcode'] = this.approvalList[j].jumCode; //점코드
-                    addData2.push(aproData);
+                    if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '') { //회사코드가 있는 경우만 담기
+                        aproData = []; //초기화 안하면 값이 이상하게 들어감
+                        aproData['subSaup'] = this.approvalList[j].companyCode; //회사코드
+                        aproData['aprvPermFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작
+                        aproData['aprvPermTo'] = this.approvalList[j].aproBandTo; //승인대역 끝
+                        aproData['aprvCode'] = this.approvalList[j].aproCode; //승인코드
+                        aproData['aprvCount'] = this.approvalList[j].aproCnt; //건수
+                        aproData['jumcode'] = this.approvalList[j].jumCode; //점코드
+                        aproData['saupId'] = this.saupId; //사업자등록번호
+                        addData2.push(aproData);
+                    }
                 }
             }
             console.log('승인대역 정보 확인');
@@ -410,14 +412,16 @@
             let addData3 : any = []; //승인대역정보 배열
             if(this.adminList.length > 0){
                 for(let k=0; k<this.adminList.length; k++){
-                    admData = []; //초기화 안하면 값이 이상하게 들어감
-                    admData['name'] = this.adminList[k].adminNm; //이름
-                    admData['phoneNum'] = this.adminList[k].adminPhonenum; //휴대폰번호
-                    admData['id'] = this.adminList[k].adminId; //ID
-                    admData['email'] = this.adminList[k].adminEmail; //이메일
-                    admData['accessIpFrom'] = this.adminList[k].adminConIp1; //접속IP 시작
-                    admData['accessIpTo'] = this.adminList[k].adminConIp2 //접속IP 끝
-                    addData3.push(admData);
+                    if(this.adminList[k].adminNm != undefined && this.adminList[k].adminNm != '') { //이름이 입력된 경우만 담기
+                        admData = []; //초기화 안하면 값이 이상하게 들어감
+                        admData['name'] = this.adminList[k].adminNm; //이름
+                        admData['phoneNum'] = this.adminList[k].adminPhonenum; //휴대폰번호
+                        admData['id'] = this.adminList[k].adminId; //ID
+                        admData['email'] = this.adminList[k].adminEmail; //이메일
+                        admData['accessIpFrom'] = this.adminList[k].adminConIp1; //접속IP 시작
+                        admData['accessIpTo'] = this.adminList[k].adminConIp2 //접속IP 끝
+                        addData3.push(admData);
+                    }
                 }
             }
             console.log('승인대역 정보 확인');
@@ -527,53 +531,21 @@
                 return;
             }
 */
-/*
-            //승인대역 입력 정보 체크
-            if(this.approvalList.length == 1){
-                if(this.approvalList['0'].companyCodeNm == undefined || this.approvalList['0'].companyCodeNm == ''){
-                    alert('회사코드를 입력하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].jumCode == undefined || this.approvalList['0'].jumCode == ''){
-                    alert('점코드를 입력하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].jumCodeYn == undefined || this.approvalList['0'].jumCodeYn == ''){
-                    alert('점코드 중복확인 하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].aproCode == undefined || this.approvalList['0'].aproCode == ''){
-                    alert('승인코드를 선택하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].aproGbn == undefined || this.approvalList['0'].aproGbn == ''){
-                    alert('승역대역 항목을 선택하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].aproGbn == '1' && (this.approvalList['0'].aproBandFrom == undefined || this.approvalList['0'].aproBandFrom == '')){
-                    alert('승인대역 시작점을 입력하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].aproGbn == '1' && (this.approvalList['0'].aproBandTo == undefined || this.approvalList['0'].aproBandTo == '')){
-                    alert('승인대역 끝점을 입력하세요.');
-                    return;
-                }
-                if(this.approvalList['0'].aproGbn == '2' && (this.approvalList['0'].aproCnt == undefined || this.approvalList['0'].aproCnt == '')){
-                    alert('승인대역 건수를 입력하세요.');
-                    return;
-                }
-            }
-*/
+            //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
-                    console.log(this.approvalList.length);
-                    if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){
+                    if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
+                        console.log('승인내역 건수 :: '+this.approvalList.length);
                         if(this.approvalList[i].jumCode == undefined || this.approvalList[i].jumCode == '') {
                             alert('점코드를 입력하세요.')
                             return;
                         }
                         if(this.approvalList[i].jumCodeYn == undefined || this.approvalList[i].jumCodeYn == '') {
                             alert('점코드 중복확인 하세요.')
+                            return;
+                        }
+                        if(this.approvalList[i].aproCode == undefined || this.approvalList[i].aproCode == ''){
+                            alert('승인코드를 선택하세요.');
                             return;
                         }
                         if(this.approvalList[i].aproGbn == undefined || this.approvalList[i].aproGbn == ''){
@@ -597,39 +569,11 @@
                 }
             }
 
-/*
-            //관리자 정보 입력 체크
-            if(this.adminList.length == 1){
-                if(this.adminList['0'].adminNm == undefined || this.adminList['0'].adminNm == ''){
-                    alert('이름을 입력하세요.');
-                    return;
-                }
-                if(this.adminList['0'].adminPhonenum == undefined || this.adminList['0'].adminPhonenum == ''){
-                    alert('휴대폰번호를 입력하세요.');
-                    return;
-                }
-                if(this.adminList['0'].adminId == undefined || this.adminList['0'].adminId == ''){
-                    alert('ID를 입력하세요.');
-                    return;
-                }
-                if(this.adminList['0'].adminIdYn == undefined || this.adminList['0'].adminIdYn == ''){
-                    alert('ID 중복확인 하세요.');
-                    return;
-                }
-                if(this.adminList['0'].adminEmail == undefined || this.adminList['0'].adminEmail == ''){
-                    alert('이메일주소를 입력하세요.');
-                    return;
-                }
-                if(this.adminList['0'].adminEmail != '' && !this.emailCheck(this.adminList['0'].adminEmail)){
-                    alert('입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.');
-                    return;
-                }
-            }
-*/
-            if(this.adminList.length > 1){
+            //관리자 정보 체크
+            if(this.adminList.length > 0){
                 for(let i=0; i<this.adminList.length; i++){
-                    if(this.adminList[i].adminNm != undefined || this.adminList[i].adminNm != ''){
-
+                    if(this.adminList[i].adminNm != undefined && this.adminList[i].adminNm != ''){ //이름을 입력하면 관리자정보는 필수 입력항목이 됨
+                        console.log('관리자 정보 건수 :: '+this.adminList.length);
                         if(this.adminList[i].adminPhonenum == undefined || this.adminList[i].adminPhonenum == '') {
                             alert('휴대폰번호를 입력하세요.');
                             return;
@@ -647,12 +591,15 @@
                             return;
                         }
                         if(this.adminList[i].adminEmail != '' && !this.emailCheck(this.adminList[i].adminEmail)){
-                            alert('입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.');
+                            alert('입력하신 이메일 주소가 올바르지 않습니다.\n이메일 주소를 확인하세요.');
                             return;
                         }
                     }
                 }
             }
+
+
+            //다음 단계 functon 들어오는 곳!!
 
         }
 
@@ -722,56 +669,6 @@
         }
 
         //점코드 유효성 체크
-        chkJumCode11111(event : any) {
-
-            let saupmsg = event.path['0'].nextSibling; //점코드 유효성 체크 메시지
-            let no = event.currentTarget.parentElement.children['0'].value;  //입력한 점코드
-
-            if(no == ''){
-                alert('점코드를 입력하세요.');
-                return;
-            }else if(no.length != 10){
-                if(saupmsg!=null){ saupmsg.innerHTML = '점코드 길이가 부적합 합니다.'; }
-                return;
-            }
-
-            let reqData: any = {};
-            reqData['checkString'] = no; //점코드
-
-            // api 데이터 호출(사업자등록번호 유효성 체크)
-            CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
-                    let result: any = response.data;
-                    console.log(result);
-                    if (result != null && result.code == '000') {
-                        //this.approvalList.jumCodeYn = 'Y'
-                        event.path['1'].children['1'].value = 'Y'; //점코드 체크여부 값 셋팅(jumCodeYn)
-                        //event.target.parentElement.children['1'].value = 'A';
-                        if(saupmsg != null){
-                            saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
-                        }
-                        //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
-//                        this.chkSaupNoAlr(no);
-                    } else {
-                        //this.approvalList.jumCodeYn = '';
-                        event.path['1'].children['1'].value = ''; //점코드 체크여부 값 셋팅(jumCodeYn)
-                        if(saupmsg != null){
-                            saupmsg.innerHTML = result.message; //화면에 메시지 보이기
-                        }
-                    }
-                }
-                , (error) => {
-                    console.log(error);
-                    //this.approvalList.jumCodeYn = '';
-                    event.path['1'].children['1'].value = '';
-                }
-            ).catch((response) => {
-                //this.approvalList.jumCodeYn = '';
-                event.path['1'].children['1'].value = '';
-                console.log(response);
-            });
-        }
-
-        //점코드 유효성 체크
         chkJumCode(idx: number) {
             console.log('===================')
             console.log(idx)
@@ -827,74 +724,14 @@
             //}
         }
 
-        jumCodeCh(event: any){
-
+        //점코드 변경시 점코드 중확확인 여부값 초기화
+        jumCodeCh(idx: number){
+            this.approvalList[idx].aproJumCodeYn = '';
         }
 
-        //관리자 ID 변경시 초기화
-        chkIdCh1111111(event: any){
-            //let id = event.currentTarget.value; //아이디 각져오기
-            let id_mag = event.path['1'].children['2'].nextSibling; //ID 체크 메시지
-
-            //if(id == ''){
-                event.path[1].children['1'].value = ''; //ID 중복확인 여부(adminIdYn) 초기화
-                id_mag.innerHTML = '';
-            //    return;
-            //}else if(id.length != 0){
-            //    event.path[1].children['1'].value = '';
-            //    id_mag.innerHTML = '';
-            //    return;
-            //}
-
-        }
-
-        //관리자 ID 변경시 ID중복확인 여부값 초기화
+        //관리자 ID 변경시 ID 중복확인 여부값 초기화
         chkIdCh(idx: number){
             this.adminList[idx].adminIdYn = '';
-        }
-
-        //사용자ID 중복확인
-        chkAdminId1111(event: any) {
-
-            let id = event.currentTarget.parentElement.children['0'].value;  //입력한 ID
-            let idmsg = event.path['0'].nextSibling; //ID 유효성 체크 메시지
-
-            if(id == ''){
-                alert('ID를 입력하세요.');
-                idmsg.innerHTML = '';
-                return;
-            }
-            let reqData: any = {};
-            reqData['checkString'] = id; //ID
-
-            // api 데이터 호출
-            CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
-                    let result: any = response.data;
-
-                    if (result.code == '000') {
-                        //this.adminList.idYn = 'Y';
-                        //alert('사용 가능한 아이디입니다.');
-                        if(idmsg!=null){ idmsg.innerHTML = '사용 가능한 아이디입니다.'; }
-                        event.path['1'].children['1'].value = 'Y'; //ID 체크여부 값 셋팅(adminIdYn)
-                    }else{
-                        //this.adminList.idYn = '';
-                        event.path['1'].children['1'].value = '';
-                        //alert('이미 등록된 아이디입니다. 다른 아이디를 사용해 주세요.');
-                        if(idmsg!=null){ idmsg.innerHTML = result.message; }
-                        return;
-                    }
-                }
-                , (error) => {
-                    console.log(error);
-                    //this.adminList.idYn = '';
-                    event.path['1'].children['1'].value = '';
-                }
-            ).catch((response) => {
-                console.log(response);
-                //this.adminList.idYn = '';
-                event.path['1'].children['1'].value = '';
-                //alert('입력한 아이디를 확인하세요.');
-            });
         }
 
         //사용자ID 중복확인
@@ -902,9 +739,9 @@
             let id = this.adminList[idx].adminId; //ID 가져오기
             let idmsg = document.getElementById('adminid_msg'+idx); //중복 확인한 ROW 메시지
 
-            if(id == ''){
+            if(id != null && id == ''){
                 alert('ID를 입력하세요.');
-                idmsg.innerHTML = '';
+                if(idmsg!=null){ idmsg.innerHTML = ''; }
                 return;
             }
             let reqData: any = {};
@@ -989,13 +826,6 @@
             //console.log(data)
             this.addr1 = data.addr;
             this.zipCode = data.zip;
-        }
-
-        companyCodeCh1111(event : any){
-            //let comCode = event.currentTarget.value;
-            //console.log(event.currentTarget.value)
-            //event.path['1'].lastChild.value = event.currentTarget.value;
-            //console.log(event.path['1'].lastChild.value)
         }
 
         //회사코드 select 변경시 코드값 표시

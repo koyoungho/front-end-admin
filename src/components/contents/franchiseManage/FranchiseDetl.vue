@@ -141,7 +141,7 @@
             <div class="title_area">
                 <h4>승인대역 정보</h4>
                 <div class="btn_tbl_top type01">
-                    <button type="button" id="" class="btn_m01 bg02 add" v-on:click="addAproval">승인대역 추가</button>
+                    <button type="button" id="" class="btn_m01 bg02 add" v-on:click="addAproval('show')">승인대역 추가</button>
                 </div>
             </div>
 
@@ -176,8 +176,8 @@
                         <td>
                             <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh($event)" maxlength="10">
                             <input type="hidden" v-model="apro.jumCodeYn">
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)" style="">중복확인</button>
-                            <p class="info_msg" id=id v-bind:id="apro.jumCodeMsg"></p>
+                            <button type="button" class="btn_s01 bg04" v-on:click="chkJumCode(index)" v-bind:style="apro.aproDupBtn">중복확인</button>
+                            <p class="info_msg" v-bind:id="apro.jumCodeMsg"></p>
                         </td>
                     </tr>
                     <tr>
@@ -366,8 +366,9 @@
                     aproGbn: "",
                     aproBandFrom: "", //승인대역 시작
                     aproBandTo: "", //승인대역 끝
-                    aproCnt: "" //승인대역 건수
-                    ,aproRadio: "band_radio0"
+                    aproCnt: "", //승인대역 건수
+                    aproRadio: "band_radio0",
+                    aproDupBtn: "dupbtn0"
                 }
             ],
                 //관리자 정보
@@ -400,12 +401,7 @@
             this.$router.push('/home/franchiseList')
         }
 
-        //수정
-        updateInfo() {
-            alert('수정되었습니다.')
-            this.$router.push('/home/franchiseList')
-        }
-
+        //상세정보 보이기
         franchiseView(){
             this.objectKey = this.$route.params.objectKey
 
@@ -440,10 +436,41 @@
 
                         //승인대역 정보
                         console.log(result.aprvBands.length);
-                        if(result.aprvBands.length > 0){
-                            this.addAproval();
+                        for(let a=0; a<result.aprvBands.length; a++){ //하나는 기본표시이기때문에 1부터시작
 
+
+
+                            if(result.aprvBands.length > 0 && a == 0){
+                                this.approvalList[0].aproDupBtn = 'display:none';
+                            }
+                            if(a > 0){ //승인대역 정보 1개는 기본으로 보여짐으로 1개이상부터 추가
+                                this.addAproval('hide'); //승인대역 정보 row 추가
+                            }
+
+                            this.approvalList[a].companyCodeName = result.aprvBands[a].subSaup;
+                            this.approvalList[a].companyCode = result.aprvBands[a].subSaup;
+                            this.approvalList[a].jumCode = result.aprvBands[a].jumcode;
+                            this.approvalList[a].aproCode = result.aprvBands[a].aprvCode;
+                            this.approvalList[a].aproBandFrom = result.aprvBands[a].aprvPermFrom;
+                            this.approvalList[a].aproBandTo = result.aprvBands[a].aprvPermTo;
+
+                            console.log('승인대역 정보 있음');
+                            console.log(this.approvalList.length)
+
+                            /*
+                            console.log('==================================')
+                            console.log(document.getElementById('dupbtn0'));
+                            console.log(document.getElementById('dupbtn1'));
+                            console.log('==================================')
+
+                            let btn_id = 'dupbtn'+a; //점코드 버튼 id 생성
+                            console.log('중복버튼 ID 만듬 :: '+btn_id);
+                            let dup_btn = document.getElementById(btn_id); //버튼 id
+                            console.log('중복버튼 ID 객체 가져옴 :: '+dup_btn);
+                            if(dup_btn != null){ dup_btn.setAttribute('style', 'display:none'); }
+                            */
                         }
+
                         //관리자 정보
 
 
@@ -508,12 +535,15 @@
         }
 
         //승인대역 추가
-        addAproval() {
+        addAproval(display) {
             this.aproIdx = this.aproIdx + 1;
             let msg_name = 'jumcode_msg'+ this.aproIdx; //점코드 중확확인 메시지 표시위해 ID 만듬
             let radio_name = 'band_radio'+this.aproIdx; //승인대역 라이오 버튼 ID또는 NAME 다르게
-            this.approvalList.push({companyCodeNm: "", companyCode: "", jumCode:"", jumCodeYn:"", jumCodeMsg:msg_name, aproCode:"", aproStat:"", aproGbn:"", aproBandFrom:"", aproBandTo:"", aproCnt:"", aproRadio:radio_name});
-            this.aproIdx = this.aproIdx;
+            let btn_hide : string = '';
+            if(display == 'hide') { //hide이면 중복확인 버튼 안나옴
+                btn_hide = 'display:none;';
+            }
+            this.approvalList.push({companyCodeNm: "", companyCode: "", jumCode:"", jumCodeYn:"", jumCodeMsg:msg_name, aproCode:"", aproStat:"", aproGbn:"", aproBandFrom:"", aproBandTo:"", aproCnt:"", aproRadio:radio_name, aproDupBtn: btn_hide});
         }
 
         //승인대역 삭제
@@ -547,7 +577,7 @@
         }
 
         validationChk(){
-            this.insertInfo();
+            this.updateInfo();
             return;
             /*
                         if(this.soluId == ''{
@@ -710,6 +740,108 @@
 
         }
 
+        //수정
+        updateInfo() {
+
+            let reqData: any = {};
+
+            reqData['soluId'] = this.soluId; //현금영수증 사업자
+
+            //사업장정보
+            let saupData: any = {};
+            saupData['saupId'] = this.saupId; //사업자등록번호
+            saupData['shopNm'] = this.storeNm; //사업장명
+            saupData['chipNm'] = this.repNm; //대표자명
+            saupData['telNum'] = this.repPhonenum; //전화번호
+            //saupData['birthday'] = this.reBirthday; //생년월일
+            //saupData['gender'] = this.reGender; //성별
+            saupData['saupType'] = this.saupType; //사업자구분
+            saupData['lawNum'] = this.lawNum; //법인등록번호
+            saupData['zipCode'] = this.zipCode; //사업장 우편번호
+            saupData['addr1'] = this.addr1; //사업장 주소
+            saupData['addr2'] = this.addr2; //사업장 상세주소
+
+            reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
+
+            //승인대역 정보
+            //let aproData: any = [];
+            let aproData : any = [];
+            let addData2 : any = []; //승인대역정보 배열
+
+            console.log('승인대역 정보 뿌리기')
+            console.log(this.approvalList)
+            console.log('관리자 정보 뿌리기')
+            console.log(this.adminList)
+            console.log('=======================================================')
+
+            if(this.approvalList.length > 0){
+                for(let j=0; j<this.approvalList.length; j++){
+                    if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '') { //회사코드가 있는 경우만 담기
+                        aproData = []; //초기화 안하면 값이 이상하게 들어감
+                        aproData['subSaup'] = this.approvalList[j].companyCode; //회사코드
+                        aproData['aprvPermFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작
+                        aproData['aprvPermTo'] = this.approvalList[j].aproBandTo; //승인대역 끝
+                        aproData['aprvCode'] = this.approvalList[j].aproCode; //승인코드
+                        aproData['aprvCount'] = this.approvalList[j].aproCnt; //건수
+                        aproData['jumcode'] = this.approvalList[j].jumCode; //점코드
+                        aproData['saupId'] = this.saupId; //사업자등록번호
+                        addData2.push(aproData);
+                    }
+                }
+            }
+            console.log('승인대역 정보 확인');
+            console.log(addData2);
+            reqData['aprvBandAddDtos'] = addData2; //승인대역 정보 셋팅
+
+            //let admData: any = {};
+            let admData: any = [];
+            let addData3 : any = []; //승인대역정보 배열
+            if(this.adminList.length > 0){
+                for(let k=0; k<this.adminList.length; k++){
+                    if(this.adminList[k].adminNm != undefined && this.adminList[k].adminNm != '') { //이름이 입력된 경우만 담기
+                        admData = []; //초기화 안하면 값이 이상하게 들어감
+                        admData['name'] = this.adminList[k].adminNm; //이름
+                        admData['phoneNum'] = this.adminList[k].adminPhonenum; //휴대폰번호
+                        admData['id'] = this.adminList[k].adminId; //ID
+                        admData['email'] = this.adminList[k].adminEmail; //이메일
+                        admData['accessIpFrom'] = this.adminList[k].adminConIp1; //접속IP 시작
+                        admData['accessIpTo'] = this.adminList[k].adminConIp2 //접속IP 끝
+                        addData3.push(admData);
+                    }
+                }
+            }
+            console.log('승인대역 정보 확인');
+            console.log(addData3);
+            reqData['accounts'] = addData3; //관리자 정보 셋팅
+
+            console.log('최종 등록 정보 확인');
+            console.log(reqData);
+
+            /*
+                        // api 데이터 호출(사업자등록번호 유효성 체크)
+                        CommonBoardService.postListDatas('validation/saupid', null, reqData).then((response) => {
+                                let result: any = response.data;
+                                console.log(result);
+                                if (result != null && result.code == '000') {
+                                    //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
+            //                        this.chkSaupNoAlr(no);
+                                } else {
+                                    //if(saupmsg != null){
+                                        //saupmsg.innerHTML = result.message; //화면에 메시지 보이기
+                                    //}
+                                    return;
+                                }
+                            }
+                            , (error) => {
+                                console.log(error);
+                            }
+                        ).catch((response) => {
+                            console.log(response);
+                        });
+            */
+            //this.$router.push('/home/franchiseRegCmpl')
+        }
+
         //사업자 구분(개인,법인) 체크
         saupIdChk() {
             if(this.saupId == ''){
@@ -822,9 +954,9 @@
             let id = this.adminList[idx].adminId; //ID 가져오기
             let idmsg = document.getElementById('adminid_msg'+idx); //중복 확인한 ROW 메시지
 
-            if(id == ''){
+            if(id != null && id == ''){
                 alert('ID를 입력하세요.');
-                idmsg.innerHTML = '';
+                if(idmsg != null){ idmsg.innerHTML = ''; }
                 return;
             }
             let reqData: any = {};
