@@ -213,7 +213,7 @@
                                 <th scope="row">ID<em class="form_req">*</em></th>
                                 <td>
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)">
-                                    <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
+                                    <input type="text" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)">중복확인</button>
                                     <p class="info_msg" id=id v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
@@ -225,9 +225,9 @@
                             <tr>
                                 <th scope="row">접속IP 대역</th>
                                 <td colspan="3">
-                                    <input type="text" class="input form_conip" title="접속IP 대역" v-model="adm.adminConIp1">
+                                    <input type="text" class="input form_conip" title="접속IP 대역" v-model="adm.adminConIp1" maxlength="14">
                                     <span class="period_form">-</span>
-                                    <input type="text" class="input form_conip" title="접속IP 대역" v-model="adm.adminConIp2">
+                                    <input type="text" class="input form_conip" title="접속IP 대역" v-model="adm.adminConIp2" maxlength="14">
                                 </td>
                             </tr>
                             </tbody>
@@ -564,6 +564,37 @@
                             alert('승인대역 건수를 입력하세요.')
                             return;
                         }
+
+                        //승인대역 대역폭 체크
+                        let bandChk : boolean = true;
+                        if(this.approvalList[i].aproGbn == '1' && this.approvalList[i].aproBandFrom != '' &&  this.approvalList[i].aproBandTo != '') { //승인대역이 대역폭이고 대역폭 시작, 끝이 있으면 체크
+                            //대역폭 정보
+                            let bandData: any = {};
+                            bandData['subSaup'] = this.approvalList[i].companyCodeNm; //회사코드
+                            bandData['approvedCode'] = this.approvalList[i].aproCode; //승인코드
+                            bandData['approvedbandFrom'] = this.approvalList[i].aproBandFrom; //시작 대역
+                            bandData['approvedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
+
+                            //승인대역 대역폭 사용가능 여부 확인
+                            console.log('대역폭 사용가능 여부 체크')
+                            CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
+                                    let result: any = response.data;
+                                    console.log(result)
+                                    if (result.code === '000') { //대역폭 사용가능
+                                        bandChk = false;
+                                    } else { //대역폭 사용 못함
+                                        alert(result.message)
+                                        bandChk = true;
+                                    }
+                                    if(bandChk == true){
+                                        return;
+                                    }
+                                }
+                                , (error) => {
+                                }
+                            ).catch();
+                        }
+
                     }
 
                 }
