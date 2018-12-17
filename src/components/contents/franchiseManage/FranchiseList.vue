@@ -1,167 +1,122 @@
 <template>
 
-    <!-- container -->
     <section id="container">
-        <!-- content  -->
+        <!--<resize-observer @notify="handleResize"/>-->
         <div class="content">
-            <h2 class="blind">가맹점 관리</h2>
-
-            <h3>가맹점 관리</h3>
-
-            <!-- btn top -->
-            <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
-            </div>
-
-            <!-- search box -->
-            <div class="search_box page_store01">
-                <ul class="search_list">
-                    <li>
-                        <label for="aa">등록일</label><span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-                    </li>
-                    <li>
-                        <label for="">가맹점상태</label>
-                        <select id="" name="" class="select sch_w100" title="가맹점상태">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">BL 상태</label>
-                        <select id="" name="" class="select sch_w100" title="BL 상태">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">검색</label>
-                        <select id="" name="" class="select sch_appnum" title="사업장명">
-                            <option>사업장명</option>
-                        </select>
-                    </li>
-                    <li>
-                        <input type="text" class="input sch_appuser" title="고객명 입력">
-                    </li>
-                </ul>
-            </div>
-            <!-- //search box -->
-
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <button type="button" class="btn_m01 bg01">조회</button>
-            </div>
-
-            <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01">
-                    <caption>가맹점 목록</caption>
-                    <colgroup>
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="15%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="12%">
-                        <col width="12%">
-                        <col width="*">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">순번</th>
-                        <th scope="col">사업장명</th>
-                        <th scope="col">사업자등록번호</th>
-                        <th scope="col">가맹점번호</th>
-                        <th scope="col">회사코드</th>
-                        <th scope="col">업종</th>
-                        <th scope="col">가맹점상태</th>
-                        <th scope="col">BL 상태</th>
-                        <th scope="col">등록일</th>
-                    </tr>
-                    </thead>
-                    <tbody v-on:click="goDetl">
-                    <tr>
-                        <td>100</td>
-                        <td>롯데정보통신</td>
-                        <td>132-**-**232</td>
-                        <td>120</td>
-                        <td>120</td>
-                        <td></td>
-                        <td>해지신청</td>
-                        <td>정상</td>
-                        <td>2018.10.04</td>
-                    </tr>
-                    <tr>
-                        <td>100</td>
-                        <td>롯데정보통신</td>
-                        <td>132-**-**232</td>
-                        <td>120</td>
-                        <td>120</td>
-                        <td></td>
-                        <td>해지신청</td>
-                        <td>정상</td>
-                        <td>2018.10.04</td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //tbl list box -->
-
-            <!-- pagination -->
-            <div class="pagination">
-                <a href="#" class="btn_fprev">맨앞</a>
-                <a href="#" class="btn_prev">이전</a>
-                <span class="num">
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<strong>3</strong>
-					<a href="#">4</a>
-					<a href="#">5</a>
-				</span>
-                <a href="#" class="btn_next">다음</a>
-                <a href="#" class="btn_enext">맨뒤</a>
-            </div>
-            <!-- //pagination -->
-
+            <div>
+                <h2 class="blind">{{titles}}</h2>
+        <h3>{{subTitle}}</h3>
+        <!-- btn top -->
+        <div class="btn_top">
+            <button type="button" id="" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
+        </div>
+        <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
+        </div>
         </div>
         <!-- //content -->
     </section>
-    <!-- //container -->
 
 </template>
 
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-    import {CommonBoardService, CommonListService} from '../../../api/common.service';
-    import {environment} from '../../../utill/environment';
-
-
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     @Component({
         components: {
-            FranchiseList
-        },
+            FranchiseList, ListComponent
+        }
     })
     export default class FranchiseList extends Vue {
-        message: any = '';
+        // 리스트 변수
+        listOn : boolean = true;
+        titles: string = '가맹점 관리'; // 제목
+        subTitle: string = '가맹점 관리'; //서브타이틀
+        windowResize : boolean = false; // 리사이즈
+        originItem : any = {} // 오리지널데이터
+        exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
+        listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            {
+                dataGrid: {
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '순번' ,id : 'rnum',type:'number', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '사업장명' ,id : 'shopNm',type:'text', width : '24%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '사업자등록번호' ,id : 'saupId',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '가맹점번호' ,id : 'gajumId',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '가맹점상태' ,id : 'gajumStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등록일' ,id : 'regiDate',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}
+                    ],
+                    totalColum: 9,
+                    apiUrl : 'gajum',
+                    onLoadList : true,  // onLoad 로딩 유무
+                    //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                    //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                    //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: '20180522' ,  searchEndDate: '20181215', calenderCount : 2},
+                    // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'selectCode' , title :'가맹점상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeName : '정상' , code: '01' },{codeName : '해지' , code: '02' },{codeName : '해지신청' , code: '03' }]},
+                    {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeName : '휴업' , code: '1' },{codeName : '수기BL' , code: '11' },{codeName : '수기BL취소' , code: '17' },{codeName : '폐업' , code: '2' },{codeName : '신용카드위장' , code: '3' },{codeName : '현금위장' , code: '4' },{codeName : '신용카드/현금위장' , code: '5' },{codeName : '현금영수증발급불가' , code: '6' },{codeName : '적용취소' , code: '7' },{codeName : '삭제된사업자' , code: '8' }]},
+                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업자등록번호' , value: 'saupId' },{name : '대표자 명' , value: 'chipNm' }]},
+                    {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
+                    // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
+                    // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
+                ],
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                goSearch : "iocSearch"
+            }
 
-        //돔생성전 호출자
-        created() {
+        created(){
+            this.originItem  = this.listItem.dataGrid.columControl
+            // if( window.innerWidth < 482){
+            //     this.handleResize()
+            // }else{
+            //     this.windowResize = false;
+            //     this.handleResize()
+            // }
         }
 
-        //돔렌더링완료시 진행
-        mounted() {
+
+        mounted(){
+
+        }
+
+        checkBoxEvent(data){
+            console.log(data); // 체크한데이터 받는다
+        }
+
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            this.$router.push({ name:'franchiseDetl' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        }
+
+        // 와이드 창줄어들시 모바일용으로 윈도우 사이즈 재는곳
+        // handleResize(){
+        // if(window.innerWidth < 482){
+        //     if(this.windowResize ==true){
+        //
+        //     }else{
+        //         // this.listItem.dataGrid.columControl= this.listItem.dataGrid.columControl.filter(e=>{
+        //         //        return this.exceptColum.find(s=>{
+        //         //         if(e.id !=s.id){
+        //         //             return e
+        //         //         }
+        //         //     })
+        //         // })
+        //         this.windowResize =true
+        //     }
+        // }else{
+        //     if(this.windowResize==false){
+        //     }else{
+        //     this.listItem.dataGrid.columControl = this.originItem;
+        //     this.windowResize =false;
+        //     }
+        // }
+
+        // }
+        updated(){
         }
 
         //가맹점 상세이동
