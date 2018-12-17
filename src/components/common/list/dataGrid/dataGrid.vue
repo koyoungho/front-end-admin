@@ -71,15 +71,15 @@
         <template v-if="listData.length > 0" >
           <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" >
             <template v-for="(rows,key,indexs) in datas">
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='checkBox'">
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
                   <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows" v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='number'">
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
                 <td>{{rows}}</td>
               </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='text'">
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
               <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
               </template>
             </template>
@@ -87,8 +87,7 @@
         </template>
         <template v-if="listData.length < 1">
           <tr>
-            <td v-bind:colspan="dataGridDetail.dataGrid.totalColum" class="no_data">조회된 내용이 없습니다.</td>
-
+            <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
           </tr>
         </template>
         </tbody>
@@ -182,12 +181,6 @@
 
         //돔생성전 호출자
         created() {
-            // this.dataGridDetail.dataGrid.columControl.filter(e=>{
-            //     if(e.type=='checkBox'){
-            //         this.allCheckId[e.id]=true;
-            //     }
-            // })
-            // console.log(this.allCheckId)
         }
 
         numberFormatCount(index){
@@ -284,15 +277,19 @@
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => {
+                            if(e.type=='checkBox'){
+                                this.menuHeader['check_'+e.id] = e.id;
+                            }else{
                             this.menuHeader[e.id] = e.id;
+                            }
                     });
                     this.listOragin = result.data;
 
                     this.totalCount = result.totalRecords;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
 
-                    if (result.length > 0) { // 데이터 키맵에 맞게 매핑하기
-                        result.filter((e,indexs) => {
+                    if (result.data.length > 0) { // 데이터 키맵에 맞게 매핑하기
+                        result.data.filter((e,indexs) => {
                             let Objects = {};
                             Object.keys(e).forEach((key) => {
                                 if (this.menuHeader[key] == key) {
@@ -308,7 +305,7 @@
                                 else{
                                 Object.keys(Objects).forEach((Objectskey) => {
                                     if (menuHeaderkey == Objectskey) {
-                                        let option = this.dataGridDetail.dataGrid.columControl[index].options
+                                        let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
                                         if(option){
                                             option.filter(e=>{
                                                 if(e.value==Objectskey){
@@ -323,9 +320,18 @@
                                             numberObject[menuHeaderkey] = Objects[Objectskey];
                                         }
                                     }
+                                    else{ // 헤더가 체크박스일때
+                                        if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){
+                                            let heder = menuHeaderkey.split('_')[1]
+                                            if (heder == Objectskey) {
+                                                numberObject[menuHeaderkey] = Objects[Objectskey];
+                                            }
+                                        }
+                                    }
                                 });
                                 }
                             });
+                            console.log(numberObject)
                             this.listData.push(numberObject);
                         });
 

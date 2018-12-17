@@ -11,11 +11,11 @@
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==2">
               <span class="form_cal">
-                            <input type="text" v-model="item.searchStartDate"  class="input date" title="날짜 입력">
+                            <input type="text" v-model="item.searchStartDate==null ? dateOne : item.searchStartDate"  class="input date" title="날짜 입력">
                           </span>
                 <span class="period_cal">-</span>
                 <span class="form_cal">
-                            <input type="text" v-model="item.searchEndDate"  class="input date" title="날짜 입력">
+                            <input type="text" v-model="item.searchEndDate==null ? dateTwo : item.searchEndDate"  class="input date" title="날짜 입력">
                             <a href="" class="btn_cal" :id="item.id">달력</a>
                           </span>
                 <template class="datepicker-trigger">
@@ -85,7 +85,7 @@
             <li>
               <label for="aa">{{item.title}}</label>
               <span v-for="radioItem in item.option" class="rdo_box" >
-                <input type="radio" name="radioBox"  :value="radioItem.value" v-model="item.value"><label for="aa11">{{radioItem.name}}</label>
+                <input type="radio" name="radioBox"  :value="radioItem.value" v-model="item.value"  ><label for="aa11">{{radioItem.name}}</label>
               </span>
             </li>
           </template>

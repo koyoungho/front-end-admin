@@ -25,6 +25,7 @@
 
 <script lang="ts">
 
+    import {format} from 'date-fns';
     import {Component, Vue} from "vue-property-decorator";
     import PreviewBusinessLicense from "@/components/contents/mnUser/previewBizLicense.vue";
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
@@ -43,16 +44,17 @@
         titles: string = '발급조회 및 취소'; // 제목
         subTitle: string = '현금영수증 발급'; //서브타이틀
         windowResize : boolean = false; // 리사이즈
+        setDate =  format(new Date(),'YYYYMMDD')
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
                 dataGrid: {
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '체크박스' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false },
+                        {columName : '체크박스' ,id :'id',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck:true }, // 올체크 투르 펄스에따라 전체체크박스생성 //checkval 디폴트값주기
                         // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
-                        {columName : '순번' ,id : 'number',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '아이디' ,id : 'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '아이디' ,id :'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                         {columName : '이름' ,id : 'name',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         {columName : '등급' ,id : 'roleNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         {columName : '소속' ,id : 'shopNm',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
@@ -61,7 +63,7 @@
                         {columName : '최종접속' ,id : 'lastConnDt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
-                    totalColum: 9, // 체크박스시 +1 순번추가시 +1
+                    totalColum: 9, //
                     apiUrl : 'accounts',
                     onLoadList : true,  // onLoad 로딩 유무
                     // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
@@ -70,8 +72,8 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: '' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
-                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'lastConnDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
+                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                     {type: 'selectCode' , title :'등급',id: 'role', name:'issuePurpose' , value: '' ,  api : '0034' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
                     {type: 'selectCode' , title :'상태',id: 'dealType', name:'dealType' , value: '' ,  api : '0035' , option : [{ codeName : '승인' , code: '0' },{codeName : '취소' , code: '1' }]},
@@ -83,7 +85,8 @@
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
-                searchClass : 'search_box page_system03'
+                searchClass : 'search_box page_system03',
+                searchClassSub : 'search_box page_system03'
             }
 
         created(){
