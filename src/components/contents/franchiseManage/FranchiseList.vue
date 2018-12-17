@@ -166,7 +166,7 @@
 
         //가맹점 상세이동
         goDetl(){
-            this.$router.push('/home/franchiseDetl')
+            this.$router.push({name: 'franchiseDetl'})
         }
         //신규등록
         newReg(){

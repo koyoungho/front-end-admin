@@ -115,12 +115,12 @@
             input.setAttribute('type','hidden')
             input.setAttribute('name','tr_cert')
             input.setAttribute('value',this.tr_cert)
-            myForm.append(input);
+            myForm.appendChild(input);
             let input2 = <HTMLElement>document.createElement('input');
             input2.setAttribute('type','hidden')
             input2.setAttribute('name','tr_url')
             input2.setAttribute('value',this.tr_url)
-            myForm.append(input2)
+            myForm.appendChild(input2)
             document.body.appendChild(myForm);
             myForm.submit();
         }

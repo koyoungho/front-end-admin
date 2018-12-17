@@ -4,10 +4,7 @@ import Home from '../views/Home.vue'
 import LoginComponent from "../views/login/login.vue"
 import SecureComponent from "../views/login/secure.vue"
 
-// import ioc from "../components/contents/issuanceOfCashReceipt/iocList.vue"
-
 import Main from "../components/contents/Main.vue" //메인
-import ChgPass from "../components/contents/login/ChgPass.vue" //비밀번호 변경
 import PhoneAuth from "../components/contents/login/PhoneAuth.vue" //휴대폰 본인 인증
 import SearchIdInput from "../components/contents/login/SearchIdInput.vue" //아이디 찾기 입력
 import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //아이디 찾기 결과
@@ -41,16 +38,6 @@ import ApprovalFileSend from "../components/contents/issuanceOfCashReceipt/Appro
 import ErrorCheck from "../components/contents/issuanceOfCashReceipt/ErrorCheck.vue" //전문 오류 체크
 import SendFileResult from "../components/contents/issuanceOfCashReceipt/SendFileResult.vue" //전송파일 처리 결과
 
-// import CashIntstitution from "../components/contents/cashReceiptSystem/CashInstitution.vue" //현금영수증 제도 안내
-// import FranchiseRegStep1 from "../components/contents/cashReceiptSystem/FranchiseRegStep1.vue" //가맹점 가입
-// import FranchiseRegStep2 from "../components/contents/cashReceiptSystem/FranchiseRegStep2.vue" //가맹점 가입
-// import FranchiseRegStep3 from "../components/contents/cashReceiptSystem/FranchiseRegStep3.vue" //가맹점 가입 완료
-//
-//
-// import IssueViewingCancel from "../components/contents/franchiseModityCancel/IssueViewingCancel.vue" //가맹점 정보변경/해지
-// import AccountCancelCompl from "../components/contents/franchiseModityCancel/AccountCancelCompl.vue" //가맹점 계정 해지 완료
-// import FranchiseCancelCompl from "../components/contents/franchiseModityCancel/FranchiseCancelCompl.vue" //가맹점 해지 신청 완료
-//
 //고객지원
 import NoticeList from "../components/contents/notice/NoticeList.vue" //공지사항 리스트
 import NoticeDetl from "../components/contents/notice/NoticeDetl.vue" //공지사항 상세
@@ -76,13 +63,8 @@ import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
 import FranchiseRegStep1Result from "../components/common/kmc/FranchiseRegStep1Result.vue"
 
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
-import CodePop from "../components/contents/mnCode/CodePop.vue"//코드관리
 import SystemMonitoring from "../components/contents/systemMonitoring/SystemMonitoring.vue"// 시스템모니터링
-import ApprovalStatus from "../components/contents/systemMonitoring/SystemMonitoring.vue"// 승인현황
-import BatchFileProc from "../components/contents/systemMonitoring/BatchFileProc.vue"//배치파일처리현황
-import BatchFileProcList from "../components/contents/systemMonitoring/BatchFileProcList.vue"//배치파일처리현황
-import ResourceSystem from "../components/contents/systemMonitoring/ResourceSystem.vue"//시스템자원
-import ServiceStatus from "../components/contents/systemMonitoring/ServiceStatus.vue"//서비스 상태
+
 
 Vue.use(Router)
 
@@ -94,14 +76,16 @@ export default new Router({
             path: "/home",
             name: "home",
             component: Home,
+            meta : {permission: 'any',
+                fail: '/error'},
             children : [
                 {path:'main', name:'main', component: Main ,meta: {authRequired: true} }, //메인
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
                 {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth ,meta: {authRequired: true} }, //핸드폰 인증
-                {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: true}}, //아이디 찾기
-                {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: true}}, //아이디 찾기 결과
-                {path:'initPass', name:'initPass',component: InitPass ,meta: {authRequired: true}}, //비밀번호 초기화
-                {path:'policy', name:'policy', component:Policy ,meta: {authRequired: true}}, //이용약관 및 개인보호처리방침
+                {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
+                {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
+                {path:'initPass', name:'initPass',component: InitPass ,meta: {authRequired: false}}, //비밀번호 초기화
+                {path:'policy', name:'policy', component:Policy ,meta: {authRequired: false}}, //이용약관 및 개인보호처리방침
 
                 //가맹점관리
                 {path:'franchiseList', name:'franchiseList', component: FranchiseList ,meta: {authRequired: true}}, //가맹점관리 리스트
@@ -127,8 +111,8 @@ export default new Router({
                 {path:'receiptViewCancel', name:'receiptViewCancel', component: ReceiptViewCancel ,meta: {authRequired: true}}, //발급 내역 조회/취소
                 {path:'receiptViewCancelDetl', name:'receiptViewCancelDetl', component: ReceiptViewCancelDetl ,meta: {authRequired: true}}, //현금영수증 발급 조회 및 취소
                 {path:'errorList', name:'errorList', component: ErrorList ,meta: {authRequired: true}}, //오류 내역 조회
-                {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend ,meta: {authRequired: true}}, //전문 오류 체크
-                {path:'errorCheck', name:'errorCheck', component: ErrorCheck ,meta: {authRequired: true}}, //승인파일전송
+                {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend ,meta: {authRequired: true}}, //승인파일전송
+                {path:'errorCheck', name:'errorCheck', component: ErrorCheck ,meta: {authRequired: true}},//전문 오류 체크
                 {path:'sendFileResult', name:'sendFileResult', component: SendFileResult ,meta: {authRequired: true}}, //전송 파일 처리결과
 
                 //고객지원>공지사항
@@ -139,7 +123,7 @@ export default new Router({
                 {path:'fnqList',component: FnqList, name:'fnqList' ,meta: {authRequired: true}}, //자주묻는질문리스트
                 {path:'regFnq',component: RegFnq, name:'regFnq' ,meta: {authRequired: true}}, //자주묻는질문 등록
                 //고객지원>메일발송
-                {path:'sendMail',component: SendMail, name:'sendMail' ,meta: {authRequired: true}}, //자주묻는질문 등록
+                {path:'sendMail',component: SendMail, name:'sendMail' ,meta: {authRequired: true}}, //메일발송
 
                 //시스템관리>약관처리
                 {path:'policyHistoryList',component: PolicyHistoryList, name:'policyHistoryList' ,meta: {authRequired: true}}, //약관이력목록
@@ -161,22 +145,12 @@ export default new Router({
                 {path:'regMenu',component: RegMenu, name:'regMenu' ,meta: {authRequired: true}}, //
                 //시스템관리>코드관리
                 {path:'mnCode',component: MnCode, name:'mnCode' ,meta: {authRequired: true}}, //
-                {path:'codePop',component: CodePop, name:'codePop' ,meta: {authRequired: true}}, //
                 //시스템관리>시스템 모니터링,
                 {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: true}}, //시스템모니터링
-                {path:'approvalStatus',component: ApprovalStatus, name:'approvalStatus' ,meta: {authRequired: true}}, //승인현황
-                {path:'batchFileProc',component: BatchFileProc, name:'batchFileProc' ,meta: {authRequired: true}}, //배치파일처리현황
-                {path:'batchFileProcList', component: BatchFileProcList, name:'batchFileProcList' ,meta: {authRequired: true}}, //배치파일처리현황리스트
-                {path:'resourceSystem',component: ResourceSystem, name:'resourceSystem' ,meta: {authRequired: true}}, //배치파일처리현황
-                {path:'serviceStatus',component: ServiceStatus, name:'serviceStatus' ,meta: {authRequired: true}}, //배치파일처리현황
-
             ]
         },
         { path: "/login", name: "login",  component: LoginComponent},
         {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
-
-        { path: '/',  redirect: "/login" },
-        // { path: '/',  redirect: "/home/main" },
         {
             path: "/secure",
             name: "secure",

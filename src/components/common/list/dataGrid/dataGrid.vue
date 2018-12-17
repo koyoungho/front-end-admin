@@ -48,12 +48,17 @@
 
           <template v-for="columNames,index in dataGridDetail.dataGrid.columControl">
             <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
-              <th scope="col" class="form_chk" >
-                <span class="chk_box"><input type="checkbox" @click="{checkAll}"><label><span class="blind">전체선택</span></label></span>
+              <th scope="col">
+                <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
+                  <span class="chk_box"><input type="checkbox" @click="checkAlls(columNames.id,index)" v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label id=""><span class="blind">전체선택</span></label></span>
+                </template>
+                <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
+                {{columNames.columName}}
+                </template>
               </th>
             </template>
             <template v-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
-              <th>{{columNames.columName}}</th>
+             <th>{{columNames.columName}}</th>
             </template>
             <template v-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
             <th>{{columNames.columName}}</th>
@@ -68,7 +73,7 @@
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='checkBox'">
                 <td>
-                  <span class="chk_box"><input type="checkbox" v-bind:value="{id:key,value:rows}" v-model="checkBoxDatas"><label for=""></label></span>
+                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows" v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type==='number'">
@@ -83,6 +88,7 @@
         <template v-if="listData.length < 1">
           <tr>
             <td v-bind:colspan="dataGridDetail.dataGrid.totalColum" class="no_data">조회된 내용이 없습니다.</td>
+
           </tr>
         </template>
         </tbody>
@@ -120,7 +126,7 @@
         lineColumName : string="";
         lineColumIndex :  number = 10000;
         checkBoxDatas :any[]= [];
-        allChecked : boolean =false;
+        selectAll : boolean = false;
 
 
         // 토탈합계
@@ -137,10 +143,51 @@
             this.$emit('checkBoxEvent', this.checkBoxDatas)
         }
 
+        checkAlls(id,indexs){
+            if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
+                this.listData.filter((e,index)=>{
+                    Object.keys(e).forEach((s,count)=>{
+                        if(indexs==count){
+                            this.checkBoxDatas.push(id+'@'+e[s]);
+                        }
+                    })
+                })
+                this.dataGridDetail.dataGrid.columControl[indexs].checkVal=true;
+            }else{
+                let tempDelCheck :any[] = [];
+                this.checkBoxDatas.filter((e)=>{
+                     if(e.split('@')[0]!=id){
+                         tempDelCheck.push(e);
+                     }
+                })
+                this.checkBoxDatas = tempDelCheck;
+                this.dataGridDetail.dataGrid.columControl[indexs].checkVal=false;
+            }
+
+        }
+        // checkBoxList(key,rows){
+        //     let id = rows+'@'+key
+        //     if(this.checkBoxDatas.length < 1){
+        //         this.checkBoxDatas.push(id)
+        //     }else{
+        //        if(this.checkBoxDatas.indexOf(id) > -1){ // 0 이면 존재한다
+        //            this.checkBoxDatas.splice(this.checkBoxDatas.indexOf(id),1);
+        //        }
+        //        else{ // 아니면 없는거다
+        //            this.checkBoxDatas.push(id)
+        //        }
+        //     }
+        // }
 
 
         //돔생성전 호출자
         created() {
+            // this.dataGridDetail.dataGrid.columControl.filter(e=>{
+            //     if(e.type=='checkBox'){
+            //         this.allCheckId[e.id]=true;
+            //     }
+            // })
+            // console.log(this.allCheckId)
         }
 
         numberFormatCount(index){
@@ -165,11 +212,6 @@
         }
         colColor(index){
             return this.dataGridDetail.dataGrid.columControl[index].colColors
-        }
-
-
-        allCheck(){
-          console.log(this.allChecked);
         }
 
         //돔렌더링완료시 진행
@@ -232,6 +274,7 @@
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
                     let result: any = response.data;
                     this.listData = [];
+                    this.checkBoxDatas=[];
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
                         this.mTotalCount = result.extra.totalAmt;
@@ -248,8 +291,8 @@
                     this.totalCount = result.totalRecords;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
 
-                    if (result.data.length > 0) { // 데이터 키맵에 맞게 매핑하기
-                        result.data.filter((e,indexs) => {
+                    if (result.length > 0) { // 데이터 키맵에 맞게 매핑하기
+                        result.filter((e,indexs) => {
                             let Objects = {};
                             Object.keys(e).forEach((key) => {
                                 if (this.menuHeader[key] == key) {

@@ -33,7 +33,7 @@ const options = {
         opacity: '0.6s',
         termination: 300
     },
-    location: 'bottom',
+    location: 'left',
     inverse: false
 }
 
@@ -43,8 +43,6 @@ Vue.use(AirbnbStyleDatepicker, datepickerOptions)
 
 
 Vue.config.productionTip = false
-
-
 
 new Vue({
     router,

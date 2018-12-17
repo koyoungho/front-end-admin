@@ -26,12 +26,6 @@
             Menu,
             Top,
             Bottom
-        },
-        data() {
-            return {
-                //menuShow : false
-                //menuShow : true
-            }
         }
     })
     export default class Home extends Vue {

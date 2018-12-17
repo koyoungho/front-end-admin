@@ -6,7 +6,7 @@
     <header id="header">
       <!-- top header -->
       <div class="top_header mobile">
-        <h1 class="logo" v-on:click="goMain"><a>현금영수증</a></h1>
+        <h1 class="logo" @click="goMain"><a>현금영수증</a></h1>
       </div>
       <!-- //top header -->
     </header>
@@ -37,13 +37,13 @@
             </form>
           </ul>
           <!-- btn -->
-          <button type="button" id="" class="btn_b01 bg01" v-on:click="onSubmit(id, password)">로그인</button>
+          <button type="button" id="" class="btn_b01 bg01" @click="onSubmit(id, password)">로그인</button>
         </fieldset>
 
         <!-- login info -->
         <div class="login_info">
-          <a href="" v-on:click="searchId()" class="id">아이디 찾기</a> |
-          <a href="" v-on:click="initPass()" class="pw">비밀번호 초기화</a>
+          <a  @click="searchId" class="id">아이디 찾기</a> |
+          <a  @click="initPass" class="pw">비밀번호 초기화</a>
         </div>
       </div>
       <!-- //login_box -->
@@ -54,19 +54,19 @@
           <h2>공지사항</h2>
           <ul class="notice_list">
             <li>
-              <a href="">현금영수증 시스템 정기 점검 및 작업 안내현금영수증 시스템 정기 점검 및 작업 안내</a>
+              <a >현금영수증 시스템 정기 점검 및 작업 안내현금영수증 시스템 정기 점검 및 작업 안내</a>
               <span class="date">2018.04.04</span>
             </li>
             <li>
-              <a href="">현금영수증 시스템 정기 점검 및 작업 안내</a>
+              <a  >현금영수증 시스템 정기 점검 및 작업 안내</a>
               <span class="date">2018.04.04</span>
             </li>
             <li>
-              <a href="">현금영수증 시스템 정기 점검 및 작업 안내</a>
+              <a  >현금영수증 시스템 정기 점검 및 작업 안내</a>
               <span class="date">2018.04.04</span>
             </li>
           </ul>
-          <a href="" class="btn_more">더보기</a>
+          <a   class="btn_more">더보기</a>
         </div>
 
         <!-- login info box -->
@@ -110,7 +110,7 @@
           <span class="text">평일 09:30~18:00</span>
         </p>
       </div>
-      <span class="page_top" v-on:click="top"><a href="typeScript:void()">TOP</a></span>
+      <span class="page_top" @click="top"><a href="typeScript:void()">TOP</a></span>
 
     </div>
 
@@ -118,8 +118,8 @@
       <ul class="footer_links">
         <li><a href="https://www.kt.com/">(주) 케이티</a></li>
         <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
-        <li><a href="#">이용약관</a></li>
-        <li><a href="#">개인보호처리방침</a></li>
+        <li><a href="">이용약관</a></li>
+        <li><a href="">개인보호처리방침</a></li>
       </ul>
       <div class="footer_address">
         <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
@@ -162,7 +162,12 @@
         this.$store.dispatch('LOGIN', {id, password})
             .then((result) =>{
               if(result=='success'){
-                this.loginChk()
+
+                this.$store.dispatch('MENU').then(result=>{
+                    if(result=='Y'){
+                      this.loginChk()
+                    }
+                })
               }
               else{
                 this.loginFail()
@@ -225,9 +230,7 @@
           alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.')
           return;
         }
-
-        this.$router.push({name:nextPage})
-
+        this.$router.push('home/'+nextPage)
       },
       loginFail() {
         alert('로그인 정보를 확인하세요.')
@@ -237,7 +240,7 @@
         this.$router.push('home/cashInstitution')
       },
       searchId() { //아이디 찾기
-        this.$router.push('home/searchIdInput')
+        this.$router.push({path:'home/searchIdInput'})
       },
       initPass() { //비밀번호 초기화
         this.$router.push('home/initPass')

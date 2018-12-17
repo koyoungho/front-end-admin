@@ -1,9 +1,6 @@
-
-
-
 <template>
-  <div >
-    <div >
+  <div>
+    <div>
       <router-link v-if="authenticated" to="/login" replace></router-link>
     </div>
     <router-view/>
@@ -12,68 +9,81 @@
 
 <script>
 
-  import {CommonBoardService} from '../src/api/common.service';
-  import Router from 'vue-router'
-
   export default {
     name: 'App',
     data() {
       return {
         authenticated: false,
         mockAccount: {
-          username: "",
-          password: ""
+          username: '',
+          password: ''
         }
-      }
+      };
     },
     created() {
       // 세션이 존재할때
 
       this.$router.beforeEach(function(to, from, next) {
         // to: 이동할 url에 해당하는 라우팅 객체
-        let menuName = "";
+        let menuName = '';
         let loginOk = to.matched.some(function(routeInfo) {
-          menuName = routeInfo.name
+          menuName = routeInfo.name;
           return routeInfo.meta.authRequired;
-        })
-        if (sessionStorage.accessToken) {
-          if(menuName =='error' || menuName=='login' ){ // 공용페이지 접근시 통과
-            next()
-          }
-          else{ // 권한필요한페이지 접근시 체크
-            if (loginOk) {
-              // CommonBoardService.getListDatas('menu', null, null).then(response => {
-              //   let datas = response.data;
-              //   if (datas) { // 해당 메뉴 결과값받아서 비교후 접근가능일시
-              //     // TODO 체크로직넣어야함f
-              //     sessionStorage.setItem('authMenu',JSON.stringify(datas))
-              //     next()
-              //   } else { // 접근권한 없을시
-              //     alert('메뉴 접근권한이 없습니다');
-              //   }
-              // }).catch(e=>{
-              //   // window.location.href='/#/error'
-              // })
+        });
+
+        if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy') { // 공용페이지 접근시 통과
+          console.log('토큰이 있지만 예외페이지 처리라 그냥 넘어간다');
+          next();
+        } else {
+          if (sessionStorage.accessToken) { // 토큰
+            console.log('라우터에 접근 토큰이 있으면 1 ㅇㅋ');
+            if (loginOk) { // 메타확인
+              console.log('체크해야되면 2 ㅇㅋ');
+              console.log('검사할 유알엘일경우 메뉴체크');
+              let result = 'sucess';
+              let authMenu = sessionStorage.getItem('authMenu');
+              let menu = JSON.parse(authMenu);
+              let passOk = 'Y';
+              // 라우터주소는 있지만 권한받지않는 메뉴는 넘어간다
+              //     if (menuName == 'main') {
+              //         passOk='Y'
+              //     } else {
+              //       menu.filter(e => {
+              //         e.subMenuDtos.filter(s => {
+              //           if (s.progId == menuName) {
+              //             passOk = 'Y';
+              //           }
+              //         });
+              //       });
+              //     }
+              //     alert(passOk);
+              if (passOk == 'Y') { // 로그인한살람이 접근할수 있는 메뉴면
+                //     alert(menuName)
+                // alert('넘어갑니다');
+                next();
+              } else {
+                alert(menuName)
+                alert('권한이 없습니다');
+                window.location.href = '/';
+              }
+            } else { // 메타체크안하는 파일일경우 그냥 넘김
               next();
-            } else {
-              next(); // 페이지 전환
+              console.log('메타체크안함 넘김');
             }
           }
-        }else{
-          window.location.href='/'
+          else {  // 토큰이 없을경우 무조건 로그인페이지로 돌림
+            window.location.href = '/#/login';
+          }
         }
 
-      })
+      });
     },
     mounted() {
 
     },
-    methods: {
-    },
-  }
+    methods: {}
+  };
 </script>
-
-
 
 
 <style>

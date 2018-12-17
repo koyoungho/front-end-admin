@@ -581,12 +581,12 @@ select.wide {width:100%;}
 .search_box.page_stats02 .search_list > li:nth-of-type(3) {width:27%; text-align:right;}
 
 /* 계정 관리 */
-.search_box.page_system03 .search_list > li:nth-of-type(1) {width:100%;}
-.search_box.page_system03 .search_list > li:nth-of-type(2) {width:25%;}
-.search_box.page_system03 .search_list > li:nth-of-type(3) {width:24%; text-align:right;}
-.search_box.page_system03 .search_list > li:nth-of-type(4) {width:29%; text-align:right;}
+.search_box.page_system03 .search_list > li:nth-of-type(1) {width:20%;}
+.search_box.page_system03 .search_list > li:nth-of-type(2) {width:30%; }
+.search_box.page_system03 .search_list > li:nth-of-type(3) {width:30%; text-align:right;}
+.search_box.page_system03 .search_list > li:nth-of-type(4) {width:29%; text-align:center;}
 .search_box.page_system03 .search_list > li:nth-of-type(5) {width:22%; text-align:right;}
-.search_box.page_system03 .search_list > li .form_area {display: inline-block; padding-right:14px;}
+.search_box.page_system03 .search_list > li .form_area {position:relative;display: inline-block; padding-right:14px;}
 
 /* 배치 파일 처리 현황 */
 .search_box.page_system06 .search_list > li:nth-of-type(1) {width:35%;}

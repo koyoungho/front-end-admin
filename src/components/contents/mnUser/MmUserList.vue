@@ -49,19 +49,20 @@
             {
                 dataGrid: {
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '체크박스' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        {columName : '이름' ,id : 'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '등급' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '소속' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : '상태' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
-                        {columName : '등록일' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '최종접속' ,id : 'storeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '체크박스' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false },
+                        // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
+                        {columName : '순번' ,id : 'number',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '아이디' ,id : 'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '이름' ,id : 'name',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등급' ,id : 'roleNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '소속' ,id : 'shopNm',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '상태' ,id : 'accountStatus',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
+                        {columName : '등록일' ,id : 'regDt',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '최종접속' ,id : 'lastConnDt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
                     totalColum: 9, // 체크박스시 +1 순번추가시 +1
-                    apiUrl : 'gajum',
+                    apiUrl : 'accounts',
                     onLoadList : true,  // onLoad 로딩 유무
                     // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                     // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -69,20 +70,20 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    // {type: 'choiseDate', title :'최종접속일', id: 'date1' , name:'date1', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
-                    // {type: 'choiseDate', title :'등록일', id: 'date2' , name:'date2', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
-                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: '' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
+                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'selectCode' , title :'등급',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '0034' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
+                    {type: 'selectCode' , title :'등급',id: 'role', name:'issuePurpose' , value: '' ,  api : '0034' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
                     {type: 'selectCode' , title :'상태',id: 'dealType', name:'dealType' , value: '' ,  api : '0035' , option : [{ codeName : '승인' , code: '0' },{codeName : '취소' , code: '1' }]},
 
-                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'confirm' },{name : '고객명' , value: 'custName' }]},
+                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
-                goSearch : "iocSearch"
+                goSearch : "iocSearch",
+                searchClass : 'search_box page_system03'
             }
 
         created(){
@@ -110,29 +111,6 @@
             console.log(row)
             //this.$router.push({ name:'iocView' , params: { current : row.searchOption , objectKey : row.row.oriAprv } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
-
-        // 와이드 창줄어들시 모바일용으로 윈도우 사이즈 재는곳
-        // handleResize(){
-        // if(window.innerWidth < 482){
-        //     if(this.windowResize ==true){
-        //
-        //     }else{
-        //         // this.listItem.dataGrid.columControl= this.listItem.dataGrid.columControl.filter(e=>{
-        //         //        return this.exceptColum.find(s=>{
-        //         //         if(e.id !=s.id){
-        //         //             return e
-        //         //         }
-        //         //     })
-        //         // })
-        //         this.windowResize =true
-        //     }
-        // }else{
-        //     if(this.windowResize==false){
-        //     }else{
-        //     this.listItem.dataGrid.columControl = this.originItem;
-        //     this.windowResize =false;
-        //     }
-        // }
 
         // }
         updated(){

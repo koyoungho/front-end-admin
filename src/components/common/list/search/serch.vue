@@ -2,7 +2,7 @@
   <div class="cont_mobile">
     <!--<resize-observer @notify="handleResize"/>-->
     <!-- tbl search box -->
-    <div v-bind:class="searchStyle" v-if="searchItem.length > 0">
+    <div :class="searchStyle" v-if="searchItem.length > 0">
       <!--{{searchItemDetail}}-->
       <ul class="search_list">
         <template v-for="item in searchItem">
@@ -11,21 +11,23 @@
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==2">
               <span class="form_cal">
-                            <input type="text"   v-model="item.searchStartDate"  class="input date" title="날짜 입력">
+                            <input type="text" v-model="item.searchStartDate"  class="input date" title="날짜 입력">
                           </span>
                 <span class="period_cal">-</span>
                 <span class="form_cal">
                             <input type="text" v-model="item.searchEndDate"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" v-bind:id="item.id">달력</a>
+                            <a href="" class="btn_cal" :id="item.id">달력</a>
                           </span>
-                <template class="datepicker-trigger" styl="left: -300px">
+                <template class="datepicker-trigger">
                   <AirbnbStyleDatepicker
-                      v-bind:trigger-element-id="item.id"
-                      v-bind:mode=showMode
-                      v-bind:fullscreen-mobile="true"
-                      v-bind:months-to-show="1"
-                      v-bind:date-one="dateOne"
-                      v-bind:date-two="dateTwo"
+                      :trigger-element-id="item.id"
+                      :mode=showMode
+                      :fullscreen-mobile="true"
+                      :months-to-show="1"
+                      :offsetX="-636"
+                      :offsetY="-20"
+                      :date-one="dateOne"
+                      :date-two="dateTwo"
                       @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
                       @date-two-selected="val => { item.searchEndDate = formatDates(val) }"
                   />
@@ -36,67 +38,21 @@
                             <input type="text" v-model="item.searchEndDate=formatDates(dateOne)"  class="input date" title="날짜 입력">
                             <a href="" class="btn_cal" id="datepicker-trigger">달력</a>
                           </span>
-                <template class="datepicker-trigger" styl="left: -300px">
+                <template class="datepicker-trigger" >
                   <AirbnbStyleDatepicker
-                      v-bind:trigger-element-id="item.id"
-                      v-bind:mode=showMode
-                      v-bind:fullscreen-mobile="true"
-                      v-bind:months-to-show="1"
-                      v-bind:date-one="dateOne"
-                      v-bind:date-two="dateTwo"
+                      :trigger-element-id="item.id"
+                      :mode=showMode
+                      :fullscreen-mobile="true"
+                      :months-to-show="1"
+                      :offsetX="-636"
+                      :offsetY="-20"
+                      :date-one="dateOne"
+                      :date-two="dateTwo"
                       @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
                       @date-two-selected="val => { item.searchEndDate = formatDates(val) }"
                   />
                 </template>
               </template>
-            </li>
-          </template>
-          <template v-if="item.type=='choiseDate'">
-            <li>
-              <template v-if="item.calenderCount==2">
-              <span class="form_area">
-                 <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa110" checked="checked"><label for="aa110">{{item.title}}</label></span>
-                <span class="form_cal">
-                            <input type="text"   v-model="item.searchStartDate"  class="input date" title="날짜 입력">
-                          </span>
-                <span class="period_cal">-</span>
-                <span class="form_cal">
-                            <input type="text" v-model="item.searchEndDate"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" v-bind:id="item.id">달력</a>
-                          </span>
-                <template class="datepicker-trigger" styl="left:-300px">
-                  <AirbnbStyleDatepicker
-                      v-bind:trigger-element-id="item.id"
-                      v-bind:mode=showMode
-                      v-bind:fullscreen-mobile="true"
-                      v-bind:months-to-show="1"
-                      v-bind:date-one="dateOne"
-                      v-bind:date-two="dateTwo"
-                      @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
-                      @date-two-selected="val => { item.searchEndDate = formatDates(val) }"
-                  />
-                </template>
-              </span>
-              </template>
-              <template v-else="item.caleanderCount==1">
-                <span class="form_cal">
-                            <input type="text" v-model="item.searchEndDate=formatDates(dateOne)"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" id="datepicker-trigger">달력</a>
-                          </span>
-                <template class="datepicker-trigger" styl="left: -300px">
-                  <AirbnbStyleDatepicker
-                      v-bind:trigger-element-id="item.id"
-                      v-bind:mode=showMode
-                      v-bind:fullscreen-mobile="true"
-                      v-bind:months-to-show="1"
-                      v-bind:date-one="dateOne"
-                      v-bind:date-two="dateTwo"
-                      @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
-                      @date-two-selected="val => { item.searchEndDate = formatDates(val) }"
-                  />
-                </template>
-              </template>
-
             </li>
           </template>
 
@@ -112,7 +68,7 @@
               <label for="aa">{{item.title}}</label>
               <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                 <option value="">선택</option>
-                <option v-for="tt in item.option" v-bind:value="tt.value" >{{tt.name}}</option>
+                <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
             </li>
           </template>
@@ -121,7 +77,7 @@
               <label for="aa">{{item.title}}</label>
               <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                 <option value="">선택</option>
-                <option v-for="tt in item.option" v-bind:value="tt.code" >{{tt.codeName}}</option>
+                <option v-for="tt in item.option" :value="tt.code" >{{tt.codeName}}</option>
               </select>
             </li>
           </template>
@@ -129,7 +85,7 @@
             <li>
               <label for="aa">{{item.title}}</label>
               <span v-for="radioItem in item.option" class="rdo_box" >
-                <input type="radio" name="radioBox"  v-bind:value="radioItem.value" v-model="item.value"><label for="aa11">{{radioItem.name}}{{radioItem.value}}</label>
+                <input type="radio" name="radioBox"  :value="radioItem.value" v-model="item.value"><label for="aa11">{{radioItem.name}}</label>
               </span>
             </li>
           </template>
@@ -178,7 +134,7 @@
 
         // 달력용
         dateFormat:any =  'YYYYMMDD';
-        dateStyle : any = 'left : 350px';
+        // dateStyle : any = 'left : 0px';
         dateOne: any =  new Date();
         dateTwo: any =  new Date();
         showMode : string = "single";
@@ -194,6 +150,10 @@
             this.searchItem.filter(e=>{
 
                 if(e.type=='date'){
+                    if(e.calenderCount > 1){
+                        this.showMode='range'
+                    }
+                }else if(e.type=='choiseDate') {
                     if(e.calenderCount > 1){
                         this.showMode='range'
                     }

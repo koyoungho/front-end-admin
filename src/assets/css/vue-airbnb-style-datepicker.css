@@ -47,7 +47,10 @@
   position: relative; }
 
 .asd__keyboard-shortcuts-trigger-wrapper {
-  position: relative; }
+  position: relative;
+  display: none;
+
+}
 
 .asd__keyboard-shortcuts-trigger {
   background-color: transparent;
@@ -232,14 +235,17 @@
       right: 15px; }
 
 .asd__mobile-header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 0px solid rgba(0, 0, 0, 0.2);
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.2);*/
   position: relative;
   padding: 15px 15px 15px 15px !important;
   text-align: center;
   height: 50px; }
   .asd__mobile-header h3 {
     font-size: 20px;
-    margin: 0; }
+    margin: 0;
+  display: none;
+  }
 
 .asd__mobile-only {
   display: none; }

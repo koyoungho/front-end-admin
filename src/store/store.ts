@@ -20,7 +20,6 @@ export default new Vuex.Store({
     },
     mutations: {
         LOGIN (state, accessToken) {
-
             state.accessToken = accessToken;
             sessionStorage.setItem("data", accessToken);
             sessionStorage.accessToken = accessToken.accesstoken; //token
@@ -38,11 +37,19 @@ export default new Vuex.Store({
             sessionStorage.saupId = accessToken.saupId; //사업장번호
             sessionStorage.upJong = accessToken.upJong; //업종코드
             sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
-
-            return "ok"
         },
         LOGOUT (state) {
             //state.accessToken = null
+            // CommonBoardService.deleteListDatas('auth', null, null).then((response) => {
+            //         let result: any = response.data;
+            //         if (result != null && result.code == '000') {
+            //             console.log('token delete success');
+            //         }
+            //     }
+            //     , (error) => {
+            //         console.log('token delete fail');
+            //     })
+            // sessionStorage.clear(); //세션스토리지 삭제
             sessionStorage.clear();
         },
         INFO_SET(state, data) {
@@ -57,7 +64,6 @@ export default new Vuex.Store({
             return CommonBoardService.postListDatas('auth', null,{id, password})
                 .then(({data}) => {
                     if(data.code=='000'){
-
                         commit('LOGIN', data)
                         return "success"
                     }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌
@@ -72,5 +78,17 @@ export default new Vuex.Store({
         LOGOUT ({commit}) {
             commit('LOGOUT')
         },
+        MENU ({commit}){
+            return CommonBoardService.getListDatas('menu', null, null).then(response => {
+                let datas = response.data;
+                if (datas) {
+                    sessionStorage.authMenu=JSON.stringify(datas)
+                    return "Y"
+                }
+                else{
+                    return "N"
+                }
+            })
+        }
     }
 })

@@ -124,7 +124,7 @@
 
         menuOver(e){
             e.target.class='sub on'
-            this.menuSelected(e.target.id)
+            // this.menuSelected(e.target.id)
             this.menuStyle='display:block ; height : '+this.subHeigth+'px';
             this.subMenuStyle='display:none';
         }
@@ -140,7 +140,9 @@
         }
 
         updated() {
+
             this.$nextTick(function () {
+
             });
         }
 
