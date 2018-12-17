@@ -44,6 +44,10 @@ Vue.use(AirbnbStyleDatepicker, datepickerOptions)
 
 Vue.config.productionTip = false
 
+/** editor**/
+import tinymce from 'vue-tinymce-editor'
+Vue.component('tinymce', tinymce)
+
 new Vue({
     router,
     store,

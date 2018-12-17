@@ -90,5 +90,7 @@
   @import "assets/css/default.css";
   @import "assets/css/common.css";
   @import "assets/css/vue-airbnb-style-datepicker.css";
+/*에디터 메뉴 숨기기*/
+  .mce-container .mce-menubar {display: none; }
 </style>
 
