@@ -5,13 +5,13 @@
         <div class="content">
             <h2 class="blind">시스템 관리</h2>
 
-            <h3>이용약관 내용 입력</h3>
+            <h3>{{titleNm}} 내용 입력</h3>
 
             <!-- tbl view box -->
             <div class="bbs_write_box">
                 <!-- tbl view01 -->
                 <table class="bbs_write">
-                    <caption>이용약관 내용 입력</caption>
+                    <caption> 내용 입력</caption>
                     <colgroup>
                         <col width="10%">
                         <col width="75%">
@@ -24,7 +24,7 @@
                     <tr>
                         <th scope="row">내용</th>
                         <td class="con_write">
-                            <textarea class="form_write"></textarea>
+                            <tinymce id="d1" v-model="content"></tinymce>
                         </td>
                     </tr>
                     </tbody>
@@ -66,10 +66,10 @@
         pageDiv(){
             let routeNm = this.$route.name;
             if(routeNm == 'policyReg' ) {
-                this.titleNm = '이용약관'
+                this.titleNm = '이용약관';
                 this.termsType="site";
             }else if(routeNm == 'personalReg' ){
-                this.titleNm ='개인보호처리방침'
+                this.titleNm ='개인보호처리방침';
                 this.termsType="user";
             }
         }

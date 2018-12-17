@@ -240,6 +240,16 @@
 
         }
 
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            if(this.termsType == 'site'){
+                this.$router.push({name:'policyList', params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            }else{
+                this.$router.push({name:'personalList', params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            }
+
+        }
+
     }
 </script>
 

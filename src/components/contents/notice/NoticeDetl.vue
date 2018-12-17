@@ -92,7 +92,6 @@
 
                 if (result !=null) {
                     this.listData = result;
-console.log( result.attFiles.length);
                 }
             }
             , (error) => {
