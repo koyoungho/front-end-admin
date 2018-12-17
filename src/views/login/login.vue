@@ -32,7 +32,7 @@
             </li>
             <form>
             <li class="form_pw">
-              <input type="password"  v-model="password" maxlength="50" placeholder="비밀번호" class="pw" title="비밀번호 입력" autocomplete="username pwd">
+              <input type="password"  v-model="password" maxlength="50" placeholder="비밀번호" class="pw" title="비밀번호 입력" autocomplete="username pwd" v-on:keyup.enter="onSubmit(id, password)">
             </li>
             </form>
           </ul>
@@ -110,7 +110,7 @@
           <span class="text">평일 09:30~18:00</span>
         </p>
       </div>
-      <span class="page_top" @click="top"><a href="typeScript:void()">TOP</a></span>
+      <span class="page_top" @click="top"><a>TOP</a></span>
 
     </div>
 
@@ -118,8 +118,8 @@
       <ul class="footer_links">
         <li><a href="https://www.kt.com/">(주) 케이티</a></li>
         <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
-        <li><a href="">이용약관</a></li>
-        <li><a href="">개인보호처리방침</a></li>
+        <li><a v-on:click="policyDiv('site')">이용약관</a></li>
+        <li><a v-on:click="policyDiv('user')">개인보호처리방침</a></li>
       </ul>
       <div class="footer_address">
         <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
@@ -248,6 +248,9 @@
       goMain() { //메인이동
         this.$router.push('home/main')
       },
+      policyDiv(titleNm){
+          this.$router.push({path:'/home/policy', name:'policy', query:{ titleNm:titleNm }})
+      }
 
     }
     , created() {
