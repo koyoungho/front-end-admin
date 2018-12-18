@@ -61,7 +61,7 @@
                 <table class="bbs_list page_notice">
                     <caption>자주묻는 질문 목록</caption>
                     <colgroup>
-                        <col width="11%">
+                        <col width="10%">
                         <col width="*">
                         <col width="10%">
                         <col width="10%">
@@ -123,6 +123,8 @@
             <!-- //pagination -->
 
 
+            <!--리스트-->
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
 
 
 
@@ -136,6 +138,9 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+
     import {CommonBoardService} from '../../../api/common.service';
     import Paging from '@/components/common/list/paging/paging.vue';
     import moment from 'moment'
@@ -143,27 +148,50 @@
 
     @Component({
         components: {
-            FnqList, Paging
+            FnqList, Paging, ListComponent
         }
     })
     export default class FnqList extends Vue {
 
         listData: any = [];
-        columControl: any = [];
         searchType: string = '';
         searchKey: string = '';
         totalCount: any = '';
         startPage: any = '';
-        isActive:boolean=false;
-        arrow:string="";
-        rownum:number=999;
 
+
+        originItem : any = {} // 오리지널데이터
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
-                // paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+                dataGrid: {
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '순번', type:'number', id : 'rnum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '제목', type:'text', id : 'title', width : '60%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '등록일', type:'text', id : 'updDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등록자', type:'text', id : 'updId', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '구분', type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                    ],
+                    totalColum: 5,
+                    apiUrl : 'faqs',
+                    onLoadList : true,  // onLoad 로딩 유무
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    {type: 'select' , title :'구분',id: 'importantYn', name:'importantYn' , value: '' ,  api : '' , option : [{ name : '사용자' , value: '0' },{name : '관리자' , value: '1' }]},
+                    {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
+                ],
+
+
                 paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
                 goDirect : ""
             }
+
+        created(){
+            this.originItem  = this.listItem.dataGrid.columControl
+        }
+
+
 
         mounted(){
             this.searchFaq( );//리스트 바인딩
@@ -254,23 +282,13 @@
             this.$router.push({name:'regFnq', params:{seq:seq}})
         }
 
-        /**
-         * 아코디언메뉴 제어
-         * @param index
-         */
-        display(index){
-            // alert(index);
-            this.isActive =false;
-            this.rownum =999;
 
-            this.isActive = !this.isActive;
 
-            if(this.isActive == true){
-                this.rownum = index;
-            }else{
-                this.arrow="";
-            }
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            this.$router.push({ name:'regFnq' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
+
 
     }
 </script>

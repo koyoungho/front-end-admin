@@ -4,7 +4,7 @@
     <!-- tbl search box -->
     <div :class="searchStyle" v-if="searchItem.length > 0">
       <!--{{searchItemDetail}}-->
-      <ul class="search_list">
+      <ul :class="searchStyle2">
         <template v-for="item in searchItem">
           <template v-if="item.type=='date'" >
             <li>
@@ -60,6 +60,13 @@
             <li>
               <template v-if="item.title !=''"><label for="aa">{{item.title}}</label></template>
               <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" ></template>
+            </li>
+          </template>
+
+          <template v-if="item.type=='input2'">
+            <li>
+              <label for="aa">{{item.title}}</label>
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" >
             </li>
           </template>
 
@@ -147,6 +154,8 @@
         }
 
         created() {
+
+
             this.searchItem.filter(e=>{
 
                 if(e.type=='date'){

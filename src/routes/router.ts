@@ -68,6 +68,17 @@ import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
 import FranchiseRegStep1Result from "../components/common/kmc/FranchiseRegStep1Result.vue"
 
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
+
+import CompCodeChart from "../components/contents/mnStatistics/CompCodeChart.vue"//회사코드별거래현황
+import SaupNumberChart from "../components/contents/mnStatistics/SaupNumberChart.vue"//사업자번호별 거래현황
+import ReceipSaupCount from "../components/contents/mnStatistics/ReceipSaupCount.vue"//현금영수증사업자정산
+import JungsanRuleSearch from "../components/contents/mnStatistics/JungsanRuleSearch.vue"//정산룰조회
+import JungsanReg from "../components/contents/mnStatistics/JungsanReg.vue"//정산등록
+import JungsanRuleReg from "../components/contents/mnStatistics/JungsanRuleReg.vue"//정산룰등록
+import JungsanDetail from "../components/contents/mnStatistics/JungsanDetail.vue"//정산룰등록
+import GajumChart from "../components/contents/mnStatistics/GajumChart.vue"//가맹점증감현황
+import GajumTotal from "../components/contents/mnStatistics/GajumTotal.vue"//가맹점수현황조회
+
 import SystemMonitoring from "../components/contents/systemMonitoring/SystemMonitoring.vue"// 시스템모니터링
 
 
@@ -128,7 +139,24 @@ export default new Router({
                 {path:'fnqList',component: FnqList, name:'fnqList' ,meta: {authRequired: true}}, //자주묻는질문리스트
                 {path:'regFnq',component: RegFnq, name:'regFnq' ,meta: {authRequired: true}}, //자주묻는질문 등록
                 //고객지원>메일발송
-                {path:'sendMail',component: SendMail, name:'sendMail' ,meta: {authRequired: true}}, //메일발송
+                {path:'sendMail',component: SendMail, name:'sendMail' ,meta: {authRequired: true}}, //자주묻는질문 등록
+
+                //통계관리
+                //통계관리>회사코드별 거래현황
+                {path:'compCodeChart',component: CompCodeChart, name:'compCodeChart' ,meta: {authRequired: true}},
+                //통계관리>사업자번호별 거래현황
+                {path:'saupNumberChart',component: SaupNumberChart, name:'saupNumberChart' ,meta: {authRequired: true}},
+                //통계관리>현금영수증 사업자 정산
+                {path:'receipSaupCount',component: ReceipSaupCount, name:'receipSaupCount' ,meta: {authRequired: true}},
+                {path:'jungsanRuleSearch',component: JungsanRuleSearch, name:'jungsanRuleSearch' ,meta: {authRequired: true}},//정산룰조회
+                {path:'jungsanRuleReg',component: JungsanRuleReg, name:'jungsanRuleReg' ,meta: {authRequired: true}},//정산룰조회
+                {path:'jungsanReg',component: JungsanReg, name:'jungsanReg' ,meta: {authRequired: true}},//신규정산등록
+                {path:'jungsanDetail',component: JungsanDetail, name:'jungsanDetail' ,meta: {authRequired: true}},//정산상세보기
+                //통계관리>가맹점 증감 현황
+                {path:'gajumChart',component: GajumChart, name:'gajumChart' ,meta: {authRequired: true}},
+                //통계관리>가맹점수 현황 조회
+                {path:'gajumTotal',component: GajumTotal, name:'gajumTotal' ,meta: {authRequired: true}},
+
 
                 //시스템관리>약관처리
                 {path:'policyHistoryList',component: PolicyHistoryList, name:'policyHistoryList' ,meta: {authRequired: true}}, //약관이력목록

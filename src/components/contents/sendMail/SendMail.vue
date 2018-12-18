@@ -23,8 +23,14 @@
 					<span class="form_area first">
 						<span class="chk_box"><input type="checkbox" name="chk" id="aa110" v-model="noticeYn" v-on:click="changeYn"><label for="aa110">공지</label></span>
 					</span>
-                            <select id="" name="" class="select form_mailrec">
-                                <option>사용자</option>
+                            <select name="" class="select form_mailrec">
+                                <option>전체</option>
+                                <option>일반사용자</option>
+                                <option>매장사용자</option>
+                                <option>관리자</option>
+                                <option>콜센터관리자</option>
+                                <option>KT관리자>사용자</option>
+                                <option>LDCC관리자>사용자</option>
                             </select>
                         </td>
                     </tr>
@@ -36,32 +42,39 @@
                         <th scope="row">첨부파일</th>
                         <td>
                             <div class="file_add_box">
-                                <ul class="file_list">
-                                    <li>
-                                        <a href="#">가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">가이드가이드가이드가이드가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
+                                <span class="btn_file_area">
+                                     <file-upload
+                                             :multiple="true"
+                                             :size="1024 * 1024 * 10"
+                                             v-model="files"
+                                             extensions="gif,jpg,jpeg,png,webp"
+                                             accept="*"
+                                             @input-filter="inputFilter"
+                                             @input-file="inputFile"
+                                             ref="upload">
+                                    <button type="button"  class="btn_m01 bg03">파일추가</button>
+                                     </file-upload>
+                                </span>
+                                <ul>
+                                    <li v-for="(file, index) in files" :key="file.id">
+                                        <span>{{file.name}}</span>
+                                        <a href="#" class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
+                                        <!--<span>{{file.size | formatSize}}</span> - -->
+                                        <!--<span v-if="file.error">{{file.error}}</span>-->
+                                        <!--<span v-else-if="file.success">success</span>-->
+                                        <!--<span v-else-if="file.active">active</span>-->
+                                        <!--<span v-else-if="file.active">active</span>-->
+                                        <!--<span v-else></span>-->
                                     </li>
                                 </ul>
-                                <span class="btn_file_area"><button type="button" id="" class="btn_m01 bg03">파일추가</button></span>
+
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">내용</th>
                         <td class="con_write">
-                            <textarea class="form_write"></textarea>
+                            <tinymce id="d1" v-model="data"></tinymce>
                         </td>
                     </tr>
                     </tbody>
@@ -85,15 +98,19 @@
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import FileUpload from 'vue-upload-component';
 
     @Component({
         components: {
-            SendMail
+            SendMail, FileUpload,
         }
     })
     export default class SendMail extends Vue {
         noticeYn:boolean=false;
         title:string="";
+        files:any=[];
+        data: string ="";
+        content:string="";
 
 
         /**
@@ -108,6 +125,37 @@
             }else{
                 this.noticeYn = false
                 this.title = this.title.replace(notice_str, '');
+            }
+        }
+
+        /**
+         * 파일업로드 (멀티파트)
+         */
+        inputFilter(newFile, oldFile, prevent) {
+            if (newFile && !oldFile) {
+                // Before adding a file
+                // Filter system files or hide files
+                if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                    return prevent()
+                }
+                // Filter php html js file
+                if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
+                    return prevent()
+                }
+            }
+        }
+        inputFile(newFile, oldFile) {
+            if (newFile && !oldFile) {
+                // add
+                console.log('add', newFile)
+            }
+            if (newFile && oldFile) {
+                // update
+                console.log('update', newFile)
+            }
+            if (!newFile && oldFile) {
+                // remove
+                console.log('remove', oldFile)
             }
         }
     }

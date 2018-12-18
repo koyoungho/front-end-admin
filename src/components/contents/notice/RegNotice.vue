@@ -41,27 +41,47 @@
                         <th scope="row">첨부파일</th>
                         <td>
                             <div class="file_add_box">
-                                <ul class="file_list">
-                                    <li>
-                                        <a href="#">가이드.pdf</a>
-                                        <a href="#" class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
+                                <span class="btn_file_area">
+                                     <file-upload
+                                             :multiple="true"
+                                             :size="1024 * 1024 * 10"
+                                             v-model="files"
+                                             extensions="gif,jpg,jpeg,png,hwp"
+                                             accept="*"
+                                             @input-filter="inputFilter"
+                                             @input-file="inputFile"
+                                             ref="upload">
+                                    <button type="button"  class="btn_m01 bg03">파일추가</button>
+                                     </file-upload>
+                                </span>
+                                <ul >
+                                    <li v-for="(file, index) in files" :key="file.id">
+                                        <span>{{file.name}}</span>
+                                        <a href="#" class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
+                                        <!--<span>{{file.size | formatSize}}</span> - -->
+                                        <!--<span v-if="file.error">{{file.error}}</span>-->
+                                        <!--<span v-else-if="file.success">success</span>-->
+                                        <!--<span v-else-if="file.active">active</span>-->
+                                        <!--<span v-else-if="file.active">active</span>-->
+                                        <!--<span v-else></span>-->
                                     </li>
-                                    <template v-if="attFileYn == 'Y' ">
-                                        <li>
-                                            <a>가이드2.pdf</a>
-                                            <a  class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                        </li>
-                                    </template>
-
                                 </ul>
-                                <span class="btn_file_area"><button type="button"  class="btn_m01 bg03">파일추가</button></span>
+
+                                <template v-if="attFileYn == 'Y' ">
+                                    <!--<li>-->
+                                    <!--<a>가이드2.pdf</a>-->
+                                    <!--<a  class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>-->
+                                    <!--</li>-->
+                                </template>
+
+
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">내용</th>
-                        <td class="con_write">
-                            <textarea class="form_write" >{{content}}</textarea>
+                        <td class="con_write" >
+                            <tinymce id="d1" v-model="data"></tinymce>
                         </td>
                     </tr>
                     </tbody>
@@ -71,11 +91,11 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" class="btn_b01 bg02" v-on:click="toList()">취소</button>
+                <button type="button" class="btn_b01 bg02" v-on:click="toList">취소</button>
                 <template v-if="div == '수정' ">
                     <button type="button" class="btn_b01 bg03">삭제</button>
                 </template>
-                <button type="button" class="btn_b01 bg01">{{div}}</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="reg">{{div}}</button>
             </div>
 
         </div>
@@ -83,14 +103,16 @@
     </section>
     <!-- //container -->
 </template>
-
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import {CommonBoardService} from "../../../api/common.service";
+    import FileUpload from 'vue-upload-component';
+
 
     @Component({
+
         components: {
-            RegNotice
+            RegNotice, FileUpload,
         }
     })
     export default class RegNotice extends Vue {
@@ -102,15 +124,18 @@
         content:string="";
         attFileYn : string ="";
         importantYn : boolean =false;
+        files:any=[];
+        data: string ="";
+
+
 
         mounted(){
-            this.seq=this.$route.params.seq; // 글번호 시퀀스
-            if(this.seq != null && this.seq != 'undefinded') {
+            this.seq=this.$route.params.seq;
+            if(  this.seq == undefined ||  this.seq == ''){
+                this.div ="등록";
+            }else{
                 this.div="수정";
                 this.getNoticeDetail();
-            }else {
-
-                this.div="등록";
             }
 
         }
@@ -125,13 +150,13 @@
                     let result: any = response.data;
 
                     if (result !=null) {
-                       this.title = result.title;
-                       this.section = result.section;
-                       this.content = result.content;
-                       this.attFileYn = result.attFileYn;
-                       if(result.importantYn =='Y'){
-                           this.importantYn = true;
-                       }
+                        this.title = result.title;
+                        this.section = result.section;
+                        this.content = result.content;
+                        this.attFileYn = result.attFileYn;
+                        if(result.importantYn =='Y'){
+                            this.importantYn = true;
+                        }
                     }
                 }
                 , (error) => {
@@ -158,5 +183,50 @@
             this.$router.push({name:'noticeList'})
         }
 
+        /**
+         * 파일업로드 (멀티파트)
+         */
+        inputFilter(newFile, oldFile, prevent) {
+            if (newFile && !oldFile) {
+                // Before adding a file
+                // Filter system files or hide files
+                if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                    return prevent()
+                }
+                // Filter php html js file
+                if (/\.(php5?|html?|jsx?|jsp?|java?|asp?|exe?|class?|js?|sh?|cgi?)$/i.test(newFile.name)) {
+                    console.log("11111111");
+                    alert("업로드 할수 없는 파일입니다.");
+                    return false;
+                    // return prevent()
+                }
+            }
+        }
+        inputFile(newFile, oldFile) {
+            if (newFile && !oldFile) {
+                // add
+                console.log('add', newFile)
+            }
+            if (newFile && oldFile) {
+                // update
+                console.log('update', newFile)
+            }
+            if (!newFile && oldFile) {
+                // remove
+                console.log('remove', oldFile)
+            }
+        }
+
+
+        reg(){
+
+
+        }
+
     }
-    </script>
+
+</script>
+
+<style>
+</style>
+
