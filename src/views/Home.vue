@@ -32,6 +32,7 @@
         //@Prop() private menuShow: boolean = true;
         menuShow: any = true;
         routerMenuChange : any = '';
+        routerPath : any = {};
         //menuShow = this.menuShow
         routerHistory :any = "";
         // 메뉴 콤포넌트에서 이벤트 처리
@@ -41,7 +42,7 @@
         }
 
         // 라우터 경로 변경시 이벤트 발생
-        @Watch('$route') onChange(){
+        @Watch('$route') onChange(now,pre){
             window.scrollTo(0,0);
 
             if(this.$route.path.slice(this.$route.path.lastIndexOf('/')+1) =='main'){

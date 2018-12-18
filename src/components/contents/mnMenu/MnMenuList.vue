@@ -1,6 +1,6 @@
 <template>
     <!-- container -->
-    <section id="container">
+    <section id="container" >
         <!-- content  -->
         <div class="content">
             <h2 class="blind">시스템 관리</h2>
@@ -56,6 +56,7 @@
         </div>
         <!-- //content -->
     </section>
+
     <!-- //container -->
 </template>
 
@@ -71,12 +72,13 @@
         }
     })
     export default class MnMenuList extends Vue {
+        viewMode : boolean = false;
         auth : any = "";
         listItem: any =
             {
                 dataGrid: {
                     columControl:[
-                        {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '순번' ,id : 'number',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '메뉴명 (1Depth)' ,id : 'name',type:'text', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '메뉴명 (2Depth)' ,id : 'sub',type:'text', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                         {columName : '메뉴코드' ,id : 'menuCode',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
@@ -110,6 +112,7 @@
                 searchClass : 'search_box page_system03'
             }
         created(){
+
         }
         mounted(){
 
@@ -120,6 +123,10 @@
         }
 
         checkBoxEvent(){
+
+        }
+
+        listViewEvent(){
 
         }
     }

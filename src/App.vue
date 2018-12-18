@@ -32,7 +32,7 @@
         });
 
         if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy') { // 공용페이지 접근시 통과
-          console.log('토큰이 있지만 예외페이지 처리라 그냥 넘어간다');
+          console.log('예외페이지 처리라 그냥 넘어간다');
           next();
         } else {
           if (sessionStorage.accessToken) { // 토큰

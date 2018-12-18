@@ -77,7 +77,13 @@
         }
 
         infoModity() {
-            this.$router.replace('/home/IssueViewingCancel');
+            // if(sessionStorage.sisMgtToken == sessionStorage.accountId){
+            this.$router.replace('/home/myPage');
+            // }
+            // else{
+              //  OTP 필요
+
+						// }
 				}
 
         loginOut() {
@@ -85,7 +91,7 @@
                 .then(() =>
 										this.$router.push({name: 'login'}) )
                 .catch()
-		}
+				}
     }
 
 </script>

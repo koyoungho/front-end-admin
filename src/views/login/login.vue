@@ -162,20 +162,23 @@
         this.$store.dispatch('LOGIN', {id, password})
             .then((result) =>{
               if(result=='success'){
-
                 this.$store.dispatch('MENU').then(result=>{
                     if(result=='Y'){
                       this.loginChk()
                     }
+                    else{
+                      this.loginFail()
+                    }
                 })
+              }
+              else if(result=='noinfo'){
+                this.loginChk()
               }
               else{
                 this.loginFail()
               }
             })
             .catch(({message}) => this.loginFail())
-      },
-      vueRecaptchaApiLoaded() {
       },
       loginChk() { //로그인 코드별 화면 분기
         var nextPage = ''
@@ -230,7 +233,18 @@
           alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.')
           return;
         }
-        this.$router.push('home/'+nextPage)
+
+        // 로그인완료 메뉴로딩완료시  OTP인증 이동한다 무조건 1회성 단 시스템관리자를 제외한 다른권한은 정보변경 및 내용조회시 재인증
+
+        // 인증페이지이동
+        if(sessionStorage.role=='0001'){
+          this.$router.push({name:'otpCheck'})
+        }else{
+          this.$router.push('home/'+nextPage)
+        }
+
+
+
       },
       loginFail() {
         alert('로그인 정보를 확인하세요.')
@@ -240,10 +254,10 @@
         this.$router.push('home/cashInstitution')
       },
       searchId() { //아이디 찾기
-        this.$router.push({path:'home/searchIdInput'})
+        this.$router.push({path:'/searchIdInput'})
       },
       initPass() { //비밀번호 초기화
-        this.$router.push('home/initPass')
+        this.$router.push({path:'/initPass'})
       },
       goMain() { //메인이동
         this.$router.push('home/main')

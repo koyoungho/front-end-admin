@@ -10,6 +10,11 @@ import SearchIdInput from "../components/contents/login/SearchIdInput.vue" //아
 import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //아이디 찾기 결과
 import InitPass from "../components/contents/login/InitPass.vue" //비밀번호 초기화
 
+// 정보변경
+import OtpCheck from "../views/login/otpCheck.vue"
+import OtpCheckm from "../views/login/otpCheckm.vue"
+import MyPage from "../components/contents/login/myPage.vue" //아이디 찾기 결과
+
 //가맹점 관리
 import FranchiseList from "../components/contents/franchiseManage/FranchiseList.vue" //매장관리 리스트
 import FranchiseDetl from "../components/contents/franchiseManage/FranchiseDetl.vue" //매장관리 상세
@@ -69,7 +74,7 @@ import SystemMonitoring from "../components/contents/systemMonitoring/SystemMoni
 Vue.use(Router)
 
 export default new Router({
-     // mode : 'history' ,
+    // mode : 'history' ,
     base: '',
     routes: [
         {
@@ -82,10 +87,10 @@ export default new Router({
                 {path:'main', name:'main', component: Main ,meta: {authRequired: true} }, //메인
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
                 {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth ,meta: {authRequired: true} }, //핸드폰 인증
-                {path:'searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
-                {path:'searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
-                {path:'initPass', name:'initPass',component: InitPass ,meta: {authRequired: false}}, //비밀번호 초기화
                 {path:'policy', name:'policy', component:Policy ,meta: {authRequired: false}}, //이용약관 및 개인보호처리방침
+                
+                //정보변경
+                {path:'myPage', name:'myPage', component: MyPage ,meta: {authRequired: true}}, //이용약관 및 개인보호처리방침
 
                 //가맹점관리
                 {path:'franchiseList', name:'franchiseList', component: FranchiseList ,meta: {authRequired: true}}, //가맹점관리 리스트
@@ -150,6 +155,13 @@ export default new Router({
             ]
         },
         { path: "/login", name: "login",  component: LoginComponent},
+
+        { path: "/otpCheck", name: "otpCheck",  component: OtpCheck ,meta: {authRequired: false}},
+        { path: "/otpCheckm", name: "otpCheckm",  component: OtpCheckm ,meta: {authRequired: false}},
+        {path:'/searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
+        {path:'/searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
+        {path:'/initPass', name:'initPass',component: InitPass ,meta: {authRequired: false}}, //비밀번호 초기화
+
         {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
         {
             path: "/secure",
@@ -157,13 +169,10 @@ export default new Router({
             component: SecureComponent
         },
         {
-            // path: '', redirect: "/home/main"
             path: '', redirect: "/login"
         },
         {
             path: "**", redirect: "/login"
-            // path: "**", redirect: "/home/main"
-
         },
         { path: 'error' , redirect: "/error"},
 

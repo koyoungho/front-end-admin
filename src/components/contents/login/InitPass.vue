@@ -1,7 +1,18 @@
 <!--아이디 찾기 화면 - 아이디, 전화번호 입력-->
 
 <template>
-
+    <div id="wrapper">
+        <div id="inc_header">
+            <!-- header -->
+            <header id="header">
+                <!-- top header -->
+                <div class="top_header mobile">
+                    <h1 class="logo" @click="goMain"><a>현금영수증</a></h1>
+                </div>
+                <!-- //top header -->
+            </header>
+            <!-- //header -->
+        </div>
     <!-- container -->
     <section id="container">
 
@@ -19,17 +30,17 @@
                         <li class="form_name">
                             <input type="text"  size="" maxlength="" placeholder="이름" class="name" title="이름 입력" v-model="inputName">
                         </li>
-                        <li class="form_ind">
-                            <input type="text"  size="" maxlength="" placeholder="사업자 등록번호" class="tel" title="사업자 등록번호 입력" v-model="saupId">
-                        </li>
                         <li class="form_tel">
                             <input type="text"  size="" maxlength="" placeholder="휴대폰 번호" class="tel" title="휴대폰 입력" v-model="phoneNum">
+                        </li>
+                        <li class="form_ind">
+                            <input type="text"  size="" maxlength="" placeholder="사업자 등록번호" class="tel" title="사업자 등록번호 입력" v-model="saupId">
                         </li>
                     </ul>
                     <!-- cert box -->
                     <div class="cert_box">
                         <p class="form_cert">
-                            <input type="text" v-model="otpNumber" size="" maxlength="" placeholder="인증번호 6자리 숫자 입력" class="cert" title="인증번호 6자리 숫자 입력">
+                            <input type="text" v-model="otpNumber" size="" maxlength="" placeholder="인증번호 6자리 숫자 입력" class="cert2" title="인증번호 6자리 숫자 입력">
                             <button type="button" id="" class="btn_m01 bg03" v-on:click="optCall" v-show="confirmButton==false">인증번호 받기</button>
                             <button type="button" id="" class="btn_m01 bg03" v-on:click="optCallConfirm" v-show="confirmButton==true">확인</button>
                         </p>
@@ -77,6 +88,38 @@
 
     </section>
     <!-- //container -->
+    <footer id="footer">
+        <!-- quick banner -->
+        <div class="quick_banner">
+            <div class="quick">
+                <span class="sub">고객센터</span>
+                <p class="cont">
+                    <span class="tel">(02)<strong>2074-0340</strong></span>
+                    <span class="text">평일 09:30~18:00</span>
+                </p>
+            </div>
+            <span class="page_top" @click="top"><a>TOP</a></span>
+
+        </div>
+
+        <div class="footer_wrap">
+            <ul class="footer_links">
+                <li><a href="https://www.kt.com/">(주) 케이티</a></li>
+                <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
+                <li><a v-on:click="policyDiv('site')">이용약관</a></li>
+                <li><a v-on:click="policyDiv('user')">개인보호처리방침</a></li>
+            </ul>
+            <div class="footer_address">
+                <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
+                    <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
+                    <span class="tel">문의전화 02-2074-0340</span> / <span class="fax">팩스번호 02-2074-6089</span>
+                </p>
+                <p class="footer_text02">Copyright ⓒ 2019 KT corporation & LDCC. <span class="rights">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    </div>
 
 
 </template>
@@ -170,7 +213,7 @@
                 saupId:this.saupId,
                 phoneNum : this.phoneNum
             }
-            CommonBoardService.postListDatas('accounts','otp',otp)
+            CommonBoardService.postListDatas('otp',null,otp)
                 .then(result => {
                     if(result.data.code=='000'){
                         this.startTimer();
@@ -195,7 +238,7 @@
                 phoneNum : this.phoneNum
             }
             if(this.otpNumber){
-                CommonBoardService.postListDatas('accounts','otp/'+this.otpNumber,otp)
+                CommonBoardService.postListDatas('otp',this.otpNumber,otp)
                     .then(result => {
                         if(result.data.code=='000'){
                             alert('인증되었습니다' )
@@ -272,25 +315,6 @@
             }
         }
 
-        // idCallApi(reqData){
-        //     // api 데이터 호출
-        //     CommonBoardService.getListDatas('accounts','id', reqData).then((response) => {
-        //             let result: any = response.data;
-        //             if (result != null) {
-        //                 this.resultId  = result.extra
-        //             } else {
-        //                 alert('입력하신 내용을 확인하세요');
-        //             }
-        //         }
-        //         , (error) => {
-        //             alert('아이디를 찾을수 없습니다.')
-        //             return;;
-        //         }
-        //     ).catch((response) =>  {
-        //         console.log('response code check!!');
-        //         alert('아이디를 찾을수 없습니다.')
-        //     });
-        // }
 
         savePwd(){
 
@@ -331,6 +355,15 @@
             ).catch((response) =>  {
                 alert('아이디를 찾을수 없습니다.')
             });
+        }
+        top(){
+            window.scrollTo(0,0);
+        }
+        goMain() { //메인이동
+            this.$router.push('home/main')
+        }
+        policyDiv(titleNm){
+            this.$router.push({path:'/home/policy', name:'policy', query:{ titleNm:titleNm }})
         }
 
     }

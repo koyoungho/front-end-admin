@@ -80,7 +80,7 @@
                 <td>{{rows}}</td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
-              <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
+                  <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
               </template>
             </template>
           </tr>
@@ -101,6 +101,7 @@
 <script lang="ts">
 
     import {ListData} from '@/model/list';
+    import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
 
@@ -141,6 +142,7 @@
         @Watch('checkBoxDatas') onChangeCheckBox() {
             this.$emit('checkBoxEvent', this.checkBoxDatas)
         }
+
 
         checkAlls(id,indexs){
             if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
@@ -230,6 +232,7 @@
             // 검색데이터
             let pagingData = this.dataGridDetail.paging;
             let searchData: any = {};
+
 
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
@@ -331,7 +334,6 @@
                                 });
                                 }
                             });
-                            console.log(numberObject)
                             this.listData.push(numberObject);
                         });
 
