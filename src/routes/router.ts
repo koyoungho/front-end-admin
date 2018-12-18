@@ -68,8 +68,9 @@ import CompCodeChart from "../components/contents/mnStatistics/CompCodeChart.vue
 import SaupNumberChart from "../components/contents/mnStatistics/SaupNumberChart.vue"//사업자번호별 거래현황
 import ReceipSaupCount from "../components/contents/mnStatistics/ReceipSaupCount.vue"//현금영수증사업자정산
 import JungsanRuleSearch from "../components/contents/mnStatistics/JungsanRuleSearch.vue"//정산룰조회
-import JungsanReg from "../components/contents/mnStatistics/JungsanReg.vue"//정산룰조회
+import JungsanReg from "../components/contents/mnStatistics/JungsanReg.vue"//정산등록
 import JungsanRuleReg from "../components/contents/mnStatistics/JungsanRuleReg.vue"//정산룰등록
+import JungsanDetail from "../components/contents/mnStatistics/JungsanDetail.vue"//정산룰등록
 import GajumChart from "../components/contents/mnStatistics/GajumChart.vue"//가맹점증감현황
 import GajumTotal from "../components/contents/mnStatistics/GajumTotal.vue"//가맹점수현황조회
 
@@ -145,6 +146,7 @@ export default new Router({
                 {path:'jungsanRuleSearch',component: JungsanRuleSearch, name:'jungsanRuleSearch' ,meta: {authRequired: true}},//정산룰조회
                 {path:'jungsanRuleReg',component: JungsanRuleReg, name:'jungsanRuleReg' ,meta: {authRequired: true}},//정산룰조회
                 {path:'jungsanReg',component: JungsanReg, name:'jungsanReg' ,meta: {authRequired: true}},//신규정산등록
+                {path:'jungsanDetail',component: JungsanDetail, name:'jungsanDetail' ,meta: {authRequired: true}},//정산상세보기
                 //통계관리>가맹점 증감 현황
                 {path:'gajumChart',component: GajumChart, name:'gajumChart' ,meta: {authRequired: true}},
                 //통계관리>가맹점수 현황 조회

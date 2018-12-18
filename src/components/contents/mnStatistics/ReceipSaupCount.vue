@@ -60,7 +60,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr @click="detailJungsan">
                         <td>2018.10.12 05:22:16</td>
                         <td>2018년 10월</td>
                         <td class="left">국세청정산</td>
@@ -133,6 +133,17 @@
          */
         ruleSearch(){
             this.$router.push({path:'jungsanRuleSearch' });
+        }
+
+        detailJungsan(){
+            // 구분값(?), 권한에 따라 상세정보 분기-화면설계 참조할것
+
+            // 구분값-정산완료, 가정산/국세청정산 저장, KT로그인시
+            this.$router.push({path:'jungsanDetail' });
+
+            // 구분값-임시저장, 수정요청 ,LDCC로그인일때만 보임
+            // this.$router.push({path:'jungsanReg' });
+
         }
 
     }
