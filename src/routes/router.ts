@@ -31,7 +31,6 @@ import StoreRegCmpl from "../components/contents/franchiseManage/StoreRegCmpl.vu
 import StoreRegBulk from "../components/contents/franchiseManage/StoreRegBulk.vue" //매장 일괄 등록
 import ApprovalBandList from "../components/contents/franchiseManage/ApprovalBandList.vue" //승인대역 리스트
 import ApprovalBandReg from "../components/contents/franchiseManage/ApprovalBandReg.vue" //승인대역 신청
-
 import GajiBox from "../components/contents/franchiseManage/GajiList.vue" //가맹점 리스트 팝업 조회
 
 //현금영수증 관리
@@ -121,7 +120,6 @@ export default new Router({
                 {path:'storeRegBulk', name:'storeRegBulk', component: StoreRegBulk ,meta: {authRequired: true}}, //매장 일괄 등록 완료
                 {path:'approvalBandList', name:'approvalBandList', component: ApprovalBandList ,meta: {authRequired: true}}, //승인대역 리스트
                 {path:'approvalBandReg', name:'approvalBandReg', component: ApprovalBandReg ,meta: {authRequired: true}}, //승인대역 신청
-
                 {path:'gajiBox', name:'gajiBox', component: GajiBox ,meta: {authRequired: false}}, //가맹점 리스트 팝업 조회
 
                 //현금영수증 관리
