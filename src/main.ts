@@ -17,10 +17,6 @@ Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
 
 import VueResize from 'vue-resize'
 
-// import VuePassword from 'vue-password'
-// Vue.use(VuePassword)
-// Vue.component('vue-password',VuePassword)
-
 Vue.use(VueResize)
 
 

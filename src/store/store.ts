@@ -37,6 +37,7 @@ export default new Vuex.Store({
             sessionStorage.saupId = accessToken.saupId; //사업장번호
             sessionStorage.upJong = accessToken.upJong; //업종코드
             sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
+            sessionStorage.role = accessToken.role; //사업장번호
         },
         LOGOUT (state) {
             //state.accessToken = null
@@ -68,7 +69,7 @@ export default new Vuex.Store({
                         return "success"
                     }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌
                         commit('INFO_SET', data)
-                        return "success"
+                        return "noinfo"
                     }
                 }).catch(e=>{
                         return 'fail'

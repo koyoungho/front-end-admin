@@ -79,15 +79,14 @@
         }
 
         pagingEvent(page) {
-            // this.searchItems.paging.currentPage=page
             this.$children['1'].getCommonListData();
         }
         searchEvent(es){
             // 로컬스토리지에 해당하는 검색정보를 담고 쓴다.
-            // let Value = this.$route.name+''
-            // console.log(search);
-            // localStorage.removeItem(Value)
-            // localStorage.setItem(Value, JSON.stringify(es))
+            let Value = this.$route.name+''
+            console.log(es);
+            // sessionStorage.removeItem(Value)
+            sessionStorage.setItem(Value, JSON.stringify(es))
             this.$children['1'].getCommonListData();
         }
         updated () {

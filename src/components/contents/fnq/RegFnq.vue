@@ -34,8 +34,8 @@
                     </tr>
                     <tr>
                         <th scope="row">내용</th>
-                        <td class="con_write">
-                            <textarea class="form_write"> {{content}}</textarea>
+                        <td class="con_write" >
+                            <tinymce id="d1" v-model="content"></tinymce>
                         </td>
                     </tr>
                     </tbody>
@@ -75,6 +75,7 @@
         title : string ="";
         viewType : string ="";
         content : string ="";
+
 
         mounted(){
             this.seq = this.$route.params.seq;

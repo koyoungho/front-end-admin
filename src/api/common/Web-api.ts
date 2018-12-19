@@ -30,11 +30,11 @@ export default class WebApi<T>{
     }
 
     //삭제api
-    deleteListData(path,id,listData: T) {
+    deleteListData(path,id,apidata) {
         this.newApi();
         let currentAction = id != null ?  "/"+id : "";
         let currentPath = path != null ?  "/"+path : "";
-        return axios.delete(`${this.ApiUrl+currentPath+currentAction}` , {headers: this.headers , params : listData});
+        return axios.delete(`${this.ApiUrl+currentPath+currentAction}` , {headers: this.headers , params : apidata});
     }
     //리스트 API
     getListData(path,id , param) {

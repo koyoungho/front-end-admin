@@ -91,11 +91,11 @@
                     {progId:'policyList',groupCode : '0005', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenuDtos:[
                             {name:'약관 관리', progId : 'policyList',sub: 'sub'},
-                            {name:'개인정보처리방침', progId : 'perssubalList',sub: 'sub'},
+                            {name:'개인정보처리방침', progId : 'personalList',sub: 'sub'},
                             {name:'계정 권한 관리', progId : 'mnUser',sub: 'sub'},
                             {name:'메뉴 권한 관리', progId : 'mnMenu',sub: 'sub'},
-                            {name:'코드관리', progId : '',sub: 'mnCode'},
-                            {name:'시스템 모니터링', progId : 'systemMsubitoring',sub: 'sub'}
+                            {name:'코드관리', progId : 'mnCode',sub: 'sub'},
+                            {name:'시스템 모니터링', progId : 'systemMonitoring',sub: 'sub'}
                         ]}
                 ];
             }
@@ -140,9 +140,7 @@
         }
 
         updated() {
-
             this.$nextTick(function () {
-
             });
         }
 

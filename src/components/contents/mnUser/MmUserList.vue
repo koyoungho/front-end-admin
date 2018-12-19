@@ -16,7 +16,6 @@
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
         <!-- //content -->
         </div>
-        <previewBusinessLicense v-if="showModalBiz"  @close="showModalBiz = false"></previewBusinessLicense>
     </section>
     <!-- //container -->
 
@@ -38,8 +37,6 @@
     export default class MmUserList extends Vue {
         showModalBiz: boolean = false; // 사업자 사본확인
         isCheck:boolean = false;
-
-
         listOn : boolean = true;
         titles: string = '발급조회 및 취소'; // 제목
         subTitle: string = '현금영수증 발급'; //서브타이틀
@@ -55,12 +52,12 @@
                         // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
                         {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '아이디' ,id :'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        {columName : '이름' ,id : 'name',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '등급' ,id : 'roleNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '소속' ,id : 'shopNm',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : '상태' ,id : 'accountStatus',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
-                        {columName : '등록일' ,id : 'regDt',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '최종접속' ,id : 'lastConnDt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '이름' ,id : 'name',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등급' ,id : 'roleNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '소속' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '상태' ,id : 'accountStatus',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
+                        {columName : '등록일' ,id : 'regDt',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,formatDate : true},
+                        {columName : '최종접속' ,id : 'lastConnDt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,formatDate : false},
                         // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
                     totalColum: 9, //
@@ -109,10 +106,11 @@
         }
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
-        listViewEvent(row){
-            alert('로우클릭')
-            console.log(row)
-            //this.$router.push({ name:'iocView' , params: { current : row.searchOption , objectKey : row.row.oriAprv } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        listViewEvent(data){
+            console.log(data)
+            if(data.key=='id'){
+                 this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            }
         }
 
         // }
