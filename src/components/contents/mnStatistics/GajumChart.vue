@@ -27,8 +27,8 @@
             <!-- tab box -->
             <div class="tab_box">
                 <ul class="tab01">
-                    <li v-bind:class="listOn" @click="show('list')"><a >표로 보기</a></li>
-                    <li v-bind:class="chartOn" @click="show('chart')"><a >차트 보기</a></li>
+                    <li :class="{'on': (listShow == true) } " @click="show('list')"><a >표로 보기</a></li>
+                    <li  :class="{'on': (chartShow == true) } " @click="show('chart')"><a >차트 보기</a></li>
                 </ul>
             </div>
 
@@ -57,9 +57,11 @@
     })
     export default class GajumChart extends Vue {
         listShow:boolean=true;
-        listOn:string = "on"
-        chartShow:boolean=false;
-        chartOn:string = ""
+        chartShow:boolean=true;
+
+        mounted(){
+            this.chartShow=false;
+        }
 
         /**
          * 표로보기
@@ -68,15 +70,11 @@
 
             if(div == 'chart'){
                 this.listShow =false;
-                this.listOn ="";
                 this.chartShow =true;
-                this.chartOn ="on";
 
             }else{
                 this.chartShow =false;
-                this.chartOn ="";
                 this.listShow =true;
-                this.listOn ="on";
             }
         }
 

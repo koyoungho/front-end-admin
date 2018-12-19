@@ -62,8 +62,8 @@
 
                 paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
                 goSearch : "iocSearch",
-                searchStyle : 'search_box page_customer02',
-                searchStyle2 : 'search_list col0301'
+                // searchStyle : 'search_box page_customer02',
+                // searchStyle2 : 'search_list col0301'
 
             }
 

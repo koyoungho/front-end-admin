@@ -100,7 +100,7 @@ export default new Router({
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
                 {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth ,meta: {authRequired: true} }, //핸드폰 인증
                 {path:'policy', name:'policy', component:Policy ,meta: {authRequired: false}}, //이용약관 및 개인보호처리방침
-                
+
                 //정보변경
                 {path:'myPage', name:'myPage', component: MyPage ,meta: {authRequired: true}}, //이용약관 및 개인보호처리방침
 
