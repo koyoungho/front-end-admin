@@ -46,7 +46,7 @@
                         {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         {columName : '등록일' ,id : 'regiDate',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}
                     ],
-                    totalColum: 9,
+                    totalColum: 7,
                     apiUrl : 'gajum',
                     onLoadList : true,  // onLoad 로딩 유무
                     //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
@@ -65,7 +65,8 @@
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
-                goSearch : "iocSearch"
+                goSearch : "iocSearch",
+                searchClass : 'search_box page_system03'
             }
 
         created(){
@@ -121,7 +122,7 @@
 
         //가맹점 상세이동
         goDetl(){
-            this.$router.push({name: 'franchiseDetl'})
+            this.$router.push('/home/franchiseDetl')
         }
         //신규등록
         newReg(){

@@ -120,13 +120,9 @@
                             <td>
                                 <select class="select form_comcode" title="회사코드" v-model="apro.companyCodeNm" v-on:change="companyCodeCh(index)">
                                     <option value="">선택</option>
-                                    <option value="1">롯데슈퍼</option>
-                                    <option value="2">롯데리아</option>
-                                    <option value="3">롯데제과</option>
-                                    <!--<option value="">선택</option>
                                     <template v-for="datas in companyCodeList">
                                         <option v-bind:value=datas.code>{{datas.name}}</option>
-                                    </template>-->
+                                    </template>
                                 </select>
                                 <input type="text" id="companyCode" class="input form_comcode" title="회사코드" v-model="apro.companyCode" disabled="disabled">
                             </td>
@@ -213,7 +209,7 @@
                                 <th scope="row">ID<em class="form_req">*</em></th>
                                 <td>
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)">
-                                    <input type="text" v-model="adm.adminIdYn" title="idcheckYn">
+                                    <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)">중복확인</button>
                                     <p class="info_msg" id=id v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
@@ -307,6 +303,11 @@
 
         //돔생성전 호출자
         created() {
+
+            console.log('세선정보 확인===========>>>>>')
+            console.log(sessionStorage)
+            console.log('세선정보 확인===========<<<<<')
+
             //data: {
                 //승인대역 정보
                 this.approvalList = [
@@ -343,14 +344,68 @@
             //}
 
             //주석 제거해야 해
-            this.getSelectList('RECEIPT');
-            //this.getSelectList('SEARCH'); //회사코드
+            this.getSelectList('RECEIPT'); //현금영수증 사업자
+            this.getSelectList('SEARCH'); //회사코드
             this.getSelectList('APRO'); //승인코드
 
         }
 
         //돔렌더링완료시 진행
         mounted() {
+
+        }
+
+        //승인대역 유효성 체크
+        alrBandChk() {
+
+            //승인대역 정보 체크
+            if(this.approvalList.length > 0){
+                for(let i=0; i<this.approvalList.length; i++){
+                    if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
+
+                        console.log('승인내역 사용가능 여부 확인!!!!!!!!!!!!!!!!!! ');
+                        console.log('승인내역 건수 :: '+this.approvalList.length);
+
+                        //승인대역 대역폭 체크
+                        let bandChk : boolean = true;
+                        if(this.approvalList[i].aproGbn == '1' && this.approvalList[i].aproBandFrom != '' &&  this.approvalList[i].aproBandTo != '') { //승인대역이 대역폭이고 대역폭 시작, 끝이 있으면 체크
+                            //대역폭 정보
+                            let bandData: any = {};
+                            bandData['subSaup'] = this.approvalList[i].companyCodeNm; //회사코드
+                            bandData['approvedCode'] = this.approvalList[i].aproCode; //승인코드
+                            bandData['approvedbandFrom'] = this.approvalList[i].aproBandFrom; //시작 대역
+                            bandData['approvedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
+
+                            //승인대역 대역폭 사용가능 여부 확인
+                            console.log('대역폭 사용가능 여부 체크')
+                            CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
+                                    let result: any = response.data;
+                                    console.log(result)
+                                    if (result.code === '000') { //대역폭 사용가능
+                                        bandChk = false;
+                                    } else { //대역폭 사용 못함
+                                        alert(result.message)
+                                        bandChk = true;
+                                    }
+                                    if(bandChk == true){
+                                        return;
+                                    }else{
+                                        this.insertInfo(); //등록
+                                    }
+                                }
+                                , (error) => {
+                                }
+                            ).catch();
+                        }
+
+                        if(bandChk == true){ //승인대역 사용 불가
+                            return;
+                        }else{
+                            this.insertInfo(); //등록
+                        }
+                    }
+                }
+            }
 
         }
 
@@ -379,7 +434,7 @@
 
             //승인대역 정보
             //let aproData: any = [];
-            let aproData : any = [];
+            let aproData : any = {};
             let addData2 : any = []; //승인대역정보 배열
 
             console.log('승인대역 정보 뿌리기')
@@ -391,7 +446,7 @@
             if(this.approvalList.length > 0){
                 for(let j=0; j<this.approvalList.length; j++){
                     if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '') { //회사코드가 있는 경우만 담기
-                        aproData = []; //초기화 안하면 값이 이상하게 들어감
+                        aproData = {}; //초기화 안하면 값이 이상하게 들어감
                         aproData['subSaup'] = this.approvalList[j].companyCode; //회사코드
                         aproData['aprvPermFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작
                         aproData['aprvPermTo'] = this.approvalList[j].aproBandTo; //승인대역 끝
@@ -400,20 +455,21 @@
                         aproData['jumcode'] = this.approvalList[j].jumCode; //점코드
                         aproData['saupId'] = this.saupId; //사업자등록번호
                         addData2.push(aproData);
+                        //addData2.push(aproData);
                     }
                 }
             }
             console.log('승인대역 정보 확인');
             console.log(addData2);
-            reqData['aprvBandAddDtos'] = addData2; //승인대역 정보 셋팅
+            reqData['approvalBandAddDtos'] = addData2; //승인대역 정보 셋팅
 
             //let admData: any = {};
-            let admData: any = [];
+            let admData: any = {};
             let addData3 : any = []; //승인대역정보 배열
             if(this.adminList.length > 0){
                 for(let k=0; k<this.adminList.length; k++){
                     if(this.adminList[k].adminNm != undefined && this.adminList[k].adminNm != '') { //이름이 입력된 경우만 담기
-                        admData = []; //초기화 안하면 값이 이상하게 들어감
+                        admData = {}; //초기화 안하면 값이 이상하게 들어감
                         admData['name'] = this.adminList[k].adminNm; //이름
                         admData['phoneNum'] = this.adminList[k].adminPhonenum; //휴대폰번호
                         admData['id'] = this.adminList[k].adminId; //ID
@@ -421,6 +477,7 @@
                         admData['accessIpFrom'] = this.adminList[k].adminConIp1; //접속IP 시작
                         admData['accessIpTo'] = this.adminList[k].adminConIp2 //접속IP 끝
                         addData3.push(admData);
+                        //addData3.push(admData);
                     }
                 }
             }
@@ -431,12 +488,12 @@
             console.log('최종 등록 정보 확인');
             console.log(reqData);
 
-/*
-            // api 데이터 호출(사업자등록번호 유효성 체크)
-            CommonBoardService.postListDatas('validation/saupid', null, reqData).then((response) => {
+
+            // api 데이터 호출(가맹점 등록)
+            CommonBoardService.postListDatas('gajum', null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result);
-                    if (result != null && result.code == '000') {
+                    if (result != null) {
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
                     } else {
@@ -452,8 +509,9 @@
             ).catch((response) => {
                 console.log(response);
             });
-*/
-            //this.$router.push('/home/franchiseRegCmpl')
+
+            this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
         }
 
         //승인대역 추가
@@ -498,8 +556,8 @@
         validationChk(){
 //            this.insertInfo();
 //return;
-/*
-            if(this.soluId == ''{
+
+            if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
                 return;
             }else if(this.saupId == ''){
@@ -517,7 +575,7 @@
             }else if(this.saupType == ''){
                 alert('사업자구분을 선택하세요.');
                 return;
-            }else if(this.lawNum == ''){
+            }else if(this.saupType == '1' || this.lawNum == ''){ //사업자구분이 법인인 경우 필수
                 alert('법인등록번호를 입력하세요.');
                 return;
             }else if(this.zipCode == ''){
@@ -530,7 +588,7 @@
                 alert('상세주소를 입력하세요.');
                 return;
             }
-*/
+
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
@@ -566,6 +624,7 @@
                         }
 
                         //승인대역 대역폭 체크
+                        /*
                         let bandChk : boolean = true;
                         if(this.approvalList[i].aproGbn == '1' && this.approvalList[i].aproBandFrom != '' &&  this.approvalList[i].aproBandTo != '') { //승인대역이 대역폭이고 대역폭 시작, 끝이 있으면 체크
                             //대역폭 정보
@@ -593,10 +652,9 @@
                                 , (error) => {
                                 }
                             ).catch();
-                        }
+                        }*/
 
                     }
-
                 }
             }
 
@@ -631,7 +689,8 @@
 
 
             //다음 단계 functon 들어오는 곳!!
-
+            //this.insertInfo();
+            this.alrBandChk();
         }
 
         //사업자 구분(개인,법인) 체크
@@ -679,10 +738,13 @@
                     console.log(result);
                     if (result != null && result.code == '000') {
                         this.saupIdYn = 'Y';
+                        if(saupmsg != null){
+                            saupmsg.innerHTML = "사용가능한 사업자등록번호입니다."; //화면에 메시지 보이기
+                        }
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
                     } else {
-                        this.saupIdYn = '';
+                        this.saupIdYn = 'Y';
                         if(saupmsg != null){
                             saupmsg.innerHTML = result.message; //화면에 메시지 보이기
                         }

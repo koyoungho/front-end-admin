@@ -259,7 +259,8 @@
         }
     }
     , mounted() {
-
+        this.id = 'test'
+        this.password = 'pass2'
     }
 
   }
