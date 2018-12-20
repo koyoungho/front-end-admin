@@ -7,10 +7,7 @@
 		<ul class="util" id="topLoginInfo">
 			<li class="user"><span class="name">{{loginName}}</span>님</li>
 			<li class="user_info">
-				<span class="company">{{loginCompany}}</span>
-				<span class="branch">{{loginBranch}}</span>
-				<span class="store">{{loginStore}}</span>
-				<span class="number">({{loginBusinessNo}})</span>
+				<span class="company">{{loginRoleNm}}</span>
 			</li>
 		</ul>
 		<!-- btn_area -->
@@ -38,24 +35,18 @@
         @Prop() private msg!: string;
 
         loginName : any = ''; //로그인 사용자 성명
-		loginCompany : any = ''; //로그인 사용자 회사
-		loginBranch : any = ''; //로그인 사용자 지점
-		loginStore : any = ''; //로그인 사용자 상점
-		loginBusinessNo : any = ''; //로그인 사용자 사업장등록번호
+        loginRoleNm : any = ''; //사용자 등급
 
         mounted() {
             let infoUpd = document.getElementById('topInfoUpd'); //정보수정
             let logout = document.getElementById('topLogout'); //로그아웃
             let login = document.getElementById('topLogin'); //로그인
 			let loginInfo = document.getElementById('topLoginInfo'); //로그인 사용자 정보
-
             if(sessionStorage.accessToken){ //로그인 상태
                 //localStore 값으로 보여줌
-                this.loginName = '김현금';
-                this.loginCompany = '롯데백화점';
-                this.loginBranch = '강남점';
-                this.loginStore = 'GUZZA몰';
-                this.loginBusinessNo = '123-34-12345';
+                this.loginName = sessionStorage.accountNm; //김현금
+                this.loginRoleNm = sessionStorage.roleNm; //콜센터
+
                 if(loginInfo != null){ loginInfo.hidden = false; } //로그인 사용자 정보
                 if(infoUpd != null){ infoUpd.setAttribute('style', 'display:'); } //정보수정
                 if(logout != null){ logout.setAttribute('style', 'display:'); } //로그아웃
