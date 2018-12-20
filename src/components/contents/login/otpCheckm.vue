@@ -82,7 +82,7 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {CommonBoardService} from '../../api/common.service';
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
         components: {

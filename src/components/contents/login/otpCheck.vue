@@ -1,84 +1,47 @@
 <template>
-  <div id="wrapper">
+  <div>
+    <!-- popup small -->
+    <div class="popup_modal"></div>
+    <div id="popup_code" class="popup_wrapper large Pstyle" tabindex="0" style="display: block;">
+      <!-- popup header -->
+      <div class="popup_header">
+        <!-- h2 -->
+        <h2>관리자 본인인증</h2>
+        <button type="button" v-on:click="closePop" class="btn_close">Close</button>
+      </div>
+      <!-- popup body -->
+      <div class="popup_body">
+        <!-- popup content -->
+        <div class="popup_content page_code">
 
-    <div id="inc_header">
-      <!-- header -->
-      <header id="header">
-        <!-- top header -->
-        <div class="top_header mobile">
-          <h1 class="logo" @click="goMain"><a>현금영수증</a></h1>
-        </div>
-        <!-- //top header -->
-      </header>
-      <!-- //header -->
-    </div>
-
-    <!-- container -->
-    <section id="container">
-      <h2 class="blind">로그인</h2>
-      <h3 class="login">관리자 본인 인증</h3>
-      <!-- login wrap  -->
-      <div class="login_wrap">
-        <!-- login_box -->
-        <div class="login_box type02">
-          <p class="login_text">개인 정보 보호 및 현금영수증 발급 도용, 오남용 방지를 위하여 OTP 추가 인증을 진행합니다.<br>가입 시 등록하신 번호로 인증번호를 전송하고 수신한 인증번호를 아래에 입력하시기 바랍니다.<br>로그인에 문제가 있다면 고객센터 (02-2074-0340)으로 문의하시기 바랍니다.</p>
-          <!-- cert box -->
-          <div class="cert_box">
-            <p class="form_cert row01">
-              <input type="text" id="" name="" size="" maxlength="" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber">
-              <span class="time_count2">{{message}}</span>
-              <button type="button" id="" class="btn_m01 bg01" @click="optCallConfirm">인증번호 확인</button>
-            </p>
+          <!-- search box -->
+          <div class="login_wrap">
+            <!-- login_box -->
+            <div class="login_box type02">
+              <p class="login_text">개인 정보 보호 및 현금영수증 발급 도용, 오남용 방지를 위하여 OTP 추가 인증을 진행합니다.<br>가입 시 등록하신 번호로 인증번호를 전송하고 수신한 인증번호를 아래에 입력하시기 바랍니다.<br>로그인에 문제가 있다면 고객센터 (02-2074-0340)으로 문의하시기 바랍니다.</p>
+              <!-- cert box -->
+              <div class="cert_box">
+                <p class="form_cert row01">
+                  <input type="text" id="" name="" size="" maxlength="" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber">
+                  <span class="time_count2">{{message}}</span>
+                  <button type="button" id="" class="btn_m01 bg01" @click="optCallConfirm">인증번호 확인</button>
+                </p>
+              </div>
+            </div>
+            <!-- //login_box -->
           </div>
         </div>
-        <!-- //login_box -->
       </div>
-      <!-- //login wrap  -->
-
-    </section>
-    <!-- //container -->
-
-    <!-- include footer -->
-    <footer id="footer">
-      <!-- quick banner -->
-      <div class="quick_banner">
-        <div class="quick">
-          <span class="sub">고객센터</span>
-          <p class="cont">
-            <span class="tel">(02)<strong>2074-0340</strong></span>
-            <span class="text">평일 09:30~18:00</span>
-          </p>
-        </div>
-        <span class="page_top" @click="top"><a>TOP</a></span>
-
-      </div>
-
-      <div class="footer_wrap">
-        <ul class="footer_links">
-          <li><a href="https://www.kt.com/">(주) 케이티</a></li>
-          <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
-          <li><a v-on:click="policyDiv('site')">이용약관</a></li>
-          <li><a v-on:click="policyDiv('user')">개인보호처리방침</a></li>
-        </ul>
-        <div class="footer_address">
-          <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
-            <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
-            <span class="tel">문의전화 02-2074-0340</span> / <span class="fax">팩스번호 02-2074-6089</span>
-          </p>
-          <p class="footer_text02">Copyright ⓒ 2019 KT corporation & LDCC. <span class="rights">All rights reserved.</span></p>
-        </div>
-      </div>
-    </footer>
-
+      <!-- //popup body -->
+    </div>
+    <!-- //popup -->
   </div>
-  <!-- container -->
-
   <!-- //container -->
 </template>
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {CommonBoardService} from '../../api/common.service';
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
         components: {
@@ -120,17 +83,17 @@
         }
 
         accountGet(){
-            CommonBoardService.getListDatas('accounts','myself',null)
-                .then(result => {
-                    if(result.data.id ==null){
-                        alert('아이디가 존재하지 않습니다');
-                    }else{
-                        this.phoneNum = result.data.phoneNum;
-                        this.inputName = result.data.name;
-                        this.saupId = result.data.saupId;
-                        this.optCall();
-                    }
-                }).catch()
+            // CommonBoardService.getListDatas('accounts','myself',null)
+            //     .then(result => {
+            //         if(result.data.id ==null){
+            //             alert('아이디가 존재하지 않습니다');
+            //         }else{
+            //             this.phoneNum = result.data.phoneNum;
+            //             this.inputName = result.data.name;
+            //             this.saupId = result.data.saupId;
+            //             this.optCall();
+            //         }
+            //     }).catch()
         }
 
         optCall(){
@@ -225,6 +188,10 @@
                 this.counter = false
                 this.otpTrue = false;
             }
+        }
+
+        closePop(){
+            this.$emit('close');
         }
     }
 

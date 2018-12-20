@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- tbl search box -->
-    <search v-bind:searchItemDetail=searchItems.search v-on:SearchToList="searchEvent"></search>
+    <search v-bind:searchItemDetail=searchItems v-on:SearchToList="searchEvent"></search>
     <!-- //tbl search box -->
 
     <!-- tbl list box -->
@@ -39,6 +39,7 @@
 
         listOnLoad : boolean = false;
         searchItems : any =  this.listObject;
+        searchItemsOrigin : any =  this.listObject;
 
         @Watch('onLoadList') onChange(){
             if(this.onLoadList==true){
@@ -76,6 +77,10 @@
 
         viewEvent(row){
             this.$emit('listView' , row)
+        }
+
+        searchReset(){
+            this.$children['0'].getSearchData();
         }
 
         pagingEvent(page) {

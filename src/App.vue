@@ -79,9 +79,7 @@
       });
     },
     mounted() {
-
-    },
-    methods: {}
+    }
   };
 </script>
 

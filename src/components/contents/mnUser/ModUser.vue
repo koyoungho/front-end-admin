@@ -240,8 +240,9 @@
             }
         created(){
             let id : any = this.$route.params.val
+            let auth : any = this.$route.params.val2
 
-            this.accountInfo();
+            this.accountInfo(id,auth);
             //
             // let level = 0;
             // if(level == 0){
@@ -256,8 +257,8 @@
             this.gajumInfo();
         }
 
-        accountInfo(){
-            CommonBoardService.getListDatas('accounts',this.$route.params.val,null).then(result=>{
+        accountInfo(id,auth){
+            CommonBoardService.getListDatas('accounts',id,{id :id ,role : auth}).then(result=>{
                if(result.status==200){
                    this.account = result.data
                }else{
@@ -293,7 +294,7 @@
 
         addressBoxOn(){
             this.addressBox = true;
-            // 우편번호 호출하기f
+            // 우편번호 호출하기
         }
 
         setDataAddr1(e){

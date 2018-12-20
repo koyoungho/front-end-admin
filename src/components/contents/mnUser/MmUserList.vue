@@ -83,7 +83,7 @@
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
                 searchClass : 'search_box page_system03',
-                searchClassSub : 'search_box page_system03'
+                searchClass2 : 'search_list'
             }
 
         created(){
@@ -109,7 +109,7 @@
         listViewEvent(data){
             console.log(data)
             if(data.key=='id'){
-                 this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                 this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
             }
         }
 

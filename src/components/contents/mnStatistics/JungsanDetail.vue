@@ -633,6 +633,7 @@
     })
     export default class JungsanDetail extends Vue {
 
+
         /**
          * 수정요청
          */

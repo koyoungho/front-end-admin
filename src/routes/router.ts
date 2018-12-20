@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
-import LoginComponent from "../views/login/login.vue"
+import Login from "../views/login/login.vue"
 import SecureComponent from "../views/login/secure.vue"
 
 import Main from "../components/contents/Main.vue" //메인
@@ -11,8 +11,6 @@ import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //�
 import InitPass from "../components/contents/login/InitPass.vue" //비밀번호 초기화
 
 // 정보변경
-import OtpCheck from "../views/login/otpCheck.vue"
-import OtpCheckm from "../views/login/otpCheckm.vue"
 import MyPage from "../components/contents/login/myPage.vue" //아이디 찾기 결과
 
 //가맹점 관리
@@ -182,10 +180,8 @@ export default new Router({
                 {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: true}}, //시스템모니터링
             ]
         },
-        { path: "/login", name: "login",  component: LoginComponent},
+        { path: "/login", name: "login",  component: Login},
 
-        { path: "/otpCheck", name: "otpCheck",  component: OtpCheck ,meta: {authRequired: false}},
-        { path: "/otpCheckm", name: "otpCheckm",  component: OtpCheckm ,meta: {authRequired: false}},
         {path:'/searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
         {path:'/searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
         {path:'/initPass', name:'initPass',component: InitPass ,meta: {authRequired: false}}, //비밀번호 초기화

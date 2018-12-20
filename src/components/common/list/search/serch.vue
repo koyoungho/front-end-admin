@@ -2,9 +2,9 @@
   <div class="cont_mobile">
     <!--<resize-observer @notify="handleResize"/>-->
     <!-- tbl search box -->
-    <div :class="searchStyle" v-if="searchItem.length > 0">
+    <div v-bind:class="searchStyle" v-if="searchItem.length > 0">
       <!--{{searchItemDetail}}-->
-      <ul :class="searchStyle2">
+      <ul v-bind:class="searchStyle2">
         <template v-for="item in searchItem">
           <template v-if="item.type=='date'" >
             <li>
@@ -24,8 +24,8 @@
                       :mode=showMode
                       :fullscreen-mobile="true"
                       :months-to-show="1"
-                      :offsetX="-636"
                       :offsetY="-20"
+                      :style = "dateStyle"
                       :date-one="dateOne"
                       :date-two="dateTwo"
                       @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
@@ -44,7 +44,7 @@
                       :mode=showMode
                       :fullscreen-mobile="true"
                       :months-to-show="1"
-                      :offsetX="-636"
+                      :offsetX="0"
                       :offsetY="-20"
                       :date-one="dateOne"
                       :date-two="dateTwo"
@@ -111,6 +111,7 @@
     </div>
     <!-- btn mid -->
     <div class="btn_mid" v-if="searchItem.length > 0">
+      <button type="button" class="btn_m01 bg02" @click="resetData">초기화</button>
       <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
     </div>
   </div>
@@ -134,10 +135,12 @@
     })
     export default class Search extends Vue {
         @Prop() searchItemDetail !: any;
-        searchItem : any = this.searchItemDetail;
+        searchItem : any = this.searchItemDetail.search;
         selectObjects : any = {};
         totalitems  : number = 0;
-        searchStyle : string= 'search_box page_system03'
+        searchStyle : string= ''
+        searchStyle2 : string = ''
+        dateStyle : any = 'left : 450px';
 
         // 달력용
         dateFormat:any =  'YYYYMMDD';
@@ -154,22 +157,28 @@
         }
 
         created() {
+            this.searchStyle = this.searchItemDetail.searchClass
+            this.searchStyle2 = this.searchItemDetail.searchClass2
+
+            this.getSearchData();
+        }
 
 
+        getSearchData(){
             this.searchItem.filter(e=>{
 
                 if(e.type=='date'){
                     if(e.calenderCount > 1){
                         this.showMode='range'
                     }
+
                 }else if(e.type=='choiseDate') {
                     if(e.calenderCount > 1){
                         this.showMode='range'
                     }
                 }else if(e.type=='input'){
-
+                      e.value='';
                 }else if(e.type=='selectCode'){
-
                     if(e.api ==''){
                         this.selectObjects[e.name] = e.option;
                     }
@@ -210,12 +219,23 @@
             // CommonBoardService.getListDatas('/receipt','10').then(response => (this.listData = response.data)).catch();
         }
 
-
         SearchButton(){
 
             this.$emit('SearchToList', this.searchItem);
         }
 
+        resetData(){
+            this.searchItem.filter(e=>{
+                if(e.type=='radio' ){
+
+                }else{
+                e.value="";
+                e.searchStartDate = this.formatDates(new Date());
+                e.searchEndDate =this.formatDates(new Date());
+                }
+            })
+
+        }
     }
 
 

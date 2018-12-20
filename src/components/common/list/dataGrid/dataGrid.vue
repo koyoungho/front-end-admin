@@ -73,7 +73,7 @@
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
-                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows" v-model="checkBoxDatas"><label for=""></label></span>
+                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows+'@'+index" v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
@@ -140,6 +140,7 @@
             this.getCommonListData();
         }
         @Watch('checkBoxDatas') onChangeCheckBox() {
+            console.log(this.checkBoxDatas);
             this.$emit('checkBoxEvent', this.checkBoxDatas)
         }
 
