@@ -7,7 +7,7 @@
         <div class="popup_header">
             <!-- h2 -->
             <h2>사업자등록증 사본</h2>
-            <a href="#" class="btn_close b-close">Close</a>
+            <a href="#" class="btn_close b-close" v-on:click="closePop">Close</a>
         </div>
         <!-- popup body -->
         <div class="popup_body">
@@ -35,7 +35,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
 
     @Component({
         components: {
@@ -43,11 +43,18 @@
         }
     })
     export default class previewBizLicense extends Vue {
+        @Prop() listObject  !: any;
+
+        reqRowData : any = this.listObject;
 
         closePop(){
             this.$emit('close');
         }
 
+        created(){
+            console.log('사업장 사본 확인 화면')
+            console.log(this.reqRowData)
+        }
     }
 
 </script>

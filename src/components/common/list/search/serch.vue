@@ -66,7 +66,7 @@
           <template v-if="item.type=='input2'">
             <li>
               <label for="aa">{{item.title}}</label>
-              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" >
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  :title="item.title"  :placeholder="item.placeholder">
             </li>
           </template>
 
@@ -157,6 +157,8 @@
         searchStyle : string= ''
         searchStyle2 : string = ''
         dateStyle : any = 'left : 450px';
+        title : string = "";
+        placeholder : string = "";
 
         // 달력용
         dateFormat:any =  'YYYYMMDD';
@@ -201,6 +203,9 @@
                     }
                 }else if(e.type=='input'){
                       e.value='';
+                }else if(e.type=='input2'){
+                    this.title = e.title;
+                    this.placeholder = e.placeholder;
                 }else if(e.type=='selectCode'){
                     if(e.api ==''){
                         this.selectObjects[e.name] = e.option;

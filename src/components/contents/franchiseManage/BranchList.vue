@@ -8,7 +8,7 @@
             <h3>지점 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
             </div>
 
@@ -23,6 +23,7 @@
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import {format} from 'date-fns';
 
     @Component({
         components: {
@@ -37,6 +38,8 @@
         windowResize : boolean = false; // 리사이즈
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
+        regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
+        setDate =  format(new Date(),'YYYYMMDD');
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
                 dataGrid: {
@@ -62,7 +65,7 @@
                     {type: 'selectCode' , title :'회사코드',id: 'companyCode', name:'companyCode' , value: '' ,  api : 'company' , option : [{ name: '', value:''}]},
                     {type: 'select' , title :'지점상태',id: 'jijumStatus', name:'jijumStatus' , value: '' ,  api : '' , option : [{ name : '승인신청' , value: '0' },{name : '해지신청' , value: '1' },{name : '정상' , value: '2' },{name : '해지' , value: '3' }]},
                     {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeName : '휴업' , code: '1' },{codeName : '수기BL' , code: '11' },{codeName : '수기BL취소' , code: '17' },{codeName : '폐업' , code: '2' },{codeName : '신용카드위장' , code: '3' },{codeName : '현금위장' , code: '4' },{codeName : '신용카드/현금위장' , code: '5' },{codeName : '현금영수증발급불가' , code: '6' },{codeName : '적용취소' , code: '7' },{codeName : '삭제된사업자' , code: '8' }]},
-                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: '20180522' ,  searchEndDate: '20181215', calenderCount : 2},
+                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate, calenderCount : 2},
                     {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: '0' },{name : '사업자등록번호' , value: '1' },{name : '대표자명' , value: '2' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' },
                     {type: 'input', title :'', id: 'gajumId', name:'gajumId' , value: '0093032',   api : '' , option : '' }
@@ -72,17 +75,31 @@
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
-                //searchClass : 'search_box page_system03'
+                searchClass : 'search_box page_system03',
+                searchStyle : 'search_box page_customer03',
+                searchStyle2 : 'search_list col0301'
             }
 
         created(){
             this.originItem  = this.listItem.dataGrid.columControl
-            // if( window.innerWidth < 482){
-            //     this.handleResize()
-            // }else{
-            //     this.windowResize = false;
-            //     this.handleResize()
-            // }
+
+            //시스템관리자(0001), 콜센터관리자(0003)만 등록버튼 보임
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+                this.regbtnShow = true;
+            }else{
+                this.regbtnShow = false;
+            }
+
+            //모바일, PC 구분
+            let filter : string = "win16|win32|win64|mac";
+            if (navigator.platform ) {
+                if (filter.indexOf(navigator.platform.toLowerCase()) > -1) {
+                    console.log('피씨')
+                } else {
+                    console.log('모바일')
+                }
+            }
+
         }
 
 

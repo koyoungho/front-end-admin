@@ -49,7 +49,7 @@
                 <template v-if="div_str == '수정' ">
                     <button type="button" class="btn_b01 bg03">삭제</button>
                 </template>
-                <button type="button" class="btn_b01 bg01">{{div_str}}</button>
+                <button type="button" class="btn_b01 bg01" @click="regFnq">{{div_str}}</button>
             </div>
 
         </div>
@@ -93,7 +93,7 @@
          */
         getFnqDetail() {
             // api 데이터 호출
-            CommonBoardService.getListDatas('faqs', this.seq, null).then((response) => {
+            CommonBoardService.getListDatas('faq', this.seq, null).then((response) => {
                     let result: any = response.data;
 
                     if (result !=null) {
@@ -113,6 +113,13 @@
          */
         toList(){
             this.$router.push({name:'fnqList'})
+        }
+
+        /**
+         * 등록
+         */
+        regFnq(){
+
         }
 
     }
