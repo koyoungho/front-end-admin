@@ -8,13 +8,16 @@
             <h3>계정 권한 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" class="btn_m01 bg02" v-on:click="regUser">계정 등록</button>
             </div>
 
             <!-- search box -->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
         <!-- //content -->
+
+            <PreviewBusinessLicense v-if="showModalBiz" v-bind:listObject="rowData" v-on:close="bizClose"></PreviewBusinessLicense>
+
         </div>
     </section>
     <!-- //container -->
@@ -35,7 +38,9 @@
         }
     })
     export default class MmUserList extends Vue {
+        regbtnShow: boolean = false; //등록
         showModalBiz: boolean = false; // 사업자 사본확인
+        rowData: any = {}; //사업자 사본 화면으로 넘기는 row 데이터
         isCheck:boolean = false;
         listOn : boolean = true;
         titles: string = '발급조회 및 취소'; // 제목
@@ -54,6 +59,7 @@
                         {columName : '아이디' ,id :'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                         {columName : '이름' ,id : 'name',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         {columName : '등급' ,id : 'roleNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등급' ,id : 'role',type:'hidden', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
                         {columName : '소속' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
                         {columName : '상태' ,id : 'accountStatus',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                         {columName : '등록일' ,id : 'regDt',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,formatDate : true},
@@ -66,6 +72,7 @@
                     // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                     // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
                     //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                    acntAuthMng : true
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
@@ -94,6 +101,11 @@
             //     this.windowResize = false;
             //     this.handleResize()
             // }
+
+            //시스템관리자(001), 콜센터관리자(0003)만 등록,승인 가능
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+                this.regbtnShow = true;
+            }
         }
 
 
@@ -110,6 +122,10 @@
             console.log(data)
             if(data.key=='id'){
                  this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태가 승인대기인 경우 팝업창 확인
+                this.rowData = data.row;
+                this.popComfirm();
+                console.log('사업자 등록증 확인 팝업 보이기')
             }
         }
 
@@ -137,9 +153,17 @@
             this.showModalBiz=true;
         }
 
+        /**
+         * 사업자등록증 사본 화면 닫기
+         */
+        bizClose(){
+            this.showModalBiz=false;
+        }
+
         checkAll(){
 
         }
+
 
 
 

@@ -8,7 +8,7 @@
             <h3>지점 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
             </div>
 
@@ -37,6 +37,7 @@
         windowResize : boolean = false; // 리사이즈
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
+        regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
                 dataGrid: {
@@ -72,17 +73,31 @@
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
-                //searchClass : 'search_box page_system03'
+                searchClass : 'search_box page_system03',
+                searchStyle : 'search_box page_customer03',
+                searchStyle2 : 'search_list col0301'
             }
 
         created(){
             this.originItem  = this.listItem.dataGrid.columControl
-            // if( window.innerWidth < 482){
-            //     this.handleResize()
-            // }else{
-            //     this.windowResize = false;
-            //     this.handleResize()
-            // }
+
+            //시스템관리자(0001), 콜센터관리자(0003)만 등록버튼 보임
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+                this.regbtnShow = true;
+            }else{
+                this.regbtnShow = false;
+            }
+
+            //모바일, PC 구분
+            let filter : string = "win16|win32|win64|mac";
+            if (navigator.platform ) {
+                if (filter.indexOf(navigator.platform.toLowerCase()) > -1) {
+                    console.log('피씨')
+                } else {
+                    console.log('모바일')
+                }
+            }
+
         }
 
 

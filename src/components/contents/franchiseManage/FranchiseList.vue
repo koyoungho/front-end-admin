@@ -7,8 +7,8 @@
                 <h2 class="blind">{{titles}}</h2>
         <h3>{{subTitle}}</h3>
         <!-- btn top -->
-        <div class="btn_top">
-            <button type="button" id="" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
+        <div class="btn_top" v-if="regbtnShow">
+            <button type="button" id="reg_btn" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
         </div>
         <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
         </div>
@@ -34,6 +34,7 @@
         windowResize : boolean = false; // 리사이즈
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
+        regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
                 dataGrid: {
@@ -57,9 +58,9 @@
                 search: [
                     {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: '20180522' ,  searchEndDate: '20181215', calenderCount : 2},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'selectCode' , title :'가맹점상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeName : '정상' , code: '01' },{codeName : '해지' , code: '02' },{codeName : '해지신청' , code: '03' }]},
+                    {type: 'selectCode' , title :'가맹점상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeName : '휴업' , code: '1' },{codeName : '수기BL' , code: '11' },{codeName : '수기BL취소' , code: '17' },{codeName : '폐업' , code: '2' },{codeName : '신용카드위장' , code: '3' },{codeName : '현금위장' , code: '4' },{codeName : '신용카드/현금위장' , code: '5' },{codeName : '현금영수증발급불가' , code: '6' },{codeName : '적용취소' , code: '7' },{codeName : '삭제된사업자' , code: '8' }]},
-                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업자등록번호' , value: 'saupId' },{name : '대표자 명' , value: 'chipNm' }]},
+                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: '0' },{ name : '사업자등록번호' , value: '1' },{name : '대표자 명' , value: '2' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
@@ -72,12 +73,14 @@
 
         created(){
             this.originItem  = this.listItem.dataGrid.columControl
-            // if( window.innerWidth < 482){
-            //     this.handleResize()
-            // }else{
-            //     this.windowResize = false;
-            //     this.handleResize()
-            // }
+
+            //시스템관리자(0001), 콜센터관리자(0002)만 등록버튼 보임
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+                this.regbtnShow = true;
+            }else{
+                this.regbtnShow = false;
+            }
+
         }
 
 

@@ -74,7 +74,7 @@
                     <!-- //tbl scroll -->
 
                     <!-- pagination -->
-                    <div class="pagination">
+                    <!--<div class="pagination">
                         <a href="#" class="btn_prev" v-on:click="prePages()">이전</a>
                         <span class="num">
                           <a v-for="page in paggingStr" v-on:click="goPage(page.page)">
@@ -83,7 +83,7 @@
                           </a>
                         </span>
                         <a href="#" class="btn_next" v-on:click="nextPages()">다음</a>
-                    </div>
+                    </div>-->
                     <!-- //pagination -->
 
                 </div>
@@ -191,19 +191,19 @@
             let reqData = {
                 searchType : this.searchType,
                 searchWord : this.searchWord,
-                currentPage : this.pageNum,
-                perPage  : this.PAGEBLOCK,
+                //currentPage : this.pageNum,
+                //perPage  : this.PAGEBLOCK,
             }
 
             CommonBoardService.getListData('gajum/popup', null, reqData).then((response) => {
                 //console.log(response)
                     this.responseData = response.data.data;
 
-                    this.total = parseInt(response.data.totalRecords);
+                    /*this.total = parseInt(response.data.totalRecords);
                     this.pageNum = parseInt(response.data.currentPage);
                     this.pageSize = parseInt(response.data.perPage);
                     this.PAGEBLOCK = parseInt(response.data.perPage);
-                    this.pageMake();
+                    this.pageMake();*/
                 }
                 , (error) => {
                 }

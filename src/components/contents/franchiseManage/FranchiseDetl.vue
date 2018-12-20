@@ -11,7 +11,7 @@
             <h4 class="blind">기본 정보</h4>
 
             <!-- search reg box -->
-            <div class="search_reg_box">
+            <div class="search_reg_box" v-if="topinfoShow">
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
@@ -250,7 +250,7 @@
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)" v-bind:style="adm.admDupBtn">중복확인</button>
-                                    <p class="info_msg" id=id v-bind:id="adm.adminIdMsg" ></p>
+                                    <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
                                 <th scope="row">이메일주소<em class="form_req">*</em></th>
                                 <td>
@@ -322,6 +322,8 @@
     })
     export default class FranchiseDetl extends Vue {
         message: any = '';
+
+        topinfoShow : boolean = false; //상단 현금영수증, 가맹점, 지점 정보 표시
 
         viewRowItem : {} = {};
         objectKey : any = "";
@@ -415,6 +417,11 @@
                         lastConnDate: "" //최종접속일시
                     }
                 ]
+
+            //시스템관리자(0001), 콜센터관리자(0003)만 표시
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+                this.topinfoShow = true;
+            }
 
             this.getSelectbox(); //공통사용 selectbox 조회
             this.franchiseView(); //가맹점 정보 조회
@@ -1011,31 +1018,33 @@
 
             //시스템 관리자는 인증 안함. 콜센터/가맹점/지점 관리자는 인증(세션값으로 체크)
             //시스템관리자-0001, 현금영수증관리자-0002, 콜센터-0003, 가맹점-0004, 지점-0005
+            if(sessionStorage.role == '0001'){ //시스템 관리자는 인증 안함
 
-            //if(confirm('관리자 본인 인증 후 수정됩니다.')){
-                this.$router.push({ name:'phoneAuth' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-            //}else{
-            //    return;
-            //}
-/*
-CommonBoardService.updateListData('gajum', this.gajumId, reqData).then((response) => {
-                    console.log('수정 API 결과 11')
-                    console.log(response)
-                    //let result: any = response.data;
-                    console.log('수정 API 결과 22')
-                    //console.log(result)
-                    //if (result.code === '000' || ) { //성공
-                    if (response.status == 200) { //성공
-                        alert('가맹점 정보가 수정되었습니다.');
-                        //this.$router.push({name:'franchiseList'});
-                    } else { //실패
-                        alert('가맹점 정보 수정이 실패하였습니다.\n다시 시도하세요.')
+                reqData['accountId'] = sessionStorage.accountId; //로그인 ID
+
+                CommonBoardService.updateListData('gajum', this.gajumId, reqData).then((response) => {
+                        console.log('수정 API 결과 11')
+                        console.log(response)
+                        //let result: any = response.data;
+                        console.log('수정 API 결과 22')
+                        //console.log(result)
+                        //if (result.code === '000' || ) { //성공
+                        if (response.status == 200) { //성공
+                            alert('가맹점 정보가 수정되었습니다.');
+                            this.$router.push({name:'franchiseList'});
+                        } else { //실패
+                            alert('가맹점 정보 수정이 실패하였습니다.\n다시 시도하세요.')
+                        }
                     }
-                }
-                , (error) => {
-                }
-            ).catch();
-*/
+                    , (error) => {
+                    }
+                ).catch();
+
+            }else{ // 그외는 본인인증 필수
+
+                this.$router.push({ name:'phoneAuth' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
+            }
 
         }
 
