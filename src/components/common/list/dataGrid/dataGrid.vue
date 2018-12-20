@@ -33,10 +33,10 @@
     </div>
     </template>
 
-    <div class="tbl_scroll_box">
+    <div :class="tableOriginCss">
       <!-- tbl list01 -->
 
-      <table class="tbl_list01 page_inquiry" v-on:change="windowSize">
+      <table :class="tableOriginCss2" v-on:change="windowSize">
         <caption></caption>
         <colgroup>
           <template v-for="columNames,index in dataGridDetail.dataGrid.columControl">
@@ -44,8 +44,16 @@
           </template>
         </colgroup>
         <thead>
+         <!--탑헤더 추가하기-->
+        <template v-if="dataGridDetail.dataGrid.columHeader.length >0">
         <tr>
-
+            <template v-for="header in dataGridDetail.dataGrid.columHeader">
+              <th :colspan="header.cols" :rowspan="header.rows" >{{header.headerName}}</th>
+            </template>
+        </tr>
+        </template>
+         <!--메뉴 헤더 추가-->
+        <tr>
           <template v-for="columNames,index in dataGridDetail.dataGrid.columControl">
             <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
               <th scope="col">
@@ -57,10 +65,10 @@
                 </template>
               </th>
             </template>
-            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
+            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
              <th>{{columNames.columName}}</th>
             </template>
-            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
+            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
             <th>{{columNames.columName}}</th>
             </template>
           </template>
@@ -127,6 +135,8 @@
         lineColumIndex :  number = 10000;
         checkBoxDatas :any[]= [];
         selectAll : boolean = false;
+        tableOriginCss= this.dataGridDetail.dataGrid.tableClass==null ? 'tbl_scroll_box' :  this.dataGridDetail.dataGrid.tableClass
+        tableOriginCss2= this.dataGridDetail.dataGrid.tableClass2==null ? 'tbl_list01 page_inquiry' :  this.dataGridDetail.dataGrid.tableClass2
 
 
         // 토탈합계
@@ -134,7 +144,6 @@
         mServiceCharge: number = 0;
         mSupplyValue: number = 0;
         mSurtax: number = 0;
-
 
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
