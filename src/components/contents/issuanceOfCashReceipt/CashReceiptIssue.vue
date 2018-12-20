@@ -5,9 +5,7 @@
         <!-- content  -->
         <div class="content">
             <h2 class="blind">현금영수증관리</h2>
-
             <h3>현금영수증 발급</h3>
-
             <!-- btn top -->
             <div class="btn_top">
                 <button type="button" id="" class="btn_m01 bg05" v-on:click="bulkIssue">Excel 일괄 발급</button>
@@ -21,20 +19,12 @@
                 <table class="tbl_view01">
                     <caption>사업장 기본 정보</caption>
                     <colgroup>
-                        <col width="17%">
-                        <col width="32%">
-                        <col width="17%">
-                        <col width="33%">
+                        <col class="col_mob" width="18%">
+                        <col class="col_mob" width="32%">
+                        <col class="col_mob" width="18%">
+                        <col class="col_mob" width="32%">
                     </colgroup>
                     <tbody>
-                    <tr>
-                        <th scope="row">회사코드</th>
-                        <td colspan="3">
-                            <select id="" name="" class="select form_w50" title="회사코드">
-                                <option>선택</option>
-                            </select>
-                        </td>
-                    </tr>
                     <tr>
                         <th scope="row">사업자등록번호</th>
                         <td>
@@ -42,12 +32,17 @@
                             <button type="button" id="" class="btn_sch01">검색</button>
                             <input type="text" class="input sch_indcode02" value="롯데백화점 강남점" title="가맹점명">
                         </td>
-                        <th scope="row">거래일자<em class="form_req">*</em></th>
-                        <td>
-                            <span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-                        </td>
+                        <th scope="row">거래일자</th>
+                        <td class="con_row01"><strong>{{ymd}}</strong> </td>
                     </tr>
+
                     <tr>
+                        <th scope="row">발급용도<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="발급용도">
+                                <option>선택</option>
+                            </select>
+                        </td>
                         <th scope="row">고객신분확인<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_userfind" title="고객신분">
@@ -56,30 +51,25 @@
                             </select>
                             <input type="text" class="input form_userint" title="고객신분">
                         </td>
-                        <th scope="row">고객성명</th>
-                        <td><input type="text" class="input form_w100" title="고객성명"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">발급용도<em class="form_req">*</em></th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="발급용도">
-                                <option>선택</option>
-                            </select>
-                        </td>
-                        <th scope="row">상품구분</th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="상품구분">
-                                <option>선택</option>
-                            </select>
-                        </td>
+
                     </tr>
                     <tr>
                         <th scope="row">지출구분<em class="form_req">*</em></th>
                         <td>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">일반</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12"><label for="aa12">도서/공연</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13"><label for="aa13">대중교통</label></span>
+                        <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">일반</label></span>
+                        <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12"><label for="aa12">도서/공연</label></span>
+                        <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13"><label for="aa13">대중교통</label></span>
                         </td>
+                        <th scope="row">회사코드</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="회사코드">
+                                <option>선택</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">고객성명</th>
+                        <td><input type="text" class="input form_w100" title="고객성명"></td>
                         <th scope="row">메모</th>
                         <td><input type="text" class="input form_w100" title="메모"></td>
                     </tr>
@@ -87,7 +77,9 @@
                 </table>
             </div>
             <!-- //tbl view box -->
-
+            <h4 class="first">거래 금액 <em class="form_req">*</em>
+                <span>(* "거래금액"란에 입력하시면 "공급가액과 부가세"가 자동으로 분배됩니다.)</span>
+            </h4> <!-- 2018-11-06 추가 -->
             <!-- grid box -->
             <div class="grid_box col02 tbl_blank01">
                 <!-- col -->
@@ -122,8 +114,8 @@
                         </table>
                     </div>
                     <!-- //tbl list box -->
-
                 </div>
+
                 <!-- col -->
                 <div class="col">
                     <!-- tbl list box -->
@@ -168,7 +160,6 @@
                 <button type="button" id="" class="btn_b01 bg02">초기화</button>
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="receiptIssue">발급</button>
             </div>
-
 
         </div>
         <!-- //content -->
