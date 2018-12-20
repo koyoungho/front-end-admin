@@ -346,10 +346,7 @@
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
                                         if(option){
                                             option.filter(e=>{
-                                                if(e.value==Objectskey){
-                                                    numberObject[menuHeaderkey] = e.change;
-                                                }
-                                                else{
+                                                if(e.value==Objects[Objectskey]){
                                                     numberObject[menuHeaderkey] = e.change;
                                                 }
                                             })
