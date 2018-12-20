@@ -250,7 +250,7 @@
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)" v-bind:style="adm.admDupBtn">중복확인</button>
-                                    <p class="info_msg" id=id v-bind:id="adm.adminIdMsg" ></p>
+                                    <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
                                 <th scope="row">이메일주소<em class="form_req">*</em></th>
                                 <td>

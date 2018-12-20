@@ -45,7 +45,7 @@
         </colgroup>
         <thead>
          <!--탑헤더 추가하기-->
-        <template v-if="dataGridDetail.dataGrid.columHeader.length >0">
+        <template v-if="dataGridDetail.dataGrid.columHeader">
         <tr>
             <template v-for="header in dataGridDetail.dataGrid.columHeader">
               <th :colspan="header.cols" :rowspan="header.rows" >{{header.headerName}}</th>
@@ -66,7 +66,10 @@
               </th>
             </template>
             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
-             <th>{{columNames.columName}}</th>
+                <template v-if="dataGridDetail.dataGrid.columHeader">
+
+                </template>
+                <th>{{columNames.columName}}</th>
             </template>
             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
             <th>{{columNames.columName}}</th>

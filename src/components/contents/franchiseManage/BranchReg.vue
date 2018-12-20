@@ -152,7 +152,7 @@
                             <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10">
                             <input type="hidden" v-model="apro.jumCodeYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)">중복확인</button>
-                            <p class="info_msg" id=id v-bind:id="apro.jumCodeMsg"></p>
+                            <p class="info_msg"  v-bind:id="apro.jumCodeMsg"></p>
                         </td>
                     </tr>
                     <tr>
@@ -230,7 +230,7 @@
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)">중복확인</button>
-                                    <p class="info_msg" id=id v-bind:id="adm.adminIdMsg" ></p>
+                                    <p class="info_msg"  v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
                                 <th scope="row">이메일주소</th>
                                 <td>
