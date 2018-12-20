@@ -102,20 +102,71 @@
             <a href="#" class="btn_enext">맨뒤</a>
         </div>
         <!-- //pagination -->
+
+
+        <!--리스트-->
+        <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+
+
+
     </div>
 </template>
 
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
 
     @Component({
         components: {
-            BatchFileProcList
+            BatchFileProcList, ListComponent
 
         }
     })
     export default class BatchFileProcList extends Vue {
+
+        originItem : any = {} // 오리지널데이터
+        listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            {
+                dataGrid: {
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '처리일시' ,type:'text', id : 'title', width : '20%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '작업ID'  ,type:'text', id : 'attFileYn', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '작업명' ,type:'text', id : 'updDt', width : '18%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '파일명'  ,type:'text', id : 'regRoll', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '파일사이즈'  ,type:'text', id : 'trguNm', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '처리결과'  ,type:'text', id : 'trguNm', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '내용'  ,type:'text', id : 'trguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                    ],
+                    totalColum: 7,
+                    apiUrl : 'notices',
+                    onLoadList : true,  // onLoad 로딩 유무
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {type: 'date', title :'처리일시', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
+                    {type: 'select' , title :'처리결과',id: 'importantYn', name:'importantYn' , value: '' ,  api : '' , option : [{ name : '성공' , value: '0' },{name : '실패' , value: '1' }]},
+                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '작업ID' , value: 'saupId' },{name : '작업명' , value: 'chipNm' },{name : '파일명' , value: 'chipNm' }]},
+                    {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
+
+                ],
+
+                paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+                goSearch : "iocSearch",
+                searchStyle : 'search_box page_customer02',
+                // searchStyle2 : 'search_list col0301'
+
+            }
+
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            this.$router.push({ name:'noticeDetl' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        }
+
+        created(){
+            this.originItem  = this.listItem.dataGrid.columControl
+        }
+
 
 
 

@@ -44,8 +44,19 @@ Vue.config.productionTip = false
 import tinymce from 'vue-tinymce-editor'
 Vue.component('tinymce', tinymce)
 
+/**
+ * 차트
+ */
+import VCharts from 'v-charts'
+Vue.use(VCharts);
+
+
+
 new Vue({
     router,
     store,
     render: h => h(App)
 }).$mount('#app')
+
+
+

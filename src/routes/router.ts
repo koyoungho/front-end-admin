@@ -29,6 +29,7 @@ import StoreRegCmpl from "../components/contents/franchiseManage/StoreRegCmpl.vu
 import StoreRegBulk from "../components/contents/franchiseManage/StoreRegBulk.vue" //매장 일괄 등록
 import ApprovalBandList from "../components/contents/franchiseManage/ApprovalBandList.vue" //승인대역 리스트
 import ApprovalBandReg from "../components/contents/franchiseManage/ApprovalBandReg.vue" //승인대역 신청
+import GajiBox from "../components/contents/franchiseManage/GajiList.vue" //가맹점 리스트 팝업 조회
 
 //현금영수증 관리
 import CashReceiptIssue from "../components/contents/issuanceOfCashReceipt/CashReceiptIssue.vue" //현금영수증 발급
@@ -97,7 +98,7 @@ export default new Router({
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
                 {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth ,meta: {authRequired: true} }, //핸드폰 인증
                 {path:'policy', name:'policy', component:Policy ,meta: {authRequired: false}}, //이용약관 및 개인보호처리방침
-                
+
                 //정보변경
                 {path:'myPage', name:'myPage', component: MyPage ,meta: {authRequired: true}}, //이용약관 및 개인보호처리방침
 
@@ -117,6 +118,7 @@ export default new Router({
                 {path:'storeRegBulk', name:'storeRegBulk', component: StoreRegBulk ,meta: {authRequired: true}}, //매장 일괄 등록 완료
                 {path:'approvalBandList', name:'approvalBandList', component: ApprovalBandList ,meta: {authRequired: true}}, //승인대역 리스트
                 {path:'approvalBandReg', name:'approvalBandReg', component: ApprovalBandReg ,meta: {authRequired: true}}, //승인대역 신청
+                {path:'gajiBox', name:'gajiBox', component: GajiBox ,meta: {authRequired: false}}, //가맹점 리스트 팝업 조회
 
                 //현금영수증 관리
                 {path:'cashReceiptIssue', name:'cashReceiptIssue', component: CashReceiptIssue ,meta: {authRequired: true}}, //현금영수증 발급
