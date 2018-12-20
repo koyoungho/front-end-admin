@@ -45,7 +45,7 @@
         </colgroup>
         <thead>
          <!--탑헤더 추가하기-->
-        <template v-if="dataGridDetail.dataGrid.columHeader.length >0">
+        <template v-if="dataGridDetail.dataGrid.columHeader">
         <tr>
             <template v-for="header in dataGridDetail.dataGrid.columHeader">
               <th :colspan="header.cols" :rowspan="header.rows" >{{header.headerName}}</th>
@@ -81,7 +81,7 @@
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
-                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows+'@'+listData[index].role" v-model="checkBoxDatas"><label for=""></label></span>
+                  <span class="chk_box"><input type="checkbox"  v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
@@ -163,7 +163,7 @@
             this.getCommonListData();
         }
         @Watch('checkBoxDatas') onChangeCheckBox() {
-            console.log(this.checkBoxDatas.length);
+            //console.log(this.checkBoxDatas.length);
 //            this.$emit('checkBoxEvent', this.checkBoxDatas)
 
             // 계정권한관리 화면이고, 계정권한관리 리스트에서 체크박스에 체크 건이 있고, 시스템관리자이거나 콜센터관리자이면 승인버튼 보임
@@ -410,9 +410,8 @@
 
         //계정 권한 관리의 승인처리
         accountAuth() {
-            /*
-            let reqData = {};
-            let arayData = [];
+            let reqData : any = {};
+            let arayData : any = [];
             if(this.checkBoxDatas != null && this.checkBoxDatas.length > 0){
                 for(let i=0; i<this.checkBoxDatas.length; i++){
                     let sData = {};
@@ -423,9 +422,8 @@
                 }
                 reqData['selectedId'] = arayData;
             }
-            console.log('최종 넘길값');
+            console.log('계정 권한 관리 승인 처리시 최종 parameter');
             console.log(reqData);
-            */
 /*
             // api 데이터 호출
             CommonBoardService.getListDatas('accounts/approval', null, reqData).then((response) => {

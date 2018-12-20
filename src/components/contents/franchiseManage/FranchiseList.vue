@@ -21,6 +21,7 @@
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import {format} from 'date-fns';
     @Component({
         components: {
             FranchiseList, ListComponent
@@ -35,6 +36,7 @@
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
         regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
+        setDate =  format(new Date(),'YYYYMMDD');
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
                 dataGrid: {
@@ -56,7 +58,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: '20180522' ,  searchEndDate: '20181215', calenderCount : 2},
+                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.setDate,  searchEndDate: this.setDate, calenderCount : 2},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                     {type: 'selectCode' , title :'가맹점상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeName : '휴업' , code: '1' },{codeName : '수기BL' , code: '11' },{codeName : '수기BL취소' , code: '17' },{codeName : '폐업' , code: '2' },{codeName : '신용카드위장' , code: '3' },{codeName : '현금위장' , code: '4' },{codeName : '신용카드/현금위장' , code: '5' },{codeName : '현금영수증발급불가' , code: '6' },{codeName : '적용취소' , code: '7' },{codeName : '삭제된사업자' , code: '8' }]},
