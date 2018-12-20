@@ -33,10 +33,10 @@
                   />
                 </template>
               </template>
-              <template v-else="item.caleanderCount==1">
+              <template v-else="item.calenderCount==1">
                 <span class="form_cal">
-                            <input type="text" v-model="item.searchEndDate=formatDates(dateOne)"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" id="datepicker-trigger">달력</a>
+                            <input type="text" v-model="item.searchStartDate==null ? dateOne : item.searchStartDate"  class="input date" title="날짜 입력">
+                            <a href="" class="btn_cal" :id="item.id">달력</a>
                           </span>
                 <template class="datepicker-trigger" >
                   <AirbnbStyleDatepicker
@@ -44,7 +44,7 @@
                       :mode=showMode
                       :fullscreen-mobile="true"
                       :months-to-show="1"
-                      :offsetX="0"
+                      :style = "dateStyle"
                       :offsetY="-20"
                       :date-one="dateOne"
                       :date-two="dateTwo"
@@ -104,6 +104,15 @@
             </span>
             </li>
           </template>
+          <template v-if="item.type=='popup'">
+            <li>
+              <label for="aa">{{item.title}}</label>
+                <span  v-for="popItem in item.option">
+                <input type="text"  class="input" v-model="item.value">
+                </span>
+              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+            </li>
+          </template>
         </template>
       </ul>
       <!--</div>-->
@@ -114,6 +123,7 @@
       <button type="button" class="btn_m01 bg02" @click="resetData">초기화</button>
       <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
     </div>
+    <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
   </div>
 </template>
 
@@ -123,6 +133,7 @@
     import format from 'date-fns/format'
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
+    import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
     // see docs for available options
 
 
@@ -130,7 +141,7 @@
 
     @Component({
         components: {
-            Search
+            Search,GajiBox
         }
     })
     export default class Search extends Vue {
@@ -149,11 +160,18 @@
         dateTwo: any =  new Date();
         showMode : string = "single";
 
+        // 가지팝업
+        showModal1 : boolean = false;
+
 
         formatDates(date) {
             let formattedDates = ''
             formattedDates = format(date, this.dateFormat)
             return formattedDates
+        }
+
+        popupOpen(){
+            this.showModal1= true;
         }
 
         created() {
@@ -213,6 +231,8 @@
 
                 }else if(e.type=='check'){
 
+                }else if(e.type=='popup'){
+
                 }
             })
 
@@ -220,7 +240,6 @@
         }
 
         SearchButton(){
-
             this.$emit('SearchToList', this.searchItem);
         }
 
@@ -235,6 +254,14 @@
                 }
             })
 
+        }
+
+        //선택한 가맹점 정보 셋팅(지점 등록화면 상단의 지점 정보)
+        setGajiData(data) {
+            // this.gajumId = data.gajumId; //가맹점 번호
+            // this.saupNo = data.saupId; //사업자 번호
+            // this.soluNm = data.shopNm; //가맹점명
+            console.log(data);
         }
     }
 
