@@ -26,7 +26,7 @@
                     <!-- code col -->
                     <div class="code_col">
                         <!-- sub -->
-                        <div class="sub">회사 메인코드 그룹</div>
+                        <h4 class="first">회사 메인코드 그룹</h4>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
                             <button type="button" v-on:click="viewPop('add','main')" class="btn_s01 bg03 add">추가</button>
@@ -81,7 +81,7 @@
                     <!-- code col -->
                     <div class="code_col">
                         <!-- sub -->
-                        <div class="sub">회사 서브 코드</div>
+                        <h4 class="first">회사 서브 코드</h4>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
                             <button type="button" v-on:click="viewPop('add','sub')" class="btn_s01 bg03 add">추가</button>

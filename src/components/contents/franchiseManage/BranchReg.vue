@@ -135,7 +135,7 @@
                         <col width="17%">
                         <col width="33%">
                     </colgroup>
-                    <tbody v-for="(apro, index) in approvalList">
+                    <tbody v-for="(apro, index) in approvalList" class="bottom_space">
                     <tr>
                         <th scope="row">회사코드</th>
                         <td>
@@ -215,7 +215,7 @@
                                 <col width="17%">
                                 <col width="33%">
                             </colgroup>
-                            <tbody v-for="(adm, index) in adminList">
+                            <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름</th>
                                 <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm"></td>
