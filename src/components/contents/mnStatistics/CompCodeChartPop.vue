@@ -2,7 +2,7 @@
     <div>
         <!-- popup small -->
         <div class="popup_modal"></div>
-        <div id="popup_code" class="popup_wrapper small Pstyle" tabindex="0" style="display: block;">
+        <div id="popup_code" class="popup_wrapper Pstyle" tabindex="0" style="display: block;">
             <!-- popup header -->
             <div class="popup_header">
                 <!-- h2 -->

@@ -140,7 +140,7 @@ h2 {font-family:"NanumB"; font-size:16px; color:#010101; padding:0 0 0 0px; marg
 h2:after{content:''; position:absolute; top:0px; left:0px; width:10px; height:12px;}
 h3 {font-family:"NanumB"; font-size:24px; color:#212121; padding:0 0 0 0px; margin:38px 0 40px 0;}
 h3.join {font-family:"NanumB"; font-size:24px; color:#212121; padding:0 0 0 0px; margin:88px 0 0 0; text-align: center;}
-h3.login {font-family:'NanumB'; font-size: 26px; color:#212121; text-align: center; margin:70px 0 15px 0;}
+h3.login {font-family:'NanumB'; font-size: 26px; color:#212121; text-align: center; margin-bottom:15px;}
 h4 {font-family:"NanumB"; font-size:16px; color:#212121; padding:0 0 0 20px; margin:38px 0 16px 0; background:url('../images/icon_bull01.png') no-repeat 0px 3px;}
 h4:nth-of-type(1) {margin-top:-10px;}
 h4.first {margin:28px 0 16px 0;}
@@ -416,7 +416,7 @@ select.wide {width:100%;}
 .login_wrap .cert_box .form_cert .btn_m01 {min-width:130px; font-size:16px; height:49px; line-height:49px; margin-left:10px;}
 .login_wrap .cert_box .time_count {font-family:'NanumB'; font-size:13px; color:#da291c; position: absolute; right:180px; bottom:15px; width:auto;}
 .login_wrap .cert_box .time_count2 {font-family:'NanumB'; font-size:13px; color:#da291c; position: absolute; right:290px; bottom:15px; width:auto;}
-.login_wrap .info_bot {font-size: 12px; margin-top:0px; padding:15px 0 15px 0; text-align:center;}
+.login_wrap .info_bot {font-size: 12px; margin-top:0px; padding:50px 0 15px 0; text-align:center;}
 .login_wrap .info_bot:after{content:''; display: block; clear: both;}
 .login_wrap .info_bot .btn_s01 {min-width: 80px;padding:0 15px; vertical-align:middle;}
 
@@ -711,7 +711,7 @@ select.wide {width:100%;}
 .data_check_box .data_check_list .result.ok {border:1px solid #c6c6c6; background:#f8f8f8;}
 .data_check_box .data_check_list .result.error {color:#fff; border:1px solid #da291c; background:#da291c;}
 
-.comcode_box {overflow-x:hidden; overflow-y: auto; width:420px; height:500px; margin:0 auto; border:1px solid #dedede; padding:20px;}
+.comcode_box {overflow-x:hidden; overflow-y: auto; width:420px; height:400px; margin:0 auto; border:1px solid #dedede; padding:20px;}
 .comcode_box .comcode_list li {padding:18px 0 0 0;}
 .comcode_box .comcode_list li:first-child {padding-top:0;}
 .comcode_box .comcode_list li >.chk_box {display:inline-block; width:100%;}
@@ -1240,7 +1240,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper.alert .popup_body .popup_content {height:auto; padding:6px 30px 22px 30px;}
 
 #popup_receipt.popup_wrapper .popup_body .receipt > img {width:100%; height:auto; border:2px solid #7f7f7f;} /* 사업자등록증 사본 */
-#popup_code.popup_wrapper {top:200px;}
+#popup_code.popup_wrapper {top:100px;}
 
 
 @media print {
