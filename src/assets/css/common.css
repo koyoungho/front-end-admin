@@ -562,8 +562,8 @@ select.wide {width:100%;}
 .search_box.page_cash02 .search_list > li:nth-of-type(7) {width:20%;}
 .search_box.page_cash02 .search_list > li:nth-of-type(7) > select {width : 100px}
 .search_box.page_cash02 .search_list > li:nth-of-type(8) {width:20%; text-align:right;}
-.search_box.page_cash02 .search_list > li:nth-of-type(8) > select {width : 100px}
-.search_box.page_cash02 .search_list > li:nth-of-type(9) {width:24%; text-align:right;}
+.search_box.page_cash02 .search_list > li:nth-of-type(8) > select {width : 110px}
+.search_box.page_cash02 .search_list > li:nth-of-type(9) {width:24%; text-align:left;}
 
 /* 전송파일 처리결과 */
 .search_box.page_cash03 .search_list > li:nth-of-type(1) {width:25%;}

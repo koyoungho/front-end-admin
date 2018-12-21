@@ -11,11 +11,11 @@
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==2">
               <span class="form_cal">
-                            <input type="text" v-model="item.searchStartDate==null ? dateOne : item.searchStartDate"  class="input date" title="날짜 입력">
+                            <input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">
                           </span>
                 <span class="period_cal">-</span>
                 <span class="form_cal">
-                            <input type="text" v-model="item.searchEndDate==null ? dateTwo : item.searchEndDate"  class="input date" title="날짜 입력">
+                            <input type="text" v-model="item.searchEndDate=='' ? formatDates(nowDate) : item.searchEndDate"  class="input date" title="날짜 입력">
                             <a href="" class="btn_cal" :id="item.id">달력</a>
                           </span>
                 <template class="datepicker-trigger">
@@ -25,6 +25,7 @@
                       :fullscreen-mobile="true"
                       :months-to-show="1"
                       :offsetY="-20"
+                      :showMonthYearSelect = "true"
                       :style = "dateStyle"
                       :date-one="dateOne"
                       :date-two="dateTwo"
@@ -35,7 +36,7 @@
               </template>
               <template v-else="item.calenderCount==1">
                 <span class="form_cal">
-                            <input type="text" v-model="item.searchStartDate==null ? dateOne : item.searchStartDate"  class="input date" title="날짜 입력">
+                            <input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">
                             <a href="" class="btn_cal" :id="item.id">달력</a>
                           </span>
                 <template class="datepicker-trigger" >
@@ -44,6 +45,7 @@
                       :mode=showMode
                       :fullscreen-mobile="true"
                       :months-to-show="1"
+                      :showMonthYearSelect = "true"
                       :style = "dateStyle"
                       :offsetY="-20"
                       :date-one="dateOne"
@@ -77,7 +79,6 @@
               <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
             </li>
           </template>
-
           <template v-if="item.type=='select'">
             <li>
               <label for="aa">{{item.title}}</label>
@@ -87,12 +88,21 @@
               </select>
             </li>
           </template>
-          <template v-if="item.type=='selectCode'">
+          <template v-if="item.type=='selectObject'">
             <li>
               <label for="aa">{{item.title}}</label>
               <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                 <option value="">선택</option>
-                <option v-for="tt in item.option" :value="tt.code" >{{tt.codeName}}</option>
+                <option v-for="tt in item.option" :value="tt.code" >{{tt.name}}</option>
+              </select>
+            </li>
+          </template>
+          <template v-if="item.type=='selectCode'">
+            <li>
+              <label for="aa">{{item.title}}</label>
+              <select v-model="item.value"  class="select form_w100" title="발급용도 선택">
+                <option value="">선택</option>
+                <option v-for="tt in item.option" :value="tt.code" >{{tt.codeNm}}</option>
               </select>
             </li>
           </template>
@@ -163,8 +173,9 @@
         // 달력용
         dateFormat:any =  'YYYYMMDD';
         // dateStyle : any = 'left : 0px';
-        dateOne: any =  new Date();
-        dateTwo: any =  new Date();
+        dateOne: any =  "";
+        dateTwo: any =  "";
+        nowDate : any = new Date();
         showMode : string = "single";
 
         // 가지팝업
@@ -211,7 +222,7 @@
                         this.selectObjects[e.name] = e.option;
                     }
                     else{
-                        CommonBoardService.getListDatas('pcodes/'+e.api+'/codes', null, '').then((response) => {
+                        CommonBoardService.getListDatas(e.api, null, '').then((response) => {
                                 let result: any = response.data;
                                 //console.log(result)
                                 if (result.length > 0) {
@@ -225,7 +236,10 @@
                         //api 호출한다
                     }
                 }else if(e.type=='selectObject'){
-                    CommonBoardService.getListDatas('pcodes/'+e.api+'/codes', null, '').then((response) => {
+                    if(e.api ==''){
+                        this.selectObjects[e.name] = e.option;
+                    }else{
+                    CommonBoardService.getListDatas(e.api, null, '').then((response) => {
                             let result: any = response.data;
                             //console.log(result)
                             if (result.length > 0) {
@@ -236,7 +250,7 @@
                         , (error) => {
                         }
                     ).catch();
-
+                    }
                 }else if(e.type=='radio'){
 
                 }else if(e.type=='check'){

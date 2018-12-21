@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div>
-      <router-link v-if="authenticated" to="/login" replace></router-link>
-    </div>
+    <router-link v-if="authenticated" to="/login" replace></router-link>
     <router-view/>
   </div>
 </template>
