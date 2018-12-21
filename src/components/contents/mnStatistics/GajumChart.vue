@@ -29,6 +29,7 @@
                 <ul class="tab01">
                     <li :class="{'on': (listShow == true) } " @click="show('list')"><a >표로 보기</a></li>
                     <li  :class="{'on': (chartShow == true) } " @click="show('chart')"><a >차트 보기</a></li>
+                    <li  :class="{'on': (chartShow == true) } " @click="show('chart')"><a >3번째</a></li>
                 </ul>
             </div>
 
