@@ -11,9 +11,15 @@
             <!-- code mgt -->
             <div class="code_mgt">
                 <!-- sch form -->
-                <div class="sch_form">
-                    <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">회사코드 관리</label></span>
-                    <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12"><label for="aa12">공통코드 관리</label></span>
+                <!--<div class="sch_form">-->
+                    <!--<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">회사코드 관리</label></span>-->
+                    <!--<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12"><label for="aa12">공통코드 관리</label></span>-->
+                <!--</div>-->
+                <div class="tab_box">
+                    <ul class="tab01">
+                        <li :class="{'on': (company == true) } " @click="show('company')"><a >회사코드관리</a></li>
+                        <li  :class="{'on': (common == true) } " @click="show('common')"><a >공통코드관리</a></li>
+                    </ul>
                 </div>
                 <!-- grid box -->
                 <div class="grid_box col02">
@@ -137,6 +143,29 @@
     export default class MnCode extends Vue {
         popupYn:boolean =false;
         data:any=[]
+
+        company:boolean=true;
+        common:boolean=false;
+
+        mounted(){
+            // this.company=false;
+            // this.common=false;
+        }
+
+        /**
+         * 표로보기
+         */
+        show(div){
+
+            this.company=false;
+            this.common=false;
+
+            if(div == 'company'){
+                this.company =true;
+            }else if(div == 'common'){
+                this.common =true;
+            }
+        }
 
         /**
          * 팝업기능
