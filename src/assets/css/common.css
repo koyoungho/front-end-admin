@@ -37,7 +37,7 @@
 .util_wrap .util li {float:left; padding-right:20px; font-family: 'NanumEB'; color: #939393;}
 .util_wrap .util li.user {background:url('../images/bg_util_line01.png') no-repeat 90% 4px;}
 .util_wrap .util li.user > .name {color: #212121;}
-.util_wrap .util li.user_info .company {display: inline-block; float:left; /*width:160px;*/ height:24px; padding-left:0px; /*padding-right:10px;*/ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.util_wrap .util li.user_info .company {display: inline-block; float:left; /*33333width:160px;*/ height:24px; padding-left:0px; /*padding-right:10px;*/ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .util_wrap .util li.user_info .number {display: inline-block; float:left;}
 .util_wrap .btn_area {display: inline-block; position: relative;}
 .util_wrap .btn_area .btn_util {cursor:pointer; white-space:nowrap; min-width:70px; height:28px; line-height:28px; padding:0 12px; font-family: 'NanumB'; font-size:13px; color:#212121; text-align: center; margin-left:6px;
