@@ -761,7 +761,7 @@ select.wide {width:100%;}
 .tab01.col04 li {width:246px;} */
 
 .tab_box .tab01 {display:flex; flex-direction:row; flex-wrap: wrap; justify-content:center; padding-top:1px; padding-left:1px; margin:0 auto 40px;}
-.tab_box .tab01 li {width:calc(25% + 1px); margin-top:-1px; margin-left:-1px; padding:10px; text-align:center; border:1px solid #dedede; transition:all 0.2s; cursor:pointer;}
+.tab_box .tab01 li {flex:1 1 auto; margin-top:-1px; margin-left:-1px; padding:10px; text-align:center; border:1px solid #dedede; transition:all 0.2s; cursor:pointer;}
 .tab_box .tab01 li a {font-family:NanumB; color:#939393}  
 .tab_box .tab01 li.on, .tab_box li:hover {background-color:#777;}
 .tab_box .tab01 li.on a, .tab_box li:hover a {color:#fff;}
