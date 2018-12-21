@@ -85,7 +85,7 @@
                             {name:'사업자번호별 거래현황', progId : 'saupNumberChart',sub: 'sub'},
                             {name:'현금영수증 사업자 정산', progId : 'receipSaupCount',sub: 'sub'},
                             {name:'가맹점 증감 현황', progId : 'gajumChart',sub: 'sub'},
-                            {name:'가맹점수 현황 조회', progId : 'gajumTotal',sub: 'sub'}
+                            // {name:'가맹점수 현황 조회', progId : 'gajumTotal',sub: 'sub'}
                         ]
                     },
                     {progId:'policyList',groupCode : '0005', name: '시스템관리', value : '', dept: '', auth: ''
