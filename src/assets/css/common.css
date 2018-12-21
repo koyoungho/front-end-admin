@@ -611,7 +611,7 @@ select.wide {width:100%;}
 .search_box.type01 .search_inner .btn_req_area {float:left; display:inline-block; margin-top:-17px; padding-left:15px; margin-left:20px; border-left:1px solid #dedede;}
 .search_box.type01 .search_inner .btn_req_area .btn_s01 {min-width:75px;}
 
-.search_box.type02 {position:relative; width:100%; text-align: center; margin-bottom:30px; border:0px solid #d8d8d8; padding:20px 30px 0 30px; background: #ffffff;}
+.search_box.type02 {position:relative; width:100%; text-align: center; margin-bottom:30px; padding:20px 30px 0 30px;}
 .search_box.type02 .search_inner {display: flex; justify-content: center; align-items: center;}
 .search_box.type02 .search_inner .search_list {position: relative; float:left;}
 .search_box.type02 .search_inner .search_list > li {float:left; padding:0 0 20px 0;}
@@ -749,7 +749,7 @@ select.wide {width:100%;}
 .form_settle_area > .col > label {display:inline-block; width:60px; padding-left:10px; padding-right:10px; text-align: right;}
 .form_settle_area > .col > label:first-child {padding-left:0;}
 
-.tab_box {display:table; margin:0 auto 40px;}
+/* .tab_box {display:table; margin:0 auto 40px;}
 .tab01 {display:table-cell;}
 .tab01 li {position: relative; float:left; margin-left:-1px; width:170px;}
 .tab01 li:first-child {border-left:0px;}
@@ -758,7 +758,13 @@ select.wide {width:100%;}
 .tab01 li > a:hover {color: #fff; background:#777777; border-left:0; border-right:0; border:1px solid #777777;}
 
 .tab_box.page_system06 {}
-.tab01.col04 li {width:246px;}
+.tab01.col04 li {width:246px;} */
+
+.tab_box {display:flex; flex-direction:row; flex-wrap: wrap; justify-content:center; padding-top:1px; padding-left:1px; margin:0 auto 40px;}
+.tab_box li {width:calc(25% + 1px); margin-top:-1px; margin-left:-1px; padding:10px; text-align:center; border:1px solid #dedede; transition:all 0.2s; cursor:pointer;}
+.tab_box li a {font-family:NanumB; color:#939393}  
+.tab_box li.on, .tab_box li:hover {background-color:#777;}
+.tab_box li.on a, .tab_box li:hover a {color:#fff;}
 
 .btn_tab {margin-top:-20px; padding:0 0 20px 0; text-align: right;}
 
@@ -1301,3 +1307,4 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   .quick_banner .quick {position:fixed; left:calc(50% + 443px);}
   .quick_banner .page_top {position:fixed; left:calc(50% + 443px);}
 }
+
