@@ -66,7 +66,10 @@
               </th>
             </template>
             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
-             <th>{{columNames.columName}}</th>
+                <template v-if="dataGridDetail.dataGrid.columHeader">
+
+                </template>
+                <th>{{columNames.columName}}</th>
             </template>
             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
             <th>{{columNames.columName}}</th>
@@ -343,10 +346,7 @@
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
                                         if(option){
                                             option.filter(e=>{
-                                                if(e.value==Objectskey){
-                                                    numberObject[menuHeaderkey] = e.change;
-                                                }
-                                                else{
+                                                if(e.value==Objects[Objectskey]){
                                                     numberObject[menuHeaderkey] = e.change;
                                                 }
                                             })
