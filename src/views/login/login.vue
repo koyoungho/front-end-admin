@@ -72,7 +72,7 @@
           <!-- login info box -->
           <div class="login_info_box">
             <dl class="info">
-              <dt>현금 영수증 관련 문의</dt>
+              <dt>고객센터</dt>
               <dd>
                 <strong>02-2074-0340</strong>
                 <span class="sub">상담시간 : </span>

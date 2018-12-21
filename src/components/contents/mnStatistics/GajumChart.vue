@@ -29,6 +29,7 @@
                 <ul class="tab01">
                     <li :class="{'on': (listShow == true) } " @click="show('list')"><a >표로 보기</a></li>
                     <li  :class="{'on': (chartShow == true) } " @click="show('chart')"><a >차트 보기</a></li>
+                    <li  :class="{'on': (chartShow == true) } " @click="show('tab')"><a >3번째</a></li>
                 </ul>
             </div>
 
@@ -58,9 +59,11 @@
     export default class GajumChart extends Vue {
         listShow:boolean=true;
         chartShow:boolean=true;
+        tabShow:boolean=true;
 
         mounted(){
             this.chartShow=false;
+            this.tabShow=false;
         }
 
         /**
@@ -68,13 +71,16 @@
          */
         show(div){
 
-            if(div == 'chart'){
-                this.listShow =false;
-                this.chartShow =true;
+            this.listShow=false;
+            this.chartShow=false;
+            this.tabShow=false;
 
-            }else{
-                this.chartShow =false;
+            if(div == 'chart'){
+                this.chartShow =true;
+            }else if(div == 'list'){
                 this.listShow =true;
+            }else{
+                this.tabShow =true;
             }
         }
 
