@@ -59,14 +59,22 @@
           <template v-if="item.type=='input'">
             <li>
               <template v-if="item.title !=''"><label for="aa">{{item.title}}</label></template>
-              <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" ></template>
+              <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appnum"></template>
             </li>
           </template>
 
           <template v-if="item.type=='input2'">
             <li>
               <label for="aa">{{item.title}}</label>
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  :title="item.title"  :placeholder="item.placeholder">
+            </li>
+          </template>
+
+          <template v-if="item.type=='inputPop'">
+            <li>
+              <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" >
+              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
             </li>
           </template>
 
@@ -107,10 +115,7 @@
           <template v-if="item.type=='popup'">
             <li>
               <label for="aa">{{item.title}}</label>
-                <span  v-for="popItem in item.option">
-                <input type="text"  class="input" v-model="item.value">
-                </span>
-              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+                <input type="text"  class="input" v-model="item.value" disabled>
             </li>
           </template>
         </template>
@@ -152,6 +157,8 @@
         searchStyle : string= ''
         searchStyle2 : string = ''
         dateStyle : any = 'left : 450px';
+        title : string = "";
+        placeholder : string = "";
 
         // 달력용
         dateFormat:any =  'YYYYMMDD';
@@ -196,6 +203,9 @@
                     }
                 }else if(e.type=='input'){
                       e.value='';
+                }else if(e.type=='input2'){
+                    this.title = e.title;
+                    this.placeholder = e.placeholder;
                 }else if(e.type=='selectCode'){
                     if(e.api ==''){
                         this.selectObjects[e.name] = e.option;
@@ -261,7 +271,6 @@
             // this.gajumId = data.gajumId; //가맹점 번호
             // this.saupNo = data.saupId; //사업자 번호
             // this.soluNm = data.shopNm; //가맹점명
-            console.log(data);
         }
     }
 

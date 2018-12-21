@@ -85,13 +85,13 @@
                             {name:'사업자번호별 거래현황', progId : 'saupNumberChart',sub: 'sub'},
                             {name:'현금영수증 사업자 정산', progId : 'receipSaupCount',sub: 'sub'},
                             {name:'가맹점 증감 현황', progId : 'gajumChart',sub: 'sub'},
-                            {name:'가맹점수 현황 조회', progId : 'gajumTotal',sub: 'sub'}
+                            // {name:'가맹점수 현황 조회', progId : 'gajumTotal',sub: 'sub'}
                         ]
                     },
                     {progId:'policyList',groupCode : '0005', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenuDtos:[
                             {name:'약관 관리', progId : 'policyList',sub: 'sub'},
-                            {name:'개인정보처리방침', progId : 'personalList',sub: 'sub'},
+                            {name:'개인보호처리방침', progId : 'personalList',sub: 'sub'},
                             {name:'계정 권한 관리', progId : 'mnUser',sub: 'sub'},
                             {name:'메뉴 권한 관리', progId : 'mnMenu',sub: 'sub'},
                             {name:'코드관리', progId : 'mnCode',sub: 'sub'},

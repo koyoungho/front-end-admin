@@ -38,6 +38,7 @@ export default new Vuex.Store({
             sessionStorage.upJong = accessToken.upJong; //업종코드
             sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
             sessionStorage.role = accessToken.role; //사업장번호
+            sessionStorage.roleNm = accessToken.roleNm; //사업장번호
         },
         LOGOUT (state) {
             //state.accessToken = null

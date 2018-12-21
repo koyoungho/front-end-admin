@@ -45,7 +45,7 @@
         </colgroup>
         <thead>
          <!--탑헤더 추가하기-->
-        <template v-if="dataGridDetail.dataGrid.columHeader.length >0">
+        <template v-if="dataGridDetail.dataGrid.columHeader">
         <tr>
             <template v-for="header in dataGridDetail.dataGrid.columHeader">
               <th :colspan="header.cols" :rowspan="header.rows" >{{header.headerName}}</th>
@@ -66,7 +66,10 @@
               </th>
             </template>
             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
-             <th>{{columNames.columName}}</th>
+                <template v-if="dataGridDetail.dataGrid.columHeader">
+
+                </template>
+                <th>{{columNames.columName}}</th>
             </template>
             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
             <th>{{columNames.columName}}</th>
@@ -81,7 +84,7 @@
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
-                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows+'@'+index" v-model="checkBoxDatas"><label for=""></label></span>
+                  <span class="chk_box"><input type="checkbox"  v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
@@ -95,13 +98,25 @@
         </template>
         <template v-if="listData.length < 1">
           <tr>
-            <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
+            <template v-if="dataGridDetail.dataGrid.acntAuthMng == true"> <!-- 계정권한관리 메뉴는 role을 hidden값으로 가지고 있기 때문에 1을 빼야한다. -->
+              <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length-1" class="no_data">조회된 내용이 없습니다.</td>
+            </template>
+            <template v-if="dataGridDetail.dataGrid.acntAuthMng == ''">
+              <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
+            </template>
           </tr>
         </template>
         </tbody>
       </table>
     </div>
     <!-- //tbl list box -->
+    <!-- btn tbl bot -->
+    <template v-if="authButton"> <!--계정 권한 관리에서 사용-->
+      <div class="btn_tbl_bot">
+        <button type="button" id="" class="btn_m01 bg01" v-on:click="accountAuth">승인</button>
+      </div>
+    </template>
+
   </div>
 </template>
 
@@ -138,19 +153,28 @@
         tableOriginCss= this.dataGridDetail.dataGrid.tableClass==null ? 'tbl_scroll_box' :  this.dataGridDetail.dataGrid.tableClass
         tableOriginCss2= this.dataGridDetail.dataGrid.tableClass2==null ? 'tbl_list01 page_inquiry' :  this.dataGridDetail.dataGrid.tableClass2
 
-
         // 토탈합계
         mTotalCount: number = 0;
         mServiceCharge: number = 0;
         mSupplyValue: number = 0;
         mSurtax: number = 0;
 
+        authButton: boolean = false; //승인버튼 보이기
+
+
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
         }
         @Watch('checkBoxDatas') onChangeCheckBox() {
-            console.log(this.checkBoxDatas);
-            this.$emit('checkBoxEvent', this.checkBoxDatas)
+            //console.log(this.checkBoxDatas.length);
+//            this.$emit('checkBoxEvent', this.checkBoxDatas)
+
+            // 계정권한관리 화면이고, 계정권한관리 리스트에서 체크박스에 체크 건이 있고, 시스템관리자이거나 콜센터관리자이면 승인버튼 보임
+            if(this.dataGridDetail.dataGrid.acntAuthMng == true && this.checkBoxDatas != null && this.checkBoxDatas.length > 0 && (sessionStorage.role == '0001' || sessionStorage.role == '0003')){
+                this.authButton = true;
+            }else{
+                this.authButton = false;
+            }
         }
 
 
@@ -193,6 +217,7 @@
 
         //돔생성전 호출자
         created() {
+
         }
 
         numberFormatCount(index){
@@ -321,10 +346,7 @@
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
                                         if(option){
                                             option.filter(e=>{
-                                                if(e.value==Objectskey){
-                                                    numberObject[menuHeaderkey] = e.change;
-                                                }
-                                                else{
+                                                if(e.value==Objects[Objectskey]){
                                                     numberObject[menuHeaderkey] = e.change;
                                                 }
                                             })
@@ -384,6 +406,42 @@
 
             });
             // data 값 변조하면됨 Y / N   1,2? 이런값들 변경시 필요함
+        }
+
+        //계정 권한 관리의 승인처리
+        accountAuth() {
+            let reqData : any = {};
+            let arayData : any = [];
+            if(this.checkBoxDatas != null && this.checkBoxDatas.length > 0){
+                for(let i=0; i<this.checkBoxDatas.length; i++){
+                    let sData = {};
+                    let splitData = this.checkBoxDatas[i].split('@');
+                    sData['id'] = splitData[1]; //id
+                    sData['role'] = splitData[2]; //role
+                    arayData.push(sData);
+                }
+                reqData['selectedId'] = arayData;
+            }
+            console.log('계정 권한 관리 승인 처리시 최종 parameter');
+            console.log(reqData);
+/*
+            // api 데이터 호출
+            CommonBoardService.getListDatas('accounts/approval', null, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result)
+                    if (result.code == '000') {
+                        console.log('승인 처리 성공');
+                        this.$emit('authCompl'); //승인처리 완료후 페이지 로딩
+                    } else {
+                        console.log('승인 처리 실패')
+                    }
+                }
+                , (error) => {
+                    console.log(error)
+                }
+            ).catch();
+*/
+
         }
     }
 

@@ -5,7 +5,7 @@
     <!-- //tbl search box -->
 
     <!-- tbl list box -->
-    <DataGrid v-bind:dataGridDetail="searchItems" v-bind:listOnLoad ="listOnLoad" v-on:dataToPaging="dataEvent" v-on:checkBoxEvent="checkEvent" v-on:rowClick="viewEvent"></DataGrid>
+    <DataGrid v-bind:dataGridDetail="searchItems" v-bind:listOnLoad ="listOnLoad" v-on:dataToPaging="dataEvent" v-on:checkBoxEvent="checkEvent" v-on:rowClick="viewEvent" v-on:authCompl="pageReload"></DataGrid>
     <!-- //tbl list box -->
 
     <!-- pagination -->
@@ -97,6 +97,11 @@
         updated () {
             this.$nextTick(function () {
             })
+        }
+        pageReload(){
+            console.log('list asd;flasjdfa;sdjfak;jsdkfa;sdfjk')
+
+            this.$children['0'].SearchButton();
         }
     }
 

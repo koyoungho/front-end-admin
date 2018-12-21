@@ -7,126 +7,64 @@
             <h2 class="blind">자주 묻는 질문</h2>
 
             <h3>자주 묻는 질문</h3>
-
+            <template v-if="role =='0001'">
             <!-- btn top -->
             <div class="btn_top">
                 <button type="button" class="btn_m01 bg02" v-on:click="regFnq">자주묻는 질문 등록</button>
             </div>
+            </template >
 
-            <!-- search box -->
-            <div class="search_box page_customer04">
-                <ul class="search_list col0301">
-                    <li>
-                        <label for="">등록일</label>
-                        <span class="form_cal">
-                            <input type="text" title="날짜 입력" class="input date">
-                        </span>
-                        <span class="period_cal">-</span>
-                        <span class="form_cal">
-                            <input type="text" title="날짜 입력" class="input date">
-                            <a href="#" id="datepicker-trigger" class="btn_cal">달력</a>
-                        </span>
-                    </li>
-                    <li>
-                        <label for="">구분</label>
-                        <select name="" class="select sch_w100" title="구분">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">검색어</label>
-                        <input type="text" class="input sch_notice" placeholder="제목+내용" title="검색어입력">
-                    </li>
-                </ul>
-            </div>
-            <!-- //search box -->
 
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <span class="btn_top type02 fleft">
-                    <button type="button" id="" class="btn_s01 bg02 manual" v-on:click="manual"><i class="icon download"></i>매뉴얼 다운로드</button>
-                </span>
-                <button type="button" class="btn_m01 bg01" v-on:click="searchFaq">조회</button>
-            </div>
 
             <!--<template v-if=""> 관리자,콜센터일때-->
-            <!-- bbs list box -->
-            <div class="bbs_list_box">
-                <!-- tbl list01 -->
-                <table class="bbs_list page_notice">
-                    <caption>자주묻는 질문 목록</caption>
-                    <colgroup>
-                        <col width="10%">
-                        <col width="*">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">순번</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">등록일</th>
-                        <th scope="col">등록자</th>
-                        <th scope="col">구분</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <template v-if="listData.length > 0">
-                            <template v-for="(datas, index) in listData">
-                                <tr>
-                                    <td>{{totalCount - startPage -index }}</td>
-                                    <td class="left" v-on:click="toDetail(datas.seq)"> {{datas.title}} </td>
-                                    <td>{{formatDates(datas.updDt)}}</td>
-                                    <td>{{datas.updId}}</td>
-                                    <td>{{datas.viewType}}</td>
-                                </tr>
-                            </template>
-                        </template>
-                        <template v-else>
-                            <tr>
-                                <td colspan="5" class="no_data">조회된 내용이 없습니다.</td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //bbs list box -->
-            <!--</template> -->
-
-            <!--<template v-else> 일반관리자-->
-            <!-- faq box -->
-            <div class="faq_box">
-                <dl class="faq_list">
-                    <template v-if="listData.length > 0">
-                        <template v-for="(datas, index) in listData">
-                            <dt v-on:click=" display(index)" v-bind:class="{ 'on': (rownum == index) } " ><i class="icon faq_q">Q</i> {{datas.title}}</dt>
-                            <dd v-show="rownum == index"><i class="icon faq_a">A</i> {{datas.content}}</dd>
-                        </template>
-                    </template>
-                    <template v-else>
-                        <dd style="text-align: center">데이터가 없습니다.</dd>
-                    </template>
-                </dl>
-            </div>
-            <!-- //faq box -->
-            <!--</template>-->
-
-
-            <!-- pagination -->
-            <Paging v-bind:pagingDetail=listItem.paging v-on:pageToList="pagingEvent" ></Paging>
-            <!-- //pagination -->
 
 
             <!--리스트-->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+            <!-- pagination -->
+            <!--<Paging v-bind:pagingDetail=listItem.paging v-on:pageToList="pagingEvent" ></Paging>-->
+            <!-- //pagination -->
 
+            <!--</template>-->
+========================================================================================================
+            <!--<template v-else> 일반관리자-->
+            <!-- faq box -->
 
+            <!-- btn mid -->
+            <!--<p class="btn_top type02">-->
+                <!--<button type="button"  class="btn_s01 bg02 manual" v-on:click="manual"><i class="icon download"></i>매뉴얼 다운로드</button>-->
+            <!--</p>-->
+            <!--&lt;!&ndash; search bbs box &ndash;&gt;-->
+            <!--<div class="search_bbs_box type01">-->
+                <!--<ul class="search_list">-->
+                    <!--<li>-->
+                        <!--<input type="text" class="input sch_notice" placeholder="제목+내용" title="검색어 입력" v-model="searchKey" v-on:keyup.enter="searchFaq">-->
+                    <!--</li>-->
+                    <!--<li>-->
+                            <!--<span class="btn_area">-->
+                                <!--<button type="button"  class="btn_sch01" v-on:click="searchFaq">검색</button>-->
+                                <!--<img src="../../../assets/images/icon_reset.png" v-on:click="searchReset">-->
+                            <!--</span>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; //search bbs box &ndash;&gt;-->
+
+            <!--<div class="faq_box">-->
+                <!--<dl class="faq_list">-->
+                    <!--<template v-if="listData.length > 0">-->
+                        <!--<template v-for="(datas, index) in listData">-->
+                            <!--<dt v-on:click=" display(index)" v-bind:class="{ 'on': (rownum == index) } " ><i class="icon faq_q">Q</i> {{datas.title}}</dt>-->
+                            <!--<dd v-show="rownum == index"><i class="icon faq_a">A</i> {{datas.content}}</dd>-->
+                        <!--</template>-->
+                    <!--</template>-->
+                    <!--<template v-else>-->
+                        <!--<dd style="text-align: center">데이터가 없습니다.</dd>-->
+                    <!--</template>-->
+                <!--</dl>-->
+            <!--</div>-->
+            <!-- //faq box -->
+            <!--</template>-->
 
         </div>
         <!-- //content -->
@@ -156,9 +94,9 @@
         listData: any = [];
         searchType: string = '';
         searchKey: string = '';
-        totalCount: any = '';
-        startPage: any = '';
-
+        // totalCount: any = '';
+        // startPage: any = '';
+        role: any = sessionStorage.getItem('role');
 
         originItem : any = {} // 오리지널데이터
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -167,25 +105,29 @@
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                         {columName : '순번', type:'number', id : 'rnum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                         {columName : '제목', type:'text', id : 'title', width : '60%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
-                        {columName : '등록일', type:'text', id : 'updDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '등록자', type:'text', id : 'updId', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등록일', type:'text', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '등록자', type:'text', id : 'regRole', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         {columName : '구분', type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
                     ],
                     totalColum: 5,
-                    apiUrl : 'faqs',
+                    apiUrl : 'faq',
                     onLoadList : true,  // onLoad 로딩 유무
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
                     {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: null ,  searchEndDate: null, calenderCount : 2},
-                    {type: 'select' , title :'구분',id: 'importantYn', name:'importantYn' , value: '' ,  api : '' , option : [{ name : '사용자' , value: '0' },{name : '관리자' , value: '1' }]},
-                    {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
+                    {type: 'select' , title :'구분',id: 'importantYn', name:'importantYn' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{ name : '사용자' , value: 'USR' },{name : '관리자' , value: 'ADM' }]},
+                    {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' ,placeholder:'제목+내용',  },
                 ],
-
-
-                paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+                searchClass: 'search_box page_customer04',
+                searchClass2: 'search_list col0301',
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 1 , to : 0 , perPage : 10},
                 goDirect : ""
             }
+
+        isActive:boolean=false;
+        arrow:string="";
+        rownum:number=999;
 
         created(){
             this.originItem  = this.listItem.dataGrid.columControl
@@ -194,7 +136,10 @@
 
 
         mounted(){
-            this.searchFaq( );//리스트 바인딩
+
+            // if(this.role == '0004'|| this.role == '0005' ){
+                this.searchFaq( );//리스트 바인딩
+            // }
         }
 
         //조회
@@ -211,16 +156,16 @@
             searchData['perPage'] = this.listItem.paging.perPage;
 
             // api 데이터 호출
-            CommonBoardService.getListDatas('faqs', null, searchData).then((response) => {
+            CommonBoardService.getListDatas('faq', null, searchData).then((response) => {
                     let result: any = response.data;
 
                     if (result.data.length > 0) {
                         this.listData=result.data;
                      }
 
-                    this.totalCount = result.totalRecords;
-                    this.startPage= (result.currentPage -1) * result.perPage;
-                    this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
+                    // this.totalCount = result.totalRecords;
+                    // this.startPage= (result.currentPage -1) * result.perPage;
+                    // this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
                     //this.$Progress.finish();
                 }
                 , (error) => {
@@ -228,26 +173,35 @@
                 }
             ).catch();
         }
-        pageSet(froms, to, lastPage, perPage, totalRecords, viewPageSize) {
-            this.listItem.paging.from = froms;
-            this.listItem.paging.to = to;
-            this.listItem.paging.lastPage = lastPage;
-            this.listItem.paging.perPage = perPage;
-            this.listItem.paging.totalRecords = totalRecords;
-            this.listItem.paging.viewPageSize = viewPageSize;
-            //this.$emit('dataToPaging', this.listItem.paging);
-            this.dataEvent(this.listItem.paging);
-        }
-        pagingEvent(page) {
+        // pageSet(froms, to, lastPage, perPage, totalRecords, viewPageSize) {
+        //     this.listItem.paging.from = froms;
+        //     this.listItem.paging.to = to;
+        //     this.listItem.paging.lastPage = lastPage;
+        //     this.listItem.paging.perPage = perPage;
+        //     this.listItem.paging.totalRecords = totalRecords;
+        //     this.listItem.paging.viewPageSize = viewPageSize;
+        //     //this.$emit('dataToPaging', this.listItem.paging);
+        //     this.dataEvent(this.listItem.paging);
+        // }
+        // pagingEvent(page) {
+        //     this.searchFaq();
+        // }
+        // dataEvent(es){
+        //     //데이터 로딩된후 이벤트를 받으면  변경된 페이지 정보를 전달해준다.
+        //     if(es.lastPage > 0){
+        //         this.$children['0'].defaultPaging(es)
+        //         this.$children['0'].arrayPaging(es);
+        //     }
+        // }
+
+        /**
+         * 검색어 초기화 및 리스트 전체목록
+         */
+        searchReset(){
+            this.searchKey="";
             this.searchFaq();
         }
-        dataEvent(es){
-            //데이터 로딩된후 이벤트를 받으면  변경된 페이지 정보를 전달해준다.
-            if(es.lastPage > 0){
-                this.$children['0'].defaultPaging(es)
-                this.$children['0'].arrayPaging(es);
-            }
-        }
+
 
 
         /**
@@ -280,6 +234,24 @@
          */
         toDetail(seq){
             this.$router.push({name:'regFnq', params:{seq:seq}})
+        }
+
+        /**
+         * 아코디언메뉴 제어
+         * @param index
+         */
+        display(index){
+            // alert(index);
+            this.isActive =false;
+            this.rownum =999;
+
+            this.isActive = !this.isActive;
+
+            if(this.isActive == true){
+                this.rownum = index;
+            }else{
+                this.arrow="";
+            }
         }
 
 
