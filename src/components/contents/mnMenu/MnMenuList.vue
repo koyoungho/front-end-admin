@@ -79,11 +79,11 @@
                 dataGrid: {
                     columControl:[
                         {columName : '순번' ,id : 'number',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '메뉴명 (1Depth)' ,id : 'name',type:'text', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '메뉴명 (2Depth)' ,id : 'sub',type:'text', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '메뉴명 (1Depth)' ,id : 'groupCodeNm',type:'text', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '메뉴명 (2Depth)' ,id : 'name',type:'text', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                         {columName : '메뉴코드' ,id : 'menuCode',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '사용여부' ,id : 'geoguNm',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '권한설정' ,id : 'geoguNm',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '사용여부' ,id : 'useYn',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '권한설정' ,id : 'useYn',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         // {columName : '메뉴코드' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false},
                         // {columName : '사용여부' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false},
                         // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
@@ -98,7 +98,7 @@
                         // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
                     totalColum: 6, //
-                    apiUrl : 'menu',
+                    apiUrl : 'menu-manage',
                     onLoadList : true,  // onLoad 로딩 유무
                     // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                     // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },

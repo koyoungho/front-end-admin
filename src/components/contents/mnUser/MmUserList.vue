@@ -77,7 +77,7 @@
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
                     {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'lastConnDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
-                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
+                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: '20180101' ,  searchEndDate: this.setDate , calenderCount : 2},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                     {type: 'selectCode' , title :'등급',id: 'role', name:'issuePurpose' , value: '' ,  api : '0034' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
                     {type: 'selectCode' , title :'상태',id: 'dealType', name:'dealType' , value: '' ,  api : '0035' , option : [{ codeName : '승인' , code: '0' },{codeName : '취소' , code: '1' }]},
@@ -101,7 +101,7 @@
             //     this.windowResize = false;
             //     this.handleResize()
             // }
-
+            this.listItem.search[1].searchStartDate = '20180101';
             //시스템관리자(001), 콜센터관리자(0003)만 등록,승인 가능
             if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
                 this.regbtnShow = true;
@@ -110,6 +110,9 @@
 
 
         mounted(){
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            console.log(this.listItem.search[1]);
+            this.listItem.search[1].searchStartDate = '20180101';
 
         }
 
