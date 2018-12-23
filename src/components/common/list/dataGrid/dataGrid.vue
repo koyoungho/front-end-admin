@@ -263,10 +263,17 @@
         }
 
         numberFormatCount(index){  // 넘버링시 전체값 받아서 변경하는값
+
+            let nowNumber = 0;
+            if(this.dataGridDetail.paging.totalRecords){
             let nowPage = Number(this.dataGridDetail.paging.currentPage)
             let nowTotal = Number(this.dataGridDetail.paging.totalRecords) ;
             let viewPageSize = Number(this.dataGridDetail.paging.viewPageSize)
-            let nowNumber = nowTotal-(nowPage-1) * viewPageSize-index
+             nowNumber = nowTotal-(nowPage-1) * viewPageSize-index
+            }
+            else{
+                nowNumber = index+1
+            }
             return nowNumber
         }
 
