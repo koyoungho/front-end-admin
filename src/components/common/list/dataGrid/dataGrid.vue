@@ -183,8 +183,7 @@
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
         }
-        @Watch('checkBoxDatas') onChangeCheckBox() {
-
+        @Watch('checkBoxDatas') onChangeCheckBox() { // 체크박스 선택시 및 데이터 전달하는곳
             let rowData :any=[]
             this.checkBoxDatas.filter(e=>{
                 let dt1 = e.split('@')[0]
@@ -205,7 +204,7 @@
             }
         }
 
-        headerCheck(columName,index){
+        headerCheck(columName,index){  // 헤더 로우스가 존재할경우 그리지않는 체크헤더
             // alert(columName+'||'+ index)
             let result : boolean = false;
             if(this.dataGridDetail.dataGrid.columTopHeader[0].level.length < 1){
@@ -226,8 +225,7 @@
             }
         }
 
-        checkAlls(id,indexs){
-            alert(id+'11'+indexs);
+        checkAlls(id,indexs){  // 전체 체크박스선택
             if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
                 //중복된거있으면 뺸다
                 let tempDelCheck :any[] = [];
@@ -238,7 +236,7 @@
                 })
                 this.checkBoxDatas = tempDelCheck;
 
-                // 로우다추가
+                // 전체로우 추가
                 this.listData.filter((e,index)=>{
                     Object.keys(e).forEach((s,count)=>{
                         if(indexs==count){
@@ -259,26 +257,12 @@
             }
 
         }
-        // checkBoxList(key,rows){
-        //     let id = rows+'@'+key
-        //     if(this.checkBoxDatas.length < 1){
-        //         this.checkBoxDatas.push(id)
-        //     }else{
-        //        if(this.checkBoxDatas.indexOf(id) > -1){ // 0 이면 존재한다
-        //            this.checkBoxDatas.splice(this.checkBoxDatas.indexOf(id),1);
-        //        }
-        //        else{ // 아니면 없는거다
-        //            this.checkBoxDatas.push(id)
-        //        }
-        //     }
-        // }
-
 
         //돔생성전 호출자
         created() {
         }
 
-        numberFormatCount(index){
+        numberFormatCount(index){  // 넘버링시 전체값 받아서 변경하는값
             let nowPage = Number(this.dataGridDetail.paging.currentPage)
             let nowTotal = Number(this.dataGridDetail.paging.totalRecords) ;
             let viewPageSize = Number(this.dataGridDetail.paging.viewPageSize)
@@ -286,24 +270,25 @@
             return nowNumber
         }
 
-        rowColor(index) {
+        rowColor(index) {  //로우전체색변경시  클래스 변경한다
             if (this.lineColumIndex != 10000) {
                 if (this.listData[index][this.lineColumName] == this.dataGridDetail.dataGrid.columControl[this.lineColumIndex].lineValue) {
                     return "date_del"
                 }
             }
         }
-        fontColor(index,rows){
+        fontColor(index,rows){  // 폰트컬러변경시사용
             if(rows == this.dataGridDetail.dataGrid.columControl[index].textValue){
                 return this.dataGridDetail.dataGrid.columControl[index].fontColors
             }
         }
-        colColor(index){
+        colColor(index){  // 콜컬러변경
             return this.dataGridDetail.dataGrid.columControl[index].colColors
         }
 
         //돔렌더링완료시 진행
         mounted() {
+            // 랜더링후 라인텍스트 색을바꿀때사용
             this.dataGridDetail.dataGrid.columControl.filter((e,index)=>{
                 if(e.lineValue){
                     this.lineColumName = e.id;
@@ -367,7 +352,7 @@
 
                     let result : any = "";
 
-                    if(response.data.data){
+                    if(response.data.data){  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
                         result = response.data;
                     }else{
                         result = response
@@ -383,7 +368,7 @@
                         this.mSurtax = result.extra.vat;
                     }
 
-                    this.dataGridDetail.dataGrid.columControl.filter(e => {
+                    this.dataGridDetail.dataGrid.columControl.filter(e => { // 뿌릴헤더를 먼저 만들어준다
                             this.menuHeader[e.id] = e.id;
                     });
 
@@ -404,19 +389,19 @@
                             });
 
                             let numberObject = {};
-                            Object.keys(this.menuHeader).forEach((menuHeaderkey,index) => {
-                                if(this.dataGridDetail.dataGrid.columControl[index].type=='number'){
+                            Object.keys(this.menuHeader).forEach((menuHeaderkey,index) => { // 헤더순서에 맞게 받은키값을돌리면서 해당데이터를 넣는다
+
+                                if(this.dataGridDetail.dataGrid.columControl[index].type=='number'){ // 넘버링일경우 따로만들어서 컬럼값에 담는다
                                     numberObject[menuHeaderkey] = this.numberFormatCount(indexs)
                                 }
                                 else{
                                 Object.keys(Objects).forEach((Objectskey,indexsss) => {
                                     if (menuHeaderkey == Objectskey) {
-                                        // 체크박스일경우 현재데이터를 체크한다
-                                        if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){
+                                        if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){  // 체크박스일경우 현재데이터를 체크박스에 담아논다
                                             this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@'+Objects[Objectskey]+'@'+indexs+'@'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
                                         }
 
-                                        let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
+                                        let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 데이터코드값이 Y,N ; 전송 , 미전송  같은 문자열치환할때 사용
                                         if(option){
                                             option.filter(e=>{
                                                 if(e.value==Objects[Objectskey]){
@@ -425,10 +410,10 @@
                                             })
 
                                         }else{
-                                            numberObject[menuHeaderkey] = Objects[Objectskey];
+                                            numberObject[menuHeaderkey] = Objects[Objectskey];  // 치환하지않은 일반 TEXT 타입은 그대로 넣어준다
                                         }
                                     }
-                                    else{ // 헤더가 체크박스일때
+                                    else{ // 헤더가 체크박스일때   ID 가 신규일대 무조건 check_ 를 붙여서 만들어줘야한다
                                         if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){
                                             let heder = menuHeaderkey.split('_')[1]
                                             if (heder == Objectskey) {
@@ -457,7 +442,7 @@
             ).catch();
         }
 
-        rowView(row, searchData, index, key) {
+        rowView(row, searchData, index, key) {  // 로우클릭시 검색데이터 로우열 전체 데이터를 이벤트로 전송한다
             let rowData = this.listOragin[index];
             let publicDatas = {row: rowData, searchOption: searchData, key: key};
             this.$emit('rowClick', publicDatas);
