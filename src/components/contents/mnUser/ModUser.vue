@@ -177,68 +177,68 @@
 
             <h4>메뉴사용권한</h4>
             <!-- tbl list box -->
-            <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>-->
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
             <!-- //tbl list box -->
 
             <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <table class="tbl_list01">
-                    <caption>메뉴사용권한 목록</caption>
-                    <colgroup>
-                        <col width="17%">
-                        <col width="21%">
-                        <col width="21%">
-                        <col width="21%">
-                        <col width="20%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">메뉴</th>
-                        <th scope="col">조회</th>
-                        <th scope="col">등록</th>
-                        <th scope="col">수정</th>
-                        <th scope="col">삭제</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-if="gajumShow">
-                        <th scope="row">가맹점관리</th>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="gajum1"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="gajum2"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="gajum3"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="gajum4"><label for=""><span class="blind">선택</span></label></span></td>
-                    </tr>
-                    <tr v-if="jijumShow">
-                        <th scope="row">지점관리</th>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="jijum1"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="jijum2"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="jijum3"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="jijum4"><label for=""><span class="blind">선택</span></label></span></td>
-                    </tr>
-                    <tr v-if="storeShow">
-                        <th scope="row">매장관리</th>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="store1"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="store2"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="store3"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="store4"><label for=""><span class="blind">선택</span></label></span></td>
-                    </tr>
-                    <tr v-if="aprovShow">
-                        <th scope="row">승인대역관리</th>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="aprov1"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="aprov2"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="aprov3"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="aprov4"><label for=""><span class="blind">선택</span></label></span></td>
-                    </tr>
-                    <tr v-if="storeShow">
-                        <th scope="row">매장일괄등록</th>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk1"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk2"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk3"><label for=""><span class="blind">선택</span></label></span></td>
-                        <td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk4"><label for=""><span class="blind">선택</span></label></span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <!--<div class="tbl_list_box">-->
+                <!--<table class="tbl_list01">-->
+                    <!--<caption>메뉴사용권한 목록</caption>-->
+                    <!--<colgroup>-->
+                        <!--<col width="17%">-->
+                        <!--<col width="21%">-->
+                        <!--<col width="21%">-->
+                        <!--<col width="21%">-->
+                        <!--<col width="20%">-->
+                    <!--</colgroup>-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th scope="col">메뉴</th>-->
+                        <!--<th scope="col">조회</th>-->
+                        <!--<th scope="col">등록</th>-->
+                        <!--<th scope="col">수정</th>-->
+                        <!--<th scope="col">삭제</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr v-if="gajumShow">-->
+                        <!--<th scope="row">가맹점관리</th>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum1"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum2"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum3"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum4"><label for=""><span class="blind">선택</span></label></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr v-if="jijumShow">-->
+                        <!--<th scope="row">지점관리</th>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum1"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum2"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum3"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum4"><label for=""><span class="blind">선택</span></label></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr v-if="storeShow">-->
+                        <!--<th scope="row">매장관리</th>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store1"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store2"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store3"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store4"><label for=""><span class="blind">선택</span></label></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr v-if="aprovShow">-->
+                        <!--<th scope="row">승인대역관리</th>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov1"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov2"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov3"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov4"><label for=""><span class="blind">선택</span></label></span></td>-->
+                    <!--</tr>-->
+                    <!--<tr v-if="storeShow">-->
+                        <!--<th scope="row">매장일괄등록</th>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk1"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk2"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk3"><label for=""><span class="blind">선택</span></label></span></td>-->
+                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk4"><label for=""><span class="blind">선택</span></label></span></td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
             <!-- //tbl list box -->
 
 
@@ -316,11 +316,11 @@
             {
                 dataGrid: {
                     columControl:[
-                        {columName : '메뉴' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '조회' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false},
-                        {columName : '등록' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false},
-                        {columName : '수정' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false},
-                        {columName : '삭제' ,id : 'rnum',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false},
+                        {columName : '메뉴' ,id : 'name',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '조회' ,id : 'readYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        {columName : '등록' ,id : 'createYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        {columName : '수정' ,id : 'updateYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        {columName : '삭제' ,id : 'deleteYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
                         // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
                         // {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         // {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
@@ -333,7 +333,7 @@
                         // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
                     totalColum: 5, //
-                    apiUrl : 'menu',
+                    apiUrl : 'menu/role/'+sessionStorage.role,
                     onLoadList : true,  // onLoad 로딩 유무
                     // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                     // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -414,6 +414,10 @@
                    alert('에러')
                }
             })
+        }
+
+        listViewEvent(){
+
         }
 /*
         gajumInfo(){
@@ -535,9 +539,10 @@
             console.log(e);
             // 주소값 리턴 받기
         }
-        checkBoxEvent(){
-
+        checkBoxEvent(da){
+            console.log(da);
         }
+
 
         //비밀번호 초기화
         initPassword(){

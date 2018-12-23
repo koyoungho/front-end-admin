@@ -121,12 +121,7 @@
         </template>
         <template v-if="listData.length < 1">
           <tr>
-            <template v-if="dataGridDetail.dataGrid.acntAuthMng == true"> <!-- 계정권한관리 메뉴는 role을 hidden값으로 가지고 있기 때문에 1을 빼야한다. -->
-              <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length-1" class="no_data">조회된 내용이 없습니다.</td>
-            </template>
-            <template v-if="dataGridDetail.dataGrid.acntAuthMng == ''">
               <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
-            </template>
           </tr>
         </template>
         </tbody>
@@ -189,7 +184,7 @@
             this.getCommonListData();
         }
         @Watch('checkBoxDatas') onChangeCheckBox() {
-            console.log(this.checkBoxDatas)
+
             let rowData :any=[]
             this.checkBoxDatas.filter(e=>{
                 let dt1 = e.split('@')[0]
@@ -369,7 +364,15 @@
             this.$Progress.start();
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
-                    let result: any = response.data;
+
+                    let result : any = "";
+
+                    if(response.data.data){
+                        result = response.data;
+                    }else{
+                        result = response
+                    }
+
                     this.listData = [];
                     this.checkBoxDatas=[];
                     // 토탈금액 인풋
@@ -381,16 +384,15 @@
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => {
-                            if(e.type=='checkBox'){
-                                this.menuHeader['check_'+e.id] = e.id;
-                            }else{
                             this.menuHeader[e.id] = e.id;
-                            }
                     });
+
                     this.listOragin = result.data;
 
+                    if(result.totalRecords){
                     this.totalCount = result.totalRecords;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
+                    }
 
                     if (result.data.length > 0) { // 데이터 키맵에 맞게 매핑하기
                         result.data.filter((e,indexs) => {
@@ -407,8 +409,14 @@
                                     numberObject[menuHeaderkey] = this.numberFormatCount(indexs)
                                 }
                                 else{
-                                Object.keys(Objects).forEach((Objectskey) => {
+                                Object.keys(Objects).forEach((Objectskey,indexsss) => {
                                     if (menuHeaderkey == Objectskey) {
+                                        // 체크박스일경우 현재데이터를 체크한다
+                                        if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){
+                                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@'+Objects[Objectskey]+'@'+indexs+'@'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
+                                            console.log(this.checkBoxDatas);
+                                        }
+
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
                                         if(option){
                                             option.filter(e=>{
