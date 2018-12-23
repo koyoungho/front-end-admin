@@ -383,8 +383,11 @@
 
                     if(result.totalRecords){
                     this.totalCount = result.totalRecords;
-                    this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
+                    }else{
+                    this.totalCount = result.data.length
                     }
+
+                    this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
 
                     if (result.data.length > 0) { // 데이터 키맵에 맞게 매핑하기
                         result.data.filter((e,indexs) => {
