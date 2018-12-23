@@ -414,7 +414,6 @@
                                         // 체크박스일경우 현재데이터를 체크한다
                                         if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){
                                             this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@'+Objects[Objectskey]+'@'+indexs+'@'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
-                                            console.log(this.checkBoxDatas);
                                         }
 
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 치환하기
