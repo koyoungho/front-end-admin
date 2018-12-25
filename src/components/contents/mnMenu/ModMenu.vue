@@ -13,7 +13,7 @@
             <div class="tbl_view_box">
                 <!-- tbl view01 -->
                 <table class="tbl_view01">
-                    <caption>메뉴 권한 등록</caption>
+                    <caption>메뉴 권한 상세</caption>
                     <colgroup>
                         <col width="17%">
                         <col width="33%">
@@ -124,12 +124,12 @@
                     </tbody>
                 </table>
                 <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>-->
-            <!-- //tbl list box -->
+                <!-- //tbl list box -->
             </div>
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelReg">취소</button>
-                <button type="button" class="btn_b01 bg01" v-on:click="validationChk">등록</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="validationChk">수정</button>
             </div>
 
         </div>
@@ -147,11 +147,13 @@
 
     @Component({
         components: {
-            RegMenu
+            ModMenu
         }
     })
-    export default class RegMenu extends Vue {
+    export default class ModMenu extends Vue {
         auth : any = "";
+
+        objectKey : any = '';
 
         menuGroupList : any = {}; //메뉴그룹 selectbox
 
@@ -162,13 +164,14 @@
         menuPath: any = '';
         memo: any = '';
 
+        menuAray : any = [];
+
         //menuAuth : MenuAuth[]=[]; //메뉴권한
 
         system1 : any = '';
         system2 : any = '';
         system3 : any = '';
         system4 : any = '';
-
         systemVal1 : any = '';
         systemVal2 : any = '';
         systemVal3 : any = '';
@@ -178,7 +181,6 @@
         saupja2 : any = '';
         saupja3 : any = '';
         saupja4 : any = '';
-
         saupjaVal1 : any = '';
         saupjaVal2 : any = '';
         saupjaVal3 : any = '';
@@ -188,7 +190,6 @@
         call2 : any = '';
         call3 : any = '';
         call4 : any = '';
-
         callVal1 : any = '';
         callVal2 : any = '';
         callVal3 : any = '';
@@ -198,7 +199,6 @@
         gajum2 : any = '';
         gajum3 : any = '';
         gajum4 : any = '';
-
         gajumVal1 : any = '';
         gajumVal2 : any = '';
         gajumVal3 : any = '';
@@ -208,20 +208,139 @@
         jijum2 : any = '';
         jijum3 : any = '';
         jijum4 : any = '';
-
         jijumVal1 : any = '';
         jijumVal2 : any = '';
         jijumVal3 : any = '';
         jijumVal4 : any = '';
 
         mounted(){
+
         }
 
         created(){
             this.getSelectList('GROUP');
+
+            this.objectKey = this.$route.params.objectKey;
+            console.log('넘겨받은 값 확인');
+            console.log(this.objectKey);
+
+            this.menuView(); //메뉴 정보 조회
         }
 
-        getMenuDetail(){//메뉴 상세정보
+        menuView(){//메뉴 상세정보
+            if(!this.objectKey){
+                alert('접근할수 없습니다')
+                this.$router.push({name:'mnMenuList'});
+            }else{
+                let mCode = this.objectKey.menuCode; //메뉴코드
+                CommonBoardService.getListDatas('menu-manage', mCode, null).then((response) => {
+                    let result: any =  response.data;
+                    console.log(result)
+                    if(result != null){
+                        this.groupCode = result.groupCode;
+                        this.name = result.name;
+                        this.menuCode = result.menuCode;
+                        this.useYn = result.useYn;
+                        this.memo = result.memo;
+                        this.menuPath = result.menuPath;
+
+                        //this.menuAray = result.menuRole;
+                        //let menuId = ['system', 'saupja', 'call', 'gajum', 'jijum']
+                        for(let i=0; i<result.menuRole.length; i++){
+                            if(result.menuRole[i].roleCode == '0001'){ //시스템관리자
+                                if(result.menuRole[i].readYn == 'Y'){
+                                    this.system1 = true;
+                                    this.systemVal1 = 'Y';
+                                }
+                                if(result.menuRole[i].createYn == 'Y'){
+                                    this.system2 = true;
+                                    this.systemVal2 = 'Y';
+                                }
+                                if(result.menuRole[i].updateYn == 'Y'){
+                                    this.system3 = true;
+                                    this.systemVal3 = 'Y';
+                                }
+                                if(result.menuRole[i].deleteYn == 'Y'){
+                                    this.system4 = true;
+                                    this.systemVal4 = 'Y';
+                                }
+                            }else if(result.menuRole[i].roleCode == '0002'){ //사업자관리자
+                                if(result.menuRole[i].readYn == 'Y'){
+                                    this.saupja1 = true;
+                                    this.saupjaVal1 = 'Y';
+                                }
+                                if(result.menuRole[i].createYn == 'Y'){
+                                    this.saupja2 = true;
+                                    this.saupjaVal2 = 'Y';
+                                }
+                                if(result.menuRole[i].updateYn == 'Y'){
+                                    this.saupja3 = true;
+                                    this.saupjaVal3 = 'Y';
+                                }
+                                if(result.menuRole[i].deleteYn == 'Y'){
+                                    this.saupja4 = true;
+                                    this.saupjaVal4 = 'Y';
+                                }
+                            }else if(result.menuRole[i].roleCode == '0003'){ //콜센터
+                                if(result.menuRole[i].readYn == 'Y'){
+                                    this.call1 = true;
+                                    this.callVal1 = 'Y';
+                                }
+                                if(result.menuRole[i].createYn == 'Y'){
+                                    this.call2 = true;
+                                    this.callVal2 = 'Y';
+                                }
+                                if(result.menuRole[i].updateYn == 'Y'){
+                                    this.call3 = true;
+                                    this.callVal3 = 'Y';
+                                }
+                                if(result.menuRole[i].deleteYn == 'Y'){
+                                    this.call4 = true;
+                                    this.callVal4 = 'Y';
+                                }
+                            }else if(result.menuRole[i].roleCode == '0004'){ //가맹점관리자
+                                if(result.menuRole[i].readYn == 'Y'){
+                                    this.gajum1 = true;
+                                    this.gajumVal1 = 'Y';
+                                }
+                                if(result.menuRole[i].createYn == 'Y'){
+                                    this.gajum2 = true;
+                                    this.gajumVal2 = 'Y';
+                                }
+                                if(result.menuRole[i].updateYn == 'Y'){
+                                    this.gajum3 = true;
+                                    this.gajumVal3 = 'Y';
+                                }
+                                if(result.menuRole[i].deleteYn == 'Y'){
+                                    this.gajum4 = true;
+                                    this.gajumVal4 = 'Y';
+                                }
+                            }else if(result.menuRole[i].roleCode == '0005'){ //지점관리자
+                                if(result.menuRole[i].readYn == 'Y'){
+                                    this.jijum1 = true;
+                                    this.jijumVal1 = 'Y';
+                                }
+                                if(result.menuRole[i].createYn == 'Y'){
+                                    this.jijum2 = true;
+                                    this.jijumVal2 = 'Y';
+                                }
+                                if(result.menuRole[i].updateYn == 'Y'){
+                                    this.jijum3 = true;
+                                    this.jijumVal3 = 'Y';
+                                }
+                                if(result.menuRole[i].deleteYn == 'Y'){
+                                    this.jijum4 = true;
+                                    this.jijumVal4 = 'Y';
+                                }
+                           }
+                        }
+
+                    }else{
+                        console.log('메뉴 조회 실패')
+                    }
+                    //this.onLoadListView = true;
+                }).catch();
+            }
 
         }
 
@@ -296,28 +415,28 @@
             console.log('최종값 확인');
             console.log(reqData);
 
-/*
-            // api 데이터 호출(가맹점 등록)
-            CommonBoardService.postListDatas('menu-manage', null, reqData).then((response) => {
-                    let result: any = response.data;
-                    console.log(result);
-                    if (result != null) {
-                        //메뉴 등록 완료
-                        //this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                        //this.$router.push({name:'mnMenu'})
-                        this.$router.push('/home/mnMenu');
-                    } else {
-                        alert('메뉴 등록에 실패하였습니다.\n다시 시도하세요.');
-                        return;
-                    }
-                }
-                , (error) => {
-                    console.log(error);
-                }
-            ).catch((response) => {
-                console.log(response);
-            });
-*/
+            /*
+                        // api 데이터 호출(메뉴 등록)
+                        CommonBoardService.updateListData('menu-manage', this.menuCode, reqData).then((response) => {
+                                let result: any = response.data;
+                                console.log(result);
+                                if (result != null) {
+                                    //메뉴 수정 완료
+                                    //this.$router.push({ name:'mnMenuList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                                    //this.$router.push({name:'mnMenu'})
+                                    this.$router.push('/home/mnMenu');
+                                } else {
+                                    alert('메뉴 수정에 실패하였습니다.\n다시 시도하세요.');
+                                    return;
+                                }
+                            }
+                            , (error) => {
+                                console.log(error);
+                            }
+                        ).catch((response) => {
+                            console.log(response);
+                        });
+            */
         }
 
         //등록 취소

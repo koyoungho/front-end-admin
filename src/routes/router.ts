@@ -64,6 +64,7 @@ import PreviewBizLicense from "../components/contents/mnUser/previewBizLicense.v
 
 import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
+import ModMenu from "../components/contents/mnMenu/ModMenu.vue"//메뉴상세
 import FranchiseRegStep1Result from "../components/common/kmc/FranchiseRegStep1Result.vue"
 
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
@@ -176,6 +177,7 @@ export default new Router({
                 //시스템관리>메뉴 권한 관리
                 {path:'mnMenu',component: MnMenuList, name:'mnMenuList' ,meta: {authRequired: true}}, //
                 {path:'regMenu',component: RegMenu, name:'regMenu' ,meta: {authRequired: true}}, //
+                {path:'modMenu',component: ModMenu, name:'modMenu' ,meta: {authRequired: true}}, //
                 //시스템관리>코드관리
                 {path:'mnCode',component: MnCode, name:'mnCode' ,meta: {authRequired: true}}, //
                 //시스템관리>시스템 모니터링,

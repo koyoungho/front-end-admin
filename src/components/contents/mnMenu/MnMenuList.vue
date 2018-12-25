@@ -126,8 +126,8 @@
 
         }
 
-        listViewEvent(){
-
+        listViewEvent(row){
+            this.$router.push({ name:'modMenu' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
     }
 </script>
