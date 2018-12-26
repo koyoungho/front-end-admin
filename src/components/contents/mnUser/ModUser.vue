@@ -382,8 +382,10 @@
                if(result.status==200){
                    console.log('계정정보 조회 결과')
                    console.log(result.data)
-
                    this.saupInfo(result.data.saupId); //조회된 사업자등록번호로 사업장 정보 조회
+                   this.account = result.data
+
+                   this.setData()
 
                    this.account = result.data;
                    this.oldRole = result.data.role;

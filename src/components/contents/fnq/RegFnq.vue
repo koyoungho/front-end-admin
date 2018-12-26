@@ -20,7 +20,7 @@
                     <tbody>
                     <tr>
                         <th scope="row">제목</th>
-                        <td><input type="text" class="input form_w100" title="제목"  v-model="title" ></td>
+                        <td><input type="text" class="input form_w100" title="제목"  v-model="title" maxlength="80" ></td>
                     </tr>
                     <tr>
                         <th scope="row">구분</th>
@@ -45,9 +45,9 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button"  class="btn_b01 bg02" v-on:click="toList()">취소</button>
+                <button type="button"  class="btn_b01 bg02" v-on:click="toList">취소</button>
                 <template v-if="div_str == '수정' ">
-                    <button type="button" class="btn_b01 bg03">삭제</button>
+                    <button type="button" class="btn_b01 bg03" @click="del">삭제</button>
                 </template>
                 <button type="button" class="btn_b01 bg01" @click="regFnq">{{div_str}}</button>
             </div>
@@ -83,7 +83,6 @@
         mounted(){
             // this.seq = this.$route.params.seq;
             this.objectKey = this.$route.params.objectKey;
-            console.log(this.$route.params.objectKey);
 
             if(this.objectKey == null || this.objectKey == 'undefinded') {
                 this.div_str="등록";
@@ -102,8 +101,7 @@
                 alert('접근할수 없습니다')
                 this.$router.push({name:'fnqList'});
             }else {
-                this.seq = this.objectKey.seq; //가맹점 번호
-
+                this.seq = this.objectKey.seq;
 
                 // api 데이터 호출
                 CommonBoardService.getListDatas('faq', this.seq, null).then((response) => {
@@ -144,13 +142,11 @@
 
             if(this.objectKey != null || this.objectKey !=undefined){ //수정일때
                 // api 데이터 호출
-                CommonBoardService.updateListData('faq', this.objectKey, reqData).then((response) => {
-                        if (response.status.toString() == '200') { //메일 전송 완료
+                CommonBoardService.updateListData('faq', this.seq, reqData).then((response) => {
+                        if (response.status.toString() == '200') { //성공
                             alert("수정되었습니다.");
-                            console.log('수정되었습니다');
-                            console.log(response);
-                            // 현금영수증 발급 완료 화면 이동
-                            // this.$router.push({ name:'faq' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            // 리스트로 이동
+                            this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         } else { //메일 전송 실패
                             console.log('수정실패');
                             console.log(response);
@@ -163,15 +159,12 @@
                 ).catch();
 
             }else{//등록일때
-                CommonBoardService.postListDatas('faq', this.objectKey, reqData).then((response) => {
-                        if (response.status.toString() == '200') { //메일 전송 완료
+                CommonBoardService.postListDatas('faq', null, reqData).then((response) => {
+                        if (response.status.toString() == '201') { //성공
                             alert("등록되었습니다.");
-                            console.log('등록되었습니다');
                             console.log(response);
-                            // 현금영수증 발급 완료 화면 이동
-                            // this.$router.push({ name:'faq' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         } else { //메일 전송 실패
-                            console.log('등록실패');
                             console.log(response);
                         }
                     }
@@ -195,6 +188,26 @@
                 alert("내용을 입력하세요");
                 return false;
             }
+        }
+
+        /**
+         * 삭제
+          */
+        del(){
+            if (window.confirm("삭제하시겠습니까?")) {
+
+                CommonBoardService.deleteListDatas('faq', this.seq, null).then((response) => {
+                    if (response.status.toString() == '200') { //성공
+                        alert("삭제되었습니다.");
+                        this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    }
+                }
+                , (error) => {
+                        //this.$Progress.finish();
+                        console.log(error);
+                    }
+                ).catch();
+             }
         }
 
     }

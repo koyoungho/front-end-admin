@@ -114,7 +114,20 @@
                 <td>{{rows}}</td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
-                  <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
+                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
+                      <template v-if="listData[index].importantYn == 'Y'"> <i class="icon notice">공지</i></template>
+                      <span v-bind:style="colColor(indexs)">{{rows}}</span>
+                      <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
+                    </td>
+                  </template>
+                  <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
+                  </template>
+
+              </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'">
+                <td  v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)"><input type="text" v-bind:value="rows"></span></td>
               </template>
             </template>
           </tr>
@@ -449,7 +462,6 @@
                     }
 
                     this.$Progress.finish();
-
                 }
                 , (error) => {
                     this.$Progress.finish();
