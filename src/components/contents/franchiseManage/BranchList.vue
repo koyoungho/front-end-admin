@@ -75,9 +75,8 @@
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
-                searchClass : 'search_box page_system03',
-                searchStyle : 'search_box page_customer03',
-                searchStyle2 : 'search_list col0301'
+                searchClass : 'search_box page_store01',
+                searchClass2 : 'search_list'
             }
 
         created(){

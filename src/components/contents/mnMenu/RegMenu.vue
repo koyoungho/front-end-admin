@@ -168,7 +168,6 @@
         system2 : any = '';
         system3 : any = '';
         system4 : any = '';
-
         systemVal1 : any = '';
         systemVal2 : any = '';
         systemVal3 : any = '';
@@ -178,7 +177,6 @@
         saupja2 : any = '';
         saupja3 : any = '';
         saupja4 : any = '';
-
         saupjaVal1 : any = '';
         saupjaVal2 : any = '';
         saupjaVal3 : any = '';
@@ -188,7 +186,6 @@
         call2 : any = '';
         call3 : any = '';
         call4 : any = '';
-
         callVal1 : any = '';
         callVal2 : any = '';
         callVal3 : any = '';
@@ -198,7 +195,6 @@
         gajum2 : any = '';
         gajum3 : any = '';
         gajum4 : any = '';
-
         gajumVal1 : any = '';
         gajumVal2 : any = '';
         gajumVal3 : any = '';
@@ -208,7 +204,6 @@
         jijum2 : any = '';
         jijum3 : any = '';
         jijum4 : any = '';
-
         jijumVal1 : any = '';
         jijumVal2 : any = '';
         jijumVal3 : any = '';

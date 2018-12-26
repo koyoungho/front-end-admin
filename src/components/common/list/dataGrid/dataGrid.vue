@@ -121,7 +121,12 @@
         </template>
         <template v-if="listData.length < 1">
           <tr>
-              <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
+              <template v-if="dataGridDetail.dataGrid.apiUrl == 'accounts'"> <!-- 계정 권한 관리 화면은 columControl에 hidden이 있기때문 totalColum 으로 함 -->
+                <td v-bind:colspan="dataGridDetail.dataGrid.totalColum" class="no_data">조회된 내용이 없습니다.</td>
+              </template>
+              <template v-if="dataGridDetail.dataGrid.apiUrl != 'accounts'">
+                <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
+              </template>
           </tr>
         </template>
         </tbody>
