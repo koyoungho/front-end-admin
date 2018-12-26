@@ -312,48 +312,56 @@
 
         auth : any = "";
         addressBox : boolean = false;
-        listItem: any =
-            {
-                dataGrid: {
-                    columControl:[
-                        {columName : '메뉴' ,id : 'name',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '조회' ,id : 'readYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                        {columName : '등록' ,id : 'createYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                        {columName : '수정' ,id : 'updateYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                        {columName : '삭제' ,id : 'deleteYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                        // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
-                        // {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        // {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        // {columName : '이름' ,id : 'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        // {columName : '등급' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        // {columName : '소속' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        // {columName : '상태' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
-                        // {columName : '등록일' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        // {columName : '최종접속' ,id : 'storeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
-                    ],
-                    totalColum: 5, //
-                    apiUrl : 'menu/role/'+sessionStorage.role,
-                    onLoadList : true,  // onLoad 로딩 유무
-                    // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
-                    // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
-                    //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
-                },
-                // 아이디는 실제 컬럼값을 넣어주면됩니다.
-                search: [
-                ],
-                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
-                goSearch : "iocSearch",
-                searchClass : 'search_box page_system03',
-                /*menuAuth: [
+        listItem : any = {};
 
-                ]*/
-            }
+
+        setData(){
+            this.listItem =
+                {
+                    dataGrid: {
+                        columControl:[
+                            {columName : '메뉴' ,id : 'name',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                            {columName : '조회' ,id : 'readYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                            {columName : '등록' ,id : 'createYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                            {columName : '수정' ,id : 'updateYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                            {columName : '삭제' ,id : 'deleteYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                            // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
+                            // {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                            // {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                            // {columName : '이름' ,id : 'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            // {columName : '등급' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            // {columName : '소속' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                            // {columName : '상태' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
+                            // {columName : '등록일' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            // {columName : '최종접속' ,id : 'storeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
+                        ],
+                        totalColum: 5, //
+                        apiUrl : 'menu/role/'+this.account['role'],
+                        onLoadList : true,  // onLoad 로딩 유무
+                        // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                        // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                        //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                    },
+                    // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                    search: [
+                    ],
+                    paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                    goSearch : "iocSearch",
+                    searchClass : 'search_box page_system03',
+                    /*menuAuth: [
+
+                    ]*/
+                }
+        }
+
         created(){
             let id : any = this.$route.params.val
             let auth : any = this.$route.params.val2
 
             this.accountInfo(id,auth);
+
+
             //
             // let level = 0;
             // if(level == 0){
@@ -406,10 +414,10 @@
                if(result.status==200){
                    console.log('계정정보 조회 결과')
                    console.log(result.data)
-
                    this.saupInfo(result.data.saupId); //조회된 사업자등록번호로 사업장 정보 조회
-
                    this.account = result.data
+
+                   this.setData()
                }else{
                    alert('에러')
                }
