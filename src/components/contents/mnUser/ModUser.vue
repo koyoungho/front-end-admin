@@ -566,7 +566,6 @@
                 }
                 reqData['gajumDto'] = gajumData;
                 console.log(reqData)
-
             }
 */
 
