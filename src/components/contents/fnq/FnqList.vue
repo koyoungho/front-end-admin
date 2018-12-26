@@ -118,8 +118,8 @@
                         {columName : '순번', type:'number', id : 'rnum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                         {columName : '제목', type:'text', id : 'title', width : '60%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                         {columName : '등록일', type:'text', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '등록자', type:'text', id : 'roleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '구분', type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}] }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '등록자', type:'text', id : 'regRole', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : '0001' , change : '시스템'},{ value : '0002' , change : '사업자'},{ value : '0003' , change : '콜센터'},{ value : '0004' , change : '가맹점'},{ value : '0005' , change : '지점'}]},
+                        {columName : '구분', type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}] }, // 라인컬러와 라인벨류는 오직하나만
                     ],
                     totalColum: 5,
                     apiUrl : 'faq',
@@ -128,7 +128,7 @@
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
                     {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.searchStartDate_str ,  searchEndDate: this.searchEndDate_str, calenderCount : 2},
-                    {type: 'select' , title :'구분',id: 'importantYn', name:'importantYn' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{ name : '사용자' , value: 'USR' },{name : '관리자' , value: 'ADM' }]},
+                    {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{ name : '사용자' , value: 'USR' },{name : '관리자' , value: 'ADM' }]},
                     {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' ,placeholder:'제목+내용',  },
                 ],
                 searchClass: 'search_box page_customer04',
@@ -141,8 +141,6 @@
             this.originItem  = this.listItem.dataGrid.columControl
         }
 
-
-reqreq
         mounted(){
 
             if(this.role == '0004'|| this.role == '0005' ){
