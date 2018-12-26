@@ -185,6 +185,16 @@
         }
 
         searchGajum() {
+
+            // SM006M00 테이블 조회
+            if(this.searchType == ''){
+                alert('가맹점 검색 항목을 선택하세요.');
+                return;
+            }else if(this.searchWord == ''){
+                alert('검색어를 입력하세요.');
+                return;
+            }
+
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.
             // 넣어진 페이지 데이터에 의해 페이징 페이지 생성 이벤트는 페이지번호 옴겨와야한다
             // 검색데이터
@@ -197,7 +207,7 @@
 
             CommonBoardService.getListData('gajum/popup', null, reqData).then((response) => {
                 //console.log(response)
-                    this.responseData = response.data.data;
+                    this.responseData = response.data;
 
                     /*this.total = parseInt(response.data.totalRecords);
                     this.pageNum = parseInt(response.data.currentPage);

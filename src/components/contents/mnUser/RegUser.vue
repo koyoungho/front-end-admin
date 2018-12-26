@@ -12,7 +12,7 @@
             <div class="tbl_view_box">
                 <!-- tbl view01 -->
                 <table class="tbl_view01">
-                    <caption>사용자 정보</caption>
+                    <caption>관리자 정보</caption>
                     <colgroup>
                         <col width="17%">
                         <col width="33%">
@@ -56,7 +56,7 @@
                         </td>
                         <th scope="row">계정상태</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정상태" v-model="accountStatus">
+                            <select id="" name="" class="select form_w100" title="계정상태" v-model="accountStatus" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="0">정상</option>
                                 <option value="1">승인대기</option>
@@ -64,6 +64,31 @@
                                 <option value="3">사용중지</option>
                                 <option value="4">해지</option>
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">주소</th>
+                        <td colspan="3">
+                            <ul class="address_list">
+                                <li class="con01">
+                                    <input type="text" class="input form_post" title="우편번호" v-model="zipCode">
+                                    <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
+                                </li>
+                                <li class="con02">
+                                    <input type="text" class="input form_address01" title="주소" v-model="addr1">
+                                </li>
+                                <li class="con03">
+                                    <input type="text" class="input form_address02" title="상세 주소" v-model="addr2">
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">접속IP 대역</th>
+                        <td colspan="3">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpFrom" maxlegnth="14">
+                            <span class="period_form">-</span>
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpTo" maxlength="14">
                         </td>
                     </tr>
                     </tbody>
@@ -89,18 +114,17 @@
                         <td>
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdCh()" maxlength="10">
                             <input type="hidden" v-model="saupIdChkYn">
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="saupIdChk">중복확인</button>
-                            <p class="info_msg" id="saupid_msg"></p>
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="saupInfo(saupId)">찾기</button>
                         </td>
                         <th scope="row">사업장명</th>
-                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명" v-model="shopNm"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명" v-model="saupjang.shopNm" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명</th>
-                        <td><input type="text" class="input form_w100" title="대표자명" v-model="reqNm"></td>
+                        <td><input type="text" class="input form_w100" title="대표자명" v-model="saupjang.chipNm" disabled="disabled"></td>
                         <th scope="row">전화번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호" v-model="telno">
+                            <input type="text" class="input form_w100" title="전화번호" v-model="saupjang.telNum" disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -108,59 +132,14 @@
                         <td colspan="3">
                             <ul class="address_list">
                                 <li class="con01">
-                                    <input type="text" class="input form_post" title="우편번호" v-model="zipCode">
+                                    <input type="text" class="input form_post" title="우편번호" v-model="saupjang.zipCode" disabled="disabled">
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소" v-model="addr1">
+                                    <input type="text" class="input form_address01" title="주소" v-model="saupjang.addr1" disabled="disabled">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소" v-model="addr2">
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //tbl view box -->
-
-            <h4>회사/매장 정보</h4>
-            <!-- tbl view box -->
-            <div class="tbl_view_box">
-                <!-- tbl view01 -->
-                <table class="tbl_view01">
-                    <caption>회사/매장 정보</caption>
-                    <colgroup>
-                        <col width="17%">
-                        <col width="33%">
-                        <col width="17%">
-                        <col width="33%">
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                        <th scope="row">매장명</th>
-                        <td>
-                            <input type="text" class="input form_w100" title="매장명" v-model="storeNm">
-                        </td>
-                        <th scope="row">전화번호</th>
-                        <td>
-                            <input type="text" class="input form_w100" title="전화번호" v-model="storeTelno">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">주소</th>
-                        <td colspan="3">
-                            <ul class="address_list">
-                                <li class="con01">
-                                    <input type="text" class="input form_post" title="우편번호" v-model="storeZipCd">
-                                    <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn2">우편번호</button>
-                                </li>
-                                <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소" v-model="storeAddr1">
-                                </li>
-                                <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소" v-model="storeAddr2">
+                                    <input type="text" class="input form_address02" title="상세 주소" v-model="saupjang.addr2" disabled="disabled">
                                 </li>
                             </ul>
                         </td>
@@ -172,7 +151,41 @@
 
             <h4>메뉴사용권한</h4>
             <!-- tbl list box -->
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
+            <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>-->
+            <!-- //tbl list box -->
+
+            <!-- tbl list box -->
+            <div class="tbl_list_box">
+                <!-- tbl list01 -->
+                <table class="tbl_list01">
+                    <caption>메뉴사용권한 목록</caption>
+                    <colgroup>
+                        <col width="17%">
+                        <col width="21%">
+                        <col width="21%">
+                        <col width="21%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col">메뉴</th>
+                        <th scope="col">조회</th>
+                        <th scope="col">등록</th>
+                        <th scope="col">수정</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody v-for="datas in menuList">
+                    <tr>
+                        <th scope="row">{{datas.name}}</th>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.readId" v-model="datas.readGbn"><label for=""><span class="blind">선택</span></label></span></td>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.createId" v-model="datas.createGbn"><label for=""><span class="blind">선택</span></label></span></td>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.updateId" v-model="datas.updateGbn"><label for=""><span class="blind">선택</span></label></span></td>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.deleteId" v-model="datas.deleteGbn"><label for=""><span class="blind">선택</span></label></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- //tbl list box -->
 
             <!-- btn bot -->
@@ -195,6 +208,7 @@
     import {CommonBoardService} from '../../../api/common.service';
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import {Saupjang} from '../../../model/account/saupjang';
 
     @Component({
         components: {
@@ -211,24 +225,19 @@
         email: any = ''; //이메일
         accountLevel: any = ''; //계정등급
         accountStatus: any = ''; //계정상태
-
-        //사업장정보
-        saupId: any = ''; //사업자등록번호
-        saupIdChkYn: any = ''; //사업자등록번호 사용가능 여부
-        shopNm: any = ''; //사업장명
-        reqNm: any = ''; //대표자명
-        telno: any = ''; //전화번호
         zipCode: any = ''; //우편번호
         addr1: any = ''; //주소
         addr2: any = ''; //상세주소
+        accessIpFrom: any = ''; //접속IP 시작
+        accessIpTo: any = ''; //접속IP 끝
 
-        //매장정보
-        storeNm: any = ''; //매장명
-        storeTelno: any = ''; //전화번호
-        storeZipCd: any = ''; //우편번호
-        storeAddr1: any = ''; //주소
-        storeAddr2: any = ''; //상세주소
+        //사업장정보
+        saupId: any = ''; //사업자등록번호
+        saupIdChkYn: any = ''; //사업자정보 찾기 여부
 
+        menuList: any = []; //메뉴 권한 리스트
+
+        saupjang : Saupjang[]=[];
 
         model : any = [];
         auth : any = "";
@@ -270,6 +279,9 @@
             }
         created(){
             this.commonCode();
+            this.authMenuList();
+
+            this.accountStatus = '0'; //계정상태 정상(0)으로 셋팅
         }
         mounted(){
 
@@ -336,10 +348,10 @@
                     let result: any = response.data;
                     console.log(result)
                     if (result.code === '000') {
-                        this.saupIdChkYn = 'Y'
+                        //this.saupIdChkYn = 'Y'
                         if(saupid_msg!=null){ saupid_msg.innerHTML = '사용가능한 사업자등록번호입니다.'; }
                     } else { //대역폭 사용 못함
-                        this.saupIdChkYn = ''
+                        //this.saupIdChkYn = ''
                         if(saupid_msg!=null){ saupid_msg.innerHTML = result.message; }
                         return;
                     }
@@ -354,6 +366,8 @@
             this.saupIdChkYn = '';
             let saupid_msg = document.getElementById('saupid_msg')
             if(saupid_msg!=null){ saupid_msg.innerHTML = ''; }
+
+            this.saupjang = []; //사업장 조회 정보 초기화
         }
 
         addressBoxOn(){
@@ -370,15 +384,23 @@
         setDataAddr1(e){
             console.log(e);
             // 주소값 리턴 받기
+
+            this.zipCode = e.zip;
+            this.addr1 = e.addr;
         }
 
         setDataAddr2(e){
             console.log(e);
+            console.log('1111')
             // 주소값 리턴 받기
         }
 
         //입력값 validation 체크
         validationChk(){
+
+            console.log('Form 정보 보이기')
+            console.log(this.menuList)
+            let saupjang = this.saupjang;
 
             if(this.name == ''){
                 alert('이름을 입력하세요.');
@@ -398,44 +420,26 @@
             }else if(this.accountLevel == ''){
                 alert('계정등급을 확인하세요.');
                 return;
-            }else if(this.accountStatus == ''){
-                alert('계정상태를 선택하세요..');
+            }else if(this.zipCode == ''){
+                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.');
+                return;
+            }else if(this.addr1 == ''){
+                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.');
+                return;
+            }else if(this.addr2 == ''){
+                alert('상세주소를 입력하세요.');
+                return;
+            }else if(this.accessIpFrom == ''){
+                alert('접속IP 시작 대역을 입력하세요.');
+                return;
+            }else if(this.accessIpTo == ''){
+                alert('접속IP 끝 대역을 입력하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력 하세요.');
                 return;
             }else if(this.saupIdChkYn == ''){
-                alert('사업자등록번호를 중복확인 하세요.');
-                return;
-            }else if(this.shopNm == ''){
-                alert('사업장명을 중복확인 하세요.');
-                return;
-            }else if(this.reqNm == ''){
-                alert('대표자명을 중복확인 하세요.');
-                return;
-            }else if(this.telno == ''){
-                alert('전화번호를 확인하세요.');
-                return;
-            }else if(this.zipCode == ''){
-                alert('우편번호를 입력하세요.');
-                return;
-            }else if(this.addr1 == ''){
-                alert('주소를 입력하세요.');
-                return;
-            }else if(this.addr2 == ''){
-                alert('상세주소를 입력하세요.');
-                return;
-            }else if(this.storeNm == ''){
-                alert('매장명을 입력하세요.');
-                return;
-            }else if(this.storeTelno == ''){
-                alert('전화번호를 입력하세요.');
-                return;
-            }else if(this.storeAddr1 == ''){
-                alert('주소를 입력하세요.');
-                return;
-            }else if(this.storeAddr2 == '') {
-                alert('상세주소를 입력하세요.');
+                alert('사업자등록번호를 입력 후 찾기 버튼을 클릭하세요.');
                 return;
             }else{
                 this.insertInfo();
@@ -446,7 +450,152 @@
         //계정 등록
         insertInfo(){
             console.log('계정등록')
+
+            let chkList : any = this.menuList; //메뉴 권한 정보
+
+            let reqData : any = {};
+            let rowData : any = {};
+            let arrData : any = [];
+
+            //사용자 정보
+            reqData['name'] = this.name;
+            reqData['phoneNum'] = this.phoneNum;
+            reqData['id'] = this.id;
+            reqData['email'] = this.email;
+            reqData['role'] = this.accountLevel; //계정등급
+            reqData['accountStatus'] = this.accountStatus; //계정상태
+            reqData['zipCode'] = this.zipCode;
+            reqData['addr1'] = this.addr1;
+            reqData['addr2'] = this.addr2;
+            reqData['accessIpFrom'] = this.accessIpFrom;
+            reqData['accessIpTo'] = this.accessIpTo;
+            reqData['saupId'] = this.saupId;
+
+            chkList.filter(e=>{
+                rowData = {};
+                if(e.readGbn == true){ //조회
+                    rowData['readYn'] = 'Y';
+                }else{
+                    rowData['readYn'] = 'N';
+                }
+                if(e.createGbn == true){ //등록
+                    rowData['createYn'] = 'Y';
+                }else{
+                    rowData['createYn'] = 'N';
+                }
+                if(e.updateGbn == true){ //수정
+                    rowData['updateYn'] = 'Y';
+                }else{
+                    rowData['updateYn'] = 'N';
+                }
+                if(e.deleteGbn == true){ //삭제
+                    rowData['deleteYn'] = 'Y';
+                }else{
+                    rowData['deleteYn'] = 'N';
+                }
+                rowData['groupCode'] = e.groupCode;
+                //rowData['groupCodeNm'] = e.groupCodeNm;
+                rowData['menuCode'] = e.menuCode;
+                //rowData['progId'] = e.progId;
+                rowData['name'] = e.name;
+                //rowData['menuLevel'] = e.menuLevel;
+                //rowData['sub'] = e.sub;
+                //rowData['apiUri'] = e.apiUri;
+
+                arrData.push(rowData)
+            });
+            reqData['menuList'] = arrData
+
+            console.log('최종 요청값 확인')
+            console.log(reqData)
+
+            // api 데이터 호출(계정 정보 수정)
+            CommonBoardService.postListData('accounts', null, reqData).then((response) => {
+                    let result: any = response.data;
+                    console.log(result);
+                    if (result != null) {
+                        //계정 수정 완료
+                        //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        //this.$router.push({name:'mnUserList'})
+                        this.$router.push('/home/mnUserList');
+                    } else {
+                        alert('계정 정보 등록에 실패하였습니다.\n다시 시도하세요.');
+                        return;
+                    }
+                }
+                , (error) => {
+                    console.log(error);
+                }
+            ).catch((response) => {
+                console.log(response);
+            });
+
         }
+
+        //메뉴 사용 권한 리스트 뿌리기
+        authMenuList(){
+
+            let role = sessionStorage.role;
+
+            CommonBoardService.getListDatas('menu/role/'+role, null, null).then(result=>{
+                if(result.status==200){
+                    console.log('메뉴 정보 조회 결과')
+                    console.log(result.data)
+
+                    let mList = result.data;
+                    let rowData : any = {};
+                    let arrData : any = [];
+                    let rowCnt : number = 0;
+                    mList.filter(e => {
+                        rowData = {};
+                        rowCnt++;
+                        rowData['groupCode'] = e.groupCode;
+                        rowData['menuCode'] = e.menuCode;
+                        rowData['name'] = e.name;
+                        rowData['readYn'] = e.readYn;
+                        rowData['createYn'] = e.createYn;
+                        rowData['updateYn'] = e.updateYn;
+                        rowData['deleteYn'] = e.deleteYn;
+                        rowData['readGbn'] = false;
+                        rowData['createGbn'] = false;
+                        rowData['updateGbn'] = false;
+                        rowData['deleteGbn'] = false;
+                        rowData['readId'] = e.menuCode + rowCnt;
+                        rowData['createId'] = e.menuCode + rowCnt;
+                        rowData['updateId'] = e.menuCode + rowCnt;
+                        rowData['deleteId'] = e.menuCode + rowCnt;
+
+                        arrData.push(rowData);
+                    });
+
+                    this.menuList = arrData;
+
+                }else{
+                    alert('에러')
+                }
+            })
+
+        }
+
+        //사업장 정보 조회
+        saupInfo(saupId){
+            if(saupId == ''){
+                alert('사업자등록번호를 입력하세요.');
+                return;
+            }
+
+            CommonBoardService.getListDatas('saupjang',saupId,null).then(result=>{
+                if(result.status==200){
+                    console.log('사업장 정보 조회')
+                    console.log(result.data)
+                    this.saupjang = result.data;
+                    this.saupIdChkYn = 'Y';
+                }else{
+                    alert('에러')
+                }
+            })
+        }
+
 
     }
 

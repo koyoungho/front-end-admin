@@ -76,10 +76,10 @@
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
                     {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'lastConnDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
-                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: '20180101' ,  searchEndDate: this.setDate , calenderCount : 2},
+                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'selectCode' , title :'등급',id: 'role', name:'issuePurpose' , value: '' ,  api : '0034' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
-                    {type: 'selectCode' , title :'상태',id: 'dealType', name:'dealType' , value: '' ,  api : '0035' , option : [{ codeName : '승인' , code: '0' },{codeName : '취소' , code: '1' }]},
+                    {type: 'selectCode' , title :'등급',id: 'role', name:'role' , value: '' ,  api : '' , option : [{ codeNm : '시스템관리자' , code: '0001' },{codeNm : '현금영수증사업자' , code: '0002' },{codeNm : '콜센터관리자' , code: '0003' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
+                    {type: 'selectCode' , title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
 
                     {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
@@ -107,12 +107,8 @@
             }
         }
 
-
         mounted(){
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             console.log(this.listItem.search[1]);
-            this.listItem.search[1].searchStartDate = '20180101';
-
         }
 
         checkBoxEvent(data){
