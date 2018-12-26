@@ -116,6 +116,9 @@
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
                   <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
               </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'">
+                <td  v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)"><input type="text" v-bind:value="rows"></span></td>
+              </template>
             </template>
           </tr>
         </template>
@@ -448,8 +451,14 @@
 
                     }
 
-                    this.$Progress.finish();
 
+                    this.listData = [{num : 0 ,retCode:'test',retCodeNm:'test23',originPerm:'test3',originDate:'test4',perm:'test5',saleDate:'test6',totamt:'7',geodate:'8',sendDate:'9',saupId:'10'
+                        ,subSaup:'11',shopNm:'12',reperm:'13',resaleDate:'14',fixDate:'15',rsnCode:'16',rstCode:'17'},
+                        {num : 1 ,retCode:'test',retCodeNm:'test23',originPerm:'test3',originDate:'test4',perm:'test5',saleDate:'test6',totamt:'7',geodate:'8',sendDate:'9',saupId:'10'
+                            ,subSaup:'11',shopNm:'12',reperm:'13',resaleDate:'14',fixDate:'15',rsnCode:'16',rstCode:'17'},
+                        {num : 2 ,retCode:'test',retCodeNm:'test23',originPerm:'test3',originDate:'test4',perm:'test5',saleDate:'test6',totamt:'7',geodate:'8',sendDate:'9',saupId:'10'
+                            ,subSaup:'11',shopNm:'12',reperm:'13',resaleDate:'14',fixDate:'15',rsnCode:'16',rstCode:'17'}]
+                    this.$Progress.finish();
                 }
                 , (error) => {
                     this.$Progress.finish();
