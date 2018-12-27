@@ -86,7 +86,7 @@
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="account.zipCode" disabled="disabled">
-                                    <button type="button" id="" class="btn_s01 bg03">우편번호</button>
+                                    <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
                                     <input type="text" class="input form_address01" title="주소" v-model="account.addr1">
@@ -245,12 +245,6 @@
     })
     export default class ModUser extends Vue {
 
-        //권한별 메뉴사용 보이기
-        gajumShow : boolean = false; //가맹점관리
-        jijumShow : boolean = false; //지점관리
-        storeShow : boolean = false; //매장관리, 매장일괄등록
-        aprovShow : boolean = false; //승인대역
-
         gajum1 : any = '';
         gajum2 : any = '';
         gajum3 : any = '';
@@ -343,50 +337,18 @@
             //this.gajumInfo();
             //this.saupInfo(); //사업장 정보 조회
 
-/*
-            if(sessionStorage.accessToken){
-                let role = sessionStorage.role;
-                console.log('사용자 권한 확인 :: ' + role)
-                if(role == '0001'){ //시스템관리자
-                    this.gajumShow = true;
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                    this.aprovShow = true;
-                }else if(role == '0002'){ //현금영수증사업자
-                    this.gajumShow = true;
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                    this.aprovShow = true;
-                }else if(role == '0003'){ //콜센터관리자
-                    this.gajumShow = true;
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                    this.aprovShow = true;
-                }else if(role == '0004'){ //가맹점관리자
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                }else if(role == '0005'){ //지점관리자
-                    this.storeShow = true;
-                }else if(role == '0006'){ //매장관리자
-
-                }
-
-            }
-*/
-
         }
 
         accountInfo(id,auth){
             let reqData = { id: id ,role: auth }
             CommonBoardService.getListDatas('accounts/'+id, null, reqData).then(result=>{
                if(result.status==200){
-                   console.log('계정정보 조회 결과')
-                   console.log(result.data)
+                   //console.log('계정정보 조회 결과')
+                   //console.log(result.data)
                    this.saupInfo(result.data.saupId); //조회된 사업자등록번호로 사업장 정보 조회
                    this.account = result.data
 
-                   this.setData()
-
+                   //this.setData()
                    this.account = result.data;
                    this.oldRole = result.data.role;
 
@@ -394,6 +356,7 @@
                    let objList : any = {};
                    let mList = result.data.menuList;
                    let rowCnt : number  = 0;
+
                    mList.filter(e=>{
                        rowCnt++;
                        objList = {};
@@ -420,8 +383,8 @@
 
                        arrList.push(objList)
                    })
-                   console.log('다시 담은 값')
-                   console.log(arrList)
+                   //console.log('다시 담은 값')
+                   //console.log(arrList)
                    this.menuList = arrList;
 
                }else{
@@ -508,34 +471,34 @@
 
 
 
-            if(account.phoneNum == ''){
+            if(account.phoneNum == '' || account.phoneNum == null){
                 alert('휴대폰번호를 입력하세요.')
                 return;
-            }else if(account.email == ''){
+            }else if(account.email == '' || account.email == null){
                 alert('이메일 주소를 입력하세요.')
                 return;
-            }else if(account.role == ''){
+            }else if(account.role == '' || account.role == null){
                 alert('계정등급을 선택하세요.')
                 return;
-            }else if(account.accountStatus == ''){
+            }else if(account.accountStatus == '' || account.accountStatus == null){
                 alert('계정상태를 선택하세요.')
                 return;
-            }else if(account.telNum == ''){
+            }else if(account.telNum == '' || account.telNum == null){
                 alert('전화번호를 입력하세요.')
                 return;
-            }else if(account.zipCode == ''){
+            }else if(account.zipCode == '' || account.zipCode == null){
                 alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
                 return;
-            }else if(account.addr1 == ''){
-                alert('주소를 입력하세요.')
+            }else if(account.addr1 == '' || account.addr1 == null){
+                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
                 return;
-            }else if(account.addr2 == ''){
+            }else if(account.addr2 == '' || account.addr2 == null){
                 alert('상세주소를 입력하세요.')
                 return;
-            }else if(account.accessIpStart == ''){
+            }else if(account.accessIpStart == '' || account.accessIpStart == null){
                 alert('접속IP 대역 시작점을 입력하세요.')
                 return;
-            }else if(account.accessIpEnd == '') {
+            }else if(account.accessIpEnd == '' || account.accessIpEnd == null) {
                 alert('접속IP 대역 끝점을 입력하세요.')
                 return;
             }else {
@@ -552,25 +515,8 @@
 
             //let gajumData : any = [];
 
-/*
-            if(this.gajumShow){ //가맹점관리
-                let arayAuth = ['select', 'insert', 'update', 'delete'];
-                console.log(arayAuth)
-                for(let i=1; i<5; i++){
-                    let rowData = {};
-                    //let colNm = arayAuth[i-1];
-                    //let colVal = 'this.gajum'+ i;
-                    let colVal = document.getElementById('this.gajum'+1);
-                    rowData[arayAuth[i-1]] = colVal;
-                    gajumData.push(rowData);
-                }
-                reqData['gajumDto'] = gajumData;
-                console.log(reqData)
-            }
-*/
-
-            console.log('Form 들어있는 내용 확인')
-            console.log(this.menuList)
+            //console.log('Form 들어있는 내용 확인')
+            //console.log(this.menuList)
 
             let chkList : any = this.menuList;
 
@@ -636,7 +582,7 @@
             // api 데이터 호출(계정 정보 수정)
             CommonBoardService.updateListData('accounts', account.id, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
+                    //console.log(result);
                     if (result.code == '000') {
                         //계정 수정 완료
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
@@ -648,10 +594,10 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch((response) => {
-                console.log(response);
+                //console.log(response);
             });
 
 
@@ -677,14 +623,17 @@
             // 우편번호 호출하기
         }
 
+        //주소 셋팅
         setDataAddr1(e){
             console.log(e);
             // 주소값 리턴 받기
+            let account : any = this.account;
+            account.zipCode = e.zip;
+            account.addr1 = e.addr;
         }
         checkBoxEvent(da){
             console.log(da);
         }
-
 
         //비밀번호 초기화
         initPassword(){
