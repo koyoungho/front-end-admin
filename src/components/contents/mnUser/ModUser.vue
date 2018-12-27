@@ -7,7 +7,7 @@
 
             <h3>계정 조회</h3>
 
-            <h4>사용자 정보</h4>
+            <h4>관리자 정보</h4>
             <!-- tbl view box -->
             <div class="tbl_view_box">
                 <!-- tbl view01 -->
@@ -85,8 +85,8 @@
                         <td colspan="3">
                             <ul class="address_list">
                                 <li class="con01">
-                                    <input type="text" class="input form_post" title="우편번호" v-model="account.zipCode">
-                                    <button type="button" id="" class="btn_s01 bg03">우편번호</button>
+                                    <input type="text" class="input form_post" title="우편번호" v-model="account.zipCode" disabled="disabled">
+                                    <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
                                     <input type="text" class="input form_address01" title="주소" v-model="account.addr1">
@@ -177,74 +177,45 @@
 
             <h4>메뉴사용권한</h4>
             <!-- tbl list box -->
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
+            <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>-->
             <!-- //tbl list box -->
 
             <!-- tbl list box -->
-            <!--<div class="tbl_list_box">-->
-                <!--<table class="tbl_list01">-->
-                    <!--<caption>메뉴사용권한 목록</caption>-->
-                    <!--<colgroup>-->
-                        <!--<col width="17%">-->
-                        <!--<col width="21%">-->
-                        <!--<col width="21%">-->
-                        <!--<col width="21%">-->
-                        <!--<col width="20%">-->
-                    <!--</colgroup>-->
-                    <!--<thead>-->
-                    <!--<tr>-->
-                        <!--<th scope="col">메뉴</th>-->
-                        <!--<th scope="col">조회</th>-->
-                        <!--<th scope="col">등록</th>-->
-                        <!--<th scope="col">수정</th>-->
-                        <!--<th scope="col">삭제</th>-->
-                    <!--</tr>-->
-                    <!--</thead>-->
-                    <!--<tbody>-->
-                    <!--<tr v-if="gajumShow">-->
-                        <!--<th scope="row">가맹점관리</th>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum1"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum2"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum3"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="gajum4"><label for=""><span class="blind">선택</span></label></span></td>-->
-                    <!--</tr>-->
-                    <!--<tr v-if="jijumShow">-->
-                        <!--<th scope="row">지점관리</th>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum1"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum2"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum3"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="jijum4"><label for=""><span class="blind">선택</span></label></span></td>-->
-                    <!--</tr>-->
-                    <!--<tr v-if="storeShow">-->
-                        <!--<th scope="row">매장관리</th>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store1"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store2"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store3"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="store4"><label for=""><span class="blind">선택</span></label></span></td>-->
-                    <!--</tr>-->
-                    <!--<tr v-if="aprovShow">-->
-                        <!--<th scope="row">승인대역관리</th>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov1"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov2"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov3"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="aprov4"><label for=""><span class="blind">선택</span></label></span></td>-->
-                    <!--</tr>-->
-                    <!--<tr v-if="storeShow">-->
-                        <!--<th scope="row">매장일괄등록</th>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk1"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk2"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk3"><label for=""><span class="blind">선택</span></label></span></td>-->
-                        <!--<td><span class="chk_box"><input type="checkbox" id="" v-model="sbulk4"><label for=""><span class="blind">선택</span></label></span></td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
-            <!--</div>-->
+            <div class="tbl_list_box">
+                <table class="tbl_list01">
+                    <caption>메뉴사용권한 목록</caption>
+                    <colgroup>
+                        <col width="17%">
+                        <col width="21%">
+                        <col width="21%">
+                        <col width="21%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col">메뉴</th>
+                        <th scope="col">조회</th>
+                        <th scope="col">등록</th>
+                        <th scope="col">수정</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody v-for="(datas,index) in  menuList">
+                    <tr>
+                        <th scope="row">{{datas.name}}</th>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.readId" v-model="datas.readGbn"><label for=""><span class="blind">선택</span></label></span></td>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.createId" v-model="datas.createGbn" ><label for=""><span class="blind">선택</span></label></span></td>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.updateId" v-model="datas.updateGbn" ><label for=""><span class="blind">선택</span></label></span></td>
+                        <td><span class="chk_box"><input type="checkbox" v-bind:id="datas.deleteId" v-model="datas.deleteGbn" ><label for=""><span class="blind">선택</span></label></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- //tbl list box -->
-
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02">취소</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">정보변경</button>
             </div>
 
@@ -274,12 +245,6 @@
     })
     export default class ModUser extends Vue {
 
-        //권한별 메뉴사용 보이기
-        gajumShow : boolean = false; //가맹점관리
-        jijumShow : boolean = false; //지점관리
-        storeShow : boolean = false; //매장관리, 매장일괄등록
-        aprovShow : boolean = false; //승인대역
-
         gajum1 : any = '';
         gajum2 : any = '';
         gajum3 : any = '';
@@ -305,63 +270,59 @@
         sbulk3 : any = '';
         sbulk4 : any = '';
 
+        menuList : any = [];
 
         account : Account[]=[];
         gajum : Gajum[]=[];
         saupjang : Saupjang[]=[];
 
+        oldRole : any = ''; //이전 role
+
         auth : any = "";
         addressBox : boolean = false;
-        listItem : any = {};
-
-
-        setData(){
-            this.listItem =
-                {
-                    dataGrid: {
-                        columControl:[
-                            {columName : '메뉴' ,id : 'name',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                            {columName : '조회' ,id : 'readYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                            {columName : '등록' ,id : 'createYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                            {columName : '수정' ,id : 'updateYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                            {columName : '삭제' ,id : 'deleteYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
-                            // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
-                            // {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                            // {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                            // {columName : '이름' ,id : 'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            // {columName : '등급' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            // {columName : '소속' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                            // {columName : '상태' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
-                            // {columName : '등록일' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            // {columName : '최종접속' ,id : 'storeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
-                        ],
-                        totalColum: 5, //
-                        apiUrl : 'menu/role/'+this.account['role'],
-                        onLoadList : true,  // onLoad 로딩 유무
-                        // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
-                        // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
-                        //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
-                    },
-                    // 아이디는 실제 컬럼값을 넣어주면됩니다.
-                    search: [
+        listItem: any =
+            {
+                dataGrid: {
+                    columControl:[
+                        {columName : '메뉴' ,id : 'name',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '조회' ,id : 'readYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        {columName : '등록' ,id : 'createYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        {columName : '수정' ,id : 'updateYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        {columName : '삭제' ,id : 'deleteYn',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck: false , returnKey :'menuCode'},
+                        // {columName : '체크박스' ,id : 'gajumId',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',checkVal :  false},
+                        // {columName : '순번' ,id : 'number0',type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        // {columName : '아이디' ,id : 'gajumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        // {columName : '이름' ,id : 'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        // {columName : '등급' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        // {columName : '소속' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        // {columName : '상태' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff'},
+                        // {columName : '등록일' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        // {columName : '최종접속' ,id : 'storeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
-                    paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
-                    goSearch : "iocSearch",
-                    searchClass : 'search_box page_system03',
-                    /*menuAuth: [
+                    totalColum: 5, //
+                    apiUrl : 'menu/role/'+sessionStorage.role,
+                    onLoadList : true,  // onLoad 로딩 유무
+                    // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                    // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                    //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                ],
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                goSearch : "iocSearch",
+                searchClass : 'search_box page_system03',
+                /*menuAuth: [
 
-                    ]*/
-                }
-        }
-
+                ]*/
+            }
         created(){
             let id : any = this.$route.params.val
             let auth : any = this.$route.params.val2
+            //id = 'test'
 
             this.accountInfo(id,auth);
-
-
             //
             // let level = 0;
             // if(level == 0){
@@ -376,48 +337,56 @@
             //this.gajumInfo();
             //this.saupInfo(); //사업장 정보 조회
 
-
-            if(sessionStorage.accessToken){
-                let role = sessionStorage.role;
-                console.log('사용자 권한 확인 :: ' + role)
-                if(role == '0001'){ //시스템관리자
-                    this.gajumShow = true;
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                    this.aprovShow = true;
-                }else if(role == '0002'){ //현금영수증사업자
-                    this.gajumShow = true;
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                    this.aprovShow = true;
-                }else if(role == '0003'){ //콜센터관리자
-                    this.gajumShow = true;
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                    this.aprovShow = true;
-                }else if(role == '0004'){ //가맹점관리자
-                    this.jijumShow = true;
-                    this.storeShow = true;
-                }else if(role == '0005'){ //지점관리자
-                    this.storeShow = true;
-                }else if(role == '0006'){ //매장관리자
-
-                }
-
-            }
-
-
         }
 
         accountInfo(id,auth){
-            CommonBoardService.getListDatas('accounts',id,{id :id ,role : auth}).then(result=>{
+            let reqData = { id: id ,role: auth }
+            CommonBoardService.getListDatas('accounts/'+id, null, reqData).then(result=>{
                if(result.status==200){
-                   console.log('계정정보 조회 결과')
-                   console.log(result.data)
+                   //console.log('계정정보 조회 결과')
+                   //console.log(result.data)
                    this.saupInfo(result.data.saupId); //조회된 사업자등록번호로 사업장 정보 조회
                    this.account = result.data
 
-                   this.setData()
+                   //this.setData()
+                   this.account = result.data;
+                   this.oldRole = result.data.role;
+
+                   let arrList : any = [];
+                   let objList : any = {};
+                   let mList = result.data.menuList;
+                   let rowCnt : number  = 0;
+
+                   mList.filter(e=>{
+                       rowCnt++;
+                       objList = {};
+                       objList['groupCode'] = e.groupCode;
+                       objList['groupCodeNm'] = e.groupCodeNm;
+                       objList['menuCode'] = e.menuCode;
+                       objList['progId'] = e.progId;
+                       objList['name'] = e.name;
+                       objList['menuLevel'] = e.menuLevel;
+                       objList['sub'] = e.sub;
+                       objList['createYn'] = e.createYn;
+                       objList['readYn'] = e.readYn;
+                       objList['updateYn'] = e.updateYn;
+                       objList['deleteYn'] = e.deleteYn;
+                       objList['rowCnt'] = rowCnt;
+                       objList['readId'] = e.groupCode + rowCnt;
+                       objList['createId'] = e.groupCode + rowCnt;
+                       objList['updateId'] = e.groupCode + rowCnt;
+                       objList['deleteId'] = e.groupCode + rowCnt;
+                       if(e.createYn == 'Y'){ objList['createGbn'] = true; }else{ objList['createGbn'] = false; }
+                       if(e.readYn == 'Y'){ objList['readGbn'] = true; }else{ objList['readGbn'] = false; }
+                       if(e.updateYn == 'Y'){ objList['updateGbn'] = true; }else{ objList['updateGbn'] = false; }
+                       if(e.deleteYn == 'Y'){ objList['deleteGbn'] = true; }else{ objList['deleteGbn'] = false; }
+
+                       arrList.push(objList)
+                   })
+                   //console.log('다시 담은 값')
+                   //console.log(arrList)
+                   this.menuList = arrList;
+
                }else{
                    alert('에러')
                }
@@ -427,6 +396,12 @@
         listViewEvent(){
 
         }
+
+        //취소
+        cancelUpdate(){
+            this.$router.push('/home/mnUserList');
+        }
+
 /*
         gajumInfo(){
             CommonBoardService.getListDatas('accounts',this.$route.params.val+'/gajum',null).then(result=>{
@@ -455,70 +430,175 @@
 
         validationChk(){
             let account : any = this.account;
+            console.log('form 정보 확인')
+            console.log(account);
 /*
-            if(account.phoneNum == ''){
+            let checkBoxData = this.$children['0'].$children['1'].chkDatas;
+
+            console.log('메뉴 체크 권한 데이터')
+            console.log(checkBoxData)
+            let arayMenuCode : any = [];
+            //console.log('배열값 확인!!!!!')
+            //console.log(arayMenuCode.indexOf('0003'));
+
+            for(let i=0; i<checkBoxData.length; i++){ //96번 돌리기
+                let menuCode = checkBoxData[i].withKey;
+                if(arayMenuCode.indexOf(menuCode) == -1){ //배열에 값이 없으면
+                    arayMenuCode.push(menuCode.toString());
+                }
+            }
+            console.log('전체 메뉴 코드 확인!!')
+            console.log(arayMenuCode); //전체 메뉴 확인
+
+            for(let j=0; j<arayMenuCode.length; j++) { //24번 돌리기
+                let newArr = checkBoxData.filter(e => {
+                    //console.log("eeeeeeeeeeeeeeeeeeee :: " +e)
+                    return e.withKey == arayMenuCode[j];
+                });
+                console.log('메뉴별로 리스트 뿌리기!!!!!');
+                console.log(newArr); //메뉴별로 들어감
+                //console.log(JSON.stringify(newArr));
+            }
+*/
+
+/*
+            let rowData = {};
+            for(let j=0; j<checkBoxData.length; j++) { //96번
+                //console.log(checkBoxData[j]);
+
+            }
+*/
+
+
+
+            if(account.phoneNum == '' || account.phoneNum == null){
                 alert('휴대폰번호를 입력하세요.')
                 return;
-            }else if(account.email == ''){
-                alert('휴대폰번호를 입력하세요.')
+            }else if(account.email == '' || account.email == null){
+                alert('이메일 주소를 입력하세요.')
                 return;
-            }else if(account.role == ''){
+            }else if(account.role == '' || account.role == null){
                 alert('계정등급을 선택하세요.')
                 return;
-            }else if(account.accountStatus == ''){
+            }else if(account.accountStatus == '' || account.accountStatus == null){
                 alert('계정상태를 선택하세요.')
                 return;
-            }else if(account.telNum == ''){
+            }else if(account.telNum == '' || account.telNum == null){
                 alert('전화번호를 입력하세요.')
                 return;
-            }else if(account.zipCode == ''){
+            }else if(account.zipCode == '' || account.zipCode == null){
                 alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
                 return;
-            }else if(account.addr1 == ''){
-                alert('주소를 입력하세요.')
+            }else if(account.addr1 == '' || account.addr1 == null){
+                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
                 return;
-            }else if(account.addr2 == ''){
+            }else if(account.addr2 == '' || account.addr2 == null){
                 alert('상세주소를 입력하세요.')
                 return;
-            }else if(account.accessIpStart == ''){
+            }else if(account.accessIpStart == '' || account.accessIpStart == null){
                 alert('접속IP 대역 시작점을 입력하세요.')
                 return;
-            }else if(account.accessIpEnd == '') {
+            }else if(account.accessIpEnd == '' || account.accessIpEnd == null) {
                 alert('접속IP 대역 끝점을 입력하세요.')
                 return;
-            }else{
+            }else {
                 //수정 펑션 들어가는 곳!!!
                 this.updateInfo();
             }
-            */
 
-            this.updateInfo();
         }
 
         //계정 정보 변경
         updateInfo(){
 
+            //let reqData : any = {};
+
+            //let gajumData : any = [];
+
+            //console.log('Form 들어있는 내용 확인')
+            //console.log(this.menuList)
+
+            let chkList : any = this.menuList;
+
+            let account : any = this.account;
             let reqData : any = {};
+            let rowData : any = {};
+            let arrData : any = [];
 
-            let gajumData : any = [];
+            reqData['id'] = account.id;
+            reqData['name'] = account.name;
+            reqData['processType'] = 'UPDATE';
+            reqData['phoneNum'] = account.phoneNum;
+            reqData['email'] = account.email;
+            reqData['role'] = account.role; //계정등급
+            reqData['oldRole'] = this.oldRole; //이전계정등급
+            reqData['accountStatus'] = account.accountStatus; //계정상태
+            reqData['telNum'] = account.telNum;
+            reqData['zipCode'] = account.zipCode;
+            reqData['addr1'] = account.addr1;
+            reqData['addr2'] = account.addr2;
+            reqData['accessIpFrom'] = account.accessIpStart;
+            reqData['accessIpTo'] = account.accessIpEnd;
+            reqData['phoneNum'] = account.phoneNum;
 
-/*
-            if(this.gajumShow){ //가맹점관리
-                let arayAuth = ['select', 'insert', 'update', 'delete'];
-                console.log(arayAuth)
-                for(let i=1; i<5; i++){
-                    let rowData = {};
-                    //let colNm = arayAuth[i-1];
-                    //let colVal = 'this.gajum'+ i;
-                    let colVal = document.getElementById('this.gajum'+1);
-                    rowData[arayAuth[i-1]] = colVal;
-                    gajumData.push(rowData);
+            chkList.filter(e=>{
+                rowData = {};
+                if(e.readGbn == true){ //조회
+                    rowData['readYn'] = 'Y';
+                }else{
+                    rowData['readYn'] = 'N';
                 }
-                reqData['gajumDto'] = gajumData;
-                console.log(reqData)
+                if(e.createGbn == true){ //등록
+                    rowData['createYn'] = 'Y';
+                }else{
+                    rowData['createYn'] = 'N';
+                }
+                if(e.updateGbn == true){ //수정
+                    rowData['updateYn'] = 'Y';
+                }else{
+                    rowData['updateYn'] = 'N';
+                }
+                if(e.deleteGbn == true){ //삭제
+                    rowData['deleteYn'] = 'Y';
+                }else{
+                    rowData['deleteYn'] = 'N';
+                }
+                rowData['groupCode'] = e.groupCode;
+                rowData['groupCodeNm'] = e.groupCodeNm;
+                rowData['menuCode'] = e.menuCode;
+                //rowData['progId'] = e.progId;
+                rowData['name'] = e.name;
+                //rowData['menuLevel'] = e.menuLevel;
+                //rowData['sub'] = e.sub;
+                //rowData['apiUri'] = e.apiUri;
 
-            }
-*/
+                arrData.push(rowData)
+            });
+            reqData['menuList'] = arrData
+
+            console.log('최종 요청값 확인')
+            console.log(reqData)
+
+            // api 데이터 호출(계정 정보 수정)
+            CommonBoardService.updateListData('accounts', account.id, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result);
+                    if (result.code == '000') {
+                        //계정 수정 완료
+                        //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        //this.$router.push({name:'mnUserList'})
+                        this.$router.push('/home/mnUser');
+                    } else {
+                        alert('계정 정보 수정에 실패하였습니다.\n다시 시도하세요.');
+                        return;
+                    }
+                }
+                , (error) => {
+                    //console.log(error);
+                }
+            ).catch((response) => {
+                //console.log(response);
+            });
 
 
         }
@@ -543,14 +623,17 @@
             // 우편번호 호출하기
         }
 
+        //주소 셋팅
         setDataAddr1(e){
             console.log(e);
             // 주소값 리턴 받기
+            let account : any = this.account;
+            account.zipCode = e.zip;
+            account.addr1 = e.addr;
         }
         checkBoxEvent(da){
             console.log(da);
         }
-
 
         //비밀번호 초기화
         initPassword(){

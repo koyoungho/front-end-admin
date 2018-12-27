@@ -126,7 +126,17 @@
                 <td>{{rows}}</td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
-                  <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
+                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
+                      <template v-if="listData[index].importantYn == 'Y'"> <i class="icon notice">공지</i></template>
+                      <span v-bind:style="colColor(indexs)">{{rows}}</span>
+                      <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
+                    </td>
+                  </template>
+                  <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
+                  </template>
+
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'">
                 <td><input type="text"  class="input form_w100" v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]"></td>

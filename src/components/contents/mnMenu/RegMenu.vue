@@ -230,7 +230,6 @@
 
         validationChk(){
 
-            /*
             if(this.groupCode == ''){
                 alert('상위메뉴를 선택하세요.');
                 return;
@@ -245,12 +244,10 @@
                 return;
             }else{
 
-                //this.insertInfo();
-
+                this.insertInfo();
             }
-*/
 
-            this.insertInfo();
+            //this.insertInfo();
 
         }
 
@@ -267,6 +264,7 @@
 
             let menuAuth : any = ['system','saupja','call','gajum','jijum']; //체크박스 아이디(시스템, 사업자, 콜센터, 가맹점, 지점) 관리자 순으로
             let authCode : any = ['0001', '0002', '0003', '0004', '0005']; //권한코드(시스템, 사업자, 콜센터, 가맹점, 지점) 관리자 순으로
+            let authNm : any = ['시스템관리자', '사업자관리자', '콜센터', '가맹점관리자', '지점관리자']; //권한명
             let authTit :  any = ['readYn','createYn','updateYn','deleteYn']; //조회, 등록, 수정, 삭제 권한 순으로
             let arayObj : any = [];
             let authRow : any = {};
@@ -275,6 +273,7 @@
                 authRow = {};
                 for (let i = 0; i < authTit.length; i++) {
                     authRow['roleCode'] = authCode[j]; //권한코드
+                    authRow['roleNm'] = authNm[j]; //권한명
                     let selData = menuAuth[j] + (i+1);
                     let abc = document.getElementById(selData);
                     if (abc != null) {
@@ -291,12 +290,12 @@
             console.log('최종값 확인');
             console.log(reqData);
 
-/*
+
             // api 데이터 호출(가맹점 등록)
             CommonBoardService.postListDatas('menu-manage', null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result);
-                    if (result != null) {
+                    if (result.code == '000') {
                         //메뉴 등록 완료
                         //this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnMenu'})
@@ -312,7 +311,7 @@
             ).catch((response) => {
                 console.log(response);
             });
-*/
+
         }
 
         //등록 취소

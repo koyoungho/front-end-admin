@@ -5,7 +5,7 @@
         <div class="content">
             <h2 class="blind">시스템 관리</h2>
 
-            <h3>메뉴 권한 등록</h3>
+            <h3>메뉴 권한 수정</h3>
 
             <p class="req_info type01">(<em class="form_req">*</em>)는 필수항목입니다.</p>
 
@@ -391,6 +391,7 @@
 
             let menuAuth : any = ['system','saupja','call','gajum','jijum']; //체크박스 아이디(시스템, 사업자, 콜센터, 가맹점, 지점) 관리자 순으로
             let authCode : any = ['0001', '0002', '0003', '0004', '0005']; //권한코드(시스템, 사업자, 콜센터, 가맹점, 지점) 관리자 순으로
+            let authNm : any = ['시스템관리자', '사업자관리자', '콜센터', '가맹점관리자', '지점관리자']; //권한명
             let authTit :  any = ['readYn','createYn','updateYn','deleteYn']; //조회, 등록, 수정, 삭제 권한 순으로
             let arayObj : any = [];
             let authRow : any = {};
@@ -399,6 +400,8 @@
                 authRow = {};
                 for (let i = 0; i < authTit.length; i++) {
                     authRow['roleCode'] = authCode[j]; //권한코드
+                    authRow['roleNm'] = authNm[j]; //권한명
+                    authRow['menuCode'] = this.menuCode;
                     let selData = menuAuth[j] + (i+1);
                     let abc = document.getElementById(selData);
                     if (abc != null) {
@@ -415,28 +418,26 @@
             console.log('최종값 확인');
             console.log(reqData);
 
-            /*
-                        // api 데이터 호출(메뉴 등록)
-                        CommonBoardService.updateListData('menu-manage', this.menuCode, reqData).then((response) => {
-                                let result: any = response.data;
-                                console.log(result);
-                                if (result != null) {
-                                    //메뉴 수정 완료
-                                    //this.$router.push({ name:'mnMenuList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                                    //this.$router.push({name:'mnMenu'})
-                                    this.$router.push('/home/mnMenu');
-                                } else {
-                                    alert('메뉴 수정에 실패하였습니다.\n다시 시도하세요.');
-                                    return;
-                                }
-                            }
-                            , (error) => {
-                                console.log(error);
-                            }
-                        ).catch((response) => {
-                            console.log(response);
-                        });
-            */
+            // api 데이터 호출(메뉴 등록)
+            CommonBoardService.updateListData('menu-manage', this.menuCode, reqData).then((response) => {
+                    let result: any = response.data;
+                    console.log(result);
+                    if (result != null) {
+                        //메뉴 수정 완료
+                        //this.$router.push({ name:'mnMenuList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        //this.$router.push({name:'mnMenu'})
+                        this.$router.push('/home/mnMenu');
+                    } else {
+                        alert('메뉴 수정에 실패하였습니다.\n다시 시도하세요.');
+                        return;
+                    }
+                }
+                , (error) => {
+                    console.log(error);
+                }
+            ).catch((response) => {
+                console.log(response);
+            });
         }
 
         //등록 취소
