@@ -61,7 +61,7 @@
           <template v-if="item.type=='input'">
             <li>
               <template v-if="item.title !=''"><label for="aa">{{item.title}}</label></template>
-              <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appnum"></template>
+              <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appuser"></template>
             </li>
           </template>
 
