@@ -131,21 +131,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in upjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
-                        </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="SW 제공회사" v-model="subCompany">
                                 <option value="">선택</option>
                                 <template v-for="datas in subCompanyList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>
+                        </td>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in upjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
                             </select>
                         </td>
@@ -679,13 +679,13 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.upjong == ''){
-                alert('업종구분을 선택하세요.');
-                return;
             }else if(this.subCompany == ''){
                 alert('회사코드를 선택하세요.');
                 return;
-            }else if(this.gikanId == ''){
+            }else if(this.upjong == ''){
+                alert('업종구분을 선택하세요.');
+                return;
+            }else if(this.upjong == '0005' && (this.gikanId == '' || this.gikanId == null)){
                 alert('요양기관기호를 입력하세요.');
                 return;
             }

@@ -135,15 +135,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">업종구분</th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in upjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
-                        </td>
                         <th scope="row">회사코드</th>
                         <td>
                             <select id="" name="" class="select form_w100" title="SW 제공회사" v-model="subCompany">
@@ -153,14 +144,29 @@
                                 </template>
                             </select>
                         </td>
+                        <th scope="row">업종구분</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in upjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
                         <th scope="row">요양기관기호</th>
                         <td><input type="text" class="input form_w100" title="요양기관기호" v-model="gikanId"></td>
                     </tr>
                     <tr>
                         <th scope="row">매장 상태</th>
                         <td colspan="5">
-                            <input type="text" class="input form_w50" title="지점" v-model="storeStatus" disabled="disabled">
-
+                            <!--<input type="text" class="input form_w50" title="지점" v-model="storeStatus" disabled="disabled">-->
+                            <select id="" name="" class="select form_bl" title="BL 정보" v-model="storeStatus">
+                                <option value="">선택</option>
+                                <option value="0">승인신청</option>
+                                <option value="1">해지신청</option>
+                                <option value="2">정상</option>
+                                <option value="3">해지</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -172,8 +178,8 @@
                     <tr>
                         <th scope="row">BL 정보</th>
                         <td colspan="5">
-                            <select id="" name="" class="select form_bl" title="BL 정보" v-model="blGb">
-                                <option value=""></option>
+                            <select id="blGb" name="" class="select form_bl" title="BL 정보" v-model="blGb">
+                                <option value="">선택</option>
                                 <option value="0">BL적용</option>
                                 <option value="1">BL해지</option>
                             </select>
@@ -204,7 +210,7 @@
                         <col width="17%">
                         <col width="33%">
                     </colgroup>
-                    <tbody v-for="(apro, index) in approvalList">
+                    <tbody v-for="(apro, index) in approvalList" class="bottom_space">
                     <tr>
                         <th scope="row">회사코드</th>
                         <td>
@@ -464,10 +470,13 @@
             //시스템관리자(0001), 콜센터관리자(0003)만 표시
             if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
                 this.topinfoShow = true;
+
             }
 
             this.getSelectbox(); //공통사용 selectbox 조회
             this.franchiseView(); //가맹점 정보 조회
+
+
 
         }
 
@@ -475,6 +484,17 @@
 
         //돔렌더링완료시 진행
         mounted() {
+
+            //시스템관리자(0001), 콜센터관리자(0003)만 표시
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+
+            }else{
+                let blGb_btn = document.getElementById('blGb');
+                if(blGb_btn!=null){ blGb_btn.setAttribute('disabled', 'disabled') }
+            }
+
+
+
         }
 
         //상세정보 보이기
@@ -523,12 +543,12 @@
                             this.zipCode = result.saupjang.zipCode;
                             this.addr1 = result.saupjang.addr1;
                             this.addr2 = result.saupjang.addr2;
-                            this.upjong = result.saupjang.upjong;
-                            this.subCompany = result.saupjang.subSaup;
+                            this.upjong = this.nullCheck(result.saupjang.upjong);
+                            this.subCompany = this.nullCheck(result.saupjang.subSaup);
                             this.gikanId = result.saupjang.gikanId;
                         }
 
-                        this.storeStatus = result.storStsNm; //매장 상태
+                        this.storeStatus = result.storSts; //매장 상태 storStsNm
                         this.regiDate = result.regDate; //매장 등록일
                         this.canDate = result.updDate; //매장 수정일
                         this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
@@ -695,6 +715,7 @@
             //사업장정보
             let saupData: any = {};
             saupData['blCode'] = this.blGb; //BL정보
+            saupData['storeStatus'] = this.storeStatus; //매장상태
             saupData['saupId'] = this.saupId; //사업자등록번호
             saupData['shopNm'] = this.storeNm; //사업장명
             saupData['chipNm'] = this.repNm; //대표자명
@@ -707,7 +728,6 @@
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
             saupData['addr2'] = this.addr2; //사업장 상세주소
-            //saupData['blCode'] = this.blCode; //BL 코드
 
             reqData['saupjang'] = saupData; //사업장 정보 셋팅
 
@@ -768,16 +788,16 @@
 
             console.log('최종 등록 정보 확인');
             console.log(reqData);
-/*
-            // api 데이터 호출(매장 등록)
-            CommonBoardService.postListDatas('store', null, reqData).then((response) => {
+
+            // api 데이터 호출(매장 tnwjd)
+            CommonBoardService.updateListData('store/'+this.saupId, null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result);
                     if (result != null) {
-                        //매장등록 완료 화면으로 이동
-                        this.$router.push({ name:'storeRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        alert('매장 정보가 수정되었습니다.');
+                        this.$router.push({name:'storeList'});
                     } else {
-                        alert('매장 등록에 실패하였습니다.\n다시 시도하세요.');
+                        alert('매장 정보 수정이 실패하였습니다.\n다시 시도하세요.');
                         return;
                     }
                 }
@@ -787,7 +807,7 @@
             ).catch((response) => {
                 console.log(response);
             });
-*/
+
             //지점등록 완료 화면으로 이동
             //this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
@@ -846,22 +866,21 @@
         }
 
         validationChk(){
-//            this.insertInfo();
-//return;
 
-            if(this.soluId == ''){
+            /*if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
                 return;
-            /*}else if(this.gajumId == ''){
+            }else if(this.gajumId == ''){
                 alert('가맹점 검색버튼을 클릭하여 가맹점을 선택하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
-                return;*/
-            //}else if(this.saupIdYn == '') {
-            //    alert('사업자등록번호를 중복확인하세요.');
-            //    return;
-            }else if(this.storeNm == ''){
+                return;
+            }else if(this.saupIdYn == '') {
+                alert('사업자등록번호를 중복확인하세요.');
+                return;
+            }else */
+            if(this.storeNm == ''){
                 alert('사업장명을 입력하세요.');
                 return;
             }else if(this.repNm == ''){
@@ -885,15 +904,15 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
+            }else if(this.subCompany == '') {
+                alert('회사코드를 선택하세요.');
+                return;
             }else if(this.upjong == ''){
                 alert('업종구분을 선택하세요.');
                 return;
-            }else if(this.subCompany == ''){
-                alert('회사코드를 선택하세요.');
-                return;
-            /*}else if(this.gikanId == ''){ // 업종구분이 병원, 의원인 경우 필수입력
+            }else if(this.upjong == '0005' && (this.gikanId == '' || this.gikanId == null)){ // 업종구분이 병원, 의원인 경우 필수입력
                 alert('요양기관기호를 입력하세요.');
-                return;*/
+                return;
             }
 
             //승인대역 정보 체크
@@ -1265,6 +1284,17 @@
 
                     return formatDate;
                 }
+            }
+        }
+
+        // Null체크
+        nullCheck(val){
+            if(val == null){
+                return '';
+            }else if(val == ''){
+                return '';
+            }else{
+                return val;
             }
         }
 

@@ -19,21 +19,20 @@
                                 <template v-if="listData.importantYn == 'Y'"> <i class="icon notice">공지</i></template>
                                 {{listData.title}}
                             </span>
-                            <template v-bind:class="{'sub icon_new': (listData.newYn == 'Y') }">
-                                <i class="icon new">new</i>
-                            </template>
-                            <span class="col_date"><strong class="sub">등록일 : </strong>{{formatDates(listData.updDt)}}</span>
+                                <i class="icon new" v-if="listData.newYn == 'Y'">new</i>
+                            <span class="col_date"><strong class="sub">등록일 : </strong>{{formatDates(listData.regDt)}}</span>
                         </dt>
                         <dd class="row_sub">
-							<span class="col_left" v-if="listData.attFileYn == 'Y' ">
+							<span class="col_left" v-if="listData.fileYn == 'Y' ">
+							<!--<span class="col_left" v-if="listData.uploadFileNames>0">-->
                                 <strong class="sub">첨부파일 : </strong>
                                 <span class="file_area">
-                                    <template v-for="attFiles in listData.attFiles">
+                                    <template v-for="attFiles in listData.uploadFileNames">
                                         <a v-on:click="download(attFiles.fileOrigin)" >{{attFiles.fileName}}<i class="icon_file"></i></a>
                                     </template>
                                 </span>
 							</span>
-                            <span class="col_right"><strong class="sub">등록일 : </strong>{{listData.regRoll}} </span>
+                            <span class="col_right"><strong class="sub">등록자 : </strong>{{listData.regRoleNm}} </span>
                         </dd>
                         <dd class="row_cont">
                             <div class="cont_data">{{listData.content}}</div>
@@ -75,9 +74,12 @@
         seq:string ="";
         listData:any=[];
         attachFiles:any=[];
+        objectKey : any = "";
 
         mounted() {
-            this.seq = this.$route.params.seq; // 글번호 시퀀스
+            this.objectKey = this.$route.params.objectKey;
+
+            this.seq = this.objectKey.seq;// 글번호 시퀀스
             this.getNoticeDetail()
         }
 
@@ -85,19 +87,24 @@
          * 상세정보 호출
          */
         getNoticeDetail(){
+            if(!this.objectKey){
+                alert('접근할수 없습니다')
+                this.$router.push({name:'notice'});
+            }else {
+                this.seq = this.objectKey.seq;
 
-            // api 데이터 호출
-            CommonBoardService.getListDatas('notices', this.seq, null ).then((response) => {
-                let result: any = response.data;
+                // api 데이터 호출
+                CommonBoardService.getListDatas('notice', this.seq, null).then((response) => {
+                        let result: any = response.data;
 
-                if (result !=null) {
-                    this.listData = result;
-                }
+                        if (result != null) {
+                            this.listData = result;
+                        }
+                    }
+                    , (error) => {
+                        //this.$Progress.finish();
+                    }).catch();
             }
-            , (error) => {
-                //this.$Progress.finish();
-            }   ).catch();
-
         }
 
         /**

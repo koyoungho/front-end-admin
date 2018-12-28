@@ -644,7 +644,11 @@
             console.log(account.id)
 
 //            let apiUrl = 'accounts/'+acntId+
-            let reqData : any = { newPass : '' };
+            let reqData : any = {
+                to : account.email,
+
+
+                newPass : '' };
 /*
             CommonBoardService.getListDatas('accounts/'+account.id+'/password', null, reqData).then(result=>{
                 if(result.status==200){

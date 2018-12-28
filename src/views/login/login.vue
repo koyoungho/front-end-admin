@@ -29,12 +29,12 @@
               <li class="form_id">
                 <input type="text" v-model="id" maxlength="50" placeholder="아이디" class="id" title="아이디 입력">
               </li>
-              <form>
+              <!--<form>-->
                 <li class="form_pw">
                   <input type="password" v-model="password" maxlength="50" placeholder="비밀번호" class="pw" title="비밀번호 입력"
                          autocomplete="username pwd" v-on:keyup.enter="onSubmits(id, password)">
                 </li>
-              </form>
+              <!--</form>-->
             </ul>
             <!-- btn -->
             <button type="button" id="" class="btn_b01 bg01" @click="onSubmits(id, password)">로그인</button>
@@ -146,6 +146,8 @@
     })
     export default class Login extends Vue {
         otpChecks : boolean =false;
+        id : string = "";
+        password : string = "";
 
         created() {
             if (sessionStorage.accessToken) {

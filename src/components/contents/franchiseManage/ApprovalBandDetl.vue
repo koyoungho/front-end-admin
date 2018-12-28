@@ -6,7 +6,7 @@
         <div class="content">
             <h2 class="blind">가맹점 관리</h2>
 
-            <h3>승인 대역 신청 및 등록</h3>
+            <h3>승인 대역 수정</h3>
 
             <!-- tbl view box -->
             <div class="tbl_view_box tbl_blank02">
@@ -24,7 +24,7 @@
                         <th scope="row">사업자등록번호</th>
                         <td class="con_indcode" colspan="3">
                             <input type="text" class="input sch_indcode01" value="000-00-00000" title="사업자등록번호" v-model="saupId" disabled="disabled">
-                            <button type="button" id="" class="btn_sch01" @click="searchSaupPop">검색</button>
+                            <!--<button type="button" id="" class="btn_sch01" @click="searchSaupPop">검색</button>-->
                             <input type="text" class="input form_store02" value="롯데백화점 강남점" title="가맹점명" v-model="shopNm" disabled="disabled">
                             <input type="hidden" title="매장번호" v-model="storeId">
                         </td>
@@ -32,7 +32,7 @@
                     <tr>
                         <th scope="row">회사코드</th>
                         <td class="con_comcode">
-                            <select id="" name="" class="select form_comcode" title="회사코드" v-model="companyCode">
+                            <select id="" name="" class="select form_comcode" title="회사코드" v-model="companyCode" disabled="disabled">
                                 <option value="">선택</option>
                                 <template v-for="datas in companyCodeList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
@@ -42,7 +42,8 @@
                         </td>
                         <th scope="row">점코드</th>
                         <td>
-                            <input type="text" class="input form_branchcode" title="점코드" v-model="jumCode">
+                            <input type="text" class="input form_branchcode" title="점코드" v-model="jumCode" v-on:keyup="jumCodeCh()" maxlength="10">
+                            <input type="hidden" title="기존 점코드" v-model="oldJumCode">
                             <input type="hidden" v-model="jumCodeYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode">중복확인</button>
                             <p class="info_msg" id="jumcode_msg"></p>
@@ -51,7 +52,7 @@
                     <tr>
                         <th scope="row">승인코드</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="승인번호" v-model="aproCode">
+                            <select id="" name="" class="select form_w100" title="승인번호" v-model="aproCode" disabled="disabled">
                                 <option value="">선택</option>
                                 <template v-for="datas in aproCodeList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -67,8 +68,10 @@
                             <div class="form_col approval">
                                 <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa11" checked="checked" v-model="aproGbn"><label for="aa11">대역폭</label></span>
                                 <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="aproBandFrom">
+                                <input type="hidden" title="기존 승인대역 시작점" v-model="oldAproBandFrom">
                                 <span class="period_form">-</span>
                                 <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="aproBandTo">
+                                <input type="hidden" title="기존 승인대역 끝점" v-model="oldAproBandTo">
                             </div>
                             <div class="form_col approval">
                                 <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="aproGbn"><label for="aa12">건수</label></span>
@@ -84,10 +87,10 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <!--<button type="button" id="" class="btn_b01 bg03">승인대역 수정</button>-->
+                <button type="button" id="" class="btn_b01 bg03" v-on:click="deleteInfo">승인대역 삭제</button>
+                <button type="button" id="" class="btn_b01 bg03" v-on:click="validationChk">승인대역 수정</button>
                 <!--<button type="button" id="" class="btn_b01 bg01">승인대역 신청</button>-->
-                <!--<button type="button" id="" class="btn_b01 bg03">승인대역 삭제</button>-->
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">승인대역 등록</button>
+
             </div>
 
         </div>
@@ -108,10 +111,10 @@
 
     @Component({
         components: {
-            ApprovalBandReg, SaupBox
+            SaupBox
         },
     })
-    export default class ApprovalBandReg extends Vue {
+    export default class ApprovalBandDetl extends Vue {
         message: any = '';
 
         showModal1 : boolean= false; // 팝업
@@ -124,6 +127,7 @@
         companyCd : any = '';
 
         jumCode: any = '';
+        oldJumCode: any = '';
         jumCodeYn: any = '';
 
         aproCode: any = ''; //승인코드
@@ -131,17 +135,24 @@
         aproGbn: any = ''; //승인대역 rodio 선택
 
         aproBandFrom: any = ''; //승인 대역폭 시작점
+        oldAproBandFrom: any = ''; //기존 승인 대역폭 시작점
         aproBandTo: any = ''; //승인 대역폭 끝점
+        oldAproBandTo: any = ''; //기존 승인 대역폭 끝점
         aproCnt: any = ''; //승인대역 건수
 
         companyCodeList: any = {}; //회사코드
         aproCodeList: any = {}; //승인코드
+
+        objectKey : any = "";
 
         //돔생성전 호출자
         created() {
 
             this.getSelectList('SEARCH'); //회사코드
             this.getSelectList('APRO'); //승인코드
+
+            this.detailView(); //정보 조회
+
         }
 
         //돔렌더링완료시 진행
@@ -152,21 +163,92 @@
             this.$router.push('/home/approvalBandList')
         }
 
-        //등록
-        insertInfo(){
+        //승인대역 삭제
+        deleteInfo(){
+
+            let reqData : any = { aprvCode : this.aproCode , aprvPermFrom : this.aproBandFrom, aprvPermTo : this.aproBandTo };
+
+            CommonBoardService.deleteListDatas('approvalband', null, reqData).then((response) => {
+                let result: any =  response.data;
+                console.log(response)
+                if(result != null){
+                    alert('승인대역이 삭제되었습니다.')
+                    this.$router.push('/home/approvalBandList')
+                }else{
+                    alert('승인대역 등록이 실패하였습니다.\n다시 시도하세요.');
+                }
+            }).catch();
+        }
+
+        //상세정보 조회
+        detailView(){
+            this.objectKey = this.$route.params.objectKey;
+            console.log('넘겨받은 값 확인');
+            console.log(this.objectKey);
+
+            if(!this.objectKey){
+                alert('접근할수 없습니다')
+                this.$router.push({name:'approvalBandList'});
+            }else{
+
+                this.aproCode = this.objectKey.lpermid; // 승인코드
+                this.aproBandFrom = this.objectKey.lpermfrom; // 승인 시작대역
+                this.aproBandTo = this.objectKey.lpermto; // 승인 끝대역
+
+                let reqData : any = { aprvPermFrom : this.aproBandFrom, aprvPermTo : this.aproBandTo };
+
+                CommonBoardService.getListDatas('approvalband/'+this.aproCode, null, reqData).then((response) => {
+                    let result: any =  response.data;
+                    console.log(result)
+                    if(result != null){
+                        this.saupId = result.saupId; //사업자등록번호
+                        this.companyCode = result.subSaup; // 회사코드 select
+                        this.companyCd = result.subSaup; // 회사코드 표시
+                        this.jumCode = result.jumCode; //점코드
+                        this.oldJumCode = result.jumCode; //변경시 체크를 위한 점코드
+                        this.jumCodeYn = 'Y';
+                        this.aproCode = result.aprvCode; //승인코드
+                        this.aproStatus = result.aprvYn; //승인상태
+                        this.aproBandFrom = result.aprvPermFrom; //시작점
+                        this.oldAproBandFrom = result.aprvPermFrom; //변경시 체크를 위한 시작점
+                        this.aproBandTo = result.aprvPermTo; //끝점
+                        this.oldAproBandTo = result.aprvPermTo; //변경시 체크를 위한 끝점
+                        //this.aproCnt = result.aprvPermTo;
+                        if(result.aprvPermFrom != null || result.aprvPermFrom != ''){
+                            this.aproGbn = '1'; //대역폭 선택
+                        }else{
+                            this.aproGbn = '2'; //건수 선택
+                        }
+
+                        this.saupjangInfo(result.saupId);
+
+                    }else{
+
+                    }
+                    //this.onLoadListView = true;
+                }).catch();
+
+            }
+        }
+
+        //수정
+        updateInfo(){
 
             let reqData : any = {
                 saupId : this.saupId,
                 subSaup : this.companyCode,
-                aprvPermFrom : this.aproBandFrom,
-                aprvPermTo : this.aproBandTo,
+                newAprvPermFrom : this.aproBandFrom,
+                originAprvPermFrom : this.oldAproBandFrom,
+                newAprvPermTo : this.aproBandTo,
+                originAprvPermTo : this.oldAproBandTo,
                 aprvCode : this.aproCode,
                 aprvCount : this.aproCnt,
-                jumcode : this.jumCode
+                newJumcode : this.jumCode,
+                originJumcode : this.oldJumCode
             };
             console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
-            CommonBoardService.postListDatas('approvalband', null, reqData).then((response) => {
+            CommonBoardService.updateListData('approvalband', null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result);
                     if (result != null) {
@@ -262,17 +344,8 @@
 
         validationChk(){
 
-            if(this.saupId == ''){
-                alert('사업자등록번호를 입력하세요.')
-                return;
-            }else if(this.companyCode == ''){
-                alert('회사코드를 선택하세요.')
-                return;
-            }else if(this.jumCode == ''){
+            if(this.jumCode == ''){
                 alert('점코드를 입력하세요.')
-                return;
-            }else if(this.jumCodeYn == ''){
-                alert('점코드 중복확인 하세요.')
                 return;
             }else if(this.jumCodeYn == ''){
                 alert('점코드 중복확인 하세요.')
@@ -290,10 +363,13 @@
                 alert('승인대역 건수를 입력하세요.')
                 return;
             }else{
-                //this.insertInfo();
-                this.aproBandChk();
-            }
 
+                if(this.aproBandFrom != '' && this.aproBandTo != '') { //승인대역이 있으면 체크
+                    this.aproBandChk();
+                }else{ //업으면 그냥 수정
+                    this.updateInfo();
+                }
+            }
         }
 
         //승인대역 사용 가능여부 검증
@@ -304,7 +380,9 @@
                 subSaup: this.companyCode, //회사코드
                 approvedCode: this.aproCode, //승인코드
                 newApprovedbandFrom: this.aproBandFrom, //시작대역
-                newApprovedbandTo: this.aproBandTo //끝대역
+                oldApprovedbandFrom: this.oldAproBandFrom, //시작대역
+                newApprovedbandTo: this.aproBandTo, //끝대역
+                oldApprovedbandTo: this.oldAproBandTo //끝대역
             };
 
             //승인대역 대역폭 사용가능 여부 확인
@@ -323,12 +401,29 @@
                     if(bandChk == true){
                         return;
                     }else{
-                        this.insertInfo(); //등록
+                        this.updateInfo(); //등록
                     }
                 }
                 , (error) => {
                 }
             ).catch();
+        }
+
+        //점코드 변경시 점코드 중확확인 여부값 초기화
+        jumCodeCh(){
+            this.jumCodeYn = '';
+        }
+
+        //사업장정보 조회
+        saupjangInfo(no){
+
+            CommonBoardService.getListDatas('saupjang',no,null).then(result=>{
+                if(result.status==200){
+                    this.shopNm = result.data.shopNm; //사업장명
+                }else{
+                }
+            })
+
         }
 
         //공통 select box 조회
@@ -374,6 +469,17 @@
                 }
             ).catch();
 
+        }
+
+        // Null체크
+        nullCheck(val){
+            if(val == null){
+                return '';
+            }else if(val == ''){
+                return '';
+            }else{
+                return val;
+            }
         }
 
     }

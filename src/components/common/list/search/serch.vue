@@ -243,11 +243,17 @@
                     if(e.api ==''){
                         this.selectObjects[e.name] = e.option;
                     }else{
+                        let optNm :string = e.optNm;
+                        let optVal :string = e.optVal
                     CommonBoardService.getListDatas(e.api, null, '').then((response) => {
                             let result: any = response.data;
-                            //console.log(result)
+                            // console.log(result)
+
                             if (result.length > 0) {
                                 e.option = result;
+
+                                e.option.name = result.optNm;
+                                e.option.value = result.optVal;
                             } else {
                             }
                         }
