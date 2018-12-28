@@ -39,7 +39,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" v-on:click="toPolicyTempList" class="btn_b01 bg02">취소</button>
-                <!--<button type="button" v-on:click="toPolicyDetail" class="btn_b01 bg03">미리보기</button>-->
+                <button type="button" v-on:click="delPolicy" class="btn_b01 bg03">삭제</button>
                 <button type="button" v-on:click="regPolicy" class="btn_b01 bg01">{{way}}</button>
             </div>
 
@@ -93,12 +93,11 @@
             let routeNm = this.$route.name;
             if (routeNm == 'policyReg') {
                 this.titleNm = '이용약관';
-                this.termsType = "site";
+                this.termsType = "SITE";
             } else if (routeNm == 'personalReg') {
                 this.titleNm = '개인보호처리방침';
-                this.termsType = "user";
+                this.termsType = "USER";
             }
-
         }
 
         /**
@@ -108,16 +107,16 @@
             // api 데이터 호출 -  약관/개인 지침 리스트
             CommonBoardService.getListDatas('terms/temp/' + this.termsType, this.termsOrder_old, null).then((response) => {
 
-                    let result: any = response.data;
-                    if (response.status.toString() == '200') {
-                        this.title = result.title;
-                        this.content = result.content;
-                        this.termsOrder_new = result.termsOrder;
-                    }
+                let result: any = response.data;
+                if (response.status.toString() == '200') {
+                    this.title = result.title;
+                    this.content = result.content;
+                    this.termsOrder_new = result.termsOrder;
                 }
-                , (error) => {
-                    //this.$Progress.finish();
-                }).catch();
+            }
+            , (error) => {
+                //this.$Progress.finish();
+            }).catch();
         }
 
         /**
@@ -186,6 +185,31 @@
             } else {
                 this.$router.push({name: 'personalTempList'});
             }
+
+        }
+        /**
+         * 삭제
+         */
+        delPolicy(){
+
+            CommonBoardService.deleteListDatas('terms/temp/'+ this.termsType, this.termsOrder_old, null).then((response) => {
+                console.log(response);
+                if (response.status.toString() == '200') { //성공
+                    alert("삭제되었습니다.");
+                    this.toPolicyTempList();//목록으로
+                } else { // 실패
+                    console.log(response);
+                    alert("삭제에 실패 하였습니다.");
+                    this.toPolicyTempList();//목록으로
+                }
+            }
+            , (error) => {
+                //this.$Progress.finish();
+                console.log(error);
+            }).catch();
+
+
+
 
         }
 

@@ -80,10 +80,10 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'select' , title :'사업자구분',id: 'test', name:'searchType' , value: '' ,  api : '' , option : [{name : '' , value: 'saupId' },{name : '사업자등록번호' , value: 'shopNm' }]},
+                    {type: 'select' , title :'사업자구분',id: 'test', name:'searchType' , value: '' ,  api : '' , option : [{name : '회사코드' , value: 'saupId' },{name : '사업자등록번호' , value: 'saupId' }]},
                     {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'' , value: '' ,  api : 'company' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
-                    {type: 'popup', title :'매장선택', id: '3', name:'사업자번호' , value: '',   api : '' },
-                    {type: 'inputPop', title :'', id: '4', name:'매장정보' , value: '',   api : ''  },
+                    {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: '',   api : '' },
+                    {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: '',   api : ''  },
                     {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },
                     {type: 'date', title :'', id: '6' , name:'searchDate', searchStartDate: '20181010' ,  searchEndDate: this.setDate , calenderCount : 1},
                     {type: 'select' , title :'오류구분',id: 'errorType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '전체' , value: 'all' },{name : '국세청' , value: 'tax' },{name : '내부오류' , value: 'inner' }]},

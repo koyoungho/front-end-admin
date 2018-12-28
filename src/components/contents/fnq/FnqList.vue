@@ -102,7 +102,6 @@
         searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
 
         role: any = sessionStorage.getItem('role');
-        // role: string = '0004';
 
         originItem : any = {} // 오리지널데이터
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -148,9 +147,6 @@
         }
 
         mounted(){
-
-
-            alert(this.role);
             if(this.role == '0004'|| this.role == '0005' ){
                 this.searchFaq( );//리스트 바인딩
             }

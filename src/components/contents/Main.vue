@@ -17,25 +17,25 @@
             <div class="main_menu_box">
                     <ul class="main_menu">
                         <li>
-                            <a v-on:click="menuChk('cashInstitution')">
+                            <a v-on:click="menuChk('franchiseReg')">
                                 <i class="icon_main m01"></i>
                                 <span class="sub">가맹점 등록</span>
                             </a>
                         </li>
                         <li>
-                            <a v-on:click="menuChk('cashReceiptIssue')">
+                            <a v-on:click="menuChk('storeReg')">
                                 <i class="icon_main m02"></i>
                                 <span class="sub">매장 등록</span>
                             </a>
                         </li>
                         <li>
-                            <a v-on:click="menuChk('ioc')">
+                            <a v-on:click="menuChk('cashReceiptIssue')">
                                 <i class="icon_main m03"></i>
                                 <span class="sub">현금영수증<br>발급</span>
                             </a>
                         </li>
                         <li>
-                            <a v-on:click="menuChk('IssueViewingCancel')">
+                            <a v-on:click="menuChk('ReceiptViewCancel')">
                                 <i class="icon_main m04"></i>
                                 <span class="sub">현금영수증 발급<br>내역 조회</span>
                             </a>
@@ -53,7 +53,7 @@
                             </a>
                         </li>
                         <li>
-                            <a v-on:click="menuChk('faq')">
+                            <a v-on:click="menuChk('fnqList')">
                                 <i class="icon_main m07"></i>
                                 <span class="sub">자주 묻는 질문</span>
                             </a>
@@ -150,26 +150,7 @@
         }
 
         menuChk(menuId: string) {
-
-            /* 로그인 필수 메뉴
-             *  cashReceiptIssue        현금영수증 발급
-             *  ioc                     발급 조회 및 취소
-             *  IssueViewingCancel      가맹점 정보변경/해지
-             */
-            console.log(menuId);
-            if(menuId == 'cashReceiptIssue' || menuId == 'ioc' || menuId == 'IssueViewingCancel'){
-                if(localStorage.accessToken){
-                    console.log('already login')
-                    this.$router.push('/home/'+menuId)
-                }else{
-                    console.log('login require')
-                    this.$router.push('/login')
-                }
-            }else{
-                console.log('not login')
                 this.$router.push('/home/'+menuId )
-            }
-
         }
 
         /**

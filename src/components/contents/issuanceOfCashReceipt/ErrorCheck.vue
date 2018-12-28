@@ -19,29 +19,25 @@
                 </div>
                 <div class="form_cont">
                     <textarea cols="" rows="" name="" class="textarea" placeholder="전문을 복사해서 넣으세요." title="입력"></textarea>
-                    <span class="btn_check_area"><button type="button" id="" class="btn_m01 bg03" v-on:click="chkError">오류 체크</button></span>
+                    <span class="btn_check_area"><button type="button" id="" class="btn_m01 bg03" v-on:click="chkError">확인</button></span>
                 </div>
                 <!-- data check list -->
                 <ul class="data_check_list">
                     <li>
                         <label>헤더 :</label>
                         <input type="text" class="input form_data" title="">
-                        <span class="result ok">정상</span>
                     </li>
                     <li>
                         <label>회사코드 :</label>
                         <input type="text" class="input form_data" title="">
-                        <span class="result ok">정상</span>
                     </li>
                     <li>
                         <label>승인/취소 :</label>
                         <input type="text" class="input form_data" title="">
-                        <span class="result ok">정상</span>
                     </li>
                     <li>
                         <label>발행용도 :</label>
                         <input type="text" class="input form_data" title="">
-                        <span class="result error">오류</span>
                     </li>
                 </ul>
 

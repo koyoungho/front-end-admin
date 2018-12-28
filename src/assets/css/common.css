@@ -561,9 +561,9 @@ select.wide {width:100%;}
 .search_box.page_cash01 .search_list > li:nth-of-type(9) {width:22%; text-align:right;} /* row */
 
 /* 오류 내역 조회 및 처리 */
-.search_box.page_cash02 .search_list > li:nth-of-type(1) {width:26%;}
+.search_box.page_cash02 .search_list > li:nth-of-type(1) {width:24%;}
 .search_box.page_cash02 .search_list > li:nth-of-type(2) {width:23%;}
-.search_box.page_cash02 .search_list > li:nth-of-type(3) {width:25%; text-align:right;}/* row */
+.search_box.page_cash02 .search_list > li:nth-of-type(3) {width:27%; text-align:right;}/* row */
 .search_box.page_cash02 .search_list > li:nth-of-type(4) {width:26%; text-align:left;}/* row */
 .search_box.page_cash02 .search_list > li:nth-of-type(5) {width:18%; text-align:left;}
 .search_box.page_cash02 .search_list > li:nth-of-type(6) {width:18%;}
@@ -746,6 +746,7 @@ select.wide {width:100%;}
 .code_list_box .code_body {overflow-x: hidden; overflow-y:scroll; height:329px; border:1px solid #dedede;}
 .code_list_box .code_body a:hover .cont {background: #f0f8f9;}
 .code_list_box .code_body .cont {float: left; padding:10px 8px 10px 8px; border:1px solid #dedede; border-top:0; margin-left:-1px; text-align: center;}
+
 /*.code_list_box .code_body .cont:first-child {margin-left:0;}*/
 .code_list_box .code_head .title:nth-of-type(1) {width:100px;}
 .code_list_box .code_head .title:nth-of-type(2) {width:387px;}
