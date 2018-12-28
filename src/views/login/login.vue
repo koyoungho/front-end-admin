@@ -146,8 +146,8 @@
     })
     export default class Login extends Vue {
         otpChecks : boolean =false;
-        id : string = "";
-        password : string = "";
+        id : string = "test";
+        password : string = "pass2";
 
         created() {
             if (sessionStorage.accessToken) {

@@ -204,7 +204,7 @@
             if (newFile && !oldFile) {
 
                 let formData = new FormData();
-                formData.append('file', this.file);
+                formData.append('file', this.files);
 
                 CommonBoardService.postListDatas('file', null, formData).then((response) => {
                         let result: any = response.status;
