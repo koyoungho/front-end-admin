@@ -58,7 +58,7 @@
                                              :multiple="true"
                                              :size="1024 * 1024 * 10"
                                              v-model="files"
-                                             extensions="gif,jpg,jpeg,png,hwp"
+                                             <!--extensions="gif,jpg,jpeg,png,hwp"-->
                                              accept="*"
                                              @input-filter="inputFilter"
                                              @input-file="inputFile"
@@ -93,7 +93,7 @@
             <div class="btn_bot">
                 <button type="button" class="btn_b01 bg02" v-on:click="toList">취소</button>
                 <template v-if="div == '수정' ">
-                    <button type="button" class="btn_b01 bg03">삭제</button>
+                    <button type="button" class="btn_b01 bg03" v-on:click="delNotice">삭제</button>
                 </template>
                 <button type="button" class="btn_b01 bg01" v-on:click="reg">{{div}}</button>
             </div>
@@ -120,7 +120,7 @@
         div: string="";
         listData:any =[];
         title:string="";
-        viewType:string="";
+        viewType:string="ALL";
         content:string="";
         attFileYn : string ="";
         importantYn : boolean =false;
@@ -202,8 +202,29 @@
         }
         inputFile(newFile, oldFile) {
             if (newFile && !oldFile) {
+
+                let formData = new FormData();
+                formData.append('file', this.file);
+
+                CommonBoardService.postListDatas('file', null, formData).then((response) => {
+                        let result: any = response.status;
+                        // console.log(response);
+
+                        if (result=='200') {
+                            console.log('파일 등록');
+                        } else {
+                            console.log('파일 등록 실패');
+                        }
+                    }
+                    , (error) => {
+                        console.log(error)
+                    }
+                ).catch();
+
+
                 // add
                 console.log('add', newFile)
+
             }
             if (newFile && oldFile) {
                 // update
@@ -241,7 +262,7 @@
                 //             alert("등록되었습니다.");
                 //             console.log(response);
                 //             this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                //         } else { //메일 전송 실패
+                //         } else {
                 //             console.log(response);
                 //         }
                 //     }
@@ -257,7 +278,7 @@
                 //         alert("수정되었습니다.");
                 //         // 리스트로 이동
                 //         this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                //     } else { //메일 전송 실패
+                //     } else {
                 //         console.log('수정실패');
                 //         console.log(response);
                 //     }
@@ -269,6 +290,23 @@
 
             }
 
+        }
+
+        delNotice(){
+            CommonBoardService.deleteListDatas('notice', this.seq, null).then((response) => {
+                if (response.status.toString() == '200') { //성공
+                    alert("삭제되었습니다.");
+                    // 리스트로 이동
+                    this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                } else { //
+                    console.log('삭제실패');
+                    console.log(response);
+                }
+            }, (error) => {
+                //this.$Progress.finish();
+                console.log(error);
+            }
+            ).catch();
         }
 
         /**

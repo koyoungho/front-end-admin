@@ -20,19 +20,24 @@
                     <tr>
                         <th scope="row">받는 사람</th>
                         <td>
-					<span class="form_area first">
-						<span class="chk_box"><input type="checkbox" name="chk" id="aa110" v-model="noticeYn" v-on:click="changeYn"><label for="aa110">공지</label></span>
-					</span>
+                            <span class="form_area first">
+                                <span class="chk_box"><input type="checkbox" name="chk" id="aa110" v-model="noticeYn" v-on:click="changeYn"><label for="aa110">공지</label></span>
+                            </span>
                             <select name="" class="select form_mailrec">
-                                <option>전체</option>
-                                <option>일반사용자</option>
-                                <option>매장사용자</option>
-                                <option>관리자</option>
-                                <option>콜센터관리자</option>
-                                <option>KT관리자>사용자</option>
-                                <option>LDCC관리자>사용자</option>
+                                <option value="">시스템관리자</option>
+                                <option value="">KT 사업자 관리자</option>
+                                <option value="">LDCC 사업자 관리자</option>
+                                <option value="">관리자</option>
+                            </select>
+                            <select name="" class="select form_mailrec">
+                                <option value="">전체</option>
+                                <option value="">사업자 관리자</option>
+                                <option value="">가맹점 관리자</option>
+                                <option value="">지점 관리자</option>
+                                <option value="">일반 사용자</option>
                             </select>
                         </td>
+
                     </tr>
                     <tr>
                         <th scope="row">제목</th>
