@@ -7,98 +7,9 @@
             <h2 class="blind">현금영수증관리</h2>
 
             <h3>전송파일 처리결과</h3>
-            <!-- search box -->
-            <div class="search_box page_cash03">
-                <ul class="search_list">
-                    <li>
-                        <label for="">회사코드</label>
-                        <select id="" name="" class="select sch_w100" title="회사코드">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">처리일시</label><span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-                    </li>
-                    <li>
-                        <label for="">처리결과</label>
-                        <select id="" name="" class="select sch_w100" title="처리결과">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                </ul>
-            </div>
-            <!-- //search box -->
 
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <button type="button" class="btn_m01 bg01" v-on:click="goSearch">조회</button>
-            </div>
-
-            <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01">
-                    <caption>전송파일 처리 목록</caption>
-                    <colgroup>
-                        <col width="18%">
-                        <col width="15%">
-                        <col width="*">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">처리일시</th>
-                        <th scope="col">작업명</th>
-                        <th scope="col">파일명</th>
-                        <th scope="col">파일사이즈</th>
-                        <th scope="col">처리결과</th>
-                        <th scope="col">내용</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>2018.10.12 05:22:16</td>
-                        <td>작업명</td>
-                        <td class="left">/home/cash/sdata/CSI20181012_01.dat</td>
-                        <td>100</td>
-                        <td>성공</td>
-                        <td>1000</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //tbl list box -->
-
-            <!-- pagination -->
-            <div class="pagination">
-                <a href="#" class="btn_fprev">맨앞</a>
-                <a href="#" class="btn_prev">이전</a>
-                <span class="num">
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<strong>3</strong>
-					<a href="#">4</a>
-					<a href="#">5</a>
-				</span>
-                <a href="#" class="btn_next">다음</a>
-                <a href="#" class="btn_enext">맨뒤</a>
-            </div>
-            <!-- //pagination -->
+            <!--리스트-->
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
 
         </div>
         <!-- //content -->
@@ -110,19 +21,67 @@
 
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-    import {CommonBoardService, CommonListService} from '../../../api/common.service';
-    import {environment} from '../../../utill/environment';
+    import {format} from 'date-fns';
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
 
     @Component({
         components: {
-            SendFileResult
+            SendFileResult, ListComponent
         },
     })
     export default class SendFileResult extends Vue {
         message: any = '';
+        setDate =  format(new Date(),'YYYYMMDD');
+
+        listItem : any= {
+            dataGrid: {
+                columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                    {columName : '처리일' ,type:'text', id : 'procDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , date: true},
+                    {columName : '작업명'  ,type:'text', id : 'jobNm', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                    {columName : '파일명' ,type:'text', id : 'batchFname', width : '37%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                    {columName : '건수'  ,type:'text', id : 'procNum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                    {columName : '처리결과'  ,type:'text', id : 'procYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', option : [{ name : '성공' , value: 'Y' },{ name : '실패' , value: 'N' }]   },
+                    {columName : '메모'  ,type:'text', id : 'memo', width : '18%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
+                ],
+                totalColum: 7,
+                apiUrl : 'approval/file/transaction',
+                onLoadList : true,  // onLoad 로딩 유무
+            },
+            // 아이디는 실제 컬럼값을 넣어주면됩니다.
+            search: [
+                {type: 'selectObject' , title :'회사코드',id: 'upjongCode', name:'upjongCode' , value: '' ,  api : 'company',  optNm : 'name', optVal: 'code', option : []},
+                {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
+                {type: 'select' , title :'처리결과',id: 'procYn', name:'procYn' , value: '' , option : [{ name : '성공' , value: 'Y' },{ name : '실패' , value: 'N' }]},
+    ],
+
+            paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+            goSearch : "iocSearch",
+            searchClass : 'search_box page_customer02',
+            searchClass2 : 'search_list col0301'
+        };
+
+        originItem : any = {} // 오리지널데이터
+
+
+        dataEvent(es){
+            //데이터 로딩된후 이벤트를 받으면  변경된 페이지 정보를 전달해준다.
+            if(es.lastPage > 0){
+                this.$children['0'].defaultPaging(es)
+                this.$children['0'].arrayPaging(es);
+            }
+        }
+
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            this.$router.push({ name:'noticeDetl' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        }
+
+
 
         //돔생성전 호출자
         created() {
+
+            this.originItem  = this.listItem.dataGrid.columControl
         }
 
         //돔렌더링완료시 진행
@@ -133,6 +92,8 @@
         goSearch(){
 
         }
+
+
 
 
     }

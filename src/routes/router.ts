@@ -58,6 +58,7 @@ import PolicyReg from "../components/contents/policy/PolicyReg.vue" // 약관 �
 import Policy from "../components/contents/policy/Policy.vue" //약관,개인 뷰
 import PolicyDetail from "../components/contents/policy/PolicyDetail.vue" //이용약관 상세
 import PolicyList from "../components/contents/policy/PolicyList.vue" //이력에 따른 약관관리/개인정보처리 목록
+import PolicyTempList from "../components/contents/policy/PolicyTempList.vue" //이력에 따른 약관관리/개인정보처리 목록
 
 import MnUserList from "../components/contents/mnUser/MmUserList.vue"//계정관리
 import RegUser from "../components/contents/mnUser/RegUser.vue"//계정등록
@@ -168,11 +169,13 @@ export default new Router({
                 {path:'policyReg',component: PolicyReg, name:'policyReg' ,meta: {authRequired: true}}, //약관 등록/수정
                 {path:'policyList',component: PolicyList, name:'policyList' ,meta: {authRequired: true}}, //약관목록
                 {path:'policyDetail',component: PolicyDetail, name:'policyDetail' ,meta: {authRequired: true}}, //약관상세
+                {path:'policyTempList',component: PolicyTempList, name:'policyTempList' ,meta: {authRequired: true}}, //약관임시리스트
                 //시스템관리>개인정보처리방침
                 {path:'personalHistoryList',component: PolicyHistoryList, name:'personalHistoryList' ,meta: {authRequired: true}}, //개인정보처리방침 이력 목록
                 {path:'personalReg',component: PolicyReg, name:'personalReg' ,meta: {authRequired: true} }, //개인정보처리방침 등록/수정
                 {path:'personalList',component:PolicyList, name:'personalList' ,meta: {authRequired: true}}, //개인정보처리방침 목록
                 {path:'personalDetail',component:PolicyDetail, name:'personalDetail' ,meta: {authRequired: true}}, //개인정보처리방침 상세
+                {path:'personalTempList',component:PolicyTempList, name:'personalTempList' ,meta: {authRequired: true}}, //개인정보처리방침 임시 리스트
                 // 시스템관리>계정 권한 관리,
                 {path:'mnUser',component: MnUserList, name:'mnUserList' ,meta: {authRequired: true}}, //계정리스트
                 {path:'regUser',component: RegUser, name:'regUser' ,meta: {authRequired: true}}, //계정 등록
