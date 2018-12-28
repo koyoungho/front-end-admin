@@ -91,6 +91,26 @@
                             </ul>
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row">회사코드</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupSubSaupList">
+                                    <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>
+                        </td>
+                        <th scope="row">업종구분</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupUpjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -278,6 +298,8 @@
         addr1: any = ''; //주소
         addr2: any = ''; //상세주소
         zipCode: any = ''; //우편번호
+        saupSubSaup: any = ''; //회사코드
+        saupUpjong: any = ''; //업종코드
 
         //gajumStat: any = ''; //가점상태
         //saupjangRegDt: any = ''; //사업장등록일
@@ -297,6 +319,8 @@
         saupGbnList: any = {}; //사업자구분
         companyCodeList: any = {}; //회사코드
         aproCodeList: any = {}; //승인코드
+        saupSubSaupList: any = {}; //사업장정보의 회사코드
+        saupUpjongList: any = {}; //사업장정보의 업종코드
 
         aproIdx : number = 0;
         admIdx : number = 0;
@@ -345,9 +369,10 @@
 
             //주석 제거해야 해
             this.getSelectList('RECEIPT'); //현금영수증 사업자
-            this.getSelectList('SEARCH'); //회사코드
+            this.getSelectList('SEARCH'); //회사코드(승인대역)
             this.getSelectList('APRO'); //승인코드
-
+            this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
+            this.getSelectList('UPJONG'); //업종구분(사업장정보)
         }
 
         //돔렌더링완료시 진행
@@ -584,10 +609,11 @@
             }else if(this.addr1 == ''){
                 alert('주소를 입력하세요.');
                 return;
-            }else if(this.addr2 == ''){
+            }else if(this.addr2 == '') {
                 alert('상세주소를 입력하세요.');
                 return;
-            }
+            }//else if(this.)
+
 
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
@@ -886,6 +912,11 @@
                 apiUrl = 'code/aprvcode';
             }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드 -- get
                 apiUrl = 'code/issuer';
+            }else if(code == 'SUBSAUP'){ //회사코드(사업장정보)
+                reqData['searchType'] = 'SEARCH';
+                apiUrl = 'company';
+            }else if(code == 'UPJONG'){ //업종코드
+                apiUrl = 'code/upjong';
             }
 
             // api 데이터 호출
@@ -901,6 +932,10 @@
                             this.companyCodeList = result;
                         }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드
                             this.receiptSaupList = result;
+                        }else if(code == 'SUBSAUP'){
+                            this.saupSubSaupList = result;
+                        }else if(code == 'UPJONG'){
+                            this.saupUpjongList = result;
                         }
                     } else {
                         console.log('코드리스트 조회 오류')

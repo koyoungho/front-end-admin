@@ -104,7 +104,7 @@
                     <tr>
                         <th scope="row">사업자구분</th>
                         <td colspan="2">
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" >
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
                                 <option value="1">법인사업자</option>
@@ -115,7 +115,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10"></td>
+                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -538,7 +538,7 @@
                             this.storeNm = result.saupjang.shopNm; //사업장명
                             this.repNm = result.saupjang.chipNm; //대표자명
                             this.telNum = result.saupjang.telNum; //전화번호
-                            this.saupType = result.saupjang.saupType; //사업구분
+                            this.saupType = result.saupjang.regiGb; //사업자구분
                             this.lawNum = result.saupjang.lawNum; //법인등록번호
                             this.zipCode = result.saupjang.zipCode;
                             this.addr1 = result.saupjang.addr1;
@@ -723,7 +723,7 @@
             saupData['saupType'] = this.saupType; //사업자구분
             saupData['lawNum'] = this.lawNum; //법인등록번호
             saupData['upjong'] = this.upjong; //업종코드
-            saupData['subSaup'] = this.subCompany; //사업자구분
+            saupData['subSaup'] = this.subCompany; //회사코드
             saupData['gikanId'] = this.gikanId; //요양기간 번호
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
