@@ -42,7 +42,7 @@
                     <tr>
                         <th scope="row">계정등급</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role">
+                            <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="0001">시스템관리자</option>
                                 <option value="0002">현금영수증사업자</option>
@@ -638,16 +638,17 @@
         //비밀번호 초기화
         initPassword(){
 
-            let acntId = sessionStorage.accountId;
+            let account : any = this.account;
 
             console.log("비밀번호 초기화")
-            console.log(this.account)
+            console.log(account.id)
 
 //            let apiUrl = 'accounts/'+acntId+
+            let reqData : any = { newPass : '' };
 /*
-            CommonBoardService.getListDatas('accounts',null,{id :id ,role : auth}).then(result=>{
+            CommonBoardService.getListDatas('accounts/'+account.id+'/password', null, reqData).then(result=>{
                 if(result.status==200){
-                    console.log('계정정보 조회 결과')
+                    console.log('비밀번호 초기화 성공')
                     console.log(result.data)
                     this.account = result.data
                 }else{

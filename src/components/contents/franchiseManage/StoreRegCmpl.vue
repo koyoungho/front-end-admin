@@ -12,9 +12,9 @@
             <div class="complete_wrap">
                 <div class="result_box">
                     <ul class="result_info">
-                        <li><span class="sub">사업자등록번호 : </span>123-45-67883</li>
-                        <li><span class="sub">매장명 : </span>롯데리아 산본점</li>
-                        <li><span class="sub">아이디 : </span>dfdss</li>
+                        <li><span class="sub">사업자등록번호 : </span>{{saupId}}</li>
+                        <li><span class="sub">매장명 : </span>{{shopNm}}</li>
+                        <li><span class="sub">아이디 : </span>{{manageId}}</li>
                     </ul>
                 </div>
                 <p class="complete_result ok">매장 등록이 완료되었습니다.</p>
@@ -45,20 +45,39 @@
     export default class StoreRegCmpl extends Vue {
         message: any = '';
 
+        reqObjectKey: any = '';
+
+        saupId: any = '';
+        shopNm: any = '';
+        manageId: any = '';
+
         //돔생성전 호출자
         created() {
+
+            this.reqObjectKey = this.$route.params.objectKey;
+
+            this.saupId = this.reqObjectKey.saupjang.saupId; //사업자등록번호
+            this.shopNm = this.reqObjectKey.saupjang.shopNm; //매장명
+
+            console.log(this.reqObjectKey.accounts.length)
+            if(this.reqObjectKey.accounts != null && this.reqObjectKey.accounts.length == 1){
+                this.manageId = this.reqObjectKey.accounts[0].id;
+            }else if(this.reqObjectKey.accounts != null && this.reqObjectKey.accounts.length > 1){
+                let putId : any = ''
+                for(let i=0; i<this.reqObjectKey.accounts.length; i++){
+                    if(i == 0){
+                        putId = this.reqObjectKey.accounts[i].id;
+                    }else{
+                        putId = putId + ', ' +this.reqObjectKey.accounts[i].id;
+                    }
+                }
+                this.manageId = putId; //관라자 ID
+            }
+
         }
 
         //돔렌더링완료시 진행
         mounted() {
-        }
-
-        //가맹점 등록
-        insertFranchise() {
-
-
-
-            this.$router.push('/home/franchiseRegCmpl')
         }
 
         goConfirm() {
