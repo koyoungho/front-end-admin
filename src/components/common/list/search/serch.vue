@@ -71,14 +71,6 @@
               <input type="text"  v-model="item.value"   class="input sch_appnum"  :title="item.title"  :placeholder="item.placeholder">
             </li>
           </template>
-
-          <template v-if="item.type=='inputPop'">
-            <li>
-              <label for="aa">{{item.title}}</label>
-              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" >
-              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
-            </li>
-          </template>
           <template v-if="item.type=='select'">
             <li>
               <label for="aa">{{item.title}}</label>
@@ -125,7 +117,14 @@
           <template v-if="item.type=='popup'">
             <li>
               <label for="aa">{{item.title}}</label>
-                <input type="text"  class="input" v-model="item.value" disabled>
+                <input type="text"  class="input" v-model="item.value" readonly>
+            </li>
+          </template>
+          <template v-if="item.type=='inputPop'">
+            <li>
+              <label for="aa">{{item.title}}</label>
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
+              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
             </li>
           </template>
         </template>
@@ -169,6 +168,11 @@
         dateStyle : any = 'left : 450px';
         title : string = "";
         placeholder : string = "";
+
+        //팝업용
+        gajumId : string='';
+        saupId : string ='';
+        shopNm : string ='';
 
         // 달력용
         dateFormat:any =  'YYYYMMDD';
@@ -282,9 +286,13 @@
 
         //선택한 가맹점 정보 셋팅(지점 등록화면 상단의 지점 정보)
         setGajiData(data) {
-            // this.gajumId = data.gajumId; //가맹점 번호
-            // this.saupNo = data.saupId; //사업자 번호
-            // this.soluNm = data.shopNm; //가맹점명
+            this.searchItem.filter(e=>{
+                if(e.id=='saupId'){
+                    e.value=data.saupId
+                }else if(e.id=='shopNm'){
+                    e.value = data.shopNm
+                }
+            })
         }
     }
 

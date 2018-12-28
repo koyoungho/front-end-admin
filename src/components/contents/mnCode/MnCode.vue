@@ -17,8 +17,8 @@
                 <!--</div>-->
                 <div class="tab_box">
                     <ul class="tab01">
-                        <li :class="{'on': (company == true) } " @click="show('company')"><a >회사코드관리</a></li>
-                        <li  :class="{'on': (common == true) } " @click="show('common')"><a >공통코드관리</a></li>
+                        <li :class="{'on': (company == true) } " @click="show('company')"><a >{{title1}}</a></li>
+                        <li  :class="{'on': (common == true) } " @click="show('common')"><a >{{title2}}</a></li>
                     </ul>
                 </div>
                 <!-- grid box -->
@@ -26,11 +26,13 @@
                     <!-- code col -->
                     <div class="code_col">
                         <!-- sub -->
-                        <h4 class="first">회사 메인코드 그룹</h4>
+                        <h4 class="first">{{company == true ? title1 : title2}}</h4>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
+                          <template v-if="company==false">
                             <button type="button" v-on:click="viewPop('add','main')" class="btn_s01 bg03 add">추가</button>
-                            <button type="button" v-on:click="viewPop('del','main')" class="btn_s01 bg03 del">삭제</button>
+                            <button type="button" v-on:click="removeData('main')" class="btn_s01 bg03 del">삭제</button>
+                          </template>
                         </div>
 
                         <!-- code list box -->
@@ -42,38 +44,18 @@
                             </div>
                             <!-- code body -->
                             <div class="code_body tbl_scroll">
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
+                                <template v-for="cCode in data">
+                                    <a>
+                                        <template v-if="company==true">
+                                        <div class="cont" :class="{highlight:cCode.code == selectedp}"  @click="subCodeList(cCode.code),onSelectedParentCompany(cCode.code)">{{cCode.code}}</div>
+                                            <div class="cont" :class="{highlight:cCode.code == selectedp}"  @click="subCodeList(cCode.code),onSelectedParentCompany(cCode.code)" >{{cCode.codeNm}}</div>
+                                        </template>
+                                        <template v-if="company==false">
+                                            <div class="cont" :class="{highlight:cCode.code == selectedp}"  @click="subCodeList(cCode.code),onSelectedParent(cCode.code,cCode.groupCode)">{{cCode.code}}</div>
+                                            <div class="cont" :class="{highlight:cCode.code == selectedp}"  @click="subCodeList(cCode.code),onSelectedParent(cCode.code,cCode.groupCode)" v-on:dblclick="counter += 1, viewPopCommon('upd','main' ,cCode.code , cCode.codeNm , 'ROOT')">{{cCode.codeNm}}</div>
+                                        </template>
+                                    </a>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -81,11 +63,11 @@
                     <!-- code col -->
                     <div class="code_col">
                         <!-- sub -->
-                        <h4 class="first">회사 서브 코드</h4>
+                        <h4 class="first">{{company == true ? subTitle1 : subTitle2}}</h4>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
                             <button type="button" v-on:click="viewPop('add','sub')" class="btn_s01 bg03 add">추가</button>
-                            <button type="button" v-on:click="viewPop('del', 'sub')" class="btn_s01 bg03 del">삭제</button>
+                            <button type="button" v-on:click="removeData('sub')" class="btn_s01 bg03 del">삭제</button>
                         </div>
 
                         <!-- code list box -->
@@ -97,22 +79,18 @@
                             </div>
                             <!-- code body -->
                             <div class="code_body tbl_scroll">
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
-                                <a href="#">
-                                    <div class="cont">0001</div>
-                                    <div class="cont">회사코드</div>
-                                </a>
+                                <template v-for="cCode,index in subData" >
+                                    <a >
+                                        <!--<div :class="cCode.cssClass" @click="onSelected(cCode.code)">{{cCode.code}}</div>-->
+                                        <div class='cont' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)">{{cCode.code}}</div>
+                                        <template v-if="company==true">
+                                        <div class='cont' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)" v-on:dblclick="counter += 1, viewPopCompany('upd','sub', cCode.code , cCode.name , cCode.upjongCode , cCode.saupId )" >{{cCode.name}}</div>
+                                        </template>
+                                        <template v-if="company==false">
+                                            <div class='cont' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code,cCode.groupCode)" v-on:dblclick="counter += 1, viewPopCommon('upd','sub',cCode.code , cCode.codeNm, cCode.groupCode)"  >{{cCode.codeNm}}</div>
+                                        </template>
+                                    </a>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -123,7 +101,7 @@
 
         </div>
         <!-- //content -->
-        <codePop v-if="popupYn" @close="popupYn=false" v-bind:dataObject="data"></codePop>
+        <codePop v-if="popupYn" @close="popupYn=false" v-bind:dataObject="dataSet" v-bind:dataSelected="dataSet" v-on:regEvents="regEvents" v-on:regEventp="regEventp"></codePop>
     </section>
     <!-- //container -->
     
@@ -134,6 +112,7 @@
 
     import {Component, Vue} from "vue-property-decorator";
     import CodePop from "@/components/contents/mnCode/CodePop.vue";
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
         components: {
@@ -143,48 +122,199 @@
     export default class MnCode extends Vue {
         popupYn:boolean =false;
         data:any=[]
-
+        subData:any=[]
+        dataSet : any =[]
+        originData : any =[]
+        rowClass : string = "cont";
         company:boolean=true;
         common:boolean=false;
+        clickCode :string = "";
+        saupId : string ="";
+        upjongCode : string = "";
+        title1: string ="회사 코드 그룹";
+        subTitle1: string ="회사 서브 코드";
+        title2: string ="공통 코드 그룹";
+        subTitle2: string ="서브 공통코드";
+        counter : number =0;
+        selecteds : string = "";
+        selectedp : string = "";
+        pDelCode : string ="";
+        sDelCode : string ="";
+        pDelGroupCode : string ="";
+        sDelGroupCode : string ="";
+
+        created(){
+            this.callCodeList('company')
+        }
 
         mounted(){
-            // this.company=false;
-            // this.common=false;
+
+        }
+
+
+        callCodeList(type){
+            let val = "";
+            if(type=='company'){
+                 val='code/upjong';
+            }else{
+                 val='code/group';
+            }
+            CommonBoardService.getListDatas(val,null,null).then(result=>{
+                if(result.status==200){
+                    this.data = result.data
+                }
+            })
+        }
+
+        subCodeList(code){
+            let val='';
+            let columN :any=[];
+            this.clickCode=code;
+
+            if(this.company){ //회사코드
+                val='company'
+                columN ={upjongCode:code};
+            }
+            else{
+                val='code'
+                columN ={groupCode:code};
+            }
+            CommonBoardService.getListDatas(val,null,columN).then(result=>{
+                if(result.status==200){
+                    this.subData = result.data
+                }
+            })
         }
 
         /**
          * 표로보기
          */
-        show(div){
-
+        show(div){ // 영역바뀌면 초기화
+            this.data =[]
+            this.subData =[];
+            this.clickCode='';
             this.company=false;
             this.common=false;
-
+            this.selectedp = '';
+            this.selecteds = '';
+            this.sDelCode = '';
+            this.pDelCode = '';
+            this.sDelGroupCode = '';
+            this.pDelGroupCode = '';
             if(div == 'company'){
                 this.company =true;
+                this.callCodeList('company')
             }else if(div == 'common'){
                 this.common =true;
+                this.callCodeList('common')
             }
+        }
+
+        onSelectedSub(data,groupCode){
+            this.selecteds = data;
+            this.sDelCode = data;
+            this.sDelGroupCode = groupCode;
+        }
+        onSelectedParent(data,groupCode){
+            this.selectedp = data;
+            this.pDelCode = data;
+            this.pDelGroupCode = groupCode;
+            this.selecteds = "";
+        }
+
+        onSelectedParentCompany(data,saupId,upjongCode){
+            this.selectedp = data;
+            this.pDelCode = data;
+        }
+
+        regEvents(data){
+            this.subCodeList(data)
+        }
+        regEventp(data){
+            this.callCodeList(data)
         }
 
         /**
          * 팝업기능
          * @param fc
          */
-        viewPop(fc, div){
-            this.data.push({'fc': fc, 'div':div});
-
-            console.log( this.data);
-            console.log( this.data[0]);
-
+        viewPop(fc,div){
+            if(div=='main' && this.company==false){ // 메인공통
+                this.dataSet = {fc: fc, div:div , groupCode: 'ROOT' ,delCode : this.pDelCode}
+            }else if(div=='sub' && this.company==false){ // 메인서브
+                this.dataSet = {fc: fc, div:div , groupCode: this.clickCode ,delCode : this.sDelCode}
+            }else{ // 서브 회사코드
+                this.dataSet = {fc: fc, div:div ,type:this.company, groupCode: this.clickCode ,delCode : this.sDelCode}
+            }
             this.popupYn = true;
-
+            }
+        viewPopCommon(fc,div,code,name,groupCode){
+            this.dataSet = {fc: fc, div:div ,type: this.company, code : code , name : name , groupCode : groupCode };
+            this.popupYn = true;
         }
+
+        viewPopCompany(fc,div,code,name,upjoinCode,saupId){
+        this.dataSet = {fc: fc, div:div ,type: this.company , code : code , name : name , upjongCode : upjoinCode , saupId : saupId };
+        this.popupYn = true;
+        }
+
+        removeData(fc){
+            let apiAddr = "";
+            let Object :any = [];
+
+            if(this.company){ // 회사코드 일때
+                  if(fc=='main'){ // 회사코드는 메인삭제가 없음
+                  }else{ // 컴퍼니 서브코드
+                      if(!this.sDelCode){
+                          alert('코드를 선택해주세요')
+                          return;
+                      }
+                      apiAddr = 'company'+'/'+ this.sDelCode;
+                      Object = {code : this.sDelCode}
+                  }
+            }else{ // 공통코드일떄
+                 if(fc=='main'){
+                     if(!this.pDelCode){
+                         alert('코드를 선택해주세요')
+                         return;
+                     }
+                     apiAddr = 'code/group'+'/'+ this.pDelCode
+                     Object = { groupCode : this.pDelCode}
+                  }else{ // 컴퍼니 서브코드
+                     if(!this.sDelCode){
+                         alert('코드를 선택해주세요')
+                         return;
+                     }
+                     apiAddr = 'code'+'/'+ this.sDelCode
+                     Object = {code : this.pDelCode , groupCode : this.sDelGroupCode}
+                  }
+            }
+            CommonBoardService.deleteListDatas(apiAddr,null,Object).then(result=>{
+                if(result.status==200){
+                    alert('삭제 되었습니다')
+                    if(this.company){
+                    this.callCodeList('company')
+                    }else{
+                    this.callCodeList('common')
+                    }
+                    this.sDelCode ='';
+                    this.pDelCode = '';
+                    this.subCodeList(this.clickCode);
+                }else{
+
+                }
+            }).catch(e=>{
+                alert(e.data.message);
+            })
+        }
+
 
 
     }
 </script>
 
 <style scoped>
-
+    div.highlight {
+        background: #f0f8f9;
+    }
 </style>
