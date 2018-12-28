@@ -104,7 +104,7 @@
                     <tr>
                         <th scope="row">사업자구분</th>
                         <td colspan="2">
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" >
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
                                 <option value="1">법인사업자</option>
@@ -160,6 +160,7 @@
                         <th scope="row">매장 상태</th>
                         <td colspan="5">
                             <input type="text" class="input form_w50" title="지점" v-model="storeStatus" disabled="disabled">
+
                         </td>
                     </tr>
                     <tr>
@@ -285,18 +286,18 @@
                             <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름</th>
-                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm"></td>
+                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn"></td>
                                 <th scope="row">휴대폰번호</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum">
+                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">ID</th>
                                 <td>
-                                    <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)">
+                                    <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
-                                    <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)">중복확인</button>
+                                    <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)" v-bind:style="adm.admDupBtn">중복확인</button>
                                     <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
                                 <th scope="row">이메일주소</th>
@@ -318,7 +319,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="updateInfo">정보 변경</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">정보 변경</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
