@@ -19,16 +19,16 @@
                     <tbody>
                     <tr>
                         <th scope="row">제목</th>
-                        <td><input type="text" class="input form_w100" title="제목" v-model="title" > </td>
+                        <td><input type="text" class="input form_w100" title="제목" v-model="title" maxlength="80"> </td>
                     </tr>
                     <tr>
                         <th scope="row">구분</th>
                         <td>
-                            <!--<select  name="" class="select form_notice" v-model="section">-->
-                            <select  name="" class="select form_notice" >
-                                <option>사용자</option>
-                                <option>관리자</option>
-                                <option>공통</option>
+                            <select  name="" class="select form_notice" v-model="viewType">
+                                <option value="ALL">공통</option>
+                                <option value="USR">사용자</option>
+                                <option value="ADM">관리자</option>
+
                             </select>
                             <span class="form_area">
                             <span class="chk_box right">
@@ -41,6 +41,18 @@
                         <th scope="row">첨부파일</th>
                         <td>
                             <div class="file_add_box">
+                                <ul >
+                                    <li v-for="(file, index) in files" :key="file.id">
+                                        <span>{{file.name}}</span>
+                                        <a href="#" class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
+                                        <!--<span>{{file.size | formatSize}}</span> - -->
+                                        <!--<span v-if="file.error">{{file.error}}</span>-->
+                                        <!--<span v-else-if="file.success">success</span>-->
+                                        <!--<span v-else-if="file.active">active</span>-->
+                                        <!--<span v-else-if="file.active">active</span>-->
+                                        <!--<span v-else></span>-->
+                                    </li>
+                                </ul>
                                 <span class="btn_file_area">
                                      <file-upload
                                              :multiple="true"
@@ -54,25 +66,13 @@
                                     <button type="button"  class="btn_m01 bg03">파일추가</button>
                                      </file-upload>
                                 </span>
-                                <ul >
-                                    <li v-for="(file, index) in files" :key="file.id">
-                                        <span>{{file.name}}</span>
-                                        <a href="#" class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                        <!--<span>{{file.size | formatSize}}</span> - -->
-                                        <!--<span v-if="file.error">{{file.error}}</span>-->
-                                        <!--<span v-else-if="file.success">success</span>-->
-                                        <!--<span v-else-if="file.active">active</span>-->
-                                        <!--<span v-else-if="file.active">active</span>-->
-                                        <!--<span v-else></span>-->
-                                    </li>
-                                </ul>
 
-                                <template v-if="attFileYn == 'Y' ">
+                                <!--<template v-if="attFileYn == 'Y' ">-->
                                     <!--<li>-->
                                     <!--<a>가이드2.pdf</a>-->
                                     <!--<a  class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>-->
                                     <!--</li>-->
-                                </template>
+<!--</template>-->
 
 
                             </div>
@@ -81,7 +81,7 @@
                     <tr>
                         <th scope="row">내용</th>
                         <td class="con_write" >
-                            <tinymce id="d1" v-model="data"></tinymce>
+                            <tinymce id="d1" v-model="content"></tinymce>
                         </td>
                     </tr>
                     </tbody>
@@ -120,13 +120,12 @@
         div: string="";
         listData:any =[];
         title:string="";
-        section:string="";
+        viewType:string="";
         content:string="";
         attFileYn : string ="";
         importantYn : boolean =false;
         files:any=[];
-        data: string ="";
-
+        uploadFileNames: any=[];
 
 
         mounted(){
@@ -146,12 +145,12 @@
         getNoticeDetail(){
 
             // api 데이터 호출
-            CommonBoardService.getListDatas('notices', this.seq, null ).then((response) => {
+            CommonBoardService.getListDatas('notice', this.seq, null ).then((response) => {
                     let result: any = response.data;
 
                     if (result !=null) {
                         this.title = result.title;
-                        this.section = result.section;
+                        this.viewType = result.viewType;
                         this.content = result.content;
                         this.attFileYn = result.attFileYn;
                         if(result.importantYn =='Y'){
@@ -195,10 +194,9 @@
                 }
                 // Filter php html js file
                 if (/\.(php5?|html?|jsx?|jsp?|java?|asp?|exe?|class?|js?|sh?|cgi?)$/i.test(newFile.name)) {
-                    console.log("11111111");
                     alert("업로드 할수 없는 파일입니다.");
-                    return false;
-                    // return prevent()
+                    // return false;
+                    return prevent()
                 }
             }
         }
@@ -217,10 +215,73 @@
             }
         }
 
-
+/**
+ * 등록 및 수정
+ */
         reg(){
+            this.validationChk();
+            let reqData ={};
 
+            reqData['title'] = this.title;
+            reqData['viewType'] = this.viewType;
+            reqData['content'] = this.content;
+            // reqData['uploadFileNames'] = this.files;
 
+    //         for(){
+    //
+    // }
+    //
+    //         this.uploadFileNames.fileName =   this.files
+
+            console.log(this.files)
+
+            if(this.seq == undefined ||  this.seq == '') {//등록
+                // CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
+                //         if (response.status.toString() == '201') { //성공
+                //             alert("등록되었습니다.");
+                //             console.log(response);
+                //             this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                //         } else { //메일 전송 실패
+                //             console.log(response);
+                //         }
+                //     }
+                //     , (error) => {
+                //         //this.$Progress.finish();
+                //         console.log(error);
+                //     }
+                // ).catch();
+
+            }else{//수정
+                // CommonBoardService.updateListData('notice', this.seq, reqData).then((response) => {
+                //     if (response.status.toString() == '200') { //성공
+                //         alert("수정되었습니다.");
+                //         // 리스트로 이동
+                //         this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                //     } else { //메일 전송 실패
+                //         console.log('수정실패');
+                //         console.log(response);
+                //     }
+                // }, (error) => {
+                //     //this.$Progress.finish();
+                //     console.log(error);
+                // }
+                // ).catch();
+
+            }
+
+        }
+
+        /**
+         * 유효성체크
+         */
+        validationChk(){
+            if(this.title == null || this.title==""){
+                alert("제목을 입력하세요");
+                return false;
+            }else if(this.content ==null || this.content ==""){
+                alert("내용을 입력하세요");
+                return false;
+            }
         }
 
     }

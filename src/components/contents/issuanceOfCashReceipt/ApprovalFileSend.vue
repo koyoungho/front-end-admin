@@ -14,9 +14,9 @@
                     <li>
                         <label class="sub_filereq" for="">오프라인 승인 파일 업로드</label>
                         <div class="input_file_form">
-                            <input class="upload_path" readonly="readonly">
+                            <input class="upload_path" readonly="readonly" v-model="uploadFileNm">
                             <label class="upload btn_m01 bg02">
-                                <input type="file">
+                                <input type="file" @change="uploadFile($event)" >
                                 <span>파일찾기</span>
                             </label>
                         </div>
@@ -28,108 +28,9 @@
 
             <!-- sch info bot -->
             <div class="sch_info_bot">
-                <p class="text_file">모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.</p>
-            </div>
-
-            <!-- tbl scroll box -->
-            <div class="tbl_scroll_box">
-                <!-- tbl list02 -->
-                <table class="tbl_list02 page_cash03">
-                    <caption>승인 내역 목록</caption>
-                    <colgroup>
-                        <col width="104px">
-                        <col width="110px">
-                        <col width="110px">
-                        <col width="110px">
-                        <col width="110px">
-                        <col width="110px">
-                        <col width="120px">
-                        <col width="105px">
-                        <col width="105px">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">거래일자</th>
-                        <th scope="col">총액</th>
-                        <th scope="col">공급가액</th>
-                        <th scope="col">부가세</th>
-                        <th scope="col">봉사료</th>
-                        <th scope="col">발급용도</th>
-                        <th scope="col">신분확인</th>
-                        <th scope="col">고객명</th>
-                        <th scope="col">메모</th>
-                    </tr>
-                    </thead>
-                </table>
-                <!-- tbl scroll -->
-                <div class="tbl_scroll">
-                    <table class="tbl_list02 brd_none page_cash03">
-                        <caption>승인 내역 목록</caption>
-                        <colgroup>
-                            <col width="104px">
-                            <col width="110px">
-                            <col width="110px">
-                            <col width="110px">
-                            <col width="110px">
-                            <col width="110px">
-                            <col width="120px">
-                            <col width="105px">
-                            <col width="88px">
-                        </colgroup>
-                        <tbody>
-                        <tr>
-                            <td>2018.10.12</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td>소득공제</td>
-                            <td>000 0000 0000</td>
-                            <td>홍길동</td>
-                            <td class="left">12211111</td>
-                        </tr>
-                        <tr class="date_error">
-                            <td>2018.10.12</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td>소득공제</td>
-                            <td>000 0000 0000</td>
-                            <td>홍길동</td>
-                            <td class="left">12211111</td>
-                        </tr>
-                        <tr>
-                            <td>2018.10.12</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td class="right">100,000</td>
-                            <td>소득공제</td>
-                            <td>000 0000 0000</td>
-                            <td>홍길동</td>
-                            <td class="left">12211111</td>
-                        </tr>
-                        <tr>
-                            <td colspan="9" class="no_data">조회된 내용이 없습니다.</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- //tbl scroll -->
-            </div>
-            <!-- //tbl scroll box -->
-
-            <!-- tbl info result -->
-            <div class="tbl_info_result">
-                <span class="data_result">정상 : <strong class="fc_re01">7</strong>건</span>
-                <span class="data_result">오류 : <strong class="fc_re02">1</strong>건</span>
-                <span class="data_result">승인건 <strong class="fc_re03">7</strong>건 전송 예정</span>
-            </div>
-
-            <!-- btn bot -->
-            <div class="btn_bot">
-                <button type="button" id="" class="btn_b02 bg01" v-on:click="goInsert">승인 등록</button>
+                <p class="text_file">
+                    모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.
+                </p>
             </div>
 
         </div>
@@ -151,6 +52,8 @@
     })
     export default class ApprovalFileSend extends Vue {
         message: any = '';
+        file: any = ''; //파일 객체
+        uploadFileNm : any=""; //업로드 파일 명
 
         //돔생성전 호출자
         created() {
@@ -160,13 +63,67 @@
         mounted() {
         }
 
+        uploadFile(event: any) { //파일 업로드
+            this.file = '';
+            this.uploadFileNm = '';
+            this.file = event.target.files[0];
+            this.uploadFileNm = this.file.name;
+            console.log(this.file);
+            //let formData = new FormData();
+            //formData.append('file',this.file);
+        }
+
         //파일 등록
         approvalFile(){
 
-        }
+            if(this.file != null && this.file != '') {
 
-        //승인등록
-        goInsert(){
+                //파일 확장자 확인(text 파일만 등록 가능)
+                let fileExt = this.file.name.split('.');
+                let fileNm = fileExt[0].toLowerCase();
+                let lowerExt = fileExt[1].toLowerCase();
+
+                if (!lowerExt.includes('txt')) {
+                    alert('txt파일만 등록 가능합니다');
+                    return;
+                }
+
+               //파일명 체크
+               let check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+               if(check.test(fileNm)){
+                   alert("한글파일명을 사용할 수 없습니다.");
+                   return;
+               }
+
+                //파일사이즈체크
+               let fileSize = this.file.size;
+               let standardSize = 5 * 1024 * 1024; //5MB
+
+               if(fileSize>standardSize){
+                   alert("첨부하실 파일 사이즈는 5MB 이내로 등록 가능합니다.");
+                   return;
+               }
+
+                let formData = new FormData();
+                formData.append('file', this.file);
+
+                CommonBoardService.postListDatas('approval/file', null, formData).then((response) => {
+                        let result: any = response.status;
+                        // console.log(response);
+
+                        if (result=='201') {
+                            alert("파일이 등록 되었습니다.");
+                            this.uploadFileNm ="";
+
+                        } else {
+                            console.log('파일 등록 실패');
+                        }
+                    }
+                    , (error) => {
+                        console.log(error)
+                    }
+                ).catch();
+            }
 
         }
 

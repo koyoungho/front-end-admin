@@ -7,12 +7,12 @@
             <h3>{{titleNm}}</h3>
 
             <!-- terms info -->
-            <div class="terms_info">
-                <select class="select form_history" title="계정이력 선택" v-model ="policyHistory" v-on:change="historyChange">
-                    <option value="">개정이력 보기</option>
-                    <option v-for="policyList in policyList" v-bind:value="policyList.hisSeq">{{policyList.hisTitle}}</option>
-                </select>
-            </div>
+            <!--<div class="terms_info">-->
+                <!--<select class="select form_history" title="계정이력 선택" v-model ="policyHistory" v-on:change="historyChange">-->
+                    <!--<option value="">개정이력 보기</option>-->
+                    <!--<option v-for="policyList in policyList" v-bind:value="policyList.hisSeq">{{policyList.hisTitle}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
 
             <!-- cont_mobile -->
             <div class="cont_mobile">
@@ -20,7 +20,7 @@
                 <div class="terms_box">
                     <dl class="terms_list" v-for="(policyDetail, index) in policyDetail">
                         <dt v-on:click=" display(index)" v-bind:class="{ 'on': (rownum == index) } "  >{{policyDetail.detTitle}}</dt>
-                        <dd v-show="rownum == index" >{{policyDetail.detContent}}</dd>
+                        <dd v-show="rownum == index" v-html="policyDetail.detContent"></dd>
                     </dl>
                 </div>
                 <!-- //terms box -->
@@ -46,13 +46,14 @@
     export default class Policy extends Vue {
         titleNm: string ="";
         policyList:any[]=[];
-        policyHistory:string="";
-        currentDate:string="";
+        // policyHistory:string="";
+        // currentDate:string="";
         hisSeq:string = "";
         policyDetail:any[]=[];
         isActive:boolean=false;
         arrow:string="";
         rownum:number=999;
+        termsType :any="";
 
         mounted(){
             this.pageDiv();
@@ -68,43 +69,23 @@
          */
         pageDiv(){
 
-            let params = this.$route.query.titleNm;
+            this.termsType = this.$route.query.titleNm;
 
-            if(params == 'site' ){
+            if(this.termsType == 'site' ){
                 this.titleNm ='이용약관'
-            }else if(params == 'user' ){
+            }else if(this.termsType == 'user' ){
                 this.titleNm ='개인보호처리방침'
             }
 
-            // api 데이터 호출 -  개정이력 보기 리스트
-            CommonBoardService.getListDatas('terms/'+params+'/history', null, null).then((response) => {
-                    let resultList: any = response.data;
-                    this.hisSeq ="";
-                    this.policyHistory="";
+            this.bindContent();//본문호출
 
-                    if (resultList.length > 0) {
-                        this.policyList = resultList;
-                        this.currentDate =this.formatDates(this.policyList[0].regDt);
-
-                        this.hisSeq =this.policyList[0].hisSeq;
-
-                        this.bindContent( this.hisSeq);//본문호출
-
-                    } else {
-                        console.log("개정이력리스트가  없습니다.");
-                    }
-                }
-                , (error) => {
-                    //this.$Progress.finish();
-                } ).catch();
         }
 
         /**
          * api 데이터 호출 -  본문
-         * @param hisSeq
          */
-        bindContent(hisSeq){
-            CommonBoardService.getListDatas('terms/history', hisSeq, null).then((response) => {
+        bindContent(){
+            CommonBoardService.getListDatas('terms/current', this.termsType, null).then((response) => {
 
                     let resultDetail: any = response.data;
 
@@ -163,13 +144,6 @@
 
         }
 
-
-        /**
-         * 셀렉트박스 이벤트 - 개정이력
-         */
-        historyChange(){
-            this.bindContent(this.policyHistory);
-        }
 
     }
 </script>

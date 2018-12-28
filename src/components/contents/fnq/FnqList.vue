@@ -20,7 +20,6 @@
             </template>
 
             <template v-else>
-                ========================================================================================================
                 <!--btn mid -->
                 <p class="btn_top type02">
                     <button type="button"  class="btn_s01 bg02 manual" v-on:click="manual"><i class="icon download"></i>매뉴얼 다운로드</button>
@@ -34,7 +33,11 @@
                         <li>
                             <span class="btn_area">
                                 <button type="button"  class="btn_sch01" v-on:click="searchFaq">검색</button>
-                                <img src="../../../assets/images/icon_reset.png" v-on:click="searchReset">
+                            </span>
+                        </li>
+                        <li>
+                            <span class="btn_area">
+                                <button type="button" class="btn_sch02" v-on:click="searchReset">리셋</button>
                             </span>
                         </li>
                     </ul>
@@ -46,7 +49,10 @@
                         <template v-if="listData.length > 0">
                             <template v-for="(datas, index) in listData">
                                 <dt v-on:click=" display(index)" v-bind:class="{ 'on': (rownum == index) } " ><i class="icon faq_q">Q</i> {{datas.title}}</dt>
-                                <dd v-show="rownum == index"><i class="icon faq_a">A</i> {{datas.content}}</dd>
+                                <dd v-show="rownum == index" >
+                                    <div><i class="icon faq_a">A </i></div>
+                                    <div style="vertical-align: middle;   margin: -25px 0 0 70px;"><span v-html="datas.content"></span></div>
+                                </dd>
                             </template>
                         </template>
                         <template v-else>
@@ -95,8 +101,8 @@
         searchStartDate_str: any = '';
         searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
 
-        // role: string = sessionStorage.getItem('role');
-        role: string = '0001';
+        role: any = sessionStorage.getItem('role');
+        // role: string = '0004';
 
         originItem : any = {} // 오리지널데이터
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -143,6 +149,8 @@
 
         mounted(){
 
+
+            alert(this.role);
             if(this.role == '0004'|| this.role == '0005' ){
                 this.searchFaq( );//리스트 바인딩
             }
@@ -165,6 +173,8 @@
             CommonBoardService.getListDatas('faq', null, searchData).then((response) => {
                     let result: any = response.data;
 
+
+                    console.log(result);
                     if (result.data.length > 0) {
                         this.listData=result.data;
                      }
@@ -172,7 +182,7 @@
                     this.totalCount = result.totalRecords;
                     this.startPage= (result.currentPage -1) * result.perPage;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
-                    this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
+                    // this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
                     // this.$Progress.finish();
                 }
                 , (error) => {
