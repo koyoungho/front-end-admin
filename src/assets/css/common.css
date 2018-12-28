@@ -543,6 +543,11 @@ select.wide {width:100%;}
 .search_box.page_store04 .search_list > li:nth-of-type(5) {width:28%; text-align:right;}
 .search_box.page_store04 .search_list > li:nth-of-type(6) {width:22%; text-align:right;}
 
+/* 승인 대역 범위 관리 */
+.search_box.page_store05 .search_list > li:nth-of-type(1) {width:40%;}
+.search_box.page_store05 .search_list > li:nth-of-type(2) {width:30%;}
+.search_box.page_store05 .search_list > li:nth-of-type(3) {width:30%; text-align:right;}
+
 /* 현금영수증 발급 조회 및 취소 */
 .search_box.page_cash01 .search_list > li:nth-of-type(1) {width:50%;}
 .search_box.page_cash01 .search_list > li:nth-of-type(2) {width:50%; text-align:right;}

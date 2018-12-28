@@ -6,16 +6,23 @@
         <div class="content">
             <h2 class="blind">가맹점 관리</h2>
 
-            <h3>승인 대역 관리</h3>
+            <h3>승인 대역 범위 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg02" v-on:click="bandSet">승인대역 범위 설정</button>
-                <button type="button" id="" class="btn_m01 bg02" v-on:click="newReg">승인대역신청 및 등록</button>
+            <!--<div class="btn_top">-->
+                <!--<button type="button" id="" class="btn_m01 bg02" v-on:click="bandSet">승인대역 범위 설정</button>-->
+                <!--<button type="button" id="" class="btn_m01 bg02" v-on:click="newReg">승인대역신청 및 등록</button>-->
+            <!--</div>-->
+
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+
+            <!-- btn_bot -->
+            <div class="btn_bot type03">
+                <!--<button type="button" id="" class="btn_b01 bg02" v-on:click="cancelCope">취소</button>-->
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="goAproBand">승인대역 관리</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="newReg">승인대역 범위 등록</button>
             </div>
 
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList"
-                           v-on:listView="listViewEvent"></ListComponent>
 
         </div>
         <!-- //content -->
@@ -31,10 +38,10 @@
 
     @Component({
         components: {
-            ApprovalBandList, ListComponent
+            ListComponent
         },
     })
-    export default class ApprovalBandList extends Vue {
+    export default class ApprovalBandScopeList extends Vue {
         message: any = '';
 
 // 리스트 변수
@@ -50,20 +57,18 @@
             {
                 dataGrid: {
                     columControl: [  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName: '순번',id: 'rnum',type: 'number',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: '',rowColors: ''},
-                        {columName: '사업장명',id: 'shopNm',type: 'text',width: '10%',height: '',size: '',mobile: 'N',cols: '',rows: '',colColors: 'color: #008aff'},
-                        {columName: '사업자등록번호',id: 'saupId',type: 'text',width: '10%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '회사코드',id: 'subSaup',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '승인코드',id: 'lpermid',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '승인대역(시작)',id: 'lpermfrom',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '승인대역(끝)',id: 'lpermto',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '건수',id: 'count',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '순번', id: 'rnum', type: 'number',width: '8%',height: '', size: '', mobile: 'N', cols: '', rows: '', rowColors: ''},
+                        {columName: '회사코드', id: 'subSaup', type: 'text', width: '10%', height: '', size: '', mobile: 'N', cols: '',rows: '' },
+                        {columName: '회사명', id: 'shopNm', type: 'text', width: '18%', height: '', size: '', mobile: 'N', cols: '', rows: '', colColors: 'color: #008aff'},
+                        {columName: '승인코드', id: 'aprvCode', type: 'text', width: '12%', height: '', size: '', mobile: 'N', cols: '', rows: '' },
+                        {columName: '승인대역(시작)',id: 'aprvFrom',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '승인대역(끝)', id: 'aprvTo', type: 'text', width: '12%', height: '', size: '', mobile: 'N', cols: '', rows: ''},
+                        {columName: '단일최대건수',id: 'perCount',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '등록일',id: 'regDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '수정일',id: 'updDate',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '상태',id: 'aprvYn',type: 'text',width: '6%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '수정일',id: 'updDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                     ],
-                    totalColum: 11,
-                    apiUrl: 'approvalband',
+                    totalColum: 9,
+                    apiUrl: 'approvalband/range',
                     onLoadList: true,  // onLoad 로딩 유무
                     //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                     //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -71,18 +76,15 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
-                    {type: 'select',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: '',option: [{name: '승인신청', value: '0'}, {name: '해지신청', value: '1'}, {name: '정상',value: '2'}, {name: '해지', value: '3'}]},
-                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeName: '승인대기', code: '1'}, {codeName: '취소', code: '2'}, {codeName: '등록',code: '3'}]},
                     {type: 'date',title: '등록일',id: 'date',name: 'date',searchStartDate: this.setDate,searchEndDate: this.setDate,calenderCount: 2},
-                    {type: 'select',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}, {name: '대표자명', value: '2'}]},
-                    {type: 'input', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
+                    {type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
+                    {type: 'select',title: '승인코드',id: 'aprvCode',name: 'aprvCode',value: '',api: '',option: [{name: '승인신청', value: '0'}, {name: '해지신청', value: '1'}, {name: '정상',value: '2'}, {name: '해지', value: '3'}]},
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                 ],
                 paging: {currentPage: 1, lastPage: 0, viewPageSize: 10, totalRecords: 0, from: 0, to: 0, perPage: 10},
                 goSearch: "iocSearch",
-                searchClass: 'search_box page_store04',
+                searchClass: 'search_box page_store05',
                 searchClass2: 'search_list'
             }
 
@@ -106,14 +108,19 @@
             this.$router.push('/home/approvalBandReg')
         }
 
-        //승인대역 범위 설정
-        bandSet() {
-            this.$router.push('/home/approvalBandScopeList')
+        //취소
+        cancelCope() {
+            this.$router.push('/home/approvalBandList')
+        }
+
+        //승인대역 관리
+        goAproBand() {
+            this.$router.push('/home/approvalBandList')
         }
 
         //등록
         newReg() {
-            this.$router.push('/home/approvalBandReg')
+            this.$router.push('/home/approvalBandScopeReg')
         }
     }
 

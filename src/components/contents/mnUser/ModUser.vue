@@ -641,25 +641,26 @@
             let account : any = this.account;
 
             console.log("비밀번호 초기화")
-            console.log(account.id)
 
-//            let apiUrl = 'accounts/'+acntId+
             let reqData : any = {
-                to : account.email,
-
-
-                newPass : '' };
-/*
-            CommonBoardService.getListDatas('accounts/'+account.id+'/password', null, reqData).then(result=>{
-                if(result.status==200){
-                    console.log('비밀번호 초기화 성공')
-                    console.log(result.data)
-                    this.account = result.data
-                }else{
-                    alert('에러')
+                to : [account.email],
+                title : '현금영수증 비밀번호 초기화 안내 메일입니다.',
+                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://localhost:8081/login#/initPass 에서 비밀번호 초기화 하세요.',
+                cc : [''],
+             };
+            // api 데이터 호출
+            CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
+                    console.log(response);
+                    if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
+                        alert('비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.');
+                    }
                 }
-            })
-*/
+                , (error) => {
+                    //this.$Progress.finish();
+                    console.log(error);
+                }
+            ).catch();
+
         }
 
         // 날짜 포맷
