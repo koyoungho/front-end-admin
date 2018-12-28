@@ -68,6 +68,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
+                    {type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'매장상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeNm : '승인신청' , code: '0' },{codeNm : '해지신청' , code: '1' },{codeNm : '정상' , code: '2' },{codeNm : '해지' , code: '3' }]},
@@ -79,7 +80,7 @@
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
-                searchClass : 'search_box page_system03',
+                searchClass : 'search_box page_store03',
                 searchClass2 : 'search_list'
             }
 

@@ -524,13 +524,15 @@ select.wide {width:100%;}
 .search_box.page_store02 .search_list > li:nth-of-type(6) {width:22%; text-align:right;}
 
 /* 매장 관리 */
-.search_box.page_store03 .search_list > li:nth-of-type(1) {width:22%;}
-.search_box.page_store03 .search_list > li:nth-of-type(2) {width:32%;}
-.search_box.page_store03 .search_list > li:nth-of-type(3) {width:24%; text-align:right;}
-.search_box.page_store03 .search_list > li:nth-of-type(4) {width:22%; text-align:right;}
-.search_box.page_store03 .search_list > li:nth-of-type(5) {width:50%;}
-.search_box.page_store03 .search_list > li:nth-of-type(6) {width:28%; text-align:right;}
-.search_box.page_store03 .search_list > li:nth-of-type(7) {width:22%; text-align:right;}
+.search_box.page_store03 .search_list > li:nth-of-type(1) {width:100%;}
+.search_box.page_store03 .search_list > li:nth-of-type(2) {width:25%;}
+.search_box.page_store03 .search_list > li:nth-of-type(3) {width:25%; }
+.search_box.page_store03 .search_list > li:nth-of-type(4) {width:25%; text-align:right;}
+.search_box.page_store03 .search_list > li:nth-of-type(5) {width:25%; text-align:right;}
+.search_box.page_store03 .search_list > li:nth-of-type(6) {width:20%; }
+.search_box.page_store03 .search_list > li:nth-of-type(7) {width:30%; }
+.search_box.page_store03 .search_list > li:nth-of-type(8) {width:25%; text-align:right;}
+.search_box.page_store03 .search_list > li:nth-of-type(9) {width:25%; text-align:right;}
 
 /* 승인 대역 관리 */
 .search_box.page_store04 .search_list > li:nth-of-type(1) {width:24%;}

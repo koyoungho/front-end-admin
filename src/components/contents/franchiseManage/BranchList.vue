@@ -68,14 +68,14 @@
                     {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate, calenderCount : 2},
                     {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: '0' },{name : '사업자등록번호' , value: '1' },{name : '대표자명' , value: '2' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' },
-                    {type: 'input', title :'', id: 'gajumId', name:'gajumId' , value: '0093032',   api : '' , option : '' }
+                    {type: 'hidden', title :'', id: 'gajumId', name:'gajumId' , value: '0093032',   api : '' , option : '' }
 
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
-                searchClass : 'search_box page_store01',
+                searchClass : 'search_box page_store02',
                 searchClass2 : 'search_list'
             }
 
