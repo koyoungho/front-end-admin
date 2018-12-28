@@ -135,21 +135,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">업종구분</th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in upjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
-                        </td>
                         <th scope="row">회사코드</th>
                         <td>
                             <select id="" name="" class="select form_w100" title="SW 제공회사" v-model="subCompany">
                                 <option value="">선택</option>
                                 <template v-for="datas in subCompanyList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>
+                        </td>
+                        <th scope="row">업종구분</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in upjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
                             </select>
                         </td>
@@ -543,8 +543,8 @@
                             this.zipCode = result.saupjang.zipCode;
                             this.addr1 = result.saupjang.addr1;
                             this.addr2 = result.saupjang.addr2;
-                            this.upjong = result.saupjang.upjong;
-                            this.subCompany = result.saupjang.subSaup;
+                            this.upjong = this.nullCheck(result.saupjang.upjong);
+                            this.subCompany = this.nullCheck(result.saupjang.subSaup);
                             this.gikanId = result.saupjang.gikanId;
                         }
 
@@ -866,22 +866,21 @@
         }
 
         validationChk(){
-//            this.insertInfo();
-//return;
 
-            if(this.soluId == ''){
+            /*if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
                 return;
-            /*}else if(this.gajumId == ''){
+            }else if(this.gajumId == ''){
                 alert('가맹점 검색버튼을 클릭하여 가맹점을 선택하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
-                return;*/
-            //}else if(this.saupIdYn == '') {
-            //    alert('사업자등록번호를 중복확인하세요.');
-            //    return;
-            }else if(this.storeNm == ''){
+                return;
+            }else if(this.saupIdYn == '') {
+                alert('사업자등록번호를 중복확인하세요.');
+                return;
+            }else */
+            if(this.storeNm == ''){
                 alert('사업장명을 입력하세요.');
                 return;
             }else if(this.repNm == ''){
@@ -905,15 +904,15 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
+            }else if(this.subCompany == '') {
+                alert('회사코드를 선택하세요.');
+                return;
             }else if(this.upjong == ''){
                 alert('업종구분을 선택하세요.');
                 return;
-            }else if(this.subCompany == ''){
-                alert('회사코드를 선택하세요.');
-                return;
-            /*}else if(this.gikanId == ''){ // 업종구분이 병원, 의원인 경우 필수입력
+            }else if(this.upjong == '0005' && (this.gikanId == '' || this.gikanId == null)){ // 업종구분이 병원, 의원인 경우 필수입력
                 alert('요양기관기호를 입력하세요.');
-                return;*/
+                return;
             }
 
             //승인대역 정보 체크
@@ -1285,6 +1284,17 @@
 
                     return formatDate;
                 }
+            }
+        }
+
+        // Null체크
+        nullCheck(val){
+            if(val == null){
+                return '';
+            }else if(val == ''){
+                return '';
+            }else{
+                return val;
             }
         }
 

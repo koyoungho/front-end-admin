@@ -10,152 +10,12 @@
 
             <!-- btn top -->
             <div class="btn_top">
+                <!--<button type="button" id="" class="btn_m01 bg02" v-on:click="bandSet">승인대역 범위 설정</button>-->
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="newReg">승인대역신청 및 등록</button>
             </div>
 
-            <!-- search box -->
-            <div class="search_box page_store04">
-                <ul class="search_list">
-                    <li>
-                        <label for="">회사코드</label>
-                        <select id="" name="" class="select sch_w100" title="회사코드">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">승인코드</label>
-                        <select id="" name="" class="select sch_w100" title="승인코드">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">상태</label>
-                        <select id="" name="" class="select sch_w100" title="상태">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="">등록일</label><span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-                    </li>
-                    <li>
-                        <label for="">검색</label>
-                        <select id="" name="" class="select sch_appnum" title="사업장명">
-                            <option>사업장명</option>
-                        </select>
-                    </li>
-                    <li>
-                        <input type="text" class="input sch_appuser" title="고객명 입력">
-                    </li>
-                </ul>
-            </div>
-            <!-- //search box -->
-
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <button type="button" class="btn_m01 bg01">조회</button>
-            </div>
-
-            <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01">
-                    <caption>승인 대역 관리 목록</caption>
-                    <colgroup>
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="15%">
-                        <col width="10%">
-                        <col width="12%">
-                        <col width="12%">
-                        <col width="12%">
-                        <col width="12%">
-                        <col width="*">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">순번</th>
-                        <th scope="col">사업장명</th>
-                        <th scope="col">사업자등록번호</th>
-                        <th scope="col">회사코드</th>
-                        <th scope="col">승인코드</th>
-                        <th scope="col">승인대역 (시작)</th>
-                        <th scope="col">승인대역 (끝)</th>
-                        <th scope="col">등록일</th>
-                        <th scope="col">상태</th>
-                    </tr>
-                    </thead>
-                    <tbody v-on:click="goDetl">
-                    <tr>
-                        <td>100</td>
-                        <td>롯데정보통신</td>
-                        <td>132-**-**232</td>
-                        <td>120</td>
-                        <td>A1</td>
-                        <td>10000</td>
-                        <td>10000</td>
-                        <td>2018.10.04</td>
-                        <td>승인</td>
-                    </tr>
-                    <tr>
-                        <td>100</td>
-                        <td>롯데정보통신</td>
-                        <td>132-**-**232</td>
-                        <td>120</td>
-                        <td>A1</td>
-                        <td>10000</td>
-                        <td>10000</td>
-                        <td>2018.10.04</td>
-                        <td>승인대기</td>
-                    </tr>
-                    <tr>
-                        <td>100</td>
-                        <td>롯데정보통신</td>
-                        <td>132-**-**232</td>
-                        <td>120</td>
-                        <td>A1</td>
-                        <td>10000</td>
-                        <td>10000</td>
-                        <td>2018.10.04</td>
-                        <td><span class="fc_pt01">해지</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //tbl list box -->
-
-            <!-- pagination -->
-            <div class="pagination">
-                <a href="#" class="btn_fprev">맨앞</a>
-                <a href="#" class="btn_prev">이전</a>
-                <span class="num">
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<strong>3</strong>
-					<a href="#">4</a>
-					<a href="#">5</a>
-				</span>
-                <a href="#" class="btn_next">다음</a>
-                <a href="#" class="btn_enext">맨뒤</a>
-            </div>
-            <!-- //pagination -->
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList"
+                           v-on:listView="listViewEvent"></ListComponent>
 
         </div>
         <!-- //content -->
@@ -166,17 +26,223 @@
 
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-    import {CommonBoardService, CommonListService} from '../../../api/common.service';
-    import {environment} from '../../../utill/environment';
-
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import {format} from 'date-fns';
 
     @Component({
         components: {
-            ApprovalBandList
+            ApprovalBandList, ListComponent
         },
     })
     export default class ApprovalBandList extends Vue {
         message: any = '';
+
+// 리스트 변수
+        listOn: boolean = true;
+        titles: string = '가맹점 관리'; // 제목
+        subTitle: string = '지점 관리'; //서브타이틀
+        windowResize: boolean = false; // 리사이즈
+        originItem: any = {} // 오리지널데이터
+        exceptColum: any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
+        regbtnShow: boolean = false; //신규등록 버튼 보여주는지 여부
+        setDate = format(new Date(), 'YYYYMMDD');
+        listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            {
+                dataGrid: {
+                    columControl: [  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {
+                            columName: '순번',
+                            id: 'rnum',
+                            type: 'number',
+                            width: '8%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: '',
+                            rowColors: ''
+                        },
+                        {
+                            columName: '사업장명',
+                            id: 'shopNm',
+                            type: 'text',
+                            width: '10%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: '',
+                            colColors: 'color: #008aff'
+                        },
+                        {
+                            columName: '사업자등록번호',
+                            id: 'saupId',
+                            type: 'text',
+                            width: '10%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '회사코드',
+                            id: 'subSaup',
+                            type: 'text',
+                            width: '8%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '승인코드',
+                            id: 'lpermid',
+                            type: 'text',
+                            width: '8%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '승인대역(시작)',
+                            id: 'lpermfrom',
+                            type: 'text',
+                            width: '12%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '승인대역(끝)',
+                            id: 'lpermto',
+                            type: 'text',
+                            width: '12%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '건수',
+                            id: 'jumCode',
+                            type: 'text',
+                            width: '8%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '등록일',
+                            id: 'regDt',
+                            type: 'text',
+                            width: '8%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '수정일',
+                            id: '',
+                            type: 'text',
+                            width: '8%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                        {
+                            columName: '상태',
+                            id: 'aprvYn',
+                            type: 'text',
+                            width: '6%',
+                            height: '',
+                            size: '',
+                            mobile: 'N',
+                            cols: '',
+                            rows: ''
+                        },
+                    ],
+                    totalColum: 11,
+                    apiUrl: 'approvalband',
+                    onLoadList: true,  // onLoad 로딩 유무
+                    //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                    //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                    //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {
+                        type: 'selectObject',
+                        title: '회사코드',
+                        id: 'subSaup',
+                        name: 'subSaup',
+                        value: '',
+                        api: 'company',
+                        option: [{name: '', value: ''}]
+                    },
+                    {
+                        type: 'select',
+                        title: '승인코드',
+                        id: 'lpermid',
+                        name: 'lpermid',
+                        value: '',
+                        api: '',
+                        option: [{name: '승인신청', value: '0'}, {name: '해지신청', value: '1'}, {
+                            name: '정상',
+                            value: '2'
+                        }, {name: '해지', value: '3'}]
+                    },
+                    {
+                        type: 'selectCode',
+                        title: '상태',
+                        id: 'aprvYn',
+                        name: 'aprvYn',
+                        value: '',
+                        api: '',
+                        option: [{codeName: '승인대기', code: '1'}, {codeName: '취소', code: '2'}, {
+                            codeName: '등록',
+                            code: '3'
+                        }]
+                    },
+                    {
+                        type: 'date',
+                        title: '등록일',
+                        id: 'date',
+                        name: 'date',
+                        searchStartDate: this.setDate,
+                        searchEndDate: this.setDate,
+                        calenderCount: 2
+                    },
+                    {
+                        type: 'select',
+                        title: '검색',
+                        id: 'searchType',
+                        name: 'searchType',
+                        value: '',
+                        api: '',
+                        option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}, {name: '대표자명', value: '2'}]
+                    },
+                    {type: 'input', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
+                    // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
+                    // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
+                ],
+                paging: {currentPage: 1, lastPage: 0, viewPageSize: 10, totalRecords: 0, from: 0, to: 0, perPage: 10},
+                goSearch: "iocSearch",
+                searchClass: 'search_box page_store04',
+                searchClass2: 'search_list'
+            }
 
         //돔생성전 호출자
         created() {
@@ -186,13 +252,25 @@
         mounted() {
         }
 
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row) {
+            console.log('승인대역 리스트에서 상세 이동')
+            console.log(row)
+            this.$router.push({name: 'approvalBandDetl', params: {current: row.searchOption, objectKey: row.row}}) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        }
+
         //상세이동
-        goDetl(){
+        goDetl() {
             this.$router.push('/home/approvalBandReg')
         }
 
+        //승인대역 범위 설정
+        bandSet() {
+            //this.$router.push('/home/approvalBandScopeList')
+        }
+
         //등록
-        newReg(){
+        newReg() {
             this.$router.push('/home/approvalBandReg')
         }
     }

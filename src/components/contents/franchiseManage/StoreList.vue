@@ -37,6 +37,8 @@
     export default class StoreList extends Vue {
         message: any = '';
 
+        receiptSaupList: any = {}; //현금영수증 사업자 코드
+
         // 리스트 변수
         listOn : boolean = true;
         titles: string = '가맹점 관리'; // 제목
@@ -68,7 +70,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
+                    {type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: '' ,  api : '' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
                     {type: 'selectCode' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : '' , option : [{ codeName : '승인신청' , code: '0' },{codeName : '해지신청' , code: '1' },{codeName : '정상' , code: '2' },{codeName : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'매장상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeNm : '승인신청' , code: '0' },{codeNm : '해지신청' , code: '1' },{codeNm : '정상' , code: '2' },{codeNm : '해지' , code: '3' }]},
@@ -87,11 +89,15 @@
         //돔생성전 호출자
         created() {
 
-            //this.getSelectList('RECEIPT'); //현금영수증사업자 selectbox 조회
+            //this.getSelectList('RECEIPT');
         }
 
         //돔렌더링완료시 진행
         mounted() {
+            let comCode = document.getElementById('soluId');
+            console.log('soluId')
+            console.log(comCode)
+            //comCode.childNodes() = this.receiptSaupList;
         }
 
         checkBoxEvent(data){
@@ -144,7 +150,23 @@
                         }else if(code == 'SEARCH'){ //회사코드
                             //this.companyCodeList = result;
                         }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드
+                            let comCode = document.getElementById('soluId');
+
+                            if(comCode!=null){
+                                //comCode.setAttribute('option', '')
+                            }
+                            let op = new Option();
                             //this.receiptSaupList = result;
+                            let saupList = result;
+                            let rowData : any = {};
+                            let arrData : any = [];
+                            saupList.filter(e=>{
+                                rowData = {};
+                                rowData['value'] = e.code;
+                                rowData['text'] = e.codeNm;
+                                arrData.push(rowData);
+                            })
+                            this.receiptSaupList = arrData;
                         }
                     } else {
                         console.log('코드리스트 조회 오류')
