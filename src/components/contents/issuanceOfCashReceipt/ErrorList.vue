@@ -23,6 +23,7 @@
 <script lang="ts">
     import {format} from 'date-fns';
     import {Component, Vue} from "vue-property-decorator";
+    import {CommonBoardService} from '../../../api/common.service';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
 
     @Component({
@@ -40,16 +41,16 @@
                     columTopHeader : [
                         {level : [
                                 {headerName : '순번', value:'', cols : '1' , rows :'3' , level : '1'},
-                                {headerName : '오류수신내역' ,value:'',  cols : '11' , rows :'1' , level : '1'},
+                                {headerName : '오류수신내역' ,value:'',  cols : '12' , rows :'1' , level : '1'},
                                 {headerName : '오류처리내역' ,value:'',  cols : '5' , rows :'1' , level : '1'},
                             ]},
                     ],
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                         {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  },
                         {columName : '오류코드' ,id :'retCode',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  , colColors : 'color: #008aff' },
-                        {columName : '오류내용' ,id :'',type:'retCodeNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,  lineValue: '승인대기'},
-                        {columName : '원거래승인번호' ,id :'23',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '원거래승일일자' ,id :'243',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '오류내용' ,id :'retCodeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '원거래승인번호' ,id :'originPerm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '원거래승일일자' ,id :'originAprvDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '승인번호' ,id :'perm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '승인일자' ,id :'saleDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '거래금액' ,id :'totamt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
@@ -58,13 +59,19 @@
                         {columName : '사업자등록번호' ,id :'saupId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '회사코드' ,id :'subSaup',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '가맹점' ,id :'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '승인번호' ,id :'reperm',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '거래일자' ,id :'resaleDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '처리일자' ,id :'fixDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '오류발생사유' ,id :'rsnCode',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '조치결과' ,id :'rstCode',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '승인번호' ,id :'reperm',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:''},
+                        {columName : '거래일자' ,id :'resaleDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',value:'' },
+                        {columName : '처리일자' ,id :'fixDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:''},
+                        {columName : '오류발생사유' ,id :'rsnCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , selectList : '1' }, // api 데이터를 가져와야할때
+                        {columName : '조치결과' ,id :'rstCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'', selectList : '2' },
 
                     ],
+                    commonApiOneUse : true, // 공용셀렉트 조건 1/2 두개까지만 일단적용
+                    commonApiOne : 'code/rsncode',
+                    commonSelectListOne : [],
+                    commonApiTwoUse : true,
+                    commonApiTwo : 'code/rstcode',
+                    commonSelectListTwo : [],
                     tableClass:'tbl_scroll_x_box',
                     tableClass2:'tbl_list04 page_cash03',
                     totalColum: 15, //
@@ -83,7 +90,7 @@
                     {type: 'selectCode' , title :'오류코드',id: 'errorCode', name:'issuePurpose' , value: '' ,  api : 'code/taxerror' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
                     {type: 'input', title :'', id: 'errorMsg', name:'inputType' , value: '',   api : '' , option : '' },
                 ],
-                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 50},
                 goSearch : "iocSearch",
                 searchClass : 'search_box page_cash02',
                 searchClass2 : 'search_list'
@@ -119,7 +126,8 @@
 
         //저장
         goInsert(){
-
+            let ObjectData = this.$children['0'].$children['1'].listData
+            // CommonBoardService.postListDatas()
         }
 
     }

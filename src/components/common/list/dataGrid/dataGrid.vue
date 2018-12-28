@@ -78,6 +78,12 @@
                   <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
                     <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
                   </template>
+                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='input'">
+                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
+                  </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
+                <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
+              </template>
             </template>
             <!-- top 헤더가 없을경우 -->
             <template v-if="!dataGridDetail.dataGrid.columTopHeader">
@@ -96,6 +102,12 @@
               </template>
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
                <th>{{columNames.columName}}</th>
+              </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='input'">
+                <th>{{columNames.columName}}</th>
+              </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
+                <th>{{columNames.columName}}</th>
               </template>
             </template>
             </template>
@@ -127,7 +139,24 @@
 
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'">
-                <td  v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)"><input type="text" v-bind:value="rows"></span></td>
+                <td><input type="text"  class="input form_w100" v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]"></td>
+              </template>
+              <!--주의 셀렉트박스는 공용보다 하나의 별개추가된 부분입니다-->
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'">
+                <td>
+                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList==1">
+                    <select class="select form_w100" v-model="listData[index].rsnCode">
+                      <option value="null">선택</option>
+                      <option v-for="commonList1 in dataGridDetail.dataGrid.commonSelectListOne"  v-bind:value="commonList1.code">{{commonList1.codeNm}}</option>
+                    </select>
+                  </template>
+                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList==2">
+                    <select class="select form_w100" v-model="listData[index].rstCode">
+                      <option value="null">선택</option>
+                      <option v-for="commonList2 in dataGridDetail.dataGrid.commonSelectListTwo"  v-bind:value="commonList2.code">{{commonList2.codeNm}}</option>
+                    </select>
+                  </template>
+              </td>
               </template>
             </template>
           </tr>
@@ -172,22 +201,23 @@
     export default class DataGrid extends Vue {
         @Prop() dataGridDetail  !: any;
         @Prop() listOnLoad !: boolean;
-        gridData: any = this.dataGridDetail;
-        listOragin: any = [];
-        listData: any = [];
-        totalCount: any = '0';
-        $Progress: any;
-        windowSize: any = '';
-        publicPageing: any = '';
-        menuHeader: any = {};
-        bgColor : any = "";
-        trColor : any = "";
+        gridData: any = this.dataGridDetail;  // 전달받은 list 데이터
+        listOragin: any = [];  // 오리지널데이터
+        listData: any = [];    // 실제 가공해서 뿌리는데이터
+        totalCount: any = '0';  // 리스트 전체 카운트
+        $Progress: any;  // 프로그래스바
+        windowSize: any = '';  // 윈도우 사이즈 체크
+        publicPageing: any = '';  // 페이징
+        menuHeader: any = {};  // 메뉴헤더생성
+        bgColor : any = ""; // 배경색
+        trColor : any = ""; // tr 컬러
+        inputData : any[] = [{key:'', input1 :'' , input2: '' , input3:'', selectValue1:'', selectValue2:''}];  // 인풋한 영역 넘겨주는 데이터
         lineColumName : string="";
-        lineColumIndex :  number = 10000;
-        checkBoxDatas :any[]= [];
-        selectAll : boolean = false;
-        tableOriginCss= this.dataGridDetail.dataGrid.tableClass==null ? 'tbl_scroll_box' :  this.dataGridDetail.dataGrid.tableClass
-        tableOriginCss2= this.dataGridDetail.dataGrid.tableClass2==null ? 'tbl_list01 page_inquiry' :  this.dataGridDetail.dataGrid.tableClass2
+        lineColumIndex :  number = 10000;  // 라인컬러 인덱스
+        checkBoxDatas :any[]= [];  // 체크박스 체크데이터리스트
+        selectAll : boolean = false; // 전체선택옵션
+        tableOriginCss= this.dataGridDetail.dataGrid.tableClass==null ? 'tbl_scroll_box' :  this.dataGridDetail.dataGrid.tableClass  // 테이블 스크롤 없는것
+        tableOriginCss2= this.dataGridDetail.dataGrid.tableClass2==null ? 'tbl_list01 page_inquiry' :  this.dataGridDetail.dataGrid.tableClass2 // 테이블 스크롤 있는것
 
         // 토탈합계
         mTotalCount: number = 0;
@@ -245,7 +275,7 @@
 
         checkAlls(id,indexs){  // 전체 체크박스선택
             if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
-                //중복된거있으면 뺸다
+                // 중복제거
                 let tempDelCheck :any[] = [];
                 this.checkBoxDatas.filter((e)=>{
                     if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
@@ -263,7 +293,7 @@
                     })
                 })
                 this.dataGridDetail.dataGrid.columControl[indexs].checkVal=true;
-            }else{
+            }else{  // 체크박스내용삭제
                 let tempDelCheck :any[] = [];
                 this.checkBoxDatas.filter((e)=>{
                     if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
@@ -286,7 +316,7 @@
             if(this.dataGridDetail.paging.totalRecords){
             let nowPage = Number(this.dataGridDetail.paging.currentPage)
             let nowTotal = Number(this.dataGridDetail.paging.totalRecords) ;
-            let viewPageSize = Number(this.dataGridDetail.paging.viewPageSize)
+            let viewPageSize = Number(this.dataGridDetail.paging.perPage)
              nowNumber = nowTotal-(nowPage-1) * viewPageSize-index
             }
             else{
@@ -321,7 +351,7 @@
                 }
             })
 
-            if (this.listOnLoad == true) {
+            if (this.listOnLoad == true) {  //  바로 조회 값
                 this.getCommonListData();
             }
             else {
@@ -331,14 +361,18 @@
 
         getCommonListData() {
 
-
-
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.
             // 넣어진 페이지 데이터에 의해 페이징 페이지 생성 이벤트는 페이지번호 옴겨와야한다
             // 검색데이터
             let pagingData = this.dataGridDetail.paging;
-            let searchData: any = {};
 
+            // let routerName = this.$route.name+''
+            // let searchBox  = JSON.parse();
+            //
+            let searchData: any = {};
+            // if(searchBox.length > 0){
+            //     this.dataGridDetail.search = searchBox
+            // }
 
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
@@ -394,8 +428,25 @@
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => { // 뿌릴헤더를 먼저 만들어준다
-                            this.menuHeader[e.id] = e.id;
+                        this.menuHeader[e.id] = e.id;
                     });
+
+                    // 오류전문때문에 추가한부분
+                    if(this.dataGridDetail.dataGrid.commonApiOneUse){
+                        CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.commonApiOne,null,null).then(result=>{
+                            if(result.status==200){
+                            this.dataGridDetail.dataGrid.commonSelectListOne = result.data
+                            }
+                        })
+                    }
+                    if(this.dataGridDetail.dataGrid.commonApiTwoUse){
+                        CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.commonApiTwo,null,null).then(result=>{
+                            if(result.status==200){
+                                this.dataGridDetail.dataGrid.commonSelectListTwo = result.data
+                            }
+                        })
+                    }
+
 
                     this.listOragin = result.data;
 
@@ -415,10 +466,8 @@
                                     Objects[key] = e[key];
                                 }
                             });
-
                             let numberObject = {};
                             Object.keys(this.menuHeader).forEach((menuHeaderkey,index) => { // 헤더순서에 맞게 받은키값을돌리면서 해당데이터를 넣는다
-
                                 if(this.dataGridDetail.dataGrid.columControl[index].type=='number'){ // 넘버링일경우 따로만들어서 컬럼값에 담는다
                                     numberObject[menuHeaderkey] = this.numberFormatCount(indexs)
                                 }
@@ -428,17 +477,18 @@
                                         if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){  // 체크박스일경우 현재데이터를 체크박스에 담아논다
                                             this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@'+Objects[Objectskey]+'@'+indexs+'@'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
                                         }
-
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 데이터코드값이 Y,N ; 전송 , 미전송  같은 문자열치환할때 사용
-                                        if(option){
+                                        let selectOption = this.dataGridDetail.dataGrid.columControl[index].selectOptionApi // 옵션데이터를 받아와야하는경우
+
+                                        if(option){ // 문자열 치환옵션  사용시
                                             option.filter(e=>{
                                                 if(e.value==Objects[Objectskey]){
                                                     numberObject[menuHeaderkey] = e.change;
                                                 }
                                             })
-
-                                        }else{
-                                            numberObject[menuHeaderkey] = Objects[Objectskey];  // 치환하지않은 일반 TEXT 타입은 그대로 넣어준다
+                                        }
+                                        else{ // 데이터가 세렉트박스일경우
+                                            numberObject[menuHeaderkey] = Objects[Objectskey];
                                         }
                                     }
                                     else{ // 헤더가 체크박스일때   ID 가 신규일대 무조건 check_ 를 붙여서 만들어줘야한다
@@ -507,8 +557,7 @@
                 }
                 reqData['selectedId'] = arayData;
             }
-            console.log('계정 권한 관리 승인 처리시 최종 parameter');
-            console.log(reqData);
+
 /*
             // api 데이터 호출
             CommonBoardService.getListDatas('accounts/approval', null, reqData).then((response) => {

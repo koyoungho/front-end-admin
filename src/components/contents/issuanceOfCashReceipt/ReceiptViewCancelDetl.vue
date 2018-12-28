@@ -1,14 +1,9 @@
 <template>
-
-    <!-- container -->
     <section id="container">
-        <!-- content  -->
-        <div class="content">
-            <h2 class="blind">현금영수증관리</h2>
-
-            <h3>현금영수증 발급 조회 및 취소</h3>
-            <h4 class="blind">현금영수증 발급 조회</h4>
-
+        <div class="content no_print">
+            <!--<resize-observer @notify="handleResize"/>-->
+            <h3>{{subtitle}}</h3>
+            <h4>현금영수증 발급 조회</h4>   <!-- 20181112 수정 -->
             <!-- tbl grid wrap -->
             <div class="tbl_grid_wrap">
                 <!-- tbl grid01 -->
@@ -20,7 +15,7 @@
                     </colgroup>
                     <thead>
                     <tr>
-                        <th scope="col" colspan="2">현금영수증 (고객용)</th>
+                        <th scope="col" colspan="2" >현금영수증 (고객용)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,31 +32,31 @@
                                     <th scope="row">신분확인번호</th>
                                 </tr>
                                 <tr>
-                                    <td>010****1234</td>
+                                    <td>{{viewRowItem.comfirm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">거래구분</th>
                                 </tr>
                                 <tr>
-                                    <td>현금(소득공제)</td>
+                                    <td>{{viewRowItem.geoguNm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">승인번호</th>
                                 </tr>
                                 <tr>
-                                    <td>C339221</td>
+                                    <td>{{viewRowItem.perm}}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">사업자명</th>
+                                    <th scope="row">사업장명</th>
                                 </tr>
                                 <tr>
-                                    <td>롯데정보통신(주)</td>
+                                    <td>{{viewRowItem.shopNm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">대표자명</th>
                                 </tr>
                                 <tr>
-                                    <td>홍길동</td>
+                                    <td>{{viewRowItem.chipNm}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -78,35 +73,35 @@
                                     <th scope="row" colspan="2">거래일시</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">2018.10.04 17:51:00</td>
+                                    <td colspan="2">{{viewRowItem.saleDate}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">공급가액</th>
-                                    <td class="right">10,000</td>
+                                    <td class="right">{{viewRowItem.amt}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">부가세</th>
-                                    <td class="right">1,000</td>
+                                    <td class="right">{{viewRowItem.vat}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">봉사료</th>
-                                    <td class="right">1,000</td>
+                                    <td class="right">{{viewRowItem.bong}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">합계</th>
-                                    <td class="right">12,000</td>
+                                    <td class="right">{{viewRowItem.totalAmt}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업자등록번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">123-45-67890</td>
+                                    <td colspan="2">{{viewRowItem.saupId}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업장전화번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">02-333-3333</td>
+                                    <td colspan="2">{{viewRowItem.charTel}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -116,7 +111,7 @@
                         <th scope="col" colspan="2">사업장 주소</th>
                     </tr>
                     <tr>
-                        <td colspan="2" class="con01">서울시 강서구 가산디지털2로 롯데정보통신 18층</td>
+                        <td colspan="2" class="con01">{{viewRowItem.saupCaddr}}</td>
                     </tr>
                     <tr>
                         <td colspan="2" class="con01">
@@ -127,37 +122,27 @@
                     </tbody>
                 </table>
                 <!-- //tbl grid01 -->
-
-                <!-- result msg box -->
-                <div class="result_msg_box">
-                    <ul class="result_msg">
-                        <li><span class="sub">취소 사유 : </span> 거래취소</li>
-                    </ul>
-                </div>
-
                 <!-- receipt info -->
                 <div class="receipt_info">
                     <ul class="receipt">
-                        <li><span class="sub">지출구분 : </span> 일반</li>
-                        <li><span class="sub">메모 : </span> 메모 내용메모 내용</li>
+                        <li><span class="sub">지출구분 : </span> {{viewRowItem.cultGbNm}}</li>
+                        <li><span class="sub">메모 : </span> {{viewRowItem.memo}}</li>
                     </ul>
                 </div>
-
             </div>
-
-            <!-- btn bot -->
-            <div class="btn_bot type02">
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="cashReceiptCancel">현금영수증 발급 취소</button>
+            <div class="btn_bot type02"> <!-- 20181112 수정 -->
             </div>
+        </div>
+
+
+        <div class="no_print">
+            <!-- btn top -->
 
             <h4>현금영수증 발급 취소</h4>
-
-            <!-- btn top -->
-            <div class="btn_top type03">
-                <button type="button" id="" class="btn_m01 bg04">전체금액 입력</button>
-            </div>
-
             <!-- grid box -->
+            <div class="btn_top type03">  <!-- 20181112 type03 추가 -->
+                <button type="button" id="" class="btn_m01 bg04" v-on:click="aceptTotalCount">취소 가능한 전체금액 불러오기</button>
+            </div>
             <div class="grid_box col02">
                 <!-- col -->
                 <div class="col">
@@ -167,41 +152,47 @@
                         <table class="tbl_list03">
                             <caption>기본 정보</caption>
                             <colgroup>
-                                <col width="50%">
-                                <col width="50%">
+                                <col class="col_mob" width="50%">
+                                <col class="col_mob" width="50%">
                             </colgroup>
                             <thead>
                             <tr>
-                                <th scope="col">취소금액</th>
+                                <th scope="col">취소가능금액</th>
                                 <th scope="col">봉사료</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" id="" name="" class="input form_price" title="거래금액">
+                                    <input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력">
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" id="" name="" class="input form_price" title="봉사료">
+                                    <input type="text" v-model="canBong" class="input form_price" title="봉사료 입력">
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div class="tbl_info_bot">
+                        <span class="chk_box"><input type="checkbox" id="aa01" v-model="ghase"  disabled><label for="aa01">면세 및 간이과세자</label></span>
+                    </div>
                     <!-- //tbl list box -->
                 </div>
+
+
+
                 <!-- col -->
-                <div class="col">
+                <div class="col" >
                     <!-- tbl list box -->
                     <div class="tbl_list_box">
                         <!-- tbl list03 -->
                         <table class="tbl_list03">
                             <caption>기본 정보</caption>
                             <colgroup>
-                                <col width="50%">
-                                <col width="50%">
+                                <col class="col_mob" width="50%">
+                                <col class="col_mob" width="50%">
                             </colgroup>
                             <thead>
                             <tr>
@@ -212,11 +203,11 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" id="" name="" class="input form_price" value="10,000" readonly="" title="공급가액">
+                                    <input type="text" v-model="canTotal" class="input form_price"  title="공급가액 입력" readonly>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" id="" name="" class="input form_price" readonly="" title="봉사료">
+                                    <input type="text" v-model="canVat" class="input form_price"  title="봉사료 입력" readonly>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -224,11 +215,8 @@
                         </table>
                     </div>
                     <!-- //tbl list box -->
+                    <!-- tbl info bot -->
                 </div>
-            </div>
-            <!-- tbl info bot -->
-            <div class="tbl_info_bot">
-                <span class="chk_box"><input type="checkbox" id="aa01"><label for="aa01">면세 및 간이과세자</label></span>
             </div>
 
             <!-- tbl list box -->
@@ -244,9 +232,9 @@
                     <tr>
                         <th scope="row">취소 사유 입력</th>
                         <td class="left">
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">거래취소</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12"><label for="aa12">오류발급</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13"><label for="aa13">기타</label></span>
+                            <span class="rdo_box"><input type="radio" name="chk"  v-model="canSayu" value="1" id="aa11" ><label for="aa11">거래취소</label></span>
+                            <span class="rdo_box"><input type="radio" name="chk"  v-model="canSayu" value="2" id="aa12" ><label for="aa12">오류발급</label></span>
+                            <span class="rdo_box"><input type="radio" name="chk"  v-model="canSayu" value="3" id="aa13" ><label for="aa13">기타</label></span>
                         </td>
                     </tr>
                     </tbody>
@@ -256,124 +244,236 @@
 
             <!-- btn bot -->
             <div class="btn_bot type01">
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="receiptCancel">영수증 발급 취소</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction">발급취소</button>
             </div>
 
             <h4>관련 발급 내역</h4>
             <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01 page_inquiry">
-                    <caption>현금영수증 발급 목록</caption>
-                    <colgroup>
-                        <col width="11%">
-                        <col width="11%">
-                        <col width="11%">
-                        <col width="11%">
-                        <col width="11%">
-                        <col width="14%">
-                        <col width="12%">
-                        <col width="*">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">거래일자</th>
-                        <th scope="col">승인번호</th>
-                        <th scope="col">금액</th>
-                        <th scope="col">발급용도</th>
-                        <th scope="col">거래구분</th>
-                        <th scope="col">신분확인</th>
-                        <th scope="col">고객명</th>
-                        <th scope="col">메모</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="date_org">
-                        <td>2018.10.04</td>
-                        <td>C23233</td>
-                        <td class="right">100,000</td>
-                        <td>소득공제</td>
-                        <td>승인</td>
-                        <td>010 **** 1234</td>
-                        <td>홍길동</td>
-                        <td class="left">12212112</td>
-                    </tr>
-                    <tr>
-                        <td>2018.10.04</td>
-                        <td>C23233</td>
-                        <td class="right">100,000</td>
-                        <td>소득공제</td>
-                        <td>승인</td>
-                        <td>010 **** 1234</td>
-                        <td>홍길동</td>
-                        <td class="left">12212112</td>
-                    </tr>
-                    <tr>
-                        <td colspan="8" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="onLoadListView"  v-on:listView="iocViewEvent"></ListComponent>
             <!-- //tbl list box -->
 
-            <!-- tbl info bot -->
+            <!-- tbl info bot --> <!-- 20181112 수정 -->
             <p class="tbl_info_bot type01 text_type02">승인거래와 취소거래는 각각 별도의 승인번호로 발급됩니다.</p>
 
-            <!-- btn bot -->
-            <div class="btn_bot type02">
-                <button type="button" id="" class="btn_b01 bg02" v-on:click="goCancel">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="goConfirm">확인</button>
-            </div>
-
         </div>
-        <!-- //content -->
+
+        <div v-show="popOn">
+            <ReceipConfirm v-bind:resultRecripKey="resultRecrip" v-on:close="popOn=false"></ReceipConfirm>
+        </div>
     </section>
-    <!-- //container -->
 
 </template>
 
+
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-    import {CommonBoardService, CommonListService} from '../../../api/common.service';
-    import {environment} from '../../../utill/environment';
+    import {CommonBoardService} from '../../../api/common.service';
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import ReceipConfirm from '../../contents/issuanceOfCashReceipt/receipConfrim.vue';
 
     @Component({
         components: {
-            ReceiptViewCancelDetl
-        },
+            ListComponent,ReceipConfirm
+        }
     })
     export default class ReceiptViewCancelDetl extends Vue {
-        message: any = '';
+        viewRowItem : {} = {};
+        titles: string = '발급조회 및 취소'; // 제목
+        subtitle: string = '현금영수증 발급조회 및 취소'; // 제목
+        objectKey : any = "";
+        onLoadListView : any = false;
+        readonly : boolean = false  // 리드온리옵션
+        ghase : boolean = false; //과세체크유무
+        popOn : boolean = false; //영수증 발급
+        receiptOk : boolean = false; // 전체금액확인
+        resultRecrip : any = ""; // 발급취소 키
 
-        //돔생성전 호출자
-        created() {
+        canSayu : string = '1';
+        canTotal : number = 0;
+        canBong: number =0;
+        canBongOrigin : number =0;
+        canAceptTotal : number =0;
+        canAceptTotalOrigin : number =0;
+        canVat : number =0;
+
+        windowResize : boolean = false; // 리사이즈
+        originItem : any = {} // 오리지널데이터
+        exceptColum : any = "";
+        listItem : any = "";
+
+        created(){
+            this.cancleReceipView();
+            // this.exceptColum  = [{name : '거래일자' , id : 'saleDate'}] // 리사이즈 됬을경우 숨겨져야할 컬럼
+            this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+                {
+                    dataGrid: {
+                        columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                            {columName : '거래일자' ,id : 'regiDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                            {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '발급용도' ,id : 'geoguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '거래구분' ,id : 'trguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소거래' },
+                            {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        ],
+                        totalColum: 8,
+                        apiUrl : 'receipts/'+this.$route.params.objectKey+ '/cancels',
+                        onLoadList : this.onLoadListView,  // onLoad 로딩 유무
+                        mTotal : false , // 합계금액 란 활성화시 리슐트금액넣기
+                        mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                            {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                    },
+                    // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                    search: [
+                    ],
+                    paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                    goDirect : ""
+                }
         }
 
-        //돔렌더링완료시 진행
-        mounted() {
+        @Watch('canAceptTotal') onTotalamtChange(){ //합계 변경시
+            if(Number(this.canAceptTotal) == 0){
+            }else{
+                this.resetCash()
+            }
+        }
+        @Watch('canBong') onBongChange(){ //봉사료 변경시
+            if(Number(this.canBong) == 0){
+            }else{
+                this.resetCash()
+            }
         }
 
-        //현금영수증발급 취소
-        cashReceiptCancel(){
-            alert('취소되었습니다.')
+        resetCash(){
+
+            if(this.receiptOk ==false){
+                alert('취소 가능한 전체금액을 클릭해주세요')
+            }else if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
+                this.canAceptTotal = 0;
+                this.canBong = 0;
+                alert('취소 가능한 금액을 초과하였습니다')
+                return;
+            }else if(Number(this.canBongOrigin) < Number(this.canBong)){
+                console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
+                alert('면세 및 간이과세자 입니다')
+                this.canBong = 0;
+                return;
+            }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal)+Number(this.canBong))){
+                console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
+                alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                return;
+            }
+            else{
+                if(this.ghase==true) {
+                    this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong))); // 공급가액 : (합계+봉사료) * 1.1
+                    this.canVat = 0;
+                }else {
+                    this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong)) / 1.1); // 공급가액 : (합계+봉사료) * 1.1
+                    this.canVat = Math.round(((Number(this.canAceptTotal) - Number(this.canBong))) - this.canTotal); // 부가세 : 공급가액의 10%
+                }
+                this.receiptOk = true;
+            }
         }
 
-        //영수증 발급 취소
-        receiptCancel(){
-            alert('취소되었습니다.')
-        }
-
-        //취소
-        goCancel(){
-            this.$router.push('/home/receiptViewCancel')
-        }
-
-        //확인
-        goConfirm(){
-            this.$router.push('/home/receiptViewCancel')
+        mounted(){
         }
 
 
+        iocViewEvent(data){
+            console.log(data);
+            this.resultRecrip = data.row.perm
+            this.popOn = true;
+            // this.$modal.show(ReceipConfirm)
+        }
+
+        aceptTotalCount(){
+            CommonBoardService.getListDatas('receipts',this.$route.params.objectKey+'/remain','').then((response) => {
+                this.canAceptTotalOrigin  = response.data.remainTotal
+                this.canAceptTotal  = response.data.remainTotal
+                this.canBong = response.data.remainBong;
+                this.canBongOrigin=response.data.remainBong;
+
+                this.receiptOk = true;
+            }).catch();
+        }
+
+        cancleReceipView(){
+            this.objectKey = this.$route.params.objectKey
+            if(!this.objectKey){
+                alert('접근할수 없습니다')
+                this.$router.push({name:'ioc'});
+            }else{
+                CommonBoardService.getListDatas('receipts',this.$route.params.objectKey,'').then((response) => {
+                    this.viewRowItem = response.data
+                    if(response.data.vat > 1){
+                        if(response.data.vat >= 1){
+                            this.ghase = false;
+                        }else{
+                            this.ghase = true;
+                        }
+                    }
+                    this.onLoadListView = true;
+                }).catch();
+            }
+            this.onLoadListView = false
+        }
+        cancleReceipAction(){
+            let data :any= {
+                canSayu: this.canSayu,
+                cancelAmt: this.canTotal,
+                cancelBong: this.canBong,
+                cancelTotalAmt: this.canAceptTotal,
+                cancelVat: this.canVat
+            };
+
+            if( this.canAceptTotal < 1 ){
+                alert('취소 금액이 존재하지않습니다')
+            }
+            else if(this.canTotal < 1){
+                alert('공급가액이 존재하지않습니다')
+            }else if(this.receiptOk ==false){
+                alert('취소 가능한 전체금액을 확인해주세요')
+            }
+            else{
+                CommonBoardService.updateListData('receipts',this.$route.params.objectKey,data).then((response) => {
+                    this.openReceiptPop(response.data);
+                }).catch();
+            }
+        }
+
+        openReceiptPop(response){
+            this.receiptOk = false;
+            this.cancleReceipView();
+        }
+
+        // 와이드 창줄어들시 모바일용으로 윈도우 사이즈 재는곳
+        handleResize(){
+            if(window.innerWidth < 482){
+                if(this.windowResize ==true){
+
+                }else{
+                    this.listItem.dataGrid.columControl= this.listItem.dataGrid.columControl.filter(e=>{
+                        return this.exceptColum.find(s=>{
+                            if(e.id !=s.id){
+                                return e
+                            }
+                        })
+                    })
+                    this.windowResize =true
+                }
+            }else{
+                if(this.windowResize==false){
+                }else{
+                    this.listItem.dataGrid.columControl = this.originItem;
+                    this.windowResize =false;
+                }
+            }
+
+        }
     }
+
+
+
 
 </script>
