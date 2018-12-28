@@ -373,8 +373,8 @@
                             let bandData: any = {};
                             bandData['subSaup'] = this.approvalList[i].companyCodeNm; //회사코드
                             bandData['approvedCode'] = this.approvalList[i].aproCode; //승인코드
-                            bandData['approvedbandFrom'] = this.approvalList[i].aproBandFrom; //시작 대역
-                            bandData['approvedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
+                            bandData['newApprovedbandFrom'] = this.approvalList[i].aproBandFrom; //시작 대역
+                            bandData['newApprovedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
 
                             //승인대역 대역폭 사용가능 여부 확인
                             console.log('대역폭 사용가능 여부 체크')
@@ -766,11 +766,16 @@
             console.log('===================')
             console.log(idx)
 
+            if(this.saupId == ''){
+                alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
+                return;
+            }
             let no = this.approvalList[idx].jumCode; //점코드
             let saupmsg = document.getElementById('jumcode_msg'+idx); //중복 확인한 ROW 메시지
 
             let reqData: any = {};
-            reqData['checkString'] = no; //점코드
+            reqData['newJumCode'] = no; //점코드
+            reqData['saupId'] = this.saupId; //사업자등록번호
 
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {

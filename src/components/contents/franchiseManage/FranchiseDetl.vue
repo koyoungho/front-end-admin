@@ -794,8 +794,8 @@
                     if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '' && this.approvalList[j].inputDisGbn != true) { //회사코드가 있고 기존 등록된 건이 아닌것만 담기
                         aproBand = {}; //초기화 안하면 값이 이상하게 들어감
                         aproBand['subSaup'] = this.approvalList[j].companyCode; //회사코드
-                        aproBand['approvedbandFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작
-                        aproBand['approvedbandTo'] = this.approvalList[j].aproBandTo; //승인대역 끝
+                        aproBand['newApprovedbandFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작
+                        aproBand['newApprovedbandTo'] = this.approvalList[j].aproBandTo; //승인대역 끝
                         aproBand['approvedCode'] = this.approvalList[j].aproCode; //승인코드
                         arayBand.push(aproBand); // 새로 추가한 승인내역만 담기
                     }
@@ -1125,11 +1125,16 @@
             console.log('===================')
             console.log(idx)
 
+            if(this.saupId == ''){
+                alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
+                return;
+            }
             let no = this.approvalList[idx].jumCode; //점코드
             let saupmsg = document.getElementById('jumcode_msg'+idx); //중복 확인한 ROW 메시지
 
             let reqData: any = {};
-            reqData['checkString'] = no; //점코드
+            reqData['newJumCode'] = no; //점코드
+            reqData['saupId'] = this.saupId; //사업자등록번호
 
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
