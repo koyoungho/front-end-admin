@@ -96,6 +96,9 @@
 
         aproCnt: any = '';
 
+        companyCodeList: any = {};
+        aproCodeList: any = {};
+
         //돔생성전 호출자
         created() {
 
@@ -179,76 +182,21 @@
             //this.$router.push('/home/approvalBandList')
         }
 
-        //점코드 유효성 체크
-        chkJumCode() {
-
-            if(this.saupId == ''){
-                alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
-                return;
-            }else if(this.jumCode == ''){
-                alert('점코드를 입력하세요.');
-                return;
-            }
-
-            let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
-
-            let reqData: any = {};
-            reqData['newJumCode'] = this.jumCode; //점코드
-            reqData['saupId'] = this.saupId; //사업자등록번호
-
-            // api 데이터 호출(사업자등록번호 유효성 체크)
-            CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
-                    let result: any = response.data;
-                    console.log(result);
-                    if (result != null && result.code == '000') {
-                        if(saupmsg != null){
-                            saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
-                        }
-                        this.jumCodeYn = 'Y';
-                    } else {
-                        this.jumCodeYn = '';
-                        if(saupmsg != null){
-                            saupmsg.innerHTML = result.message; //화면에 메시지 보이기
-                        }
-                    }
-                }
-                , (error) => {
-                    console.log(error);
-                    this.jumCodeYn = '';
-                }
-            ).catch((response) => {
-                this.jumCodeYn = '';
-                console.log(response);
-            });
-        }
-
         validationChk(){
 
-            if(this.saupId == ''){
-                alert('사업자등록번호를 입력하세요.')
-                return;
-            }else if(this.companyCode == ''){
+            if(this.subSaup == ''){
                 alert('회사코드를 선택하세요.')
-                return;
-            }else if(this.jumCode == ''){
-                alert('점코드를 입력하세요.')
-                return;
-            }else if(this.jumCodeYn == ''){
-                alert('점코드 중복확인 하세요.')
-                return;
-            }else if(this.jumCodeYn == ''){
-                alert('점코드 중복확인 하세요.')
                 return;
             }else if(this.aproCode == ''){
                 alert('승인코드를 선택하세요.')
                 return;
-            }else if(this.aproGbn == '1' &&  this.aproBandFrom == ''){
+            }else if(this.aproBandFrom == ''){
                 alert('대역폭 시작점을 입력하세요.')
                 return;
-            }else if(this.aproGbn == '1' &&  this.aproBandTo == ''){
+            }else if(this.aproBandTo == ''){
                 alert('대역폭 끝점을 입력하세요.')
                 return;
-            }else if(this.aproGbn == '2' &&  this.aproCnt == ''){
+            }else if(this.aproCnt == ''){
                 alert('승인대역 건수를 입력하세요.')
                 return;
             }else{
@@ -263,7 +211,7 @@
 
             //대역폭 정보
             let bandData: any = {
-                subSaup: this.companyCode, //회사코드
+                subSaup: this.subSaup, //회사코드
                 approvedCode: this.aproCode, //승인코드
                 newApprovedbandFrom: this.aproBandFrom, //시작대역
                 newApprovedbandTo: this.aproBandTo //끝대역
@@ -285,7 +233,7 @@
                     if(bandChk == true){
                         return;
                     }else{
-                        this.insertInfo(); //등록
+                        this.updateInfo(); //등록
                     }
                 }
                 , (error) => {
@@ -302,15 +250,11 @@
             let reqData: any = {};
             let apiUrl : string = '';
 
-            if(code == '0001'){ //사업자구분:0001
-                apiUrl = 'pcodes/'+code+'/codes';
-            }else if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
+            if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
                 apiUrl = 'code/aprvcode';
-            }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드 -- get
-                apiUrl = 'code/issuer';
             }
 
             // api 데이터 호출
@@ -318,14 +262,10 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result.length > 0) {
-                        if(code == '0001'){ //사업자구분
-                            //this.saupGbnList = result;
-                        }else if(code == 'APRO'){ //승인코드
+                        if(code == 'APRO'){ //승인코드
                             this.aproCodeList = result;
                         }else if(code == 'SEARCH'){ //회사코드
                             this.companyCodeList = result;
-                        }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드
-                            //this.receiptSaupList = result;
                         }
                     } else {
                         console.log('코드리스트 조회 오류')
