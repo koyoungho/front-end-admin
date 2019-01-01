@@ -252,10 +252,10 @@
                     let result: any = response.data;
                     console.log(result);
                     if (result != null) {
-                        alert('승인대역이 등록되었습니다.')
+                        alert('승인대역이 수정되었습니다.')
                         this.$router.push('/home/approvalBandList')
                     } else {
-                        alert('승인대역 등록이 실패하였습니다.\n다시 시도하세요.');
+                        alert('승인대역 수정이 실패하였습니다.\n다시 시도하세요.');
                     }
                 }
                 , (error) => {

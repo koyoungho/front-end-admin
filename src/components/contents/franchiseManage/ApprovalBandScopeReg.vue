@@ -116,22 +116,21 @@
             let reqData : any = {
                 //saupId : this.saupId,
                 //subSaup : this.companyCode,
-                aprvPermFrom : this.aproBandFrom,
-                aprvPermTo : this.aproBandTo,
+                aprvFrom : this.aproBandFrom,
+                aprvTo : this.aproBandTo,
                 aprvCode : this.aproCode,
                 aprvCount : this.aproCnt,
-                //jumcode : this.jumCode
             };
             console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
-            CommonBoardService.postListDatas('approvalband', null, reqData).then((response) => {
+            CommonBoardService.postListDatas('approvalband/range', null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result);
                     if (result != null) {
-                        alert('승인대역이 등록되었습니다.')
-                        this.$router.push('/home/approvalBandList')
+                        alert('승인대역 범위 등록되었습니다.')
+                        this.$router.push('/home/approvalBandScopeList')
                     } else {
-                        alert('승인대역 등록이 실패하였습니다.\n다시 시도하세요.');
+                        alert('승인대역 범위 등록이 실패하였습니다.\n다시 시도하세요.');
                     }
                 }
                 , (error) => {
@@ -149,56 +148,13 @@
             this.subSaupNo = this.subSaup;
         }
 
-        //점코드 유효성 체크
-        chkJumCode() {
-/*
-            if(this.saupId == ''){
-                alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
-                return;
-            }else if(this.jumCode == ''){
-                alert('점코드를 입력하세요.');
-                return;
-            }
-
-            let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
-
-            let reqData: any = {};
-            reqData['newJumCode'] = this.jumCode; //점코드
-            reqData['saupId'] = this.saupId; //사업자등록번호
-
-            // api 데이터 호출(사업자등록번호 유효성 체크)
-            CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
-                    let result: any = response.data;
-                    console.log(result);
-                    if (result != null && result.code == '000') {
-                        if(saupmsg != null){
-                            saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
-                        }
-                        this.jumCodeYn = 'Y';
-                    } else {
-                        this.jumCodeYn = '';
-                        if(saupmsg != null){
-                            saupmsg.innerHTML = result.message; //화면에 메시지 보이기
-                        }
-                    }
-                }
-                , (error) => {
-                    console.log(error);
-                    this.jumCodeYn = '';
-                }
-            ).catch((response) => {
-                this.jumCodeYn = '';
-                console.log(response);
-            });
-            */
-        }
-
         validationChk(){
 
-            if(this.subSaup == ''){
+            /*if(this.subSaup == ''){
                 alert('회사코드를 선택하세요.')
                 return;
-            }else if(this.aproCode == ''){
+            }else */
+            if(this.aproCode == ''){
                 alert('승인코드를 선택하세요.')
                 return;
             }else if(this.aproBandFrom == ''){
@@ -207,10 +163,11 @@
             }else if(this.aproBandTo == ''){
                 alert('승인대역 끝점을 입력하세요.')
                 return;
-            }else if(this.aproCnt == ''){
+            }/*else if(this.aproCnt == ''){
                 alert('단일 최대건수를 입력하세요.')
                 return;
-            }else{
+            }*/
+            else{
                 this.aproBandChk();
             }
 
@@ -221,7 +178,7 @@
 
             //대역폭 정보
             let bandData: any = {
-                subSaup: this.subSaup, //회사코드
+                //subSaup: this.subSaup, //회사코드
                 approvedCode: this.aproCode, //승인코드
                 newApprovedbandFrom: this.aproBandFrom, //시작대역
                 newApprovedbandTo: this.aproBandTo //끝대역
