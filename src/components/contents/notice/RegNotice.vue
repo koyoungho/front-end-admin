@@ -32,7 +32,7 @@
                             </select>
                             <span class="form_area">
                             <span class="chk_box right">
-                                <input type="checkbox" id="aa01" v-model="importantYn" v-on:click="changeYn"><label for="aa01">중요공지</label>
+                                <input type="checkbox" id="aa01" v-model="importantYnB" v-on:click="changeYn"><label for="aa01">중요공지</label>
                             </span>
                         </span>
                         </td>
@@ -43,6 +43,7 @@
                             <div class="file_add_box">
                                 <ul >
                                     <li v-for="(file, index) in files" :key="file.id">
+                                        <!--<span>{{file.fileName}}</span>-->
                                         <span>{{file.name}}</span>
                                         <a href="#" class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
                                         <!--<span>{{file.size | formatSize}}</span> - -->
@@ -58,7 +59,6 @@
                                              :multiple="true"
                                              :size="1024 * 1024 * 10"
                                              v-model="files"
-                                             <!--extensions="gif,jpg,jpeg,png,hwp"-->
                                              accept="*"
                                              @input-filter="inputFilter"
                                              @input-file="inputFile"
@@ -123,7 +123,8 @@
         viewType:string="ALL";
         content:string="";
         attFileYn : string ="";
-        importantYn : boolean =false;
+        importantYnB : boolean =false;
+        importantYn : string ="N";
         files:any=[];
         uploadFileNames: any=[];
 
@@ -147,12 +148,13 @@
             // api 데이터 호출
             CommonBoardService.getListDatas('notice', this.seq, null ).then((response) => {
                     let result: any = response.data;
-
+console.log(result);
                     if (result !=null) {
                         this.title = result.title;
                         this.viewType = result.viewType;
                         this.content = result.content;
                         this.attFileYn = result.attFileYn;
+                        this.files =result.uploadFileNames;
                         if(result.importantYn =='Y'){
                             this.importantYn = true;
                         }
@@ -168,10 +170,12 @@
          * 체크박스 제어
          */
         changeYn(){
-            if(this.importantYn==false){
-                this.importantYn = true;
+            if(this.importantYnB==false){
+                this.importantYnB = true;
+                this.importantYn = "Y";
             }else{
-                this.importantYn = false
+                this.importantYnB = false
+                this.importantYn = "N";
             }
         }
 
@@ -208,7 +212,7 @@
 
                 CommonBoardService.postListDatas('file', null, formData).then((response) => {
                         let result: any = response.status;
-                        // console.log(response);
+                        console.log(response);
 
                         if (result=='200') {
                             console.log('파일 등록');
@@ -246,7 +250,8 @@
             reqData['title'] = this.title;
             reqData['viewType'] = this.viewType;
             reqData['content'] = this.content;
-            // reqData['uploadFileNames'] = this.files;
+            reqData['uploadFileNames'] = this.files;
+            reqData['importantYn'] = this.importantYn;
 
     //         for(){
     //
@@ -257,36 +262,36 @@
             console.log(this.files)
 
             if(this.seq == undefined ||  this.seq == '') {//등록
-                // CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
-                //         if (response.status.toString() == '201') { //성공
-                //             alert("등록되었습니다.");
-                //             console.log(response);
-                //             this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                //         } else {
-                //             console.log(response);
-                //         }
-                //     }
-                //     , (error) => {
-                //         //this.$Progress.finish();
-                //         console.log(error);
-                //     }
-                // ).catch();
+                CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
+                        if (response.status.toString() == '201') { //성공
+                            alert("등록되었습니다.");
+                            console.log(response);
+                            this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        } else {
+                            console.log(response);
+                        }
+                    }
+                    , (error) => {
+                        //this.$Progress.finish();
+                        console.log(error);
+                    }
+                ).catch();
 
             }else{//수정
-                // CommonBoardService.updateListData('notice', this.seq, reqData).then((response) => {
-                //     if (response.status.toString() == '200') { //성공
-                //         alert("수정되었습니다.");
-                //         // 리스트로 이동
-                //         this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                //     } else {
-                //         console.log('수정실패');
-                //         console.log(response);
-                //     }
-                // }, (error) => {
-                //     //this.$Progress.finish();
-                //     console.log(error);
-                // }
-                // ).catch();
+                CommonBoardService.updateListData('notice', this.seq, reqData).then((response) => {
+                    if (response.status.toString() == '200') { //성공
+                        alert("수정되었습니다.");
+                        // 리스트로 이동
+                        this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    } else {
+                        console.log('수정실패');
+                        console.log(response);
+                    }
+                }, (error) => {
+                    //this.$Progress.finish();
+                    console.log(error);
+                }
+                ).catch();
 
             }
 

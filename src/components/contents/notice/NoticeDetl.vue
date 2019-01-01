@@ -35,7 +35,7 @@
                             <span class="col_right"><strong class="sub">등록자 : </strong>{{listData.regRoleNm}} </span>
                         </dd>
                         <dd class="row_cont">
-                            <div class="cont_data">{{listData.content}}</div>
+                            <div class="cont_data" v-html="listData.content"></div>
                         </dd>
                     </dl>
                     <!-- //bbs view -->
