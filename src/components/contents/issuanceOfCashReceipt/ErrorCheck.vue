@@ -74,6 +74,7 @@
             searchData['checkType'] =this.checkType;
             // api 데이터 호출
             CommonBoardService.getListDatas('transfer/check', null, searchData).then((response) => {
+                   console.log(response);
                     if (response.status.toString() == '201' ) { //성공
                         let result: any = response.data;
                         this.listData=result;
@@ -87,7 +88,10 @@
                     }
                 }
                 , (error) => {
-                    //this.$Progress.finish();
+
+                    if (error.data.code == '400') {
+                        alert(error.data.message);
+                    }
                 }
             ).catch();
 
