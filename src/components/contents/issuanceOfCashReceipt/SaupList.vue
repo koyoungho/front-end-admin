@@ -143,6 +143,7 @@
             selectedRow['storeId'] = obj.storeId;
             selectedRow['saupId'] = obj.saupId;
             selectedRow['shopNm'] = obj.shopNm;
+            selectedRow['soluId'] = obj.soluId;
             this.$emit('selectedSaup', selectedRow); //선택한 매장번호만값 넘김
             this.$emit('saupClose')
         }

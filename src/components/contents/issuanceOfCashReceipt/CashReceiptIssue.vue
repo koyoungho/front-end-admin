@@ -28,8 +28,8 @@
                     <tr>
                         <th scope="row">사업자등록번호</th>
                         <td>
-                            <input type="text" class="input sch_indcode01" v-model="saupId" title="사업자등록번호">
-                            <input type="text" class="input sch_indcode02" v-model="shopNm" title="가맹점명">
+                            <input type="text" class="input sch_indcode01" v-model="saupId" title="사업자등록번호" readonly>
+                            <input type="text" class="input sch_indcode02" v-model="shopNm" title="가맹점명" readonly>
                             <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
                         </td>
                         <th scope="row">거래일자</th>
@@ -178,6 +178,7 @@
 </template>
 
 <script lang="ts">
+    import {format} from 'date-fns';
     import {Component, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
     import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
@@ -209,7 +210,10 @@
         //noTaxGbn: any = '';
         noTax: boolean = false; //면세 및 간이과세
         perm : any = ''; //현금영수증 발급 결과
+        saleDate : string = '';
         showModal1 : boolean= false; // 팝업
+        sendYmd : string = ''; // 현재날짜포맷
+
 
         ymd: any = '';
 
@@ -217,6 +221,7 @@
         shopNm :string = "";
         saupId :string = "";
         storeId :string = "";
+        soluId : string = "";
 
         //select box 객체
         confirmList: any = []; //고객신분확인
@@ -382,7 +387,10 @@
             }else if(this.geogu == ''){
                 alert('발급용도를 선택하세요.');
                 return;
-            }else if(this.productGbn == ''){ //신문사, 택배사만 체크
+            }else if(this.soluId == ''){
+                alert('발급 사업자가 존재하지않습니다');
+                return;
+            }else if(this.compoanyCode == ''){ //신문사, 택배사만 체크
                 alert('회사코드를 선택하세요.');
                 return;
             }else if(this.cultGb == ''){
@@ -403,8 +411,8 @@
 
             reqData['ymd'] = this.ymd; //거래일자
 
-            reqData['saupId'] = this.ymd; //거래일자
-            reqData['soluId'] = this.ymd; //거래일자
+            reqData['saupId'] = this.saupId; // 선택한 사업ID
+            reqData['soluId'] = this.soluId; // 회사코드 선택
             reqData['custNm'] = this.custNm; //고객명
             reqData['amt'] = this.supplyAmt; //공급가액
             reqData['vat'] = this.vat; //부가세
@@ -414,23 +422,21 @@
             reqData['cultGb'] = this.cultGb; //지출구분
             reqData['confirm'] = this.confirm; //고객신분확인 입력
             reqData['positionGb'] = this.positionGb; //고객신분확인 선택
-            reqData['subSaup'] = this.productGbn; //상품구분
+            reqData['subSaup'] = this.compoanyCode; //상품구분
             reqData['memo'] = this.memo; //메모
             reqData['trgu'] = '0'; //거래구분(0:승인)으로 고정
-            //reqData['subSaup'] = sessionStorage.newspaperYn; //회사코드(신문사 때문)
 
-            let apiUrl = 'receipts';
-            //let apiUrl = 'receipts99999999';
+            let apiUrl = 'receipt';
 
             // api 데이터 호출
             CommonBoardService.postListDatas(apiUrl, null, reqData).then((response) => {
                     let result: any = response.data;
-                    if (result.code == '000') { //현금영수증 발급 성공
+                    console.log(response)
+                    if (response.status == 201) { //현금영수증 발급 성공
                         //console.log('현금영수증 발급 성공');
                         this.perm = result.perm;
-                        //console.log(result);
                         // 현금영수증 발급 완료 화면 이동
-                        this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm}});
+                        this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm , reqDate : this.sendYmd}});
                     } else {
                         alert('현금영수증 발급에 실패하였습니다.')
                         //console.log('현금영수증 발급 실패');
@@ -454,6 +460,7 @@
             //거래일자(현재 일자) 가져오기
             let d = new Date();
             this.ymd = d.getFullYear() +'.'+ (d.getMonth() + 1) +'.'+ d.getDate();
+            this.sendYmd =  format(d,'YYYYMMDD')
 
             this.saupNo = sessionStorage.saupId;
             this.storeNm = sessionStorage.storeNm;
@@ -535,7 +542,7 @@
             this.storeId = data.storeId; // 매장번호 번호
             this.saupId = data.saupId; //사업자 번호
             this.shopNm = data.shopNm; //가맹점명
-
+            this.soluId = data.soluId; //가맹점명
             CommonBoardService.getListDatas('company',null,null).then(e=>{
 
             });

@@ -4,7 +4,7 @@
     <section id="container">
         <!-- content  -->
         <div class="content">
-            <h2 class="blind">현금영수증관리</h2>
+            <h2 class="blind">현금영수증 발급</h2>
 
             <h3>현금영수증 (소득공제)</h3>
 
@@ -14,8 +14,8 @@
                 <table class="tbl_grid01">
                     <caption>현금영수증</caption>
                     <colgroup>
-                        <col width="50%">
-                        <col width="50%">
+                        <col class="col_mob" width="50%">
+                        <col class="col_mob" width="50%">
                     </colgroup>
                     <thead>
                     <tr>
@@ -36,31 +36,31 @@
                                     <th scope="row">신분확인번호</th>
                                 </tr>
                                 <tr>
-                                    <td>010****1234</td>
+                                    <td>{{comfirm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">거래구분</th>
                                 </tr>
                                 <tr>
-                                    <td>현금(소득공제)</td>
+                                    <td>{{geoguNm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">승인번호</th>
                                 </tr>
                                 <tr>
-                                    <td>C339221</td>
+                                    <td>{{perm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">사업자명</th>
                                 </tr>
                                 <tr>
-                                    <td>롯데정보통신(주)</td>
+                                    <td>{{shopNm}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">대표자명</th>
                                 </tr>
                                 <tr>
-                                    <td>홍길동</td>
+                                    <td>{{chipNm}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -77,35 +77,35 @@
                                     <th scope="row" colspan="2">거래일시</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">2018.10.04 17:51:00</td>
+                                    <td colspan="2">{{saleDate}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">공급가액</th>
-                                    <td class="right">10,000</td>
+                                    <td class="right">{{amt}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">부가세</th>
-                                    <td class="right">1,000</td>
+                                    <td class="right">{{vat}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">봉사료</th>
-                                    <td class="right">1,000</td>
+                                    <td class="right">{{bong}}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="bg01">합계</th>
-                                    <td class="right">12,000</td>
+                                    <th scope="row" class="bg01">거래금액</th>
+                                    <td class="right">{{totalAmt}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업자등록번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">123-45-67890</td>
+                                    <td colspan="2">{{saupId}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업장전화번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">02-333-3333</td>
+                                    <td colspan="2">{{charTel}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -115,9 +115,9 @@
                         <th scope="col" colspan="2">사업장 주소</th>
                     </tr>
                     <tr>
-                        <td colspan="2" class="con01">서울시 강서구 가산디지털2로 롯데정보통신 18층</td>
+                        <td colspan="2" class="con01">{{saupCaddr}} {{saupAddr}}</td>
                     </tr>
-                    <tr>
+                    <tr id="mailCon">
                         <td colspan="2" class="con01">
                             <span class="text01">현금영수증 문의 <a href="#"><i class="icon tel"></i> 126-1-1</a></span>
                             <span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>
@@ -127,39 +127,34 @@
                 </table>
                 <!-- //tbl grid01 -->
 
-                <!-- result msg box -->
-                <div class="result_msg_box">
-                    <ul class="result_msg">
-                        <li><span class="sub">취소 사유 : </span> 거래취소</li>
-                    </ul>
-                </div>
-
                 <!-- receipt info -->
-                <div class="receipt_info">
+                <div class="receipt_info no_print">
                     <ul class="receipt">
-                        <li><span class="sub">지출구분 : </span> 일반</li>
-                        <li><span class="sub">메모 : </span> 메모 내용메모 내용</li>
+                        <li><span class="sub">지출구분 : </span> {{cultGbNm}}</li>
+                        <li><span class="sub">메모 : </span> {{memo}}</li>
                     </ul>
                 </div>
 
                 <!-- mail info box -->
-                <div class="mail_info_box">
-                    <input type="text" class="input form_mailid" title="아이디 입력"> @
-                    <input type="text" class="input form_mailcom" title="회사 입력">
-                    <button type="button" class="btn_m01 bg03">메일로 전송</button>
+                <div class="mail_info_box no_print">
+                    <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId"> @
+                    <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany">
+                    <button type="button" class="btn_m01 bg03" v-on:click="sendMail">메일로 전송</button>
                 </div>
 
             </div>
 
             <!-- btn bot -->
-            <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02" v-on:click="receiptPrint">영수증 출력</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="receiptConfirm">확인</button>
+            <div class="btn_bot no_print">
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="receiptPrint">영수증 출력</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="receiptConfirm">확인</button>
             </div>
+
         </div>
         <!-- //content -->
     </section>
     <!-- //container -->
+
 
 </template>
 
@@ -183,15 +178,16 @@
         comfirm: any = ''; //신분확인
         geogu: any = ''; //발급용도
         geoguNm: any = ''; //거래구분
-        saleDate: any = ''; //거래일시
         saupAddr: any = ''; //사업장주소
         saupCaddr: any = ''; //사업장
         saupId: any = ''; //사업자ID
         shopNm: any = ''; //사업자명
-        totalAmt: any = ''; //합계
+        totalAmt: any = ''; //거래금액(합계)
         vat: any = ''; //부가세
-        cultGb: any = ''; //지출구분
+        //cultGb: any = ''; //지출구분
+        cultGbNm: any = ''; //지출구분명
         memo: any = ''; //메모
+        saleDate : any = '';
 
         mailId: any = ''; //이메일 아이디
         mailCompany: any = ''; //이메일 회사 주소
@@ -199,18 +195,17 @@
         created() {
 
             this.perm = this.$route.params.reqPerm; //현금영수증 승인번호
-            //let perm = this.perm.reqPerm;
+            this.saleDate = this.$route.params.reqDate; //현금영수증 발급날짜
 
             //let reqParams = this.$route.params;
             //this.perm = 'C39044964';
-            console.log('perm ::::::::::: ' + this.perm); //C39044964
 
             if(this.perm == '' || this.perm == undefined){
                 this.perm = 'C39044963';
             }
 
             // api 데이터 호출
-            CommonBoardService.getListDatas('receipts/'+this.perm, null, '').then((response) => {
+            CommonBoardService.getListDatas('receipt' , this.saleDate+"/"+this.perm, '').then((response) => {
                     let result: any = response.data;
                     console.log(result)
                     if (result != null) {
@@ -221,14 +216,15 @@
                         this.comfirm = result.comfirm; //신분확인
                         this.geogu = result.geogu; //발급용도
                         this.geoguNm = result.geoguNm; //거래구분
-                        this.saleDate = result.saleDate; //거래일시
+                        this.saleDate = this.dateFormat(result.saleDate); //거래일시
                         this.saupAddr = result.saupAddr; //사업장주소
                         this.saupCaddr = result.saupCaddr; //사업장
                         this.saupId = result.saupId; //사업자ID
                         this.shopNm = result.shopNm; //사업자명
-                        this.totalAmt = result.totalAmt; //합계
+                        this.totalAmt = result.totamt; //거래금액(합계)
                         this.vat = result.vat; //부가세
-                        this.cultGb = result.cultGb; //지출구분
+                        //this.cultGb = result.cultGb; //지출구분
+                        this.cultGbNm = result.cultGbNm; //지출구분
                         this.memo = result.memo; //메모
                     } else {
                         console.log(result);
@@ -269,7 +265,7 @@
         }
 
         receiptConfirm() { //확인
-            this.$router.push('/home/cashReceiptIssue'); //현금영수증 발급 화면 이동
+            this.$router.push('/home/cashReceiptIssue'); //메인이동
         }
 
         sendMail() { //메일 발송
@@ -305,7 +301,7 @@
                 "\t\t\t\t\t\t<tbody><tr>\n" +
                 "\t\t\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"images/mail/img_logo01.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
                 "\t\t\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:18px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\">"+sendDate+"</td>\n" +
-                "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\">관리자용</td>\n" +
+                "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\">사용자용</td>\n" +
                 "\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t</tbody>\n" +
                 "\t\t\t\t\t</table>\n" +
@@ -390,7 +386,7 @@
                 "\t\t\t\t\t\t\t\t\t\t\t<td class=\"right\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; padding:16px 20px 16px 20px; text-align:right;  border-left:1px solid #dedede;border-right:0px solid #dedede; border-bottom:1px solid #dedede; word-wrap:break-word;\">"+this.bong+"</td>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" class=\"bg01\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#ffffff; text-align: center;\">합계</th>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" class=\"bg01\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#ffffff; text-align: center;\">거래금액</th>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<td class=\"right\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; text-align:right;  border-left:1px solid #dedede;border-right:0px solid #dedede; border-bottom:1px solid #dedede; word-wrap:break-word;\">"+this.totalAmt+"</td>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
@@ -448,14 +444,10 @@
 
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
-                    if (response.status.toString() == '201') { //메일 전송 완료
-                        console.log('메일 발송 성공');
-                        console.log(response);
-                        // 현금영수증 발급 완료 화면 이동
-                        //this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm}});
+                    if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
+                        alert('현금영수증 메일 발송이 완료되었습니다.');
                     } else { //메일 전송 실패
-                        console.log('메일 발송 실패');
-                        console.log(response);
+                        alert('현금영수증 메일 발송이 실패되었습니다.');
                     }
                 }
                 , (error) => {
@@ -469,6 +461,21 @@
         email_check( email ) {
             var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             return (email != '' && email != 'undefined' && regex.test(email));
+        }
+
+        // 날짜 포맷
+        dateFormat(val: string){
+            let y1 : number  = Number(val.substring(0, 4));
+            let m1 : number = Number(val.substring(4,6));
+            let d1 : number = Number(val.substring(6,8));
+            let hH : number = Number(val.substring(8,10));
+            let mM : number = Number(val.substring(10,12));
+            let sS : number = Number(val.substring(12));
+
+            let date = new Date(y1, m1, d1, hH, mM, sS); //날짜로 변경
+            let formatDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
+
+            return formatDate;
         }
 
     }

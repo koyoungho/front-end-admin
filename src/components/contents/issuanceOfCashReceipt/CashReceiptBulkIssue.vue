@@ -4,13 +4,13 @@
     <section id="container">
         <!-- content  -->
         <div class="content">
-            <h2 class="blind">현금영수증관리</h2>
+            <h2 class="blind">현금영수증 발급</h2>
 
             <h3>현금영수증 발급</h3>
 
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg02" v-on:click="indivIssue">개별 발급</button>
+                <button type="button" id="" class="btn_m01 bg04" v-on:click="indivIssue()">개별 발급</button>
             </div>
 
             <!-- cont_mobile -->
@@ -21,25 +21,26 @@
                         <li>
                             <label class="sub_filereq" for="">엑셀 파일 등록</label>
                             <div class="input_file_form">
-                                <input class="upload_path" readonly="readonly">
+                                <input class="upload_path" readonly="readonly" v-model="uploadPath">
                                 <label class="upload btn_m01 bg02">
-                                    <input type="file">
+                                    <input type="file" @change="uploadFile($event)" id="fileUpload">
                                     <span>파일찾기</span>
                                 </label>
                             </div>
                         </li>
                     </ul>
-                    <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="excelRegist">등록</button></span>
+                    <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="excelRegist()">등록</button></span>
                 </div>
                 <!-- //search box -->
             </div>
             <!-- //cont_mobile -->
 
+            <!-- 2018-11-06 수정 -->
             <!-- sch info bot -->
             <div class="sch_info_bot">
                 <p class="text_type01 center">
                     xls, xlsx 파일로 일괄발급이 가능합니다.
-                    <button type="button" id="" class="btn_s01 bg02"><i class="icon download" v-on:click="excelSampleDownload"></i>샘플다운로드</button>
+                    <button type="button" id="" class="btn_s01 bg02" v-on:click="excelSampleDownload()"><i class="icon download"></i>샘플다운로드</button>
                 </p>
                 <p class="text_file">모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.</p>
             </div>
@@ -72,7 +73,7 @@
                         <th scope="col">신분확인</th>
                         <th scope="col">고객명</th>
                         <th scope="col">메모</th>
-                        <th scope="col">처리결과</th>  <!-- 20181112 수정 -->
+                        <th scope="col">오류내역</th>
                     </tr>
                     </thead>
                 </table>
@@ -93,57 +94,27 @@
                             <col width="127px">
                         </colgroup>
                         <tbody>
-                        <tr>
-                            <td>2018.10.04</td>
-                            <td class="right">100,000</td>
-                            <td class="right">9,000</td>
-                            <td class="right">1,000</td>
-                            <td class="right">100</td>
-                            <td>소득공제</td>
-                            <td>010 2323 1234</td>
-                            <td>홍길동</td>
-                            <td class="left">12212112</td>
-                            <td class="left"></td>
-                        </tr>
-                        <tr class="date_error">
-                            <td>2018.10.04</td>
-                            <td class="right">100,000</td>
-                            <td class="right">9,000</td>
-                            <td class="right">1,000</td>
-                            <td class="right">100</td>
-                            <td>소득공제</td>
-                            <td>010 2323 1234</td>
-                            <td>홍길동</td>
-                            <td class="left">12212112</td>
-                            <td class="left">신분확인번호오류</td>
-                        </tr>
-                        <tr>
-                            <td>2018.10.04</td>
-                            <td class="right">100,000</td>
-                            <td class="right">9,000</td>
-                            <td class="right">1,000</td>
-                            <td class="right">100</td>
-                            <td>소득공제</td>
-                            <td>010 2323 1234</td>
-                            <td>홍길동</td>
-                            <td class="left">12212112</td>
-                            <td class="left"></td>
-                        </tr>
-                        <tr>
-                            <td>2018.10.04</td>
-                            <td class="right">100,000</td>
-                            <td class="right">9,000</td>
-                            <td class="right">1,000</td>
-                            <td class="right">100</td>
-                            <td>소득공제</td>
-                            <td>010 2323 1234</td>
-                            <td>홍길동</td>
-                            <td class="left">12212112</td>
-                            <td class="left"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="10" class="no_data">조회된 내용이 없습니다.</td>
-                        </tr>
+                        <template v-if="listData.length > 1">
+                            <template v-for="datas in listData">
+                                <tr>
+                                    <td>{{datas.saleDt}}</td>
+                                    <td class="right">{{datas.totalAmt}}</td>
+                                    <td class="right">{{datas.amt}}</td>
+                                    <td class="right">{{datas.vat}}</td>
+                                    <td class="right">{{datas.bong}}</td>
+                                    <td>{{datas.geoguNm}}</td>
+                                    <td>{{datas.confirm}}</td>
+                                    <td>{{datas.custNm}}</td>
+                                    <td class="left">{{datas.memo}}</td>
+                                    <td class="left">{{datas.error}}</td>
+                                </tr>
+                            </template>
+                        </template>
+                        <template v-if="listData.length < 1">
+                            <tr>
+                                <td colspan="10" class="no_data">조회된 내용이 없습니다.</td>
+                            </tr>
+                        </template>
                         </tbody>
                     </table>
                 </div>
@@ -153,20 +124,21 @@
 
             <!-- tbl info result -->
             <div class="tbl_info_result">
-                <span class="data_result">정상 : <strong class="fc_re01">7</strong>건</span>
-                <span class="data_result">오류 : <strong class="fc_re02">1</strong>건</span>
-                <span class="data_result">현금영수증 : <strong class="fc_re03">7</strong>건 발급 예정</span>
+                <span class="data_result">정상 : <strong class="fc_re01">{{normalData}}</strong>건</span>
+                <span class="data_result">오류 : <strong class="fc_re02">{{errorData}}</strong>건</span>
+                <span class="data_result">현금영수증 : <strong class="fc_re03">{{possibleData}}</strong>건 발급 예정</span>
             </div>
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b02 bg01" v-on:click="cashReceiptIssue">현금영수증 일괄 발급</button>
+                <button type="button" id="" class="btn_b02 bg01" v-on:click="cashReceiptIssue()">현금영수증 일괄 발급</button>
             </div>
 
         </div>
         <!-- //content -->
     </section>
     <!-- //container -->
+
 
 </template>
 
@@ -199,7 +171,25 @@
             let formData = new FormData();
             //console.log(this.file);
             formData.append('file', this.file);
-/*
+            /*
+                        axios.post('/api/receipts/file', formData, {
+                            headers: {
+                                "x-auth-token": sessionStorage.accessToken
+                            }
+                        }).then((response) => {
+                                if (response.status.toString() == '201') {
+                                    console.log('엑셀 파일 대량 등록 성공 ^_^');
+                                    this.$router.push('/home/main')
+                                } else {
+                                    console.log('엑셀 파일 대량 등록 실패 -_-');
+                                }
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        ).catch();
+            */
+
             CommonBoardService.postListDatas('receipts/file', null, formData).then((response) => {
                     let result: any = response.data;
                     console.log(response);
@@ -209,17 +199,17 @@
                     // failCount: 7
                     // totalCount: 14
                     if (response.status.toString() == '201') {
-                        console.log('엑셀 파일 대량 등록 성공 ^_^');
+                        alert('현금영수증 일괄등록 되었습니다.')
                         this.$router.push('/home/main')
                     } else {
-                        console.log('엑셀 파일 대량 등록 실패 -_-');
+                        alert('현금영수증 일괄등록이 실패되었습니다.\n다시 시도 해 주세요.')
                     }
                 }
                 , (error) => {
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch();
-*/
+
         }
         excelSampleDownload() { //샘플다운로드
             //alert('샘플파일 다운로드')
@@ -241,10 +231,28 @@
 
             let formData = new FormData();
             formData.append('file', this.file);
-/*
+            //
+            /*
+            axios.post('http://211.39.150.112/api/receipts/filecheck', formData, {
+                headers: {
+                    "x-auth-token": localStorage.accessToken
+                }
+            }).then((response) => {
+                    if (response.status.toString() == '201') {
+                        console.log('엑셀 파일 대량 등록 성공 ^_^');
+                        this.$router.push('/home/main')
+                    } else {
+                        console.log('엑셀 파일 대량 등록 실패 -_-');
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                }
+            ).catch();
+*/
+
             CommonBoardService.postListDatas('receipts/filecheck', null, formData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     // data - list
                     // failCount
                     // totalCount
@@ -254,21 +262,20 @@
                         this.errorData = result.failCount; //오류 건수
                         this.normalData = result.totalCount - result.failCount; //정상 건수
                         this.possibleData = result.totalCount - result.failCount; //발급예정 건수
-                        console.log("정상 :: "+this.normalData + " 오류 :: " + this.errorData);
                     } else {
                         console.log('엑셀 파일 체크 실패');
                     }
                 }
                 , (error) => {
-                    console.log(error)
+                    //console.log(error)
                 }
             ).catch();
-*/
+
         }
         uploadFile(event: any) { //파일 업로드
             this.file = event.target.files[0];
             this.uploadPath = this.file.name;
-            console.log(this.file)
+            //console.log(this.file)
             //let formData = new FormData();
             //formData.append('file',this.file);
         }
