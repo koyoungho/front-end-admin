@@ -50,7 +50,8 @@ Vue.component('tinymce', tinymce)
 import VCharts from 'v-charts'
 Vue.use(VCharts);
 
-
+import VueDragscroll from 'vue-dragscroll'
+Vue.use(VueDragscroll)
 
 new Vue({
     router,

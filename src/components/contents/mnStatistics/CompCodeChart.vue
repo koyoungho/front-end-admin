@@ -182,6 +182,7 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import CompCodeChartPop from "@/components/contents/mnStatistics/CompCodeChartPop.vue";
+    import {CcChart} from '../../../model/chart/compCodeChart';
 
     @Component({
 
@@ -190,8 +191,17 @@
         }
     })
     export default class CompCodeChart extends Vue {
+        ChartModel : CcChart[] = [];
         popupYn:boolean =false;
 
+
+        created(){ // api 데이터
+
+        }
+
+        mounted(){
+
+        }
         /**
          * 팝업기능
          * @param fc

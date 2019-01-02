@@ -33,9 +33,9 @@
     </div>
     </template>
 
-    <div :class="tableOriginCss">
+    <div :class="tableOriginCss"  v-dragscroll>
       <!-- tbl list01 -->
-
+        <!-- content goes here -->
       <table :class="tableOriginCss2" v-on:change="windowSize">
         <caption></caption>
         <colgroup>
@@ -172,8 +172,11 @@
           </tr>
         </template>
         </tbody>
+
       </table>
+
     </div>
+
     <!-- //tbl list box -->
     <!-- btn tbl bot -->
     <template v-if="authButton"> <!--계정 권한 관리에서 사용-->
