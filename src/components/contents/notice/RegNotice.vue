@@ -156,7 +156,7 @@ console.log(result);
                         this.attFileYn = result.attFileYn;
                         this.files =result.uploadFileNames;
                         if(result.importantYn =='Y'){
-                            this.importantYn = true;
+                            this.importantYnB = true;
                         }
                     }
                 }
