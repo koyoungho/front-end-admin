@@ -231,6 +231,9 @@
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
         }
+        @Watch('dataGridDetail') onChange2() {
+            this.getCommonListData();
+        }
         @Watch('checkBoxDatas') onChangeCheckBox() { // 체크박스 선택시 및 데이터 전달하는곳
             let rowData :any=[]
             this.checkBoxDatas.filter(e=>{
@@ -275,12 +278,12 @@
 
         checkAlls(id,indexs){  // 전체 체크박스선택
             if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
-                // 중복제거
-                let tempDelCheck :any[] = [];
-                this.checkBoxDatas.filter((e)=>{
-                    if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
-                        tempDelCheck.push(e);
-                    }
+                    // 중복제거
+                    let tempDelCheck :any[] = [];
+                    this.checkBoxDatas.filter((e)=>{
+                        if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
+                            tempDelCheck.push(e);
+                        }
                 })
                 this.checkBoxDatas = tempDelCheck;
 
@@ -422,6 +425,7 @@
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
                         this.mTotalCount = result.extra.totalAmt;
+                        // this.mTotalCount = result.extra.totalAmt;
                         this.mServiceCharge = result.extra.bong;
                         this.mSupplyValue = result.extra.amt;
                         this.mSurtax = result.extra.vat;

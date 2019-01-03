@@ -14,7 +14,7 @@
             </div>
 
             <!--리스트-->
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" ></ListComponent>
 
         </div>
         <!-- //content -->
@@ -54,34 +54,6 @@
         created(){
 
             this.pageDiv();
-            this.searchStartDate_str =new Date();
-            this.searchStartDate_str.setFullYear(this.searchStartDate_str.getFullYear()-3);
-            this.searchStartDate_str = format(this.searchStartDate_str ,'YYYYMMDD');
-
-            this.listItem={
-                dataGrid: {
-                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '순번', type:'number', id : 'rnum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
-                        {columName : '등록일', type:'text', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '제목', type:'text', id : 'hisTitle', width : '70%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
-                        {columName : '등록자', type:'text', id : 'regRole', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : '0001' , change : '시스템'},{ value : '0002' , change : '사업자'},{ value : '0003' , change : '콜센터'},{ value : '0004' , change : '가맹점'},{ value : '0005' , change : '지점'}]},
-                    ],
-                    totalColum: 4,
-                    apiUrl : 'terms/history',
-                    onLoadList : true,  // onLoad 로딩 유무
-                },
-                // 아이디는 실제 컬럼값을 넣어주면됩니다.
-                search: [
-                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.searchStartDate_str ,  searchEndDate: this.searchEndDate_str, calenderCount : 2},
-                    {type: 'textNone', title :'termsType', id: 'termsType' , name:'termsType', value: this.termsType} ,
-                ],
-                searchClass: 'search_box page_system01',
-                searchClass2: 'search_list col0201',
-                paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
-                goDirect : ""
-            }
-
-            this.originItem  = this.listItem.dataGrid.columControl
         }
 
 
@@ -109,6 +81,33 @@
                 this.termsType="user";
             }
 
+            this.searchStartDate_str =new Date();
+            this.searchStartDate_str.setFullYear(this.searchStartDate_str.getFullYear()-3);
+            this.searchStartDate_str = format(this.searchStartDate_str ,'YYYYMMDD');
+            this.listItem={
+                dataGrid: {
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '순번', type:'number', id : 'rnum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '등록일', type:'text', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '제목', type:'text', id : 'hisTitle', width : '70%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '등록자', type:'text', id : 'regRole', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : '0001' , change : '시스템'},{ value : '0002' , change : '사업자'},{ value : '0003' , change : '콜센터'},{ value : '0004' , change : '가맹점'},{ value : '0005' , change : '지점'}]},
+                    ],
+                    totalColum: 4,
+                    apiUrl : 'terms/history',
+                    onLoadList : true,  // onLoad 로딩 유무
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.searchStartDate_str ,  searchEndDate: this.searchEndDate_str, calenderCount : 2},
+                    {type: 'textNone', title :'termsType', id: 'termsType' , name:'termsType', value: this.termsType} ,
+                ],
+                searchClass: 'search_box page_system01',
+                searchClass2: 'search_list col0201',
+                paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+                goDirect : ""
+            }
+
+            this.originItem  = this.listItem.dataGrid.columControl;
         }
 
         /**
