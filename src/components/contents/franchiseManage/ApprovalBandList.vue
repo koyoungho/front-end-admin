@@ -50,11 +50,11 @@
             {
                 dataGrid: {
                     columControl: [  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName: '순번',id: 'rnum',type: 'number',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: '',rowColors: ''},
+                        {columName: '순번',id: 'rnum',type: 'number',width: '7%',height: '',size: '',mobile: 'N',cols: '',rows: '',rowColors: ''},
                         {columName: '사업장명',id: 'shopNm',type: 'text',width: '10%',height: '',size: '',mobile: 'N',cols: '',rows: '',colColors: 'color: #008aff'},
-                        {columName: '사업자등록번호',id: 'saupId',type: 'text',width: '10%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '사업자등록번호',id: 'saupId',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '회사코드',id: 'subSaup',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '승인코드',id: 'lpermid',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '승인코드',id: 'lpermid',type: 'text',width: '7%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '승인대역(시작)',id: 'lpermfrom',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '승인대역(끝)',id: 'lpermto',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '건수',id: 'count',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
@@ -72,10 +72,10 @@
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
                     {type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
-                    {type: 'select',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: '',option: [{name: '승인신청', value: '0'}, {name: '해지신청', value: '1'}, {name: '정상',value: '2'}, {name: '해지', value: '3'}]},
-                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeName: '승인대기', code: '1'}, {codeName: '취소', code: '2'}, {codeName: '등록',code: '3'}]},
+                    {type: 'selectCode',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: 'code/aprvcode',option: [{name: '', value: ''}]},
+                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: '1'}, {codeNm: '취소', code: '2'}, {codeNm: '등록',code: '3'}]},
                     {type: 'date',title: '등록일',id: 'date',name: 'date',searchStartDate: this.setDate,searchEndDate: this.setDate,calenderCount: 2},
-                    {type: 'select',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}, {name: '대표자명', value: '2'}]},
+                    {type: 'select',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}]},
                     {type: 'input', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },

@@ -291,7 +291,7 @@
             console.log(reqData);
 
 
-            // api 데이터 호출(가맹점 등록)
+            // api 데이터 호출(매뉴 등록)
             CommonBoardService.postListDatas('menu-manage', null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result);
@@ -299,7 +299,7 @@
                         //메뉴 등록 완료
                         //this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnMenu'})
-                        this.$router.push('/home/mnMenu');
+                        this.$router.push('/home/mnUserList');
                     } else {
                         alert('메뉴 등록에 실패하였습니다.\n다시 시도하세요.');
                         return;

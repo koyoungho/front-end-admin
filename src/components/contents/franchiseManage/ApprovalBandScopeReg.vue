@@ -21,7 +21,7 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row">회사코드</th>
+                        <!--<th scope="row">회사코드</th>
                         <td class="con_comcode">
                             <select id="" name="" class="select form_comcode" title="회사코드" v-model="subSaup">
                                 <option value="">선택</option>
@@ -30,15 +30,16 @@
                                 </template>
                             </select>
                             <input type="text" class="input form_comcode" title="승인코드" disabled="disabled" v-model="subSaupNo">
-                        </td>
+                        </td>-->
                         <th scope="row">승인코드</th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="승인번호" v-model="aproCode">
+                        <td colspan="3">
+                            <!--<select id="" name="" class="select form_w100" title="승인번호" v-model="aproCode">
                                 <option value="">선택</option>
                                 <template v-for="datas in aproCodeList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
-                            </select>
+                            </select>-->
+                            <input type="text" class="input form_app01" title="승인코드" v-model="aproCode" maxlength="2">
                         </td>
                     </tr>
                     <tr>
@@ -98,8 +99,8 @@
         //돔생성전 호출자
         created() {
 
-            this.getSelectList('SEARCH'); //회사코드
-            this.getSelectList('APRO'); //승인코드
+            //this.getSelectList('SEARCH'); //회사코드
+            //this.getSelectList('APRO'); //승인코드
         }
 
         //돔렌더링완료시 진행
@@ -121,12 +122,15 @@
                 aprvCode : this.aproCode,
                 aprvCount : this.aproCnt,
             };
+
+            let reqParam : any = { 'addDto' : reqData };
+
             console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
             CommonBoardService.postListDatas('approvalband/range', null, reqData).then((response) => {
-                    let result: any = response.data;
-                    console.log(result);
-                    if (result != null) {
+                    //let result: any = response.data;
+                    console.log(response);
+                    if(response.status == 200 || response.status == 201) {
                         alert('승인대역 범위 등록되었습니다.')
                         this.$router.push('/home/approvalBandScopeList')
                     } else {
@@ -134,18 +138,28 @@
                     }
                 }
                 , (error) => {
-                    //console.log(error);
+                    if(error.data.code == 400){
+                        alert(error.data.message);
+                        return;
+                    }
                 }
             ).catch((response) => {
-                //console.log(response);
+                console.log(response);
             });
 
             //this.$router.push('/home/approvalBandList')
         }
 
-        @Watch('subSaup') onChange(){
-            console.log('회사코드')
-            this.subSaupNo = this.subSaup;
+        @Watch('aproBandFrom') onFromChange(){
+            if(this.aproBandFrom != '' && this.aproBandTo != '') {
+                this.aproCnt = (Number(this.aproBandTo) - Number(this.aproBandFrom) + 1);
+            }
+        }
+
+        @Watch('aproBandTo') onToChange(){
+            if(this.aproBandFrom != '' && this.aproBandTo != '') {
+                this.aproCnt = (Number(this.aproBandTo) - Number(this.aproBandFrom) + 1);
+            }
         }
 
         validationChk(){
@@ -155,7 +169,7 @@
                 return;
             }else */
             if(this.aproCode == ''){
-                alert('승인코드를 선택하세요.')
+                alert('승인코드를 입력하세요.')
                 return;
             }else if(this.aproBandFrom == ''){
                 alert('승인대역 시작점을 입력하세요.')
@@ -168,7 +182,8 @@
                 return;
             }*/
             else{
-                this.aproBandChk();
+                //this.aproBandChk();
+                this.insertInfo();
             }
 
         }

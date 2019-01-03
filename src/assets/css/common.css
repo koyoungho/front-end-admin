@@ -202,6 +202,8 @@ select.form_mailrec {width:200px;}
 /* input form */
 input.form_w100 {width:100%;}
 input.form_w50 {width:36.5%;}
+input.form_w40 {width:40%;}
+input.form_w45 {width:45%;}
 
 input.form_industry {width:56%;} /* 사업자등록번호 */
 input.form_branchcode {width:56%;} /* 점코드 */
@@ -515,13 +517,14 @@ select.wide {width:100%;}
 .search_box.page_store01 .search_list > li:nth-of-type(5) {width:22%; text-align:right;}
 
 /* 지점 관리 */
-.search_box.page_store02 .search_list > li:nth-of-type(1) {width:54%;}
-.search_box.page_store02 .search_list > li:nth-of-type(2) {width:24%; text-align:right;}
-.search_box.page_store02 .search_list > li:nth-of-type(3) {width:22%; text-align:right;}
-.search_box.page_store02 .search_list > li:nth-of-type(4) {width:50%;}
-.search_box.page_store02 .search_list > li:nth-of-type(4) > label {padding-left:13px;}
-.search_box.page_store02 .search_list > li:nth-of-type(5) {width:28%; text-align:right;}
-.search_box.page_store02 .search_list > li:nth-of-type(6) {width:22%; text-align:right;}
+.search_box.page_store02 .search_list > li:nth-of-type(1) {width:34%;}
+.search_box.page_store02 .search_list > li:nth-of-type(2) {width:33%; text-align:right;}
+.search_box.page_store02 .search_list > li:nth-of-type(3) {width:33%; text-align:right;}
+.search_box.page_store02 .search_list > li:nth-of-type(4) {width:20%;}
+/*.search_box.page_store02 .search_list > li:nth-of-type(4) > label {padding-left:13px;}*/
+.search_box.page_store02 .search_list > li:nth-of-type(5) {width:35%;}
+.search_box.page_store02 .search_list > li:nth-of-type(6) {width:25%; text-align:right;}
+.search_box.page_store02 .search_list > li:nth-of-type(7) {width:20%; text-align:right;}
 
 /* 매장 관리 */
 .search_box.page_store03 .search_list > li:nth-of-type(1) {width:100%;}

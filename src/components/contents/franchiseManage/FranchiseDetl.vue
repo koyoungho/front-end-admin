@@ -104,6 +104,26 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">회사코드</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupSubSaupList">
+                                    <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>
+                        </td>
+                        <th scope="row">업종구분</th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupUpjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <th scope="row">가맹점 상태</th>
                         <td colspan="3">
                             <!--<select id="" name="" class="select form_w50" title="가맹점" disabled="disabled" v-model="gajumStatus">
@@ -133,26 +153,6 @@
                             <input type="text" class="input form_bldate" title="BL 정보" disabled="disabled" v-model="blDate">
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">회사코드</th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
-                                <option value="">선택</option>
-                                <template v-for="datas in saupSubSaupList">
-                                    <option v-bind:value=datas.code>{{datas.name}}</option>
-                                </template>
-                            </select>
-                        </td>
-                        <th scope="row">업종구분</th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in saupUpjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -176,7 +176,7 @@
                         <col width="17%">
                         <col width="33%">
                     </colgroup>
-                    <tbody v-for="(apro, index) in approvalList">
+                    <tbody v-for="(apro, index) in approvalList" class="bottom_space">
                     <tr>
                         <th scope="row">회사코드</th>
                         <td>
@@ -255,7 +255,7 @@
                                 <col width="17%">
                                 <col width="33%">
                             </colgroup>
-                            <tbody v-for="(adm, index) in adminList">
+                            <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름<em class="form_req">*</em></th>
                                 <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn"></td>
@@ -364,6 +364,8 @@
         addr1: any = ''; //주소
         addr2: any = ''; //상세주소
         zipCode: any = ''; //우편번호
+        saupSubSaup: any = ''; //회사코드
+        saupUpjong: any = ''; //업종구분
 
         gajumStatus: any = ''; //가맹점상태
         regiDate: any = ''; //등록일
@@ -490,6 +492,8 @@
                         this.zipCode = result.zipCode; //우편번호
                         this.addr1 = result.addr1; //주소
                         this.addr2 = result.addr2; //상세주소
+                        this.saupSubSaup = result.subSaup; //회사코드
+                        this.saupUpjong = result.upjong; //업종구분
                         this.gajumStatus = result.gajumStatus; //가맹점 상태
                         this.regiDate = this.dateFormat(result.regiDate); //사업장 등록일
                         this.canDate = this.dateFormat(result.canDate); //사업장 해지일
@@ -740,6 +744,12 @@
                 return;
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
+                return;
+            }else if(this.saupSubSaup == null || this.saupSubSaup == ''){
+                alert('회사코드를 선택하세요.');
+                return;
+            }else if(this.saupUpjong == null || this.saupUpjong == '') {
+                alert('업종코드를 선택하세요.');
                 return;
             }
 

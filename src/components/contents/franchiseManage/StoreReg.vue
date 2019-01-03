@@ -287,13 +287,56 @@
                 </div>
             </div>
 
+            <br></br>
+            <div class="account_list">
+                <div class="acc_col">
+                    <!-- tbl view box -->
+                    <div class="tbl_view_box">
+                        <!-- tbl view01 -->
+                        <table class="tbl_view01">
+                            <caption>정보</caption>
+                            <colgroup>
+                                <col width="17%">
+                                <col width="83%">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th scope="row">사업자등록증사본</th>
+                                <td colspan="3" class="con_ind02">
+                                    <div class="form_row upload">
+                                        <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa11" v-model="fileUploadGbn" checked="checked"><label for="aa11">파일 업로드</label></span>
+                                        <div class="input_file_form">
+                                            <input class="upload_path9" readonly="readonly" v-model="uploadFileNm">
+                                            <label class="upload btn_s01 bg03" id="btnFile">
+                                                <input type="file" @change="uploadFile($event)" />
+                                                <span>파일찾기</span>
+                                            </label>
+                                        </div>
+                                        <p class="form_info">
+                                            <span class="send_text" style="padding: 93px">(* 사업자등록증 사본 이미지 는  jpg.png.tiff.pdf 파일 형식으로 업로드 해주세요.)</span> <!-- 20181210 수정 -->
+                                        </p>
+                                    </div>
+                                    <div class="form_row send">
+                                        <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="fileUploadGbn"><label for="aa12">팩스 전송</label></span>
+                                        <p class="form_info">: 가입 신청 후 2일 이내에  02-2074-6089 으로 팩스를 전송해 주시기 바랍니다. <br> <!-- 20181112 수정 -->
+                                            <span class="send_text">(* 팩스 전송 후 온라인 가맹점 가입 승인 까지는 영업 일 기준 3~4일의 시간이 소요 될 수 있습니다.)</span> <!-- 20181112 수정 -->
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">매장 등록</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
-            <GajijumBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajijumBox>
+            <GajijumBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal1 = false"></GajijumBox>
 
         </div>
         <!-- //content -->
@@ -356,6 +399,11 @@
         showModal1: boolean = false; // 가맹점 검색
         postText1: string = ""; //테스트 가맹점
 
+        file: any = ''; //파일 객체
+        fileUploadGbn: any = '1'; //파일업로드 구분(기본-파일 업로드)
+        uploadFileNm: any = '';
+        resultFileNm: any = ''; //등록된 파일명
+
         //selectbox list
         receiptSaupList: any = {}; //현금영수증 사업자 코드
         saupGbnList: any = {}; //사업자구분
@@ -363,7 +411,6 @@
         subCompanyList: any = {}; //회사코드
         aproCodeList: any = {}; //승인코드
         upjongList: any = {}; //업종코드
-
 
         aproIdx : number = 0;
         admIdx : number = 0;
@@ -466,7 +513,8 @@
                                     if(bandChk == true){
                                         return;
                                     }else{
-                                        this.insertInfo(); //등록
+                                        //this.insertInfo(); //등록
+                                        this.fileUpload();
                                     }
                                 }
                                 , (error) => {
@@ -477,14 +525,50 @@
                         if(bandChk == true){ //승인대역 사용 불가
                             return;
                         }else{
-                            this.insertInfo(); //등록
+                            //this.insertInfo(); //등록
+                            this.fileUpload();
                         }
                     }else{
-                        this.insertInfo(); //승인대역 리스트가 없으면 그냥 등록
+                        //this.insertInfo(); //승인대역 리스트가 없으면 그냥 등록
+                        this.fileUpload();
                     }
                 }
             }
 
+        }
+
+        //파일 등록
+        fileUpload(){
+
+            if(this.file != null && this.file != '') {
+
+                let formData = new FormData();
+                formData.append('file', this.file);
+
+                CommonBoardService.postListDatas('file', null, formData).then((response) => {
+                        let result: any = response.data;
+                        // data - list
+                        // failCount
+                        // totalCount
+                        console.log(result)
+                        if (result != null) {
+                            console.log('엑셀 파일 체크 성공');
+                            this.resultFileNm =  result.fileName; //(원본파일명-originFileName)
+
+                            this.insertInfo();
+                        } else {
+                            console.log('엑셀 파일 체크 실패');
+                        }
+                    }
+                    , (error) => {
+                        //console.log(error)
+                    }
+                ).catch();
+            }else{
+
+                this.insertInfo();
+
+            }
         }
 
         //등록
@@ -571,7 +655,7 @@
             console.log(addData3);
             reqData['accounts'] = addData3; //관리자 정보 셋팅
 
-            reqData['saupFileNm'] = 'attachFileNm.jpg'; //관리자 정보 셋팅
+            reqData['saupFileNm'] = this.resultFileNm; //관리자 정보 셋팅
 
             console.log('최종 등록 정보 확인');
             console.log(reqData);
@@ -727,7 +811,7 @@
                 }
             }
 
-            //관리자 정보 체크
+            //사용자 정보 체크
             if(this.adminList.length > 0){
                 for(let i=0; i<this.adminList.length; i++){
                     if(this.adminList[i].adminNm != undefined && this.adminList[i].adminNm != ''){ //이름을 입력하면 관리자정보는 필수 입력항목이 됨
@@ -756,12 +840,17 @@
                 }
             }
 
+            if(this.fileUploadGbn == '1' && this.uploadFileNm == ''){
+                alert('사업자등록증사본 파일을 첨부 하세요.');
+                return;
+            }
+
             //다음 단계 functon 들어오는 곳!!
             //this.insertInfo();
             this.alrBandChk();
         }
 
-//사업자 구분(개인,법인) 체크
+        //사업자 구분(개인,법인) 체크
         saupIdChk() {
             if(this.saupId == ''){
                 this.saupIdYn = ''; //입력한 사업자등록번호가 없으면 사업자등록번호 중복체크값 초기화
@@ -1030,13 +1119,25 @@
         }
 
         //선택한 가맹점 정보 셋팅(지점 등록화면 상단의 지점 정보)
-        setGajiData(data) {
+        setGaJijumData(data) {
+            console.log('받은 가맹점 정보 :: ' + data)
             this.gajumId = data.gajumId; //가맹점 번호
             this.gajumSaupId = data.gajumSaupId; //가맹점 사업자 번호
             this.gajumNm = data.gajumNm; //가맹점명
             this.jijumId = data.jijumId; //지점 번호
             this.jijumNo = data.jijumSaupId; //지점 사업자 번호
             this.jijumNm = data.jijumNm; //지점명
+        }
+
+        uploadFile(event: any) { //파일 업로드
+            this.file = '';
+            this.uploadFileNm = '';
+            this.file = event.target.files[0];
+            this.uploadFileNm = this.file.name;
+            this.fileUploadGbn = '1';
+            console.log(this.file);
+            //let formData = new FormData();
+            //formData.append('file',this.file);
         }
 
     }

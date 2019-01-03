@@ -49,9 +49,13 @@
                 this.listOnLoad = false;
             }
         }
+        @Watch('listObject') onChange2(){
+            this.searchItems = this.listObject;
+        }
 
         //돔생성전 호출자
         created() {
+
             if(this.onLoadList==true){
                 this.listOnLoad = true;
             }

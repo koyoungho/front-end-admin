@@ -28,7 +28,7 @@
                                 <strong class="sub">첨부파일 : </strong>
                                 <span class="file_area">
                                     <template v-for="attFiles in listData.uploadFileNames">
-                                        <a v-on:click="download(attFiles.fileOrigin)" >{{attFiles.fileName}}<i class="icon_file"></i></a>
+                                        <a v-on:click="download(attFiles.fileName)" >{{attFiles.fileOrigin}}<i class="icon_file"></i></a>
                                     </template>
                                 </span>
 							</span>
@@ -99,6 +99,7 @@
 
                         if (result != null) {
                             this.listData = result;
+                            console.log( this.listData);
                         }
                     }
                     , (error) => {
