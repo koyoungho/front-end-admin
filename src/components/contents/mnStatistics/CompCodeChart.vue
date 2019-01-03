@@ -278,14 +278,6 @@
             CommonBoardService.getListDatas('statistics','subsaup',Object).then(result=>{
                     if(result.status==200){
                         this.ChartModel = result.data;
-                        this.ChartModel.filter(month=>{
-                            if(month.data.length > 0){
-                                let totalCount : any = {};
-                                month.data.filter(monthData=>{
-
-                                })
-                            }
-                        })
                     }
             }).catch(e=>{
                 console.log(e.message)
