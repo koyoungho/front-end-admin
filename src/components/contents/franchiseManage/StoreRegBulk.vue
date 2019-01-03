@@ -189,6 +189,7 @@
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import {environment} from '../../../utill/environment';
     import GajijumBox from '@/components/contents/franchiseManage/GajijumBox.vue';
+    import axios from 'axios';
 
     @Component({
         components: {
@@ -447,6 +448,23 @@
 
         downloadSample(){
 
+            //파일 다운로드
+            axios({
+                url: environment.apiUrl + '/file/sample/store',
+                method: 'GET',
+                responseType: 'blob', // important
+                headers: {"x-auth-token": sessionStorage.accessToken}
+            }).then((response) => {
+                console.log(response);
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', '매장 일괄 등록 양식.xlsx'); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+            });
+
+            /*
             CommonBoardService.getListDatas('file/sample/store', null, null).then((response) => {
                     let result: any = response.data;
                     console.log(result)
@@ -460,7 +478,7 @@
                     console.log(error)
                 }
             ).catch();
-
+            */
         }
 
     }
