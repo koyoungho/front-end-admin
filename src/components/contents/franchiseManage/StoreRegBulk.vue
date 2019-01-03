@@ -92,7 +92,7 @@
             <div class="sch_info_bot">
                 <p class="text_type01 center">
                     xls, xlsx 파일로 일괄발급이 가능합니다.
-                    <button type="button" id="" class="btn_s01 bg02"><i class="icon download"></i>샘플다운로드</button>
+                    <button type="button" id="" class="btn_s01 bg02" v-on:click="downloadSample"><i class="icon download"></i>샘플다운로드</button>
                 </p>
                 <p class="text_file">모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.</p>
             </div>
@@ -443,6 +443,24 @@
             //this.gajumNm = data.gajumNm;
             this.jijumId = data.jijumId;
             //this.jijumNm = data.jijumNm;
+        }
+
+        downloadSample(){
+
+            CommonBoardService.getListDatas('file/sample/store', null, null).then((response) => {
+                    let result: any = response.data;
+                    console.log(result)
+                    if (result.length > 0) {
+                        console.log('샘플 다운로드 성공')
+                    } else {
+                        console.log('샘플 다운로드 오류')
+                    }
+                }
+                , (error) => {
+                    console.log(error)
+                }
+            ).catch();
+
         }
 
     }
