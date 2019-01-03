@@ -412,23 +412,24 @@
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
 
-                    let result : any = "";
+                    let result : any = '';
 
-                    if(response.data.data){  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
+                    if(response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
                         result = response.data;
                     }else{
-                        result = response
+                        result = response;
+
                     }
 
                     this.listData = [];
                     this.checkBoxDatas=[];
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
-                        this.mTotalCount = result.extra.totalAmt;
+                        this.mTotalCount = result.data.extra.totalAmt;
                         // this.mTotalCount = result.extra.totalAmt;
-                        this.mServiceCharge = result.extra.bong;
-                        this.mSupplyValue = result.extra.amt;
-                        this.mSurtax = result.extra.vat;
+                        this.mServiceCharge = result.data.extra.bong;
+                        this.mSupplyValue = result.data.extra.amt;
+                        this.mSurtax = result.data.extra.vat;
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => { // 뿌릴헤더를 먼저 만들어준다
