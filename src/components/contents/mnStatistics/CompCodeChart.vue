@@ -71,36 +71,34 @@
 
             <!-- tbl scroll x box -->
             <div class="tbl_scroll_x_box" >
+              <template v-for="data,index in ChartModel">
               <div style="width: 50% ; float :left; ">
                 <td>
                 <!-- tbl list02 -->
                 <table class="tbl_list04 page_stats01">
                     <caption>회사코드별 통계</caption>
                     <colgroup>
+                        <template v-if="index == 0">
                         <col width="100px">
                         <col width="120px">
-                        <template v-for="array in ChartModel">
-                        <col span="16">
                         </template>
+                        <col span="16">
                     </colgroup>
                     <thead>
                     <tr>
-                        <th scope="col" rowspan="4">회사코드{{ChartModel.length}}</th>
+                      <template v-if="index == 0">
+                        <th scope="col" rowspan="4">회사코드</th>
                         <th scope="col" rowspan="4">사업장명</th>
-                        <template v-for="array,index in ChartModel" >
-                            <th scope="col" colspan="16">{{array.searchDate}}</th>
-                        </template>
+                      </template>
+                        <th scope="col" colspan="16">{{data.searchDate}}</th>
                     </tr>
                     <tr>
-                        <template v-for="array in ChartModel">
                         <th scope="col" colspan="4">승인</th>
                         <th scope="col" colspan="4">취소</th>
                         <th scope="col" colspan="4">국세청 승인 오류</th>
                         <th scope="col" colspan="4">국세청 취소 오류</th>
-                        </template>
                     </tr>
                     <tr>
-                        <template v-for="array in ChartModel">
                         <th scope="col" colspan="2">온라인</th>
                         <th scope="col" colspan="2">오프라인</th>
                         <th scope="col" colspan="2">온라인</th>
@@ -109,10 +107,8 @@
                         <th scope="col" colspan="2">오프라인</th>
                         <th scope="col" colspan="2">온라인</th>
                         <th scope="col" colspan="2">오프라인</th>
-                        </template>
                     </tr>
                     <tr>
-                        <template v-for="array in ChartModel">
                         <th scope="col">자진</th>
                         <th scope="col">비자진</th>
                         <th scope="col">자진</th>
@@ -129,172 +125,64 @@
                         <th scope="col">비자진</th>
                         <th scope="col">자진</th>
                         <th scope="col">비자진</th>
-                        </template>
                     </tr>
                     </thead>
                     <tbody>
-
+                                <template v-for="countData in data.data">
                                 <tr>
-                                  <template v-for=""></template>
-                                    <!--<td class="name">{{row.subSaup}}</td>-->
-                                    <!--<td class="name">{{row.shopNm}}</td>-->
-                                    <!--<td class="right">{{row.aprvOnlineSelf}}</td>-->
-                                    <!--<td class="right">{{row.aprvOnline}}</td>-->
-                                    <!--<td class="right">{{row.aprvOfflineSelf}}</td>-->
-                                    <!--<td class="right">{{row.aprvOffline}}</td>-->
-                                    <!--<td class="right">{{row.cancelOnlineSelf}}</td>-->
-                                    <!--<td class="right">{{row.cancelOnline}}</td>-->
-                                    <!--<td class="right">{{row.cancelOfflineSelf}}</td>-->
-                                    <!--<td class="right">{{row.cancelOffline}}</td>-->
-                                    <!--<td class="right">{{row.taxOnlineSelf}}</td>-->
-                                    <!--<td class="right">{{row.taxOnline}}</td>-->
-                                    <!--<td class="right">{{row.taxOfflineSelf}}</td>-->
-                                    <!--<td class="right">{{row.taxOffline}}</td>-->
-                                    <!--<td class="right">{{row.taxCancelOnlineSelf}}</td>-->
-                                    <!--<td class="right">{{row.taxCancelOnline}}</td>-->
-                                    <!--<td class="right">{{row.taxCancelOfflineSelf}}</td>-->
-                                    <!--<td class="right">{{row.taxCancelOffline}}</td>-->
+                                    <td class="name">{{countData.subSaup}}</td>
+                                    <td class="name">{{countData.shopNm}}</td>
+                                    <td class="right">{{countData.aprvOnlineSelf}}</td>
+                                    <td class="right">{{countData.aprvOnline}}</td>
+                                    <td class="right">{{countData.aprvOfflineSelf}}</td>
+                                    <td class="right">{{countData.aprvOffline}}</td>
+                                    <td class="right">{{countData.cancelOnlineSelf}}</td>
+                                    <td class="right">{{countData.cancelOnline}}</td>
+                                    <td class="right">{{countData.cancelOfflineSelf}}</td>
+                                    <td class="right">{{countData.cancelOffline}}</td>
+                                    <td class="right">{{countData.taxOnlineSelf}}</td>
+                                    <td class="right">{{countData.taxOnline}}</td>
+                                    <td class="right">{{countData.taxOfflineSelf}}</td>
+                                    <td class="right">{{countData.taxOffline}}</td>
+                                    <td class="right">{{countData.taxCancelOnlineSelf}}</td>
+                                    <td class="right">{{countData.taxCancelOnline}}</td>
+                                    <td class="right">{{countData.taxCancelOfflineSelf}}</td>
+                                    <td class="right">{{countData.taxCancelOffline}}</td>
                                 </tr>
-
+                                </template>
                     <!--<tr>-->
                         <!--<td colspan="18" class="no_data">조회된 내용이 없습니다.</td>-->
                     <!--</tr>-->
                     </tbody>
                     <tfoot>
                     <tr class="total">
-                        <template v-for="array in ChartModel">
+                        <template v-if="index == 0">
                         <th scope="row" colspan="2">합계</th>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
                         </template>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
+                        <td class="right">1,000</td>
                     </tr>
                     </tfoot>
                 </table>
                 </td>
               </div>
+              </template>
 
-              <div style='width: 50%  ; float : left ; '>
-                <!-- tbl list02 -->
-                <table class="tbl_list04 page_stats01">
-                    <caption>회사코드별 통계</caption>
-                    <colgroup>
-                      <template v-for="array in ChartModel">
-                        <col span="16">
-                      </template>
-                    </colgroup>
-                    <thead>
-                    <tr>
-                      <template v-for="array,index in ChartModel" >
-                        <th scope="col" colspan="16">{{array.searchDate}}</th>
-                      </template>
-                    </tr>
-                    <tr>
-                      <template v-for="array in ChartModel">
-                        <th scope="col" colspan="4">승인</th>
-                        <th scope="col" colspan="4">취소</th>
-                        <th scope="col" colspan="4">국세청 승인 오류</th>
-                        <th scope="col" colspan="4">국세청 취소 오류</th>
-                      </template>
-                    </tr>
-                    <tr>
-                      <template v-for="array in ChartModel">
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                      </template>
-                    </tr>
-                    <tr>
-                      <template v-for="array in ChartModel">
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                      </template>
-                    </tr>
-                    </thead>
-                    <tbody>
 
-                    <tr>
-                      <template v-for=""></template>
-                      <!--<td class="name">{{row.subSaup}}</td>-->
-                      <!--<td class="name">{{row.shopNm}}</td>-->
-                      <!--<td class="right">{{row.aprvOnlineSelf}}</td>-->
-                      <!--<td class="right">{{row.aprvOnline}}</td>-->
-                      <!--<td class="right">{{row.aprvOfflineSelf}}</td>-->
-                      <!--<td class="right">{{row.aprvOffline}}</td>-->
-                      <!--<td class="right">{{row.cancelOnlineSelf}}</td>-->
-                      <!--<td class="right">{{row.cancelOnline}}</td>-->
-                      <!--<td class="right">{{row.cancelOfflineSelf}}</td>-->
-                      <!--<td class="right">{{row.cancelOffline}}</td>-->
-                      <!--<td class="right">{{row.taxOnlineSelf}}</td>-->
-                      <!--<td class="right">{{row.taxOnline}}</td>-->
-                      <!--<td class="right">{{row.taxOfflineSelf}}</td>-->
-                      <!--<td class="right">{{row.taxOffline}}</td>-->
-                      <!--<td class="right">{{row.taxCancelOnlineSelf}}</td>-->
-                      <!--<td class="right">{{row.taxCancelOnline}}</td>-->
-                      <!--<td class="right">{{row.taxCancelOfflineSelf}}</td>-->
-                      <!--<td class="right">{{row.taxCancelOffline}}</td>-->
-                    </tr>
-
-                    <!--<tr>-->
-                    <!--<td colspan="18" class="no_data">조회된 내용이 없습니다.</td>-->
-                    <!--</tr>-->
-                    </tbody>
-                    <tfoot>
-                    <tr class="total">
-                      <template v-for="array in ChartModel">
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                      </template>
-                    </tr>
-                    </tfoot>
-                </table>
-              </div>
             </div>
             <!-- //tbl scroll box -->
 
@@ -312,6 +200,7 @@
     import CompCodeChartPop from "@/components/contents/mnStatistics/CompCodeChartPop.vue";
     import {CommonBoardService} from '../../../api/common.service';
     import {CcChart} from '../../../model/chart/compCodeChart';
+    import {CcChartAcount} from '../../../model/chart/compCodeChartAccount';
 
     @Component({
 
@@ -321,6 +210,7 @@
     })
     export default class CompCodeChart extends Vue {
         ChartModel : CcChart[] = [];
+        ChartAccountModel : CcChartAcount[] = [];
         companyCodeList : any = ""; // 회사코드
         companyCode : string = "";
         upjongCodeList : any = "";  //  업종코드
@@ -388,7 +278,14 @@
             CommonBoardService.getListDatas('statistics','subsaup',Object).then(result=>{
                     if(result.status==200){
                         this.ChartModel = result.data;
-                        this.monthCount = result.data.length;
+                        this.ChartModel.filter(month=>{
+                            if(month.data.length > 0){
+                                let totalCount : any = {};
+                                month.data.filter(monthData=>{
+
+                                })
+                            }
+                        })
                     }
             }).catch(e=>{
                 console.log(e.message)
