@@ -53,6 +53,8 @@ Vue.use(VCharts);
 import VueDragscroll from 'vue-dragscroll'
 Vue.use(VueDragscroll)
 
+
+
 new Vue({
     router,
     store,
