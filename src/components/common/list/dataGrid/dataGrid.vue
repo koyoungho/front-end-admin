@@ -43,12 +43,11 @@
             <col v-bind:width="columNames.width">
           </template>
         </colgroup>
-
         <thead>
          <!--탑헤더 추가하기-->
         <template v-if="dataGridDetail.dataGrid.columTopHeader">
           <template v-for="topHeader in dataGridDetail.dataGrid.columTopHeader">
-                <tr >
+                <tr>
                     <template v-for="header in topHeader.level">
                       <template v-if="header.rows!=0">
                       <th :colspan="header.cols" :rowspan="header.rows">{{header.headerName}}</th>
@@ -143,8 +142,7 @@
                 <td><input type="text"  class="input form_w100" v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]"></td>
               </template>
               <!--주의 셀렉트박스는 공용보다 하나의 별개추가된 부분입니다-->
-
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'" >
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'">
                 <td>
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList==1">
                     <select class="select form_w100" v-model="listData[index].rsnCode">
@@ -160,8 +158,6 @@
                   </template>
               </td>
               </template>
-
-
             </template>
           </tr>
         </template>
@@ -176,10 +172,8 @@
           </tr>
         </template>
         </tbody>
-
       </table>
     </div>
-
     <!-- //tbl list box -->
     <!-- btn tbl bot -->
     <template v-if="authButton"> <!--계정 권한 관리에서 사용-->
@@ -230,13 +224,14 @@
         mServiceCharge: number = 0;
         mSupplyValue: number = 0;
         mSurtax: number = 0;
-        datass :any = [1,2,3]
-        authButton: boolean = false; //승인버튼 보이기
-        position :number = 0;
 
-        ops:any = "";
+        authButton: boolean = false; //승인버튼 보이기
+
 
         @Watch('listOnLoad') onChange() {
+            this.getCommonListData();
+        }
+        @Watch('dataGridDetail') onChange2() {
             this.getCommonListData();
         }
         @Watch('checkBoxDatas') onChangeCheckBox() { // 체크박스 선택시 및 데이터 전달하는곳
@@ -283,12 +278,12 @@
 
         checkAlls(id,indexs){  // 전체 체크박스선택
             if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
-                // 중복제거
-                let tempDelCheck :any[] = [];
-                this.checkBoxDatas.filter((e)=>{
-                    if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
-                        tempDelCheck.push(e);
-                    }
+                    // 중복제거
+                    let tempDelCheck :any[] = [];
+                    this.checkBoxDatas.filter((e)=>{
+                        if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
+                            tempDelCheck.push(e);
+                        }
                 })
                 this.checkBoxDatas = tempDelCheck;
 
@@ -313,7 +308,6 @@
             }
 
         }
-
 
         //돔생성전 호출자
         created() {
@@ -418,12 +412,13 @@
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
 
-                    let result : any = "";
+                    let result : any = '';
 
-                    if(response.data.data){  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
+                    if(response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
                         result = response.data;
                     }else{
-                        result = response
+                        result = response;
+
                     }
 
                     this.listData = [];
@@ -522,6 +517,8 @@
                             });
                             this.listData.push(numberObject);
                         });
+
+
                     }
                     else {
 
