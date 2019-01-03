@@ -89,7 +89,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">합계</th>
-                                    <td class="right">{{viewRowItem.totalAmt}}</td>
+                                    <td class="right">{{viewRowItem.totamt}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업자등록번호</th>
@@ -101,7 +101,7 @@
                                     <th scope="row" colspan="2">사업장전화번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">{{viewRowItem.charTel}}</td>
+                                    <td colspan="2">{{viewRowItem.telNum}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -111,7 +111,7 @@
                         <th scope="col" colspan="2">사업장 주소</th>
                     </tr>
                     <tr>
-                        <td colspan="2" class="con01">{{viewRowItem.saupCaddr}}</td>
+                        <td colspan="2" class="con01">{{viewRowItem.addr1}} {{viewRowItem.addr2}}</td>
                     </tr>
                     <tr>
                         <td colspan="2" class="con01">
@@ -230,7 +230,7 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row">취소 사유 입력</th>
+                        <th scope="row" style="">취소 사유 입력</th>
                         <td class="left">
                             <span class="rdo_box"><input type="radio" name="chk"  v-model="canSayu" value="1" id="aa11" ><label for="aa11">거래취소</label></span>
                             <span class="rdo_box"><input type="radio" name="chk"  v-model="canSayu" value="2" id="aa12" ><label for="aa12">오류발급</label></span>
@@ -304,21 +304,22 @@
         created(){
             this.cancleReceipView();
             // this.exceptColum  = [{name : '거래일자' , id : 'saleDate'}] // 리사이즈 됬을경우 숨겨져야할 컬럼
-            this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            this.listItem =  // 그리드 서치 페이징 옵션 처리 데\이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '거래일자' ,id : 'regiDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                             {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '발급용도' ,id : 'geoguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '발급용도' ,id : 'geogu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '거래구분' ,id : 'trguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소거래' },
                             {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                         ],
                         totalColum: 8,
-                        apiUrl : 'receipts/'+this.$route.params.objectKey+ '/cancels',
+                        // apiUrl : 'receipt/'+this.$route.params.objectKey.saleDate+'/'+this.$route.params.objectKey.perm+ '/cancels',
+                        apiUrl : 'receipt/'+'20181205/C34344701' +'/cancels'+'?onlineYn=Y',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         mTotal : false , // 합계금액 란 활성화시 리슐트금액넣기
                         mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -399,12 +400,13 @@
         }
 
         cancleReceipView(){
-            this.objectKey = this.$route.params.objectKey
-            if(!this.objectKey){
-                alert('접근할수 없습니다')
-                this.$router.push({name:'ioc'});
-            }else{
-                CommonBoardService.getListDatas('receipts',this.$route.params.objectKey,'').then((response) => {
+            // this.objectKey = this.$route.params.objectKey
+            // if(!this.objectKey){
+            //     alert('접근할수 없습니다')
+            //     this.$router.push({name:'receiptViewCancel'});
+            // }else{
+                CommonBoardService.getListDatas('receipt/20181205','C34344701','').then((response) => {
+                // CommonBoardService.getListDatas('receipt',this.$route.params.objectKey,'').then((response) => {
                     this.viewRowItem = response.data
                     if(response.data.vat > 1){
                         if(response.data.vat >= 1){
@@ -415,7 +417,7 @@
                     }
                     this.onLoadListView = true;
                 }).catch();
-            }
+            // }
             this.onLoadListView = false
         }
         cancleReceipAction(){
