@@ -26,40 +26,11 @@
                     <span class="btn_check_area"><button type="button" id="" class="btn_m01 bg03" v-on:click="chkError">확인</button></span>
                 </div>
                 <!-- data check list -->
-                <ul class="data_check_list">
-
-                    {{listData}}
-
-                    <!--<li>-->
-                        <!--<label> {{listData.}} :</label>-->
-                        <!--<input type="text" class="input form_data" title="">-->
-                    <!--</li>-->
-                    <!---->
-
-
-
-
-
-<!--
-
-                    <li>
-                        <label>헤더 :</label>
-                        <input type="text" class="input form_data" title="">
+                <ul class="data_check_list"  style="width:800px;">
+                    <li v-for="(datas, index) in listDataView">
+                        <label style="width:500px;">{{datas.name}} </label>
+                        <input type="text" class="input form_data" title="" v-model ="datas.value" style="width:130px;">
                     </li>
-                    <li>
-                        <label>회사코드 :</label>
-                        <input type="text" class="input form_data" title="">
-                    </li>
-                    <li>
-                        <label>승인/취소 :</label>
-                        <input type="text" class="input form_data" title="">
-                    </li>
-                    <li>
-                        <label>발행용도 :</label>
-                        <input type="text" class="input form_data" title="">
-                    </li>
-
-                    -->
                 </ul>
 
             </div>
@@ -85,6 +56,7 @@
         checkString: string = '';
         checkType: string = "realtime";
         listData:any ="";
+        listDataView:any =[];
 
         //돔생성전 호출자
         created() {
@@ -102,21 +74,24 @@
             searchData['checkType'] =this.checkType;
             // api 데이터 호출
             CommonBoardService.getListDatas('transfer/check', null, searchData).then((response) => {
-                console.log(response);
-
+                   console.log(response);
                     if (response.status.toString() == '201' ) { //성공
                         let result: any = response.data;
                         this.listData=result;
-                        // let resultstr = result.join(',');
-                        // console.log(resultstr);
+
+                        Object.keys(this.listData).forEach( e =>{
+                            this.listDataView.push({ name : e, value : this.listData[e]})
+                        })
+
                     } else { //
-                        // alert(response.msg);
                         console.log(response);
-                    //
                     }
                 }
                 , (error) => {
-                    //this.$Progress.finish();
+
+                    if (error.data.code == '400') {
+                        alert(error.data.message);
+                    }
                 }
             ).catch();
 

@@ -43,21 +43,15 @@
                             <div class="file_add_box">
                                 <ul >
                                     <li v-for="(file, index) in files" :key="file.id">
-                                        <!--<span>{{file.fileName}}</span>-->
-                                        <span>{{file.name}}</span>
-                                        <a href="#" class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
-                                        <!--<span>{{file.size | formatSize}}</span> - -->
-                                        <!--<span v-if="file.error">{{file.error}}</span>-->
-                                        <!--<span v-else-if="file.success">success</span>-->
-                                        <!--<span v-else-if="file.active">active</span>-->
-                                        <!--<span v-else-if="file.active">active</span>-->
-                                        <!--<span v-else></span>-->
+                                        <span>{{file.name}}/{{file.index}}</span>
+                                        <a class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
                                     </li>
                                 </ul>
                                 <span class="btn_file_area">
                                      <file-upload
                                              :multiple="true"
                                              :size="1024 * 1024 * 10"
+                                             :headers="{'Accept-Charset': 'utf-8'}"
                                              v-model="files"
                                              accept="*"
                                              @input-filter="inputFilter"
@@ -66,15 +60,6 @@
                                     <button type="button"  class="btn_m01 bg03">파일추가</button>
                                      </file-upload>
                                 </span>
-
-                                <!--<template v-if="attFileYn == 'Y' ">-->
-                                    <!--<li>-->
-                                    <!--<a>가이드2.pdf</a>-->
-                                    <!--<a  class="btn_close"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>-->
-                                    <!--</li>-->
-<!--</template>-->
-
-
                             </div>
                         </td>
                     </tr>
@@ -154,7 +139,16 @@ console.log(result);
                         this.viewType = result.viewType;
                         this.content = result.content;
                         this.attFileYn = result.attFileYn;
-                        this.files =result.uploadFileNames;
+
+                        let oldFile :any =[];
+                        if(result.uploadFileNames.length >0) {
+                            for (let i = 0; i < result.uploadFileNames.length; i++) {
+                                oldFile.push({name: result.uploadFileNames[i].fileOrigin});
+                                this.uploadFileNames.push({fileName: result.uploadFileNames[i].fileName, fileOrigin: result.uploadFileNames[i].fileOrigin});
+                            }
+                        }
+                        this.files = oldFile;
+
                         if(result.importantYn =='Y'){
                             this.importantYnB = true;
                         }
@@ -205,29 +199,11 @@ console.log(result);
             }
         }
         inputFile(newFile, oldFile) {
+
             if (newFile && !oldFile) {
-
-                let formData = new FormData();
-                formData.append('file', this.files);
-
-                CommonBoardService.postListDatas('file', null, formData).then((response) => {
-                        let result: any = response.status;
-                        console.log(response);
-
-                        if (result=='200') {
-                            console.log('파일 등록');
-                        } else {
-                            console.log('파일 등록 실패');
-                        }
-                    }
-                    , (error) => {
-                        console.log(error)
-                    }
-                ).catch();
-
-
                 // add
-                console.log('add', newFile)
+                console.log('add', newFile);
+                this.addFile(newFile);
 
             }
             if (newFile && oldFile) {
@@ -235,7 +211,12 @@ console.log(result);
                 console.log('update', newFile)
             }
             if (!newFile && oldFile) {
+
+                console.log( this.uploadFileNames);
+
                 // remove
+                console.log('oldFile', oldFile);
+                console.log('newFile', newFile);
                 console.log('remove', oldFile)
             }
         }
@@ -250,16 +231,10 @@ console.log(result);
             reqData['title'] = this.title;
             reqData['viewType'] = this.viewType;
             reqData['content'] = this.content;
-            reqData['uploadFileNames'] = this.files;
+            reqData['uploadFileNames'] = this.uploadFileNames;
             reqData['importantYn'] = this.importantYn;
 
-    //         for(){
-    //
-    // }
-    //
-    //         this.uploadFileNames.fileName =   this.files
-
-            console.log(this.files)
+            console.log( this.uploadFileNames);
 
             if(this.seq == undefined ||  this.seq == '') {//등록
                 CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
@@ -278,6 +253,7 @@ console.log(result);
                 ).catch();
 
             }else{//수정
+
                 CommonBoardService.updateListData('notice', this.seq, reqData).then((response) => {
                     if (response.status.toString() == '200') { //성공
                         alert("수정되었습니다.");
@@ -297,6 +273,9 @@ console.log(result);
 
         }
 
+        /**
+         * 공지사항 삭제
+         */
         delNotice(){
             CommonBoardService.deleteListDatas('notice', this.seq, null).then((response) => {
                 if (response.status.toString() == '200') { //성공
@@ -325,6 +304,37 @@ console.log(result);
                 alert("내용을 입력하세요");
                 return false;
             }
+        }
+
+        /**
+         * 파일 등록
+         * @param newFile
+         */
+        addFile(newFile){
+            let formData = new FormData();
+            formData.append('Accept-Charset', ' utf-8');
+            formData.append('file', newFile.file);
+
+            CommonBoardService.postListDatas('file', null, formData).then((response) => {
+                    let result: any = response.data;
+
+                    let addFile ={};
+
+                    if (response.status.toString() =='200') {
+
+                        addFile['fileName']= result.fileName;
+                        addFile['fileOrigin']= result.originFileName;
+
+                        this.uploadFileNames.push(addFile);
+
+                    } else {
+                        alert('파일 등록 실패');
+                    }
+                }
+                , (error) => {
+                    console.log(error)
+                }
+            ).catch();
         }
 
     }
