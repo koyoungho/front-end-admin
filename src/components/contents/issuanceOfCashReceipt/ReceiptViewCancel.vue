@@ -37,18 +37,18 @@
             {
                 dataGrid: {
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '거래일자' ,id : 'saleDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
-                        {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        {columName : '금액' ,id : 'totamt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '발급용도' ,id : 'geogu', width : '13s%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '거래구분' ,id : 'trgu', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : '회사코드' ,id : 'trguNm', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : '사업자번호' ,id : 'saupId', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'ID명' ,id : 'loginid', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '고객명' ,id : 'cusName', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '처리내용' ,id : 'errorMsg', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' },
+                        {columName : '거래일자' ,id : 'saleDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '승인번호' ,id : 'perm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '금액' ,id : 'totamt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '발급용도' ,id : 'geogu',type:'text', width : '13s%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '거래구분' ,id : 'trgu',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '회사코드' ,id : 'trguNm',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '사업자번호' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'ID명' ,id : 'loginid',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '신분확인' ,id : 'comfirm',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '고객명' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '메모' ,id : 'memo',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '처리내용' ,id : 'errorMsg',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' },
                     ],
                     totalColum: 10,
                     apiUrl : 'receipt',

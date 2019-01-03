@@ -421,9 +421,9 @@
                     let result : any = "";
 
                     if(response.data.data){  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
-                        result = response.data.data;
+                        result = response.data;
                     }else{
-                        result = response.data
+                        result = response
                     }
 
                     this.listData = [];
@@ -467,8 +467,17 @@
 
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
 
-                    if (result.data.length > 0) { // 데이터 키맵에 맞게 매핑하기
-                        result.data.filter((e,indexs) => {
+                    let nowData :any = []
+
+
+                    if(result.data){
+                        nowData = result.data;
+                    }else{
+                        nowData = result
+                    }
+
+                    if (nowData.length > 0) { // 데이터 키맵에 맞게 매핑하기
+                        nowData.filter((e,indexs) => {
                             let Objects = {};
                             Object.keys(e).forEach((key) => {
                                 if (this.menuHeader[key] == key) {
@@ -513,8 +522,6 @@
                             });
                             this.listData.push(numberObject);
                         });
-
-
                     }
                     else {
 
