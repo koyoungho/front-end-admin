@@ -200,13 +200,13 @@
                 selectedRow['jijumNm'] = obj.shopNm; //지점명
                 console.log('지점 선택!!!')
                 console.log(selectedRow);
-                this.$emit('selectedGaji', selectedRow); //선택한 가맹점만 값 넘김
-                this.$emit('gajiClose')
+                this.$emit('selectedGaJijum', selectedRow); //선택한 가맹점만 값 넘김
+                this.$emit('gajiumClose')
             }
         }
 
         closeAddr(){
-            this.$emit('gajiClose');
+            this.$emit('gajiumClose');
         }
 
         searchGajum() {
@@ -237,6 +237,7 @@
                     let rowData : any = {};
                     let putData : any = [];
                     arrData.filter(e=>{
+                        rowData = {};
                         rowData['gajumId'] = e.gajumId;
                         rowData['saupId'] = e.saupId;
                         rowData['shopNm'] = e.shopNm;
@@ -255,7 +256,7 @@
 
             this.gajiGbn = false;
             this.gajuNm = '지점 번호';
-
+            this.responseData = [];
             CommonBoardService.getListData('jijum/'+this.gajumId, null, null).then((response) => {
                     //console.log(response)
                     this.responseData = response.data;

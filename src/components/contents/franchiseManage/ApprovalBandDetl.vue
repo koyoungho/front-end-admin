@@ -175,7 +175,7 @@
                     alert('승인대역이 삭제되었습니다.')
                     this.$router.push('/home/approvalBandList')
                 }else{
-                    alert('승인대역 등록이 실패하였습니다.\n다시 시도하세요.');
+                    alert('승인대역 삭제가 실패하였습니다.\n다시 시도하세요.');
                 }
             }).catch();
         }

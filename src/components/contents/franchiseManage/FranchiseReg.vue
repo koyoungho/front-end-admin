@@ -134,7 +134,7 @@
                         <col width="17%">
                         <col width="33%">
                     </colgroup>
-                    <tbody v-for="(apro, index) in approvalList">
+                    <tbody v-for="(apro, index) in approvalList" class="bottom_space">
                         <tr>
                             <th scope="row">회사코드</th>
                             <td>
@@ -216,7 +216,7 @@
                                 <col width="17%">
                                 <col width="33%">
                             </colgroup>
-                            <tbody v-for="(adm, index) in adminList">
+                            <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름<em class="form_req">*</em></th>
                                 <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm"></td>
@@ -454,6 +454,8 @@
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
             saupData['addr2'] = this.addr2; //사업장 상세주소
+            saupData['subSaup'] = this.saupSubSaup; //회사코드
+            saupData['upjong'] = this.saupUpjong; //업종구분
 
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
 
@@ -612,8 +614,13 @@
             }else if(this.addr2 == '') {
                 alert('상세주소를 입력하세요.');
                 return;
-            }//else if(this.)
-
+            }else if(this.saupSubSaup == ''){
+                alert('회사코드를 선택하세요.');
+                return;
+            }else if(this.saupUpjong == '') {
+                alert('업종코드를 선택하세요.');
+                return;
+            }
 
             //승인대역 정보 체크
             if(this.approvalList.length > 0){

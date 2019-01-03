@@ -127,6 +127,13 @@
               <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
             </li>
           </template>
+          <template v-if="item.type=='inputPop2'">
+            <li>
+              <label for="aa">{{item.title}}</label>
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
+              <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen">검색</button>
+            </li>
+          </template>
         </template>
       </ul>
       <!--</div>-->
@@ -138,6 +145,7 @@
       <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
     </div>
     <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
+    <GajijumBox v-if="showModal2"  v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
   </div>
 </template>
 
@@ -148,6 +156,7 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
+    import GajijumBox from '@/components/contents/franchiseManage/GajijumBox.vue'
     // see docs for available options
 
 
@@ -155,7 +164,7 @@
 
     @Component({
         components: {
-            Search,GajiBox
+            Search,GajiBox,GajijumBox
         }
     })
     export default class Search extends Vue {
@@ -185,6 +194,8 @@
         // 가지팝업
         showModal1 : boolean = false;
 
+        // 가맹점 지점 팝업
+        showModal2 : boolean = false;
 
         formatDates(date) {
             let formattedDates = ''
@@ -194,6 +205,10 @@
 
         popupOpen(){
             this.showModal1= true;
+        }
+
+        gajiPopupOpen(){
+            this.showModal2= true;
         }
 
         created() {
@@ -297,6 +312,20 @@
                     e.value=data.saupId
                 }else if(e.id=='shopNm'){
                     e.value = data.shopNm
+                }else if(e.id=='gajumId'){
+                    e.value = data.gajumId
+                }
+            })
+        }
+
+        //선택한 가맹점,지점 정보 셋팅(지점 등록화면 상단의 지점 정보)
+        setGaJijumData(data) {
+            console.log(data)
+            this.searchItem.filter(e=>{
+                if(e.id=='gajumId'){
+                    e.value=data.gajumId;
+                }else if(e.id=='jijumId'){
+                    e.value = data.jijumId;
                 }
             })
         }

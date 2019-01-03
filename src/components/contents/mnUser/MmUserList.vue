@@ -30,7 +30,8 @@
     import {format} from 'date-fns';
     import {Component, Vue} from "vue-property-decorator";
     import PreviewBusinessLicense from "@/components/contents/mnUser/previewBizLicense.vue";
-    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import ListComponent from '../../common/list/list.vue';
+    import {CommonBoardService} from "../../../api/common.service";  // 공용리스트 콤포넌트
 
     @Component({
         components: {
@@ -80,7 +81,6 @@
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                     {type: 'selectCode' , title :'등급',id: 'role', name:'role' , value: '' ,  api : '' , option : [{ codeNm : '시스템관리자' , code: '0001' },{codeNm : '현금영수증사업자' , code: '0002' },{codeNm : '콜센터관리자' , code: '0003' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
                     {type: 'selectCode' , title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
-
                     {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
@@ -118,7 +118,33 @@
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(data){
             console.log(data)
-            if(data.key=='id'){
+            if(data.row.saupFileNm != ''){
+                //this.rowData = data.row;
+                //this.popComfirm();
+                console.log('사업자 등록증 확인 팝업 보이기')
+
+                // api 데이터 호출(매장 tnwjd)
+                CommonBoardService.getListData('file/'+data.row.saupFileNm, null, null).then((response) => {
+                        //let result: any = response.data;
+                        console.log(response);
+                        if (response.status == 200 ||  response.status == 201) {
+                            alert('첨부파일 있습니다.');
+                            this.$router.push({name:'storeList'});
+                        } else {
+                            alert('첨부파일이 없습니다.');
+                            return;
+                        }
+                    }
+                    , (error) => {
+                        console.log(error);
+                    }
+                ).catch((response) => {
+                    console.log(response);
+                });
+
+
+
+            }else if(data.key=='id'){
                  this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
             }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태가 승인대기인 경우 팝업창 확인
                 this.rowData = data.row;

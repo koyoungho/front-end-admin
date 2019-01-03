@@ -14,7 +14,7 @@
             <!-- popup content -->
             <div class="popup_content">
                 <p class="receipt">
-                    <img src="images/img_receipt01.png" alt="사업자등록증 사본">
+                    <img src="../../../assets/images/img_receipt01.png" alt="사업자등록증 사본">
                 </p>
             </div>
             <!-- //popup content -->
