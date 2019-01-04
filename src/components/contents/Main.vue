@@ -78,7 +78,7 @@
                 <ul class="notice_list">
                     <template v-if="noticeList.length > 0">
                         <li v-for="noticeList in noticeList" v-on:click="goNoticeDetl(noticeList.seq)" >
-                            <a href="typescript:void();">{{noticeList.title}}</a>
+                            <a>{{noticeList.title}}</a>
                             <span class="date">{{formatDates(noticeList.updDt)}}</span>
                         </li>
                     </template>
@@ -131,7 +131,7 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {CommonBoardService} from "../../api/common.service";
     import moment from 'moment'
-    Vue.prototype.moment = moment;
+    // Vue.prototype.moment = moment;
 
 
     @Component({
@@ -184,8 +184,8 @@
          */
         formatDates(date) {
             let formattedDates = '';
-            formattedDates = moment(date.substr(0,8)).format( "YYYY.MM.DD");
-            return formattedDates
+            formattedDates = moment(date).format( "YYYY.MM.DD");
+            return formattedDates--
         }
 
 
