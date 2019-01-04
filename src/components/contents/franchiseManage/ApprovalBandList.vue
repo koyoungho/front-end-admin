@@ -58,10 +58,9 @@
                         {columName: '승인대역(끝)',id: 'lpermto',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '건수',id: 'count',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '등록일',id: 'regDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '수정일',id: 'updDate',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '상태',id: 'aprvYn',type: 'text',width: '6%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                     ],
-                    totalColum: 11,
+                    totalColum: 10,
                     apiUrl: 'approvalband',
                     onLoadList: true,  // onLoad 로딩 유무
                     //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
@@ -72,7 +71,7 @@
                 search: [
                     {type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
                     {type: 'selectCode',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: 'code/aprvcode',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: '1'}, {codeNm: '취소', code: '2'}, {codeNm: '등록',code: '3'}]},
+                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: 'N'}, {codeNm: '등록',code: 'Y'}]},
                     {type: 'date',title: '등록일',id: 'date',name: 'date',searchStartDate: this.setDate,searchEndDate: this.setDate,calenderCount: 2},
                     {type: 'select',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}]},
                     {type: 'input', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
