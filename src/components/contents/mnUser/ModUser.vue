@@ -73,7 +73,7 @@
                     <tr>
                         <th scope="row">사업자등록증 확인</th>
                         <td class="con01">
-                            <a href="#" class="link02">신일약국 사업자등록증 사업자등록증 뷰화면</a>
+                            <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
                         </td>
                         <th scope="row">전화번호</th>
                         <td class="con01">
@@ -235,6 +235,8 @@
     import {Gajum} from '../../../model/account/gajum';
     import {Saupjang} from '../../../model/account/saupjang';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import axios from 'axios';
+    import {environment} from '../../../utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
@@ -660,6 +662,33 @@
                     console.log(error);
                 }
             ).catch();
+
+        }
+
+        downloadFile(){
+
+            console.log('사업자등록증 파일 다운로드');
+            //this.rowData = data.row;
+            //this.popComfirm();
+
+            let server: any = environment.apiUrl;
+            let param: any = '/file/' + '20190102154913_J0341559.JPG';
+            let fileNm : string = '20190102154913_J0341559.JPG';
+            //파일 다운로드
+            axios({
+                url: server + param,
+                method: 'GET',
+                responseType: 'blob', // important
+                headers: {"x-auth-token": sessionStorage.accessToken}
+            }).then((response) => {
+                console.log(response);
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', fileNm); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+            });
 
         }
 

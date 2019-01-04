@@ -24,7 +24,7 @@
                 <p class="form_cert row01">
                   <input type="text" id="" name="" size="" maxlength="" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber">
                   <span class="time_count2">{{message}}</span>
-                  <button type="button" id="" class="btn_m01 bg01" @click="optCallConfirm">인증번호 확인</button>
+                  <button type="button" id="" class="btn_m01 bg01" @click="optCallConfirm(otpNumber)">인증번호 확인</button>
                 </p>
               </div>
             </div>
@@ -66,11 +66,14 @@
         interval : number = 0;
         message : string = "";
 
+        @Prop() loginId !: string;
+        id : string = this.loginId;
+
         created(){
           this.accountGet()
         }
         mounted(){
-
+            this.startTimer();
         }
         goMain() { //메인이동
             this.$router.push('home/main')
@@ -133,19 +136,31 @@
             this.interval = setInterval(this.countDown, 1000);
         }
 
+        optCallConfirm(auth_opt){
 
-        optCallConfirm(){
+            if(this.message == '0:00'){
+                alert('인증 시간이 초과되었습니다. 다시 로그인하세요.');
+                this.closePop();
+                return;
+            }
+
             let otp = {
-                id: "",
+                /*id: "",
                 name: this.inputName,
                 saupId:this.saupId,
-                phoneNum : this.phoneNum
+                phoneNum : this.phoneNum*/
             }
+
+            let id : string = this.id;
+
             if(this.otpNumber){
-                CommonBoardService.postListDatas('otp',this.otpNumber,otp)
+                /*
+                CommonBoardService.postListDatas('/otp/'+this.otpNumber+'/login', null, otp)
                     .then(result => {
                         if(result.data.code=='000'){
                             alert('인증되었습니다' )
+                            //commit('LOGIN', result.data)
+
                             clearInterval(this.interval)
                             this.reset();
                             sessionStorage.setItem('sisMgtToken',sessionStorage.accountId)
@@ -155,7 +170,27 @@
                             clearInterval(this.interval)
                         }
 
+                    })*/
+
+                //보안로직포함할곳
+                this.$store.dispatch('OTP_LOGIN', {auth_opt, id})
+                    .then((result) => {
+                        console.log('OTP 인증 여부');
+                        console.log(result);
+                        if (result == 'success') {
+                            sessionStorage.setItem('sisMgtToken',sessionStorage.accountId)
+                            console.log('@@@@@ OPT인증 후 세션 확인 시작!!!')
+                            console.log(sessionStorage)
+                            console.log('@@@@@ OPT인증 후 세션 확인 끝###')
+
+                            this.$emit('menuChk');
+                            //메뉴권한 부분 추가
+                            //this.$router.push({name:'main'})
+                        } else {
+                            this.otpFail();
+                        }
                     })
+                    .catch(({message}) => this.otpFail());
             }
             else{
                 alert('otp번호를 입력해주세요')
@@ -193,6 +228,16 @@
         closePop(){
             this.$emit('close');
         }
+
+        otpFail(){
+            alert(sessionStorage.message);
+
+            sessionStorage.clear();
+        }
+
+
+
+
     }
 
 </script>

@@ -9,6 +9,7 @@ import PhoneAuth from "../components/contents/login/PhoneAuth.vue" //휴대폰 �
 import SearchIdInput from "../components/contents/login/SearchIdInput.vue" //아이디 찾기 입력
 import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //아이디 찾기 결과
 import InitPass from "../components/contents/login/InitPass.vue" //비밀번호 초기화
+import MnUserOtp from "../components/contents/login/MnUserOtp.vue" //휴대폰 본인인증(계정정보 변경)
 
 // 정보변경
 import MyPage from "../components/contents/login/myPage.vue" //아이디 찾기 결과
@@ -203,6 +204,7 @@ export default new Router({
         {path:'/searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
         {path:'/searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
         {path:'/initPass', name:'initPass',component: InitPass ,meta: {authRequired: false}}, //비밀번호 초기화
+        {path:'/mnUserOtp', name:'mnUserOtp', component: MnUserOtp ,meta: {authRequired: false}}, //휴대폰 본인인증(계정정보 변경)
 
         {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
         {
