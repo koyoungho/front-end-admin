@@ -7,7 +7,7 @@
                 <h2 class="blind">{{titles}}</h2>
         <h3>{{subTitle}}</h3>
         <!-- btn top -->
-        <div class="btn_top" v-if="regbtnShow">
+        <div class="btn_top" v-if="regShow">
             <button type="button" id="reg_btn" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
         </div>
         <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:listCheckEvent="checkBoxEvent"></ListComponent>
@@ -35,7 +35,7 @@
         windowResize : boolean = false; // 리사이즈
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
-        regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
+        regShow : boolean = false; //신규등록 버튼 보여주는지 여부
         setDate =  format(new Date(),'YYYYMMDD');
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
@@ -77,12 +77,19 @@
         created(){
             this.originItem  = this.listItem.dataGrid.columControl
 
-            //시스템관리자(0001), 콜센터관리자(0002)만 등록버튼 보임
-            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
-                this.regbtnShow = true;
-            }else{
-                this.regbtnShow = false;
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'franchiseList'; //메뉴ID (가맹점 관리)
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y'){
+                        this.regShow = true;
+                    }
+                }
             }
+            console.log('등록권한 있음 ?? :: ' + this.regShow)
 
         }
 
