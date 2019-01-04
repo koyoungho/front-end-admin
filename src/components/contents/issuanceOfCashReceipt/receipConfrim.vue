@@ -1,167 +1,167 @@
 <template>
-  <div>
-<div class="popup_modal"></div>
-<div id="popup_cash01" class="popup_wrapper large Pstyle" tabindex="0" style="display: block;">
-  <!-- popup header -->
-  <div class="popup_header no_print">
-    <!-- h2 -->
-    <h2>취소 현금영수증</h2>
-    <a class="btn_close b-close" @click="closeAddr">Close</a>
-  </div>
+    <div>
+        <div class="popup_modal"></div>
+        <div id="popup_cash01" class="popup_wrapper large Pstyle" tabindex="0" style="display: block;">
+            <!-- popup header -->
+            <div class="popup_header no_print">
+                <!-- h2 -->
+                <h2>현금영수증</h2>
+                <a class="btn_close b-close" @click="closeAddr">Close</a>
+            </div>
 
-  <!-- popup body -->
-  <div class="popup_body">
-    <!-- popup content -->
-    <div class="popup_content page_cash01">
-      <!-- tbl grid wrap -->
-      <div class="tbl_grid_wrap">
-        <!-- tbl grid01 -->
-        <table class="tbl_grid01 print_area">
-          <caption>현금영수증</caption>
-          <colgroup>
-            <col class="col_mob" width="50%">
-            <col class="col_mob" width="50%">
-          </colgroup>
-          <thead>
-          <tr>
-            <th scope="col" colspan="2">취소 현금영수증 (고객용)</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td class="left">
-              <!-- tbl view02 -->
-              <table class="tbl_view02">
-                <caption>현금영수증</caption>
-                <colgroup>
-                  <col class="col_mob" width="100%">
-                </colgroup>
-                <tbody>
-                <tr>
-                  <th scope="row">신분확인번호</th>
-                </tr>
-                <tr>
-                  <td>{{ResultViewRowItem.comfirm}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">거래구분</th>
-                </tr>
-                <tr>
-                  <td>{{ResultViewRowItem.geoguNm}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">승인번호</th>
-                </tr>
-                <tr>
-                  <td>{{ResultViewRowItem.perm}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">사업자명</th>
-                </tr>
-                <tr>
-                  <td>{{ResultViewRowItem.shopNm}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">대표자명</th>
-                </tr>
-                <tr>
-                  <td>{{ResultViewRowItem.chipNm}}</td>
-                </tr>
-                </tbody>
-              </table>
-            </td>
-            <td class="right">
-              <table class="tbl_view02">
-                <caption>현금영수증</caption>
-                <colgroup>
-                  <col class="col_mob" width="35%">
-                  <col class="col_mob" width="65%">
-                </colgroup>
-                <tbody>
-                <tr>
-                  <th scope="row" colspan="2">거래일시</th>
-                </tr>
-                <tr>
-                  <td colspan="2">{{ResultViewRowItem.saleDate}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="bg01">공급가액</th>
-                  <td class="right">{{ResultViewRowItem.amt}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="bg01">부가세</th>
-                  <td class="right">{{ResultViewRowItem.vat}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="bg01">봉사료</th>
-                  <td class="right">{{ResultViewRowItem.bong}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="bg01">합계</th>
-                  <td class="right">{{ResultViewRowItem.totalAmt}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" colspan="2">사업자등록번호</th>
-                </tr>
-                <tr>
-                  <td colspan="2">{{ResultViewRowItem.saupId}}</td>
-                </tr>
-                <tr>
-                  <th scope="row" colspan="2">사업장전화번호</th>
-                </tr>
-                <tr>
-                  <td colspan="2">{{ResultViewRowItem.charTel}}</td>
-                </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <th scope="col" colspan="2">사업장 주소</th>
-          </tr>
-          <tr>
-            <td colspan="2" class="con01">{{ResultViewRowItem.saupCaddr}}</td>
-          </tr>
-          <tr>
-            <td colspan="2" class="con01">
-              <span class="text01">현금영수증 문의 <a href="#"><i class="icon tel"></i> 126-1-1</a></span>
-              <span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <!-- //tbl grid01 -->
-        <!-- receipt info -->
-        <div class="receipt_info no_print">
-          <ul class="receipt">
-            <li v-if="ResultViewRowItem.canSayuNm"><span class="sub">취소사유 : </span> {{ResultViewRowItem.canSayuNm}}</li>
-          </ul>
+            <!-- popup body -->
+            <div class="popup_body"  >
+                <!-- popup content -->
+                <div class="popup_content page_cash01">
+                    <!-- tbl grid wrap -->
+                    <div class="tbl_grid_wrap">
+                        <!-- tbl grid01 -->
+                        <table class="tbl_grid01 print_area">
+                            <caption>현금영수증</caption>
+                            <colgroup>
+                                <col class="col_mob" width="50%">
+                                <col class="col_mob" width="50%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col" colspan="2"> 현금영수증 (고객용) {{titleSub}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="left">
+                                    <!-- tbl view02 -->
+                                    <table class="tbl_view02">
+                                        <caption>현금영수증</caption>
+                                        <colgroup>
+                                            <col class="col_mob" width="100%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">신분확인번호</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ResultViewRowItem.comfirm}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">거래구분</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ResultViewRowItem.geoguNm}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">승인번호</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ResultViewRowItem.perm}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">사업자명</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ResultViewRowItem.shopNm}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">대표자명</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ResultViewRowItem.chipNm}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td class="right">
+                                    <table class="tbl_view02">
+                                        <caption>현금영수증</caption>
+                                        <colgroup>
+                                            <col class="col_mob" width="35%">
+                                            <col class="col_mob" width="65%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row" colspan="2">거래일시</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">{{ResultViewRowItem.saleDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="bg01">공급가액</th>
+                                            <td class="right">{{ResultViewRowItem.amt}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="bg01">부가세</th>
+                                            <td class="right">{{ResultViewRowItem.vat}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="bg01">봉사료</th>
+                                            <td class="right">{{ResultViewRowItem.bong}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="bg01">합계</th>
+                                            <td class="right">{{ResultViewRowItem.totalAmt}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" colspan="2">사업자등록번호</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">{{ResultViewRowItem.saupId}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" colspan="2">사업장전화번호</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">{{ResultViewRowItem.charTel}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col" colspan="2">사업장 주소</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="con01">{{ResultViewRowItem.saupCaddr}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="con01">
+                                    <span class="text01">현금영수증 문의 <a href="#"><i class="icon tel"></i> 126-1-1</a></span>
+                                    <span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- //tbl grid01 -->
+                        <!-- receipt info -->
+                        <div class="receipt_info no_print">
+                            <ul class="receipt">
+                                <li v-if="ResultViewRowItem.canSayuNm"><span class="sub">취소사유 : </span> {{ResultViewRowItem.canSayuNm}}</li>
+                            </ul>
+                        </div>
+
+                        <!-- mail info box -->
+                        <div class="mail_info_box no_print">
+                            <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId"> @
+                            <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- //popup content -->
+                <!-- bottom area -->
+                <div class="bottom_area no_print">
+                    <!-- btn -->
+                    <div class="btn_bot">
+                        <button type="button" class="btn_b01 bg02" @click="closeAddr">취소</button>
+                        <button type="button" class="btn_b01 bg03" @click="sendMail">메일로 전송</button>
+                        <button type="button" class="btn_b01 bg01" @click="printReceip">영수증 출력</button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- //popup body -->
         </div>
-
-        <!-- mail info box -->
-        <div class="mail_info_box no_print">
-          <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId"> @
-          <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany">
-        </div>
-      </div>
-
+        <!-- //popup -->
     </div>
-    <!-- //popup content -->
-    <!-- bottom area -->
-    <div class="bottom_area no_print">
-      <!-- btn -->
-      <div class="btn_bot">
-        <button type="button" class="btn_b01 bg02" @click="closeAddr">취소</button>
-        <button type="button" class="btn_b01 bg03" @click="sendMail">메일로 전송</button>
-        <button type="button" class="btn_b01 bg01" @click="printReceip">영수증 출력</button>
-      </div>
-    </div>
-
-  </div>
-  <!-- //popup body -->
-</div>
-<!-- //popup -->
-  </div>
 </template>
 
 <script lang="ts">
@@ -179,11 +179,15 @@
         ResultViewRowItem : any = "";
         mailCompany : any = "";
         mailId : any = "";
+        resultRecripKeyObj : any ="";
+        titleSub : string ="";
+
 
         originId : any = "header2";
 
         created(){
-            this.makeHeader('hide')
+            this.makeHeader('hide');
+
         }
         //돔렌더링완료시 진행
         mounted() {
@@ -191,7 +195,7 @@
 
         @Watch('resultRecripKey') onchange(){
             if(this.resultRecripKey){
-            this.onLoadData();
+                this.onLoadData();
             }
         }
         closeAddrPop(){
@@ -202,7 +206,13 @@
             this.makeHeader('show')
         }
         onLoadData(){
-            CommonBoardService.getListDatas('receipts',this.resultRecripKey,'').then((response) => {
+            this.resultRecripKeyObj = this.resultRecripKey;
+
+            if( this.resultRecripKeyObj.trgu == '1' ){
+                this.titleSub =" - 현금결제취소";
+            }
+
+            CommonBoardService.getListDatas('receipt', this.resultRecripKeyObj.regiDate+'/'+this.resultRecripKeyObj.perm , null).then((response) => {
                 this.ResultViewRowItem = response.data
             }).catch();
         }
@@ -413,6 +423,7 @@
             var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             return (email != '' && email != 'undefined' && regex.test(email));
         }
+
         printReceip(){
             window.print();
         }
