@@ -163,19 +163,19 @@
             searchData['currentPage'] ="1";
             searchData['perPage'] = "5";
 
-            searchData['viewType'] = 'USR';
+            searchData['viewType'] = 'ADM';
 
             // api 데이터 호출
-            // CommonBoardService.getListDatas('notices', null, searchData).then((response) => {
-            //         let result: any = response.data;
-            //
-            //         if (result.data.length > 0) {
-            //             this.noticeList=result.data;
-            //         }
-            //     }
-            //     , (error) => {
-            //         //this.$Progress.finish();
-            //     }  ).catch();
+            CommonBoardService.getListDatas('notice', null, searchData).then((response) => {
+                    let result: any = response.data;
+
+                    if (result.data.length > 0) {
+                        this.noticeList=result.data;
+                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                }  ).catch();
         }
 
         /**

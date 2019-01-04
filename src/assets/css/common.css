@@ -1267,9 +1267,14 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 @media print {
   #header, #header2,#footer {display: none;}
-  #no_print {display: none;}
+  .no_print {display: none !important;}
+  .print_area col:nth-child(1) {width: 40% !important;}
+  .print_area col:nth-child(2) {width: 60% !important;}
+  .print_area .right col:nth-child(1) {width: 45% !important;}
+  .print_area .right col:nth-child(2) {width: 55% !important;}
   #popup_cash01 {top:100px; box-shadow:0 0px 0px rgba(0,0,0,0);}
   #popup_header,#bottom_area {display: none;}
+
 }
 
 /* media 480  */
