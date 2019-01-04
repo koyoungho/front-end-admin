@@ -89,7 +89,7 @@
                     }
                 }
             }
-            console.log('등록권한 있음 ?? :: ' + this.regShow)
+            console.log('등록 권한 확인 ?? :: ' + this.regShow)
 
         }
 

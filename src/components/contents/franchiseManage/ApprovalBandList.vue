@@ -9,13 +9,12 @@
             <h3>승인 대역 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="bandSet">승인대역 범위 설정</button>
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="newReg">승인대역신청 및 등록</button>
             </div>
 
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList"
-                           v-on:listView="listViewEvent"></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
 
         </div>
         <!-- //content -->
@@ -37,7 +36,7 @@
     export default class ApprovalBandList extends Vue {
         message: any = '';
 
-// 리스트 변수
+        // 리스트 변수
         listOn: boolean = true;
         titles: string = '가맹점 관리'; // 제목
         subTitle: string = '지점 관리'; //서브타이틀
@@ -88,6 +87,22 @@
 
         //돔생성전 호출자
         created() {
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'approvalBandList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
+            }
+            console.log('승인대역 등록 권한 확인 ?? :: ' + this.regbtnShow)
+
         }
 
         //돔렌더링완료시 진행

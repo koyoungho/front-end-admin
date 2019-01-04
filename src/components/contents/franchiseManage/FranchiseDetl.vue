@@ -145,9 +145,9 @@
                         <th scope="row">BL 정보</th> <!-- 시스템 관리자만 변경가능 -->
                         <td colspan="3">
                             <select id="blGbID" name="" class="select form_bl" title="BL 정보" v-model="blGb">
-                                <option value=""></option>
-                                <option value="0">BL적용</option>
-                                <option value="1">BL해지</option>
+                                <option value="">선택</option>
+                                <option value="0">BL 적용</option>
+                                <option value="1">BL 해지</option>
                             </select>
                             <input type="text" class="input form_bl" title="BL 정보" disabled="disabled" v-model="blGbNm">
                             <input type="text" class="input form_bldate" title="BL 정보" disabled="disabled" v-model="blDate">
@@ -316,7 +316,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">정보 변경</button>
+                <button type="button" id="" class="btn_b01 bg01" v-if="btnUpdShow" v-on:click="validationChk">정보 변경</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
@@ -342,6 +342,8 @@
     })
     export default class FranchiseDetl extends Vue {
         message: any = '';
+
+        btnUpdShow: boolean = false; //수정버튼 권한
 
         topinfoShow : boolean = false; //상단 현금영수증, 가맹점, 지점 정보 표시
 
@@ -442,6 +444,21 @@
                     }
                 ]
 
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'franchiseList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.btnUpdShow = true;
+                    }
+                }
+            }
+            console.log('수정 권한 확인 ?? :: ' + this.btnUpdShow)
+
             //시스템관리자(0001), 콜센터관리자(0003)만 표시
             if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
                 this.topinfoShow = true;
@@ -497,12 +514,14 @@
                         this.gajumStatus = result.gajumStatus; //가맹점 상태
                         this.regiDate = this.dateFormat(result.regiDate); //사업장 등록일
                         this.canDate = this.dateFormat(result.canDate); //사업장 해지일
-                        this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+                        this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능)
                         this.blGbNm = result.blGbNm; //BL상태
                         this.blDate = result.blDate; //BL등록일
-                        let blGb = document.getElementById('blGbID');
-                        if(blGb != null){ blGb.setAttribute('disabled', 'disabled'); }
 
+                        if(sessionStorage.role != '0001') { //시스템관리자만 변경 가능
+                            let blGb = document.getElementById('blGbID');
+                            if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
+                        }
                         //승인대역 정보
                         console.log(result.aprvBands.length);
 
@@ -571,10 +590,17 @@
                             this.adminList[a].adminConIp2 = result.accounts[a].accessIpTo; //접속대역IP종료
                             this.adminList[a].revocationYn = 'N'; //조회되는 관리자는 계정상태가 무조건 정상임
                             this.adminList[a].adminIdYn = 'Y'; //기존 등록건은 ID 중복확인을 한것으로 함
-                            this.adminList[a].lastConnDate = '2018.12.01 15:35:13'; //변경해야해!!
+                            this.adminList[a].lastConnDate = result.accounts[a].lastConnDt;
 
-                            console.log('관리자 정보 있음');
-                            console.log(this.adminList.length)
+                            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){ //시스템, 콜센터 수정가능
+                                console.log('111111111111111111')
+                            }else{
+                                //this.adminList[a].revocationYn =
+                                console.log('asdasdfsdfsdfsdfsd')
+                            }
+
+                            //console.log('관리자 정보 있음');
+                            //console.log(this.adminList.length)
                         }
 
                     }else{

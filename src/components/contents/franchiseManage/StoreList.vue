@@ -9,7 +9,7 @@
             <h3>매장 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02 reg" v-on:click="newReg">신규 등록</button>
             </div>
 
@@ -80,7 +80,7 @@
                     {type: 'inputPop2' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : '' , option : ''},
                     {type: 'selectCode' , title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상 ' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기 ' , code: '2' },{codeNm : '해지' , code: '3' }]},
                     {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
-                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'lastConnDt' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
+                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
                     {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: this.setDate,  searchEndDate: this.setDate, calenderCount : 2},
                     {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
@@ -95,6 +95,19 @@
         created() {
 
             //this.getSelectList('RECEIPT');
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'storeList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
+            }
         }
 
         //돔렌더링완료시 진행

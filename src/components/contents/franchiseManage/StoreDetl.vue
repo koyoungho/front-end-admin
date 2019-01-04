@@ -325,7 +325,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">정보 변경</button>
+                <button type="button" id="" class="btn_b01 bg01" v-if="btnUpdShow" v-on:click="validationChk">정보 변경</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
@@ -355,6 +355,7 @@
     export default class StoreDetl extends Vue {
         message: any = '';
 
+        btnUpdShow: boolean = false; //수정 권한
         topinfoShow : boolean = false; //상단 현금영수증, 가맹점, 지점 정보 표시
 
         objectKey : any = "";
@@ -430,6 +431,21 @@
             console.log('세션정보===============>>>>>')
             console.log(sessionStorage)
             console.log('세션정보===============<<<<<')
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'storeList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.btnUpdShow = true;
+                    }
+                }
+            }
+            console.log('수정 권한 확인 ?? :: ' + this.btnUpdShow)
 
             this.approvalList = [
                 {

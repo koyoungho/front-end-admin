@@ -11,7 +11,7 @@
             <h4 class="blind">기본정보</h4>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="bulkReg">매장 일괄 등록</button>
             </div>
 
@@ -331,7 +331,7 @@
             </div>
 
             <!-- btn bot -->
-            <div class="btn_bot">
+            <div class="btn_bot" v-if="regbtnShow">
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">매장 등록</button>
             </div>
 
@@ -359,6 +359,8 @@
     })
     export default class StoreReg extends Vue {
         message: any = '';
+
+        regbtnShow: boolean = false; //등록버튼 권한
 
         soluId: any = ''; //현금영수증 사업자
 
@@ -421,6 +423,21 @@
             console.log('세선정보 확인===========>>>>>')
             console.log(sessionStorage)
             console.log('세선정보 확인===========<<<<<')
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'storeReg'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
+            }
+            console.log('등록 권한 확인 ?? :: ' + this.regbtnShow)
 
             //승인대역 정보
             this.approvalList = [

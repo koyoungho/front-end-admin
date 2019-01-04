@@ -9,7 +9,7 @@
             <h3>매장 일괄 등록</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="indivReg">매장 개별 등록</button>
             </div>
 
@@ -39,7 +39,7 @@
                             </select>-->
                             <input type="text" class="input form_industry" title="가맹점번호" v-model="gajumId">
                             <!--<input type="text" class="input form_w45" title="가맹점명" v-model="gajumNm">-->
-                            <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen">검색</button>
+                            <button type="button" id="" class="btn_sch01" v-if="regbtnShow" @click="gajiPopupOpen">검색</button>
                         </td>
                         <th scope="row">지점<em class="form_req">*</em></th>
                         <td>
@@ -53,7 +53,7 @@
                             </select>-->
                             <input type="text" class="input form_industry" title="지점번호" v-model="jijumId">
                             <!--<input type="text" class="input form_w45" title="지점번호" v-model="jijumNm">-->
-                            <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen">검색</button>
+                            <button type="button" id="" class="btn_sch01" v-if="regbtnShow" @click="gajiPopupOpen">검색</button>
                         </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
@@ -84,7 +84,7 @@
                         </div>
                     </li>
                 </ul>
-                <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="excelRegist('check')">등록</button></span>
+                <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01"  v-if="regbtnShow" v-on:click="excelRegist('check')">등록</button></span>
             </div>
             <!-- //search box -->
 
@@ -225,8 +225,25 @@
         showModal1: boolean = false; // 가맹점 검색
         postText1: string = ""; //테스트 가맹점
 
+        regbtnShow: boolean = false; //등록버튼
+
         //돔생성전 호출자
         created() {
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'storeRegBulk'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
+            }
+            //console.log('등록 권한 확인 ?? :: ' + this.regbtnShow)
 
             this.getCommonSelect();
         }
