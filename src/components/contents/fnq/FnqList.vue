@@ -180,8 +180,6 @@
             CommonBoardService.getListDatas('faq', null, searchData).then((response) => {
                     let result: any = response.data;
 
-
-                    console.log(result);
                     if (result.data.length > 0) {
                         this.listData=result.data;
                      }
@@ -189,8 +187,6 @@
                     this.totalCount = result.totalRecords;
                     this.startPage= (result.currentPage -1) * result.perPage;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
-                    // this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
-                    // this.$Progress.finish();
                 }
                 , (error) => {
                     //this.$Progress.finish();

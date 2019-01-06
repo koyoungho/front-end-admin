@@ -191,7 +191,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk()">등록</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk()" v-show="regShow">등록</button>
             </div>
 
         </div>
@@ -236,6 +236,7 @@
         saupIdChkYn: any = ''; //사업자정보 찾기 여부
 
         menuList: any = []; //메뉴 권한 리스트
+        regShow :boolean =false;
 
         saupjang : Saupjang[]=[];
 
@@ -282,6 +283,21 @@
             this.authMenuList();
 
             this.accountStatus = '0'; //계정상태 정상(0)으로 셋팅
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'mnUser'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+
+
         }
         mounted(){
 

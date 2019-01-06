@@ -166,7 +166,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" class="btn_b01 bg02" v-on:click="receiptInit()">초기화</button>
-                <button type="button" class="btn_b01 bg01" v-on:click="receiptIssue()">발급</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="receiptIssue()" v-show="regShow">발급</button>
             </div>
 
         </div>
@@ -213,7 +213,7 @@
         saleDate : string = '';
         showModal1 : boolean= false; // 팝업
         sendYmd : string = ''; // 현재날짜포맷
-
+        regShow:boolean = false;
 
         ymd: any = '';
 
@@ -467,6 +467,21 @@
 
             this.getUpjongSelectList();
             this.getSinbunSelectList();
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'cashReceiptIssue'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+
+
 
             // let upjong = sessionStorage.upJong; //일반-0001, 신문사-0002, 택배사-0003, 학원-0004
             // if(upjong == '0002' || upjong == '0003'){ //업종이 신문사, 택배사인 경우에만 상품구분이 보임

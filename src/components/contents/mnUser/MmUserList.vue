@@ -105,10 +105,20 @@
             //     this.handleResize()
             // }
             this.listItem.search[1].searchStartDate = '20180101';
-            //시스템관리자(001), 콜센터관리자(0003)만 등록,승인 가능
-            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
-                this.regbtnShow = true;
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'mnUser'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
             }
+
         }
 
         mounted(){
