@@ -115,7 +115,7 @@
         </thead>
         <tbody>
         <template v-if="listData.length > 0">
-          <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" >
+          <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" :id="index" >
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
@@ -138,20 +138,21 @@
                   </template>
 
               </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'">
-                <td><input type="text"  class="input form_w100" v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]"></td>
+              <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'" >
+                <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)"></td>
               </template>
               <!--주의 셀렉트박스는 공용보다 하나의 별개추가된 부분입니다-->
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'">
                 <td>
-                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList==1">
-                    <select class="select form_w100" v-model="listData[index].rsnCode">
+                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='1'">
+                    <select class="select form_w100" v-model="listData[index].rsnCode" @change="dataVal(index,indexs)">
                       <option value="null">선택</option>
                       <option v-for="commonList1 in dataGridDetail.dataGrid.commonSelectListOne"  v-bind:value="commonList1.code">{{commonList1.codeNm}}</option>
                     </select>
                   </template>
-                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList==2">
-                    <select class="select form_w100" v-model="listData[index].rstCode">
+                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='2'">
+                    <select class="select form_w100" v-model="listData[index].rstCode" @change="dataVal(index,indexs)">
                       <option value="null">선택</option>
                       <option v-for="commonList2 in dataGridDetail.dataGrid.commonSelectListTwo"  v-bind:value="commonList2.code">{{commonList2.codeNm}}</option>
                     </select>
@@ -226,7 +227,11 @@
         mSurtax: number = 0;
 
         authButton: boolean = false; //승인버튼 보이기
-
+        //인풋 벨리데이션 체크
+        styleCss : string = "";
+        inputString : string = "";
+        lineCheckOk : boolean = true;
+        dataStatus : string = '';
 
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
@@ -273,6 +278,101 @@
                       }
               })
               return result;
+            }
+        }
+
+        disableVal(index){
+            return this.listOragin[index].innerFixYn
+        }
+
+        dataVal(listIndex, columIndex,$event){
+            let trObject : any = document.getElementById(listIndex)
+            let nowLineOk :boolean = true;
+            console.log(this.dataGridDetail.dataGrid.columControl[columIndex].id)
+
+            if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixPerm') {
+                if (this.listData[listIndex].fixPerm.length != 9) {
+                    if(this.listData[listIndex].fixPerm.length < 1){
+                        $event.target.style=''
+                    }
+                    else{
+                        nowLineOk = false;
+                    $event.target.style='background:red'
+                        trObject.setAttribute('style','background:red')
+                    }
+                }
+                else{
+                    $event.target.style=''
+                }
+            }
+            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixDate'){
+                if(this.listData[listIndex].fixDate.length != 8) {
+                    if(this.listData[listIndex].fixDate.length < 1){
+                        $event.target.style=''
+                    }
+                    else{
+                        nowLineOk = false;
+                        $event.target.style='background:red'
+                        trObject.setAttribute('style','background:red')
+                    }
+                }
+                else{
+                    $event.target.style=''
+                }
+            }
+            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixSaleDate'){
+                if(this.listData[listIndex].fixSaleDate.length != 8) {
+                    if(this.listData[listIndex].fixSaleDate.length < 1){
+                        $event.target.style=''
+                    }
+                    else{
+                        nowLineOk = false;
+                        $event.target.style='background:red'
+                        trObject.setAttribute('style','background:red')
+                    }
+                }else{
+                    $event.target.style=''
+                }
+            }
+            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rsnCode'){
+                console.log('rsnCode || ' + this.listData[listIndex].rsnCode )
+                if(this.listData[listIndex].rsnCode !='null'){
+                    trObject.setAttribute('style','')
+                }else{
+                    nowLineOk = false;
+                    trObject.setAttribute('style','background:red')
+                }
+            }
+            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rstCode') {
+                console.log('rsnCode || ' + this.listData[listIndex].rstCode )
+                if(this.listData[listIndex].rstCode !='null'){
+                    trObject.setAttribute('style','')
+                }else{
+                    nowLineOk = false;
+                    trObject.setAttribute('style','background:red')
+                }
+            }
+
+            if(this.listData[listIndex].fixPerm && this.listData[listIndex].fixDate
+                && this.listData[listIndex].fixSaleDate && this.listData[listIndex].rsnCode && this.listData[listIndex].rstCode){
+                if(nowLineOk){
+                    this.lineCheckOk = true;
+                trObject.setAttribute('style','')
+                }
+                else{
+                    this.lineCheckOk = false;
+                }
+                console.log('다입력됨')
+            }
+            else if(this.listData[listIndex].fixPerm.length < 1 && this.listData[listIndex].fixDate < 1
+                && this.listData[listIndex].fixSaleDate < 1 && this.listData[listIndex].rsnCode=='null' && this.listData[listIndex].rstCode=='null'){
+                this.lineCheckOk = true;
+                trObject.setAttribute('style','')
+            }
+            else{
+                this.lineCheckOk = false;
+                trObject.setAttribute('style','background:red')
+                console.log('다입력안됨')
             }
         }
 
@@ -333,8 +433,13 @@
                 if (this.listData[index][this.lineColumName] == this.dataGridDetail.dataGrid.columControl[this.lineColumIndex].lineValue) {
                     return "date_del"
                 }
+                // 오류내역때문에 추가
+                if(this.listOragin[index].innerYn=='Y'){
+                    return "date_del"
+                }
             }
         }
+
         fontColor(index,rows){  // 폰트컬러변경시사용
             if(rows == this.dataGridDetail.dataGrid.columControl[index].textValue){
                 return this.dataGridDetail.dataGrid.columControl[index].fontColors
@@ -411,7 +516,7 @@
             this.$Progress.start();
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
-
+                console.log(response)
                     let result : any = '';
 
                     if(response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
@@ -515,10 +620,9 @@
                                 });
                                 }
                             });
+                            // 예외 컬러처리에 필요한 로우데이터 생성
                             this.listData.push(numberObject);
                         });
-
-
                     }
                     else {
 
@@ -589,6 +693,10 @@
             ).catch();
 */
 
+        }
+
+        getListData(){
+            this.$emit('listData', this.listData)
         }
     }
 

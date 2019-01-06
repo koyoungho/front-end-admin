@@ -278,6 +278,7 @@ select.wide {width:100%;}
 .chk_box, .rdo_box {display:inline-block; margin-right:10px;}
 .chk_box input[type='checkbox'] {position:absolute;width:18px;height:18px;margin:0;opacity:0;}
 .chk_box label {display:inline-block;min-height:18px;color:#333; line-height:18px;vertical-align:top; margin-right:10px;}
+/*.chk_box label:before{display:inline-block;width:18px;height:18px;margin-right:5px;background:url('../images/icon_form.png') no-repeat 0 0;vertical-align:top;content:'';}*/
 .chk_box label:before{display:inline-block;width:18px;height:18px;margin-right:5px;background:url('../images/icon_form.png') no-repeat 0 0;vertical-align:top;content:'';}
 .chk_box label:before{background-position:0 -23px;}
 .chk_box input[type='checkbox']:checked + label:before{background-position:-18px -23px;}
@@ -582,15 +583,15 @@ select.wide {width:100%;}
 .search_box.page_cash03 .search_list > li:nth-of-type(3) {width:25%; text-align:right;}
 
 /* 회사코드별 통계 */
-.search_box.page_stats01 .search_list > li:nth-of-type(1) {width:32%;}
-.search_box.page_stats01 .search_list > li:nth-of-type(2) {width:42%; text-align:center;}
-.search_box.page_stats01 .search_list > li:nth-of-type(3) {width:10%; text-align:right;}
-.search_box.page_stats01 .search_list > li:nth-of-type(4) {width:16%; text-align:right;}
+.search_box.page_stats01 .search_list > li:nth-of-type(1) {width:33%;}
+.search_box.page_stats01 .search_list > li:nth-of-type(2) {width:12%; text-align:right;}
+.search_box.page_stats01 .search_list > li:nth-of-type(3) {width:25%; text-align:left;}
+.search_box.page_stats01 .search_list > li:nth-of-type(4) {width:30%; text-align:left;}
 
 /* 사업자등록번호별 통계 */
-.search_box.page_stats02 .search_list > li:nth-of-type(1) {width:32%;}
-.search_box.page_stats02 .search_list > li:nth-of-type(2) {width:41%; text-align:center;}
-.search_box.page_stats02 .search_list > li:nth-of-type(3) {width:27%; text-align:right;}
+.search_box.page_stats02 .search_list > li:nth-of-type(1) {width:36%;}
+.search_box.page_stats02 .search_list > li:nth-of-type(2) {width:28%; text-align:center;}
+.search_box.page_stats02 .search_list > li:nth-of-type(3) {width:36%; text-align:right;}
 
 /* 계정 관리 */
 .search_box.page_system03 .search_list > li:nth-of-type(1) {width:20%; float:left;}
@@ -723,12 +724,11 @@ select.wide {width:100%;}
 .data_check_box .data_check_list .result.ok {border:1px solid #c6c6c6; background:#f8f8f8;}
 .data_check_box .data_check_list .result.error {color:#fff; border:1px solid #da291c; background:#da291c;}
 
-.comcode_box {overflow-x:hidden; overflow-y: auto; width:420px; height:400px; margin:0 auto; border:1px solid #dedede; padding:20px;}
+.comcode_box {overflow-x:auto; overflow-y: auto; width:420px; height:400px; margin:0 auto; border:1px solid #dedede; padding:20px;}
 .comcode_box .comcode_list li {padding:18px 0 0 0;}
 .comcode_box .comcode_list li:first-child {padding-top:0;}
 .comcode_box .comcode_list li >.chk_box {display:inline-block; width:100%;}
 .comcode_box .comcode_list li >.chk_box > label {display:inline-block; width:100%;}
-.comcode_box .comcode_list .company {display: inline-block; font-family:'NanumB'; padding-left:10px;}
 
 .code_mgt {width:100%; margin:0 auto}
 .code_mgt .sch_form {font-family: 'NanumB'; font-size:16px; padding-bottom:25px; text-align: center; border-bottom:1px solid #dedede;}
@@ -996,7 +996,7 @@ tr td.no_data {cursor: default;}
 .tbl_list03 tr th:first-child {border-left:1px solid #dedede;}
 .tbl_list03 tr td:first-child {border-left:1px solid #dedede;}
 
-.tbl_scroll_x_box {width:200%;overflow-y: hidden ;overflow-x: scroll; margin-bottom:0px; }
+.tbl_scroll_x_box {width:100%;overflow-y: hidden ;overflow-x: scroll; margin-bottom:0px; }
 .tbl_scroll_x_box .page_stats01 {width:1500px;} /* 회사코드별 통계 */
 .tbl_scroll_x_box .page_stats02 {width:1500px;} /* 사업자등록번호별 통계 */
 .tbl_scroll_x_box .page_stats03 {width:1500px;} /* 현금영수증 사업자별 정산 */

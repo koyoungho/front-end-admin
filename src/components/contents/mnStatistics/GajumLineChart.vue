@@ -45,7 +45,9 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from 'vue-property-decorator';
+    import {format} from 'date-fns';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
 
@@ -54,6 +56,23 @@
         }
     })
     export default class GajumLineChart extends Vue {
+        @Prop() searchStartDate !:string
+        @Prop() searchEndDate !:string
+        gajumList : Object = [];
+        gajumCount : number = 0;
+        receiptList : Object = [];
+        receiptCount : number = 0;
+        nowDate : any = new Date();
+        dateArray : any = [];
+        dateArray2 : any = [];
+
+
+        formatDates(date) {
+            let formattedDates = ''
+            formattedDates = format(date, 'YYYYMM')
+            return formattedDates
+        }
+
         //가맹점현황
         ChartSettingsJoin : any  ={
             labelMap: {
@@ -107,6 +126,101 @@
                 { 'cost': 712, 'date': '01/12', 'profit': 152, 'growthRate': 0.65, 'people': 100 }
             ]}
 
+        dateFormats(date) {
+            let dates = '';
+            dates = date.substr(2,2)+'/'+date.substr(4,2)
+            return dates
+        }
+
+        created(){
+            this.gajumStatistics()
+            this.receuptStatistics()
+        }
+
+        mounted(){
+
+        }
+
+        gajumStatistics(){
+            CommonBoardService.getListDatas('statistics','gajum',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+                if(result.status==200){
+                    this.gajumList = result.data
+                    let ObjectColumn : any = [];
+                    let ObjectRowList : any = [];
+                    result.data.filter((e,index)=>{
+                        ObjectColumn.push(e.SOLU)
+                    })
+
+                    result.data.filter((e,index)=>{
+                            let ObjectRow = {}
+                            Object.keys(e).forEach(s=>{
+                                if(s=='SOLU' || s=='TYPE'){
+                                }
+                                else{
+                                    ObjectRow['e.SOLU'] = e.SOLU
+                                    ObjectRow['date'] = s
+                                    ObjectRow['cost'] = e[s]
+                                }
+                            })
+                            ObjectRowList.push(ObjectRow)
+                     })
+
+
+                    // this.chartDataJoin = {
+                    //     column: [ObjectColumn],
+                    //     row : [ObjectRowList]
+                    // }
+
+                    console.log(this.chartDataJoin)
+                }
+            }).catch(e=>{
+            })
+        }
+
+        receuptStatistics(){
+            CommonBoardService.getListDatas('statistics','receipt',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+                if(result.status==200){
+                    console.log(result)
+                    this.receiptList = result.data
+
+                    let ObjectColumn : any = [];
+                    let ObjectRowList : any = [];
+                    result.data.filter((e,index)=>{
+                        if(index==0){
+                            Object.keys(e).forEach(s=>{
+                                if(s=='SOLU' || s=='TYPE'){
+                                }
+                                else{
+                                    ObjectColumn.push(s)
+                                }
+                            })
+                        }
+                    })
+
+                    result.data.filter((e,index)=>{
+                        let ObjectRow = {}
+                        Object.keys(e).forEach(s=>{
+
+                            if(s=='SOLU' || s=='TYPE'){
+                            }
+                            else{
+                                ObjectRow['company'] = e.SOLU
+                                ObjectRow['date'] = s
+                                ObjectRow['account'] = e[s]
+                            }
+                        })
+                        ObjectRowList.push(ObjectRow)
+                    })
+
+
+                    // this.chartDataCash = {
+                    //     column: [ObjectColumn],
+                    //     row : [ObjectRowList]
+                    // }
+                }
+            }).catch(e=>{
+            })
+        }
     }
 </script>
 

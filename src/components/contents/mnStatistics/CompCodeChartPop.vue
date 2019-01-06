@@ -12,17 +12,14 @@
             <!-- popup body -->
             <div class="popup_body">
                 <!-- popup content -->
-                <div class="popup_content page_code">
+                <div class="popup_content page_code scroll_no">
 
                     <!-- content  -->
                     <div class="comcode_box">
                         <ul class="comcode_list">
-                            <li><span class="chk_box"><input type="checkbox" id="aa01"><label for="aa01">100 <span class="company">KT</span></label></span></li>
-                            <li><span class="chk_box"><input type="checkbox" id="aa02"><label for="aa02">107 <span class="company">(주)비지에프리테일</span></label></span></li>
-                            <li><span class="chk_box"><input type="checkbox" id="aa03"><label for="aa03">100 <span class="company">KT</span></label></span></li>
-                            <li><span class="chk_box"><input type="checkbox" id="aa04"><label for="aa04">107 <span class="company">(주)비지에프리테일</span></label></span></li>
-                            <li><span class="chk_box"><input type="checkbox" id="aa05"><label for="aa05">100 <span class="company">KT</span></label></span></li>
-                            <li><span class="chk_box"><input type="checkbox" id="aa06"><label for="aa06">107 <span class="company">(주)비지에프리테일</span></label></span></li>
+                            <template v-for="ar in companyCodeList">
+                            <li><span class="chk_box"><input type="checkbox"  v-model="checkBoxList" v-bind:value="ar.code"  :id="ar.code" @click="checkData(ar.code)"><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label></span></li>
+                            </template>
                         </ul>
                     </div>
                     <!-- //popup content -->
@@ -30,8 +27,8 @@
                     <div class="bottom_area">
                         <!-- btn bot -->
                         <div class="btn_bot">
-                            <button type="button" id="" class="btn_b01 bg02">취소</button>
-                            <button type="button" id="" class="btn_b01 bg01">저장</button>
+                            <button type="button" id="" class="btn_b01 bg02" v-on:click="closePop">취소</button>
+                            <button type="button" id="" class="btn_b01 bg01" v-on:click="closePopAndSave()">저장</button>
                         </div>
                     </div>
                 </div>
@@ -46,6 +43,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
 
@@ -54,9 +52,63 @@
         }
     })
     export default class CompCodeChartPop extends Vue {
+        companyCodeList : any = [];
+        checkBoxList : any = [];
 
         closePop(){
             this.$emit('close');
+        }
+        closePopAndSave(){
+            this.$emit('listSend' , this.checkBoxList)
+            this.$emit('close');
+        }
+
+        created(){
+           this.codeList()
+        }
+
+        mounted(){
+
+        }
+
+        codeList(){
+            CommonBoardService.getListDatas('company',null,null).then(response=>{
+                  if(response.status==200){
+                      this.companyCodeList = response.data
+                      response.data.filter(data=>{
+                          if(data.favYn=='Y'){
+                              this.checkBoxList.push(data.code)
+                          }
+                      })
+                  }
+            })
+        }
+
+        checkData(data){
+            let remove = 'N'
+            this.checkBoxList = this.checkBoxList;
+            this.checkBoxList.find(e=>{
+                if(e==data){ // 체크박스데이터안에 데이터있을경우
+                 remove='Y'
+                }
+            })
+            if(remove=='Y'){
+                console.log('존재하니 삭제하라')
+                CommonBoardService.deleteListDatas('company/account',data,null).then(response =>{
+                    if(response.status==200){
+                    }else{
+                        alert('저장 오류가 발생하였습니다')
+                    }
+                })
+            }else{
+                console.log('없으니 인서트하라')
+                CommonBoardService.postListDatas('company/account',data,null).then(response =>{
+                    if(response.status==201){
+                    }else{
+                        alert('저장 오류가 발생하였습니다')
+                    }
+                })
+            }
         }
 
     }
