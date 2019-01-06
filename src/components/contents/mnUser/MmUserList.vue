@@ -17,7 +17,7 @@
         <!-- //content -->
 
             <PreviewBusinessLicense v-if="showModalBiz" v-bind:listObject="rowData" v-on:close="bizClose"></PreviewBusinessLicense>
-
+            <!--<MnUserOtp v-if="otpChecks" @close="otpChecks=false"></MnUserOtp>-->
         </div>
     </section>
     <!-- //container -->
@@ -34,6 +34,7 @@
     import {CommonBoardService} from "../../../api/common.service";  // 공용리스트 콤포넌트
     import axios from 'axios';
     import {environment} from '../../../utill/environment';
+    //import MnUserOtp from "@/components/contents/login/MnUserOtp.vue";
 
     @Component({
         components: {
@@ -41,6 +42,7 @@
         }
     })
     export default class MmUserList extends Vue {
+        //otpChecks: boolean = false; //OTP인증
         regbtnShow: boolean = false; //등록
         showModalBiz: boolean = false; // 사업자 사본확인
         rowData: any = {}; //사업자 사본 화면으로 넘기는 row 데이터
@@ -121,7 +123,14 @@
         listViewEvent(data){
             console.log(data)
             if(data.key=='id'){ //ID 클릭시
-                 this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
+                if(sessionStorage.role == '0001'){ //시스템관리자
+                    this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                }else if(sessionStorage.role == '0003'){ //콜센터는 인증화면
+                    //OTP인증 화면으로 이동
+                    this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                }
+
             }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
 
                 if(data.row.saupFileNm == null || data.row.saupFileNm == ''){

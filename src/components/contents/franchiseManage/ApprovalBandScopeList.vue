@@ -20,7 +20,7 @@
             <div class="btn_bot type03">
                 <!--<button type="button" id="" class="btn_b01 bg02" v-on:click="cancelCope">취소</button>-->
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="goAproBand">승인대역 관리</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="newReg">승인대역 범위 등록</button>
+                <button type="button" id="" class="btn_b01 bg01" v-if="regbtnShow" v-on:click="newReg">승인대역 범위 등록</button>
             </div>
 
 
@@ -90,6 +90,22 @@
 
         //돔생성전 호출자
         created() {
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'approvalBandList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        //this.regbtnShow = true;
+                    }
+                }
+            }
+            console.log('승인대역 범위 등록 권한 확인 ?? :: ' + this.regbtnShow)
+
         }
 
         //돔렌더링완료시 진행

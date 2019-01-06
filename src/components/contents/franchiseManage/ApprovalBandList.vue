@@ -9,13 +9,12 @@
             <h3>승인 대역 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-if="regbtnShow">
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="bandSet">승인대역 범위 설정</button>
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="newReg">승인대역신청 및 등록</button>
             </div>
 
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList"
-                           v-on:listView="listViewEvent"></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
 
         </div>
         <!-- //content -->
@@ -37,7 +36,7 @@
     export default class ApprovalBandList extends Vue {
         message: any = '';
 
-// 리스트 변수
+        // 리스트 변수
         listOn: boolean = true;
         titles: string = '가맹점 관리'; // 제목
         subTitle: string = '지점 관리'; //서브타이틀
@@ -59,10 +58,9 @@
                         {columName: '승인대역(끝)',id: 'lpermto',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '건수',id: 'count',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '등록일',id: 'regDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '수정일',id: 'updDate',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '상태',id: 'aprvYn',type: 'text',width: '6%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                     ],
-                    totalColum: 11,
+                    totalColum: 10,
                     apiUrl: 'approvalband',
                     onLoadList: true,  // onLoad 로딩 유무
                     //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
@@ -73,7 +71,7 @@
                 search: [
                     {type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
                     {type: 'selectCode',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: 'code/aprvcode',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: '1'}, {codeNm: '취소', code: '2'}, {codeNm: '등록',code: '3'}]},
+                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: 'N'}, {codeNm: '등록',code: 'Y'}]},
                     {type: 'date',title: '등록일',id: 'date',name: 'date',searchStartDate: this.setDate,searchEndDate: this.setDate,calenderCount: 2},
                     {type: 'select',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}]},
                     {type: 'input', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
@@ -88,6 +86,22 @@
 
         //돔생성전 호출자
         created() {
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'approvalBandList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
+            }
+            console.log('승인대역 등록 권한 확인 ?? :: ' + this.regbtnShow)
+
         }
 
         //돔렌더링완료시 진행

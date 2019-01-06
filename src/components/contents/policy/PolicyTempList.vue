@@ -13,9 +13,11 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" v-on:click="toList" class="btn_b01 bg02">취소</button>
-                <button type="button" v-on:click="toRegPolicy" class="btn_b01 bg03">{{titleNm}} 추가</button>
-                <button type="button" class="btn_b01 bg03" v-on:click="searchTemp">임시 저장</button>
-                <button type="button" class="btn_b01 bg01" v-on:click="totalSave">전체 저장</button>
+                <template v-show="regShow">
+                    <button type="button" v-on:click="toRegPolicy" class="btn_b01 bg03">{{titleNm}} 추가</button>
+                    <button type="button" class="btn_b01 bg03" v-on:click="searchTemp">임시 저장</button>
+                    <button type="button" class="btn_b01 bg01" v-on:click="totalSave">전체 저장</button>
+                </template>
             </div>
 
 
@@ -52,6 +54,7 @@
 
         listData : any = {};
         reqData :any ={};
+        regShow: boolean = false;
 
         created(){
             this.pageDiv();
@@ -72,9 +75,23 @@
                 this.titleNm = '이용약관';
                 this.termsType = "site";
 
+
             } else if (routeNm == 'personalTempList') {
                 this.titleNm = '개인보호처리방침';
                 this.termsType = "user";
+            }
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId =routeNm; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
             }
 
             this.listItem= {
@@ -94,7 +111,6 @@
                 goDirect : ""
             }
 
-            this.originItem  = this.listItem.dataGrid.columControl
         }
 
 

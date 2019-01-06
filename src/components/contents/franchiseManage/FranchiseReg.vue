@@ -260,7 +260,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" class="btn_b01 bg01" v-on:click="validationChk">가맹점 등록</button>
+                <button type="button" class="btn_b01 bg01" v-if="regbtnShow" v-on:click="validationChk">가맹점 등록</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
@@ -325,12 +325,21 @@
         aproIdx : number = 0;
         admIdx : number = 0;
 
+        regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
+
         //돔생성전 호출자
         created() {
 
             console.log('세선정보 확인===========>>>>>')
             console.log(sessionStorage)
             console.log('세선정보 확인===========<<<<<')
+
+            //시스템관리자(0001), 현금영수증사업자(0002), 콜센터관리자(0003)만 등록버튼 보임
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0002' || sessionStorage.role == '0003'){
+                this.regbtnShow = true;
+            }else{
+                this.regbtnShow = false;
+            }
 
             //data: {
                 //승인대역 정보

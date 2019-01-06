@@ -6,22 +6,20 @@
 
             <h3>{{titleNm}}</h3>
 
-            <!-- terms info -->
-            <!--<div class="terms_info">-->
-                <!--<select class="select form_history" title="계정이력 선택" v-model ="policyHistory" v-on:change="historyChange">-->
-                    <!--<option value="">개정이력 보기</option>-->
-                    <!--<option v-for="policyList in policyList" v-bind:value="policyList.hisSeq">{{policyList.hisTitle}}</option>-->
-                <!--</select>-->
-            <!--</div>-->
-
             <!-- cont_mobile -->
             <div class="cont_mobile">
                 <!-- terms box -->
                 <div class="terms_box">
-                    <dl class="terms_list" v-for="(policyDetail, index) in policyDetail">
-                        <dt v-on:click=" display(index)" v-bind:class="{ 'on': (rownum == index) } "  >{{policyDetail.detTitle}}</dt>
-                        <dd v-show="rownum == index" v-html="policyDetail.detContent"></dd>
-                    </dl>
+                    <template  v-if="policyDetail.length >0">
+                        <dl class="terms_list" v-for="(policyDetail, index) in policyDetail">
+                            <dt v-on:click=" display(index)" v-bind:class="{ 'on': (rownum == index) } "  >{{policyDetail.detTitle}}</dt>
+                            <dd v-show="rownum == index" v-html="policyDetail.detContent"></dd>
+                        </dl>
+                    </template>
+                    <template v-else>
+                        <dl> 내용이 없습니다.</dl>
+
+                    </template>
                 </div>
                 <!-- //terms box -->
             </div>

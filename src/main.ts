@@ -19,6 +19,8 @@ import VueResize from 'vue-resize'
 
 Vue.use(VueResize)
 
+import { VueSpinners } from '@saeris/vue-spinners'
+Vue.use(VueSpinners)
 
 const options = {
     color: '#fa0a12',
@@ -58,7 +60,7 @@ Vue.use(VCharts);
 new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
 }).$mount('#app')
 
 

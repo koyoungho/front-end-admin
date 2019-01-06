@@ -10,11 +10,9 @@
 
             <!-- btn top -->
             <!--권한에 따라 숨기기 설정-->
-            <template v-if="role =='0001' || role == '0003' || role == '0002' ">
-            <div class="btn_top">
+            <div class="btn_top" v-show="regShow">
                 <button type="button" id="" class="btn_m01 bg02" v-on:click="goRegNotice">공지사항 등록</button>
             </div>
-            </template>
             <!--리스트-->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
 
@@ -46,6 +44,7 @@
         searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
         listItem: any ={}  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
         role: any = sessionStorage.getItem('role');
+        regShow : boolean = false; //신규등록 버튼 보여주는지 여부
 
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
@@ -91,6 +90,20 @@
         }
 
         mounted() {
+
+            // 메뉴별 권한 확인
+                let menuList = JSON.parse(sessionStorage.authMenu);
+                let programId = 'noticeList'; //메뉴ID
+                for (let i = 0; i < menuList.length; i++) {
+                    for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                        //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                        if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                            this.regShow = true;
+                        }
+                    }
+                }
+
         }
 
 
@@ -119,6 +132,9 @@
         goRegNotice(){
             this.$router.push({path:'regNotice' });
         }
+
+
+
     }
 </script>
 

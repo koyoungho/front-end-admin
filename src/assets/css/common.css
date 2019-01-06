@@ -416,7 +416,7 @@ select.wide {width:100%;}
 .login_wrap .cert_box .form_cert .cert {width:200px;}
 .login_wrap .cert_box .form_cert .cert2 {width:330px;font-size:16px; height:49px; border:1px solid #c6c6c6; padding-left:10px; padding-right:10px;}
 .login_wrap .cert_box .form_cert.row01 {}
-.login_wrap .cert_box .form_cert.row02 {padding:20px 0 0 204px;}
+.login_wrap .cert_box .form_cert.row02 {padding:20px 0 0 240px;}
 .login_wrap .cert_box .form_cert .btn_m01 {min-width:130px; font-size:16px; height:49px; line-height:49px; margin-left:10px;}
 .login_wrap .cert_box .time_count {font-family:'NanumB'; font-size:13px; color:#da291c; position: absolute; right:180px; bottom:15px; width:auto;}
 .login_wrap .cert_box .time_count2 {font-family:'NanumB'; font-size:13px; color:#da291c; position: absolute; right:290px; bottom:15px; width:auto;}
@@ -1267,9 +1267,14 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 @media print {
   #header, #header2,#footer {display: none;}
-  #no_print {display: none;}
+  .no_print {display: none !important;}
+  .print_area col:nth-child(1) {width: 40% !important;}
+  .print_area col:nth-child(2) {width: 60% !important;}
+  .print_area .right col:nth-child(1) {width: 45% !important;}
+  .print_area .right col:nth-child(2) {width: 55% !important;}
   #popup_cash01 {top:100px; box-shadow:0 0px 0px rgba(0,0,0,0);}
   #popup_header,#bottom_area {display: none;}
+
 }
 
 /* media 480  */

@@ -255,8 +255,12 @@
     }
 
     saveInfo(){
-         if(this.account['passwordConfirm'] == "" || this.account['passwordConfirm'] == ""){
+         if(this.account['password'] == ''){
              alert('패스워드를 입력해주세요')
+             return;
+         }
+         if(this.account['passwordConfirm'] == ""){
+             alert('패스워드 확인을 입력해주세요')
              return;
          }
         if(this.account['password'] !=  this.account['passwordConfirm']){
@@ -288,7 +292,7 @@
              accessIpFrom: this.account['accessIpEnd'],
              accessIpTo: this.account['accessIpStart']
          }
-        CommonBoardService.putListData('accounts','myself', data).then(result=>{
+        CommonBoardService.putListData('accounts','myself/'+this.account['id'], data).then(result=>{
             if(result.status==200){
                 alert('수정이완료 되었습니다')
             }

@@ -68,7 +68,7 @@
                     {type: 'select' , title :'지점상태',id: 'jijumStatus', name:'jijumStatus' , value: '' ,  api : '' , option : [{ name : '승인신청' , value: '0' },{name : '해지신청' , value: '1' },{name : '정상' , value: '2' },{name : '해지' , value: '3' }]},
                     //{type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeName : '휴업' , code: '1' },{codeName : '수기BL' , code: '11' },{codeName : '수기BL취소' , code: '17' },{codeName : '폐업' , code: '2' },{codeName : '신용카드위장' , code: '3' },{codeName : '현금위장' , code: '4' },{codeName : '신용카드/현금위장' , code: '5' },{codeName : '현금영수증발급불가' , code: '6' },{codeName : '적용취소' , code: '7' },{codeName : '삭제된사업자' , code: '8' }]},
                     //{type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
-                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'lastConnDt' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
+                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
                     {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate, calenderCount : 2},
                     {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: '0' },{name : '사업자등록번호' , value: '1' },{name : '대표자명' , value: '2' }]},
                     {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' },
@@ -85,22 +85,36 @@
         created(){
             this.originItem  = this.listItem.dataGrid.columControl
 
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'branchList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regbtnShow = true;
+                    }
+                }
+            }
+            console.log('등록 권한 확인 ?? :: ' + this.regbtnShow)
+
             //시스템관리자(0001), 콜센터관리자(0003)만 등록버튼 보임
-            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+            /*if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
                 this.regbtnShow = true;
             }else{
                 this.regbtnShow = false;
-            }
+            }*/
 
             //모바일, PC 구분
-            let filter : string = "win16|win32|win64|mac";
+            /*let filter : string = "win16|win32|win64|mac";
             if (navigator.platform ) {
                 if (filter.indexOf(navigator.platform.toLowerCase()) > -1) {
                     console.log('피씨')
                 } else {
                     console.log('모바일')
                 }
-            }
+            }*/
 
         }
 

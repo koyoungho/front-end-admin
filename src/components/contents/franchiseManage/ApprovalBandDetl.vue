@@ -87,8 +87,8 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <button type="button" id="" class="btn_b01 bg03" v-on:click="deleteInfo">승인대역 삭제</button>
-                <button type="button" id="" class="btn_b01 bg03" v-on:click="validationChk">승인대역 수정</button>
+                <button type="button" id="" class="btn_b01 bg03" v-if="btnDelShow" v-on:click="deleteInfo">승인대역 삭제</button>
+                <button type="button" id="" class="btn_b01 bg03" v-if="btnUpdShow" v-on:click="validationChk">승인대역 수정</button>
                 <!--<button type="button" id="" class="btn_b01 bg01">승인대역 신청</button>-->
 
             </div>
@@ -116,6 +116,9 @@
     })
     export default class ApprovalBandDetl extends Vue {
         message: any = '';
+
+        btnUpdShow: boolean = false; //수정권한
+        btnDelShow: boolean = false; //삭제권한
 
         showModal1 : boolean= false; // 팝업
 
@@ -147,6 +150,25 @@
 
         //돔생성전 호출자
         created() {
+
+            //메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList)
+            let programId = 'approvalBandList'; //메뉴ID
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.btnUpdShow = true;
+                    }
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].deleteYn == 'Y') {
+                        this.btnDelShow = true;
+                    }
+                }
+            }
+            console.log('수정 권한 확인 ?? :: ' + this.btnUpdShow)
+            console.log('삭제 권한 확인 ?? :: ' + this.btnDelShow)
 
             this.getSelectList('SEARCH'); //회사코드
             this.getSelectList('APRO'); //승인코드
