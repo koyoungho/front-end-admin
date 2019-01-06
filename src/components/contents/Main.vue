@@ -185,7 +185,7 @@
         formatDates(date) {
             let formattedDates = '';
             formattedDates = moment(date).format( "YYYY.MM.DD");
-            return formattedDates--
+            return formattedDates
         }
 
 
