@@ -19,7 +19,7 @@
                     <tbody>
                     <tr>
                         <th scope="row">제목</th>
-                        <td><input type="text" class="input form_w100" title="제목" v-model="title" maxlength="80"> </td>
+                        <td><input type="text" class="input form_w100" title="제목" v-model="title" maxlength="100"> </td>
                     </tr>
                     <tr>
                         <th scope="row">구분</th>
@@ -77,10 +77,10 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" class="btn_b01 bg02" v-on:click="toList">취소</button>
-                <template v-if="div == '수정' ">
+                <template v-if="div == '수정' && delShow == true">
                     <button type="button" class="btn_b01 bg03" v-on:click="delNotice">삭제</button>
                 </template>
-                <button type="button" class="btn_b01 bg01" v-on:click="reg">{{div}}</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="reg" v-show="regShow">{{div}}</button>
             </div>
 
         </div>
@@ -112,6 +112,8 @@
         importantYn : string ="N";
         files:any=[];
         uploadFileNames: any=[];
+        regShow : boolean= false;
+        delShow : boolean= false;
 
 
         mounted(){
@@ -121,6 +123,22 @@
             }else{
                 this.div="수정";
                 this.getNoticeDetail();
+            }
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'noticeList'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y' || menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.regShow = true;
+                    }
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].deleteYn == 'Y') {
+                        this.delShow = true;
+                    }
+                }
             }
 
         }

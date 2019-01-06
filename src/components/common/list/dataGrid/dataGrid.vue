@@ -4,7 +4,10 @@
 
     <!-- tbl info top -->
     <div class="tbl_info_top">
-      <vue-progress-bar></vue-progress-bar>
+      <div style="padding-left: 492px;" >
+        <ClipLoader class="custom-class" :loading="loading" :size="35" :sizeUnit="`px`"  :color='`#D0021B`'></ClipLoader>
+      </div>
+      <!--<vue-progress-bar></vue-progress-bar>-->
       <span class="total">총 <strong>{{totalCount}} </strong>건</span>
     </div>
     <!-- 20181112 수정 추가 -->
@@ -192,10 +195,12 @@
     import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
+    import { ClipLoader  } from '@saeris/vue-spinners'
 
     @Component({
         components: {
-            DataGrid
+            DataGrid, ClipLoader
+
         }
     })
     export default class DataGrid extends Vue {
@@ -226,6 +231,7 @@
         mSurtax: number = 0;
 
         authButton: boolean = false; //승인버튼 보이기
+        loading :boolean= false;
 
 
         @Watch('listOnLoad') onChange() {
@@ -408,7 +414,8 @@
             });
 
             // 로딩바
-            this.$Progress.start();
+            // this.$Progress.start();
+            this.loading = true;
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
 
@@ -524,10 +531,12 @@
 
                     }
 
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.loading = false;
                 }
                 , (error) => {
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.loading = false;
                 }
             ).catch();
         }

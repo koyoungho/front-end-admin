@@ -9,8 +9,8 @@
 
 
             <!-- btn top -->
-            <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg02" v-on:click="toRegPolicy">{{titleNm}} 등록</button>
+            <div class="btn_top" v-show = regShow>
+                <button type="button" id="" class="btn_m01 bg02" v-on:click="toRegPolicy" >{{titleNm}} 등록</button>
             </div>
 
             <!--리스트-->
@@ -50,15 +50,29 @@
         searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
         originItem : any = {} // 오리지널데이터
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+        regShow : boolean = false;
 
         created(){
-
             this.pageDiv();
         }
 
 
-        mounted(){
+        mounted() {
+            let routeNm = this.$route.name;
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            console.log(menuList);
+            let programId = routeNm; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
 
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+            console.log(this.regShow);
         }
 
         // 라우터 경로 변경시 이벤트 발생
@@ -76,9 +90,35 @@
                 this.titleNm = '이용약관';
                 this.termsType="site";
 
+                // 메뉴별 권한 확인
+                    let menuList = JSON.parse(sessionStorage.authMenu);
+                    let programId = 'policyHistoryList'; //메뉴ID
+                    for (let i = 0; i < menuList.length; i++) {
+                        for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                            //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                            if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                                this.regShow = true;
+                            }
+                        }
+                }
+
             }else if(routeNm == 'personalHistoryList' ){
                 this.titleNm ='개인보호처리방침';
                 this.termsType="user";
+
+                // 메뉴별 권한 확인
+                let menuList = JSON.parse(sessionStorage.authMenu);
+                let programId = 'personalHistoryList'; //메뉴ID
+                for (let i = 0; i < menuList.length; i++) {
+                    for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                        //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                        if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                            this.regShow = true;
+                        }
+                    }
+                }
             }
 
             this.searchStartDate_str =new Date();

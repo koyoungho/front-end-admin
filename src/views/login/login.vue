@@ -146,7 +146,7 @@
     })
     export default class Login extends Vue {
         otpChecks : boolean =false;
-        id : string = "test";
+        id : string = "hol_test";
         password : string = "pass2";
 
         created() {
@@ -251,12 +251,11 @@
 
 
         checkAuth(){
+            this.checkMenu();
+
             if(sessionStorage.role=='0001'){
                 this.otpChecks=true
 
-            }
-            else{
-                this.checkMenu();
             }
         }
 

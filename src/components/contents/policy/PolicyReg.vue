@@ -21,9 +21,9 @@
                     <tbody>
                     <tr>
                         <th scope="row">제목</th>
-                        <td><input type="text" class="input form_w100" title="제목" v-model="title"></td>
+                        <td><input type="text" class="input form_w100" title="제목" v-model="title" maxlength="80"></td>
                         <th scope="row">순번</th>
-                        <td><input type="text" class="input form_w100" title="순번" v-model="termsOrder_new"></td>
+                        <td><input type="text" class="input form_w100" title="순번" v-model="termsOrder_new" maxlength="5"></td>
                     </tr>
                     <tr>
                         <th scope="row">내용</th>
@@ -39,8 +39,8 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" v-on:click="toPolicyTempList" class="btn_b01 bg02">취소</button>
-                <button type="button" v-on:click="delPolicy" class="btn_b01 bg03">삭제</button>
-                <button type="button" v-on:click="regPolicy" class="btn_b01 bg01">{{way}}</button>
+                <button type="button" v-on:click="delPolicy" class="btn_b01 bg03" v-show="delShow">삭제</button>
+                <button type="button" v-on:click="regPolicy" class="btn_b01 bg01" v-show="regShow">{{way}}</button>
             </div>
 
         </div>
@@ -69,12 +69,14 @@
         termsOrder_old: string = "";
         termsOrder_new: string = "";
         way: string = "";
+        delShow: boolean = false;
+        regShow: boolean = false;
+
+        menuCheck="";
 
         mounted() {
             this.objectKey = this.$route.params.objectKey;
             this.way = "등록";
-
-            console.log('11this.objectKey', this.objectKey);
 
             this.pageDiv();
 
@@ -91,13 +93,35 @@
          */
         pageDiv() {
             let routeNm = this.$route.name;
+
             if (routeNm == 'policyReg') {
                 this.titleNm = '이용약관';
                 this.termsType = "SITE";
+                this.menuCheck = "policyHistoryList";
             } else if (routeNm == 'personalReg') {
                 this.titleNm = '개인보호처리방침';
                 this.termsType = "USER";
+                this.menuCheck = "personalHistoryList";
             }
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = this.menuCheck;
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y' || menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y' ) {
+                        this.regShow = true;
+                    }
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].deleteYn == 'Y') {
+                        this.delShow = true;
+                    }
+                }
+            }
+
+
         }
 
         /**
@@ -245,6 +269,7 @@
          * 유효성체크
          */
         validationChk() {
+            let regNumber = /^[0-9]*$/;
             if (this.title == null || this.title == "") {
                 alert("제목을 입력하세요");
                 return false;
@@ -253,6 +278,9 @@
                 return false;
             } else if (this.termsOrder_new == null || this.termsOrder_new == "") {
                 alert("순번을 입력하세요");
+                return false;
+            }else if(!regNumber.test(this.termsOrder_new)){
+                alert('숫자만 입력 가능합니다.');
                 return false;
             }
         }

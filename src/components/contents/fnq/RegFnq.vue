@@ -46,10 +46,10 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button"  class="btn_b01 bg02" v-on:click="toList">취소</button>
-                <template v-if="div_str == '수정' ">
+                <template v-if="div_str == '수정' && delShow == true ">
                     <button type="button" class="btn_b01 bg03" @click="del">삭제</button>
                 </template>
-                <button type="button" class="btn_b01 bg01" @click="regFnq">{{div_str}}</button>
+                <button type="button" class="btn_b01 bg01" @click="regFnq" v-show="regShow">{{div_str}}</button>
             </div>
 
         </div>
@@ -75,7 +75,8 @@
         title : string ="";
         viewType : string ="";
         content : string ="";
-
+        regShow:boolean = false;
+        delShow:boolean = false;
 
         objectKey : any = "";
 
@@ -90,6 +91,24 @@
                 this.div_str="수정";
                 this.getFnqDetail();
             }
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'fnqList'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y' || menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y' ) {
+                        this.regShow = true;
+                    }
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].deleteYn == 'Y') {
+                        this.delShow = true;
+                    }
+                }
+            }
+
         }
 
         /**
