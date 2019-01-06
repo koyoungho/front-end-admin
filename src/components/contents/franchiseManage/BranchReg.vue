@@ -63,7 +63,7 @@
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p>
@@ -93,7 +93,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
@@ -115,7 +115,7 @@
                     <tr>
                         <th scope="row">회사코드</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
+                            <select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupSubSaupList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
@@ -124,7 +124,7 @@
                         </td>
                         <th scope="row">업종구분</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
+                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupUpjongList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -169,7 +169,7 @@
                         </td>
                         <th scope="row">점코드</th>
                         <td>
-                            <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10">
+                            <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="apro.jumCodeYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)">중복확인</button>
                             <p class="info_msg" v-bind:id="apro.jumCodeMsg"></p>
@@ -811,7 +811,7 @@
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
                     } else {
-                        this.saupIdYn = 'Y'; //개발 반영시 ''로 바꾸어야 함
+                        this.saupIdYn = ''; //개발 반영시 ''로 바꾸어야 함
                         if(saupmsg != null){
                             saupmsg.innerHTML = result.message; //화면에 메시지 보이기
                         }
@@ -1038,6 +1038,17 @@
             this.soluNm = data.shopNm; //가맹점명
         }
 
+        showKeyCode(event) {
+            event = event || window.event;
+            var keyID = (event.which) ? event.which : event.keyCode;
+            if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105)) {
+                //console.log('숫자')
+            }
+            else {
+                event.target.value = '';
+            }
+            /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
+        }
     }
 
 </script>

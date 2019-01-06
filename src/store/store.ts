@@ -20,6 +20,29 @@ export default new Vuex.Store({
     },
     mutations: {
         LOGIN (state, accessToken) {
+            /*
+            state.accessToken = accessToken;
+            sessionStorage.setItem("data", accessToken);
+            sessionStorage.accessToken = accessToken.accesstoken; //token
+            sessionStorage.code = accessToken.code; //결과코드
+            sessionStorage.message = accessToken.message; //결과메시지
+            sessionStorage.failCnt = accessToken.failCnt; //실패카운트
+            sessionStorage.lastIp = accessToken.lastIp; //최종접속IP
+            sessionStorage.lastConnDt = accessToken.lastConnDt; //최종접속 시간
+            sessionStorage.accountId = accessToken.accountId; //계정ID
+            sessionStorage.accountNm = accessToken.accountNm; //계정명
+            sessionStorage.gajumNm = accessToken.gajumNm; //가점명
+            sessionStorage.jijumNm = accessToken.jijumNm; //지점명
+            sessionStorage.lastConnDt = accessToken.lastConnDt; //마지막접속일자
+            sessionStorage.storeNm = accessToken.storeNm; //상점명
+            sessionStorage.saupId = accessToken.saupId; //사업장번호
+            sessionStorage.upJong = accessToken.upJong; //업종코드
+            sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
+            sessionStorage.role = accessToken.role; //사업장번호
+            sessionStorage.roleNm = accessToken.roleNm; //사업장번호
+            */
+        },
+        OTP_LOGIN (state, accessToken) {
             state.accessToken = accessToken;
             sessionStorage.setItem("data", accessToken);
             sessionStorage.accessToken = accessToken.accesstoken; //token
@@ -55,6 +78,7 @@ export default new Vuex.Store({
             sessionStorage.clear();
         },
         INFO_SET(state, data) {
+            sessionStorage.role = data.role;
             sessionStorage.code = data.code;
             sessionStorage.message = data.message;
             sessionStorage.failCnt = data.failCnt;
@@ -62,17 +86,44 @@ export default new Vuex.Store({
     },
     actions: {
         LOGIN ({commit}, {id, password}) {
+            sessionStorage.clear();
+
             // 로그인결과 리턴해줌
             return CommonBoardService.postListDatas('auth', null,{id, password})
                 .then(({data}) => {
+                    console.log('login check!!')
                     if(data.code=='000'){
-                        commit('LOGIN', data)
+                        console.log(data)
+                        //commit('LOGIN', data)
+                        //commit('INFO_SET', data)
                         return "success"
                     }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌
                         commit('INFO_SET', data)
                         return "noinfo"
                     }
                 }).catch(e=>{
+                        return 'fail'
+                    }
+                )
+        },
+        OTP_LOGIN ({commit}, {auth_opt, id}) {
+            // 로그인결과 리턴해줌
+            let apiUrl = 'otp/'+auth_opt+'/login';
+            return CommonBoardService.postListDatas(apiUrl, null,{id})
+                .then(({data}) => {
+                    console.log('otp login check!!')
+                    console.log(data)
+                    if(data.code=='000'){
+                        //commit('LOGIN', data)
+                        commit('OTP_LOGIN', data)
+                        return "success"
+                    }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌
+                        console.log('OTP 인증코드가 맞지않습니다1.')
+                        commit('INFO_SET', data)
+                        return "noinfo"
+                    }
+                }).catch(e=>{
+                        console.log('OTP 인증코드가 맞지않습니다2.')
                         return 'fail'
                     }
                 )

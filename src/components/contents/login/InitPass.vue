@@ -72,7 +72,7 @@
                                 <input type="password" class="pw"  v-model="pwdConfirm"  size="" maxlength="" placeholder="비밀번호 확인"  id="passwordconf" title="비밀번호 확인 입력" autocomplete="new-password">
                             </li>
                         </ul>
-                    </ul>
+                    </ul>&nbsp;
                     <p class="info_msg fc_pt01">{{valueChecks}}</p>
                 </fieldset>
                 <!-- btn area -->
@@ -338,9 +338,9 @@
 
             let initPass ={}
             initPass['id'] = this.resultId; //이름
-            initPass['newPass'] = this.pwdConfirm; //사업자등록번호
+            initPass['newPass'] = this.pwdConfirm; //패스워드
             // api 데이터 호출
-            CommonBoardService.postListDatas('accounts','pass', initPass).then((response) => {
+            CommonBoardService.updateListData('accounts',this.resultId+'/password', initPass).then((response) => {
                     if (response.status == 200) {
                         alert('변경이 완료되었습니다')
                         this.$router.push({name:'login'})

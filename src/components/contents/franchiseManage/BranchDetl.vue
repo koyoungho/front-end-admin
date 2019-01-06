@@ -117,7 +117,7 @@
                             </ul>
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <th scope="row">회사코드</th>
                         <td>
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
@@ -136,7 +136,7 @@
                                 </template>
                             </select>
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <th scope="row">지점 상태</th>
                         <td colspan="3">
@@ -533,8 +533,8 @@
                         this.zipCode = result.zipCode; //우편번호
                         this.addr1 = result.addr1; //주소
                         this.addr2 = result.addr2; //상세주소
-                        this.saupSubSaup = result.subSaup; //회사코드
-                        this.saupUpjong = result.upjong; //업종코드
+                        //this.saupSubSaup = result.subSaup; //회사코드
+                        //this.saupUpjong = result.upjong; //업종코드
                         this.jijumStatus = result.jijumStatus; //가맹점 상태
                         this.regiDate = this.dateFormat(result.regiDate); //사업장 등록일
                         this.canDate = this.dateFormat(result.canDate); //사업장 해지일
@@ -614,8 +614,8 @@
             this.getSelectList('RECEIPT'); //현금영수증 사업자
             this.getSelectList('SEARCH'); //회사코드
             this.getSelectList('APRO'); //승인코드
-            this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
-            this.getSelectList('UPJONG'); //업종구분(사업장정보)
+            //this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
+            //this.getSelectList('UPJONG'); //업종구분(사업장정보)
         }
 
         //공통 select box 조회
@@ -769,12 +769,12 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.saupSubSaup == null || this.saupSubSaup == ''){
-                alert('회사코드를 선택하세요.');
-                return;
-            }else if(this.saupUpjong == null || this.saupUpjong == ''){
-                alert('업종코드를 선택하세요.');
-                return;
+            // }else if(this.saupSubSaup == null || this.saupSubSaup == ''){
+            //     alert('회사코드를 선택하세요.');
+            //     return;
+            // }else if(this.saupUpjong == null || this.saupUpjong == ''){
+            //     alert('업종코드를 선택하세요.');
+            //     return;
             }
 
             if(this.approvalList.length > 0){
@@ -916,8 +916,8 @@
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
             saupData['addr2'] = this.addr2; //사업장 상세주소
-            saupData['subSaup'] = this.saupSubSaup; //회사코드
-            saupData['upjong'] = this.saupUpjong; //업종구분
+            //saupData['subSaup'] = this.saupSubSaup; //회사코드
+            //saupData['upjong'] = this.saupUpjong; //업종구분
 
             reqData['gajumId'] = this.gajumId; //가맹점 ID
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅

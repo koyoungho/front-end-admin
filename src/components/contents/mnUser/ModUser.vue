@@ -72,13 +72,13 @@
                     </tr>
                     <tr>
                         <th scope="row">사업자등록증 확인</th>
-                        <td class="con01">
+                        <td class="con01" colspan="3">
                             <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
                         </td>
-                        <th scope="row">전화번호</th>
+                        <!--<th scope="row">전화번호</th>
                         <td class="con01">
                             <input type="text" class="input form_w100" title="전화번호" v-model="account.telNum">
-                        </td>
+                        </td>-->
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -485,9 +485,9 @@
             }else if(account.accountStatus == '' || account.accountStatus == null){
                 alert('계정상태를 선택하세요.')
                 return;
-            }else if(account.telNum == '' || account.telNum == null){
-                alert('전화번호를 입력하세요.')
-                return;
+            //}else if(account.telNum == '' || account.telNum == null){
+            //    alert('전화번호를 입력하세요.')
+            //    return;
             }else if(account.zipCode == '' || account.zipCode == null){
                 alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
                 return;

@@ -51,7 +51,36 @@
         }
 
         created() {
-            // this.menuItem = JSON.parse(sessionStorage.authMenu)
+            this.menuItem = JSON.parse(sessionStorage.authMenu)
+/*
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'franchiseList'; //메뉴ID (가맹점 관리)
+            let readShow : boolean = false; //가맹점 관리 등록권한
+            let regShow : boolean = false; //가맹점 관리 등록권한
+            let updShow : boolean = false; //가맹점 관리 수정권한
+            let delShow : boolean = false; //가맹점 관리 삭제권한
+            for(let i=0; i<menuList.length; i++){
+                for(let j=0; j<menuList[i].subMenuDtos.length; j++){
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].readYn == 'Y'){ //조회권한 확인
+                        readShow = true;
+                    }
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y'){ //등록권한 확인
+                        regShow = true;
+                    }
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y'){ //수정권한 확인
+                        updShow = true;
+                    }
+                    if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].deleteYn == 'Y'){ //삭제권한 확인
+                        delShow = true;
+                    }
+                }
+            }
+            console.log('조회권한 있음 ?? :: ' + readShow)
+            console.log('등록권한 있음 ?? :: ' + regShow)
+            console.log('수정권한 있음 ?? :: ' + updShow)
+            console.log('삭제권한 있음 ?? :: ' + delShow)
+*/
+            /*
             if (this.menuItem == null) {
                 this.menuItem = [
                     {progId:'franchiseList',groupCode : '0001', name: '가맹점관리' , sub: 'sub',subMenuDtos:[
@@ -99,6 +128,7 @@
                         ]}
                 ];
             }
+            */
             this.menuHeight();
         }
 

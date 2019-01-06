@@ -31,27 +31,27 @@
                 <ul class="search_list col03">
                     <li>
                         <label for="">가맹점 번호</label>
-                        <input type="text" class="input form_w100" value="0000000000" title="가맹점번호" v-model="gajumId">
+                        <input type="text" class="input form_w100" value="0000000000" title="가맹점번호" v-model="gajumId" disabled="disabled">
                     </li>
                     <li>
                         <label for="">사업자 번호</label>
-                        <input type="text" class="input form_w100" value="0000000000" title="사업자번호" v-model="gajumSaupId">
+                        <input type="text" class="input form_w100" value="0000000000" title="사업자번호" v-model="gajumSaupId" disabled="disabled">
                     </li>
                     <li>
                         <label for="">가맹점명</label>
-                        <input type="text" class="input form_w100" value="신일약국" title="가맹점명" v-model="gajumNm">
+                        <input type="text" class="input form_w100" value="신일약국" title="가맹점명" v-model="gajumNm" disabled="disabled">
                     </li>
                     <li>
                         <label for="">지점 번호</label>
-                        <input type="text" class="input form_w100" value="000-00-00000" title="지점번호" v-model="jijumId">
+                        <input type="text" class="input form_w100" value="000-00-00000" title="지점번호" v-model="jijumId" disabled="disabled">
                     </li>
                     <li>
                         <label for="">사업자 번호</label>
-                        <input type="text" class="input form_w100" value="000-00-00000" title="사업자번호" v-model="jijumNo">
+                        <input type="text" class="input form_w100" value="000-00-00000" title="사업자번호" v-model="jijumNo" disabled="disabled">
                     </li>
                     <li>
                         <label for="">지점명</label>
-                        <input type="text" class="input form_w100" value="신일약국 영등포점" title="지점명" v-model="jijumNm">
+                        <input type="text" class="input form_w100" value="신일약국 영등포점" title="지점명" v-model="jijumNm" disabled="disabled">
                     </li>
                 </ul>
             </div>
@@ -81,7 +81,7 @@
                     <tr>
                         <th scope="row">사업자등록번호</th>
                         <td colspan="2">
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p>
@@ -111,7 +111,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10"></td>
+                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -189,7 +189,7 @@
                         </td>
                         <th scope="row">점코드</th>
                         <td>
-                            <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10">
+                            <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="apro.jumCodeYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)">중복확인</button>
                             <p class="info_msg" v-bind:id="apro.jumCodeMsg"></p>
@@ -427,7 +427,7 @@
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
             console.log(menuList)
-            let programId = 'storeReg'; //메뉴ID
+            let programId = 'storeList'; //메뉴ID
             for(let i=0; i<menuList.length; i++){
                 for(let j=0; j<menuList[i].subMenuDtos.length; j++){
 
@@ -1155,6 +1155,18 @@
             console.log(this.file);
             //let formData = new FormData();
             //formData.append('file',this.file);
+        }
+
+        showKeyCode(event) {
+            event = event || window.event;
+            var keyID = (event.which) ? event.which : event.keyCode;
+            if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105)) {
+                //console.log('숫자')
+            }
+            else {
+                event.target.value='';
+            }
+            /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
         }
 
     }
