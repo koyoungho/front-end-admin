@@ -9,7 +9,7 @@
             <h3>전송파일 처리결과</h3>
 
             <!--리스트-->
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" ></ListComponent>
 
         </div>
         <!-- //content -->
@@ -72,10 +72,6 @@
             }
         }
 
-        // 뷰페이지 클릭이벤트 받아서 여는곳
-        listViewEvent(row){
-            this.$router.push({ name:'noticeDetl' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-        }
 
 
 

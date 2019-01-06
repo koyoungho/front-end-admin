@@ -47,7 +47,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" class="btn_b02 bg02" v-on:click="toList">목록</button>
-                <button type="button" class="btn_b02 bg02" v-on:click="goRegNotice">수정</button>
+                <button type="button" class="btn_b02 bg02" v-on:click="goRegNotice" v-show="regShow">수정</button>
             </div>
 
         </div>
@@ -75,12 +75,27 @@
         listData:any=[];
         attachFiles:any=[];
         objectKey : any = "";
+        regShow: boolean = false;
 
         mounted() {
             this.objectKey = this.$route.params.objectKey;
 
             this.seq = this.objectKey.seq;// 글번호 시퀀스
-            this.getNoticeDetail()
+            this.getNoticeDetail();
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'noticeList'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+
         }
 
         /**

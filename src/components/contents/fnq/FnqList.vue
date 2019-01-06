@@ -7,12 +7,10 @@
             <h2 class="blind">자주 묻는 질문</h2>
 
             <h3>자주 묻는 질문</h3>
-            <template v-if="role =='0001'">
             <!-- btn top -->
-            <div class="btn_top">
+            <div class="btn_top" v-show="regShow">
                 <button type="button" class="btn_m01 bg02" v-on:click="regFnq">자주묻는 질문 등록</button>
             </div>
-            </template >
 
             <template v-if="role == '0001' || role == '0003'">
                 <!--리스트-->
@@ -102,10 +100,10 @@
         searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
 
         role: any = sessionStorage.getItem('role');
+        regShow : boolean=false;
 
         originItem : any = {} // 오리지널데이터
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
-
 
         isActive:boolean=false;
         arrow:string="";
@@ -150,6 +148,19 @@
             if(this.role == '0004'|| this.role == '0005' ){
                 this.searchFaq( );//리스트 바인딩
             }
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'fnqList'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
         }
 
         //조회
@@ -169,8 +180,6 @@
             CommonBoardService.getListDatas('faq', null, searchData).then((response) => {
                     let result: any = response.data;
 
-
-                    console.log(result);
                     if (result.data.length > 0) {
                         this.listData=result.data;
                      }
@@ -178,8 +187,6 @@
                     this.totalCount = result.totalRecords;
                     this.startPage= (result.currentPage -1) * result.perPage;
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
-                    // this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
-                    // this.$Progress.finish();
                 }
                 , (error) => {
                     //this.$Progress.finish();

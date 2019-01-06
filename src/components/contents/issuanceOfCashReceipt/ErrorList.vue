@@ -11,8 +11,8 @@
 
         <div class="btn_bot type03">
             <button type="button" id="" class="btn_b01 bg02" v-on:click="goCancel">취소</button>
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goPresent">제출</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goInsert">저장</button>
+            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert"  v-show="regShow">임시저장</button>
+            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
         </div>
         </div>
     </section>
@@ -34,6 +34,7 @@
     export default class ErrorList extends Vue {
         message: any = '';
         setDate =  format(new Date(),'YYYYMMDD')
+        regShow : boolean = false;
 
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
@@ -47,23 +48,23 @@
                     ],
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                         {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  },
+                        {columName : '오류발생일자' ,id :'sendDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '오류코드' ,id :'retCode',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  , colColors : 'color: #008aff' },
                         {columName : '오류내용' ,id :'retCodeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '원거래승인번호' ,id :'originPerm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '원거래승일일자' ,id :'originAprvDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '승인번호' ,id :'perm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '승인일자' ,id :'saleDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '거래금액' ,id :'totamt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '승인번호' ,id :'errorAprvPerm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '거래일자' ,id :'saleDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '거래일시' ,id :'geodate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '오류발생일자' ,id :'sendDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '거래금액' ,id :'totamt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '원거래승인번호' ,id :'oriAprvPerm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '원거래승일일자' ,id :'oriSaleDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '사업자등록번호' ,id :'saupId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '회사코드' ,id :'subSaup',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '가맹점' ,id :'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '승인번호' ,id :'reperm',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:''},
-                        {columName : '거래일자' ,id :'resaleDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',value:'' },
-                        {columName : '처리일자' ,id :'fixDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:''},
-                        {columName : '오류발생사유' ,id :'rsnCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , selectList : '1' }, // api 데이터를 가져와야할때
-                        {columName : '조치결과' ,id :'rstCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'', selectList : '2' },
+                        {columName : '승인번호' ,id :'fixPerm',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , colColors: ''},
+                        {columName : '거래일자' ,id :'fixSaleDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',value:'' , colColors: '' },
+                        {columName : '처리일자' ,id :'fixDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , colColors: ''},
+                        {columName : '오류발생사유' ,id :'rsnCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , selectList : '1' , colColors: ''}, // api 데이터를 가져와야할때
+                        {columName : '조치결과' ,id :'rstCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'', selectList : '2' , colColors: '' },
 
                     ],
                     commonApiOneUse : true, // 공용셀렉트 조건 1/2 두개까지만 일단적용
@@ -98,6 +99,18 @@
 
         //돔생성전 호출자
         created() {
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'cashReceiptIssue'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
         }
 
         //돔렌더링완료시 진행
@@ -126,8 +139,12 @@
 
         //저장
         goInsert(){
-            let ObjectData = this.$children['0'].$children['1'].listData
-            // CommonBoardService.postListDatas()
+            let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
+            let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
+
+            if(checkTrue){
+
+            }
         }
 
     }

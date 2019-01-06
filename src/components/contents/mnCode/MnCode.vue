@@ -30,8 +30,8 @@
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
                           <template v-if="company==false">
-                            <button type="button" v-on:click="viewPop('add','main')" class="btn_s01 bg03 add">추가</button>
-                            <button type="button" v-on:click="removeData('main')" class="btn_s01 bg03 del">삭제</button>
+                            <button type="button" v-on:click="viewPop('add','main')" class="btn_s01 bg03 add" v-show="regShow">추가</button>
+                            <button type="button" v-on:click="removeData('main')" class="btn_s01 bg03 del" v-show="delShow">삭제</button>
                           </template>
                         </div>
 
@@ -66,8 +66,8 @@
                         <h4 class="first">{{company == true ? subTitle1 : subTitle2}}</h4>
                         <!-- btn mgt area -->
                         <div class="btn_mgt_area">
-                            <button type="button" v-on:click="viewPop('add','sub')" class="btn_s01 bg03 add">추가</button>
-                            <button type="button" v-on:click="removeData('sub')" class="btn_s01 bg03 del">삭제</button>
+                            <button type="button" v-on:click="viewPop('add','sub')" class="btn_s01 bg03 add"  v-show="regShow">추가</button>
+                            <button type="button" v-on:click="removeData('sub')" class="btn_s01 bg03 del"  v-show="delShow">삭제</button>
                         </div>
 
                         <!-- code list box -->
@@ -143,8 +143,30 @@
         pDelGroupCode : string ="";
         sDelGroupCode : string ="";
 
+        regShow : boolean =false;
+        delShow : boolean =false;
+
         created(){
             this.callCodeList('company')
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'mnCode'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.regShow = true;
+                    }
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].deleteYn == 'Y') {
+                        this.delShow = true;
+                    }
+                }
+            }
+
+
         }
 
         mounted(){

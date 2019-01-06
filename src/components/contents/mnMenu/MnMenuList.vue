@@ -8,8 +8,8 @@
             <h3>메뉴 권한 관리</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
-                <button type="button" class="btn_m01 bg02" v-on:click="regMenu">메뉴 권한 등록</button>
+            <div class="btn_top" v-show="regShow">
+                <button type="button" class="btn_m01 bg02" v-on:click="regMenu" >메뉴 권한 등록</button>
             </div>
 
             <!-- tbl list box -->
@@ -36,6 +36,7 @@
     })
     export default class MnMenuList extends Vue {
         viewMode : boolean = false;
+        regShow:boolean=false;
         auth : any = "";
         listItem: any =
             {
@@ -76,6 +77,20 @@
                 searchClass2 : 'search_list'
             }
         created(){
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'mnMenu'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+
+
 
         }
         mounted(){

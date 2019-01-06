@@ -216,7 +216,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">정보변경</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk" v-show="regShow">정보변경</button>
             </div>
 
         </div>
@@ -273,6 +273,7 @@
         sbulk4 : any = '';
 
         menuList : any = [];
+        regShow : boolean = false;
 
         account : Account[]=[];
         gajum : Gajum[]=[];
@@ -338,6 +339,19 @@
             this.commonCode();
             //this.gajumInfo();
             //this.saupInfo(); //사업장 정보 조회
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'mnUser'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
 
         }
 

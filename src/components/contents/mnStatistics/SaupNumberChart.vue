@@ -6,27 +6,52 @@
             <h2 class="blind">통계관리</h2>
 
             <h3>사업자번호별 거래현황</h3>
+
+            <!-- btn top -->
+
             <!-- search box -->
             <div class="search_box page_stats02">
                 <ul class="search_list">
                     <li>
-                        <label for="">기간</label><span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
+                        <label for="">기간</label>
+                        <span class="form_cal">
+                            <input type="text" v-model="searchStartDate=='' ? formatDates(nowDate) : searchStartDate"  class="input date" title="날짜 입력">
+                          </span>
+                        <span class="period_cal">-</span>
+                        <span class="form_cal">
+                            <input type="text" v-model="searchEndDate=='' ? formatDates(nowDate) : searchEndDate"  class="input date" title="날짜 입력">
+                            <a href="" class="btn_cal" id="datepicker">달력</a>
+                          </span>
+                        <template class="datepicker-trigger">
+                            <AirbnbStyleDatepicker
+                                :trigger-element-id="'datepicker'"
+                                :mode="'range'"
+                                :fullscreen-mobile="true"
+                                :months-to-show="2"
+                                :offsetY="-20"
+                                :showMonthYearSelect = "true"
+                                :date-one="formatDates(nowDate)"
+                                :date-two="formatDates(nowDate)"
+                                @date-one-selected="val => { searchStartDate = formatDates(val) }"
+                                @date-two-selected="val => { searchEndDate = formatDates(val) }"
+                            />
+                        </template>
                     </li>
                     <li>
                         <label for="">회사코드</label>
-                        <select id="" name="" class="select sch_w100" title="회사코드">
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
-                            <option>01</option>
-                            <option>02</option>
-                            <option>03</option>
+                        <select  class="select sch_w100" title="회사코드" v-model="companyCode" >
+                            <option value="">전체</option>
+                            <template v-for="data in companyCodeList">
+                                <option  :value="data.code">{{data.name}}</option>
+                            </template>
                         </select>
                     </li>
                     <li>
-                        <label for="">사업자등록번호</label>
-                        <input type="text" class="input sch_indcode01" value="000-00-00000" title="사업자등록번호">
+                        <label for="aa">사업자등록번호</label>
+                        <input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>
+                        <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
                     </li>
+
                 </ul>
             </div>
             <!-- //search box -->
@@ -34,148 +59,346 @@
             <!-- btn mid -->
             <div class="btn_mid">
                 <button type="button" class="btn_m01 bg05" @click="excelDown"><i class="icon download01"></i> 엑셀 다운로드</button>
-                <button type="button" class="btn_m01 bg01">조회</button>
+                <button type="button" class="btn_m01 bg01" @click="compCodeChart()">조회</button>
             </div>
 
             <!-- tbl scroll x box -->
-            <div class="tbl_scroll_x_box">
-                <!-- tbl list02 -->
-                <table class="tbl_list04 page_stats02">
-                    <caption>사업자등록번호별 통계</caption>
-                    <colgroup>
-                        <col width="130px">
-                        <col width="120px">
-                        <col span="16">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" rowspan="4">사업자등록번호</th>
-                        <th scope="col" rowspan="4">사업장명</th>
-                        <th scope="col" colspan="16">2018년 10월</th>
-                    </tr>
-                    <tr>
-                        <th scope="col" colspan="4">승인</th>
-                        <th scope="col" colspan="4">취소</th>
-                        <th scope="col" colspan="4">국세청 승인 오류</th>
-                        <th scope="col" colspan="4">국세청 취소 오류</th>
-                    </tr>
-                    <tr>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                        <th scope="col" colspan="2">온라인</th>
-                        <th scope="col" colspan="2">오프라인</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                        <th scope="col">자진</th>
-                        <th scope="col">비자진</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>000-00-00000</td>
-                        <td class="name">롯데정보통신</td>
-                        <td class="right">1,000</td>
-                        <td class="right">-</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">-</td>
-                        <td class="right">-</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                    </tr>
-                    <tr>
-                        <td>000-00-00000</td>
-                        <td class="name">롯데정보통신</td>
-                        <td class="right">1,000</td>
-                        <td class="right">-</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                        <td class="right">1,000</td>
-                    </tr>
-                    <tr>
-                        <td colspan="18" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr class="total">
-                        <th scope="row" colspan="2">합계</th>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                        <td class="right">8,000</td>
-                    </tr>
-                    </tfoot>
-                </table>
+            <div class="tbl_scroll_x_box" >
+                <!-- 데이터가 존재 -->
+                <template v-if="monthCount">
+                    <!--개월수만큼 데이터 오픈-->
+                    <template v-for="data,index in ChartModel">
+                        <!--개월중 데이터 존재하는것만 -->
+                        <template v-if="data.data.length > 0">
+                            <div style="display:block; width:5000px">
+                                <!-- tbl list02 -->
+                                <!--border-left:none"-->
+                                <table class="tbl_list04 page_stats01" style="float:left;">
+                                    <caption>사업자번호별 통계</caption>
+                                    <colgroup>
+                                        <!--<template v-if="data(-1).length < 1">-->
+                                        <col width="100px">
+                                        <col width="120px">
+                                        <!--</template>-->
+                                        <col span="16">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <!--<template v-if="data(-1).length < 1">-->
+                                        <th scope="col" rowspan="4">사업자등록번호</th>
+                                        <th scope="col" rowspan="4">사업장명</th>
+                                        <!--</template>-->
+                                        <th scope="col" colspan="16">{{data.searchDate}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" colspan="4">승인</th>
+                                        <th scope="col" colspan="4">취소</th>
+                                        <th scope="col" colspan="4">국세청 승인 오류</th>
+                                        <th scope="col" colspan="4">국세청 취소 오류</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" colspan="2">온라인</th>
+                                        <th scope="col" colspan="2">오프라인</th>
+                                        <th scope="col" colspan="2">온라인</th>
+                                        <th scope="col" colspan="2">오프라인</th>
+                                        <th scope="col" colspan="2">온라인</th>
+                                        <th scope="col" colspan="2">오프라인</th>
+                                        <th scope="col" colspan="2">온라인</th>
+                                        <th scope="col" colspan="2">오프라인</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                        <th scope="col">자진</th>
+                                        <th scope="col">비자진</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template v-if="data.data.length > 0" >
+                                        <template v-for="countData in data.data">
+                                            <tr>
+                                                <!--<template v-if="data.searchDate==searchStartDate">-->
+                                                <td class="name">{{countData.saupId}}</td>
+                                                <td class="name">{{countData.shopNm}}</td>
+                                                <!--</template>-->
+                                                <td class="right">{{countData.aprvOnlineSelf}}</td>
+                                                <td class="right">{{countData.aprvOnline}}</td>
+                                                <td class="right">{{countData.aprvOfflineSelf}}</td>
+                                                <td class="right">{{countData.aprvOffline}}</td>
+                                                <td class="right">{{countData.cancelOnlineSelf}}</td>
+                                                <td class="right">{{countData.cancelOnline}}</td>
+                                                <td class="right">{{countData.cancelOfflineSelf}}</td>
+                                                <td class="right">{{countData.cancelOffline}}</td>
+                                                <td class="right">{{countData.taxOnlineSelf}}</td>
+                                                <td class="right">{{countData.taxOnline}}</td>
+                                                <td class="right">{{countData.taxOfflineSelf}}</td>
+                                                <td class="right">{{countData.taxOffline}}</td>
+                                                <td class="right">{{countData.taxCancelOnlineSelf}}</td>
+                                                <td class="right">{{countData.taxCancelOnline}}</td>
+                                                <td class="right">{{countData.taxCancelOfflineSelf}}</td>
+                                                <td class="right">{{countData.taxCancelOffline}}</td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                    <template v-else>
+                                        <!--<template v-for="e in monthCount">-->
+                                        <!--<tr>-->
+                                        <!--<template v-if="index == 0">-->
+                                        <!--<td class="name">{{countData.subSaup}}</td>-->
+                                        <!--<td class="name">{{countData.shopNm}}</td>-->
+                                        <!--</template>-->
+                                        <!--<td class="right">{{countData.aprvOnlineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.aprvOnline}}</td>-->
+                                        <!--<td class="right">{{countData.aprvOfflineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.aprvOffline}}</td>-->
+                                        <!--<td class="right">{{countData.cancelOnlineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.cancelOnline}}</td>-->
+                                        <!--<td class="right">{{countData.cancelOfflineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.cancelOffline}}</td>-->
+                                        <!--<td class="right">{{countData.taxOnlineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.taxOnline}}</td>-->
+                                        <!--<td class="right">{{countData.taxOfflineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.taxOffline}}</td>-->
+                                        <!--<td class="right">{{countData.taxCancelOnlineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.taxCancelOnline}}</td>-->
+                                        <!--<td class="right">{{countData.taxCancelOfflineSelf}}</td>-->
+                                        <!--<td class="right">{{countData.taxCancelOffline}}</td>-->
+                                        <!--</tr>-->
+                                        <!--</template>-->
+                                    </template>
+
+                                    <!--<tr>-->
+                                    <!---->
+                                    <!--</tr>-->
+                                    </tbody>
+                                    <tfoot>
+                                    <tr class="total">
+                                        <!--<template v-if="index == 0">-->
+                                        <th scope="row" colspan="2">합계</th>
+                                        <!--</template>-->
+                                        <td class="right">{{data.total.aprvOnlineSelf}}</td>
+                                        <td class="right">{{data.total.aprvOnline}}</td>
+                                        <td class="right">{{data.total.aprvOfflineSelf}}</td>
+                                        <td class="right">{{data.total.aprvOffline}}</td>
+                                        <td class="right">{{data.total.cancelOnlineSelf}}</td>
+                                        <td class="right">{{data.total.cancelOnline}}</td>
+                                        <td class="right">{{data.total.cancelOfflineSelf}}</td>
+                                        <td class="right">{{data.total.cancelOffline}}</td>
+                                        <td class="right">{{data.total.taxOnlineSelf}}</td>
+                                        <td class="right">{{data.total.taxOnline}}</td>
+                                        <td class="right">{{data.total.taxOfflineSelf}}</td>
+                                        <td class="right">{{data.total.taxOffline}}</td>
+                                        <td class="right">{{data.total.taxCancelOnlineSelf}}</td>
+                                        <td class="right">{{data.total.taxCancelOnline}}</td>
+                                        <td class="right">{{data.total.taxCancelOfflineSelf}}</td>
+                                        <td class="right">{{data.total.taxCancelOffline}}</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </template>
+
+                    </template>
+                </template>
+                <!-- 데이터가 하나도 존재하지않을경우 -->
+                <template v-else>
+
+                    <div style="display:block; width:5000px">
+                        <!-- tbl list02 -->
+                        <!--border-left:none"-->
+                        <table class="tbl_list04 page_stats01" style="float:left;">
+                            <caption>사업자번호별 통계</caption>
+                            <colgroup>
+                                <!--<template v-if="data(-1).length < 1">-->
+                                <col width="100px">
+                                <col width="120px">
+                                <!--</template>-->
+                                <col span="16">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <!--<template v-if="data(-1).length < 1">-->
+                                <th scope="col" rowspan="4">사업자등록번호</th>
+                                <th scope="col" rowspan="4">사업장명</th>
+                                <!--</template>-->
+                                <th scope="col" colspan="16">-</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" colspan="4">승인</th>
+                                <th scope="col" colspan="4">취소</th>
+                                <th scope="col" colspan="4">국세청 승인 오류</th>
+                                <th scope="col" colspan="4">국세청 취소 오류</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" colspan="2">온라인</th>
+                                <th scope="col" colspan="2">오프라인</th>
+                                <th scope="col" colspan="2">온라인</th>
+                                <th scope="col" colspan="2">오프라인</th>
+                                <th scope="col" colspan="2">온라인</th>
+                                <th scope="col" colspan="2">오프라인</th>
+                                <th scope="col" colspan="2">온라인</th>
+                                <th scope="col" colspan="2">오프라인</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                                <th scope="col">자진</th>
+                                <th scope="col">비자진</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="18">데이터가 존재하지않습니다</td>
+                            </tr>
+
+                            </tbody>
+                            <tfoot>
+                            <tr class="total">
+                                <!--<template v-if="index == 0">-->
+                                <th scope="row" colspan="2">합계</th>
+                                <!--</template>-->
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                                <td class="right">-</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </template>
+
+
+
+
+
             </div>
             <!-- //tbl scroll box -->
 
-
         </div>
         <!-- //content -->
+        <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
     </section>
     <!-- //container -->
 </template>
 
 <script lang="ts">
-
+    import {format} from 'date-fns';
     import {Component, Vue} from 'vue-property-decorator';
+    import CompCodeChartPop from "@/components/contents/mnStatistics/CompCodeChartPop.vue";
+    import {CommonBoardService} from '../../../api/common.service';
+    import {CcChart} from '../../../model/chart/compCodeChart';
+    import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
 
     @Component({
 
         components: {
-            SaupNumberChart
+             CompCodeChartPop,GajiBox
         }
     })
-    export default class SaupNumberChart extends Vue {
+    export default class saupNumberChart extends Vue {
+        ChartModel : CcChart[] = [];
+        companyCodeList : any = []; // 회사코드
+        companyCode : string = "";
+        searchStartDate = "";
+        searchEndDate = "";
+        dateOne: any =  "";
+        dateTwo: any =  "";
+        nowDate : any = new Date();
+        showMode : string = "single";
+        monthCount : boolean = false;
+        saupId : string="";
+        storeId : string ="";
+        showModal1 : boolean = false;
+
+
+        formatDates(date) {
+            let formattedDates = ''
+            formattedDates = format(date, 'YYYYMM')
+            return formattedDates
+        }
+
+
+        created(){ // api 데이터
+            this.nowDate= this.formatDates(new Date())
+            this.searchStartDate =  this.nowDate
+            this.searchEndDate =  this.nowDate
+            this.companyList()
+            this.compCodeChart()
+        }
+
+        popupOpen(){
+            this.showModal1= true;
+        }
+        //선택한 가맹점 정보 셋팅(지점 등록화면 상단의 지점 정보)
+        setGajiData(data) {
+              this.saupId=data.saupId
+        }
+        mounted(){
+
+        }
+
+        companyList(){
+            CommonBoardService.getListDatas('company',null,null).then(result=>{
+                if(result.status==200){
+                    this.companyCodeList = result.data
+                }
+            }).catch(e=>{
+            })
+        }
+
+        compCodeChart(){
+
+            let Object = {searchStartDate : this.searchStartDate , searchEndDate : this.searchEndDate , subSaup : this.companyCode ,saupId: this.saupId}
+            CommonBoardService.getListDatas('statistics','saupid',Object).then(result=>{
+                if(result.status==200){
+                    this.ChartModel = result.data;
+                    result.data.filter(e=>{
+                        if(e.data.length > 0){
+                            this.monthCount=true;
+                        }
+                    })
+                }
+            }).catch(e=>{
+                console.log(e.message)
+            })
+        }
+
         /**
          * 엑셀다운로드
          */
@@ -183,9 +406,9 @@
             alert("엑셀다운로드");
         }
 
+
     }
 </script>
-
 
 <style scoped>
 

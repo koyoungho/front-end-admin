@@ -243,7 +243,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot type01">
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction">발급취소</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
             </div>
 
             <h4>관련 발급 내역</h4>
@@ -302,8 +302,22 @@
         listItem : any = "";
         onlineYn : string ="";
         onLoadListView : any = false;
+        regShow: boolean =false;
 
         created(){
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'cashReceiptIssue'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+
             this.onlineYn= this.$route.params.onlineYn;
 
             this.cancleReceipView();

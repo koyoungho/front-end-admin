@@ -13,105 +13,30 @@
             <thead>
             <tr>
                 <th scope="col">항목</th>
-                <th scope="col">18.1월</th>
-                <th scope="col">2월</th>
-                <th scope="col">3월</th>
-                <th scope="col">4월</th>
-                <th scope="col">5월</th>
-                <th scope="col">6월</th>
-                <th scope="col">7월</th>
-                <th scope="col">8월</th>
-                <th scope="col">9월</th>
-                <th scope="col">10월</th>
-                <th scope="col">11월</th>
-                <th scope="col">12월</th>
+                <template v-for="data,index in dateArray">
+                <th scope="col">{{dateFormats(data)}}</th>
+                </template>
                 <th scope="col">합계</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">전체</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">KT</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">롯데</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">가입</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">해지</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <!-- 			<tr>
-                            <td colspan="14" class="no_data">조회된 내용이 없습니다.</td>
-                        </tr> -->
+            <template v-for="data,index in gajumList">
+                <tr>
+                <th scope="row">{{data.SOLU}}</th>
+                <template v-for="da,indexs in dateArray">
+                <td class="right">{{data[dateArray[indexs]]}}</td>
+                </template>
+                <td></td>
+                </tr>
+            <!--<tr>-->
+                <!--<th scope="row">{{data.SOLU}}</th>-->
+                <!--<template v-for="da,indexs in dateArray">-->
+                <!--<td class="right">{{data[dateArray[indexs]]}}</td>-->
+                <!--</template>-->
+                <!--<td></td>-->
+            <!--</tr>-->
+            </template>
+
             </tbody>
         </table>
     </div>
@@ -130,105 +55,22 @@
             <thead>
             <tr>
                 <th scope="col">항목</th>
-                <th scope="col">18.1월</th>
-                <th scope="col">2월</th>
-                <th scope="col">3월</th>
-                <th scope="col">4월</th>
-                <th scope="col">5월</th>
-                <th scope="col">6월</th>
-                <th scope="col">7월</th>
-                <th scope="col">8월</th>
-                <th scope="col">9월</th>
-                <th scope="col">10월</th>
-                <th scope="col">11월</th>
-                <th scope="col">12월</th>
+                <template v-for="data,index in dateArray2">
+                    <th scope="col">{{dateFormats(data)}}</th>
+                </template>
                 <th scope="col">합계</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">전체</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">KT 가맹점 발행</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">롯데 가맹점 발행</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">일반 발행</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <tr>
-                <th scope="row">웹 발행</th>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-                <td class="right">100</td>
-            </tr>
-            <!-- 			<tr>
-                            <td colspan="14" class="no_data">조회된 내용이 없습니다.</td>
-                        </tr> -->
+            <template v-for="data,index in receiptList">
+                <tr>
+                    <th scope="row">{{data.SOLU}}</th>
+                    <template v-for="da,indexs in dateArray2">
+                        <td class="right">{{data[dateArray2[indexs]]}}</td>
+                    </template>
+                    <td></td>
+                </tr>
+            </template>
             </tbody>
         </table>
     </div>
@@ -240,7 +82,9 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from 'vue-property-decorator';
+    import {addMonths, differenceInCalendarMonths, differenceInMonths, format} from 'date-fns';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
 
@@ -249,6 +93,76 @@
         }
     })
     export default class GajumList extends Vue {
+        @Prop() searchStartDate !:string
+        @Prop() searchEndDate !:string
+        gajumList : Object = [];
+        gajumCount : number = 0;
+        receiptList : Object = [];
+        receiptCount : number = 0;
+        nowDate : any = new Date();
+        dateArray : any = [];
+        dateArray2 : any = [];
+
+        dateFormats(date) {
+            let dates = '';
+            dates = date.substr(2,2)+'.'+date.substr(4,2)+'월'
+            return dates
+        }
+
+        created(){
+            this.gajumStatistics()
+            this.receuptStatistics()
+        }
+
+        mounted(){
+
+        }
+
+        gajumStatistics(){
+             CommonBoardService.getListDatas('statistics','gajum',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+                  if(result.status==200){
+                      console.log(result)
+                      this.gajumList = result.data
+                      let ObjectData : any = [];
+                      result.data.filter((e,index)=>{
+                          if(index==0){
+                            Object.keys(e).forEach(s=>{
+                                if(s=='SOLU' || s=='TYPE'){
+                                }
+                                else{
+                                    ObjectData.push(s)
+                                }
+                            })
+                          }
+                      })
+                      this.dateArray = ObjectData
+                  }
+             }).catch(e=>{
+             })
+        }
+
+        receuptStatistics(){
+            CommonBoardService.getListDatas('statistics','receipt',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+                if(result.status==200){
+                    console.log(result)
+                    this.receiptList = result.data
+                    let ObjectData : any = [];
+                    result.data.filter((e,index)=>{
+                        if(index==0){
+                            Object.keys(e).forEach(s=>{
+                                if(s=='SOLU' || s=='TYPE'){
+                                }
+                                else{
+                                    ObjectData.push(s)
+                                }
+                            })
+                        }
+                    })
+                    this.dateArray2 = ObjectData
+                }
+            }).catch(e=>{
+            })
+        }
 
     }
 </script>

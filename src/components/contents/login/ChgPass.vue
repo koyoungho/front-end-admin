@@ -73,7 +73,7 @@
         passwordChk(){
 
             if(this.curPassword == ''){
-                alert('현재 비밀번호가 입력되지 않았습니다.');
+                alert('현재 비밀번호가 입력되지 않았습니다');
                 return;
             }else if(this.newPassword == ''){
                 alert('새로운 비밀번호가 입력되지 않았습니다.');
