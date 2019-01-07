@@ -328,7 +328,6 @@
                     else{
                         nowLineOk = false;
                         $event.target.style='background:red'
-                        trObject.setAttribute('style','background:red')
                     }
                 }else{
                     $event.target.style=''
@@ -340,7 +339,6 @@
                     trObject.setAttribute('style','')
                 }else{
                     nowLineOk = false;
-                    trObject.setAttribute('style','background:red')
                 }
             }
             else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rstCode') {
@@ -364,8 +362,9 @@
                 }
                 console.log('다입력됨')
             }
-            else if(this.listData[listIndex].fixPerm.length < 1 && this.listData[listIndex].fixDate < 1
-                && this.listData[listIndex].fixSaleDate < 1 && this.listData[listIndex].rsnCode=='null' && this.listData[listIndex].rstCode=='null'){
+            else if( (this.listData[listIndex].fixPerm =='' || this.listData[listIndex].fixPerm ==null) && (this.listData[listIndex].fixDate ==''  || this.listData[listIndex].fixDate ==null)
+                && (this.listData[listIndex].fixSaleDate=='' || this.listData[listIndex].fixSaleDate==null)
+                && (this.listData[listIndex].rsnCode=='null' ||  this.listData[listIndex].rsnCode==null) && (this.listData[listIndex].rstCode=='null' || this.listData[listIndex].rstCode==null)){
                 this.lineCheckOk = true;
                 trObject.setAttribute('style','')
             }
@@ -374,6 +373,11 @@
                 trObject.setAttribute('style','background:red')
                 console.log('다입력안됨')
             }
+            console.log(this.listData[listIndex].fixPerm)
+            console.log(this.listData[listIndex].fixDate)
+            console.log(this.listData[listIndex].fixSaleDate)
+            console.log(this.listData[listIndex].rsnCode)
+            console.log(this.listData[listIndex].rstCode)
         }
 
         checkAlls(id,indexs){  // 전체 체크박스선택

@@ -146,7 +146,7 @@
     })
     export default class Login extends Vue {
         otpChecks : boolean =false;
-        id : string = "hol_test";
+        id : string = "test2";
         password : string = "pass2";
 
         created() {

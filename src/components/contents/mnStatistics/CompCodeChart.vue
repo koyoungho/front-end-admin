@@ -400,7 +400,6 @@
                         })
                     }
             }).catch(e=>{
-                console.log(e.message)
             })
         }
 
@@ -420,7 +419,7 @@
                         this.upjongCodeList = result.data
                     }
             }).catch(e=>{
-                console.log(e.message)
+
             })
         }
 
@@ -444,7 +443,7 @@
                         })
                     }
             }).catch(e=>{
-                console.log(e.message)
+
             })
         }
 

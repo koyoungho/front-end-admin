@@ -145,25 +145,28 @@
             CommonBoardService.getListDatas('statistics','gajum',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
                 if(result.status==200){
                     this.gajumList = result.data
-                    let ObjectColumn : any = [];
+                    let dateColumn : any = [];
                     let ObjectRowList : any = [];
-                    result.data.filter((e,index)=>{
-                        ObjectColumn.push(e.SOLU)
-                    })
 
                     result.data.filter((e,index)=>{
-                            let ObjectRow = {}
-                            Object.keys(e).forEach(s=>{
-                                if(s=='SOLU' || s=='TYPE'){
-                                }
-                                else{
-                                    ObjectRow['e.SOLU'] = e.SOLU
-                                    ObjectRow['date'] = s
-                                    ObjectRow['cost'] = e[s]
+                        if(index==0){
+                            Object.keys(e).forEach(s=> {
+                                if (s == 'SOLU' || s == 'TYPE' || s == 'total'){
+                                }else{
+                                    dateColumn.push(e.SOLU)
                                 }
                             })
-                            ObjectRowList.push(ObjectRow)
-                     })
+                        }
+                    })
+
+                    dateColumn.filter(t=>{ // 데이터기준으로
+                        let data : any = {};
+                        result.data.filter(e=>{ //데이터에서 값을 뽑아넣는다
+                            Object.keys(e).forEach(s=> { // 201901 : 12  , SOLU : KT , TYPE : APRV , CANCLE
+                            })
+                        })
+                    })
+
 
 
                     // this.chartDataJoin = {

@@ -59,7 +59,7 @@
                         {columName : '사업자등록번호' ,id :'saupId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '회사코드' ,id :'subSaup',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '가맹점' ,id :'shopNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                        {columName : '승인번호' ,id :'fixPerm',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , colColors: ''},
+                        {columName : '승인번호' ,id :'fixPerm',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value: '' , colColors: ''},
                         {columName : '거래일자' ,id :'fixSaleDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',value:'' , colColors: '' },
                         {columName : '처리일자' ,id :'fixDate',type:'input', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , colColors: ''},
                         {columName : '오류발생사유' ,id :'rsnCode',type:'select', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value:'' , selectList : '1' , colColors: ''}, // api 데이터를 가져와야할때
