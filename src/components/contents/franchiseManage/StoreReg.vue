@@ -915,7 +915,7 @@
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
                     } else {
-                        this.saupIdYn = 'Y'; //개발 반영시 ''로 바꾸어야 함
+                        this.saupIdYn = ''; //개발 반영시 ''로 바꾸어야 함
                         if(saupmsg != null){
                             saupmsg.innerHTML = result.message; //화면에 메시지 보이기
                         }
