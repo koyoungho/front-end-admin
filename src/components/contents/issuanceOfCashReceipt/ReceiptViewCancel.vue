@@ -41,7 +41,7 @@
         onLoadListView : any = true;
         listItem: any ={};
         listData:any ={};
-        shopNm:string ="";
+        shopNm:any ="";
         show : boolean = false;
 
         created(){
