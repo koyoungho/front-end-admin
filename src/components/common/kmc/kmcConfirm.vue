@@ -18,6 +18,11 @@
         <iframe name="cert" id="cert" style="width: 416px;height: 500px"   v-on:load ="eventGet"></iframe>
       </div>
     </div>
+
+    <form id="myForm" :action="hostUrl" target="cert" refs="myForm">
+      <input type="hidden"  name="tr_cert" :value="tr_cert">
+      <input type="hidden"  name="tr_url" :value="tr_url">
+    </form>
   </div>
 </template>
 
