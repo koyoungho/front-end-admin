@@ -47,46 +47,13 @@
         created(){
 
             if(this.role == '0001' || this.role == '0003' ){
-
                 this.onLoadListView = false;
                 this.show =true;
-                this.searchList();
             }else{
                 this.saupId = sessionStorage.getItem('saupId');
+                this.shopNm = sessionStorage.getItem('storeNm');
                 this.show =false;
-                this.searchStoreInfo();
             }
-
-        }
-        mounted() {
-        }
-        // 뷰페이지 클릭이벤트 받아서 여는곳
-        listViewEvent(row){
-            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[6].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-        }
-        //매장정보조회
-        searchStoreInfo() {
-            // this.saupId='1048126067';
-            // api 데이터 호출
-            CommonBoardService.getListDatas('saupjang', this.saupId ,null ).then((response) => {
-                let result: any = response.data;
-
-                console.log(result);
-
-                if (result != null && result !=undefined) {
-                    this.listData=result
-                    this.shopNm = this.listData.shopNm;
-                }
-                    this.searchList();
-
-            }
-            , (error) => {
-                //this.$Progress.finish();
-            }
-            ).catch();
-        }
-
-        searchList(){
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
@@ -128,7 +95,15 @@
                     searchClass : 'search_box page_cash01',
                     searchClass2 : 'search_list'
                 }
+
         }
+        mounted() {
+        }
+        // 뷰페이지 클릭이벤트 받아서 여는곳
+        listViewEvent(row){
+            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[6].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+        }
+
 
 
         updated(){
