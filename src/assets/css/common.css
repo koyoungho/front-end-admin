@@ -417,6 +417,7 @@ select.wide {width:100%;}
 .login_wrap .cert_box .form_cert .cert2 {width:330px;font-size:16px; height:49px; border:1px solid #c6c6c6; padding-left:10px; padding-right:10px;}
 .login_wrap .cert_box .form_cert.row01 {}
 .login_wrap .cert_box .form_cert.row02 {padding:20px 0 0 240px;}
+.login_wrap .cert_box .form_cert.row03 {padding:20px 0 0 395px;}
 .login_wrap .cert_box .form_cert .btn_m01 {min-width:130px; font-size:16px; height:49px; line-height:49px; margin-left:10px;}
 .login_wrap .cert_box .time_count {font-family:'NanumB'; font-size:13px; color:#da291c; position: absolute; right:180px; bottom:15px; width:auto;}
 .login_wrap .cert_box .time_count2 {font-family:'NanumB'; font-size:13px; color:#da291c; position: absolute; right:290px; bottom:15px; width:auto;}
@@ -511,11 +512,20 @@ select.wide {width:100%;}
 .search_list.col05 > li {width:20%;}
 
 /* 가맹점 관리 */
-.search_box.page_store01 .search_list > li:nth-of-type(1) {width:54%;}
-.search_box.page_store01 .search_list > li:nth-of-type(2) {width:24%; text-align:right;}
-.search_box.page_store01 .search_list > li:nth-of-type(3) {width:22%; text-align:right;}
-.search_box.page_store01 .search_list > li:nth-of-type(4) {width:78%; text-align:right;}
-.search_box.page_store01 .search_list > li:nth-of-type(5) {width:22%; text-align:right;}
+.search_box.page_store01 .search_list > li:nth-of-type(1) {width:100%;}
+.search_box.page_store01 .search_list > li:nth-of-type(2) {width:54%;}
+.search_box.page_store01 .search_list > li:nth-of-type(3) {width:24%; text-align:right;}
+.search_box.page_store01 .search_list > li:nth-of-type(4) {width:22%; text-align:right;}
+.search_box.page_store01 .search_list > li:nth-of-type(5) {width:78%; text-align:right;}
+.search_box.page_store01 .search_list > li:nth-of-type(6) {width:22%; text-align:right;}
+
+.search_box.page_store011 .search_list > li:nth-of-type(1) {width:100%;}
+.search_box.page_store011 .search_list > li:nth-of-type(2) {width:54%;}
+.search_box.page_store011 .search_list > li:nth-of-type(3) {width:24%; text-align:right;}
+.search_box.page_store011 .search_list > li:nth-of-type(4) {width:22%; text-align:right;}
+.search_box.page_store011 .search_list > li:nth-of-type(5) {width:78%; text-align:right;}
+.search_box.page_store011 .search_list > li:nth-of-type(6) {width:22%; text-align:right;}
+
 
 /* 지점 관리 */
 .search_box.page_store02 .search_list > li:nth-of-type(1) {width:34%;}

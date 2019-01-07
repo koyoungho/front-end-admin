@@ -41,6 +41,9 @@ export default new Vuex.Store({
             sessionStorage.role = accessToken.role; //사업장번호
             sessionStorage.roleNm = accessToken.roleNm; //사업장번호
             */
+            sessionStorage.code = accessToken.code; //결과코드
+            sessionStorage.message = accessToken.message; //결과메시지
+            sessionStorage.id = accessToken.id; //ID
         },
         OTP_LOGIN (state, accessToken) {
             state.accessToken = accessToken;
@@ -100,7 +103,7 @@ export default new Vuex.Store({
                     console.log('login check!!')
                     if(data.code=='000'){
                         console.log(data)
-                        //commit('LOGIN', data)
+                        commit('LOGIN', data)
                         //commit('INFO_SET', data)
                         return "success"
                     }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌

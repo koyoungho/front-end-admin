@@ -11,9 +11,9 @@
             <!-- popup body -->
             <div class="popup_body">
                 <!-- popup content -->
-                <div class="popup_content page_sch">
+                <div class="popup_content page_sch" v-if="gajumHide">
                     <!-- search box -->
-                    <div class="search_box type01">
+                    <div class="search_box type01" >
                         <div class="search_inner">
                             <ul class="search_list">
                                 <li>
@@ -118,6 +118,68 @@
 
                 </div>
                 <!-- //popup content -->
+
+                <div class="popup_content page_sch" v-if="jijumShow">
+
+                    <!-- sch result box -->
+                    <div class="search_box type01">
+                        <div class="search_inner">
+                            <ul class="search_list">
+                                <li>
+                                    <label>가맹점</label>
+                                    <input type="text" class="input sch_appuser" value="" title="가맹점 코드" v-model="gajumId" disabled="disabled">
+                                    <span class="btn_sch_area"><button type="button" class="btn_m01 bg01" v-on:click="searchJijum">지점 번호 조회</button></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- tbl scroll box -->
+                    <div class="tbl_scroll_box">
+                        <!-- tbl list02 -->
+                        <table class="tbl_list02">
+                            <caption>검색 목록</caption>
+                            <colgroup>
+                                <col width="68px">
+                                <col width="100px">
+                                <col width="100px">
+                                <col width="400px">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col">선택</th>
+                                <th scope="col">지점번호</th>
+                                <th scope="col">사업자번호</th>
+                                <th scope="col">사업장명</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <!-- tbl scroll -->
+                        <div class="tbl_scroll">
+                            <table class="tbl_list02 brd_none page_store03">
+                                <caption>검색 목록</caption>
+                                <colgroup>
+                                    <col width="68px">
+                                    <col width="100px">
+                                    <col width="100px">
+                                    <col width="383px">
+                                </colgroup>
+                                <tbody v-for="datas in responseData">
+                                <tr>
+                                    <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
+                                    <td>{{datas.jijumId}}</td>
+                                    <td>{{datas.saupId}}</td>
+                                    <td class="left">{{datas.shopNm}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //tbl scroll -->
+                    </div>
+                    <!-- //tbl scroll box -->
+
+                </div>
+
                 <!-- bottom area -->
                 <div class="bottom_area">
                     <!-- btn -->
@@ -138,7 +200,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Prop} from "vue-property-decorator";
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
 
     @Component({
@@ -147,6 +209,11 @@
         },
     })
     export default class GajijumList extends Vue {
+
+        @Prop() gajumNum !: any;
+        gajumNumber : string = this.gajumNum;
+        gajumHide : boolean = true;
+        jijumShow : boolean = false;
 
         gajiGbn : boolean = true; //가맹점,지점 구분(true-가맹점, false-지점)
         gajuNm : any = '가맹점 번호';
@@ -177,6 +244,17 @@
         //돔생성전 호출자
         created() {
 
+            console.log('가맹점 ID 확인#####')
+            console.log(this.gajumNum)
+
+            if(this.gajumNum != null && this.gajumNum != ''){
+                console.log('가맹점 검색 감추기!!')
+                this.gajumId = this.gajumNum; //가맹점 ID 셋팅
+                this.gajumHide = false; //가맹점 검색 감추기
+                this.jijumShow = true; //지점 검색 보이기
+                this.jijumBtnShow = false; //지점 검색 버튼 감추기
+            }
+
         }
         //돔렌더링완료시 진행
         mounted(){
@@ -203,6 +281,22 @@
                 this.$emit('selectedGaJijum', selectedRow); //선택한 가맹점만 값 넘김
                 this.$emit('gajiumClose')
             }
+        }
+
+        selectedJijumRow(obj) {
+            console.log(obj);
+
+            let selectedRow: any = {};
+            selectedRow['gajumId'] = this.gajumId; //가맹점 ID
+            selectedRow['gajumSaupId'] = this.gajumNo; //가맹점 사업자번호
+            selectedRow['gajumNm'] = this.gajumNm; //가맹점명
+            selectedRow['jijumId'] = obj.jijumId; //지점 ID
+            selectedRow['jijumSaupId'] = obj.saupId; //지점 사업자번호
+            selectedRow['jijumNm'] = obj.shopNm; //지점명
+            console.log('지점 선택!!!')
+            console.log(selectedRow);
+            this.$emit('selectedGaJijum', selectedRow); //선택한 가맹점만 값 넘김
+            this.$emit('gajiumClose')
         }
 
         closeAddr(){

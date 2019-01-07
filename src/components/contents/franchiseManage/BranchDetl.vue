@@ -985,7 +985,7 @@
 
             //시스템 관리자는 인증 안함. 콜센터/가맹점/지점 관리자는 인증(세션값으로 체크)
             //시스템관리자-0001, 현금영수증관리자-0002, 콜센터-0003, 가맹점-0004, 지점-0005
-            if(sessionStorage.role == '0001'){ //인증 안함
+            //if(sessionStorage.role == '0001'){ //인증 안함
 
                 reqData['accountId'] = sessionStorage.accountId //로그인 ID
 
@@ -1007,11 +1007,11 @@
                     }
                 ).catch();
 
-            }else{ //그외는 본인인증 필수
-
-                this.$router.push({ name:'phoneAuth' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-
-            }
+            // }else{ //그외는 본인인증 필수
+            //
+            //     this.$router.push({ name:'phoneAuth' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            //
+            // }
 
         }
 
