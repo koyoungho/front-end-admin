@@ -14,7 +14,7 @@
             <!--</div>-->
             <div class="col" style ="width:100%">
                 <div class="chart_box">
-                    <ve-line :data="chartDataJoin" :settings="ChartSettingsJoin" height="280px"></ve-line>
+                    <vcha :data="chartDataJoin" :settings="ChartSettingsJoin" height="280px"></vcha>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
 <script lang="ts">
 
     import {format} from 'date-fns';
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
@@ -58,6 +58,9 @@
     export default class GajumLineChart extends Vue {
         @Prop() searchStartDate !:string
         @Prop() searchEndDate !:string
+
+        newDateStart : string = this.searchStartDate
+        newDateEnd : string = this.searchEndDate
         gajumList : Object = [];
         gajumCount : number = 0;
         receiptList : Object = [];
@@ -66,6 +69,12 @@
         dateArray : any = [];
         dateArray2 : any = [];
 
+        @Watch('searchStartDate') onChange(){
+            this.newDateStart = this.searchStartDate
+        }
+        @Watch('searchEndDate') onChange2(){
+            this.newDateEnd = this.searchEndDate
+        }
 
         formatDates(date) {
             let formattedDates = ''
@@ -76,28 +85,17 @@
         //가맹점현황
         ChartSettingsJoin : any  ={
             labelMap: {
-                cost: 'KT',
-                profit: '롯데',
-                growthRate: '가입',
-                people: '해지',
+                ktAprv: 'KT가입',
+                ktCancel: 'KT해지',
+                ldccAprv: '롯데가입',
+                ldccCancel: '롯데해지',
             },
 
         }
         chartDataJoin : any = {
-            columns: ['date', 'cost', 'profit', 'growthRate', 'people'],
+            columns: ['date', 'ktAprv', 'ktCancel', 'ldccAprv', 'ldccCancel'],
             rows: [
-                { 'cost': 152, 'date': '01/01', 'profit': 152, 'growthRate': 0.12, 'people': 100 },
-                { 'cost': 122, 'date': '01/02', 'profit': 153, 'growthRate': 0.345, 'people': 100 },
-                { 'cost': 212, 'date': '01/03', 'profit': 153, 'growthRate': 0.7, 'people': 100 },
-                { 'cost': 412, 'date': '01/04', 'profit': 123, 'growthRate': 0.31, 'people': 100 },
-                { 'cost': 312, 'date': '01/05', 'profit': 123, 'growthRate': 0.12, 'people': 100 },
-                { 'cost': 712, 'date': '01/06', 'profit': 152, 'growthRate': 0.65, 'people': 100 },
-                { 'cost': 152, 'date': '01/07', 'profit': 152, 'growthRate': 0.12, 'people': 100 },
-                { 'cost': 122, 'date': '01/08', 'profit': 153, 'growthRate': 0.345, 'people': 100 },
-                { 'cost': 212, 'date': '01/09', 'profit': 153, 'growthRate': 0.7, 'people': 100 },
-                { 'cost': 412, 'date': '01/10', 'profit': 123, 'growthRate': 0.31, 'people': 100 },
-                { 'cost': 312, 'date': '01/11', 'profit': 123, 'growthRate': 0.12, 'people': 100 },
-                { 'cost': 712, 'date': '01/12', 'profit': 152, 'growthRate': 0.65, 'people': 100 }
+
             ]}
 
             //현금영수증
@@ -134,7 +132,6 @@
 
         created(){
             this.gajumStatistics()
-            this.receuptStatistics()
         }
 
         mounted(){
@@ -142,80 +139,24 @@
         }
 
         gajumStatistics(){
-            CommonBoardService.getListDatas('statistics','gajum',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+            CommonBoardService.getListDatas('statistics','gajum',{responseType:'CHART',searchStartDate: this.newDateStart , searchEndDate: this.newDateEnd}).then(result=>{
                 if(result.status==200){
                     this.gajumList = result.data
-                    let dateColumn : any = [];
-                    let ObjectRowList : any = [];
-
-                    result.data.filter((e,index)=>{
-                        if(index==0){
-                            Object.keys(e).forEach(s=> {
-                                if (s == 'SOLU' || s == 'TYPE' || s == 'total'){
-                                }else{
-                                    dateColumn.push(e.SOLU)
-                                }
-                            })
-                        }
+                    this.chartDataJoin.rows=[];
+                    result.data.filter(e=>{
+                        this.chartDataJoin.rows.push(e)
                     })
 
-                    dateColumn.filter(t=>{ // 데이터기준으로
-                        let data : any = {};
-                        result.data.filter(e=>{ //데이터에서 값을 뽑아넣는다
-                            Object.keys(e).forEach(s=> { // 201901 : 12  , SOLU : KT , TYPE : APRV , CANCLE
-                            })
-                        })
-                    })
-
-
-
-                    // this.chartDataJoin = {
-                    //     column: [ObjectColumn],
-                    //     row : [ObjectRowList]
-                    // }
-
-                    console.log(this.chartDataJoin)
                 }
             }).catch(e=>{
             })
         }
 
         receuptStatistics(){
-            CommonBoardService.getListDatas('statistics','receipt',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+            CommonBoardService.getListDatas('statistics','receipt',{responseType:'CHART',searchStartDate: this.newDateStart , searchEndDate: this.newDateEnd}).then(result=>{
                 if(result.status==200){
                     console.log(result)
                     this.receiptList = result.data
-
-                    let ObjectColumn : any = [];
-                    let ObjectRowList : any = [];
-                    result.data.filter((e,index)=>{
-                        if(index==0){
-                            Object.keys(e).forEach(s=>{
-                                if(s=='SOLU' || s=='TYPE'){
-                                }
-                                else{
-                                    ObjectColumn.push(s)
-                                }
-                            })
-                        }
-                    })
-
-                    result.data.filter((e,index)=>{
-                        let ObjectRow = {}
-                        Object.keys(e).forEach(s=>{
-
-                            if(s=='SOLU' || s=='TYPE'){
-                            }
-                            else{
-                                ObjectRow['company'] = e.SOLU
-                                ObjectRow['date'] = s
-                                ObjectRow['account'] = e[s]
-                            }
-                        })
-                        ObjectRowList.push(ObjectRow)
-                    })
-
-
                     // this.chartDataCash = {
                     //     column: [ObjectColumn],
                     //     row : [ObjectRowList]

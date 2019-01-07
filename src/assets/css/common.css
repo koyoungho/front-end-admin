@@ -756,7 +756,6 @@ select.wide {width:100%;}
 .code_list_box .code_body .cont:nth-of-type(1) {width:100px;}
 .code_list_box .code_body .cont:nth-of-type(2) {width:370px;}
 
-.settle_box {margin:0 auto;}
 .settle_box::after {content:""; display:table; clear: both;}
 .settle_box .s_left {float:left; width:36%;}
 .settle_box .s_right {float:right; width:60%;}
@@ -788,7 +787,7 @@ select.wide {width:100%;}
 
 .btn_tab {margin-top:-20px; padding:0 0 20px 0; text-align: right;}
 
-.store_list {overflow: hidden;}
+.store_list {overflow: auto;}
 .store_list li {position: relative; height:50px; line-height:50px; border-bottom:1px solid #dedede;}
 .store_list li:after{content:''; position:absolute; top:23px; left:3px; width:2px; height:2px; background:#787878;}
 .store_list li .sub {display: inline-block; float:left; font-family:'NanumB'; padding-left:12px;}

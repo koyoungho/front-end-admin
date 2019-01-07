@@ -31,6 +31,7 @@
                                     :fullscreen-mobile="true"
                                     :months-to-show="2"
                                     :offsetY="-20"
+                                    :style = "defaultStyle"
                                     :showMonthYearSelect = "true"
                                     :date-one="formatDates(nowDate)"
                                     :date-two="formatDates(nowDate)"
@@ -73,21 +74,21 @@
     import  GajumPoint from "@/components/contents/mnStatistics/GajumPoint.vue"
 
     @Component({
-
         components: {
             GajumChart, GajumList, GajumLineChart,GajumPoint
         }
     })
     export default class GajumChart extends Vue {
-        listShow:boolean=true;
-        chartShow:boolean=true;
-        tabShow:boolean=true;
+        listShow:boolean=false;
+        chartShow:boolean=false;
+        tabShow:boolean=false;
         searchStartDate = "";
         searchEndDate = "";
         dateOne: any =  "";
         dateTwo: any =  "";
         nowDate : any = new Date();
         showMode : string = "single";
+        defaultStyle : string = "left : 0px"
 
         created(){
             this.nowDate= this.formatDates(new Date())
@@ -96,13 +97,19 @@
         }
 
         mounted(){
-            this.chartShow=false;
-            this.tabShow=false;
+            this.show('list');
         }
 
         formatDates(date) {
             let formattedDates = ''
+            if(this.tabShow){}
             formattedDates = format(date, 'YYYYMM')
+            return formattedDates
+        }
+
+        tabDates(date){
+            let formattedDates = ''
+            formattedDates = format(date, 'YYYYMMDD')
             return formattedDates
         }
 
@@ -111,17 +118,23 @@
          */
         show(div){
 
-            this.listShow=false;
-            this.chartShow=false;
-            this.tabShow=false;
-
             if(div == 'chart'){
                 this.chartShow =true;
+                this.listShow =false;
+                this.tabShow =false;
             }else if(div == 'list'){
+                this.chartShow =false;
                 this.listShow =true;
-            }else{
+                this.tabShow =false;
+            }else if(div=='tab'){
+                this.searchStartDate=this.tabDates(new Date())
+                this.searchEndDate=this.tabDates(new Date())
+                this.chartShow =false;
+                this.listShow =false
                 this.tabShow =true;
             }
+
+            this.btnClick()
         }
 
 
@@ -130,9 +143,10 @@
                 this.$children['1'].gajumStatistics();
                 this.$children['1'].receuptStatistics();
             } else if(this.chartShow){ //차트
-
+                this.$children['2'].gajumStatistics();
+                this.$children['2'].receuptStatistics();
             }else{ // 요약
-
+                this.$children['3'].searchCount();
             }
         }
 
