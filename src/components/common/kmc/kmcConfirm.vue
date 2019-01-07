@@ -90,7 +90,6 @@
                         this.result = false;
                         this.closeKcm('N', fail)
                     }
-
                 }
             }
 
