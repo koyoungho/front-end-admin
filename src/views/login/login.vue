@@ -54,7 +54,7 @@
             <h2>공지사항</h2>
             <ul class="notice_list">
               <template v-if="noticeList.length > 0">
-                <li v-for="noticeList in noticeList"  >
+                <li v-for="noticeList in noticeList">
                   <a>{{noticeList.title}}</a>
                   <span class="date">{{formatDates(noticeList.updDt)}}</span>
                 </li>
@@ -135,6 +135,7 @@
     import {Component, Vue} from 'vue-property-decorator';
     import OtpCheck from '../../components/contents/login/otpCheck.vue'
     import {CommonBoardService} from "../../api/common.service";
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -230,7 +231,7 @@
                 if (sessionStorage.code == '000') { // 로그인 성공 -> 메인화면 이동
                     nextPage = 'main';
 
-                    alert('최종 접속정보\n접속 IP 주소 : ' + sessionStorage.lastIp + '\n최종접속 시간 : ' + sessionStorage.lastConnDt);
+                    alert('최종 접속정보\n 현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n 최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n 최종 접속 IP 주소 : '+sessionStorage.lastIp);
                 } else if (sessionStorage.code == '001') { // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
                     nextPage = 'chgPass';
 
@@ -330,6 +331,16 @@
 
         policyDiv(titleNm) {
             this.$router.push({path: '/home/policy', name: 'policy', query: {titleNm: titleNm}});
+        }
+
+        /**
+         * 날짜 포맷 변경
+         * @param date
+         */
+        formatDates(date) {
+            let formattedDates = '';
+            formattedDates = moment(date).format("YYYY.MM.DD");
+            return formattedDates;
         }
 
     }

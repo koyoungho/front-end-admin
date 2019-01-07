@@ -58,7 +58,6 @@ export default new Vuex.Store({
             sessionStorage.jijumNm = accessToken.jijumNm; //지점명
             sessionStorage.id = accessToken.id; //ID
             sessionStorage.lastConnDt = accessToken.lastConnDt; //마지막접속일자
-            sessionStorage.storeNm = accessToken.storeNm; //상점명
             sessionStorage.saupId = accessToken.saupId; //사업장번호
             sessionStorage.upJong = accessToken.upJong; //업종코드
             sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
