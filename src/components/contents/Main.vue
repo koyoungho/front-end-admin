@@ -208,7 +208,7 @@
          * 매뉴얼다운로드
          */
         manual(){
-            this.$router.push({name:'noticeDetl', params:{seq:'29'}})
+            this.$router.push({name:'noticeDetl', params:{seq:'195'}})
         }
 
     };

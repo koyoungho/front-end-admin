@@ -81,9 +81,6 @@
             this.uploadFileNm = '';
             this.file = event.target.files[0];
             this.uploadFileNm = this.file.name;
-            console.log(this.file);
-            //let formData = new FormData();
-            //formData.append('file',this.file);
         }
 
         //파일 등록

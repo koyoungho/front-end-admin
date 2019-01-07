@@ -8,8 +8,8 @@
             <h3>회사코드별 거래현황</h3>
 
             <!-- btn top -->
-            <div class="btn_top">
-                <button type="button" @click="viewPop"  class="btn_m01 bg02">정산 회사코드 설정</button>
+            <div class="btn_top" v-show="regShow">
+                <button type="button" @click="viewPop"  class="btn_m01 bg02" >정산 회사코드 설정</button>
             </div>
 
             <!-- search box -->
@@ -355,6 +355,7 @@
         monthCount : boolean =false;
         loadCodeList : any = [];
         loadCode : boolean = false;
+        regShow : boolean = false;
 
 
         formatDates(date) {
@@ -375,6 +376,19 @@
             this.companyList()
             this.upjongList()
             this.compCodeChart()
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'compCodeChart'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
         }
 
         mounted(){
@@ -400,7 +414,6 @@
                         })
                     }
             }).catch(e=>{
-                console.log(e.message)
             })
         }
 
@@ -420,7 +433,7 @@
                         this.upjongCodeList = result.data
                     }
             }).catch(e=>{
-                console.log(e.message)
+
             })
         }
 
@@ -444,7 +457,7 @@
                         })
                     }
             }).catch(e=>{
-                console.log(e.message)
+
             })
         }
 

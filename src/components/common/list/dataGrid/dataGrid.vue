@@ -4,7 +4,11 @@
 
     <!-- tbl info top -->
     <div class="tbl_info_top">
-      <vue-progress-bar></vue-progress-bar>
+      <div v-show="loading">
+        <!--<ClipLoader class="custom-class" :loading="loading" :size="35" :sizeUnit="`px`"  :color='`#D0021B`'></ClipLoader>-->
+          <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+      </div>
+      <!--<vue-progress-bar></vue-progress-bar>-->
       <span class="total">총 <strong>{{totalCount}} </strong>건</span>
     </div>
     <!-- 20181112 수정 추가 -->
@@ -193,10 +197,16 @@
     import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
+    // import { ClipLoader  } from '@saeris/vue-spinners'
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
+    // node_modules/vue-simple-spinner/src/components/Spinner.vue
+
 
     @Component({
         components: {
-            DataGrid
+
+            DataGrid,
+            VueSimpleSpinner
         }
     })
     export default class DataGrid extends Vue {
@@ -232,6 +242,7 @@
         inputString : string = "";
         lineCheckOk : boolean = true;
         dataStatus : string = '';
+        loading :boolean= false;
 
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
@@ -328,7 +339,6 @@
                     else{
                         nowLineOk = false;
                         $event.target.style='background:red'
-                        trObject.setAttribute('style','background:red')
                     }
                 }else{
                     $event.target.style=''
@@ -340,7 +350,6 @@
                     trObject.setAttribute('style','')
                 }else{
                     nowLineOk = false;
-                    trObject.setAttribute('style','background:red')
                 }
             }
             else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rstCode') {
@@ -364,8 +373,9 @@
                 }
                 console.log('다입력됨')
             }
-            else if(this.listData[listIndex].fixPerm.length < 1 && this.listData[listIndex].fixDate < 1
-                && this.listData[listIndex].fixSaleDate < 1 && this.listData[listIndex].rsnCode=='null' && this.listData[listIndex].rstCode=='null'){
+            else if( (this.listData[listIndex].fixPerm =='' || this.listData[listIndex].fixPerm ==null) && (this.listData[listIndex].fixDate ==''  || this.listData[listIndex].fixDate ==null)
+                && (this.listData[listIndex].fixSaleDate=='' || this.listData[listIndex].fixSaleDate==null)
+                && (this.listData[listIndex].rsnCode=='null' ||  this.listData[listIndex].rsnCode==null) && (this.listData[listIndex].rstCode=='null' || this.listData[listIndex].rstCode==null)){
                 this.lineCheckOk = true;
                 trObject.setAttribute('style','')
             }
@@ -513,7 +523,8 @@
             });
 
             // 로딩바
-            this.$Progress.start();
+            // this.$Progress.start();
+            this.loading = true;
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
                 console.log(response)
@@ -627,11 +638,12 @@
                     else {
 
                     }
-
-                    this.$Progress.finish();
+                    this.loading = false;
+                    // this.$Progress.finish();
                 }
                 , (error) => {
-                    this.$Progress.finish();
+                    this.loading = false;
+                    // this.$Progress.finish();
                 }
             ).catch();
         }

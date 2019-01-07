@@ -12,6 +12,7 @@
             </colgroup>
             <thead>
             <tr>
+                <th scope="col">영수증 사업자</th>
                 <th scope="col">항목</th>
                 <template v-for="data,index in dateArray">
                 <th scope="col">{{dateFormats(data)}}</th>
@@ -23,18 +24,12 @@
             <template v-for="data,index in gajumList">
                 <tr>
                 <th scope="row">{{data.SOLU}}</th>
+                <th scope="row">{{data.TYPE}}</th>
                 <template v-for="da,indexs in dateArray">
                 <td class="right">{{data[dateArray[indexs]]}}</td>
                 </template>
-                <td></td>
+                <td>{{data.total}}</td>
                 </tr>
-            <!--<tr>-->
-                <!--<th scope="row">{{data.SOLU}}</th>-->
-                <!--<template v-for="da,indexs in dateArray">-->
-                <!--<td class="right">{{data[dateArray[indexs]]}}</td>-->
-                <!--</template>-->
-                <!--<td></td>-->
-            <!--</tr>-->
             </template>
 
             </tbody>
@@ -68,7 +63,7 @@
                     <template v-for="da,indexs in dateArray2">
                         <td class="right">{{data[dateArray2[indexs]]}}</td>
                     </template>
-                    <td></td>
+                    <td>{{data.total}}</td>
                 </tr>
             </template>
             </tbody>
@@ -95,13 +90,15 @@
     export default class GajumList extends Vue {
         @Prop() searchStartDate !:string
         @Prop() searchEndDate !:string
-        gajumList : Object = [];
+        gajumList : any = [];
         gajumCount : number = 0;
-        receiptList : Object = [];
+        receiptList : any = [];
         receiptCount : number = 0;
         nowDate : any = new Date();
         dateArray : any = [];
+        dateArrayCount : number = 0;
         dateArray2 : any = [];
+        dateArray2Count : number = 0;
 
         dateFormats(date) {
             let dates = '';
@@ -136,6 +133,21 @@
                           }
                       })
                       this.dateArray = ObjectData
+                      let data : any = []
+                      this.gajumList.filter((e,index)=>{
+                          let totalCount = 0;
+
+                          this.dateArray.filter((s,indexs)=>{
+                              let val =0;
+                              if(e[s]){
+                                  val = e[this.dateArray[indexs]];
+                              }else{
+                                  val = 0;
+                              }
+                              totalCount += val
+                          })
+                          e['total'] = totalCount
+                      })
                   }
              }).catch(e=>{
              })
@@ -147,6 +159,7 @@
                     console.log(result)
                     this.receiptList = result.data
                     let ObjectData : any = [];
+                    let totalcount = 0;
                     result.data.filter((e,index)=>{
                         if(index==0){
                             Object.keys(e).forEach(s=>{
@@ -159,6 +172,20 @@
                         }
                     })
                     this.dateArray2 = ObjectData
+                    let data : any = []
+                    this.receiptList.filter((e,index)=>{
+                        let totalCount = 0;
+                        this.dateArray2.filter((s,indexs)=>{
+                            let val =0;
+                            if(e[s]){
+                                val = e[this.dateArray2[indexs]];
+                            }else{
+                                val = 0;
+                            }
+                            totalCount += val
+                        })
+                        e['total'] = totalCount
+                    })
                 }
             }).catch(e=>{
             })

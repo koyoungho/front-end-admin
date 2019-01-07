@@ -9,7 +9,7 @@
 
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" @click="jungsanRuleReg" class="btn_m01 bg02">정산룰 등록</button>
+                <button type="button" @click="jungsanRuleReg" class="btn_m01 bg02" v-show="regShow">정산룰 등록</button>
             </div>
 
             <!-- tbl list box -->
@@ -77,6 +77,22 @@
         }
     })
     export default class JungsanRuleSearch extends Vue {
+        regShow : boolean =false;
+
+        mounted(){
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'receipSaupCount'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+        }
 
         /**
          * 정산룰등록
