@@ -242,7 +242,7 @@
             <!-- //tbl list box -->
 
             <!-- btn bot -->
-            <div class="btn_bot type01">
+            <div class="btn_bot type01" v-if="onlineYn == 'Y' ">
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
             </div>
 
