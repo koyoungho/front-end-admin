@@ -129,7 +129,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelReg">취소</button>
-                <button type="button" class="btn_b01 bg01" v-on:click="validationChk">수정</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="validationChk" v-show="regShow">수정</button>
             </div>
 
         </div>
@@ -213,6 +213,8 @@
         jijumVal3 : any = '';
         jijumVal4 : any = '';
 
+        regShow:boolean= false;
+
         mounted(){
 
         }
@@ -225,6 +227,19 @@
             console.log(this.objectKey);
 
             this.menuView(); //메뉴 정보 조회
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'mnMenu'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].updateYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
         }
 
         menuView(){//메뉴 상세정보

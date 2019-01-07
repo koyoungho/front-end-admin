@@ -42,7 +42,7 @@
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
@@ -72,7 +72,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
@@ -148,7 +148,7 @@
                             </td>
                             <th scope="row">점코드</th>
                             <td>
-                                <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10">
+                                <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10" v-on:keydown="showKeyCode($event)">
                                 <input type="hidden" v-model="apro.jumCodeYn">
                                 <!--<button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode($event)">중복확인</button>-->
                                 <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)">중복확인</button>
@@ -437,6 +437,8 @@
                         }else{
                             this.insertInfo(); //등록
                         }
+                    }else{
+                        this.insertInfo(); //등록
                     }
                 }
             }
@@ -611,7 +613,7 @@
             }else if(this.saupType == ''){
                 alert('사업자구분을 선택하세요.');
                 return;
-            }else if(this.saupType == '1' || this.lawNum == ''){ //사업자구분이 법인인 경우 필수
+            }else if(this.saupType == '1' && this.lawNum == ''){ //사업자구분이 법인인 경우 필수
                 alert('법인등록번호를 입력하세요.');
                 return;
             }else if(this.zipCode == ''){
@@ -786,7 +788,7 @@
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
                     } else {
-                        this.saupIdYn = 'Y';
+                        this.saupIdYn = '';
                         if(saupmsg != null){
                             saupmsg.innerHTML = result.message; //화면에 메시지 보이기
                         }
@@ -998,6 +1000,26 @@
             var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             return (email != '' && email != 'undefined' && regex.test(email));
         }
+
+        maxlengthChk(e, len){
+            let val =  e.target.value;
+            if (val.length > len){
+                e.target.preventDefault();
+            }
+        }
+
+        showKeyCode(event) {
+            event = event || window.event;
+            var keyID = (event.which) ? event.which : event.keyCode;
+            if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105)) {
+                //console.log('숫자')
+            }
+            else {
+                event.target.value='';
+            }
+            /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
+        }
+
     }
 
 </script>

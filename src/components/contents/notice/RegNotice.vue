@@ -43,7 +43,7 @@
                             <div class="file_add_box">
                                 <ul >
                                     <li v-for="(file, index) in files" :key="file.id">
-                                        <span>{{file.name}}/{{file.index}}</span>
+                                        <span>{{file.name}}</span>
                                         <a class="btn_close" @click.prevent="$refs.upload.remove(file)"><img src="../../../assets/images/btn_file_close01.png" alt="닫기"></a>
                                     </li>
                                 </ul>
@@ -161,7 +161,7 @@ console.log(result);
                         let oldFile :any =[];
                         if(result.uploadFileNames.length >0) {
                             for (let i = 0; i < result.uploadFileNames.length; i++) {
-                                oldFile.push({name: result.uploadFileNames[i].fileOrigin});
+                                oldFile.push({name: result.uploadFileNames[i].fileOrigin, id: result.uploadFileNames[i].fileName});
                                 this.uploadFileNames.push({fileName: result.uploadFileNames[i].fileName, fileOrigin: result.uploadFileNames[i].fileOrigin});
                             }
                         }
@@ -221,6 +221,7 @@ console.log(result);
             if (newFile && !oldFile) {
                 // add
                 console.log('add', newFile);
+                console.log('old', oldFile);
                 this.addFile(newFile);
 
             }
@@ -229,13 +230,10 @@ console.log(result);
                 console.log('update', newFile)
             }
             if (!newFile && oldFile) {
-
-                console.log( this.uploadFileNames);
-
                 // remove
-                console.log('oldFile', oldFile);
-                console.log('newFile', newFile);
-                console.log('remove', oldFile)
+                const idx = this.uploadFileNames.findIndex(function(item) {return item.fileName == oldFile.id}) // findIndex = find + indexOf
+                console.log(idx);
+                if (idx > -1) this.uploadFileNames.splice(idx,1);
             }
         }
 
@@ -250,6 +248,7 @@ console.log(result);
             reqData['viewType'] = this.viewType;
             reqData['content'] = this.content;
             reqData['uploadFileNames'] = this.uploadFileNames;
+            reqData['importantYn'] = this.importantYn;
             reqData['importantYn'] = this.importantYn;
 
             console.log( this.uploadFileNames);

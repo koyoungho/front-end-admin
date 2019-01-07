@@ -22,7 +22,7 @@
                         </div>
                     </li>
                 </ul>
-                <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="approvalFile">등록</button></span>
+                <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="approvalFile" v-show="regShow">등록</button></span>
             </div>
             <!-- //search box -->
 
@@ -54,9 +54,22 @@
         message: any = '';
         file: any = ''; //파일 객체
         uploadFileNm : any=""; //업로드 파일 명
+        regShow:boolean = false;
 
         //돔생성전 호출자
         created() {
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'cashReceiptIssue'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
         }
 
         //돔렌더링완료시 진행
@@ -68,9 +81,6 @@
             this.uploadFileNm = '';
             this.file = event.target.files[0];
             this.uploadFileNm = this.file.name;
-            console.log(this.file);
-            //let formData = new FormData();
-            //formData.append('file',this.file);
         }
 
         //파일 등록

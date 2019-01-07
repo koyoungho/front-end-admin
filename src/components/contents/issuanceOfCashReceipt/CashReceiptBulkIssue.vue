@@ -29,7 +29,7 @@
                             </div>
                         </li>
                     </ul>
-                    <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="excelRegist()">등록</button></span>
+                    <span class="btn_req_area"><button type="button" id="" class="btn_m01 bg01" v-on:click="excelRegist()" v-show="regShow">등록</button></span>
                 </div>
                 <!-- //search box -->
             </div>
@@ -163,6 +163,7 @@
         normalData : any = '0'; //엑셀파일 체크 결과(정상 건수)
         errorData : any = '0'; //엑셀파일 체크 결과(오류 건수)
         possibleData : any = '0'; //엑셀파일 체크 결과(발급 예정)
+        regShow:boolean = false;
 
         indivIssue() { //개별발급 화면 이동
             this.$router.push('/home/cashReceiptIssue');
@@ -298,6 +299,21 @@
             //formData.append('file',this.file);
         }
         mounted() {
+
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'cashReceiptIssue'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
+
+
             /*this.listData = [
                 {dealData : '2018.10.04' ,totAmt : '100,000', supplyAmt : '9,000' , addedTax : '1,000' , coverAmt : '100' , issueUse : '소득공제' , customerPosition : '01023231234' , customerNm : '홍길동' , memo : 'sdfs2222' , error : ''},
                 {dealData : '2018.10.02' ,totAmt : '100,000', supplyAmt : '9,000' , addedTax : '2,000' , coverAmt : '100' , issueUse : '소득공제' , customerPosition : '01023235462' , customerNm : '김길동' , memo : '12222222' , error : '신분확인번호오류'},

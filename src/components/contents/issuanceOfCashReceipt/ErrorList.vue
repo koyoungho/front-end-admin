@@ -11,8 +11,8 @@
 
         <div class="btn_bot type03">
             <button type="button" id="" class="btn_b01 bg02" v-on:click="goCancel">취소</button>
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert">임시저장</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent">제출</button>
+            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert"  v-show="regShow">임시저장</button>
+            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
         </div>
         </div>
     </section>
@@ -34,6 +34,7 @@
     export default class ErrorList extends Vue {
         message: any = '';
         setDate =  format(new Date(),'YYYYMMDD')
+        regShow : boolean = false;
 
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
@@ -98,6 +99,18 @@
 
         //돔생성전 호출자
         created() {
+            // 메뉴별 권한 확인
+            let menuList = JSON.parse(sessionStorage.authMenu);
+            let programId = 'cashReceiptIssue'; //메뉴ID
+            for (let i = 0; i < menuList.length; i++) {
+                for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
+
+                    //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
+                    if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
+                        this.regShow = true;
+                    }
+                }
+            }
         }
 
         //돔렌더링완료시 진행

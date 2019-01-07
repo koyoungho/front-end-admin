@@ -10,6 +10,7 @@ import SearchIdInput from "../components/contents/login/SearchIdInput.vue" //아
 import SearchIdResult from "../components/contents/login/SearchIdResult.vue" //아이디 찾기 결과
 import InitPass from "../components/contents/login/InitPass.vue" //비밀번호 초기화
 import MnUserOtp from "../components/contents/login/MnUserOtp.vue" //휴대폰 본인인증(계정정보 변경)
+import TermsCheck from "../components/contents/login/TermsCheck.vue" //약관동의
 
 // 정보변경
 import MyPage from "../components/contents/login/myPage.vue" //아이디 찾기 결과
@@ -205,6 +206,7 @@ export default new Router({
         {path:'/searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
         {path:'/initPass', name:'initPass',component: InitPass ,meta: {authRequired: false}}, //비밀번호 초기화
         {path:'/mnUserOtp', name:'mnUserOtp', component: MnUserOtp ,meta: {authRequired: false}}, //휴대폰 본인인증(계정정보 변경)
+        {path:'/termsCheck', name:'termsCheck', component: TermsCheck ,meta: {authRequired: true}}, //약관동의
 
         {path: "/franchiseRegStep1Result", name: "franchiseRegStep1Result", component: FranchiseRegStep1Result},
         {

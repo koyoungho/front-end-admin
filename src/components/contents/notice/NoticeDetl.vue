@@ -79,8 +79,6 @@
 
         mounted() {
             this.objectKey = this.$route.params.objectKey;
-
-            this.seq = this.objectKey.seq;// 글번호 시퀀스
             this.getNoticeDetail();
 
             // 메뉴별 권한 확인
@@ -102,11 +100,16 @@
          * 상세정보 호출
          */
         getNoticeDetail(){
-            if(!this.objectKey){
+            this.seq =  this.$route.params.seq;
+            if(!this.objectKey && (this.seq == null ||  this.seq == undefined)){
                 alert('접근할수 없습니다')
-                this.$router.push({name:'notice'});
+                this.$router.push({name:'noticeList'});
             }else {
-                this.seq = this.objectKey.seq;
+                if(this.objectKey != null || this.objectKey  !=undefined) {
+                    this.seq = this.objectKey.seq;// 글번호 시퀀스
+                }else{
+                    this.seq =  this.$route.params.seq;
+                }
 
                 // api 데이터 호출
                 CommonBoardService.getListDatas('notice', this.seq, null).then((response) => {

@@ -108,6 +108,7 @@
                     }
                 }
             }
+            console.log('등록 권한 확인 ?? :: ' + this.regbtnShow)
         }
 
         //돔렌더링완료시 진행

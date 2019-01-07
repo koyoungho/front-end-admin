@@ -141,12 +141,9 @@
             if(this.routeNm == 'policyDetail') {
                 this.objectKey['termsOrder'] = this.termsOrder;
 
-                console.log( "디테일",this.objectKey);
-
                 this.$router.push({
                     name: 'policyReg',
                     params: {objectKey: this.objectKey}
-                    // params: {hisSeq: this.hisSeq, detSeq: this.detSeq, termsOrder: this.termsOrder}
                 });
             }else {
                 this.$router.push({
