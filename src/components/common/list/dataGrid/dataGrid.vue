@@ -378,11 +378,6 @@
                 trObject.setAttribute('style','background:red')
                 console.log('다입력안됨')
             }
-            console.log(this.listData[listIndex].fixPerm)
-            console.log(this.listData[listIndex].fixDate)
-            console.log(this.listData[listIndex].fixSaleDate)
-            console.log(this.listData[listIndex].rsnCode)
-            console.log(this.listData[listIndex].rstCode)
         }
 
         checkAlls(id,indexs){  // 전체 체크박스선택
