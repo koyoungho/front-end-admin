@@ -139,7 +139,7 @@
          * 목록으로
          */
         toList(){
-            if(this.termsType="site"){
+            if(this.termsType=="site"){
                 this.$router.push({name:'policyHistoryList'});
             }else{
                 this.$router.push({name:'personalHistoryList'});
@@ -204,9 +204,11 @@
          * 전체저장
          */
         totalSave(){
-            console.log( this.termsType)
+            let params ={};
 
-            CommonBoardService.postListDatas('terms', null, {termsType : this.termsType}).then((response) => {
+            params['termsType'] = this.termsType
+
+            CommonBoardService.postListDatas('terms',null, params).then((response) => {
                     if (response.status.toString() == '201') { //성공
                         alert("전체저장 되었습니다.");
                         this.toList();//목록으로

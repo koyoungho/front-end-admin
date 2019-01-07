@@ -201,7 +201,8 @@
          * 목록으로
          */
         toPolicyTempList() {
-            if (this.termsType = "site") {
+
+            if (this.termsType == "site") {
                 this.$router.push({name: 'policyTempList'});
             } else {
                 this.$router.push({name: 'personalTempList'});
@@ -233,34 +234,6 @@
 
 
         }
-
-        // /**
-        //  미리보기
-        //  */
-        // toPolicyDetail() {
-        //     if (this.termsType = "site") {
-        //         this.$router.push({
-        //             name: 'policyDetail',
-        //             params: {
-        //                 div: 'preview',
-        //                 detTitle: this.title,
-        //                 detContent: this.content,
-        //                 termsOrder: this.termsOrder
-        //             }
-        //         });
-        //     } else {
-        //         this.$router.push({
-        //             name: 'personalDetail',
-        //             params: {
-        //                 div: 'preview',
-        //                 detTitle: this.title,
-        //                 detContent: this.content,
-        //                 termsOrder: this.termsOrder
-        //             }
-        //         });
-        //     }
-        //
-        // }
 
         /**
          * 유효성체크
