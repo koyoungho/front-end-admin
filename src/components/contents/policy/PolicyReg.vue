@@ -173,6 +173,8 @@
                 ).catch();
             }else{//수정
 
+                reqData['newTermsOrder'] = this.termsOrder_new;
+
                 CommonBoardService.updateListData('terms/temp/'+ this.termsType, this.termsOrder_old, reqData).then((response) => {
                         if (response.status.toString() == '200') { //성공
                             alert("수정되었습니다.");
@@ -202,7 +204,7 @@
          */
         toPolicyTempList() {
 
-            if (this.termsType == "site") {
+            if (this.termsType == "SITE") {
                 this.$router.push({name: 'policyTempList'});
             } else {
                 this.$router.push({name: 'personalTempList'});
