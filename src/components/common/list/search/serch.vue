@@ -124,7 +124,7 @@
             <li>
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
-              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+              <button type="button" id="" class="btn_sch01" @click="popupOpen" v-show="item.show">검색</button>
             </li>
           </template>
           <template v-if="item.type=='inputPop2'">
