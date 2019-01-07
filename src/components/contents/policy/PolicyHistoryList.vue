@@ -61,7 +61,6 @@
             let routeNm = this.$route.name;
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
-            console.log(menuList);
             let programId = routeNm; //메뉴ID
             for (let i = 0; i < menuList.length; i++) {
                 for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
@@ -72,7 +71,6 @@
                     }
                 }
             }
-            console.log(this.regShow);
         }
 
         // 라우터 경로 변경시 이벤트 발생

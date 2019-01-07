@@ -171,7 +171,6 @@
 
                     if (result.data.length > 0) {
                         this.noticeList=result.data;
-                        console.log(this.noticeList);
                     }
                 }
                 , (error) => {
