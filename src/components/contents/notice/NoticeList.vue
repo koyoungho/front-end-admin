@@ -49,6 +49,7 @@
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
+            console.log(row);
             this.$router.push({ name:'noticeDetl' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
@@ -93,7 +94,7 @@
 
         // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
-            let programId = 'noticeList'; //메뉴ID
+            let programId = 'compCodeChart'; //메뉴ID
             for (let i = 0; i < menuList.length; i++) {
                 for (let j = 0; j < menuList[i].subMenuDtos.length; j++) {
 

@@ -152,7 +152,7 @@
             let reqData = {};
 
             reqData['title'] = this.title;
-            reqData['newTermsOrder'] = this.termsOrder_new;
+            reqData['termsOrder'] = this.termsOrder_new;
             reqData['content'] = this.content;
 
             if (this.way == "등록" ) {//등록
@@ -162,7 +162,6 @@
                             alert("등록되었습니다.");
                             this.toPolicyTempList();//목록으로
                         } else { // 실패
-                            console.log(response);
                             alert("등록에 실패 하였습니다.");
                             this.toPolicyTempList();//목록으로
                         }
@@ -173,8 +172,6 @@
                     }
                 ).catch();
             }else{//수정
-                console.log('old', this.termsOrder_old );
-                console.log('new', this.termsOrder_new );
 
                 CommonBoardService.updateListData('terms/temp/'+ this.termsType, this.termsOrder_old, reqData).then((response) => {
                         if (response.status.toString() == '200') { //성공

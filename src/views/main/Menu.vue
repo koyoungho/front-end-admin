@@ -108,7 +108,7 @@
                             {name:'메일 발송', progId : 'sendMail',sub: 'sub'},
                         ]
                     },
-                    {progId: 'ioc',groupCode : '0004',name: '통계 관리', value : '', dept: '', auth: '', sub: 'sub'
+                    {progId: 'compCodeChart',groupCode : '0004',name: '통계 관리', value : '', dept: '', auth: '', sub: 'sub'
                         ,subMenuDtos:[
                             {name:'회사코드별 거래현황', progId : 'compCodeChart',sub: 'sub'},
                             {name:'사업자번호별 거래현황', progId : 'saupNumberChart',sub: 'sub'},
