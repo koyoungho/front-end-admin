@@ -18,6 +18,11 @@
         <iframe name="cert" id="cert" style="width: 416px;height: 500px"   v-on:load ="eventGet"></iframe>
       </div>
     </div>
+
+    <form id="myForm" :action="hostUrl" target="cert" refs="myForm">
+      <input type="hidden"  name="tr_cert" :value="tr_cert">
+      <input type="hidden"  name="tr_url" :value="tr_url">
+    </form>
   </div>
 </template>
 
@@ -98,7 +103,7 @@
             CommonBoardService.getListData('','kmc/cert','')
                 .then((response) => {
                         this.tr_cert = response.data.cert;
-                        this.tr_url = 'http://211.39.150.112:8080/#/searchIdResult';
+                        this.tr_url = 'http://211.39.150.112:8888/#/searchIdResult';
                         this.sendCerticication();
                     }
                     , error => {

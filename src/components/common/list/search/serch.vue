@@ -92,10 +92,10 @@
           <template v-if="item.type=='selectCode'">
             <li>
               <label for="aa">{{item.title}}</label>
-              <select v-model="item.value"  class="select form_w100" title="발급용도 선택">
-                <option value="">선택</option>
-                <option v-for="tt in item.option" :value="tt.code" >{{tt.codeNm}}</option>
-              </select>
+                <select v-model="item.value"  class="select form_w100" title="발급용도 선택" v-bind:disabled="item.disable">
+                  <option value="">선택</option>
+                  <option v-for="tt in item.option" :value="tt.code">{{tt.codeNm}}</option>
+                </select>
             </li>
           </template>
           <template v-if="item.type=='radio'">
@@ -124,14 +124,18 @@
             <li>
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
-              <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+              <template v-if="!item.disable"> <!-- 가맹점관리자는 검색 못함(자신것만 볼수 있음) -->
+                <button type="button" id="" class="btn_sch01" @click="popupOpen" v-show="item.show">검색</button>
+              </template>
             </li>
           </template>
           <template v-if="item.type=='inputPop2'">
             <li>
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
-              <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen">검색</button>
+              <template v-if="!item.disable"> <!-- 지점관리자는 검색 못함(자신것만 볼수 있음) -->
+                <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen($event, item)">검색</button>
+              </template>
             </li>
           </template>
         </template>
@@ -145,7 +149,7 @@
       <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
     </div>
     <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
-    <GajijumBox v-if="showModal2"  v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
+    <GajijumBox v-if="showModal2" v-bind:gajumNum="gajumNo" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
   </div>
 </template>
 
@@ -196,6 +200,7 @@
 
         // 가맹점 지점 팝업
         showModal2 : boolean = false;
+        gajumNo : string  = ''; //가맹점ID
 
         formatDates(date) {
             let formattedDates = ''
@@ -207,7 +212,10 @@
             this.showModal1= true;
         }
 
-        gajiPopupOpen(){
+        gajiPopupOpen(event, data){
+            if(data.id == 'jijumId'){
+                this.gajumNo = event.currentTarget.parentElement.parentElement.children['1'].children['1'].value; //가맹점 ID 넘기기
+            }
             this.showModal2= true;
         }
 
@@ -297,9 +305,16 @@
                 if(e.type=='radio' ){
 
                 }else{
-                e.value="";
-                e.searchStartDate = this.formatDates(new Date());
-                e.searchEndDate =this.formatDates(new Date());
+                    console.log('초기화')
+                    console.log(e)
+
+                    if(e.disable == true) { //로그인 권한에 따라 변경하지 못하는 값
+
+                    }else{
+                        e.value="";
+                        e.searchStartDate = this.formatDates(new Date());
+                        e.searchEndDate =this.formatDates(new Date());
+                    }
                 }
             })
 

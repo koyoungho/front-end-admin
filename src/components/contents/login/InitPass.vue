@@ -184,6 +184,8 @@
         }
 
         @Watch('pwdConfirm') onchange(){
+            this.valueChecks =''
+            /*
             if(this.pwdChange==this.pwdConfirm){
                 this.valueChecks ='정상입력'
                 this.saveOk = true;
@@ -192,6 +194,7 @@
                 this.stylePwd = {test: '1px solid #da291c'};
                 this.saveOk= false;
             }
+            */
         }
 
 
@@ -328,12 +331,12 @@
                 alert('비밀번호를 확인해주세요')
                 return ;
             }
-            if(this.pwdConfirm!=this.pwdConfirm){
+            if(this.pwdChange!=this.pwdConfirm){
                 alert('비밀번호를 확인해주세요')
                 return ;
-            }if(this.saveOk==false){
+            /*}if(this.saveOk==false){
                 alert('비밀번호를 확인해주세요')
-                return ;
+                return ;*/
             }
 
             let initPass ={}
@@ -341,19 +344,24 @@
             initPass['newPass'] = this.pwdConfirm; //패스워드
             // api 데이터 호출
             CommonBoardService.updateListData('accounts',this.resultId+'/password', initPass).then((response) => {
+                console.log(response)
                     if (response.status == 200) {
                         alert('변경이 완료되었습니다')
                         this.$router.push({name:'login'})
                     } else {
-                        alert('입력하신 내용을 확인하세요');
+                        //alert(response.data.message);
+                        this.valueChecks = response.data.message;
+                        return;
                     }
                 }
                 , (error) => {
-                    alert('아이디를 찾을수 없습니다.')
+                    //alert(error.data.message);
+                    this.valueChecks = error.data.message;
                     return;
                 }
             ).catch((response) =>  {
-                alert('아이디를 찾을수 없습니다.')
+                console.log(response)
+                alert('비밀번호 변경중 오류가 발생하였습니다.\n다시 시도하세요.')
             });
         }
         top(){

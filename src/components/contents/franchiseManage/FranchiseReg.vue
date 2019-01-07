@@ -14,7 +14,7 @@
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
-                        <select id="" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId">
+                        <select id="soluIdCon" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId">
                             <option value="">선택</option>
                             <template v-for="datas in receiptSaupList">
                                 <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -386,6 +386,13 @@
 
         //돔렌더링완료시 진행
         mounted() {
+
+            //현금영수증사업자 경우 자동 셋팅
+            if(sessionStorage.role == '0002'){
+                this.soluId = sessionStorage.soluId;
+                let soluIdCon = document.getElementById('soluIdCon');
+                if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
+            }
 
         }
 
@@ -778,6 +785,8 @@
 
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/saupid', null, reqData).then((response) => {
+                console.log(response)
+                console.log(response.status)
                     let result: any = response.data;
                     console.log(result);
                     if (result != null && result.code == '000') {

@@ -53,20 +53,17 @@
           <div class="notice_box">
             <h2>공지사항</h2>
             <ul class="notice_list">
-              <li>
-                <a>현금영수증 시스템 정기 점검 및 작업 안내현금영수증 시스템 정기 점검 및 작업 안내</a>
-                <span class="date">2018.04.04</span>
-              </li>
-              <li>
-                <a>현금영수증 시스템 정기 점검 및 작업 안내</a>
-                <span class="date">2018.04.04</span>
-              </li>
-              <li>
-                <a>현금영수증 시스템 정기 점검 및 작업 안내</a>
-                <span class="date">2018.04.04</span>
-              </li>
+              <template v-if="noticeList.length > 0">
+                <li v-for="noticeList in noticeList">
+                  <a>{{noticeList.title}}</a>
+                  <span class="date">{{formatDates(noticeList.updDt)}}</span>
+                </li>
+              </template>
+              <template v-else>
+                <li>조회된 내용이 없습니다.</li>
+              </template>
             </ul>
-            <a class="btn_more">더보기</a>
+            <!--<a class="btn_more" v-on:click="toNotice">더보기</a>-->
           </div>
 
           <!-- login info box -->
@@ -126,8 +123,7 @@
             <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
             <span class="tel">문의전화 02-2074-0340</span> / <span class="fax">팩스번호 02-2074-6089</span>
           </p>
-          <p class="footer_text02">Copyright ⓒ 2019 KT corporation & LDCC. <span
-              class="rights">All rights reserved.</span></p>
+          <p class="footer_text02">Copyright ⓒ 2019 KT corporation & LDCC. <span class="rights">All rights reserved.</span></p>
         </div>
       </div>
     </footer>
@@ -138,6 +134,8 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import OtpCheck from '../../components/contents/login/otpCheck.vue'
+    import {CommonBoardService} from "../../api/common.service";
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -146,8 +144,9 @@
     })
     export default class Login extends Vue {
         otpChecks : boolean =false;
-        id : string = "hol_test";
-        password : string = "pass2";
+        id : string = "";
+        password : string = "";
+        noticeList: any = [];
 
         created() {
             if (sessionStorage.accessToken) {
@@ -156,7 +155,31 @@
         }
 
         mounted() {
+            this.searchNotice();
+        }
+        /**
+         *  리스트 조회
+         * */
+        searchNotice() {
+            let searchData: any = {};
 
+            // 페이징요청건
+            searchData['currentPage'] ="1";
+            searchData['perPage'] = "5";
+
+            searchData['viewType'] = 'ADM';
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas('notice', null, searchData).then((response) => {
+                    let result: any = response.data;
+
+                    if (result.data.length > 0) {
+                        this.noticeList=result.data;
+                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                }  ).catch();
         }
 
         top() {
@@ -208,7 +231,7 @@
                 if (sessionStorage.code == '000') { // 로그인 성공 -> 메인화면 이동
                     nextPage = 'main';
 
-                    alert('최종 접속정보\n접속 IP 주소 : ' + sessionStorage.lastIp + '\n최종접속 시간 : ' + sessionStorage.lastConnDt);
+                    alert('최종 접속정보\n 현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n 최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n 최종 접속 IP 주소 : '+sessionStorage.lastIp);
                 } else if (sessionStorage.code == '001') { // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
                     nextPage = 'chgPass';
 
@@ -308,6 +331,16 @@
 
         policyDiv(titleNm) {
             this.$router.push({path: '/home/policy', name: 'policy', query: {titleNm: titleNm}});
+        }
+
+        /**
+         * 날짜 포맷 변경
+         * @param date
+         */
+        formatDates(date) {
+            let formattedDates = '';
+            formattedDates = moment(date).format("YYYY.MM.DD");
+            return formattedDates;
         }
 
     }
