@@ -301,7 +301,9 @@
         }
 
         goMain() { //메인이동
-            this.$router.push('home/main');
+            if (sessionStorage.accessToken) {
+                this.$router.push('home/main');
+            }
         }
 
         policyDiv(titleNm) {
