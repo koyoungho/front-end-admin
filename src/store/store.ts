@@ -50,18 +50,25 @@ export default new Vuex.Store({
             sessionStorage.message = accessToken.message; //결과메시지
             sessionStorage.failCnt = accessToken.failCnt; //실패카운트
             sessionStorage.lastIp = accessToken.lastIp; //최종접속IP
-            sessionStorage.lastConnDt = accessToken.lastConnDt; //최종접속 시간
             sessionStorage.accountId = accessToken.accountId; //계정ID
             sessionStorage.accountNm = accessToken.accountNm; //계정명
+            sessionStorage.gajumId = accessToken.gajumId; //가점ID
             sessionStorage.gajumNm = accessToken.gajumNm; //가점명
+            sessionStorage.jijumId = accessToken.jijumId; //지점ID
             sessionStorage.jijumNm = accessToken.jijumNm; //지점명
+            sessionStorage.id = accessToken.id; //ID
             sessionStorage.lastConnDt = accessToken.lastConnDt; //마지막접속일자
             sessionStorage.storeNm = accessToken.storeNm; //상점명
             sessionStorage.saupId = accessToken.saupId; //사업장번호
             sessionStorage.upJong = accessToken.upJong; //업종코드
             sessionStorage.newspaperYn = accessToken.newspaperYn; //신문사여부
-            sessionStorage.role = accessToken.role; //사업장번호
-            sessionStorage.roleNm = accessToken.roleNm; //사업장번호
+            sessionStorage.role = accessToken.role; //권한
+            sessionStorage.roleNm = accessToken.roleNm; //권한명
+            sessionStorage.currentIp = accessToken.currentIp; //현재IP
+            sessionStorage.soluId = accessToken.soluId; //현금영수증사업자
+            sessionStorage.storeId = accessToken.storeId; //상점ID
+            sessionStorage.storeNm = accessToken.storeNm; //상점명
+            sessionStorage.subSaup = accessToken.subSaup; //회사코드
         },
         LOGOUT (state) {
             //state.accessToken = null
