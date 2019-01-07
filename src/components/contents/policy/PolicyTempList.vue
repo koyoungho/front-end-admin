@@ -204,6 +204,8 @@
          * 전체저장
          */
         totalSave(){
+            console.log( this.termsType)
+
             CommonBoardService.postListDatas('terms', null, {termsType : this.termsType}).then((response) => {
                     if (response.status.toString() == '201') { //성공
                         alert("전체저장 되었습니다.");

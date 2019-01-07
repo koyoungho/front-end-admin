@@ -4,8 +4,9 @@
 
     <!-- tbl info top -->
     <div class="tbl_info_top">
-      <div style="padding-left: 492px;" >
-        <ClipLoader class="custom-class" :loading="loading" :size="35" :sizeUnit="`px`"  :color='`#D0021B`'></ClipLoader>
+      <div v-show="loading">
+        <!--<ClipLoader class="custom-class" :loading="loading" :size="35" :sizeUnit="`px`"  :color='`#D0021B`'></ClipLoader>-->
+          <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->
       <span class="total">총 <strong>{{totalCount}} </strong>건</span>
@@ -196,11 +197,16 @@
     import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
-    import { ClipLoader  } from '@saeris/vue-spinners'
+    // import { ClipLoader  } from '@saeris/vue-spinners'
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
+    // node_modules/vue-simple-spinner/src/components/Spinner.vue
+
 
     @Component({
         components: {
-            DataGrid, ClipLoader
+
+            DataGrid,
+            VueSimpleSpinner
         }
     })
     export default class DataGrid extends Vue {
