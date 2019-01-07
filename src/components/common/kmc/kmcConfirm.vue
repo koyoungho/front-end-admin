@@ -98,7 +98,7 @@
             CommonBoardService.getListData('','kmc/cert','')
                 .then((response) => {
                         this.tr_cert = response.data.cert;
-                        this.tr_url = 'http://211.39.150.112:8080/#/searchIdResult';
+                        this.tr_url = 'http://211.39.150.112:8888/#/searchIdResult';
                         this.sendCerticication();
                     }
                     , error => {
