@@ -537,6 +537,8 @@
                                 , (error) => {
                                 }
                             ).catch();
+                        }else if(this.approvalList[i].aproGbn == '2'){ //승인대역 건수는 그냥 패스
+                            bandChk = false;
                         }
 
                         if(bandChk == true){ //승인대역 사용 불가
