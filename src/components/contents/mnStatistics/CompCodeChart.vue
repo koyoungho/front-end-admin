@@ -43,6 +43,7 @@
                   <li>
                     <span class="chk_box ml"><input type="checkbox" id="aa03" :checked="loadCode" @click="checkTrue(loadCode)" ><label for="aa03">정산대상</label></span>
                   </li>
+
                     <li v-if="!loadCode">
                         <label for="">회사코드</label>
                         <select  class="select sch_w100" title="회사코드" v-model="companyCode" >
