@@ -52,6 +52,7 @@ Vue.component('tinymce', tinymce)
  * 차트
  */
 import VCharts from 'v-charts'
+Vue.component('vcha' , VCharts)
 Vue.use(VCharts);
 
 // import VueDragscroll from 'vue-dragscroll'

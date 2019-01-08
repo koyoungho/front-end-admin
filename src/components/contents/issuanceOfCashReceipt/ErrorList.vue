@@ -134,11 +134,13 @@
 
         //제출
         goPresent(){
-
+            alert('준비중입니다')
         }
 
         //저장
         goInsert(){
+
+            alert('준비중입니다')
             let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
             let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
 

@@ -78,7 +78,7 @@
 <script lang="ts">
 
     import {addMonths, differenceInCalendarMonths, differenceInMonths, format} from 'date-fns';
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
@@ -90,6 +90,9 @@
     export default class GajumList extends Vue {
         @Prop() searchStartDate !:string
         @Prop() searchEndDate !:string
+
+        newDateStartl :string = this.searchStartDate
+        newDateEndl :string = this.searchEndDate
         gajumList : any = [];
         gajumCount : number = 0;
         receiptList : any = [];
@@ -106,9 +109,16 @@
             return dates
         }
 
+        @Watch('searchStartDate') onChange(){
+            this.newDateStartl = this.searchStartDate
+        }
+        @Watch('searchEndDate') onChange2(){
+            this.newDateEndl = this.searchEndDate
+        }
+
         created(){
-            this.gajumStatistics()
-            this.receuptStatistics()
+            // this.gajumStatistics()
+            // this.receuptStatistics()
         }
 
         mounted(){
@@ -116,7 +126,7 @@
         }
 
         gajumStatistics(){
-             CommonBoardService.getListDatas('statistics','gajum',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+             CommonBoardService.getListDatas('statistics','gajum',{responseType:'GRID',searchStartDate: this.newDateStartl , searchEndDate: this.newDateEndl}).then(result=>{
                   if(result.status==200){
                       console.log(result)
                       this.gajumList = result.data
@@ -154,7 +164,7 @@
         }
 
         receuptStatistics(){
-            CommonBoardService.getListDatas('statistics','receipt',{searchStartDate: this.searchStartDate , searchEndDate: this.searchEndDate}).then(result=>{
+            CommonBoardService.getListDatas('statistics','receipt',{responseType:'GRID',searchStartDate: this.newDateStartl , searchEndDate: this.newDateEndl}).then(result=>{
                 if(result.status==200){
                     console.log(result)
                     this.receiptList = result.data
