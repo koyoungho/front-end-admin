@@ -41,6 +41,8 @@ Vue.use(AirbnbStyleDatepicker, datepickerOptions)
 
 Vue.config.productionTip = false
 
+
+/**로딩바**/
 import Spinner from 'vue-simple-spinner'
 Vue.use(Spinner)
 
