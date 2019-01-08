@@ -44,7 +44,7 @@
                     <tr>
                         <th scope="row">계정등급</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정등급saupId" v-model="accountLevel">
+                            <select id="" name="" class="select form_w100" title="계정등급" v-model="accountLevel">
                                 <option value="">선택</option>
                                 <option value="0001">시스템관리자</option>
                                 <option value="0002">현금영수증사업자</option>

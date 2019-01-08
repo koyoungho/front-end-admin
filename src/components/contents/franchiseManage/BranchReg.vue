@@ -80,7 +80,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">사업자구분</th>
+                        <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType">
                                 <option value="">선택</option>
@@ -92,7 +92,7 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row">법인등록번호<em class="form_req">*</em></th>
+                        <th scope="row">법인등록번호</th>
                         <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
@@ -113,7 +113,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드</th>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
                                 <option value="">선택</option>
@@ -122,7 +122,7 @@
                                 </template>
                             </select>
                         </td>
-                        <th scope="row">업종구분</th>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
                                 <option value="">선택</option>
@@ -450,6 +450,8 @@
                                 , (error) => {
                                 }
                             ).catch();
+                        }else if(this.approvalList[i].aproGbn == '2'){ //승인대역 건수 선택은 그냥 패스
+                            bandChk = false;
                         }
 
                         if(bandChk == true){ //승인대역 사용 불가

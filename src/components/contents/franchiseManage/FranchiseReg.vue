@@ -71,7 +71,7 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row">법인등록번호<em class="form_req">*</em></th>
+                        <th scope="row">법인등록번호</th>
                         <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
@@ -218,22 +218,22 @@
                             </colgroup>
                             <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
-                                <th scope="row">이름<em class="form_req">*</em></th>
+                                <th scope="row">이름</th>
                                 <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm"></td>
-                                <th scope="row">휴대폰번호<em class="form_req">*</em></th>
+                                <th scope="row">휴대폰번호</th>
                                 <td>
                                     <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum">
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">ID<em class="form_req">*</em></th>
+                                <th scope="row">ID</th>
                                 <td>
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)">중복확인</button>
                                     <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
-                                <th scope="row">이메일주소<em class="form_req">*</em></th>
+                                <th scope="row">이메일주소</th>
                                 <td>
                                     <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail">
                                 </td>
@@ -437,6 +437,8 @@
                                 , (error) => {
                                 }
                             ).catch();
+                        }else if(this.approvalList[i].aproGbn == '2'){ //승인대역 건수 선택은 그냥 지나감
+                            bandChk = false;
                         }
 
                         if(bandChk == true){ //승인대역 사용 불가
@@ -541,6 +543,8 @@
                     if (result != null) {
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
+                        this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
                     } else {
                         //if(saupmsg != null){
                             //saupmsg.innerHTML = result.message; //화면에 메시지 보이기
@@ -555,7 +559,6 @@
                 console.log(response);
             });
 
-            this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
         }
 

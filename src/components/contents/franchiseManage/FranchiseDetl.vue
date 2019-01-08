@@ -257,22 +257,22 @@
                             </colgroup>
                             <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
-                                <th scope="row">이름<em class="form_req">*</em></th>
+                                <th scope="row">이름</th>
                                 <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn"></td>
-                                <th scope="row">휴대폰번호<em class="form_req">*</em></th>
+                                <th scope="row">휴대폰번호</th>
                                 <td>
                                     <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn">
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">ID<em class="form_req">*</em></th>
+                                <th scope="row">ID</th>
                                 <td>
                                     <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)" v-bind:style="adm.admDupBtn">중복확인</button>
                                     <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
-                                <th scope="row">이메일주소<em class="form_req">*</em></th>
+                                <th scope="row">이메일주소</th>
                                 <td>
                                     <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail">
                                 </td>
