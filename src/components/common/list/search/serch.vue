@@ -9,51 +9,58 @@
           <template v-if="item.type=='date'" >
             <li>
               <label for="aa">{{item.title}}</label>
-              <template v-if="item.calenderCount==2">
-              <span class="form_cal">
-                            <input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">
-                          </span>
-                <span class="period_cal">-</span>
+              <template v-if="item.calenderCount==1">
                 <span class="form_cal">
-                            <input type="text" v-model="item.searchEndDate=='' ? formatDates(nowDate) : item.searchEndDate"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" :id="item.id">달력</a>
-                          </span>
-                <template class="datepicker-trigger">
-                  <AirbnbStyleDatepicker
-                      :trigger-element-id="item.id"
-                      :mode=showMode
-                      :fullscreen-mobile="true"
-                      :months-to-show="1"
-                      :offsetY="-20"
-                      :showMonthYearSelect = "true"
-                      :style = "dateStyle"
-                      :date-one="dateOne"
-                      :date-two="dateTwo"
-                      @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
-                      @date-two-selected="val => { item.searchEndDate = formatDates(val) }"
-                  />
-                </template>
+                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
+                             :first-day-of-week="1"  :format="item.default" :width="item.width" confirm ></date-picker>
+                </span>
+              <!--<span class="form_cal">-->
+                            <!--<input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">-->
+                          <!--</span>-->
+                <!--<span class="period_cal">-</span>-->
+                <!--<span class="form_cal">-->
+                            <!--<input type="text" v-model="item.searchEndDate=='' ? formatDates(nowDate) : item.searchEndDate"  class="input date" title="날짜 입력">-->
+                            <!--<a href="" class="btn_cal" :id="item.id">달력</a>-->
+                          <!--</span>-->
+                <!--<template class="datepicker-trigger">-->
+                  <!--<AirbnbStyleDatepicker-->
+                      <!--:trigger-element-id="item.id"-->
+                      <!--:mode=showMode-->
+                      <!--:fullscreen-mobile="true"-->
+                      <!--:months-to-show="1"-->
+                      <!--:offsetY="-20"-->
+                      <!--:style = "dateStyle"-->
+                      <!--:date-one="dateOne"-->
+                      <!--:date-two="dateTwo"-->
+                      <!--@date-one-selected="val => { item.searchStartDate = formatDates(val) }"-->
+                      <!--@date-two-selected="val => { item.searchEndDate = formatDates(val) }"-->
+              <!--</template>-->
+                  <!--/>-->
               </template>
-              <template v-else="item.calenderCount==1">
+              <template v-else="item.calenderCount==2">
                 <span class="form_cal">
-                            <input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" :id="item.id">달력</a>
-                          </span>
-                <template class="datepicker-trigger" >
-                  <AirbnbStyleDatepicker
-                      :trigger-element-id="item.id"
-                      :mode=showMode
-                      :fullscreen-mobile="true"
-                      :months-to-show="1"
-                      :showMonthYearSelect = "true"
-                      :style = "dateStyle"
-                      :offsetY="-20"
-                      :date-one="dateOne"
-                      :date-two="dateTwo"
-                      @date-one-selected="val => { item.searchStartDate = formatDates(val) }"
-                      @date-two-selected="val => { item.searchEndDate = formatDates(val) }"
-                  />
-                </template>
+                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
+                             :first-day-of-week="1" range :format="item.default" :width="item.width" confirm ></date-picker>
+                </span>
+                <!--<span class="form_cal">-->
+                            <!--<input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">-->
+                            <!--<a href="" class="btn_cal" :id="item.id">달력</a>-->
+                          <!--</span>-->
+                <!--<template class="datepicker-trigger" >-->
+                  <!--<AirbnbStyleDatepicker-->
+                      <!--:trigger-element-id="item.id"-->
+                      <!--:mode=showMode-->
+                      <!--:fullscreen-mobile="true"-->
+                      <!--:months-to-show="1"-->
+                      <!--:style = "dateStyle"-->
+                      <!--:offsetY="-20"-->
+                      <!--:date-one="dateOne"-->
+                      <!--:date-two="dateTwo"-->
+                      <!--@date-one-selected="val => { item.searchStartDate = formatDates(val) }"-->
+                      <!--@date-two-selected="val => { item.searchEndDate = formatDates(val) }"-->
+                  <!--/>-->
+                <!--</template>-->
+
               </template>
             </li>
           </template>
@@ -138,6 +145,19 @@
               </template>
             </li>
           </template>
+          <template v-if="item.type=='selectYYMM'">
+            <li>
+              <label for="aa">{{item.title}}</label>
+              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+                <option value="">선택</option>
+                <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
+              </select>
+              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+                <option value="">선택</option>
+                <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
+              </select>
+            </li>
+          </template>
         </template>
       </ul>
       <!--</div>-->
@@ -181,6 +201,7 @@
         dateStyle : any = 'left : 450px';
         title : string = "";
         placeholder : string = "";
+        ttss  : boolean = true
 
         //팝업용
         gajumId : string='';
@@ -195,6 +216,16 @@
         nowDate : any = new Date();
         showMode : string = "single";
 
+        lang : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '선택',
+                dateRange: '범위 선택'
+            }
+        }
+
         // 가지팝업
         showModal1 : boolean = false;
 
@@ -202,6 +233,10 @@
         showModal2 : boolean = false;
         gajumNo : string  = ''; //가맹점ID
 
+
+        test(e){
+            console.log(e);
+        }
         formatDates(date) {
             let formattedDates = ''
             formattedDates = format(date, this.dateFormat)
@@ -290,6 +325,10 @@
 
                 }else if(e.type=='popup'){
 
+                }else if(e.type=='selectYYMM'){
+                       for(let i=e.min ; i < e.max ; i++){
+                           e.option.push({name : e.min+i+'년' , value : e.min+i})
+                       }
                 }
             })
 
@@ -297,6 +336,7 @@
         }
 
         SearchButton(){
+            console.log(this.searchItem)
             this.$emit('SearchToList', this.searchItem);
         }
 

@@ -199,6 +199,7 @@
     import {CommonBoardService} from '../../../../api/common.service';
     // import { ClipLoader  } from '@saeris/vue-spinners'
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
+    import moment from 'moment'
     // node_modules/vue-simple-spinner/src/components/Spinner.vue
 
 
@@ -495,8 +496,18 @@
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
                 if (e.type == 'date') {  //날짜
-                    searchData['searchStartDate'] = e.searchStartDate;
-                    searchData['searchEndDate'] = e.searchEndDate;
+                    if(e.dateType == 'date'){
+                        console.log(e.searchStartDate)
+                        searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
+                    }else if(e.dateType == 'month'){
+                        searchData['searchStartDate'] =  moment(e.searchStartDate[0]).format('YYYYMM')
+                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMM')
+                    }else{
+                        searchData['searchStartDate'] =  moment(e.searchStartDate[0]).format('YYYYMMDD')
+                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
+                    }
+
                 } else if (e.type == 'select') {  //셀렉트박스
                     if (e.value != '') {
                         searchData[e.id] = e.value;

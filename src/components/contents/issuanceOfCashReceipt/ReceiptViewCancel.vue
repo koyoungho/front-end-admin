@@ -83,7 +83,7 @@
                         {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
                         {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
                         {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , show : this.show},
-                        {type: 'date', title :'거래일', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
+                        {type: 'date', title :'거래일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         {type: 'select' , title :'발급용도',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
                         {type: 'select' , title :'거래',id: 'dealType', name:'dealType' , value: '' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
                         {type: 'select' , title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '온라인' , value: 'Y' },{name : '오프라인' , value: 'N' }]},
