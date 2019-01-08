@@ -125,7 +125,7 @@
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
               <template v-if="!item.disable"> <!-- 가맹점관리자는 검색 못함(자신것만 볼수 있음) -->
-                <button type="button" id="" class="btn_sch01" @click="popupOpen" v-show="item.show">검색</button>
+                <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
               </template>
             </li>
           </template>
