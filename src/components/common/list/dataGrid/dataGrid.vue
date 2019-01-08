@@ -104,6 +104,12 @@
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
                 <th>{{columNames.columName}}</th>
               </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
+                <th>{{columNames.columName}}</th>
+              </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
+                <th>{{columNames.columName}}</th>
+              </template>
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
                <th>{{columNames.columName}}</th>
               </template>
@@ -129,6 +135,20 @@
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
                 <td>{{rows}}</td>
               </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
+                <td  v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{ Number(rows).toLocaleString()}}</span></td>
+              </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
+                <td  v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
+                    <span v-bind:style="colColor(indexs)">
+                      <template v-if="rows != null">
+                           {{moment(rows,'YYYYMMDDHHmmss').format(dataGridDetail.dataGrid.columControl[indexs].dateFormat)}}
+                      </template>
+                      <template v-else> - </template>
+
+                    </span>
+                </td>
+              </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
@@ -142,6 +162,10 @@
                   </template>
 
               </template>
+
+
+
+
               <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'" >
                 <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)"></td>
@@ -194,19 +218,15 @@
 <script lang="ts">
 
     import {ListData} from '@/model/list';
-    import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
-    // import { ClipLoader  } from '@saeris/vue-spinners'
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
-    // node_modules/vue-simple-spinner/src/components/Spinner.vue
 
 
     @Component({
         components: {
-
             DataGrid,
-            VueSimpleSpinner
+            VueSimpleSpinner,
         }
     })
     export default class DataGrid extends Vue {
@@ -541,10 +561,10 @@
                     this.checkBoxDatas=[];
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
-                        this.mTotalCount = result.extra.totalAmt;
-                        this.mServiceCharge = result.extra.bong;
-                        this.mSupplyValue = result.extra.amt;
-                        this.mSurtax = result.extra.vat;
+                        this.mTotalCount = (result.extra.totalAmt).toLocaleString();
+                        this.mServiceCharge = (result.extra.bong).toLocaleString();
+                        this.mSupplyValue = (result.extra.amt).toLocaleString();
+                        this.mSurtax = (result.extra.vat).toLocaleString();
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => { // 헤더를 먼저 만들어준다

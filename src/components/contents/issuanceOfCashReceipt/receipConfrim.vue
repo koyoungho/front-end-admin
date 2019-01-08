@@ -82,23 +82,23 @@
                                             <th scope="row" colspan="2">거래일시</th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">{{ResultViewRowItem.saleDate}}</td>
+                                            <td colspan="2">{{moment(ResultViewRowItem.saleDate).format('YYYY.MM.DD')}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="bg01">공급가액</th>
-                                            <td class="right">{{ResultViewRowItem.amt}}</td>
+                                            <td class="right">{{ Number(ResultViewRowItem.amt).toLocaleString()}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="bg01">부가세</th>
-                                            <td class="right">{{ResultViewRowItem.vat}}</td>
+                                            <td class="right">{{ Number(ResultViewRowItem.vat).toLocaleString()}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="bg01">봉사료</th>
-                                            <td class="right">{{ResultViewRowItem.bong}}</td>
+                                            <td class="right">{{ Number(ResultViewRowItem.bong).toLocaleString()}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="bg01">합계</th>
-                                            <td class="right">{{ResultViewRowItem.totalAmt}}</td>
+                                            <td class="right">{{ Number(ResultViewRowItem.totalAmt).toLocaleString()}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" colspan="2">사업자등록번호</th>

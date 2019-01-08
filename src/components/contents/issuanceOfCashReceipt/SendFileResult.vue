@@ -36,7 +36,7 @@
         listItem : any= {
             dataGrid: {
                 columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                    {columName : '처리일' ,type:'text', id : 'procDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , date: true},
+                    {columName : '처리일' ,type:'date', id : 'procDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat:'YYYY.MM.DD'},
                     {columName : '작업명'  ,type:'text', id : 'jobNm', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                     {columName : '파일명' ,type:'text', id : 'batchFname', width : '37%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                     {columName : '건수'  ,type:'text', id : 'procNum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
