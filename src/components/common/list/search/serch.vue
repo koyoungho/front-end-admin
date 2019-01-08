@@ -153,8 +153,6 @@
   </div>
 </template>
 
-
-
 <script lang="ts">
     import format from 'date-fns/format'
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
@@ -162,9 +160,6 @@
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
     import GajijumBox from '@/components/contents/franchiseManage/GajijumBox.vue'
     // see docs for available options
-
-
-
 
     @Component({
         components: {
