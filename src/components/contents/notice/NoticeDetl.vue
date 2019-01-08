@@ -28,7 +28,7 @@
                                 <strong class="sub">첨부파일 : </strong>
                                 <span class="file_area">
                                     <template v-for="attFiles in listData.uploadFileNames">
-                                        <a v-on:click="download(attFiles.fileName)" >{{attFiles.fileOrigin}}<i class="icon_file"></i></a>
+                                        <a v-on:click="download(attFiles.fileName, attFiles.fileOrigin)" >{{attFiles.fileOrigin}}<i class="icon_file"></i></a>
                                     </template>
                                 </span>
 							</span>
@@ -64,6 +64,7 @@
     import {environment} from '@/utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
+    import axios from 'axios';
 
     @Component({
         components: {
@@ -154,8 +155,22 @@
          * 파일다운로드
          * @param fileNm
          */
-        download(fileNm){
-            window.open( environment.apiUrl+"/file/"+fileNm);
+        download(fileNm, fileOrigin){
+            //파일 다운로드
+            axios({
+                url: environment.apiUrl +"/file/"+fileNm,
+                method: 'GET',
+                responseType: 'blob', // important
+                headers: {"x-auth-token": sessionStorage.accessToken}
+            }).then((response) => {
+                console.log(response);
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', fileOrigin); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+            });
         }
 
 

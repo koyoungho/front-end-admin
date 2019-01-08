@@ -537,6 +537,8 @@
                                 , (error) => {
                                 }
                             ).catch();
+                        }else if(this.approvalList[i].aproGbn == '2'){ //승인대역 건수는 그냥 패스
+                            bandChk = false;
                         }
 
                         if(bandChk == true){ //승인대역 사용 불가
@@ -914,6 +916,9 @@
                         this.saupIdYn = 'Y';
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
+                        if(saupmsg != null){
+                            saupmsg.innerHTML = "사용가능한 사업자등록번호입니다."; //화면에 메시지 보이기
+                        }
                     } else {
                         this.saupIdYn = ''; //개발 반영시 ''로 바꾸어야 함
                         if(saupmsg != null){

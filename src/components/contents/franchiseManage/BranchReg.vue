@@ -80,7 +80,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">사업자구분</th>
+                        <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType">
                                 <option value="">선택</option>
@@ -92,7 +92,7 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row">법인등록번호<em class="form_req">*</em></th>
+                        <th scope="row">법인등록번호</th>
                         <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
@@ -113,7 +113,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드</th>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
                                 <option value="">선택</option>
@@ -122,7 +122,7 @@
                                 </template>
                             </select>
                         </td>
-                        <th scope="row">업종구분</th>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
                                 <option value="">선택</option>
@@ -450,6 +450,8 @@
                                 , (error) => {
                                 }
                             ).catch();
+                        }else if(this.approvalList[i].aproGbn == '2'){ //승인대역 건수 선택은 그냥 패스
+                            bandChk = false;
                         }
 
                         if(bandChk == true){ //승인대역 사용 불가
@@ -810,6 +812,9 @@
                         this.saupIdYn = 'Y';
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
+                        if(saupmsg != null){
+                            saupmsg.innerHTML = "사용가능한 사업자등록번호입니다."; //화면에 메시지 보이기
+                        }
                     } else {
                         this.saupIdYn = ''; //개발 반영시 ''로 바꾸어야 함
                         if(saupmsg != null){

@@ -104,6 +104,12 @@
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
                 <th>{{columNames.columName}}</th>
               </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
+                <th>{{columNames.columName}}</th>
+              </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
+                <th>{{columNames.columName}}</th>
+              </template>
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
                <th>{{columNames.columName}}</th>
               </template>
@@ -133,7 +139,7 @@
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
                       <template v-if="listData[index].importantYn == 'Y'"> <i class="icon notice">공지</i></template>
-                      <span v-bind:style="colColor(indexs)">{{rows}}</span>
+                      <span v-bind:style="colColor(indexs)">{{rows}} </span>
                       <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
                     </td>
                   </template>
@@ -194,20 +200,15 @@
 <script lang="ts">
 
     import {ListData} from '@/model/list';
-    import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
-    // import { ClipLoader  } from '@saeris/vue-spinners'
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
-    import moment from 'moment'
-    // node_modules/vue-simple-spinner/src/components/Spinner.vue
 
 
     @Component({
         components: {
-
             DataGrid,
-            VueSimpleSpinner
+            VueSimpleSpinner,
         }
     })
     export default class DataGrid extends Vue {
@@ -552,10 +553,10 @@
                     this.checkBoxDatas=[];
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
-                        this.mTotalCount = result.extra.totalAmt;
-                        this.mServiceCharge = result.extra.bong;
-                        this.mSupplyValue = result.extra.amt;
-                        this.mSurtax = result.extra.vat;
+                        this.mTotalCount = (result.extra.totalAmt).toLocaleString();
+                        this.mServiceCharge = (result.extra.bong).toLocaleString();
+                        this.mSupplyValue = (result.extra.amt).toLocaleString();
+                        this.mSurtax = (result.extra.vat).toLocaleString();
                     }
 
                     this.dataGridDetail.dataGrid.columControl.filter(e => { // 헤더를 먼저 만들어준다

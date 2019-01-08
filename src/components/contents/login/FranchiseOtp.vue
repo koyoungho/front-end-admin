@@ -30,7 +30,7 @@
                                 <input type="text" class="tel" title="수신자ID" placeholder="수신자ID" v-model="id">
                                 <input type="text" class="tel" title="사업자등록번호" placeholder="사업자등록번호" v-model="saupId">
                                 <input type="hidden" title="받은 사업자등록번호" v-model="reqSaupId">
-                                <input type="text" class="tel" title="전화번호 입력" placeholder="전화번호 입력" v-model="phoneNum">
+                                <input type="text" class="tel" title="휴대폰번호 입력" placeholder="휴대폰번호 입력" v-model="phoneNum">
                                 <button type="button" id="" class="btn_m01 bg03" v-on:click="optCall">인증번호 전송</button>
                             </p>
                             <p class="form_cert row03">
@@ -119,10 +119,10 @@
         message : string = "";
 
         reqParam : any = ''; //요청값
-        id : any = 'test'; //ID
+        id : any = ''; //ID
         name : any = ''; //수신자명
-        phoneNum : any = '01027047329'; //수신자 전화번호
-        saupId : any = '1234567886'; //사업장번호
+        phoneNum : any = ''; //수신자 전화번호
+        saupId : any = ''; //사업장번호
         reqSaupId : any = ''; //전달받은 사업장번호
         sendOtpYn : boolean = false; //otp전송 여부
 

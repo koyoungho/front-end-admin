@@ -73,23 +73,23 @@
                                     <th scope="row" colspan="2">거래일시</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">{{viewRowItem.saleDate}}</td>
+                                    <td colspan="2">{{moment(viewRowItem.saleDate).format("YYYY.MM.DD")}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">공급가액</th>
-                                    <td class="right">{{viewRowItem.amt}}</td>
+                                    <td class="right">{{ Number(viewRowItem.amt).toLocaleString()}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">부가세</th>
-                                    <td class="right">{{viewRowItem.vat}}</td>
+                                    <td class="right">{{ Number(viewRowItem.vat).toLocaleString()}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">봉사료</th>
-                                    <td class="right">{{viewRowItem.bong}}</td>
+                                    <td class="right">{{ Number(viewRowItem.bong).toLocaleString()}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">합계</th>
-                                    <td class="right">{{viewRowItem.totamt}}</td>
+                                    <td class="right">{{ Number(viewRowItem.totamt).toLocaleString()}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업자등록번호</th>
@@ -326,9 +326,9 @@
                 {
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                            {columName : '거래일자' ,id : 'regiDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , type:'text',},
+                            {columName : '거래일자' ,id : 'regiDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , type:'date', dateFormat:'YYYY.MM.DD'},
                             {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff', type:'text', },
-                            {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
                             {columName : '발급용도' ,id : 'geoguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '거래구분' ,id : 'trgu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소거래', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
                             {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},

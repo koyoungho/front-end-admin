@@ -13,6 +13,40 @@
                 <button type="button" id="" class="btn_m01 bg04" v-on:click="indivIssue()">개별 발급</button>
             </div>
 
+            <!-- tbl view box -->
+            <div class="tbl_view_box">
+                <!-- tbl view01 -->
+                <table class="tbl_view01">
+                    <caption>사업장 기본 정보</caption>
+                    <colgroup>
+                        <col width="20%">
+                        <col width="30%">
+                        <col width="20%">
+                        <col width="30%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">사업자등록번호<em class="form_req">*</em></th>
+                        <td>
+                            <input type="text" class="input form_indcode02" title="사업자등록번호" v-model="saupId" disabled="disabled">
+                            <!--<input type="text" class="input form_w45" title="가맹점명" v-model="gajumNm">-->
+                            <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+                        </td>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="회사코드" v-model="subSaup">
+                                <option value="">선택</option>
+                                <template v-for="datas in subSaupList">
+                                    <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><br>
+            <!-- //tbl view box -->
+
             <!-- cont_mobile -->
             <div class="cont_mobile">
                 <!-- search box -->
@@ -97,12 +131,12 @@
                         <template v-if="listData.length > 1">
                             <template v-for="datas in listData">
                                 <tr>
-                                    <td>{{datas.saleDt}}</td>
+                                    <td>{{datas.saleDate}}</td>
                                     <td class="right">{{datas.totalAmt}}</td>
                                     <td class="right">{{datas.amt}}</td>
                                     <td class="right">{{datas.vat}}</td>
                                     <td class="right">{{datas.bong}}</td>
-                                    <td>{{datas.geoguNm}}</td>
+                                    <td>{{datas.geogu}}</td>
                                     <td>{{datas.confirm}}</td>
                                     <td>{{datas.custNm}}</td>
                                     <td class="left">{{datas.memo}}</td>
@@ -135,6 +169,9 @@
             </div>
 
         </div>
+
+        <SaupBox v-if="showModal1"  v-on:selectedSaup="setSaupData" @saupClose="showModal1 = false"></SaupBox>
+
         <!-- //content -->
     </section>
     <!-- //container -->
@@ -147,10 +184,11 @@
     import {CommonBoardService} from '../../../api/common.service';
     import axios from 'axios';
     import {environment} from '../../../utill/environment';
+    import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
 
     @Component({
         components: {
-            CashReceiptBulkIssue
+            CashReceiptBulkIssue, SaupBox
         }
     })
     export default class CashReceiptBulkIssue extends Vue {
@@ -165,6 +203,19 @@
         possibleData : any = '0'; //엑셀파일 체크 결과(발급 예정)
         regShow:boolean = false;
 
+        saupId : string = '';
+        subSaup : string = '';
+
+        gajumList: any = {};
+        jijumList: any = {};
+        subSaupList: any = {};
+
+        showModal1 : boolean= false; // 팝업
+
+        created(){
+            this.getSelectList('subsaup');
+        }
+
         indivIssue() { //개별발급 화면 이동
             this.$router.push('/home/cashReceiptIssue');
         }
@@ -173,6 +224,8 @@
             let formData = new FormData();
             //console.log(this.file);
             formData.append('file', this.file);
+            formData.append('saupId ', this.saupId);
+            formData.append('subSaup', this.subSaup);
             /*
                         axios.post('/api/receipts/file', formData, {
                             headers: {
@@ -192,7 +245,9 @@
                         ).catch();
             */
 
-            CommonBoardService.postListDatas('receipts/file', null, formData).then((response) => {
+            let param = 'saupId='+this.saupId + '&subSaup='+this.subSaup;
+
+            CommonBoardService.postListDatas('receipt/file?'+param, null, formData).then((response) => {
                     let result: any = response.data;
                     console.log(response);
 
@@ -202,7 +257,19 @@
                     // totalCount: 14
                     if (response.status.toString() == '201') {
                         alert('현금영수증 일괄등록 되었습니다.')
-                        this.$router.push('/home/main')
+
+                        this.saupId = '';
+                        this.subSaup = '';
+                        this.file = '';
+
+                        this.normalData = '0'; //엑셀파일 체크 결과(정상 건수)
+                        this.errorData = '0'; //엑셀파일 체크 결과(오류 건수)
+                        this.possibleData  = '0'; //엑셀파일 체크 결과(발급 예정)
+
+                        this.listData = [];
+
+                        this.uploadPath = '';
+
                     } else {
                         alert('현금영수증 일괄등록이 실패되었습니다.\n다시 시도 해 주세요.')
                     }
@@ -236,6 +303,14 @@
 
         excelRegist() { //엑셀파일 등록
 
+            if(this.saupId == ''){
+                alert('사업자등록번호를 입력하세요.')
+                return;
+            }
+            if(this.subSaup == ''){
+                alert('회사코드를 선택하세요.')
+                return;
+            }
             if(this.file == null || this.file == ''){
                 alert('파일찾기 버튼을 클릭하여 등록할 파일을 선택하세요.')
                 return;
@@ -250,6 +325,8 @@
 
             let formData = new FormData();
             formData.append('file', this.file);
+            formData.append('saupId ', this.saupId);
+            formData.append('subSaup', this.subSaup);
             //
             /*
             axios.post('http://211.39.150.112/api/receipts/filecheck', formData, {
@@ -270,7 +347,9 @@
             ).catch();
 */
 
-            CommonBoardService.postListDatas('receipts/filecheck', null, formData).then((response) => {
+            let param = 'saupId='+this.saupId + '&subSaup='+this.subSaup;
+
+            CommonBoardService.postListDatas('receipt/file/check?'+param, null, formData).then((response) => {
                     let result: any = response.data;
                     // data - list
                     // failCount
@@ -321,6 +400,58 @@
                 {dealData : '2018.10.11' ,totAmt : '140,000', supplyAmt : '5,000' , addedTax : '3,000' , coverAmt : '100' , issueUse : '소득공제' , customerPosition : '01023235654' , customerNm : '남길동' , memo : '1zzzz222' , error : ''},
                 {dealData : '2018.10.05' ,totAmt : '111,000', supplyAmt : '3,000' , addedTax : '1,000' , coverAmt : '100' , issueUse : '소득공제' , customerPosition : '01023239999' , customerNm : '이길동' , memo : '5555555' , error : ''}
             ]*/
+
+        }
+
+        //공통 select box 조회
+        getSelectList(code: string){
+            if(code == ''){
+                return;
+            }
+
+            let reqData: any = {};
+            let apiUrl : string = '';
+
+            if(code == 'gajum'){ //가맹점
+                apiUrl = 'saupjang/gajum/summary';
+            }else if(code == 'jijum'){ //지점
+                apiUrl = 'saupjang/jijum/summary';
+            }else if(code == 'subsaup'){ //회사코드
+                reqData['searchType'] = 'SEARCH';
+                apiUrl = 'company';
+            }
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas(apiUrl, null, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result)
+                    if (result.length > 0) {
+                        if(code == 'gajum'){ //가맹점
+                            this.gajumList = result;
+                        }else if(code == 'jijum'){ //지점
+                            this.jijumList = result;
+                        }else if(code == 'subsaup'){ //회사코드
+                            //let rSaup = result;
+                            this.subSaupList = result;
+                        }
+                    }
+                }
+                , (error) => {
+                    //console.log(error)
+                }
+            ).catch();
+        }
+
+
+        popupOpen(){
+            this.showModal1= true;
+        }
+
+        setSaupData(data) {
+            //this.storeId = data.storeId; // 매장번호 번호
+            this.saupId = data.saupId; //사업자 번호
+            //this.shopNm = data.shopNm; //가맹점명
+            //this.soluId = data.soluId; //가맹점명
 
         }
 
