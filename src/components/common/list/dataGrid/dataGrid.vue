@@ -203,6 +203,7 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
+    import moment from 'moment'
 
 
     @Component({
