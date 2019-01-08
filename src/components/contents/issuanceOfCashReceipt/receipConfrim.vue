@@ -98,7 +98,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="row" class="bg01">합계</th>
-                                            <td class="right">{{ Number(ResultViewRowItem.totalAmt).toLocaleString()}}</td>
+                                            <td class="right">{{ Number(ResultViewRowItem.totamt).toLocaleString()}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" colspan="2">사업자등록번호</th>
@@ -214,6 +214,7 @@
 
             CommonBoardService.getListDatas('receipt', this.resultRecripKeyObj.regiDate+'/'+this.resultRecripKeyObj.perm , null).then((response) => {
                 this.ResultViewRowItem = response.data
+                console.log(' this.ResultViewRowItem',  this.ResultViewRowItem);
             }).catch();
         }
         makeHeader(val){
