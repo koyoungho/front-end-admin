@@ -22,7 +22,7 @@
             <!-- login_box -->
             <div class="login_box type01" >
                 <p class="login_text" v-show="otpTrue==false">아이디를 확인하기 위해서는 가입시 등록하신 이름과<br>전화번호를 입력해 주시기 바랍니다.</p>
-                <p class="login_text" v-show="otpTrue==true">등록된 ID : {{resultId}}</p>
+                <p class="login_text" v-show="otpTrue==true">{{resultId}}</p>
                 <fieldset class="login_form" v-show="otpTrue==false">
                     <legend> 로그인 </legend>
                     <!-- login -->
@@ -305,15 +305,13 @@
             // this.$emit('close','');
             if(response){
                 if (response.success == 'Y') {
-                    //let reqData: any = {};
                     this.otpTrue = true;
+                    this.title='아이디 조회완료';
 
                     if(response.id == null || response.id == ''){ //조회된 ID없음
-                        this.title='아이디 조회완료';
                         this.resultId = '조회된 ID가 없습니다.';
                     }else{ //조회된 ID있음
-                        this.title='아이디 조회완료';
-                        this.resultId = response.id;
+                        this.resultId = '등록된 ID : '+ response.id;
                     }
                 }
                 else {
