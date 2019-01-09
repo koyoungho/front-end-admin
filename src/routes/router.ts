@@ -76,6 +76,7 @@ import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
 import ModMenu from "../components/contents/mnMenu/ModMenu.vue"//메뉴상세
 import FranchiseRegStep1Result from "../components/common/kmc/FranchiseRegStep1Result.vue"
+import kmcResult from "../components/common/kmc/kmcResult.vue" //kmc 인증 결과
 
 import MnCode from "../components/contents/mnCode/MnCode.vue"//코드관리
 
@@ -210,6 +211,7 @@ export default new Router({
         {path:'/franchiseOtp', name:'franchiseOtp', component: FranchiseOtp ,meta: {authRequired: false}}, //휴대폰 본인인증(가맹점관리 변경)
         {path:'/termsCheck', name:'termsCheck', component: TermsCheck ,meta: {authRequired: false}}, //약관동의
         {path:'/regPass', name:'regPass', component: RegPass ,meta: {authRequired: false}}, //비밀번호 등록
+        {path:'/kmcResult', name:'kmcResult', component: kmcResult ,meta: {authRequired: false}}, //Kmc 인증 결과
         {
             path: "/secure",
             name: "secure",

@@ -99,7 +99,7 @@
         }
         getBlaindLoding() {
             // api 요청코드 암호화 요청
-            CommonBoardService.getListData('','kmc/cert','')
+            CommonBoardService.getListData('kmc/cert', null, '')
                 .then((response) => {
                         this.tr_cert = response.data.cert;
                         this.tr_url = 'http://211.39.150.112:8888/#/kmcResult';
@@ -139,7 +139,7 @@
                 // this.originId = 'header';
                 // documentHeader.attributes.item(0).value = this.originId;
 
-                alert(result);
+                //alert(result);
                 if(response){
                     if(result =='Y' ){
                         response["success"] = result
