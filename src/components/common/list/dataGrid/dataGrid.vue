@@ -123,6 +123,7 @@
             </template>
         </tr>
         </thead>
+
         <tbody>
         <template v-if="listData.length > 0">
           <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" :id="index" >
