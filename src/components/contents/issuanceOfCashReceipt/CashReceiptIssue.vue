@@ -260,10 +260,10 @@
                 this.vat = 0; //부가세
                 return;
             }else if(Number(gerle1) > 999999999 || Number(gerle1) < 1 ){
-                alert('거래금액 입력이 잘못되었습니다.');
+                Vue.swal({text: '거래금액 입력이 잘못되었습니다.'});
                 return;
             }else if(Number(amt1) < Number(bong1)){
-                alert('봉사료가 공급가액보다 큰 액수입니다.');
+                Vue.swal({text: '봉사료가 공급가액보다 큰 액수입니다.'});
                 return;
             }
 
@@ -294,23 +294,23 @@
         searchId() { //아이디 조회(고객신분으로 아이디 조회)
 
             if(this.positionGb == ''){
-                alert('고객신분확인을 선택하세요.');
+                Vue.swal({text: '고객신분확인을 선택하세요.'});
                 return;
             }else if(this.positionGb != '' && this.confirm == ''){
                 if(this.positionGb == '1'){ //휴대폰
-                    alert('고객신분확인에 휴대폰 번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 휴대폰 번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '2'){ //주민등록번호
-                    alert('고객신분확인에 주민등록번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 주민등록번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '3'){ //사업자등록번호
-                    alert('고객신분확인에 사업자등록번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 사업자등록번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '4'){ //카드번호
-                    alert('고객신분확인에 카드번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 카드번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '5'){ //QR번호
-                    alert('고객신분확인에 QR번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 QR번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '6'){ //자진발급
                     this.confirm =  '0100001234';
@@ -359,24 +359,24 @@
         receiptIssue() { //현금영수증 발급
 
             if(this.positionGb == '') {
-                alert('고객신분확인을 선택하세요.');
+                Vue.swal({text: '고객신분확인을 선택하세요.'});
                 return;
 
             }else if(this.positionGb != '' && this.confirm == ''){
                 if(this.positionGb == '1'){ //휴대폰
-                    alert('고객신분확인에 휴대폰 번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 휴대폰 번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '2'){ //주민등록번호
-                    alert('고객신분확인에 주민등록번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 주민등록번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '3'){ //사업자등록번호
-                    alert('고객신분확인에 사업자등록번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 사업자등록번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '4'){ //카드번호
-                    alert('고객신분확인에 현금영수증 카드번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 현금영수증 카드번호를 입력하세요.'});
                     return;
                 }else if(this.positionGb == '5'){ //QR번호
-                    alert('고객신분확인에 QR번호를 입력하세요.');
+                    Vue.swal({text: '고객신분확인에 QR번호를 입력하세요.'});
                     return;
                 }
                 /*
@@ -385,25 +385,25 @@
                     return;
                  */
             }else if(this.geogu == ''){
-                alert('발급용도를 선택하세요.');
+                Vue.swal({text: '발급용도를 선택하세요.'});
                 return;
             }else if(this.soluId == ''){
-                alert('발급 사업자가 존재하지않습니다');
+                Vue.swal({text: '발급 사업자가 존재하지않습니다'});
                 return;
             }else if(this.compoanyCode == ''){ //신문사, 택배사만 체크
-                alert('회사코드를 선택하세요.');
+                Vue.swal({text: '회사코드를 선택하세요.'});
                 return;
             }else if(this.cultGb == ''){
-                alert('지출구분을 선택하세요.');
+                Vue.swal({text: '지출구분을 선택하세요.'});
                 return;
             }else if(this.totalAmt == ''){
-                alert('거래금액을 입력하세요.');
+                Vue.swal({text: '거래금액을 입력하세요.'});
                 return;
             }else if(this.totalAmt == '0'){
-                alert('거래금액을 바르게 입력하세요.');
+                Vue.swal({text: '거래금액을 바르게 입력하세요.'});
                 return;
             }else if(this.bong == ''){
-                alert('봉사료를 입력하세요.');
+                Vue.swal({text: '봉사료를 입력하세요.'});
                 return;
             }
 
@@ -438,7 +438,7 @@
                         // 현금영수증 발급 완료 화면 이동
                         this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm , reqDate : this.sendYmd}});
                     } else {
-                        alert('현금영수증 발급에 실패하였습니다.')
+                        Vue.swal({text: '현금영수증 발급에 실패하였습니다.'});
                         //console.log('현금영수증 발급 실패');
                         //console.log(result);
                     }

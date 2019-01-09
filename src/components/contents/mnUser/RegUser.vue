@@ -311,7 +311,7 @@
         //아이디 중복 체크
         idChk(){
             if(this.id == ''){
-                alert('아이디를 입력하세요.');
+                Vue.swal({text: '아이디를 입력하세요.'});
                 return;
             }
 
@@ -321,7 +321,6 @@
                 checkString : this.id,
                 checkSum : ''
             }
-            console.log('아이디 사용가능 여부 체크')
             CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
                     let result: any = response.data;
                     console.log(result)
@@ -349,7 +348,7 @@
         //사업자등록번호 중복 체크
         saupIdChk(){
             if(this.saupId == ''){
-                alert('사업자등록번호를 입력하세요.');
+                Vue.swal({text: '사업자등록번호를 입력하세요.'});
                 return;
             }
 
@@ -419,43 +418,43 @@
             let saupjang = this.saupjang;
 
             if(this.name == ''){
-                alert('이름을 입력하세요.');
+                Vue.swal({text: '이름을 입력하세요.'});
                 return;
             }else if(this.phoneNum == ''){
-                alert('휴대폰번호를 입력하세요.');
+                Vue.swal({text: '휴대폰번호를 입력하세요.'});
                 return;
             }else if(this.id == ''){
-                alert('ID를 입력하세요.');
+                Vue.swal({text: 'ID를 입력하세요.'});
                 return;
             }else if(this.idChkYn == ''){
-                alert('ID를 중복확인 하세요.');
+                Vue.swal({text: 'ID를 중복확인 하세요.'});
                 return;
             }else if(this.email == ''){
-                alert('이메일 주소를 입력하세요.');
+                Vue.swal({text: '이메일 주소를 입력하세요.'});
                 return;
             }else if(this.accountLevel == ''){
-                alert('계정등급을 확인하세요.');
+                Vue.swal({text: '계정등급을 확인하세요.'});
                 return;
             }else if(this.zipCode == ''){
-                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.');
+                Vue.swal({text: '우편번호 버튼을 클릭하여 주소를 선택하세요.'});
                 return;
             }else if(this.addr1 == ''){
-                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.');
+                Vue.swal({text: '우편번호 버튼을 클릭하여 주소를 선택하세요.'});
                 return;
             }else if(this.addr2 == ''){
-                alert('상세주소를 입력하세요.');
+                Vue.swal({text: '상세주소를 입력하세요.'});
                 return;
             }else if(this.accessIpFrom == ''){
-                alert('접속IP 시작 대역을 입력하세요.');
+                Vue.swal({text: '접속IP 시작 대역을 입력하세요.'});
                 return;
             }else if(this.accessIpTo == ''){
-                alert('접속IP 끝 대역을 입력하세요.');
+                Vue.swal({text: '접속IP 끝 대역을 입력하세요.'});
                 return;
             }else if(this.saupId == ''){
-                alert('사업자등록번호를 입력 하세요.');
+                Vue.swal({text: '사업자등록번호를 입력 하세요.'});
                 return;
             }else if(this.saupIdChkYn == ''){
-                alert('사업자등록번호를 입력 후 찾기 버튼을 클릭하세요.');
+                Vue.swal({text: '사업자등록번호를 입력 후 찾기 버튼을 클릭하세요.'});
                 return;
             }else{
                 this.insertInfo();
@@ -536,7 +535,7 @@
                         this.$router.push('/home/mnUser');
                         //this.$router.push({name:'policyTempList'});
                     } else {
-                        alert('계정 정보 등록에 실패하였습니다.\n다시 시도하세요.');
+                        Vue.swal({text: '계정 정보 등록에 실패하였습니다. 다시 시도하세요.'});
                         return;
                     }
                 }
@@ -588,7 +587,7 @@
                     this.menuList = arrData;
 
                 }else{
-                    alert('에러')
+                    Vue.swal({text: '에러'});
                 }
             })
 
@@ -597,7 +596,7 @@
         //사업장 정보 조회
         saupInfo(saupId){
             if(saupId == ''){
-                alert('사업자등록번호를 입력하세요.');
+                Vue.swal({text: '사업자등록번호를 입력하세요.'});
                 return;
             }
 
@@ -608,7 +607,7 @@
                     this.saupjang = result.data;
                     this.saupIdChkYn = 'Y';
                 }else{
-                    alert('에러')
+                    Vue.swal({text: '에러'});
                 }
             })
         }

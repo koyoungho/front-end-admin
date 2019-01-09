@@ -103,7 +103,7 @@
         getNoticeDetail(){
             this.seq =  this.$route.params.seq;
             if(!this.objectKey && (this.seq == null ||  this.seq == undefined)){
-                alert('접근할수 없습니다')
+                Vue.swal({text: '접근할수 없습니다'});
                 this.$router.push({name:'noticeList'});
             }else {
                 if(this.objectKey != null || this.objectKey  !=undefined) {

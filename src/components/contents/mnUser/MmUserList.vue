@@ -145,7 +145,7 @@
             }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
 
                 if(data.row.saupFileNm == null || data.row.saupFileNm == ''){
-                    alert('사업자등록증 파일이 없습니다.')
+                    Vue.swal({text: '사업자등록증 파일이 없습니다.'});
                     return;
                 }else {
                     console.log('사업자등록증 파일 다운로드');

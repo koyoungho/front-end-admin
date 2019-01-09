@@ -234,7 +234,7 @@
          * 매뉴얼 다운로드
           */
         manual(){
-            alert("다운로드");
+            this.$router.push({name:'noticeDetl', params:{seq:'195'}})
         }
 
         /**
@@ -249,7 +249,6 @@
          * @param index
          */
         display(index){
-            // alert(index);
             this.isActive =false;
             this.rownum =999;
 

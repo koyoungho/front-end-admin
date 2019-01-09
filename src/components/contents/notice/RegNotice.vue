@@ -211,7 +211,7 @@
                 }
                 // Filter php html js file
                 if (/\.(php5?|html?|jsx?|jsp?|java?|asp?|exe?|class?|js?|sh?|cgi?)$/i.test(newFile.name)) {
-                    alert("업로드 할수 없는 파일입니다.");
+                    Vue.swal({text:"업로드 할수 없는 파일입니다."});
                     // return false;
                     return prevent()
                 }
@@ -252,9 +252,8 @@
                 CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
                         if (response.status.toString() == '201') { //성공
 
-                            Vue.swal({
-                                text: '등록되었습니다',
-                             }).then((result) => {
+                            Vue.swal({ text: '등록되었습니다',
+                            }).then((result) => {
                                 // 리스트로 이동
                                 this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                             });
@@ -277,10 +276,9 @@
                         Vue.swal({text: '수정되었습니다' ,
                             // text: '수정되었습니다',
                             // type: 'success',
-                            }
-                        ).then((result) => {
-                            // 리스트로 이동
-                            this.$router.push({name: 'noticeList'}) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            }).then((result) => {
+                                // 리스트로 이동
+                                this.$router.push({name: 'noticeList'}) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         });
 
                     } else {
@@ -337,10 +335,10 @@
          */
         validationChk(){
             if(this.title == null || this.title==""){
-                alert("제목을 입력하세요");
+                Vue.swal({text:"제목을 입력하세요"});
                 return false;
             }else if(this.content ==null || this.content ==""){
-                alert("내용을 입력하세요");
+                Vue.swal({text:"내용을 입력하세요"});
                 return false;
             }
         }
@@ -367,7 +365,7 @@
                         this.uploadFileNames.push(addFile);
 
                     } else {
-                        alert('파일 등록 실패');
+                        Vue.swal({text:'파일 등록 실패');
                     }
                 }
                 , (error) => {

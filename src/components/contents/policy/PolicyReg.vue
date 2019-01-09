@@ -158,18 +158,23 @@
             if (this.way == "등록" ) {//등록
 
                 CommonBoardService.postListDatas('terms/temp', this.termsType, reqData).then((response) => {
-                        if (response.status.toString() == '201') { //성공
-                            alert("등록되었습니다.");
-                            this.toPolicyTempList();//목록으로
-                        } else { // 실패
-                            alert("등록에 실패 하였습니다.");
-                            this.toPolicyTempList();//목록으로
-                        }
+                    if (response.status.toString() == '201') { //성공
+
+                            Vue.swal({ text: '등록되었습니다',
+                            }).then((result) => {
+                                // 리스트로 이동
+                                this.toPolicyTempList();//목록으로
+                            });
+
+                    } else {
+                        Vue.swal({ text: '등록 실패 되었습니다.'});
+                        this.toPolicyTempList();//목록으로
                     }
-                    , (error) => {
-                        //this.$Progress.finish();
-                        console.log(error);
-                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                    console.log(error);
+                }
                 ).catch();
             }else{//수정
 
@@ -177,12 +182,16 @@
 
                 CommonBoardService.updateListData('terms/temp/'+ this.termsType, this.termsOrder_old, reqData).then((response) => {
                         if (response.status.toString() == '200') { //성공
-                            alert("수정되었습니다.");
-                            this.toPolicyTempList();//목록으로
-                        } else { // 실패
+
+                            Vue.swal({
+                                text: '수정되었습니다'
+                            }).then((result) => {
+                                // 리스트로 이동
+                                //     this.toPolicyTempList();//목록으로
+                            });
+                        } else { //메일 전송 실패
+                            Vue.swal({ text: '수정 실패 되었습니다.'});
                             console.log(response);
-                            alert("수정에 실패 하였습니다.");
-                            this.toPolicyTempList();//목록으로
                         }
                     }
                     , (error) => {
@@ -216,25 +225,34 @@
          */
         delPolicy(){
 
-            CommonBoardService.deleteListDatas('terms/temp/'+ this.termsType, this.termsOrder_old, null).then((response) => {
-                console.log(response);
-                if (response.status.toString() == '200') { //성공
-                    alert("삭제되었습니다.");
-                    this.toPolicyTempList();//목록으로
-                } else { // 실패
+            Vue.swal({
+                text: '삭제하시겠습니까',
+                showCancelButton: true,
+                showCloseButton: true,
+                reverseButtons: true
+
+            }).then((result) => {
+
+                CommonBoardService.deleteListDatas('terms/temp/'+ this.termsType, this.termsOrder_old, null).then((response) => {
                     console.log(response);
-                    alert("삭제에 실패 하였습니다.");
-                    this.toPolicyTempList();//목록으로
+                    if (response.status.toString() == '200') { //성공
+                        if (result.value) {
+                            Vue.swal({
+                                text: '삭제되었습니다.',
+                            }).then((result) => {
+                                this.toPolicyTempList();//목록으로
+                            })
+                        }
+                    } else { //
+                        Vue.swal({text: '삭제실패'});
+                        console.log(response);
+                    }
                 }
-            }
-            , (error) => {
-                //this.$Progress.finish();
-                console.log(error);
-            }).catch();
-
-
-
-
+                , (error) => {
+                    //this.$Progress.finish();
+                    console.log(error);
+                }).catch();
+             })
         }
 
         /**
@@ -243,22 +261,20 @@
         validationChk() {
             let regNumber = /^[0-9]*$/;
             if (this.title == null || this.title == "") {
-                alert("제목을 입력하세요");
+                Vue.swal({ text:"제목을 입력하세요"});
                 return false;
             } else if (this.content == null || this.content == "") {
-                alert("내용을 입력하세요");
+                Vue.swal({ text:"내용을 입력하세요"});
                 return false;
             } else if (this.termsOrder_new == null || this.termsOrder_new == "") {
-                alert("순번을 입력하세요");
+                Vue.swal({ text:"순번을 입력하세요"});
                 return false;
             }else if(!regNumber.test(this.termsOrder_new)){
-                alert('숫자만 입력 가능합니다.');
+                    Vue.swal({ text:' 순번은 숫자만 입력 가능합니다.'});
                 return false;
             }
         }
-
-
-
+a
     }
 </script>
 

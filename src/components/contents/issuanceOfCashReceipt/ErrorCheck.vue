@@ -89,7 +89,7 @@
                 , (error) => {
 
                     if (error.data.code == '400') {
-                        alert(error.data.message);
+                        Vue.swal({text: error.data.message});
                     }
                 }
             ).catch();

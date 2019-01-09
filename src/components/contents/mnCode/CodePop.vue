@@ -152,11 +152,11 @@
                     this.closePop()
                 }
                 else{
-                    alert('오류가발생하였습니다')
+                    Vue.swal({text: '오류가발생하였습니다'});
                     this.closePop()
                 }
             }).catch(e=>{
-                alert(e.message);
+                Vue.swal({text: e.message});
             })
         }
         update(){
@@ -175,7 +175,7 @@
 
             CommonBoardService.putListData(apiAddr,null,Object).then(result=>{
                 if(result.status==200){
-                    alert('수정되었습니다')
+                    Vue.swal({text: '수정되었습니다'});
                     if(this.type){
                         this.$emit('regEventp' , 'company')
                         this.$emit('regEvents' , this.getUpjong)
@@ -188,7 +188,7 @@
                     this.closePop()
                 }
                 else{
-                    alert('오류가발생하였습니다')
+                    Vue.swal({text: '오류가발생하였습니다'});
                     this.closePop()
                 }
             })
