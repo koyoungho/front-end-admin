@@ -33,6 +33,7 @@
     "vue-router": "^3.0.1",
     "vue-simple-spinner": "^1.2.8",
     "vue-spinners": "^1.0.2",
+    "vue-sweetalert2": "^1.6.3",
     "vue-tinymce-editor": "^1.6.2",
     "vue-upload-component": "^2.8.16",
     "vue2-datepicker": "^2.7.0",

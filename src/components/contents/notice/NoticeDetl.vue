@@ -118,11 +118,9 @@
 
                         if (result != null) {
                             this.listData = result;
-                            console.log( this.listData);
                         }
                     }
                     , (error) => {
-                        //this.$Progress.finish();
                     }).catch();
             }
         }
@@ -172,9 +170,6 @@
                 link.click();
             });
         }
-
-
-
 
     }
 
