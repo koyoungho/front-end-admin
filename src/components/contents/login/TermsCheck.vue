@@ -25,24 +25,18 @@
                 회원님의 개인정보보호에 최선을 다하고 있으며, 관련법률에 근거하지 않거나 회원님의 동의 없이 기재하신 개인정보가 공개되거나 제3자에게 제공되지 않습니다.<br>자세한 내용은 아래에서 확인하시길
                 바랍니다.</p>
 
-            <p class="agree_all"><span class="chk_box"><input type="checkbox" v-model="bb01" id="checkAll" v-on:click="termsAllCheck($event)">
-                <label for="bb01"><em class="fc_pt01">전체동의 하기</em></label></span></p>
+            <p class="agree_all"><span class="chk_box"><input type="checkbox" v-model="bb01" id="checkAll" v-on:click="termsAllCheck($event)"><label for="bb01"><em class="fc_pt01">전체동의 하기</em></label></span></p>
             <!-- agree_box -->
             <dl class="agree_box">
                 <dt>
-          <span class="chk_box right"><input type="checkbox"  v-model="aa01" id="aa01" ><label
-                  for="aa01">서비스 이용 약관 동의</label></span>
+                    <span class="chk_box right"><input type="checkbox"  v-model="aa01" id="aa01" ><label for="aa01">서비스 이용 약관 동의</label></span>
                 </dt>
                 <dd>
                     <div class="agree_inner">
-                        서비스 이용 약관 동의 내용입니다.
-                        <br><br><br><br><br><br>
-                        <!--
                         <template v-for="item in serviceList">
-                            <h4 class="agree">{{item.detTitle}}</h4>
-                            <p class="text">{{item.detContent}}</p>
+                            <h3 class="agree">{{item.detTitle}}</h3>
+                            <p class="text" v-html="item.detContent"></p>
                         </template>
-                        -->
                     </div>
                 </dd>
             </dl>
@@ -55,14 +49,10 @@
                 </dt>
                 <dd>
                     <div class="agree_inner">
-                        개인정보 수집 및 이용 동의 내용입니다.
-                        <br><br><br><br><br><br>
-                        <!--
                         <template v-for="item in privateList">
-                            <h4 class="agree">{{item.detTitle}}</h4>
-                            <p class="text">{{item.detContent}}</p>
+                            <h3 class="agree">{{item.detTitle}}</h3>
+                            <p class="text" v-html="item.detContent"></p>
                         </template>
-                        -->
                     </div>
                 </dd>
             </dl>
@@ -91,7 +81,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" v-on:click="phoneAuth()" class="btn_b02 bg01">본인인증</button>
+                <button type="button" id="" v-on:click="phoneAuth" class="btn_b02 bg01">본인인증</button>
             </div>
 
         </div>
@@ -142,7 +132,7 @@
 
     @Component({
         components: {
-            TermsCheck, KmcConfirm
+            KmcConfirm
         }
     })
     export default class TermsCheck extends Vue {
@@ -159,8 +149,8 @@
 
         created(){
 
-            this.getTerms('4'); //서비스 이용 약관
-            this.getTerms('8'); //개인정보 수집 및 이용동의
+            this.getTerms('site'); //서비스 이용 약관
+            this.getTerms('user'); //개인정보 수집 및 이용동의
             //this.getTerms('2'); //고객편의 제공을 위한 업무 위탁
         }
 
@@ -169,15 +159,15 @@
 
             let termSeq : string = gbn;
             // api 데이터 호출
-            CommonBoardService.getListDatas('terms/history', termSeq, null).then((response) => {
+            CommonBoardService.getListDatas('terms/current', termSeq, null).then((response) => {
                     let result: any = response.data;
                     //console.log(result);
                     if (result != null && result != '') {
-                        if(gbn == '4'){ //서비스 이용 약관
+                        if(gbn == 'site'){ //서비스 이용 약관
                             this.serviceList = result;
                             //console.log(this.serviceList);
                         }
-                        else if(gbn == '8') { //개인정보 수집 및 이용동의
+                        else if(gbn == 'user') { //개인정보 수집 및 이용동의
                             this.privateList = result;
                         }
                         else if(gbn == '2') { //고객편의 제공을 위한 업무 위탁
@@ -222,17 +212,21 @@
                 alert('고객편의 제공을 위한 업무 위탁에 체크하세요');
                 return;
             }
+
+            //this.showConfirm = true; //본인인증 화면 보이기
+
+            /*
+            let reqData: any = {};
+            reqData['birthday'] = '20010101'; //생년월일
+            reqData['gender'] = '0'; //성별
+            reqData['name'] = '김창현'; //이름
+            reqData['phoneNum'] = '01027047329'; //전화번호
+            reqData['id'] = 'test123'; //아이디
+
+            this.$router.push({name:"regPass", params:{ reqParams : reqData }});
+            */
+
 /*
-            if(this.confirmResult==true){
-                //console.log("휴대폰 본인인증 완료 :: " +this.confirmResult)
-                //console.log(sessionStorage)
-                this.$router.push('/home/franchiseRegStep2');
-            }
-            else{
-                alert('본인인증 후 진행해 주세요');
-                this.showConfirm = true;
-            }
-*/
             //약관동의
             CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
                     if (response.status == 200 || response.status == 200) {
@@ -246,9 +240,7 @@
             ).catch((response) =>  {
 
             });
-
-            //this.$router.push({name:"main"});
-
+*/
         }
 
         top(){
@@ -270,16 +262,17 @@
             this.showConfirm = false;
             if(response){
                 if (response.success == 'Y') {
-                    /*let reqData: any = {};
+                    let reqData: any = {};
                     reqData['birthday'] = response.birthday; //이름
                     reqData['gender'] = response.gender; //사업자등록번호
                     reqData['name'] = response.name; //전화번호
                     reqData['phoneNum'] = response.phoneNo; //전화번호
+                    reqData['id'] = response.id; //아이디
                     //this.idCallApi(reqData)*/
                     //console.log('본인인증 후 값 넘기기전')
-                    //console.log(response.birthday + ' | ' + response.gender + ' | ' + response.name + ' | ' + response.phoneNo);
+                    console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
 
-                    this.$router.push({name:"main"});
+                    this.$router.push({name:"RegPass", params:{ reqData }});
                 }
                 else {
 

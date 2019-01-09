@@ -454,6 +454,9 @@ select.wide {width:100%;}
 .agree_box > dt {font-family:'NanumB'; padding:15px 21px 14px; background:#fafafa; border-bottom:1px solid #dedede;}
 .agree_box > dd {}
 .agree_box > dd textarea.form_agree {width:952px; height:200px; padding:10px 10px 0 20px; border:0;}
+.agree_box .agree_inner {overflow-x: hidden; overflow-y: auto; height:200px; padding:16px 20px;}
+.agree_box .agree_inner h4.agree {font-size:14px; padding:0; margin:0 0 5px 0; background:none;}
+.agree_box .agree_inner .text {padding:0 0 10px 0;}
 
 /* grid box */
 .grid_box {position:relative; width:100%;}
