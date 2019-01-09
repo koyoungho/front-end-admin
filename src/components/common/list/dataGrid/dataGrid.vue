@@ -498,6 +498,10 @@
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
                 if (e.type == 'date') {  //날짜
+                        searchData['searchStartDate'] = e.searchStartDate
+                        searchData['searchEndDate'] =  e.searchEndDate
+
+                }else if (e.type == 'date2') {  //날짜
                     if(e.dateType == 'date'){
                         console.log(e.searchStartDate)
                         searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
@@ -510,7 +514,9 @@
                         searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
                     }
 
-                } else if (e.type == 'select') {  //셀렉트박스
+                }
+
+                else if (e.type == 'select') {  //셀렉트박스
                     if (e.value != '') {
                         searchData[e.id] = e.value;
                     }

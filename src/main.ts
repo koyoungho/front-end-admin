@@ -67,7 +67,7 @@ const datepickerOptions = {
     },
 }
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
-Vue.use(AirbnbStyleDatepicker, datepickerOptions)
+Vue.use(AirbnbStyleDatepicker)
 
 
 
