@@ -9,7 +9,7 @@
           <template v-if="item.type=='date'" >
             <li>
               <label for="aa">{{item.title}}</label>
-              <template v-if="item.calenderCount==1">
+              <template v-if="item.calenderCount==2">
               <span class="form_cal">
                             <input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">
                           </span>
@@ -34,7 +34,7 @@
               </template>
 
               </template>
-              <template v-else="item.calenderCount==2">
+              <template v-else="item.calenderCount==1">
                 <span class="form_cal">
                             <input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">
                             <a href="" class="btn_cal" :id="item.id">달력</a>

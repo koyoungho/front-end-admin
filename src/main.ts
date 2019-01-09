@@ -58,16 +58,16 @@ const datepickerOptions = {
         '12월',
     ],
     colors: {
-        selected: '#00a699',
-        inRange: '#66e2da',
-        selectedText: '#fff',
-        text: '#565a5c',
-        inRangeBorder: '#33dacd',
-        disabled: '#fff',
-    },
+            selected: '#a61c0f',
+            inRange: '#e2415a',
+            selectedText: '#fff',
+            text: '#565a5c',
+            inRangeBorder: '#e2415a',
+            disabled: '#e2415a'
+    }
 }
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
-Vue.use(AirbnbStyleDatepicker)
+Vue.use(AirbnbStyleDatepicker,datepickerOptions)
 
 
 
