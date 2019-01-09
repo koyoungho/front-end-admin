@@ -88,5 +88,13 @@
   @import "../node_modules/vue-airbnb-style-datepicker/dist/vue-airbnb-style-datepicker.min.css";
 /*에디터 메뉴 숨기기*/
   .mce-container .mce-menubar {display: none; }
+
+  .swal2-popup .swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: #da291c !important;
+    color: #fff;
+    font-size: 1.0625em; }
 </style>
 

@@ -83,6 +83,7 @@
                 <button type="button" class="btn_b01 bg01" v-on:click="reg" v-show="regShow">{{div}}</button>
             </div>
 
+
         </div>
         <!-- //content -->
     </section>
@@ -114,6 +115,7 @@
         uploadFileNames: any=[];
         regShow : boolean= false;
         delShow : boolean= false;
+        showModal:boolean= true;
 
 
         mounted(){
@@ -151,7 +153,6 @@
             // api 데이터 호출
             CommonBoardService.getListDatas('notice', this.seq, null ).then((response) => {
                     let result: any = response.data;
-console.log(result);
                     if (result !=null) {
                         this.title = result.title;
                         this.viewType = result.viewType;
@@ -220,10 +221,7 @@ console.log(result);
 
             if (newFile && !oldFile) {
                 // add
-                console.log('add', newFile);
-                console.log('old', oldFile);
                 this.addFile(newFile);
-
             }
             if (newFile && oldFile) {
                 // update
@@ -232,7 +230,6 @@ console.log(result);
             if (!newFile && oldFile) {
                 // remove
                 const idx = this.uploadFileNames.findIndex(function(item) {return item.fileName == oldFile.id}) // findIndex = find + indexOf
-                console.log(idx);
                 if (idx > -1) this.uploadFileNames.splice(idx,1);
             }
         }
@@ -251,15 +248,19 @@ console.log(result);
             reqData['importantYn'] = this.importantYn;
             reqData['importantYn'] = this.importantYn;
 
-            console.log( this.uploadFileNames);
-
             if(this.seq == undefined ||  this.seq == '') {//등록
                 CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
                         if (response.status.toString() == '201') { //성공
-                            alert("등록되었습니다.");
-                            console.log(response);
-                            this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
+                            Vue.swal({
+                                text: '등록되었습니다',
+                             }).then((result) => {
+                                // 리스트로 이동
+                                this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            });
+
                         } else {
+                            Vue.swal({ text: '등록 실패 되었습니다.'});
                             console.log(response);
                         }
                     }
@@ -273,11 +274,17 @@ console.log(result);
 
                 CommonBoardService.updateListData('notice', this.seq, reqData).then((response) => {
                     if (response.status.toString() == '200') { //성공
-                        alert("수정되었습니다.");
-                        // 리스트로 이동
-                        this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        Vue.swal({text: '수정되었습니다' ,
+                            // text: '수정되었습니다',
+                            // type: 'success',
+                            }
+                        ).then((result) => {
+                            // 리스트로 이동
+                            this.$router.push({name: 'noticeList'}) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        });
+
                     } else {
-                        console.log('수정실패');
+                        Vue.swal({ text: '수정 실패 되었습니다.'});
                         console.log(response);
                     }
                 }, (error) => {
@@ -294,20 +301,35 @@ console.log(result);
          * 공지사항 삭제
          */
         delNotice(){
-            CommonBoardService.deleteListDatas('notice', this.seq, null).then((response) => {
-                if (response.status.toString() == '200') { //성공
-                    alert("삭제되었습니다.");
-                    // 리스트로 이동
-                    this.$router.push({ name:'noticeList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                } else { //
-                    console.log('삭제실패');
-                    console.log(response);
-                }
-            }, (error) => {
-                //this.$Progress.finish();
-                console.log(error);
-            }
-            ).catch();
+
+            Vue.swal({
+                text: '삭제하시겠습니까',
+                showCancelButton: true,
+                showCloseButton: true,
+                reverseButtons: true
+
+            }).then((result) => {
+                CommonBoardService.deleteListDatas('notice', this.seq, null).then((response) => {
+                        if (response.status.toString() == '200') { //성공
+
+                            if (result.value) {
+                                Vue.swal({
+                                    text: '삭제되었습니다.',
+                                }).then((result) => {
+                                    // 리스트로 이동
+                                    this.$router.push({name: 'noticeList'}) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                                })
+                            }
+                        } else { //
+                            Vue.swal({ text: '삭제실패'});
+                            console.log(response);
+                        }
+                    }, (error) => {
+                        //this.$Progress.finish();
+                        console.log(error);
+                    }
+                ).catch();
+            })
         }
 
         /**
@@ -359,5 +381,6 @@ console.log(result);
 </script>
 
 <style>
+
 </style>
 

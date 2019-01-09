@@ -134,10 +134,12 @@
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
-                <td>{{rows}}</td>
+                <td >{{rows}}</td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
-                  <td  v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{ Number(rows).toLocaleString()}}</span></td>
+                  <td  v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right" >
+                    <span v-bind:style="colColor(indexs)">{{ Number(rows).toLocaleString()}}</span>
+                  </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
                 <td>
@@ -159,7 +161,7 @@
                   </template>
                   <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
-                  </template>
+              </template>
 
               </template>
               <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->

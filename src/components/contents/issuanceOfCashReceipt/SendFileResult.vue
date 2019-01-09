@@ -51,7 +51,7 @@
             // 아이디는 실제 컬럼값을 넣어주면됩니다.
             search: [
                 {type: 'selectObject' , title :'회사코드',id: 'upjongCode', name:'upjongCode' , value: '' ,  api : 'company',  optNm : 'name', optVal: 'code', option : []},
-                {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
+                {type: 'date2', title :'등록일', id: 'date' , name:'date', searchStartDate:[new Date(),new Date()]  , calenderCount : 2, dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                 {type: 'select' , title :'처리결과',id: 'procYn', name:'procYn' , value: '' , option : [{ name : '성공' , value: 'Y' },{ name : '실패' , value: 'N' }]},
     ],
 
