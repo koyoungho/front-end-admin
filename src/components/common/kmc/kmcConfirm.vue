@@ -67,18 +67,13 @@
         }
 
         eventGet(){
-            console.log('iframe load :::::::::::::: ')
-            console.log(this.result)
             if(this.result == false){
-                console.log(this.result)
                 this.resultValue =  setInterval(this.wating,2000)
                 this.result=true;
             }
 
         }
         wating(){
-            console.log('wating :::::::::::::: ')
-            console.log('sessionStorage ::' + sessionStorage)
             if(this.result==true) {
                 let val = sessionStorage.getItem('resultKey')
                 let fail = sessionStorage.getItem('failKey')
@@ -103,7 +98,6 @@
         mounted() {
         }
         getBlaindLoding() {
-            console.log('kmc 암호화')
             // api 요청코드 암호화 요청
             CommonBoardService.getListData('kmc/cert', null, '')
                 .then((response) => {
@@ -136,8 +130,6 @@
         }
 
         makeHeader(val, result , response){
-            console.log('kmc makeHeader')
-            console.log('val :: ' + val)
             if(val=='hide'){
                 // let documentHeader: any = document.getElementById('header');
                 // documentHeader.attributes.item(0).value = this.originId;
@@ -147,7 +139,7 @@
                 // this.originId = 'header';
                 // documentHeader.attributes.item(0).value = this.originId;
 
-                alert(result);
+                //alert(result);
                 if(response){
                     if(result =='Y' ){
                         response["success"] = result
