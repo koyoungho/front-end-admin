@@ -305,10 +305,16 @@
             // this.$emit('close','');
             if(response){
                 if (response.success == 'Y') {
-                    let reqData: any = {};
-                    this.title='아이디 조회완료'
+                    //let reqData: any = {};
                     this.otpTrue = true;
-                    this.resultId = response.id
+
+                    if(response.id == null || response.id == ''){ //조회된 ID없음
+                        this.title='아이디 조회완료';
+                        this.resultId = '조회된 ID가 없습니다.';
+                    }else{ //조회된 ID있음
+                        this.title='아이디 조회완료';
+                        this.resultId = response.id;
+                    }
                 }
                 else {
                 }

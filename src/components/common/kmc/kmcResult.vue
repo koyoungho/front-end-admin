@@ -44,7 +44,7 @@
             this.defaultParams = this.$route.query;
             if(this.$route.query){
                 // api 요청코드 암호화 요청
-                CommonBoardService.postListDatas(null, 'kmc/decert' ,this.defaultParams)
+                CommonBoardService.postListDatas('kmc/decert', null ,this.defaultParams)
                     .then((response) => {
                             let resultData = response.data;
                             if(response.status==200){
