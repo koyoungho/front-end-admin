@@ -173,6 +173,7 @@
             </template>
           </tr>
         </template>
+
         <template v-if="listData.length < 1">
           <tr>
               <template v-if="dataGridDetail.dataGrid.apiUrl == 'accounts'"> <!-- 계정 권한 관리 화면은 columControl에 hidden이 있기때문 totalColum 으로 함 -->
