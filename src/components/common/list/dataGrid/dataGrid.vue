@@ -136,6 +136,19 @@
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
                 <td>{{rows}}</td>
               </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
+                  <td  v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{ Number(rows).toLocaleString()}}</span></td>
+              </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
+                <td>
+                  <span v-bind:style="colColor(indexs)">
+                    <template v-if="rows != null">
+                         {{moment(rows,'YYYYMMDDHHmmss').format(dataGridDetail.dataGrid.columControl[indexs].dateFormat)}}
+                    </template>
+                    <template v-else> - </template>
+                  </span>
+                  </td>
+              </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
