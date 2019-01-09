@@ -316,10 +316,14 @@
             // this.$emit('close','');
             if(response){
                 if (response.success == 'Y') {
-                    let reqData: any = {};
-                    this.title='아이디 조회완료'
-                    this.otpTrue = true;
-                    this.resultId = response.id
+                    // let reqData: any = {};
+                    // this.title='아이디 조회완료'
+                    // this.otpTrue = true;
+                    // this.resultId = response.id
+
+                    //계정정보 상세화면 이동
+                    this.$router.push({ name:'modUser' , params: { current : this.reqParam.searchOption , val : this.reqParam.row.id , val2 : this.reqParam.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
                 }
                 else {
                 }

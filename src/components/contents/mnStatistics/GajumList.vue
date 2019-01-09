@@ -117,16 +117,14 @@
         }
 
         created(){
-            // this.gajumStatistics()
-            // this.receuptStatistics()
         }
 
         mounted(){
 
         }
 
-        gajumStatistics(){
-             CommonBoardService.getListDatas('statistics','gajum',{responseType:'GRID',searchStartDate: this.newDateStartl , searchEndDate: this.newDateEndl}).then(result=>{
+        gajumStatistics(date1,date2){
+             CommonBoardService.getListDatas('statistics','gajum',{responseType:'GRID',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                   if(result.status==200){
                       console.log(result)
                       this.gajumList = result.data
@@ -163,8 +161,8 @@
              })
         }
 
-        receuptStatistics(){
-            CommonBoardService.getListDatas('statistics','receipt',{responseType:'GRID',searchStartDate: this.newDateStartl , searchEndDate: this.newDateEndl}).then(result=>{
+        receuptStatistics(date1,date2){
+            CommonBoardService.getListDatas('statistics','receipt',{responseType:'GRID',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                 if(result.status==200){
                     console.log(result)
                     this.receiptList = result.data

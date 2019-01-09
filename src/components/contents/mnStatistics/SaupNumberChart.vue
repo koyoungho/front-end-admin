@@ -383,7 +383,10 @@
         }
 
         compCodeChart(){
-
+            if(!this.companyCode){
+                alert('회사코드를 선택해주세요')
+                return ;
+            }
             let Object = {searchStartDate : this.searchStartDate , searchEndDate : this.searchEndDate , subSaup : this.companyCode ,saupId: this.saupId}
             CommonBoardService.getListDatas('statistics','saupid',Object).then(result=>{
                 if(result.status==200){

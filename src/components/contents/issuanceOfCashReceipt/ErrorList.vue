@@ -85,11 +85,19 @@
                     {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'' , value: '' ,  api : 'company' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
                     {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: '',   api : '' },
                     {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: '',   api : ''  },
-                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },
-                    {type: 'date', title :'', id: '6' , name:'searchDate', searchStartDate: '20181010' ,  searchEndDate: this.setDate , calenderCount : 1},
+                    {type: 'date2', title :'오류발생월', id: 'datea' , name:'searchDate', searchStartDate: [new Date()] , calenderCount : 1 , dateType : 'month' , width : 140 ,default :'YYYY-MM'},
                     {type: 'select' , title :'오류구분',id: 'errorType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '전체' , value: 'all' },{name : '국세청' , value: 'tax' },{name : '내부오류' , value: 'inner' }]},
                     {type: 'selectCode' , title :'오류코드',id: 'errorCode', name:'issuePurpose' , value: '' ,  api : 'code/taxerror' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
-                    {type: 'input', title :'', id: 'errorMsg', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'input2', title :'오류내용', id: 'errorMsg', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'input2', title :'승인번호', id: '312', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'date2', title :'거래일자', id: '123', name:'searchDate', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'input2', title :'거래금액', id: '321321', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'input2', title :'원거래승인번호', id: 'sdfsd', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'date2', title :'원거래승인일자', id: 'sdfsdf', name:'searchDate', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220 , default :'YYYY-MM-DD'},
+                    // {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },
+
+
+
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 50},
                 goSearch : "iocSearch",
@@ -139,13 +147,12 @@
 
         //저장
         goInsert(){
-
-            alert('준비중입니다')
+            // alert('준비중입니다')
             let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
             let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
 
             if(checkTrue){
-
+                    console.log(ObjectData)
             }
         }
 

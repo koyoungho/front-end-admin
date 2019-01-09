@@ -332,10 +332,14 @@
             // this.$emit('close','');
             if(response){
                 if (response.success == 'Y') {
-                    let reqData: any = {};
-                    this.title='아이디 조회완료'
-                    this.otpTrue = true;
-                    this.resultId = response.id
+                    // let reqData: any = {};
+                    // this.title='아이디 조회완료'
+                    // this.otpTrue = true;
+                    // this.resultId = response.id
+
+                    //인증 완료후 상세 화면으로 이동
+                    this.$router.push({ name:this.reqParam.nextUrl , params: { current : this.reqParam.searchOption , objectKey : this.reqParam.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
                 }
                 else {
                 }

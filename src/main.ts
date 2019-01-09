@@ -7,7 +7,7 @@ import 'expose-loader?$!./assets/js/jquery-1.11.1.min.js'
 import 'expose-loader?$!./assets/js/common-ui.js'
 import 'expose-loader?$!./assets/js/jquery-ui-1.11.4.min.js'
 
-import AirbnbStyleDatepicker from './assets/js/vue-airbnb-style-datepicker.es.js'
+
 import VueProgressBar from 'vue-progressbar';
 import 'expose-loader?jquery'
 
@@ -35,8 +35,40 @@ const options = {
 }
 
 Vue.use(VueProgressBar, options)
-const datepickerOptions = {}
-Vue.use(AirbnbStyleDatepicker, datepickerOptions)
+
+
+
+const datepickerOptions = {
+    sundayFirst: false,
+    dateLabelFormat: 'dddd, MMMM D, YYYY',
+    days: ['월', '화', '수', '목', '금', '토', '일'],
+    daysShort: ['월', '화', '수', '목', '금', '토', '일'],
+    monthNames: [
+        '1월',
+        '2월',
+        '3월',
+        '4월',
+        '5월',
+        '6월',
+        '7월',
+        '8월',
+        '9월',
+        '10월',
+        '11월',
+        '12월',
+    ],
+    colors: {
+            selected: '#a61c0f',
+            inRange: '#e2415a',
+            selectedText: '#fff',
+            text: '#565a5c',
+            inRangeBorder: '#e2415a',
+            disabled: '#e2415a'
+    }
+}
+import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
+Vue.use(AirbnbStyleDatepicker,datepickerOptions)
+
 
 
 Vue.config.productionTip = false
@@ -50,12 +82,18 @@ Vue.use(Spinner)
 import tinymce from 'vue-tinymce-editor'
 Vue.component('tinymce', tinymce)
 
+import DatePicker from 'vue2-datepicker'
+Vue.use(DatePicker);
+
+
 /**
  * 차트
  */
 import VCharts from 'v-charts'
-Vue.component('vcha' , VCharts)
 Vue.use(VCharts);
+
+
+
 
 // import VueDragscroll from 'vue-dragscroll'
 // Vue.use(VueDragscroll)

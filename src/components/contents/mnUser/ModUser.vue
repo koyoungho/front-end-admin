@@ -70,7 +70,7 @@
                             <input type="text" class="input form_w50" title="최종접속일시" disabled="disabled" v-model="account.lastConnDt">
                         </td>
                     </tr>
-                    <tr>
+                    <tr v-if="saupjangSajin">
                         <th scope="row">사업자등록증 확인</th>
                         <td class="con01" colspan="3">
                             <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
@@ -100,9 +100,9 @@
                     <tr>
                         <th scope="row">접속IP 대역</th>
                         <td colspan="3">
-                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpStart">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpFrom" disabled="disabled">
                             <span class="period_form">-</span>
-                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpEnd">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpTo" disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -281,6 +281,8 @@
 
         oldRole : any = ''; //이전 role
 
+        saupjangSajin : boolean = false; //사업자등록증 뷰 여부
+
         auth : any = "";
         addressBox : boolean = false;
         listItem: any =
@@ -367,6 +369,9 @@
                    //this.setData()
                    this.account = result.data;
                    this.oldRole = result.data.role;
+                   if(result.data.aprvYn != null && result.data.aprvYn != 'Y'){ //승인이 안된경우만 사업자등록증 확인 보여줌
+                       this.saupjangSajin = true;
+                   }
 
                    let arrList : any = [];
                    let objList : any = {};
@@ -511,10 +516,10 @@
             }else if(account.addr2 == '' || account.addr2 == null){
                 alert('상세주소를 입력하세요.')
                 return;
-            }else if(account.accessIpStart == '' || account.accessIpStart == null){
+            }else if(account.accessIpFrom == '' || account.accessIpFrom == null){
                 alert('접속IP 대역 시작점을 입력하세요.')
                 return;
-            }else if(account.accessIpEnd == '' || account.accessIpEnd == null) {
+            }else if(account.accessIpTo == '' || account.accessIpTo == null) {
                 alert('접속IP 대역 끝점을 입력하세요.')
                 return;
             }else {
@@ -553,8 +558,8 @@
             reqData['zipCode'] = account.zipCode;
             reqData['addr1'] = account.addr1;
             reqData['addr2'] = account.addr2;
-            reqData['accessIpFrom'] = account.accessIpStart;
-            reqData['accessIpTo'] = account.accessIpEnd;
+            reqData['accessIpFrom'] = account.accessIpFrom;
+            reqData['accessIpTo'] = account.accessIpTo;
             reqData['phoneNum'] = account.phoneNum;
 
             chkList.filter(e=>{

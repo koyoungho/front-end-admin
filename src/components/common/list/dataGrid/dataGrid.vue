@@ -136,20 +136,6 @@
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
                 <td>{{rows}}</td>
               </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
-                <td  v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{ Number(rows).toLocaleString()}}</span></td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
-                <td  v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
-                    <span v-bind:style="colColor(indexs)">
-                      <template v-if="rows != null">
-                           {{moment(rows,'YYYYMMDDHHmmss').format(dataGridDetail.dataGrid.columControl[indexs].dateFormat)}}
-                      </template>
-                      <template v-else> - </template>
-
-                    </span>
-                </td>
-              </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
@@ -163,10 +149,6 @@
                   </template>
 
               </template>
-
-
-
-
               <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'" >
                 <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)"></td>
@@ -222,6 +204,7 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../../api/common.service';
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
+    import moment from 'moment'
 
 
     @Component({
@@ -516,9 +499,25 @@
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
                 if (e.type == 'date') {  //날짜
-                    searchData['searchStartDate'] = e.searchStartDate;
-                    searchData['searchEndDate'] = e.searchEndDate;
-                } else if (e.type == 'select') {  //셀렉트박스
+                        searchData['searchStartDate'] = e.searchStartDate
+                        searchData['searchEndDate'] =  e.searchEndDate
+
+                }else if (e.type == 'date2') {  //날짜
+                    if(e.dateType == 'date'){
+                        console.log(e.searchStartDate)
+                        searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
+                    }else if(e.dateType == 'month'){
+                        searchData['searchStartDate'] =  moment(e.searchStartDate[0]).format('YYYYMM')
+                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMM')
+                    }else{
+                        searchData['searchStartDate'] =  moment(e.searchStartDate[0]).format('YYYYMMDD')
+                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
+                    }
+
+                }
+
+                else if (e.type == 'select') {  //셀렉트박스
                     if (e.value != '') {
                         searchData[e.id] = e.value;
                     }
