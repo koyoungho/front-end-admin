@@ -139,6 +139,7 @@
                 }else if(sessionStorage.role == '0003'){ //콜센터는 인증화면
                     //OTP인증 화면으로 이동
                     this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    //this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                 }
 
             }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
