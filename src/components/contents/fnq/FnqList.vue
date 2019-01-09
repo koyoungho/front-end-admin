@@ -26,7 +26,7 @@
                 <div class="search_bbs_box type01">
                     <ul class="search_list">
                         <li>
-                            <input type="text" class="input sch_notice" placeholder="제목+내용" title="검색어 입력" v-model="searchKey" v-on:keyup.enter="searchFaq">
+                            <input type="text" class="input sch_notice" placeholder="제목+내용" title="검색어 입력" v-model="searchWord" v-on:keyup.enter="searchFaq">
                         </li>
                         <li>
                             <span class="btn_area">
@@ -93,7 +93,7 @@
 
         listData: any = [];
         searchType: string = '';
-        searchKey: string = '';
+        searchWord: string = '';
         totalCount: any = '';
         startPage: any = '';
 
