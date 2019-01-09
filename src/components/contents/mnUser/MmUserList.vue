@@ -81,7 +81,7 @@
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
                     {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
-                    {type: 'date', title :'', id: 'date' , name:'date', searchStartDate: this.setDate ,  searchEndDate: this.setDate , calenderCount : 2},
+                    {type: 'date2', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                     {type: 'selectCode' , title :'등급',id: 'role', name:'role' , value: '' ,  api : '' , option : [{ codeNm : '시스템관리자' , code: '0001' },{codeNm : '현금영수증사업자' , code: '0002' },{codeNm : '콜센터관리자' , code: '0003' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
                     {type: 'selectCode' , title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
@@ -104,7 +104,7 @@
             //     this.windowResize = false;
             //     this.handleResize()
             // }
-            this.listItem.search[1].searchStartDate = '20180101';
+            //this.listItem.search[1].searchStartDate = '20180101';
 
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);

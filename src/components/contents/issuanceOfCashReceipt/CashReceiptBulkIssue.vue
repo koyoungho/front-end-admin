@@ -130,7 +130,7 @@
                         <tbody>
                         <template v-if="listData.length > 1">
                             <template v-for="datas in listData">
-                                <tr>
+                                <tr v-bind:class="datas.className">
                                     <td>{{datas.saleDate}}</td>
                                     <td class="right">{{datas.totalAmt}}</td>
                                     <td class="right">{{datas.amt}}</td>
@@ -185,6 +185,7 @@
     import axios from 'axios';
     import {environment} from '../../../utill/environment';
     import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -356,7 +357,29 @@
                     // totalCount
                     if (result.data.length > 0) {
                         console.log('엑셀 파일 체크 성공');
-                        this.listData =  result.data; //리스트
+
+                        let rowData : any = {};
+                        let arrData : any = [];
+                        let resData : any = result.data;
+                        resData.filter(e =>{
+                            rowData = {};
+                            rowData['saleDate'] = moment(e.saleDate).format('YYYY.MM.DD');
+                            rowData['totalAmt'] = this.numberWithCommas(e.totalAmt);
+                            rowData['amt'] = this.numberWithCommas(e.amt);
+                            rowData['vat'] = this.numberWithCommas(e.vat);
+                            rowData['bong'] = this.numberWithCommas(e.bong);
+                            rowData['geogu'] = e.geogu;
+                            rowData['confirm'] = e.confirm;
+                            rowData['custNm'] = e.custNm;
+                            rowData['memo'] = e.memo;
+                            rowData['error'] = e.error;
+                            if(e.error != null && e.error != ''){
+                                rowData['className'] = 'date_error';
+                            }
+                            arrData.push(rowData);
+                        });
+
+                        this.listData =  arrData; //리스트
                         this.errorData = result.failCount; //오류 건수
                         this.normalData = result.totalCount - result.failCount; //정상 건수
                         this.possibleData = result.totalCount - result.failCount; //발급예정 건수
@@ -454,6 +477,13 @@
             //this.soluId = data.soluId; //가맹점명
 
         }
+
+        numberWithCommas(n) {
+            let parts=n.toString().split(".");
+            return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+        }
+
+
 
     }
 </script>
