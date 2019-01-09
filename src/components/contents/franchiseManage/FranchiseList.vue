@@ -112,7 +112,7 @@
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
                         {type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: this.soluVal ,  api : 'code/issuer' ,  disable : this.soluDis , option : [{codeNm : '(주)롯데정보통신', code: '0001'}]},
-                        {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.setDate,  searchEndDate: this.setDate, calenderCount : 2},
+                        {type: 'date2', title :'등록일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                         {type: 'selectCode' , title :'가맹점상태',id: 'gajumStatus', name:'gajumStatus' , value: '' ,  api : '' , option : [{ codeNm : '승인신청' , code: '0' },{codeNm : '해지신청' , code: '1' },{codeNm : '정상' , code: '2' },{codeNm : '해지' , code: '3' }]},
                         //{type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeNm : '휴업' , code: '1' },{codeNm : '수기BL' , code: '11' },{codeNm : '수기BL취소' , code: '17' },{codeNm : '폐업' , code: '2' },{codeNm : '신용카드위장' , code: '3' },{codeNm : '현금위장' , code: '4' },{codeNm : '신용카드/현금위장' , code: '5' },{codeNm : '현금영수증발급불가' , code: '6' },{codeNm : '적용취소' , code: '7' },{codeNm : '삭제된사업자' , code: '8' }]},

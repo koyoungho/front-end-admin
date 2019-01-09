@@ -158,8 +158,8 @@
                     <tr>
                         <th scope="row">BL 정보</th>
                         <td colspan="3">
-                            <select id="" name="" class="select form_bl" title="BL 정보" v-model="blGb">
-                                <option value=""></option>
+                            <select id="blGbID" name="" class="select form_bl" title="BL 정보" v-model="blGb">
+                                <option value="">선택</option>
                                 <option value="0">BL적용</option>
                                 <option value="1">BL해지</option>
                             </select>
@@ -500,8 +500,8 @@
         //상세정보 보이기
         franchiseView(){
             this.objectKey = this.$route.params.objectKey;
-            console.log('넘겨받은 값 확인');
-            console.log(this.objectKey);
+            //console.log('넘겨받은 값 확인');
+            //console.log(this.objectKey);
             if(!this.objectKey){
                 alert('접근할수 없습니다')
                 this.$router.push({name:'franchiseList'});
@@ -541,11 +541,13 @@
                         this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
                         this.blGbNm = result.blGbNm; //BL상태
                         this.blDate = result.blDate; //BL등록일
-                        let blGb = document.getElementById('blGbID');
-                        if(blGb != null){ blGb.setAttribute('disabled', 'disabled'); }
 
+                        if(sessionStorage.role != '0001') { //시스템관리자만 변경 가능
+                            let blGb = document.getElementById('blGbID');
+                            if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
+                        }
                         //승인대역 정보
-                        console.log(result.aprvBands.length);
+                        //console.log(result.aprvBands.length);
 
                         this.alrAproBandCnt = result.aprvBands.length; //기등록된 승인대역 카운트(승인대역 row 삭세시 체크)
                         this.alrAdminCnt = result.accounts.length; //기등록된 관리자정보 카운트(관리자정보 row 삭세시 체크)

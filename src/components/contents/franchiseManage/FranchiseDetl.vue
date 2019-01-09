@@ -15,7 +15,7 @@
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
-                        <select id="" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId">
+                        <select id="" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId" disabled="disabled">
                             <option value="">선택</option>
                             <template v-for="datas in receiptSaupList">
                                 <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -483,7 +483,7 @@
         franchiseView(){
             this.objectKey = this.$route.params.objectKey;
 
-            console.log(this.$route.params.objectKey);
+            //console.log(this.$route.params.objectKey);
             if(!this.objectKey){
                 alert('접근할수 없습니다')
                 this.$router.push({name:'franchiseList'});
@@ -523,7 +523,7 @@
                             if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
                         }
                         //승인대역 정보
-                        console.log(result.aprvBands.length);
+                        //console.log(result.aprvBands.length);
 
                         this.alrAproBandCnt = result.aprvBands.length; //기등록된 승인대역 카운트(승인대역 row 삭세시 체크)
                         this.alrAdminCnt = result.accounts.length; //기등록된 관리자정보 카운트(관리자정보 row 삭세시 체크)

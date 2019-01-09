@@ -42,8 +42,6 @@
         searchType: string = '';
         startPage: any = '';
         originItem : any = {} // 오리지널데이터
-        searchStartDate_str: any = '';
-        searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
         listItem: any ={}  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
         role: any = sessionStorage.getItem('role');
         regShow : boolean = false; //신규등록 버튼 보여주는지 여부
@@ -56,10 +54,9 @@
         }
 
         created(){
-            this.searchStartDate_str =new Date();
-            this.searchStartDate_str.setFullYear(this.searchStartDate_str.getFullYear()-3);
-            this.searchStartDate_str = format(this.searchStartDate_str ,'YYYYMMDD');
-
+            let date=new Date();
+            date.setFullYear(date.getFullYear()-3);
+            console.log(date);
 
             this.listItem= {
                 dataGrid: {
@@ -78,7 +75,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.searchStartDate_str ,  searchEndDate: this.searchEndDate_str, calenderCount : 2},
+                    {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [date ,new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{name : '관리자' , value: 'ADM' },{name : '사용자' , value: 'USR' }]},
                     {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
                 ],
@@ -117,17 +114,6 @@
                 this.$children['0'].arrayPaging(es);
             }
         }
-
-        /**
-         * 날짜 포맷 변경
-         * @param date
-         */
-        // formatDates(date) {
-        //
-        //     let formattedDates = '';
-        //     formattedDates = moment(date.substr(0,8)).format( "YYYY.MM.DD");
-        //     return formattedDates
-        // }
 
         /**
          * 등록 이동

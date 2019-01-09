@@ -13,13 +13,11 @@ import 'expose-loader?jquery'
 
 import VModal from 'vue-js-modal'
 
-Vue.use(VModal, { dynamic: true, injectModalsContainer: true })
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true, dialog:true })
 
 import VueResize from 'vue-resize'
 
 Vue.use(VueResize)
-
-
 
 const options = {
     color: '#fa0a12',
@@ -73,6 +71,13 @@ Vue.use(AirbnbStyleDatepicker,datepickerOptions)
 
 Vue.config.productionTip = false
 
+
+/** 알럿, 컴펌 **/
+import VueSweetalert2 from 'vue-sweetalert2';
+const alertOptions = {
+    confirmButtonColor: '#da291c',
+}
+Vue.use(VueSweetalert2 , alertOptions);
 
 /**로딩바**/
 import Spinner from 'vue-simple-spinner'

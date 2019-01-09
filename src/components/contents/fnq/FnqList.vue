@@ -96,8 +96,6 @@
         searchKey: string = '';
         totalCount: any = '';
         startPage: any = '';
-        searchStartDate_str: any = '';
-        searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
 
         role: any = sessionStorage.getItem('role');
         regShow : boolean=false;
@@ -111,9 +109,8 @@
         pagingUser : any =   { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10};
 
         created(){
-            this.searchStartDate_str =new Date();
-            this.searchStartDate_str.setFullYear(this.searchStartDate_str.getFullYear()-3);
-            this.searchStartDate_str = format(this.searchStartDate_str ,'YYYYMMDD');
+            let date=new Date();
+            date.setFullYear(date.getFullYear()-3);
 
             this.listItem={
                 dataGrid: {
@@ -130,7 +127,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date', title :'등록일', id: 'date' , name:'date', searchStartDate: this.searchStartDate_str ,  searchEndDate: this.searchEndDate_str, calenderCount : 2},
+                    {type: 'date2', title :'등록일', id: 'date' , name:'date',searchStartDate: [date ,new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{ name : '사용자' , value: 'USR' },{name : '관리자' , value: 'ADM' }]},
                     {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' ,placeholder:'제목+내용',  },
                 ],
