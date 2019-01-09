@@ -29,7 +29,7 @@
           return routeInfo.meta.authRequired;
         });
 
-        if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy' || menuName == 'termsCheck' || menuName == 'regPass' ) { // 공용페이지 접근시 통과
+        if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy' || menuName == 'termsCheck' || menuName == 'regPass' || menuName == 'kmcResult' ) { // 공용페이지 접근시 통과
           console.log('예외페이지 처리라 그냥 넘어간다');
           next();
         } else {
