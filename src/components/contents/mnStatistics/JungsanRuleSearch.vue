@@ -49,8 +49,8 @@
                             ]},
                     ],
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '시작일' ,id : 'startDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
-                        {columName : '종료일' ,id : 'endDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '시작일' ,id : 'startDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat : 'YYYY-MM-DD'},
+                        {columName : '종료일' ,id : 'endDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat : 'YYYY-MM-DD'},
                         {columName : '비온라인' ,id : 'taxOffline',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                         {columName : '온라인' ,id : 'taxOnline', type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , } ,
                         {columName : '자진발급' ,id : 'taxSelf',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
@@ -62,7 +62,7 @@
                         {columName : 'LDCC 편의점' ,id : 'ldccLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
                         {columName : 'KT   일반' ,id : 'ldccKtNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
                         {columName : 'KT  편의점' ,id : 'ldccKtConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : '등록일' ,id : 'regDt',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
+                        {columName : '등록일' ,id : 'regDt',type:'date', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
 
                     ],
                     totalColum: 10,
