@@ -65,53 +65,30 @@
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
                              :first-day-of-week="1"  :format="item.default" :width="item.width" confirm ></date-picker>
                 </span>
-                <!--<span class="form_cal">-->
-                <!--<input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">-->
-                <!--</span>-->
-                <!--<span class="period_cal">-</span>-->
-                <!--<span class="form_cal">-->
-                <!--<input type="text" v-model="item.searchEndDate=='' ? formatDates(nowDate) : item.searchEndDate"  class="input date" title="날짜 입력">-->
-                <!--<a href="" class="btn_cal" :id="item.id">달력</a>-->
-                <!--</span>-->
-                <!--<template class="datepicker-trigger">-->
-                <!--<AirbnbStyleDatepicker-->
-                <!--:trigger-element-id="item.id"-->
-                <!--:mode=showMode-->
-                <!--:fullscreen-mobile="true"-->
-                <!--:months-to-show="1"-->
-                <!--:offsetY="-20"-->
-                <!--:style = "dateStyle"-->
-                <!--:date-one="dateOne"-->
-                <!--:date-two="dateTwo"-->
-                <!--@date-one-selected="val => { item.searchStartDate = formatDates(val) }"-->
-                <!--@date-two-selected="val => { item.searchEndDate = formatDates(val) }"-->
-                <!--</template>-->
-                <!--/>-->
               </template>
               <template v-else="item.calenderCount==2">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
                              :first-day-of-week="1" range :format="item.default" :width="item.width" confirm ></date-picker>
                 </span>
-                <!--<span class="form_cal">-->
-                <!--<input type="text" v-model="item.searchStartDate=='' ? formatDates(nowDate) : item.searchStartDate"  class="input date" title="날짜 입력">-->
-                <!--<a href="" class="btn_cal" :id="item.id">달력</a>-->
-                <!--</span>-->
-                <!--<template class="datepicker-trigger" >-->
-                <!--<AirbnbStyleDatepicker-->
-                <!--:trigger-element-id="item.id"-->
-                <!--:mode=showMode-->
-                <!--:fullscreen-mobile="true"-->
-                <!--:months-to-show="1"-->
-                <!--:style = "dateStyle"-->
-                <!--:offsetY="-20"-->
-                <!--:date-one="dateOne"-->
-                <!--:date-two="dateTwo"-->
-                <!--@date-one-selected="val => { item.searchStartDate = formatDates(val) }"-->
-                <!--@date-two-selected="val => { item.searchEndDate = formatDates(val) }"-->
-                <!--/>-->
-                <!--</template>-->
+              </template>
+            </li>
+          </template>
 
+          <template v-if="item.type=='date3'" >
+            <li>
+              <label for="aa">{{item.title}}</label>
+              <template v-if="item.calenderCount==1">
+                <span class="form_cal">
+                <date-picker v-model="item.searchStartDate" v-on:change="dateChangeEvent"  :lang="lang" :type="item.dateType"
+                             :first-day-of-week="1"  :format="item.default" :width="item.width" confirm ></date-picker>
+                </span>
+              </template>
+              <template v-else="item.calenderCount==2">
+                <span class="form_cal">
+                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
+                             :first-day-of-week="1" range :format="item.default" :width="item.width" confirm ></date-picker>
+                </span>
               </template>
             </li>
           </template>
@@ -279,10 +256,10 @@
         showModal2 : boolean = false;
         gajumNo : string  = ''; //가맹점ID
 
-
-        test(e){
-            console.log(e);
+        dateChangeEvent(date){
+            this.$emit('dateCheck' , date)
         }
+
         formatDates(date) {
             let formattedDates = ''
             formattedDates = format(date, this.dateFormat)

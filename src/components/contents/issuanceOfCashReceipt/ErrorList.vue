@@ -6,12 +6,12 @@
             <h2 class="blind">현금영수증관리</h2>
 
             <h3>오류 내역 조회</h3>
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" ></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:searchDateChange="dateCheck"></ListComponent>
         <!-- //content -->
 
         <div class="btn_bot type03">
             <button type="button" id="" class="btn_b01 bg02" v-on:click="goCancel">취소</button>
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert"  v-show="regShow">임시저장</button>
+            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
             <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
         </div>
         </div>
@@ -22,9 +22,10 @@
 
 <script lang="ts">
     import {format} from 'date-fns';
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -33,7 +34,6 @@
     })
     export default class ErrorList extends Vue {
         message: any = '';
-        setDate =  format(new Date(),'YYYYMMDD')
         regShow : boolean = false;
 
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -77,7 +77,7 @@
                     tableClass2:'tbl_list04 page_cash03',
                     totalColum: 15, //
                     apiUrl : 'receipt-error',
-                    onLoadList : true,  // onLoad 로딩 유무
+                    onLoadList : false,  // onLoad 로딩 유무
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
@@ -85,18 +85,16 @@
                     {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'' , value: '' ,  api : 'company' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
                     {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: '',   api : '' },
                     {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: '',   api : ''  },
-                    {type: 'date2', title :'오류발생월', id: 'datea' , name:'searchDate', searchStartDate: [new Date()] , calenderCount : 1 , dateType : 'month' , width : 140 ,default :'YYYY-MM'},
+                    {type: 'date3', title :'오류발생월', id: 'searchErrorYearMonth' ,id2:'', name:'searchDate', searchStartDate: "" , calenderCount : 1 , dateType : 'month' , width : 140 ,default :'YYYY-MM'},
                     {type: 'select' , title :'오류구분',id: 'errorType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '전체' , value: 'all' },{name : '국세청' , value: 'tax' },{name : '내부오류' , value: 'inner' }]},
                     {type: 'selectCode' , title :'오류코드',id: 'errorCode', name:'issuePurpose' , value: '' ,  api : 'code/taxerror' , option : [{ codeName : '소득공제' , code: '0' },{codeName : '지출증빙' , code: '1' }]},
-                    {type: 'input2', title :'오류내용', id: 'errorMsg', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'input2', title :'승인번호', id: '312', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'date2', title :'거래일자', id: '123', name:'searchDate', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                    {type: 'input2', title :'거래금액', id: '321321', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'input2', title :'원거래승인번호', id: 'sdfsd', name:'inputType' , value: '',   api : '' , option : '' },
-                    {type: 'date2', title :'원거래승인일자', id: 'sdfsdf', name:'searchDate', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220 , default :'YYYY-MM-DD'},
+                    {type: 'input2', title :'오류내용', id: 'errorCodeNm', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'input2', title :'승인번호', id: 'errorPerm', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'date3', title :'거래일자', id: 'searchSaleStartDate',id2:'searchSaleEndDate', name:'searchDate', searchStartDate: [] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'input2', title :'거래금액', id: 'totAmt', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'input2', title :'원거래승인번호', id: 'oriPerm', name:'inputType' , value: '',   api : '' , option : '' },
+                    {type: 'date3', title :'원거래승인일자',  id: 'searchOriSaleStartsDate',id2:'searchOriSaleEndDate', name:'searchDate', searchStartDate: [] , calenderCount : 2 , dateType : 'date' , width : 220 , default :'YYYY-MM-DD'},
                     // {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },
-
-
 
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 50},
@@ -115,9 +113,18 @@
 
                     //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
                     if (menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
-                        this.regShow = true;
+                        // 월데이터가 현재달과 동일시에는 버튼 숨긴다
+                            this.regShow = true;
+                        }
+
                     }
                 }
+        }
+        dateCheck(data){
+            if(moment(data).format('YYYYMM') == moment(new Date()).format('YYYYMM')){
+                this.regShow = false;
+            }else{
+                this.regShow = true;
             }
         }
 

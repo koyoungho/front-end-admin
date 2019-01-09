@@ -38,10 +38,7 @@
     })
     export default class GajumPoint extends Vue {
         @Prop() searchStartDate !:string
-        @Prop() searchEndDate !:string
 
-        nowDateStartp : string = this.searchStartDate;
-        nowDateEndp : string = this.searchEndDate;
         searchCountData : any = [];
 
         created(){

@@ -9,97 +9,13 @@
 
             <!-- btn top -->
             <div class="btn_top">
+                <button type="button" @click="newReg" class="btn_m01 bg02" v-show="regShow">분기 별 정산 생성</button>
                 <button type="button" @click="newReg" class="btn_m01 bg02" v-show="regShow">신규 정산 등록</button>
                 <button type="button" @click="ruleSearch" class="btn_m01 bg02">정산룰 조회</button>
             </div>
-
-            <!-- search box -->
-            <div class="search_box page_stats0301">
-                <ul class="search_list col02">
-                    <li>
-                        <label for="">정산월</label><span class="form_cal"><input type="text" title="날짜 입력" class="input date"></span><span class="period_cal">-</span><span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
-                    </li>
-                    <li>
-                        <label for="">구분</label>
-                        <select id="" name="" class="select sch_w100" title="구분">
-                            <option>전체</option>
-                            <option>국세청정산</option>
-                            <option>가정산</option>
-                        </select>
-                    </li>
-                </ul>
+            <div>
+             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </div>
-            <!-- //search box -->
-
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <button type="button" class="btn_m01 bg01">조회</button>
-            </div>
-
-            <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01">
-                    <caption>사업자 정산 목록</caption>
-                    <colgroup>
-                        <col width="*">
-                        <col width="15%">
-                        <col width="15%">
-                        <col width="15%">
-                        <col width="15%">
-                        <col width="15%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">최종 수정일시</th>
-                        <th scope="col">정산월</th>
-                        <th scope="col">구분</th>
-                        <th scope="col">상태</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">승인자</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr @click="detailJungsan">
-                        <td>2018.10.12 05:22:16</td>
-                        <td>2018년 10월</td>
-                        <td class="left">국세청정산</td>
-                        <td>임시저장</td>
-                        <td>작성자ID</td>
-                        <td>승인자ID</td>
-                    </tr>
-                    <tr>
-                        <td>2018.10.12 05:22:16</td>
-                        <td>2018년 10월</td>
-                        <td class="left">국세청정산</td>
-                        <td>임시저장</td>
-                        <td>작성자ID</td>
-                        <td>승인자ID</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- //tbl list box -->
-
-            <!-- pagination -->
-            <div class="pagination">
-                <a href="#" class="btn_fprev">맨앞</a>
-                <a href="#" class="btn_prev">이전</a>
-                <span class="num">
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<strong>3</strong>
-					<a href="#">4</a>
-					<a href="#">5</a>
-				</span>
-                <a href="#" class="btn_next">다음</a>
-                <a href="#" class="btn_enext">맨뒤</a>
-            </div>
-            <!-- //pagination -->
-
         </div>
         <!-- //content -->
     </section>
@@ -110,16 +26,45 @@
 <script lang="ts">
 
     import {Component, Vue} from 'vue-property-decorator';
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
 
     @Component({
 
         components: {
-            ReceipSaupCount
+            ReceipSaupCount,ListComponent
         }
     })
     export default class ReceipSaupCount extends Vue {
 
         regShow : boolean = false;
+
+        listItem :any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            {
+                dataGrid: {
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '최종 수정일시' ,id : 'saleDate',type:'date', width : '25%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat:'YYYY/MM/DD HHMISS'},
+                        {columName : '정산 월' ,id : 'perm',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '구분' ,id : 'totamt', type:'money', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , } ,
+                        {columName : '상태' ,id : 'geogu',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : '작성자' ,id : 'trgu',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : '승인자' ,id : 'subSaup',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
+
+                    ],
+                    totalColum: 10,
+                    apiUrl : 'receipt',
+                    onLoadList : true,  // onLoad 로딩 유무
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {type: 'date3', title :'거래일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'selectObject' , title :'구분',id: 'subSaup', name:'subSaup' , value: '' ,  api : '' , option : [{ name : '국세청정산' , value: '0' },{name : '가정산' , value: '1' }]},
+                    {type: 'select' , title :'상태',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '임시저장' , value: '0' },{name : '확정대기' , value: '1' },{ name : '수정요청' , value: '0' },{name : '확정' , value: '1' }]},
+                ],
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                goSearch : "iocSearch",
+                searchClass : 'search_box page_stats021',
+                searchClass2 : 'search_list '
+            }
 
         mounted(){
             // 메뉴별 권한 확인
@@ -134,6 +79,10 @@
                     }
                 }
             }
+        }
+
+        listViewEvent(){
+
         }
 
         /**

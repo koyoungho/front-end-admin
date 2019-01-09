@@ -17,28 +17,10 @@
                 <ul class="search_list">
                     <li>
                         <label for="">기간</label>
-                        <span class="form_cal">
-                            <input type="text" v-model="searchStartDate=='' ? formatDates(nowDate) : searchStartDate"  class="input date" title="날짜 입력">
-                          </span>
-                        <span class="period_cal">-</span>
-                        <span class="form_cal">
-                            <input type="text" v-model="searchEndDate=='' ? formatDates(nowDate) : searchEndDate"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" id="datepicker">달력</a>
-                          </span>
-                        <template class="datepicker-trigger">
-                            <AirbnbStyleDatepicker
-                                :trigger-element-id="'datepicker'"
-                                :mode="'range'"
-                                :fullscreen-mobile="true"
-                                :months-to-show="2"
-                                :offsetY="-20"
-                                :showMonthYearSelect = "true"
-                                :date-one="formatDates(nowDate)"
-                                :date-two="formatDates(nowDate)"
-                                @date-one-selected="val => { searchStartDate = formatDates(val) }"
-                                @date-two-selected="val => { searchEndDate = formatDates(val) }"
-                            />
-                        </template>
+                      <span class="form_cal">
+                      <date-picker v-model="searchStartDate"  :lang="lang" :type="'month'"
+                                   :first-day-of-week="1" range  format="YYYY-MM" width="200" confirm ></date-picker>
+                      </span>
                     </li>
                   <li>
                     <span class="chk_box ml"><input type="checkbox" id="aa03" :checked="loadCode" @click="checkTrue(loadCode)" ><label for="aa03">정산대상</label></span>
@@ -329,6 +311,7 @@
     import {CommonBoardService} from '../../../api/common.service';
     import {CcChart} from '../../../model/chart/compCodeChart';
     import {CcChartAcount} from '../../../model/chart/compCodeChartAccount';
+    import moment from 'moment';
 
     @Component({
 
@@ -344,10 +327,7 @@
         upjongCodeList : any = "";  //  업종코드
         upjongCode : string = "";
         popupYn:boolean =false;
-        maxList1 : any = [];
-        maxList2 : any = [];
-        maxList3 : any = [];
-        searchStartDate = "";
+        searchStartDate = [new Date() , new Date()];
         searchEndDate = "";
         dateOne: any =  "";
         dateTwo: any =  "";
@@ -357,6 +337,16 @@
         loadCodeList : any = [];
         loadCode : boolean = false;
         regShow : boolean = false;
+
+        lang : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '선택',
+                dateRange: '범위 선택'
+            }
+        }
 
 
         formatDates(date) {
@@ -371,12 +361,10 @@
 
 
         created(){ // api 데이터
-            this.nowDate= this.formatDates(new Date())
-            this.searchStartDate =  this.nowDate
-            this.searchEndDate =  this.nowDate
+            // this.searchStartDate =  this.nowDate
+            // this.searchEndDate =  this.nowDate
             this.companyList()
             this.upjongList()
-            this.compCodeChart()
 
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -447,7 +435,7 @@
                 this.loadCodeList.push(this.companyCode)
             }
             console.log(this.loadCodeList);
-            let Object = {searchStartDate : this.searchStartDate , searchEndDate : this.searchEndDate , subSaups : this.loadCodeList.toString() , upjong : this.upjongCode}
+            let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMM') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMM') , subSaups : this.loadCodeList.toString() , upjong : this.upjongCode}
             CommonBoardService.getListDatas('statistics','subsaup',Object).then(result=>{
                     if(result.status==200){
                         this.ChartModel = result.data;
