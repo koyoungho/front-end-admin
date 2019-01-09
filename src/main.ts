@@ -71,8 +71,13 @@ Vue.use(AirbnbStyleDatepicker,datepickerOptions)
 
 Vue.config.productionTip = false
 
+
+/** 알럿, 컴펌 **/
 import VueSweetalert2 from 'vue-sweetalert2';
-Vue.use(VueSweetalert2);
+const alertOptions = {
+    confirmButtonColor: '#da291c',
+}
+Vue.use(VueSweetalert2 , alertOptions);
 
 /**로딩바**/
 import Spinner from 'vue-simple-spinner'
