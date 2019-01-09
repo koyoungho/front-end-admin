@@ -19,8 +19,6 @@
     import {CommonBoardService} from '../../../api/common.service';
     import {environment} from '../../../utill/environment';
 
-
-
     @Component({
         components: {
             kmcResult
