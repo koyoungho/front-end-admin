@@ -398,7 +398,7 @@
 
 
         setDataAddr1(e){
-            console.log(e);
+            //console.log(e);
             // 주소값 리턴 받기
 
             this.zipCode = e.zip;
@@ -406,16 +406,16 @@
         }
 
         setDataAddr2(e){
-            console.log(e);
-            console.log('1111')
+            //console.log(e);
+            //console.log('1111')
             // 주소값 리턴 받기
         }
 
         //입력값 validation 체크
         validationChk(){
 
-            console.log('Form 정보 보이기')
-            console.log(this.menuList)
+            //console.log('Form 정보 보이기')
+            //console.log(this.menuList)
             let saupjang = this.saupjang;
 
             if(this.name == ''){
@@ -522,8 +522,8 @@
             });
             reqData['menuList'] = arrData
 
-            console.log('최종 요청값 확인')
-            console.log(reqData)
+            //console.log('최종 요청값 확인')
+            //console.log(reqData)
 
             // api 데이터 호출(계정 정보 수정)
             CommonBoardService.postListData('accounts', null, reqData).then((response) => {
@@ -533,7 +533,8 @@
                         //계정 수정 완료
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnUserList'})
-                        this.$router.push('/home/mnUserList');
+                        this.$router.push('/home/mnUser');
+                        //this.$router.push({name:'policyTempList'});
                     } else {
                         alert('계정 정보 등록에 실패하였습니다.\n다시 시도하세요.');
                         return;
