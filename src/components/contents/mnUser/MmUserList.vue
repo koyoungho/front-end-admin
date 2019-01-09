@@ -66,8 +66,8 @@
                         {columName : '등급' ,id : 'role',type:'hidden', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
                         {columName : '소속' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
                         {columName : '상태' ,id : 'accountStatus',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
-                        {columName : '등록일' ,id : 'regDt',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,formatDate : true},
-                        {columName : '최종접속' ,id : 'lastConnDt',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,formatDate : false},
+                        {columName : '등록일' ,id : 'regDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
+                        {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
                         // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                     ],
                     totalColum: 9, //

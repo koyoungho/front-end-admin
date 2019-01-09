@@ -40,27 +40,19 @@
         @Prop() searchStartDate !:string
         @Prop() searchEndDate !:string
 
-        nowDateStart : string = this.searchStartDate;
-        nowDateEnd : string = this.searchEndDate;
+        nowDateStartp : string = this.searchStartDate;
+        nowDateEndp : string = this.searchEndDate;
         searchCountData : any = [];
 
         created(){
             // this.searchCount()
         }
 
-        @Watch('searchStartDate') onChange(){
-            this.nowDateStart  = this.searchStartDate
-        }
 
-        @Watch('searchEndDate') onChange2(){
-            this.nowDateEnd  = this.searchEndDate
-        }
-
-
-        searchCount() {
+        searchCount(date1,date2) {
             CommonBoardService.getListDatas('statistics/summary', 'kt', {
-                searchStartDate: this.nowDateStart,
-                searchEndDate: this.nowDateEnd
+                searchStartDate: date1,
+                searchEndDate: date2
             }).then(result => {
                 if(result.status==200){
                      this.searchCountData = result.data
