@@ -23,8 +23,10 @@
             <tbody>
             <template v-for="data,index in gajumList">
                 <tr>
-                <th scope="row">{{data.SOLU}}</th>
-                <th scope="row">{{data.TYPE}}</th>
+                <template v-if="index==0 || index==3">
+                <th scope="row" rowspan="3">{{data.SOLU=='0002' ? 'KT':'롯데'}}</th>
+                </template>
+                <th scope="row">{{changeVal(data.TYPE)}}</th>
                 <template v-for="da,indexs in dateArray">
                 <td class="right">{{data[dateArray[indexs]]}}</td>
                 </template>
@@ -59,7 +61,12 @@
             <tbody>
             <template v-for="data,index in receiptList">
                 <tr>
-                    <th scope="row">{{data.SOLU}}</th>
+                  <template v-if="index==0">
+                    <th scope="row" rowspan="1">{{checkOner(data.SOLU)}}</th>
+                  </template>
+                  <template v-if="index==1 || index==3">
+                    <th scope="row" rowspan="2">{{checkOner(data.SOLU)}}</th>
+                  </template>
                     <template v-for="da,indexs in dateArray2">
                         <td class="right">{{data[dateArray2[indexs]]}}</td>
                     </template>
@@ -89,10 +96,6 @@
     })
     export default class GajumList extends Vue {
         @Prop() searchStartDate !:string
-        @Prop() searchEndDate !:string
-
-        newDateStartl :string = this.searchStartDate
-        newDateEndl :string = this.searchEndDate
         gajumList : any = [];
         gajumCount : number = 0;
         receiptList : any = [];
@@ -109,11 +112,23 @@
             return dates
         }
 
-        @Watch('searchStartDate') onChange(){
-            this.newDateStartl = this.searchStartDate
+        changeVal(data){
+            if(data=='SUM'){
+                return '누계'
+            }else if(data=='APRV'){
+                return '가입'
+            }else{
+                return '해지'
+            }
         }
-        @Watch('searchEndDate') onChange2(){
-            this.newDateEndl = this.searchEndDate
+        checkOner(data){
+            if(data=='0001'){
+                return '롯데'
+            }else if(data=='0002'){
+                return 'KT'
+            }else{
+                return '전체(승인-취소)'
+            }
         }
 
         created(){
@@ -127,6 +142,7 @@
              CommonBoardService.getListDatas('statistics','gajum',{responseType:'GRID',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                   if(result.status==200){
                       console.log(result)
+                      this.gajumList =[];
                       this.gajumList = result.data
                       let ObjectData : any = [];
                       result.data.filter((e,index)=>{
@@ -165,6 +181,7 @@
             CommonBoardService.getListDatas('statistics','receipt',{responseType:'GRID',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                 if(result.status==200){
                     console.log(result)
+                    this.receiptList =[];
                     this.receiptList = result.data
                     let ObjectData : any = [];
                     let totalcount = 0;

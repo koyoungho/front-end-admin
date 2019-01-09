@@ -150,13 +150,13 @@
               </template>
               <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'" >
-                <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)"></td>
+                <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)" ></td>
               </template>
               <!--주의 셀렉트박스는 공용보다 하나의 별개추가된 부분입니다-->
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'">
                 <td>
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='1'">
-                    <select class="select form_w100" v-model="listData[index].rsnCode" @change="dataVal(index,indexs)">
+                    <select class="select form_w100" v-model="listData[index].rsnCode" @change="dataVal(index,indexs)" :aria-disabled="disableVal(index)">
                       <option value="null">선택</option>
                       <option v-for="commonList1 in dataGridDetail.dataGrid.commonSelectListOne"  v-bind:value="commonList1.code">{{commonList1.codeNm}}</option>
                     </select>
@@ -225,7 +225,6 @@
         menuHeader: any = {};  // 메뉴헤더생성
         bgColor : any = ""; // 배경색
         trColor : any = ""; // tr 컬러
-        inputData : any[] = [{key:'', input1 :'' , input2: '' , input3:'', selectValue1:'', selectValue2:''}];  // 인풋한 영역 넘겨주는 데이터
         lineColumName : string="";
         lineColumIndex :  number = 10000;  // 라인컬러 인덱스
         checkBoxDatas :any[]= [];  // 체크박스 체크데이터리스트
@@ -246,6 +245,10 @@
         lineCheckOk : boolean = true;
         dataStatus : string = '';
         loading :boolean= false;
+
+        //오류내역용 변수
+        innerFixYn : string ='';
+        taxfixYn  : string ='';
 
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
@@ -296,7 +299,7 @@
         }
 
         disableVal(index){
-            return this.listOragin[index].innerFixYn
+            return this.listOragin[index].innerFixYn =='Y' ? true : false
         }
 
         dataVal(listIndex, columIndex,$event){
@@ -497,23 +500,49 @@
 
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
-                if (e.type == 'date') {  //날짜
+                if (e.type == 'date' ) {  //날짜
                         searchData['searchStartDate'] = e.searchStartDate
                         searchData['searchEndDate'] =  e.searchEndDate
 
                 }else if (e.type == 'date2') {  //날짜
-                    if(e.dateType == 'date'){
-                        console.log(e.searchStartDate)
-                        searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
-                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
-                    }else if(e.dateType == 'month'){
-                        searchData['searchStartDate'] =  moment(e.searchStartDate[0]).format('YYYYMM')
-                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMM')
-                    }else{
-                        searchData['searchStartDate'] =  moment(e.searchStartDate[0]).format('YYYYMMDD')
-                        searchData['searchEndDate'] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
+                    if(e.searchStartDate.length>0) {
+                        if (e.dateType == 'date') {
+                            searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                            searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                        } else if (e.dateType == 'month') {
+                            searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMM')
+                            searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMM')
+                        } else {
+                            searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                            searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                        }
                     }
 
+                }else if (e.type == 'date3') {  //날짜
+                    if(e.calenderCount==1){ //1개짜리일때
+                        if(e.searchStartDate) {
+                            if (e.dateType == 'date') {
+                                searchData[e.id] = moment(e.searchStartDate).format('YYYYMMDD')
+                            } else if (e.dateType == 'month') {
+                                searchData[e.id] = moment(e.searchStartDate).format('YYYYMM')
+                            } else {
+                                searchData[e.id] = moment(e.searchStartDate).format('YYYYMMDD')
+                            }
+                        }
+                    }else{ //2개짜리일때
+                        if(e.searchStartDate.length > 0 ){
+                        if(e.dateType == 'date'){
+                            searchData[e.id] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                            searchData[e.id2] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
+                        }else if(e.dateType == 'month'){
+                            searchData[e.id] =  moment(e.searchStartDate[0]).format('YYYYMM')
+                            searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMM')
+                        }else{
+                            searchData[e.id] =  moment(e.searchStartDate[0]).format('YYYYMMDD')
+                            searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                        }
+                        }
+                    }
                 }
 
                 else if (e.type == 'select') {  //셀렉트박스
@@ -621,6 +650,15 @@
                                 }
                                 else{
                                 Object.keys(Objects).forEach((Objectskey,indexsss) => {
+                                    if(indexsss==0){
+                                        //오류내역관리때문에 추가
+                                        if(Objectskey =='innerFixYn'){
+                                             this.innerFixYn=Objects[Objectskey]
+                                        }else if(Objectskey =='taxfixYn'){
+                                            this.taxfixYn=Objects[Objectskey]
+                                        }
+                                    }
+
                                     if (menuHeaderkey == Objectskey) {
                                         if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){  // 체크박스일경우 현재데이터를 체크박스에 담아논다
                                             this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@'+Objects[Objectskey]+'@'+indexs+'@'+this.dataGridDetail.dataGrid.columControl[index].returnKey)

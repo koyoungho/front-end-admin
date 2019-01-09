@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- tbl search box -->
-    <search v-bind:searchItemDetail=searchItems v-on:SearchToList="searchEvent"></search>
+    <search v-bind:searchItemDetail=searchItems v-on:SearchToList="searchEvent" v-on:dateCheck ='searchDateEvent'></search>
     <!-- //tbl search box -->
 
     <!-- tbl list box -->
@@ -73,6 +73,10 @@
             this.$children['2'].defaultPaging(es)
             this.$children['2'].arrayPaging(es);
             }
+        }
+
+        searchDateEvent(data){
+            this.$emit('searchDateChange' , data)
         }
 
         checkEvent(data){

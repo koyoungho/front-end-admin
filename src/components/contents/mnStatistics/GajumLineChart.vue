@@ -58,10 +58,7 @@
     })
     export default class GajumLineChart extends Vue {
         @Prop() searchStartDate !:string
-        @Prop() searchEndDate !:string
 
-        newDateStart : string = this.searchStartDate
-        newDateEnd : string = this.searchEndDate
         gajumList : Object = [];
         gajumCount : number = 0;
         receiptList : Object = [];
@@ -97,13 +94,6 @@
             columns: ['date', 'ktAprv', 'ktCancel', 'ldccAprv', 'ldccCancel'],
             rows: [
             ]}
-
-        @Watch('searchStartDate') onChange(){
-            this.newDateStart = this.searchStartDate
-        }
-        @Watch('searchEndDate') onChange2(){
-            this.newDateEnd = this.searchEndDate
-        }
 
         dataCheck(data){
             if (data =='all'){

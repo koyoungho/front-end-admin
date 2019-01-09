@@ -11,51 +11,8 @@
             <div class="btn_top">
                 <button type="button" @click="jungsanRuleReg" class="btn_m01 bg02" v-show="regShow">정산룰 등록</button>
             </div>
-
-            <!-- tbl list box -->
-            <div class="tbl_list_box">
-                <!-- tbl list01 -->
-                <table class="tbl_list01">
-                    <caption>사업자 정산룰 목록</caption>
-                    <colgroup>
-                        <col width="*">
-                        <col width="8%">
-                        <col width="8%">
-                        <col width="8%">
-                        <col width="8%">
-                        <col width="8%">
-                        <col width="8%">
-                        <col width="8%">
-                        <col width="15%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">적용일자</th>
-                        <th scope="col">비 온라인</th>
-                        <th scope="col">온라인</th>
-                        <th scope="col">자진발급</th>
-                        <th scope="col" colspan="2">KT 배분율</th>
-                        <th scope="col" colspan="2">LDCC 배분율</th>
-                        <th scope="col">등록일</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>2018년 9월 20일~2018년 10 월 4일</td>
-                        <td class="right">12.5원</td>
-                        <td class="right">11.5원</td>
-                        <td class="right">11.5원</td>
-                        <td>일반</td>
-                        <td>편의점</td>
-                        <td>일반</td>
-                        <td>편의점</td>
-                        <td>2018.10.31 13:00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="9" class="no_data">조회된 내용이 없습니다.</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </div>
             <!-- //tbl list box -->
 
@@ -69,15 +26,62 @@
 <script lang="ts">
 
     import {Component, Vue} from 'vue-property-decorator';
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
 
     @Component({
 
         components: {
-            JungsanRuleSearch
+            JungsanRuleSearch,ListComponent
         }
     })
     export default class JungsanRuleSearch extends Vue {
         regShow : boolean =false;
+        listItem :any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+            {
+                dataGrid: {
+                    columTopHeader : [
+                        {level : [
+                                {headerName : '적용기간', value:'', cols : '2' , rows :'1' , level : '1'},
+                                {headerName : '정산내역' ,value:'',  cols : '3' , rows :'1' , level : '1'},
+                                {headerName : 'KT 배분률' ,value:'',  cols : '4' , rows :'1' , level : '1'},
+                                {headerName : 'LDCC 배분률' ,value:'',  cols : '4' , rows :'1' , level : '1'},
+                                {headerName : '등록일' ,value:'',  cols : '1' , rows :'2' , level : '1'},
+                            ]},
+                    ],
+                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName : '시작일' ,id : 'startDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '종료일' ,id : 'endDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '비온라인' ,id : 'taxOffline',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '온라인' ,id : 'taxOnline', type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , } ,
+                        {columName : '자진발급' ,id : 'taxSelf',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : 'KT일반' ,id : 'ktKtNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'KT편의점' ,id : 'ktKtConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'LDCC 일반' ,id : 'ktLdccNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : 'LDCC 편의점' ,id : 'ktLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : 'LDCC 일반' ,id : 'ldccLdccNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'LDCC 편의점' ,id : 'ldccLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'KT   일반' ,id : 'ldccKtNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : 'KT  편의점' ,id : 'ldccKtConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : '등록일' ,id : 'regDt',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
+
+                    ],
+                    totalColum: 10,
+                    apiUrl : 'statistics/jungsanrate',
+                    onLoadList : true,  // onLoad 로딩 유무
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                ],
+                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
+                goSearch : "iocSearch",
+                searchClass : 'search_box page_stats021',
+                searchClass2 : 'search_list '
+            }
+
+        listViewEvent(){
+
+        }
+
 
         mounted(){
             // 메뉴별 권한 확인

@@ -15,27 +15,9 @@
                     <li>
                         <label for="">기간</label>
                         <span class="form_cal">
-                            <input type="text" v-model="searchStartDate=='' ? formatDates(nowDate) : searchStartDate"  class="input date" title="날짜 입력">
+                          <date-picker v-model="searchStartDate"  :lang="lang" :type="'month'"
+                                       :first-day-of-week="1" range  format="YYYY-MM" width="200" confirm ></date-picker>
                           </span>
-                        <span class="period_cal">-</span>
-                        <span class="form_cal">
-                            <input type="text" v-model="searchEndDate=='' ? formatDates(nowDate) : searchEndDate"  class="input date" title="날짜 입력">
-                            <a href="" class="btn_cal" id="datepicker">달력</a>
-                          </span>
-                        <template class="datepicker-trigger">
-                            <AirbnbStyleDatepicker
-                                :trigger-element-id="'datepicker'"
-                                :mode="'range'"
-                                :fullscreen-mobile="true"
-                                :months-to-show="2"
-                                :offsetY="-20"
-                                :showMonthYearSelect = "true"
-                                :date-one="formatDates(nowDate)"
-                                :date-two="formatDates(nowDate)"
-                                @date-one-selected="val => { searchStartDate = formatDates(val) }"
-                                @date-two-selected="val => { searchEndDate = formatDates(val) }"
-                            />
-                        </template>
                     </li>
                     <li>
                         <label for="">회사코드</label>
@@ -318,12 +300,12 @@
 </template>
 
 <script lang="ts">
-    import {format} from 'date-fns';
     import {Component, Vue} from 'vue-property-decorator';
     import CompCodeChartPop from "@/components/contents/mnStatistics/CompCodeChartPop.vue";
     import {CommonBoardService} from '../../../api/common.service';
     import {CcChart} from '../../../model/chart/compCodeChart';
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
+    import moment from 'moment';
 
     @Component({
 
@@ -335,7 +317,7 @@
         ChartModel : CcChart[] = [];
         companyCodeList : any = []; // 회사코드
         companyCode : string = "";
-        searchStartDate = "";
+        searchStartDate = [new Date(),new Date()];
         searchEndDate = "";
         dateOne: any =  "";
         dateTwo: any =  "";
@@ -346,20 +328,18 @@
         storeId : string ="";
         showModal1 : boolean = false;
 
-
-        formatDates(date) {
-            let formattedDates = ''
-            formattedDates = format(date, 'YYYYMM')
-            return formattedDates
+        lang : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '선택',
+                dateRange: '범위 선택'
+            }
         }
 
-
         created(){ // api 데이터
-            this.nowDate= this.formatDates(new Date())
-            this.searchStartDate =  this.nowDate
-            this.searchEndDate =  this.nowDate
             this.companyList()
-            this.compCodeChart()
         }
 
         popupOpen(){
@@ -387,7 +367,7 @@
                 alert('회사코드를 선택해주세요')
                 return ;
             }
-            let Object = {searchStartDate : this.searchStartDate , searchEndDate : this.searchEndDate , subSaup : this.companyCode ,saupId: this.saupId}
+            let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMM') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMM') , subSaup : this.companyCode ,saupId: this.saupId}
             CommonBoardService.getListDatas('statistics','saupid',Object).then(result=>{
                 if(result.status==200){
                     this.ChartModel = result.data;
