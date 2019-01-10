@@ -364,31 +364,48 @@
         }
 
         resetCash(){
-
             if(this.receiptOk ==false){
                 alert('취소 가능한 전체금액을 클릭해주세요')
-            }else if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
-                this.canAceptTotal = 0;
-                this.canBong = 0;
-                alert('취소 가능한 금액을 초과하였습니다')
-                return;
-            }else if(Number(this.canBongOrigin) < Number(this.canBong)){
-                console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
-                alert('면세 및 간이과세자 입니다')
-                this.canBong = 0;
-                return;
-            }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal)+Number(this.canBong))){
-                console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
-                alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
-                return;
             }
             else{
                 if(this.ghase== "checked") {
+                    if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
+                        this.canAceptTotal = 0;
+                        this.canBong = 0;
+                        alert('취소 가능한 금액을 초과하였습니다')
+                        return;
+                    }else if(Number(this.canBongOrigin) < Number(this.canBong)){
+                        console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
+                        alert('면세 및 간이과세자 입니다')
+                        this.canBong = 0;
+                        return;
+                    }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
+                        console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
+                        alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                        return;
+                    }else{
                     this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong))); // 공급가액 : (합계+봉사료) * 1.1
                     this.canVat = 0;
+                    }
                 }else {
-                    this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong)) / 1.1); // 공급가액 : (합계+봉사료) * 1.1
-                    this.canVat = Math.round(((Number(this.canAceptTotal) - Number(this.canBong))) - this.canTotal); // 부가세 : 공급가액의 10%
+                    if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
+                        this.canAceptTotal = 0;
+                        this.canBong = 0;
+                        alert('취소 가능한 금액을 초과하였습니다')
+                        return;
+                    }else if(Number(this.canBongOrigin) < Number(this.canBong)){
+                        console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
+                        alert('기존봉사료를 초과할수 없습니다')
+                        this.canBong = 0;
+                        return;
+                    }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
+                        console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
+                        alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                        return;
+                    }else {
+                        this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong)) / 1.1); // 공급가액 : (합계+봉사료) * 1.1
+                        this.canVat = Math.round(((Number(this.canAceptTotal) - Number(this.canBong))) - this.canTotal); // 부가세 : 공급가액의 10%
+                    }
                 }
                 this.receiptOk = true;
             }
@@ -399,7 +416,7 @@
 
 
         iocViewEvent(data){
-
+            console.log(data)
             this.resultRecrip = data.row;
             this.popOn = true;
             // this.$modal.show(ReceipConfirm)

@@ -79,6 +79,12 @@
                   <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
                       <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
                   </template>
+                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
+                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
+                  </template>
+                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
+                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
+                  </template>
                   <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
                     <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
                   </template>
@@ -690,7 +696,7 @@
                                                 }
                                             })
                                         }
-                                        else{ // 데이터가 세렉트박스일경우
+                                        else{
                                             numberObject[menuHeaderkey] = Objects[Objectskey];
                                         }
                                     }

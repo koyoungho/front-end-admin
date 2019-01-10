@@ -368,11 +368,7 @@
                 if(e.type=='radio' ){
 
                 }else{
-                    console.log('초기화')
-                    console.log(e)
-
                     if(e.disable == true) { //로그인 권한에 따라 변경하지 못하는 값
-
                     }else{
                         e.value="";
                         e.searchStartDate = this.formatDates(new Date());
@@ -415,5 +411,10 @@
 <style>
   .mx-calendar-content .cell.actived {
     background-color: red !important;
+  }
+  .mx-calendar-content .cell.disabled {
+    cursor: not-allowed;
+    color: white!important;
+    background-color: lightpink!important;
   }
 </style>
