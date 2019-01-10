@@ -154,7 +154,10 @@
             // 검색데이터
             let searchData: any = '';
             // searchData = '?currentPage='+this.currentPage+'&countPerPage='+this.countPerPage+'&keyword='+this.keyword+'&confmKey='+this.confmKey+'&resultType='+this.resultType;
-            searchData = '?currentPage=' + this.pageNum + '&countPerPage=' + this.PAGEBLOCK + '&keyword=' + this.addressData + '&confmKey=' + this.confmKey + '&resultType=' + this.resultType;
+            searchData = '?currentPage=' + this.pageNum + '&countPerPage=' + this.PAGEBLOCK + '&keyword=' + encodeURI(this.addressData) + '&confmKey=' + this.confmKey + '&resultType=' + this.resultType;
+            // searchData ={
+            //     currentPage : this.pageNum , countPerPage :this.PAGEBLOCK , keyword : this.addressData , confmKey : this.confmKey , resultType :  this.resultType
+            // }
             // 로딩바
             this.pageMake();
 
