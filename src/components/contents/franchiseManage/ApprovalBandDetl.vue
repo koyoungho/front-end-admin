@@ -67,10 +67,10 @@
                         <td colspan="3">
                             <div class="form_col approval">
                                 <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa11" checked="checked" v-model="aproGbn"><label for="aa11">대역폭</label></span>
-                                <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="aproBandFrom">
+                                <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="aproBandFrom" maxlength="7">
                                 <input type="hidden" title="기존 승인대역 시작점" v-model="oldAproBandFrom">
                                 <span class="period_form">-</span>
-                                <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="aproBandTo">
+                                <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="aproBandTo" maxlength="7">
                                 <input type="hidden" title="기존 승인대역 끝점" v-model="oldAproBandTo">
                             </div>
                             <div class="form_col approval">
@@ -323,12 +323,19 @@
 
         //점코드 유효성 체크
         chkJumCode() {
+            let regNumber = /^[0-9]*$/;
 
             if(this.saupId == ''){
                 alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
                 return;
             }else if(this.jumCode == ''){
                 alert('점코드를 입력하세요.');
+                return;
+            }else if(!regNumber.test(this.jumCode)){
+                alert('점코드는 숫자만 입력가능합니다.');
+                return;
+            }else if(this.jumCode.length != 10){
+                alert('점코드는 10자리로 입력하세요.');
                 return;
             }
 

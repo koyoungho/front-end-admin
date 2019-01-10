@@ -84,7 +84,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -784,9 +784,12 @@
                     //console.log(this.approvalList[i].aproBandTo);
 
                     //기존 등록건은 체크 안하고(true) 회사코드를 리스트에서 선택하면 승인대역 정보가 필수가 됨
-                    if(this.approvalList[i].inputDisGbn != true && (this.approvalList[i].companyCodeNm != undefined || this.approvalList[i].companyCodeNm != '')){
+                    console.log('diasbled :: '+this.approvalList[i].inputDisGbn)
+                    console.log('회사코드 :: '+this.approvalList[i].companyCodeNm)
+                    if(this.approvalList[i].inputDisGbn != true && (this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != '')){
 
                         if(this.approvalList[i].jumCode == undefined || this.approvalList[i].jumCode == '') {
+                            console.log('123485654564545')
                             alert('점코드를 입력하세요.')
                             return;
                         }
@@ -900,112 +903,6 @@
             }
         }
 
-        alrBandChk_pre(){
-
-            if(this.approvalList.length > 0){
-
-                let bandChk : boolean = true;
-                let forCnt : number = 0;
-                let bandAlr : number = 100;
-                let bandNot : number = 0;
-                for(let i=0; i<this.approvalList.length; i++){
-
-                    //console.log('승인대역 확인 :: '+forCnt)
-                    console.log('승인대역 확인')
-                    console.log(this.approvalList[i].aproBandFrom+' ~ '+this.approvalList[i].aproBandTo)
-
-                    //기존 등록건은 체크 안하고(true) 회사코드를 리스트에서 선택하면 승인대역 정보가 필수가 됨
-                    if(this.approvalList[i].inputDisGbn != true && (this.approvalList[i].companyCodeNm != undefined || this.approvalList[i].companyCodeNm != '')){
-                        //bandNot++;
-                        //승인대역 대역폭 체크
-                        if(this.approvalList[i].aproGbn == '1' && this.approvalList[i].aproBandFrom != '' &&  this.approvalList[i].aproBandTo != '') {
-
-                            //대역폭 정보
-                            let bandData: any = {};
-                            bandData['subSaup'] = this.approvalList[i].companyCodeNm; //회사코드
-                            bandData['approvedCode'] = this.approvalList[i].aproCode; //승인코드
-                            bandData['approvedbandFrom'] = this.approvalList[i].aproBandFrom; //시작 대역
-                            bandData['approvedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
-
-                            forCnt++;
-                            //승인대역 대역폭 사용가능 여부 확인
-                            console.log('대역폭 사용가능 여부 체크')
-                            CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
-                                    let result: any = response.data;
-                                    console.log(result)
-                                    if (result.code === '000') { //대역폭 사용가능
-                                        bandNot++;
-                                        //bandAlr = 0;
-                                        bandChk = false;
-                                    } else { //대역폭 사용 못함
-                                        alert(result.message)
-                                        bandChk = true;
-                                        bandAlr++;
-                                        //break;
-                                    }
-                                    if (bandChk == true) {
-                                        //break;
-                                        return;
-                                    } else {
-                                        this.updateInfo();
-                                    }
-                                }
-                                , (error) => {
-                                }
-                            ).catch();
-
-                            /*if (bandChk == true) {
-                                return;
-                            } else {
-                                this.updateInfo();
-                            }*/
-                        }else{
-                            //bandChk = false;
-                        }
-                    }else{
-                        forCnt++;
-                    }
-
-/*                    if(bandChk = true){
-                        console.log(this.approvalList[i].aproBandFrom + ' ~ ' + this.approvalList[i].aproBandTo)
-                        console.log('break!!')
-                        break;
-                    } */
-
-                } //for
-/*
-                console.log('11 :: '+this.approvalList.length)
-                console.log('22 :: '+forCnt)
-                console.log('33 :: '+bandNot)
-                console.log('44 :: '+bandAlr)
-
-                if(this.approvalList.length == forCnt){
-                    if(bandAlr == 0){
-                        this.updateInfo();
-                    }else{
-                        //alert('중복된 승인 대역입니다.')
-                        return;
-                    }
-                }
-*/
-                /*
-                if(this.approvalList.length == forCnt && bandAlr == 0){
-                    this.updateInfo();
-                }else{
-                    alert('중복된 승인 대역입니다.')
-                    return;
-                }*/
-
-                /*if(bandChk = true){
-                    console.log(this.approvalList[i].aproBandFrom + ' ~ ' + this.approvalList[i].aproBandTo)
-                    console.log('break!!')
-                    return;
-                }*/
-
-            }
-
-        }
-
         //수정
         updateInfo() {
 
@@ -1087,7 +984,7 @@
 
             //시스템 관리자는 인증 안함. 콜센터/가맹점/지점 관리자는 인증(세션값으로 체크)
             //시스템관리자-0001, 현금영수증관리자-0002, 콜센터-0003, 가맹점-0004, 지점-0005
-            if(sessionStorage.role == '0001'){ //시스템 관리자는 인증 안함
+            //if(sessionStorage.role == '0001'){ //시스템 관리자는 인증 안함
 
                 reqData['accountId'] = sessionStorage.accountId; //로그인 ID
 
@@ -1109,11 +1006,11 @@
                     }
                 ).catch();
 
-            }else{ // 그외는 본인인증 필수
+            /*}else{ // 그외는 본인인증 필수
 
                 this.$router.push({ name:'phoneAuth' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
-            }
+            }*/
 
         }
 
@@ -1199,6 +1096,18 @@
                 return;
             }
             let no = this.approvalList[idx].jumCode; //점코드
+            let regNumber = /^[0-9]*$/;
+            if(no == ''){
+                alert('점코드를 입력하세요.');
+                return;
+            }else if(!regNumber.test(no)){
+                alert('점코드는 숫자만 입력가능합니다.');
+                return;
+            }else if(no.length != 10) {
+                alert('점코드는 10자리로 입력하세요.');
+                return;
+            }
+
             let saupmsg = document.getElementById('jumcode_msg'+idx); //중복 확인한 ROW 메시지
 
             let reqData: any = {};
@@ -1233,7 +1142,7 @@
 
         //관리자 ID 변경시 ID중복확인 여부값 초기화
         chkIdCh(idx: number){
-console.log('중복확인할 index :: ' + idx)
+//console.log('중복확인할 index :: ' + idx)
             this.adminList[idx].adminIdYn = '';
 
             let admid_msg = document.getElementById('adminid_msg'+idx); //중복 확인한 ROW 메시지

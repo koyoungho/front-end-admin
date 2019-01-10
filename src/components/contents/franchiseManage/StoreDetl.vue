@@ -115,7 +115,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" disabled="disabled"></td>
+                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -160,7 +160,7 @@
                         <th scope="row">매장 상태</th>
                         <td colspan="5">
                             <!--<input type="text" class="input form_w50" title="지점" v-model="storeStatus" disabled="disabled">-->
-                            <select id="" name="" class="select form_bl" title="BL 정보" v-model="storeStatus">
+                            <select id="storeStatusID" name="" class="select form_bl" title="BL 정보" v-model="storeStatus">
                                 <option value="">선택</option>
                                 <option value="0">승인신청</option>
                                 <option value="1">해지신청</option>
@@ -178,7 +178,7 @@
                     <tr>
                         <th scope="row">BL 정보</th>
                         <td colspan="5">
-                            <select id="blGb" name="" class="select form_bl" title="BL 정보" v-model="blGb">
+                            <select id="blGbID" name="" class="select form_bl" title="BL 정보" v-model="blGb">
                                 <option value="">선택</option>
                                 <option value="0">BL적용</option>
                                 <option value="1">BL해지</option>
@@ -502,12 +502,12 @@
         mounted() {
 
             //시스템관리자(0001), 콜센터관리자(0003)만 표시
-            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+            /*if(sessionStorage.role == '0001'){
 
             }else{
                 let blGb_btn = document.getElementById('blGb');
                 if(blGb_btn!=null){ blGb_btn.setAttribute('disabled', 'disabled') }
-            }
+            }*/
 
 
 
@@ -567,11 +567,17 @@
                         this.storeStatus = result.storSts; //매장 상태 storStsNm
                         this.regiDate = result.regDate; //매장 등록일
                         this.canDate = result.updDate; //매장 수정일
-                        this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+                        this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능)
                         this.blGbNm = result.blStatus; //BL상태
                         this.blDate = result.blDate; //BL등록일
-                        //let blGb = document.getElementById('blGbID');
-                        //if(blGb != null){ blGb.setAttribute('disabled', 'disabled'); }
+
+                        if(sessionStorage.role != '0001') { //시스템관리자만 변경 가능
+                            let blGb = document.getElementById('blGbID');
+                            if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
+
+                            let storeSts = document.getElementById('storeStatusID');
+                            if (storeSts != null) { storeSts.setAttribute('disabled', 'disabled'); }
+                        }
 
                         //승인대역 정보
                         console.log(result.approvalBandList.length);
@@ -665,7 +671,7 @@
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
-                    if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
+                    if(this.approvalList[i].inputDisGbn != true && this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
 
                         console.log('승인내역 사용가능 여부 확인!!!!!!!!!!!!!!!!!! ');
                         console.log('승인내역 건수 :: '+this.approvalList.length);
@@ -760,7 +766,7 @@
 
             if(this.approvalList.length > 0){
                 for(let j=0; j<this.approvalList.length; j++){
-                    if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '') { //회사코드가 있는 경우만 담기
+                    if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '' && this.approvalList[j].inputDisGbn != true) { //회사코드가 있는 경우만 담기
                         aproData = {}; //초기화 안하면 값이 이상하게 들어감
                         aproData['subSaup'] = this.approvalList[j].companyCode; //회사코드
                         aproData['aprvPermFrom'] = this.approvalList[j].aproBandFrom; //승인대역 시작

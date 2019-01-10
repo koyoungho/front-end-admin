@@ -350,6 +350,7 @@
                 }
                 , (error) => {
                     //console.log(error)
+                    alert('매장 일괄 등록에 실패하였습니다.\n엑셀파일을 확인하세요.');
                 }
             ).catch();
 
@@ -466,21 +467,68 @@
         downloadSample(){
 
             //파일 다운로드
+
             axios({
                 url: environment.apiUrl + '/file/sample/store',
                 method: 'GET',
-                responseType: 'blob', // important
+                responseType: 'arraybuffer', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
                 console.log(response);
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', '매장 일괄 등록 양식.xlsx'); //or any other extension
-                document.body.appendChild(link);
-                link.click();
+                let url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+                let make_url = '';
+                if(url.indexOf('http') < 0){ //http가 없으면
+                    let arrUrl = url.split(':');
+                    console.log('IE !!!!!!!!!!!!!!!!!!!!!')
+                    console.log(arrUrl[1])
+                    console.log(arrUrl[1].toLowerCase())
+                    make_url = arrUrl[0] + ':' + window.location.origin + '/' + arrUrl[1].toLowerCase();
+                    url = make_url;
+                }
+                /*
+                let link = document.createElement('a');
+                //link.href = url;
+                link.setAttribute('href', url); //or any other extension
+                link.setAttribute('download', 'sample.xlsx'); //or any other extension
+                //document.body.appendChild(link);
+                link.click();*/
+
+                let link = document.createElement('a')
+                link.href = url
+                link.download = 'event.xlsx'
+                link.click()
+
             });
 
+            /*axios({
+                method: 'GET',
+                url: environment.apiUrl + '/file/sample/store',
+                responseType: 'arraybuffer',
+                data: null
+            }).then(function(response) {
+                let blob = new Blob([response.data], { type: 'application/pdf' })
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+                link.download = 'Report.xlsx'
+                link.click()
+            })*/
+/*
+            axios({
+                url: environment.apiUrl + '/file/sample/store',
+                method: 'GET',
+                responseType: 'blob',
+                headers: {"x-auth-token": sessionStorage.accessToken}
+            }).then(function(response) {
+                console.log('응답값')
+                console.log(response)
+                let blob = environment.apiUrl +new Blob([response.data], { type: response.headers['content-type'] })
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+                link.download = 'event.xlsx'
+                link.click()
+
+            })
+*/
             /*
             CommonBoardService.getListDatas('file/sample/store', null, null).then((response) => {
                     let result: any = response.data;
