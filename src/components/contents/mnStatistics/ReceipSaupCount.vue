@@ -57,7 +57,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date3', title :'거래일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'date3', title :'거래일', id: 'curStandardDate',id2:'', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'selectObject' , title :'구분',id: 'subSaup', name:'subSaup' , value: '' ,  api : '' , option : [{ name : '국세청정산' , value: '0' },{name : '가정산' , value: '1' }]},
                     {type: 'select' , title :'상태',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '임시저장' , value: '0' },{name : '확정대기' , value: '1' },{ name : '수정요청' , value: '0' },{name : '확정' , value: '1' }]},
                 ],

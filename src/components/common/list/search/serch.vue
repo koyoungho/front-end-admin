@@ -410,11 +410,15 @@
 
 <style>
   .mx-calendar-content .cell.actived {
-    background-color: red !important;
+    background-color: #fa0b40 !important;
   }
-  .mx-calendar-content .cell.disabled {
-    cursor: not-allowed;
-    color: white!important;
-    background-color: lightpink!important;
-  }
+  /*.mx-calendar-content .cell.disabled {*/
+    /*cursor: not-allowed;*/
+    /*color: black!important;*/
+    /*background-color: white!important;*/
+  /*}*/
+  /*.mx-calendar-content .cell.inrange {*/
+    /*color: white;*/
+    /*background-color:  #fa7f9e!important;*/
+  /*}*/
 </style>

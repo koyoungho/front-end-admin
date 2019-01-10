@@ -144,7 +144,7 @@
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
                   <td  v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right" >
-                    <span v-bind:style="colColor(indexs)">{{ Number(rows).toLocaleString()}}</span>
+                    <span v-bind:style="colColor(indexs)">{{ minusCheck(Number(rows).toLocaleString(),index)}}</span>
                   </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
@@ -297,6 +297,14 @@
                 this.authButton = true;
             }else{
                 this.authButton = false;
+            }
+        }
+
+        minusCheck(data,index){
+            if(this.listData[index].trgu=='취소'){
+                return '-'+ data
+            }else{
+            return data
             }
         }
 
