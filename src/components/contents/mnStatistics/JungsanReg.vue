@@ -11,25 +11,25 @@
             <div class="search_box type03 page_stats04">
                 <div class="search_inner">
                     <ul class="search_list">
-                        <li style="margin-left: 25px">
-                            <label>정산 기간</label>
+                        <li>
+                            <label>정산 월</label>
                             <span class="form_cal">
-                            <date-picker v-model="searchDate"  :lang="lang1" :type="'month'" :title="test"
-                                         :first-day-of-week="1" range format="YYYY-MM" width="220" confirm ></date-picker>
+                            <date-picker v-model="nowDate"  :lang="lang1" :type="'month'"
+                                         :first-day-of-week="1" format="YYYY-MM" width="200" confirm ></date-picker>
                             </span>
                         </li>
                         <li style="margin-left: 20px">
-                            <label>전월</label>
+                            <label>집계 기준일   (전월)</label>
                             <span class="form_cal">
-                                 <date-picker v-model="preDate"  :lang="lang2" :type="'day'"
-                                              :first-day-of-week="1"  format="YYYY-MM-DD" width="180" confirm ></date-picker>
+                                 <date-picker v-model="preDate"  :lang="lang1" :type="'day'"
+                                              :first-day-of-week="1"  format="YYYY-MM-DD" width="150" confirm ></date-picker>
                             </span>
                         </li>
-                        <li style="margin-left: 20px">
-                            <label>당월</label>
+                        <li style="margin-left: 10px">
+                            <label>(당월)</label>
                             <span class="form_cal">
-                                 <date-picker v-model="curDate"  :lang="lang3" :type="'day'"
-                                              :first-day-of-week="1"  format="YYYY-MM-DD" width="180" confirm ></date-picker>
+                                 <date-picker v-model="curDate"  :lang="lang1" :type="'day'"
+                                              :first-day-of-week="7"  format="YYYY-MM-DD" width="150" confirm ></date-picker>
                             </span>
                             <button type="button" class="btn_m01 bg03" @click="roadData">데이터 수집</button>
                         </li>
@@ -86,7 +86,9 @@
                         <th scope="row" rowspan="5">국세청</th>
                         <th scope="row" rowspan="4">결제건수</th>
                         <th>승인건수</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
+                        <template v-for="data in jungsanData[0]">
+                        <td class="right"><input type="text" class="input form_price" v-model="data[index]" title="금액"></td>
+                        </template>
                     </tr>
                     <tr>
                         <th scope="row">삭제건수</th>
@@ -284,6 +286,8 @@
 <script lang="ts">
 
     import {Component, Vue} from 'vue-property-decorator';
+    import moment from "moment"
+    import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
 
@@ -293,52 +297,46 @@
     })
     export default class JungsanReg extends Vue {
         //서치박스
-        preDate : string = ""; // 현재정산일
-        curDate : string = ""; // 이전정산일
-        searchDate : any = [];
-        serachStandardDate: any ="";
+        preDate : any = "" // 이전정산일
+        curDate : any = ""; // 현재정산일
+        nowDate : any = "";  //정산월
+        jungsanData :any = [];
 
         lang1 : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],
             months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             pickers: ['다음주', '다음달', '이전주', '이전달'],
             placeholder: {
-                date: '선택',
+                date: '집계 기준일',
                 dateRange: '정산기간'
-            }
-        }
-        lang2 : any =  {
-            days: ['일', '월', '화', '수', '목', '금', '토'],
-            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            pickers: ['다음주', '다음달', '이전주', '이전달'],
-            placeholder: {
-                date: '집계 기준일(당월)',
-                dateRange: ''
-            }
-        }
-        lang3 : any =  {
-            days: ['일', '월', '화', '수', '목', '금', '토'],
-            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            pickers: ['다음주', '다음달', '이전주', '이전달'],
-            placeholder: {
-                date: '집계 기준일(전월)',
-                dateRange: ''
             }
         }
 
         created(){
+            this.dateSet()
+
+        }
+
+        dateSet(){
+            this.curDate= moment().startOf('month');
+            this.preDate= moment(this.curDate).subtract(1, 'month')
+            this.nowDate= moment(this.curDate).subtract(1, 'month')
 
         }
 
         roadData(){
-            let loadDatas :any = {}
-
-
-            if(this.serachStandardDate=='cur'){
-                loadDatas = {}
-            }else{
-
+            let loadDatas :any = {
+                curStandardDate : moment(this.curDate).format('YYYYMMDD') ,
+                previewStandardDate : moment(this.preDate).format('YYYYMMDD'),
+                jungsanmonth  : moment(this.nowDate).format('YYYYMM')
             }
+
+            CommonBoardService.getListDatas('statistics/saupjajungsan',moment(this.nowDate).format('YYYYMM'),loadDatas).then(result=>{
+                if(result.status==200){
+                    this.jungsanData = result.data
+                }
+                console.log(this.jungsanData)
+            })
 
         }
 

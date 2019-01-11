@@ -9,7 +9,9 @@
           <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->
+      <template>
       <span class="total">총 <strong>{{totalCount}} </strong>건</span>
+      </template>
     </div>
     <!-- 20181112 수정 추가 -->
     <!-- grid total box -->
