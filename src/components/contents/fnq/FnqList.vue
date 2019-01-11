@@ -179,7 +179,9 @@
 
                     if (result.data.length > 0) {
                         this.listData=result.data;
-                     }
+                     }else{
+                        this.listData=[];
+                    }
 
                     this.totalCount = result.totalRecords;
                     this.startPage= (result.currentPage -1) * result.perPage;
