@@ -93,7 +93,7 @@
 
         listData: any = [];
         searchType: string = '';
-        searchWord: string = '';
+        searchKey: string = '';
         totalCount: any = '';
         startPage: any = '';
 

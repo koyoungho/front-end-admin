@@ -296,6 +296,7 @@
         preDate : string = ""; // 현재정산일
         curDate : string = ""; // 이전정산일
         searchDate : any = [];
+        serachStandardDate: any ="";
 
         lang1 : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],

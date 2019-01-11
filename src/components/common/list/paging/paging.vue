@@ -78,7 +78,6 @@
         //다음페이지
             nextPageClick(){
                 if( this.lastPage < this.totalPages ){
-                    alert(this.nextPage);
                     this.onPaging(this.nextPage)
                 }
         }

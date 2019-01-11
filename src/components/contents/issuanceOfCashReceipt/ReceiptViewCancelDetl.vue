@@ -95,7 +95,9 @@
                                     <th scope="row" colspan="2">사업자등록번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">{{viewRowItem.saupId}}</td>
+                                    <!--<td colspan="2">{{viewRowItem.saupId}}</td>-->
+                                    <td colspan="2">{{viewRowItem.saupId.substring(0,3)+"-"+viewRowItem.saupId.substring(3,5)+"-"+viewRowItem.saupId.substring(5,10)}}</td>
+
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업장전화번호</th>
@@ -269,6 +271,7 @@
     import {CommonBoardService} from '../../../api/common.service';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import ReceipConfirm from '../../contents/issuanceOfCashReceipt/receipConfrim.vue';
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -330,13 +333,13 @@
                             {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff', type:'text', },
                             {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
                             {columName : '발급용도' ,id : 'geoguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '거래구분' ,id : 'trgu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소거래', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
+                            {columName : '거래구분' ,id : 'trgu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
                             {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                         ],
                         totalColum: 8,
-                        apiUrl : 'receipt/'+ this.objectKey.saleDate+'/'+ this.objectKey.perm+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
+                        apiUrl : 'receipt/'+ this.objectKey.saleDate+'/'+ this.objectKey.oriAprv+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
                         onLoadList : true,  // onLoad 로딩 유무
                         mTotal : false , // 합계금액 란 활성화시 리슐트금액넣기
                         mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -406,6 +409,7 @@
         }
 
         aceptTotalCount(){
+
             CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.perm+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
