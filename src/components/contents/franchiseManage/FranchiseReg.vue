@@ -72,7 +72,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
@@ -776,7 +776,7 @@
             let saupmsg = document.getElementById('saupid_msg');
 
             if(no == ''){
-                alert('사업자등록번호를 입력하세요.');
+                if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호를 입력하세요.'; }
                 return;
             }else if(no.length != 10){
                 if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호 길이가 부적합 합니다.'; }
@@ -826,8 +826,25 @@
                 alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
                 return;
             }
+
             let no = this.approvalList[idx].jumCode; //점코드
             let saupmsg = document.getElementById('jumcode_msg'+idx); //중복 확인한 ROW 메시지
+            let regNumber = /^[0-9]*$/;
+            if(no == ''){
+                //alert('점코드를 입력하세요.');
+                if(saupmsg!=null){ saupmsg.innerHTML = "점코드를 입력하세요."; }
+                return;
+            }
+            if(!regNumber.test(no)){
+                alert('점코드는 숫자만 입력가능합니다.');
+                //if(saupmsg!=null){ saupmsg.innerHTML = "점코드는 숫자만 입력가능합니다."; }
+                return;
+            }
+            if(no.length != 10) {
+                alert('점코드는 10자리로 입력하세요.');
+                //if(saupmsg!=null){ saupmsg.innerHTML = "점코드는 10자리로 입력하세요."; }
+                return;
+            }
 
             let reqData: any = {};
             reqData['newJumCode'] = no; //점코드
@@ -1032,6 +1049,13 @@
             /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
         }
 
+        numberChk(val){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(val)){
+                alert('숫자만 입력 가능합니다.');
+                return false;
+            }
+        }
     }
 
 </script>

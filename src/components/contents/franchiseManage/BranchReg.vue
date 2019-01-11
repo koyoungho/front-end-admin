@@ -93,7 +93,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" v-on:keydown="showKeyCode($event)"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
@@ -843,6 +843,18 @@
                 return;
             }
             let no = this.approvalList[idx].jumCode; //점코드
+            let regNumber = /^[0-9]*$/;
+            if(no == ''){
+                alert('점코드를 입력하세요.');
+                return;
+            }else if(!regNumber.test(no)){
+                alert('점코드는 숫자만 입력가능합니다.');
+                return;
+            }else if(no.length != 10) {
+                alert('점코드는 10자리로 입력하세요.');
+                return;
+            }
+
             let saupmsg = document.getElementById('jumcode_msg'+idx); //중복 확인한 ROW 메시지
 
             let reqData: any = {};

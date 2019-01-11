@@ -8,19 +8,33 @@
             <h3>현금영수증 사업자 정산 등록</h3>
 
             <!-- search box -->
-            <div class="search_box type02 page_stats0302">
+            <div class="search_box type03 page_stats04">
                 <div class="search_inner">
                     <ul class="search_list">
-                        <li>
-                            <label>정산 테이터 집계</label>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">전월</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" checked="checked"><label for="aa11">당월</label></span>
+                        <li style="margin-left: 25px">
+                            <label>정산 기간</label>
+                            <span class="form_cal">
+                            <date-picker v-model="searchDate"  :lang="lang1" :type="'month'" :title="test"
+                                         :first-day-of-week="1" range format="YYYY-MM" width="220" confirm ></date-picker>
+                            </span>
                         </li>
-                        <li>
-                            <span class="form_cal"><input type="text" title="날짜 입력" class="input date"><a href="#" id="datepicker-trigger" class="btn_cal">달력</a></span>
+                        <li style="margin-left: 20px">
+                            <label>전월</label>
+                            <span class="form_cal">
+                                 <date-picker v-model="preDate"  :lang="lang2" :type="'day'"
+                                              :first-day-of-week="1"  format="YYYY-MM-DD" width="180" confirm ></date-picker>
+                            </span>
+                        </li>
+                        <li style="margin-left: 20px">
+                            <label>당월</label>
+                            <span class="form_cal">
+                                 <date-picker v-model="curDate"  :lang="lang3" :type="'day'"
+                                              :first-day-of-week="1"  format="YYYY-MM-DD" width="180" confirm ></date-picker>
+                            </span>
+                            <button type="button" class="btn_m01 bg03" @click="roadData">데이터 수집</button>
                         </li>
                     </ul>
-                    <span class="btn_req_area"><button type="button" class="btn_m01 bg03">데이터 수집</button></span>
+
                 </div>
             </div>
             <!-- //search box -->
@@ -73,81 +87,21 @@
                         <th scope="row" rowspan="4">결제건수</th>
                         <th>승인건수</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">삭제건수</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">기타오류</th>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
                     </tr>
                     <tr class="sum01">
                         <th scope="row">합계</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row" colspan="2"><strong>조세지원액</strong></th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
@@ -155,114 +109,30 @@
                         <th scope="row" rowspan="3">KT</th>
                         <th scope="row">일반</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">편의점</th>
                         <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row">소계</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row" rowspan="3">롯데</th>
                         <th scope="row">일반</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">편의점</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum01">
                         <th scope="row" colspan="2">합계</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
 
@@ -271,114 +141,30 @@
                         <th scope="row" rowspan="3">KT</th>
                         <th scope="row">일반</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">편의점</th>
                         <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row">소계</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row" rowspan="3">롯데</th>
                         <th scope="row">일반</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">편의점</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum01">
                         <th scope="row" colspan="2">합계</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
 
@@ -387,114 +173,30 @@
                         <th scope="row" rowspan="3">KT</th>
                         <th scope="row">일반</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">편의점</th>
                         <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row">소계</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row" rowspan="3">롯데</th>
                         <th scope="row">일반</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr>
                         <th scope="row">편의점</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="-" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <tr class="sum01">
                         <th scope="row" colspan="2">합계</th>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
-                        <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                         <td class="right"><input type="text" class="input form_price" value="1,000" title="금액"></td>
                     </tr>
                     <!-- 			<tr>
@@ -590,6 +292,55 @@
         }
     })
     export default class JungsanReg extends Vue {
+        //서치박스
+        preDate : string = ""; // 현재정산일
+        curDate : string = ""; // 이전정산일
+        searchDate : any = [];
+
+        lang1 : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '선택',
+                dateRange: '정산기간'
+            }
+        }
+        lang2 : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '집계 기준일(당월)',
+                dateRange: ''
+            }
+        }
+        lang3 : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '집계 기준일(전월)',
+                dateRange: ''
+            }
+        }
+
+        created(){
+
+        }
+
+        roadData(){
+            let loadDatas :any = {}
+
+
+            if(this.serachStandardDate=='cur'){
+                loadDatas = {}
+            }else{
+
+            }
+
+        }
+
         /**
          * 임시저장
          */

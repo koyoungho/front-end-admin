@@ -41,28 +41,37 @@
                 dataGrid: {
                     columTopHeader : [
                         {level : [
-                                {headerName : '적용기간', value:'', cols : '2' , rows :'1' , level : '1'},
-                                {headerName : '정산내역' ,value:'',  cols : '3' , rows :'1' , level : '1'},
+                                {headerName : '적용기간', value:'', cols : '2' , rows :'2' , level : '1'},
+                                {headerName : '정산내역' ,value:'',  cols : '3' , rows :'2' , level : '1'},
                                 {headerName : 'KT 배분률' ,value:'',  cols : '4' , rows :'1' , level : '1'},
                                 {headerName : 'LDCC 배분률' ,value:'',  cols : '4' , rows :'1' , level : '1'},
-                                {headerName : '등록일' ,value:'',  cols : '1' , rows :'2' , level : '1'},
+                                {headerName : '등록일' ,value:'',  cols : '1' , rows :'3' , level : '1'},
+                            ]},
+                        {level : [
+                                {headerName : '적용기간', value:'', cols : '2' , rows :'0' , level : '1'},
+                                {headerName : '정산내역' ,value:'',  cols : '3' , rows :'0' , level : '1'},
+                                {headerName : '일반' ,value:'',  cols : '2' , rows :'1' , level : '1'},
+                                {headerName : '편의점' ,value:'',  cols : '2' , rows :'1' , level : '1'},
+                                {headerName : '일반' ,value:'',  cols : '2' , rows :'1' , level : '1'},
+                                {headerName : '편의점' ,value:'',  cols : '2' , rows :'1' , level : '1'},
+                                {headerName : '등록일' ,value:'',  cols : '1' , rows :'0' , level : '1'},
                             ]},
                     ],
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '시작일' ,id : 'startDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat : 'YYYY-MM-DD'},
-                        {columName : '종료일' ,id : 'endDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat : 'YYYY-MM-DD'},
-                        {columName : '비온라인' ,id : 'taxOffline',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        {columName : '온라인' ,id : 'taxOnline', type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , } ,
-                        {columName : '자진발급' ,id : 'taxSelf',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : 'KT일반' ,id : 'ktKtNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'KT편의점' ,id : 'ktKtConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'LDCC 일반' ,id : 'ktLdccNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : 'LDCC 편의점' ,id : 'ktLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : 'LDCC 일반' ,id : 'ldccLdccNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'LDCC 편의점' ,id : 'ldccLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'KT   일반' ,id : 'ldccKtNor',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : 'KT  편의점' ,id : 'ldccKtConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : '등록일' ,id : 'regDt',type:'date', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
+                        {columName : '시작일' ,id : 'startDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
+                        {columName : '종료일' ,id : 'endDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  , dateFormat : 'YYYY-MM-DD'},
+                        {columName : '비온라인' ,id : 'taxOffline',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                        {columName : '온라인' ,id : 'taxOnline', type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , } ,
+                        {columName : '자진발급' ,id : 'taxSelf',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                        {columName : 'KT' ,id : 'ktKtNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'LDCC' ,id : 'ktLdccNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : 'KT' ,id : 'ktKtConven',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'LDCC' ,id : 'ktLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : 'LDCC' ,id : 'ldccLdccNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'KT' ,id : 'ldccKtNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : 'LDCC' ,id : 'ldccLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'KT' ,id : 'ldccKtConven',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : '등록일' ,id : 'regDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
 
                     ],
                     totalColum: 10,

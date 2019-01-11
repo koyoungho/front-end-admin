@@ -87,6 +87,11 @@
         //돔생성전 호출자
         created() {
 
+            if(sessionStorage.role != '0001'){
+                alert('시스템관리자만 사용가능합니다.');
+                this.$router.push('/home/main')
+            }
+
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
             console.log(menuList)
