@@ -246,7 +246,8 @@
                 return;
             }
 
-            let dt =  new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+            // let dt =  new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+            let dt =  new Date()
             let sendDate = moment(dt).format('YYYY-MM-DD HH:mm:ss'); //메일 발송일자
 
             let mailMessage : string = ''; //메일 메시지 내용
