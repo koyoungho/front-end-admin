@@ -443,7 +443,7 @@
         }
 
         aceptTotalCount(){
-            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.perm+'/remain','').then((response) => {
+            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
                 this.canBong = response.data.remainBong;
@@ -473,7 +473,7 @@
                 alert('접근할수 없습니다')
                 this.$router.push({name:'receiptViewCancel'});
             }else{
-                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.perm,'').then((response) => {
+                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
                     this.viewRowItem = response.data
                         // 과세확인
                         if(response.data.vat >= 1){
