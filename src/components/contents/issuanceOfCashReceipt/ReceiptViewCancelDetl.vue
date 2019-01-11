@@ -95,7 +95,9 @@
                                     <th scope="row" colspan="2">사업자등록번호</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">{{viewRowItem.saupId}}</td>
+                                    <!--<td colspan="2">{{viewRowItem.saupId}}</td>-->
+                                    <td colspan="2">{{viewRowItem.saupId.substring(0,3)+"-"+viewRowItem.saupId.substring(3,5)+"-"+viewRowItem.saupId.substring(5,10)}}</td>
+
                                 </tr>
                                 <tr>
                                     <th scope="row" colspan="2">사업장전화번호</th>
@@ -132,15 +134,12 @@
             </div>
             <div class="btn_bot type02"> <!-- 20181112 수정 --></div>
         </div>
-
-
         <div class="no_print">
             <!-- btn top -->
-
             <h4>현금영수증 발급 취소</h4>
             <!-- grid box -->
             <div class="btn_top type03">  <!-- 20181112 type03 추가 -->
-                <button type="button"  class="btn_m01 bg04" v-on:click="aceptTotalCount">취소 가능한 전체금액 불러오기</button>
+                <template v-if="!bongsaBlock"><button type="button"  class="btn_m01 bg04" v-on:click="aceptTotalCount">취소 가능한 전체금액 불러오기</button></template>
             </div>
             <div class="grid_box col02">
                 <!-- col -->
@@ -163,11 +162,12 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력">
+                                    <template v-if="bongsaBlock"><input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력" disabled></template>
+                                    <template v-else><input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력"></template>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" v-model="canBong" class="input form_price" title="봉사료 입력">
+                                    <input type="text" v-model="canBong" class="input form_price" title="봉사료 입력" disabled>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -175,7 +175,10 @@
                         </table>
                     </div>
                     <div class="tbl_info_bot">
-                        <span class="chk_box"><input type="checkbox" id="aa01" v-model="ghase"  disabled><label for="aa01">면세 및 간이과세자</label></span>
+                        <template v-if="ghase=='checked'">
+                        <span class="chk_box">면세 및 간이과세자</span>
+                        </template>
+
                     </div>
                     <!-- //tbl list box -->
                 </div>
@@ -269,6 +272,7 @@
     import {CommonBoardService} from '../../../api/common.service';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import ReceipConfirm from '../../contents/issuanceOfCashReceipt/receipConfrim.vue';
+    import moment from 'moment'
 
     @Component({
         components: {
@@ -303,6 +307,7 @@
         onlineYn : string ="";
         onLoadListView : any = false;
         regShow: boolean =false;
+        bongsaBlock :boolean= false;
 
         created(){
             // 메뉴별 권한 확인
@@ -330,13 +335,13 @@
                             {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff', type:'text', },
                             {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
                             {columName : '발급용도' ,id : 'geoguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '거래구분' ,id : 'trgu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
+                            {columName : '거래구분' ,id : 'trgu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
                             {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                         ],
                         totalColum: 8,
-                        apiUrl : 'receipt/'+ this.objectKey.saleDate+'/'+ this.objectKey.perm+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
+                        apiUrl : 'receipt/'+ this.objectKey.saleDate+'/'+ this.objectKey.oriAprv+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
                         onLoadList : true,  // onLoad 로딩 유무
                         mTotal : false , // 합계금액 란 활성화시 리슐트금액넣기
                         mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -364,51 +369,66 @@
         }
 
         resetCash(){
-            if(this.receiptOk ==false){
-                alert('취소 가능한 전체금액을 클릭해주세요')
-            }
-            else{
-                if(this.ghase== "checked") {
-                    if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
-                        this.canAceptTotal = 0;
-                        this.canBong = 0;
-                        alert('취소 가능한 금액을 초과하였습니다')
-                        return;
-                    }else if(Number(this.canBongOrigin) < Number(this.canBong)){
-                        console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
-                        alert('면세 및 간이과세자 입니다')
-                        this.canBong = 0;
-                        return;
-                    }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
-                        console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
-                        alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
-                        return;
-                    }else{
-                    this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong))); // 공급가액 : (합계+봉사료) * 1.1
-                    this.canVat = 0;
+
+                // 전체취소일때
+                if(this.bongsaBlock){
+                    if(this.ghase== "checked") {
+                        this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong))); // 공급가액 : (합계+봉사료) * 1.1
+                        this.canVat = 0;
                     }
-                }else {
-                    if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
-                        this.canAceptTotal = 0;
-                        this.canBong = 0;
-                        alert('취소 가능한 금액을 초과하였습니다')
-                        return;
-                    }else if(Number(this.canBongOrigin) < Number(this.canBong)){
-                        console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
-                        alert('기존봉사료를 초과할수 없습니다')
-                        this.canBong = 0;
-                        return;
-                    }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
-                        console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
-                        alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
-                        return;
-                    }else {
+                    else{
                         this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong)) / 1.1); // 공급가액 : (합계+봉사료) * 1.1
                         this.canVat = Math.round(((Number(this.canAceptTotal) - Number(this.canBong))) - this.canTotal); // 부가세 : 공급가액의 10%
                     }
+                    this.receiptOk = true;
+                } // 부분취소일때
+                else{
+
+                    if(this.receiptOk ==false){
+                        alert('취소 가능한 전체금액을 확인해주세요')
+                        return ;
+                    }else{
+
+                    if(this.ghase== "checked") {
+                        if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
+                            this.canAceptTotal = 0;
+                            this.canBong = 0;
+                            alert('취소 가능한 금액을 초과하였습니다')
+                            return;
+                        }else if(Number(this.canBongOrigin) < Number(this.canBong)){
+                            alert('면세 및 간이과세자 입니다')
+                            this.canBong = 0;
+                            return;
+                        }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
+                            alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                            return;
+                        }else{
+                        this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong))); // 공급가액 : (합계+봉사료) * 1.1
+                        this.canVat = 0;
+                        }
+                    }else {
+                        if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
+                            this.canAceptTotal = 0;
+                            this.canBong = 0;
+                            alert('취소 가능한 금액을 초과하였습니다')
+                            return;
+                        }else if(Number(this.canBongOrigin) < Number(this.canBong)){
+                            console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
+                            alert('기존봉사료를 초과할수 없습니다')
+                            this.canBong = 0;
+                            return;
+                        }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
+                            console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
+                            alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                            return;
+                        }else {
+                            this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong)) / 1.1); // 공급가액 : (합계+봉사료) * 1.1
+                            this.canVat = Math.round(((Number(this.canAceptTotal) - Number(this.canBong))) - this.canTotal); // 부가세 : 공급가액의 10%
+                        }
+                    }
+                    this.receiptOk = true;
+                    }
                 }
-                this.receiptOk = true;
-            }
         }
 
         mounted(){
@@ -423,11 +443,25 @@
         }
 
         aceptTotalCount(){
-            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.perm+'/remain','').then((response) => {
+            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
                 this.canBong = response.data.remainBong;
                 this.canBongOrigin=response.data.remainBong;
+
+                if(response.data.remainBong >= 1){
+                    this.bongsaBlock = true
+                    this.canAceptTotal = response.data.remainTotal
+                    this.canBong = response.data.remainBong
+                }else if(this.canAceptTotal <= 0 ){
+                    this.bongsaBlock = true
+                    this.canBong  =0;
+                    this.canAceptTotal =0;
+                    this.canTotal = 0;
+                    this.canVat =0;
+                }else{
+                    this.bongsaBlock = false
+                }
 
                 this.receiptOk = true;
             }).catch();
@@ -439,14 +473,15 @@
                 alert('접근할수 없습니다')
                 this.$router.push({name:'receiptViewCancel'});
             }else{
-                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.perm,'').then((response) => {
+                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
                     this.viewRowItem = response.data
-
+                        // 과세확인
                         if(response.data.vat >= 1){
                             this.ghase = "";
                         }else{
                             this.ghase = "checked";
                         }
+                        this.aceptTotalCount()
                     this.onLoadListView = true;
                 }).catch();
             }

@@ -26,7 +26,7 @@
                 <div class="search_bbs_box type01">
                     <ul class="search_list">
                         <li>
-                            <input type="text" class="input sch_notice" placeholder="제목+내용" title="검색어 입력" v-model="searchKey" v-on:keyup.enter="searchFaq">
+                            <input type="text" class="input sch_notice" placeholder="제목+내용" title="검색어 입력" v-model="searchWord" v-on:keyup.enter="searchFaq">
                         </li>
                         <li>
                             <span class="btn_area">
@@ -179,7 +179,9 @@
 
                     if (result.data.length > 0) {
                         this.listData=result.data;
-                     }
+                     }else{
+                        this.listData=[];
+                    }
 
                     this.totalCount = result.totalRecords;
                     this.startPage= (result.currentPage -1) * result.perPage;
@@ -234,7 +236,7 @@
          * 매뉴얼 다운로드
           */
         manual(){
-            alert("다운로드");
+            this.$router.push({name:'noticeDetl', params:{seq:'195'}})
         }
 
         /**
@@ -249,7 +251,6 @@
          * @param index
          */
         display(index){
-            // alert(index);
             this.isActive =false;
             this.rownum =999;
 

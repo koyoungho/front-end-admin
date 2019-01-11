@@ -257,7 +257,7 @@
                     // failCount: 7
                     // totalCount: 14
                     if (response.status.toString() == '201') {
-                        alert('현금영수증 일괄등록 되었습니다.')
+                        Vue.swal({text: '현금영수증 일괄등록 되었습니다.'});
 
                         this.saupId = '';
                         this.subSaup = '';
@@ -272,7 +272,7 @@
                         this.uploadPath = '';
 
                     } else {
-                        alert('현금영수증 일괄등록이 실패되었습니다.\n다시 시도 해 주세요.')
+                        Vue.swal({text: '현금영수증 일괄등록이 실패되었습니다. 다시 시도 해 주세요.'});
                     }
                 }
                 , (error) => {
@@ -305,22 +305,22 @@
         excelRegist() { //엑셀파일 등록
 
             if(this.saupId == ''){
-                alert('사업자등록번호를 입력하세요.')
+                Vue.swal({text: '사업자등록번호를 입력하세요.'});
                 return;
             }
             if(this.subSaup == ''){
-                alert('회사코드를 선택하세요.')
+                Vue.swal({text: '회사코드를 선택하세요.'});
                 return;
             }
             if(this.file == null || this.file == ''){
-                alert('파일찾기 버튼을 클릭하여 등록할 파일을 선택하세요.')
+                Vue.swal({text: '파일찾기 버튼을 클릭하여 등록할 파일을 선택하세요.'});
                 return;
             }
             //파일 확장자 확인(xls, xlsx만 등록 가능)
             let fileExt =  this.file.name.split('.');
             if(fileExt[1].includes('xls') || fileExt[1].includes('xlsx')){
             }else{
-                alert('파일 확장자를 확인하세요.\n(xls, xlsx파일만 등록 가능합니다)');
+                Vue.swal({text: '파일 확장자를 확인하세요. (xls, xlsx파일만 등록 가능합니다)'});
                 return;
             }
 

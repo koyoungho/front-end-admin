@@ -127,7 +127,6 @@
          * @param index
          */
         display(index){
-            // alert(index);
             this.isActive =false;
             this.rownum =999;
 

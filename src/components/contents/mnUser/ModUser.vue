@@ -409,7 +409,7 @@
                    this.menuList = arrList;
 
                }else{
-                   alert('에러')
+                   Vue.swal({text: '조회실패'});
                }
             })
         }
@@ -493,34 +493,36 @@
 
 
             if(account.phoneNum == '' || account.phoneNum == null){
-                alert('휴대폰번호를 입력하세요.')
+                Vue.swal({text:'휴대폰번호를 입력하세요.'});
                 return;
             }else if(account.email == '' || account.email == null){
-                alert('이메일 주소를 입력하세요.')
+                Vue.swal({text:'이메일 주소를 입력하세요.'});
                 return;
             }else if(account.role == '' || account.role == null){
-                alert('계정등급을 선택하세요.')
+                Vue.swal({text:'계정등급을 선택하세요.'});
                 return;
             }else if(account.accountStatus == '' || account.accountStatus == null){
-                alert('계정상태를 선택하세요.')
+                Vue.swal({text:'계정상태를 선택하세요.'});
                 return;
             //}else if(account.telNum == '' || account.telNum == null){
             //    alert('전화번호를 입력하세요.')
             //    return;
             }else if(account.zipCode == '' || account.zipCode == null){
-                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
+                Vue.swal({text:'우편번호 버튼을 클릭하여 주소를 선택하세요.'});
                 return;
             }else if(account.addr1 == '' || account.addr1 == null){
-                alert('우편번호 버튼을 클릭하여 주소를 선택하세요.')
+                Vue.swal({text:'우편번호 버튼을 클릭하여 주소를 선택하세요.'});
                 return;
             }else if(account.addr2 == '' || account.addr2 == null){
-                alert('상세주소를 입력하세요.')
+                Vue.swal({text:'상세주소를 입력하세요.'});
                 return;
+            /*}else if(account.accessIpFrom == '' || account.accessIpFrom == null){
+                Vue.swal({text:'접속IP 대역 시작점을 입력하세요.'});
             /*}else if(account.accessIpFrom == '' || account.accessIpFrom == null){
                 alert('접속IP 대역 시작점을 입력하세요.')
                 return;
             }else if(account.accessIpTo == '' || account.accessIpTo == null) {
-                alert('접속IP 대역 끝점을 입력하세요.')
+                Vue.swal({text:'접속IP 대역 끝점을 입력하세요.'});
                 return;
                 */
             }else {
@@ -611,7 +613,7 @@
                         //this.$router.push({name:'mnUserList'})
                         this.$router.push('/home/mnUser');
                     } else {
-                        alert('계정 정보 수정에 실패하였습니다.\n다시 시도하세요.');
+                        Vue.swal({text:'계정 정보 수정에 실패하였습니다. 다시 시도하세요.'});
                         return;
                     }
                 }
@@ -634,7 +636,7 @@
             // })
         }
         validateForm(){
-            alert('중복확인준비중 입니다')
+            Vue.swal({text:'중복확인준비중 입니다'});
             // CommonBoardService.postListDatas('validattion','null',this.model).then(e=>{
             //     // 벨리데이션체크 폼
             // })
@@ -674,7 +676,7 @@
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
-                        alert('비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.');
+                        Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {

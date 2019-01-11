@@ -288,7 +288,7 @@
                   if(fc=='main'){ // 회사코드는 메인삭제가 없음
                   }else{ // 컴퍼니 서브코드
                       if(!this.sDelCode){
-                          alert('코드를 선택해주세요')
+                          Vue.swal({text: '코드를 선택해주세요'});
                           return;
                       }
                       apiAddr = 'company'+'/'+ this.sDelCode;
@@ -297,14 +297,14 @@
             }else{ // 공통코드일떄
                  if(fc=='main'){
                      if(!this.pDelCode){
-                         alert('코드를 선택해주세요')
+                         Vue.swal({text: '코드를 선택해주세요'});
                          return;
                      }
                      apiAddr = 'code/group'+'/'+ this.pDelCode
                      Object = { groupCode : this.pDelCode}
                   }else{ // 컴퍼니 서브코드
                      if(!this.sDelCode){
-                         alert('코드를 선택해주세요')
+                         Vue.swal({text: '코드를 선택해주세요'});
                          return;
                      }
                      apiAddr = 'code'+'/'+ this.sDelCode
@@ -313,7 +313,7 @@
             }
             CommonBoardService.deleteListDatas(apiAddr,null,Object).then(result=>{
                 if(result.status==200){
-                    alert('삭제 되었습니다')
+                    Vue.swal({text: '삭제 되었습니다'});
                     if(this.company){
                     this.callCodeList('company')
                     }else{
@@ -326,7 +326,7 @@
 
                 }
             }).catch(e=>{
-                alert(e.data.message);
+                Vue.swal({text: e.data.message});
             })
         }
 
