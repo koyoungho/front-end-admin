@@ -516,12 +516,13 @@
             }else if(account.addr2 == '' || account.addr2 == null){
                 alert('상세주소를 입력하세요.')
                 return;
-            }else if(account.accessIpFrom == '' || account.accessIpFrom == null){
+            /*}else if(account.accessIpFrom == '' || account.accessIpFrom == null){
                 alert('접속IP 대역 시작점을 입력하세요.')
                 return;
             }else if(account.accessIpTo == '' || account.accessIpTo == null) {
                 alert('접속IP 대역 끝점을 입력하세요.')
                 return;
+                */
             }else {
                 //수정 펑션 들어가는 곳!!!
                 this.updateInfo();

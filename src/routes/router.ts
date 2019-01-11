@@ -39,6 +39,7 @@ import ApprovalBandScopeReg from "../components/contents/franchiseManage/Approva
 import ApprovalBandScopeDetl from "../components/contents/franchiseManage/ApprovalBandScopeDetl.vue" //승인대역범위 상세
 import GajiBox from "../components/contents/franchiseManage/GajiList.vue" //가맹점 리스트 팝업 조회
 import GajijumBox from "../components/contents/franchiseManage/GajijumBox.vue" //가맹점/지점 리스트 팝업 조회
+import CompanyCodePop from "../components/contents/franchiseManage/CompanyCodePop.vue" //회사코드 팝업 조회
 
 //현금영수증 관리
 import CashReceiptIssue from "../components/contents/issuanceOfCashReceipt/CashReceiptIssue.vue" //현금영수증 발급
@@ -134,6 +135,7 @@ export default new Router({
                 {path:'approvalBandScopeList', name:'approvalBandScopeList', component: ApprovalBandScopeList ,meta: {authRequired: true}}, //승인대역범위 리스트
                 {path:'approvalBandScopeReg', name:'approvalBandScopeReg', component: ApprovalBandScopeReg ,meta: {authRequired: true}}, //승인대역범위 등록
                 {path:'approvalBandScopeDetl', name:'approvalBandScopeDetl', component: ApprovalBandScopeDetl ,meta: {authRequired: true}}, //승인대역범위 상세
+                {path:'companyCodePop', name:'companyCodePop', component: CompanyCodePop ,meta: {authRequired: true}}, //회사코드 조회 팝업
 
                 {path:'gajiBox', name:'gajiBox', component: GajiBox ,meta: {authRequired: false}}, //가맹점 리스트 팝업 조회
                 {path:'gajijumBox', name:'gajijumBox', component: GajijumBox ,meta: {authRequired: false}}, //가맹점/지점 리스트 팝업 조회

@@ -325,21 +325,24 @@
         chkJumCode() {
             let regNumber = /^[0-9]*$/;
 
+            let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
+
             if(this.saupId == ''){
                 alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
                 return;
             }else if(this.jumCode == ''){
-                alert('점코드를 입력하세요.');
+                //alert('점코드를 입력하세요.');
+                if(saupmsg!=null){ saupmsg.innerHTML = "점코드를 입력하세요."; }
                 return;
             }else if(!regNumber.test(this.jumCode)){
-                alert('점코드는 숫자만 입력가능합니다.');
+                //alert('점코드는 숫자만 입력가능합니다.');
+                if(saupmsg!=null){ saupmsg.innerHTML = "점코드는 숫자만 입력가능합니다."; }
                 return;
             }else if(this.jumCode.length != 10){
-                alert('점코드는 10자리로 입력하세요.');
+                //alert('점코드는 10자리로 입력하세요.');
+                if(saupmsg!=null){ saupmsg.innerHTML = "점코드는 10자리로 입력하세요."; }
                 return;
             }
-
-            let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
 
             let reqData: any = {};
             reqData['newJumCode'] = this.jumCode; //점코드
