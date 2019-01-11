@@ -19,8 +19,9 @@
                         <ul class="comcode_list">
                             <template v-for="ar in companyCodeList">
                                 <li>
-                                    <span class="chk_box">
+                                    <span class="">
                                         <input type="checkbox"  v-model="checkBoxList" v-bind:value="ar.code"  :id="ar.code" @click="checkData(ar.code)"><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>
+                                        <!--<input type="checkbox"  v-model="ar.favYn"  :checked="ar.favYn=='Y'"  @click="checkData(ar.code,index)">{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span>-->
                                     </span>
                                 </li>
                             </template>
@@ -92,7 +93,13 @@
 
         checkData(data){
             console.log('선택한 회사코드')
-            //console.log(data)
+            /*if(event.currentTarget.checked == true){
+
+            }else{
+
+            }*/
+
+            console.log(data)
             console.log('선택한 회사코드 전체 : ' + this.checkBoxList)
             /*let remove = 'N'
             this.checkBoxList = this.checkBoxList;
