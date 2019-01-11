@@ -369,7 +369,6 @@
         }
 
         resetCash(){
-
                 // 전체취소일때
                 if(this.bongsaBlock){
                     if(this.ghase== "checked") {
@@ -436,7 +435,6 @@
 
 
         iocViewEvent(data){
-            console.log(data)
             this.resultRecrip = data.row;
             this.popOn = true;
             // this.$modal.show(ReceipConfirm)
