@@ -96,7 +96,7 @@
                                 </tr>
                                 <tr>
                                     <!--<td colspan="2">{{viewRowItem.saupId}}</td>-->
-                                    <td colspan="2">{{viewRowItem.saupId.substring(0,3)+"-"+viewRowItem.saupId.substring(3,5)+"-"+viewRowItem.saupId.substring(5,10)}}</td>
+                                    <td colspan="2">{{(viewRowItem.saupId).substring(0,3)+"-"+(viewRowItem.saupId).substring(3,5)+"-"+(viewRowItem.saupId).substring(5,10)}}</td>
 
                                 </tr>
                                 <tr>
@@ -410,7 +410,7 @@
 
         aceptTotalCount(){
 
-            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.perm+'/remain','').then((response) => {
+            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
                 this.canBong = response.data.remainBong;
@@ -426,7 +426,7 @@
                 alert('접근할수 없습니다')
                 this.$router.push({name:'receiptViewCancel'});
             }else{
-                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.perm,'').then((response) => {
+                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
                     this.viewRowItem = response.data
 
                         if(response.data.vat >= 1){
@@ -459,7 +459,7 @@
             }
             else{
                 // saleDate}/{perm}/cancel
-                CommonBoardService.updateListData('receipt', this.objectKey.saleDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
+                CommonBoardService.updateListData('receipt', this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/cancel'  ,data).then((response) => {
                     this.openReceiptPop(response.data);
                 }).catch();
             }
