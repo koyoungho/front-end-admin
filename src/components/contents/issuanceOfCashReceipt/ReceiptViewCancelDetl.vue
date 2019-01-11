@@ -532,7 +532,7 @@
                         })
                     })
                     this.windowResize =true
-                }ㄹ
+                }
             }else{
                 if(this.windowResize==false){
                 }else{
