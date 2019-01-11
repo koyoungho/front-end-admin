@@ -178,10 +178,7 @@
                         </table>
                     </div>
                     <div class="tbl_info_bot">
-                        <template v-if="ghase=='checked'">
-                        <span class="chk_box">면세 및 간이과세자</span>
-                        </template>
-
+                        <span class="chk_box"><input type="checkbox" id="aa01" v-model="ghase"  disabled><label for="aa01">면세 및 간이과세자</label></span>
                     </div>
                     <!-- //tbl list box -->
                 </div>
@@ -447,7 +444,7 @@
 
         aceptTotalCount(){
 
-            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.perm+'/remain','').then((response) => {
+            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
                 this.canBong = response.data.remainBong;

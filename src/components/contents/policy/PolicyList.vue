@@ -59,6 +59,11 @@
             this.objectKey = this.$route.params.objectKey;
             this.hisSeq = this.$route.params.hisSeq;
 
+            if(!this.objectKey ){
+                Vue.swal({text: '접근할수 없습니다'});
+                this.$router.push({name:'policyHistoryList'});
+            }
+
             if (this.hisSeq == null || this.hisSeq == undefined) {
                 this.hisSeq = this.objectKey.hisSeq;// 글번호 시퀀스
             }
