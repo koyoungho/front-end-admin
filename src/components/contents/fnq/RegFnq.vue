@@ -73,7 +73,7 @@
         div_str : string="";
         seq : string ="";
         title : string ="";
-        viewType : string ="";
+        viewType : string ="ALL";
         content : string ="";
         regShow:boolean = false;
         delShow:boolean = false;
@@ -117,7 +117,7 @@
         getFnqDetail() {
 
             if(!this.objectKey){
-                alert('접근할수 없습니다')
+                Vue.swal({ text: '접근할수 없습니다'});
                 this.$router.push({name:'fnqList'});
             }else {
                 this.seq = this.objectKey.seq;
@@ -156,18 +156,21 @@
 
             reqData['title'] = this.title;
             reqData['viewType'] = this.viewType;
-            // reqData['regRole'] = this.regRole;
             reqData['content'] = this.content;
 
             if(this.objectKey != null || this.objectKey !=undefined){ //수정일때
                 // api 데이터 호출
                 CommonBoardService.updateListData('faq', this.seq, reqData).then((response) => {
                         if (response.status.toString() == '200') { //성공
-                            alert("수정되었습니다.");
-                            // 리스트로 이동
-                            this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            Vue.swal({
+                                text: '수정되었습니다'
+                            }).then((result) => {
+                                // 리스트로 이동
+                                this.$router.push({name: 'fnqList'}) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            });
+
                         } else { //메일 전송 실패
-                            console.log('수정실패');
+                            Vue.swal({ text: '수정 실패 되었습니다.'});
                             console.log(response);
                         }
                     }
@@ -180,10 +183,14 @@
             }else{//등록일때
                 CommonBoardService.postListDatas('faq', null, reqData).then((response) => {
                         if (response.status.toString() == '201') { //성공
-                            alert("등록되었습니다.");
-                            console.log(response);
-                            this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                        } else { //메일 전송 실패
+                            Vue.swal({ text: '등록되었습니다',
+                            }).then((result) => {
+                                // 리스트로 이동
+                                this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            });
+
+                        } else {
+                            Vue.swal({ text: '등록 실패 되었습니다.'});
                             console.log(response);
                         }
                     }
@@ -201,10 +208,10 @@
          */
         validationChk(){
             if(this.title == null || this.title==""){
-                alert("제목을 입력하세요");
+                Vue.swal({ text: "제목을 입력하세요 "});
                 return false;
             }else if(this.content ==null || this.content ==""){
-                alert("내용을 입력하세요");
+                Vue.swal({ text: "내용을 입력하세요"});
                 return false;
             }
         }
@@ -214,19 +221,35 @@
           */
         del(){
             if (window.confirm("삭제하시겠습니까?")) {
+                Vue.swal({
+                    text: '삭제하시겠습니까',
+                    showCancelButton: true,
+                    showCloseButton: true,
+                    reverseButtons: true
 
-                CommonBoardService.deleteListDatas('faq', this.seq, null).then((response) => {
-                    if (response.status.toString() == '200') { //성공
-                        alert("삭제되었습니다.");
-                        this.$router.push({ name:'fnqList' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                    }
-                }
-                , (error) => {
+                }).then((result) => {
+
+                    CommonBoardService.deleteListDatas('faq', this.seq, null).then((response) => {
+                        if (response.status.toString() == '200') { //성공
+
+                            if (result.value) {
+                                Vue.swal({
+                                    text: '삭제되었습니다.',
+                                }).then((result) => {
+                                    // 리스트로 이동
+                                    this.$router.push({name: 'fnqList'}) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                                })
+                            }
+                        } else { //
+                            Vue.swal({text: '삭제실패'});
+                            console.log(response);
+                        }
+                    }, (error) => {
                         //this.$Progress.finish();
                         console.log(error);
-                    }
-                ).catch();
-             }
+                    }).catch();
+                 })
+            }
         }
 
     }

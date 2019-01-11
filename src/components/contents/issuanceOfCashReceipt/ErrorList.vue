@@ -11,7 +11,7 @@
 
         <div class="btn_bot type03">
             <button type="button" id="" class="btn_b01 bg02" v-on:click="goCancel">취소</button>
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
+            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" v-show="regShow">임시저장</button>
             <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
         </div>
         </div>
@@ -149,7 +149,7 @@
 
         //제출
         goPresent(){
-            alert('준비중입니다')
+            Vue.swal({text: '준비중입니다'});
         }
 
         //저장

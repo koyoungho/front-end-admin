@@ -30,7 +30,6 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
-    import {format} from 'date-fns';
 
     @Component({
         components: {
@@ -54,6 +53,8 @@
         }
 
         created(){
+
+            // moment(this.ResultViewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD")
             let date=new Date();
             date.setFullYear(date.getFullYear()-3);
             console.log(date);

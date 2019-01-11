@@ -176,7 +176,7 @@
 
         searchSaup() {
             if(this.searchWord ==null){
-                alert('검색내용을 입력해주세요')
+                Vue.swal({text: '검색내용을 입력해주세요'});
                 return;
             }
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.

@@ -102,21 +102,22 @@
                     <tr>
                         <th scope="row">접속IP 대역</th>
                         <td>
-                            <input type="text" class="input form_conip" title="접속IP 대역" disabled="disabled" v-model="account.accessIpStart">
+                            <input type="text" class="input form_conip" title="접속IP 대역" disabled="disabled" v-model="account.accessIpFrom">
                             <span class="period_form">-</span>
-                            <input type="text" class="input form_conip" title="접속IP 대역" disabled="disabled" v-model="account.accessIpEnd">
+                            <input type="text" class="input form_conip" title="접속IP 대역" disabled="disabled" v-model="account.accessIpTo">
                         </td>
                         <th scope="row">최종접속일시</th>
                         <td>
                             <input type="text" class="input form_w100" title="최종접속일시" disabled="disabled" v-model="account.lastConnDt">
                         </td>
                     </tr>
+                    <!--
                     <tr>
                         <th scope="row">전화번호</th>
                         <td colspan="3">
                             <input type="text" class="input form_w50" title="전화번호" v-model="account.newPassword">
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th scope="row">주소</th>
                         <td colspan="3">
@@ -255,11 +256,11 @@
     }
 
     saveInfo(){
-         if(this.account['password'] == ''){
+         if(this.account['password'] == null || this.account['password'] == ''){
              alert('패스워드를 입력해주세요')
              return;
          }
-         if(this.account['passwordConfirm'] == ""){
+         if(this.account['passwordConfirm'] == null || this.account['passwordConfirm'] == ""){
              alert('패스워드 확인을 입력해주세요')
              return;
          }
@@ -268,7 +269,12 @@
             return;
         }
 
-        CommonBoardService.postListDatas('validation','passwd',{checkString : this.account['password'] , checkSum : sessionStorage.accountId}).then(result=>{
+        let reqData : any = {
+                checkString : this.account['password'],
+                checkSum : sessionStorage.accountId
+        };
+
+        CommonBoardService.postListDatas('validation','passwd', reqData).then(result=>{
             if(result.status==200){
                 if(result.data.code=='000')
                 this.saveAction();
@@ -289,8 +295,8 @@
              addr1:this.account['addr1'],
              addr2:this.account['addr2'],
              role:this.account['role'],
-             accessIpFrom: this.account['accessIpEnd'],
-             accessIpTo: this.account['accessIpStart']
+             accessIpFrom: this.account['accessIpTo'],
+             accessIpTo: this.account['accessIpFrom']
          }
         CommonBoardService.putListData('accounts','myself/'+this.account['id'], data).then(result=>{
             if(result.status==200){

@@ -20,7 +20,7 @@
                                 {{listData.title}}
                             </span>
                                 <i class="icon new" v-if="listData.newYn == 'Y'">new</i>
-                            <span class="col_date"><strong class="sub">등록일 : </strong>{{formatDates(listData.regDt)}}</span>
+                            <span class="col_date"><strong class="sub">등록일 : </strong> {{moment(listData.regDt).format("YYYY.MM.DD")}}</span>
                         </dt>
                         <dd class="row_sub">
 							<span class="col_left" v-if="listData.fileYn == 'Y' ">
@@ -103,7 +103,7 @@
         getNoticeDetail(){
             this.seq =  this.$route.params.seq;
             if(!this.objectKey && (this.seq == null ||  this.seq == undefined)){
-                alert('접근할수 없습니다')
+                Vue.swal({text: '접근할수 없습니다'});
                 this.$router.push({name:'noticeList'});
             }else {
                 if(this.objectKey != null || this.objectKey  !=undefined) {
@@ -125,17 +125,6 @@
             }
         }
 
-        /**
-         * 날짜 포맷 변경
-         * @param date
-         */
-        formatDates(date) {
-
-            let date_str = ''+date;
-            let formattedDates = '';
-            formattedDates = moment(date_str.substr(0, 8)).format("YYYY.MM.DD");
-            return formattedDates
-        }
         /**
          * 이동 - 목록
          */
@@ -163,6 +152,7 @@
             }).then((response) => {
                 console.log(response);
                 const url = window.URL.createObjectURL(new Blob([response.data]));
+                console.log('url',url)
                 const link = document.createElement('a');
                 link.href = url;
                 link.setAttribute('download', fileOrigin); //or any other extension

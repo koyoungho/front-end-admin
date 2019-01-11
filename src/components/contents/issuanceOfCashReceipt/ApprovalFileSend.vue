@@ -94,14 +94,14 @@
                 let lowerExt = fileExt[1].toLowerCase();
 
                 if (!lowerExt.includes('txt')) {
-                    alert('txt파일만 등록 가능합니다');
+                    Vue.swal({text: 'txt파일만 등록 가능합니다'});
                     return;
                 }
 
                //파일명 체크
                let check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
                if(check.test(fileNm)){
-                   alert("한글파일명을 사용할 수 없습니다.");
+                   Vue.swal({text: "한글파일명을 사용할 수 없습니다."});
                    return;
                }
 
@@ -110,7 +110,7 @@
                let standardSize = 5 * 1024 * 1024; //5MB
 
                if(fileSize>standardSize){
-                   alert("첨부하실 파일 사이즈는 5MB 이내로 등록 가능합니다.");
+                   Vue.swal({text: "첨부하실 파일 사이즈는 5MB 이내로 등록 가능합니다."});
                    return;
                }
 
@@ -122,7 +122,7 @@
                         // console.log(response);
 
                         if (result=='201') {
-                            alert("파일이 등록 되었습니다.");
+                            Vue.swal({text: "파일이 등록 되었습니다."});
                             this.uploadFileNm ="";
 
                         } else {

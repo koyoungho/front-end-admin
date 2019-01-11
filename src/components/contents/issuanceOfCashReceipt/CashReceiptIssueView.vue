@@ -270,16 +270,16 @@
 
         sendMail() { //메일 발송
             if(this.mailId == ''){
-                alert('이메일 주소를 입력하세요.');
+                Vue.swal({text: '이메일 주소를 입력하세요.'});
                 return;
             }else if(this.mailCompany == ''){
-                alert('이메일 주소를 입력하세요.');
+                Vue.swal({text: '이메일 주소를 입력하세요.'});
                 return;
             }
 
             let mailAddress: string = this.mailId + '@' + this.mailCompany;
             if ( ! this.email_check(mailAddress) ) {
-                alert('입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.');
+                Vue.swal({text: '입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.'});
                 return;
             }
 
@@ -445,9 +445,9 @@
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
-                        alert('현금영수증 메일 발송이 완료되었습니다.');
+                        Vue.swal({text: '현금영수증 메일 발송이 완료되었습니다.'});
                     } else { //메일 전송 실패
-                        alert('현금영수증 메일 발송이 실패되었습니다.');
+                        Vue.swal({text:'현금영수증 메일 발송이 실패되었습니다.'});
                     }
                 }
                 , (error) => {

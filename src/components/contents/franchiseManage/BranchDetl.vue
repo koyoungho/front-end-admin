@@ -98,7 +98,7 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="10" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row">주소</th>

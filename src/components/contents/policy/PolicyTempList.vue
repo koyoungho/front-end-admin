@@ -187,10 +187,10 @@
 
             CommonBoardService.postListDatas('terms/temp' , null, this.reqData).then((response) => {
                 if (response.status.toString() == '201') { //성공
-                    alert("임시저장되었습니다.");
+                    Vue.swal({ text:"임시저장되었습니다."});
                 } else { // 실패
                     console.log(response);
-                    alert("임시저장 실패 하였습니다.");
+                    Vue.swal({ text:"임시저장 실패 하였습니다."});
                 }
             }
             , (error) => {
@@ -210,12 +210,14 @@
 
             CommonBoardService.postListDatas('terms',null, params).then((response) => {
                     if (response.status.toString() == '201') { //성공
-                        alert("전체저장 되었습니다.");
-                        this.toList();//목록으로
+                        Vue.swal({ text:"전체저장 되었습니다."}).then((result) => {
+                            this.toList();//목록으로
+                        });
                     } else { // 실패
                         console.log(response);
-                        alert("전체 저장에 실패 하였습니다.");
-                        this.toList();//목록으로
+                        Vue.swal({ text:"전체 저장에 실패 하였습니다."}).then((result) => {
+                            this.toList();//목록으로
+                        });
                     }
                 }
                 , (error) => {

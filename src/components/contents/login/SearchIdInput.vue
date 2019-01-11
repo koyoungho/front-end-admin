@@ -212,16 +212,17 @@
                     if(result.data.code=='000'){
                         this.startTimer();
                         this.confirmButton = true;
-
+                        alert('인증번호를 발송하였습니다')
                     }
                     else{
                         clearInterval(this.interval)
+                        alert('본인인증정보가 불일치합니다')
                     }
 
                 }).catch(e=>{
                 alert('본인인증정보가 불일치합니다')
             })
-            // alert('인증번호를 발송하였습니다')
+
         }
 
         optCallConfirm(){
