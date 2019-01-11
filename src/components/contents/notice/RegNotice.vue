@@ -365,7 +365,7 @@
                         this.uploadFileNames.push(addFile);
 
                     } else {
-                        Vue.swal({text:'파일 등록 실패');
+                        Vue.swal({text:'파일 등록 실패'});
                     }
                 }
                 , (error) => {
