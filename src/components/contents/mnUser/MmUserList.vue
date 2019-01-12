@@ -9,7 +9,8 @@
 
             <!-- btn top -->
             <div class="btn_top" v-if="regbtnShow">
-                <button type="button" class="btn_m01 bg02" v-on:click="regUser">계정 등록</button>
+                <button type="button" class="btn_m01 bg02" v-on:click="regStoreUser">사용자 계정 등록</button>
+                <button type="button" class="btn_m01 bg02" v-on:click="regUser">관리자 계정 등록</button>
             </div>
 
             <!-- search box -->
@@ -184,16 +185,23 @@
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(data){
+            console.log('클릭 데이터 표시')
             console.log(data)
             if(data.key=='id'){ //ID 클릭시
 
-                if(sessionStorage.role == '0001'){ //시스템관리자
-                    this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                }else if(sessionStorage.role == '0003'){ //콜센터는 인증화면
-                    //OTP인증 화면으로 이동
-                    this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                    //this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                }
+                /*if(data.row.role == '0006'){ // 매장 사용자
+
+                }else{ // 관리자*/
+
+                    if(sessionStorage.role == '0001'){ //시스템관리자
+                        this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    }else if(sessionStorage.role == '0003'){ //콜센터는 인증화면
+                        //OTP인증 화면으로 이동
+                        this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        //this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    }
+
+                //}
 
             }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
 
@@ -231,6 +239,14 @@
         // }
         updated(){
         }
+
+        /**
+         * 계정등록
+         */
+        regStoreUser(){
+            this.$router.push({name:'regStoreUser'});
+        }
+
         /**
          * 계정등록
          */

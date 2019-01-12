@@ -65,7 +65,7 @@
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
                                 <option value="1">법인사업자</option>
-                                <!--<option value="">선택</option>
+                                <!--<option value="">선택</option>listSend
                                 <template v-for="datas in saupGbnList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>-->
@@ -267,7 +267,7 @@
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
 
-            <CompanyCodePop v-if="companyCodeYn" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
         </div>
         <!-- //content -->
@@ -294,6 +294,7 @@
 
         companyCodeYn:boolean =false; //회사코드 팝업 구분
         loadCodeList : any = [];
+        companyCodeArr : any = ['001','003','006']
 
         soluId: any = ''; //현금영수증 사업자
 
@@ -411,7 +412,7 @@
             this.companyCodeYn = true;
 
         }
-        getCodeList(data){ // 정산설정한데이터 받는다
+        getCodeList(data){ // 회사코드 선택 데이터 받는다
             console.log('받은 회사코드')
             console.log(data)
             console.log('받은 회사코드 수 :: ' +data.length);

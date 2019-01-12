@@ -72,6 +72,8 @@ import MnUserList from "../components/contents/mnUser/MmUserList.vue"//계정관
 import RegUser from "../components/contents/mnUser/RegUser.vue"//계정등록
 import ModUser from "../components/contents/mnUser/ModUser.vue"//계정수정
 import PreviewBizLicense from "../components/contents/mnUser/previewBizLicense.vue"//사업자등록증 미리보기
+import RegStoreUser from "../components/contents/mnUser/RegStoreUser.vue"//사용자 계정등록
+import ModStoreUser from "../components/contents/mnUser/ModStoreUser.vue"//사용자 계정수정
 
 import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
@@ -195,6 +197,9 @@ export default new Router({
                 {path:'regUser',component: RegUser, name:'regUser' ,meta: {authRequired: true}}, //계정 등록
                 {path:'modUser',component: ModUser, name:'modUser' ,meta: {authRequired: true}}, //계정수정
                 {path:'previewBizLicense',component: PreviewBizLicense, name:'previewBizLicense' ,meta: {authRequired: true}}, //사업자 등록증 미리보기
+                {path:'regStoreUser',component: RegStoreUser, name:'regStoreUser' ,meta: {authRequired: true}}, //사용자 계정 등록
+                {path:'modStoreUser',component: ModStoreUser, name:'modStoreUser' ,meta: {authRequired: true}}, //사용자 계정수정
+
                 //시스템관리>메뉴 권한 관리
                 {path:'mnMenu',component: MnMenuList, name:'mnMenuList' ,meta: {authRequired: true}}, //
                 {path:'regMenu',component: RegMenu, name:'regMenu' ,meta: {authRequired: true}}, //

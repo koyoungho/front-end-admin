@@ -91,8 +91,8 @@
             }
 
             if(sessionStorage.role == '0003') { //현금영수증 사업자
-                this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
-                this.soluDis = true;
+                //this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
+                //this.soluDis = true;
             }
 
         }

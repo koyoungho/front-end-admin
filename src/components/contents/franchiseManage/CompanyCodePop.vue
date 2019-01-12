@@ -20,7 +20,7 @@
                             <template v-for="ar in companyCodeList">
                                 <li>
                                     <span class="">
-                                        <input type="checkbox"  v-model="checkBoxList" v-bind:value="ar.code"  :id="ar.code" @click="checkData(ar.code)"><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>
+                                        <input type="checkbox"  v-model="checkBoxList" :value="ar.code" :id="ar.code" @change="checkData(ar.code)" v-bind:checked=true><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>
                                         <!--<input type="checkbox"  v-model="ar.favYn"  :checked="ar.favYn=='Y'"  @click="checkData(ar.code,index)">{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span>-->
                                     </span>
                                 </li>
@@ -47,7 +47,7 @@
 
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Prop} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
 
     @Component({
@@ -57,6 +57,8 @@
         }
     })
     export default class CompanyCodePop extends Vue {
+        @Prop() companyCodeVal  !: string;
+
         companyCodeList : any = [];
         checkBoxList : any = [];
 
@@ -72,6 +74,9 @@
 
         created(){
             this.codeList()
+
+            console.log('회사코드 받은 값')
+            console.log(this.companyCodeVal)
         }
 
         mounted(){
@@ -79,14 +84,31 @@
         }
 
         codeList(){
+            console.log('리스트 조회 전')
+            console.log(this.companyCodeVal.toString())
+            let str : string = '001'
+            console.log('111 : '+str.indexOf(this.companyCodeVal))
+            console.log('222 : '+this.companyCodeVal.indexOf(str))
+
             CommonBoardService.getListDatas('company',null,null).then(response=>{
                 if(response.status==200){
-                    this.companyCodeList = response.data
-                    /*response.data.filter(data=>{
-                        if(data.favYn=='Y'){
-                            this.checkBoxList.push(data.code)
+                    //this.companyCodeList = response.data
+                    let rowData : any = {};
+                    response.data.filter(data=>{
+                        rowData = {};
+
+                        rowData['code'] = data.code;
+                        rowData['name'] = data.name;
+
+                        if(this.companyCodeVal.indexOf(data.code) > -1){
+                            console.log(data.code)
+                            //console.log(data.code.indexOf(this.companyCodeVal))
+                            //this.checkBoxList.push(data.code)
+                            //this.companyCodeList
+                            rowData['checkGbn'] = true;
                         }
-                    })*/
+                        this.companyCodeList.push(rowData)
+                    })
                 }
             })
         }
