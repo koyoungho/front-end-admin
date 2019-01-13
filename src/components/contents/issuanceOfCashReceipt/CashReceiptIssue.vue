@@ -160,7 +160,7 @@
             </div>
             <!-- tbl info bot -->
             <div class="tbl_info_bot">
-                <span class="chk_box"><input type="checkbox" id="aa01" v-model="noTax"  :checked="noTax"  v-on:click="noTaxGbn"><label for="aa01">면세 및 간이과세자</label></span>
+                <span class="chk_box"><input type="checkbox" id="aa01" v-model="noTax"  v-on:click="noTaxGbn"><label for="aa01">면세 및 간이과세자</label></span>
             </div>
 
             <!-- btn bot -->
