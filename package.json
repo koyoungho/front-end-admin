@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --proxy-config proxy.config.json --port 8081  ",
-    "build": "vue-cli-service build NODE_ENV=production node --max_old_space_size=6144 --optimize_for_size --stack_size=6144"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "auth0-js": "^9.0.0-beta.5",

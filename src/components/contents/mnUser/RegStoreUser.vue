@@ -29,11 +29,8 @@
                         <td class="con_msg01">
                             <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId" v-model="saupId" v-on:keyup="saupIdChk" v-on:keypress="numberChk($event)"  maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
-                            <button type="button" class="btn_s01 bg04" id="btnRegConfirm" v-on:click="chkSaupNo(saupId)">등록확인</button>
+                            <button type="button" class="btn_s01 bg04" id="btnRegConfirm" v-on:click="saupInfo(saupId)">등록확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
-                            <!--<p class="info_msg form">
-                                <span class="chk_box"><input type="checkbox" id="aa01" v-model="alrSaupId"><label for="aa01"><em class="fc_pt01">이미 등록된 사업자 번호입니다.<br>기 등록된 사업자로 가맹점을 등록하시겠습니까?</em></label></span>
-                            </p>-->
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
                         <td class="vtop"><input type="text" class="input form_w100" title="사업장명 입력" v-model="storeNm"></td>
@@ -58,7 +55,7 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row"><template v-if="saupType=='1'">법인등록번호</template></th>
+                        <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
                         <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="10" v-on:keypress="numberChk($event)"></td>
                     </tr>
                     <tr>
@@ -80,8 +77,8 @@
                     </tr>
                     <tr id="companyViewChk1">
                         <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td colspan="3">
-                            <select id="" name="" class="select form_w50" title="업종 선택" v-model="upjongCode">
+                        <td colspan="1">
+                            <select id="" name="" class="select form_w100" title="업종 선택" v-model="upjongCode">
                                 <option value="">선택</option>
                                 <template v-for="datas in upjongCodeList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -89,11 +86,9 @@
                             </select>
                             <input type="hidden" v-model="upjongCodeNm">
                         </td>
-                    </tr>
-                    <tr id="companyViewChk">
                         <th scope="row" class="com_code codenone">회사코드<em class="form_req">*</em></th>
-                        <td class="com_code codenone" colspan="3">
-                            <select id="" name="" class="select form_w50" title="업종구분 상세" v-model="companyCode">
+                        <td class="com_code codenone" colspan="">
+                            <select id="" name="" class="select form_w100" title="회사코드 상세" v-model="companyCode">
                                 <option value="">선택</option>
                                 <template v-for="datas in subsaupList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
@@ -101,7 +96,7 @@
                             </select>
                         </td>
                     </tr>
-                    <tr> <!-- 2018-11-06 수정 -->
+                    <!--<tr>
                         <th scope="row" class="sub_ind02">사업자등록증사본<em class="form_req">*</em></th>
                         <td colspan="3" class="con_ind02">
                             <div class="form_row upload">
@@ -114,20 +109,17 @@
                                     </label>
                                 </div>
                                 <p class="form_info">
-                                    <span class="send_text">(* 사업자등록증 사본 이미지 는  jpg.png.tiff.pdf 파일 형식으로 업로드 해주세요.)</span> <!-- 20181210 수정 -->
+                                    <span class="send_text">(* 사업자등록증 사본 이미지 는  jpg.png.tiff.pdf 파일 형식으로 업로드 해주세요.)</span>
                                 </p>
-
                             </div>
                             <div class="form_row send">
                                 <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="fileUploadGbn"><label for="aa12">팩스 전송</label></span>
-                                <p class="form_info">: 가입 신청 후 2일 이내에  02-2074-6089 으로 팩스를 전송해 주시기 바랍니다. <br> <!-- 20181112 수정 -->
-                                    <span class="send_text">(* 팩스 전송 후 온라인 가맹점 가입 승인 까지는 영업 일 기준 3~4일의 시간이 소요 될 수 있습니다.)</span> <!-- 20181112 수정 -->
+                                <p class="form_info">: 가입 신청 후 2일 이내에  02-2074-6089 으로 팩스를 전송해 주시기 바랍니다. <br>
+                                    <span class="send_text">(* 팩스 전송 후 온라인 가맹점 가입 승인 까지는 영업 일 기준 3~4일의 시간이 소요 될 수 있습니다.)</span>
                                 </p>
                             </div>
-
-
                         </td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -168,25 +160,16 @@
                             <!--<p class="info_msg">이미 등록된 아이디 입니다.</p>-->
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <th scope="row" class="sub_msg01">비밀번호<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <!--<vue-pwd>-->
-                            <!--<div-->
-                            <!--slot="password-input"-->
-                            <!--slot-scope="props"-->
-                            <!--class="control has-icons-left"-->
-                            <!--&gt;-->
                             <input type="password" class="input form_w100" title="비밀번호 입력" v-model="password" >
-                            <!--<p class="info_msg">이미 등록된 아이디 입니다.</p>-->
-                            <!--</div>-->
-                            <!--</vue-pwd>-->
                         </td>
                         <th scope="row">비밀번호 확인<em class="form_req">*</em></th>
                         <td>
                             <input type="password" class="input form_w100" title="비밀번호 확인 입력" v-model="passwordCon">
                         </td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -268,8 +251,8 @@
         subsaupList: any = [];
         upjongCodeList: any = []; //업종구분
 
-        fileUploadGbn : string = ''; //사업자등록증사본 제출 방법
-        resultFileNm : string = ''; //등록된 파일명
+        //fileUploadGbn : string = ''; //사업자등록증사본 제출 방법
+        //resultFileNm : string = ''; //등록된 파일명
 
         //휴대폰 본인인증에서 받은 값
         reBirthday : string = ''; //생년월일
@@ -501,8 +484,8 @@
                     //console.log(result);
                     if (result != null && result.code == '000') {
                         //휴대폰번호 유효성 체크에 이상이 없으면 가맹점등록
-                        //this.franchiseReg2();
-                        this.franchiseFileReg();
+                        //this.franchiseFileReg();
+                        this.franchiseReg();
                     } else {
                         alert('휴대폰번호로 등록된 가맹점이 존재합니다.');
                     }
@@ -527,8 +510,8 @@
             regData['storeNm'] = this.storeNm; //사업장명
             regData['repNm'] = this.repNm; //대표자명
             regData['repPhonenum'] = this.repPhonenum; //전화번호
-            regData['birthday'] = this.reBirthday; //생년월일
-            regData['gender'] = this.reGender; //성별
+            //regData['birthday'] = this.reBirthday; //생년월일
+            //regData['gender'] = this.reGender; //성별
             regData['saupType'] = this.saupType; //사업자구분
             regData['lawNum'] = this.lawNum; //법인등록번호
             regData['addr1'] = this.addr1; //사업장 주소
@@ -542,23 +525,26 @@
             regData['phoneNum'] = this.phoneNum; //휴대폰번호
             regData['id'] = this.id; //ID
             regData['email'] = this.email; //이메일 주소
-            regData['password'] = this.password; //비밀번호
-            regData['saupFileNm'] = this.resultFileNm; //등록된 파일 명
+            //regData['password'] = this.password; //비밀번호
+            //regData['saupFileNm'] = this.resultFileNm; //등록된 파일 명
 
             // api 데이터 호출
-            CommonBoardService.postListDatas('members', null, regData).then((response) => {
+            CommonBoardService.postListDatas('accounts/storemember', null, regData).then((response) => {
                     let result: any = response.data;
-                    //console.log(response)
+                    console.log(response)
                     if (result != null && result != '') {
                         //console.log('가맹점 등록 성공');
-                        this.sendMail(); //가입완료 메일 발송
-                        this.$router.push({name:"franchiseRegStep3", params:{reqId:result.id, reqSaupId:result.saupId, reqStoreNm:result.storeNm}});
+                        //this.sendMail(); //가입완료 메일 발송
+                        //this.$router.push({name:"franchiseRegStep3", params:{reqId:result.id, reqSaupId:result.saupId, reqStoreNm:result.storeNm}});
+                        this.$router.push('/home/mnUser');
                     } else {
-                        //console.log('가맹점 등록 실패');
+                        Vue.swal({text: '계정 정보 등록에 실패하였습니다. 다시 시도하세요.'});
+                        return;
                     }
                 }
                 , (error) => {
                     //console.log('가맹점 등록 오류');
+                    Vue.swal({text: '계정 정보 등록에 실패하였습니다. 다시 시도하세요.'});
                 }
             ).catch();
         }
@@ -566,15 +552,8 @@
         //사업자등록증 사본 등록
         franchiseFileReg(){
 
-            // if(!this.dataValidation()){
-            //     return;
-            // }
-
-            // if(!this.passwordChk()){ //패스워드 유효성 체크
-            //     return;
-            // }
             //사업자등록증사본 제출을 파일 업로드로 선택하고 첨부파일이 있으면 등록
-            if(this.fileUploadGbn == '1' && this.file != null && this.file != '') {
+            /*if(this.fileUploadGbn == '1' && this.file != null && this.file != '') {
 
                 //파일 확장자 확인(jpg, png, tiff, pdf파밀만 등록 가능)
                 let fileExt =  this.file.name.split('.');
@@ -610,7 +589,7 @@
                 //첨부파일이 없으면
             }else{
                 this.franchiseReg();
-            }
+            }*/
         }
 
         dataValidation() {
@@ -644,7 +623,10 @@
             }else if(this.upjongCode == '') {
                 alert('업종구분을 선택하세요.');
                 return false;
-            }else if((this.upjongCode == '0003' || this.upjongCode == '0002') && this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
+            }else if(this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
+                alert('회사코드를 선택하세요.');
+                return false;
+            /*}else if((this.upjongCode == '0003' || this.upjongCode == '0002') && this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
                 alert('회사코드를 선택하세요.');
                 return false;
             }else if(this.fileUploadGbn == '') {
@@ -652,6 +634,12 @@
                 return false;
             }else if(this.fileUploadGbn == '1' && this.uploadFileNm == ''){ //파일업로드를 선택하고 파일 첨부를 안한경우
                 alert('사업자등록증사본 파일을 첨부 하세요.');
+                return false;*/
+            }else if(this.name == '') {
+                alert('사용자 이름을 입력하세요.');
+                return false;
+            }else if(this.phoneNum == '') {
+                alert('사용자 휴대폰번호를 입력하세요.');
                 return false;
             }else if(this.id == '') {
                 alert('사용자 ID를 입력하세요.');
@@ -675,7 +663,6 @@
                 alert('사용자ID 중복체크를 하세요.');
                 return false;
             }else{
-
                 this.passwordChk(); //패스워드 유효성 체크
                 //return true;
             }
@@ -1062,7 +1049,38 @@
             } else {
                 event.preventDefault();
             }
-
         }
+
+        //사업장 정보 조회
+        saupInfo(saupId){
+            if(saupId == ''){
+                Vue.swal({text: '사업자등록번호를 입력하세요.'});
+                return;
+            }
+
+            CommonBoardService.getListDatas('saupjang',saupId,null).then(result=>{
+                if(result.status==200){
+
+                    console.log('사업장 정보 조회')
+                    console.log(result.data)
+                    //this.saupjang = result.data;
+                    //this.saupIdChkYn = 'Y';
+
+                    this.saupId = result.data.saupId;
+                    this.storeNm = result.data.shopNm;
+                    this.repNm = result.data.chipNm;
+                    this.repPhonenum = result.data.telNum;
+
+
+
+
+
+
+                }else{
+                    Vue.swal({text: '에러'});
+                }
+            })
+        }
+
     }
 </script>

@@ -92,7 +92,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드</th>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
@@ -103,7 +103,7 @@
                                 </template>
                             </select>-->
                         </td>
-                        <th scope="row">업종구분</th>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
                                 <option value="">선택</option>
@@ -242,10 +242,20 @@
                             </tr>
                             <tr>
                                 <th scope="row">접속IP 대역</th>
-                                <td colspan="3">
+                                <td colspan="">
                                     <input type="text" class="input form_conip" title="접속IP 대역" v-model="adm.adminConIp1" maxlength="14">
                                     <span class="period_form">-</span>
                                     <input type="text" class="input form_conip" title="접속IP 대역" v-model="adm.adminConIp2" maxlength="14">
+                                </td>
+                                <th scope="row">회사코드</th>
+                                <td colspan="">
+                                    <select class="select form_comcode" title="회사코드" v-model="adm.adminSubsaup" v-on:change="adminCompanyCodeCh(index)">
+                                        <option value="">선택</option>
+                                        <template v-for="datas in companyCodeList">
+                                            <option v-bind:value=datas.code>{{datas.name}}</option>
+                                        </template>
+                                    </select>
+                                    <input type="text" id="adminSubsaupNm" class="input form_comcode" title="회사코드" v-model="adm.adminSubsaupNm" disabled="disabled">
                                 </td>
                             </tr>
                             </tbody>
@@ -380,7 +390,8 @@
                         adminIdMsg: 'adminid_msg0', //추가되는 row의 메시지 표시부분 id를 다르게 하기위해
                         adminEmail: '', //이메일주소
                         adminConIp1: '', //접속IP대역 시작
-                        adminConIp2: '' //접속IP대역 끝
+                        adminConIp2: '', //접속IP대역 끝
+                        adminSubsaup: '' //회사코드
                     }
                 ]
 
@@ -502,7 +513,7 @@
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
             saupData['addr2'] = this.addr2; //사업장 상세주소
-            saupData['subSaup'] = this.saupSubSaup; //회사코드
+            saupData['subSaup'] = this.loadCodeList; //this.saupSubSaup; //회사코드(배열값)
             saupData['upjong'] = this.saupUpjong; //업종구분
 
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
@@ -551,6 +562,7 @@
                         admData['email'] = this.adminList[k].adminEmail; //이메일
                         admData['accessIpFrom'] = this.adminList[k].adminConIp1; //접속IP 시작
                         admData['accessIpTo'] = this.adminList[k].adminConIp2 //접속IP 끝
+                        admData['subSaup'] = this.adminList[k].adminSubsaup //회사코드
                         addData3.push(admData);
                         //addData3.push(admData);
                     }
@@ -562,7 +574,6 @@
 
             console.log('최종 등록 정보 확인');
             console.log(reqData);
-
 
             // api 데이터 호출(가맹점 등록)
             CommonBoardService.postListDatas('gajum', null, reqData).then((response) => {
@@ -615,7 +626,7 @@
         addAdmin() {
             this.admIdx = this.admIdx + 1;
             let msg_name = 'adminid_msg' + this.admIdx;
-            this.adminList.push({adminNm: "", adminPhonenum: "", adminId:"", adminIdYn:"", adminIdMsg:msg_name , adminEmail:"", adminConIp1:"", adminConIp2:""});
+            this.adminList.push({adminNm: "", adminPhonenum: "", adminId:"", adminIdYn:"", adminIdMsg:msg_name , adminEmail:"", adminConIp1:"", adminConIp2:"", adminSubsaup:''});
             this.admIdx = this.admIdx;
         }
         //관리자 삭제
@@ -663,11 +674,11 @@
             }else if(this.addr2 == '') {
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.saupSubSaup == ''){
-                alert('회사코드를 선택하세요.');
+            }else if(this.saupSubSaupCnt == ''){
+                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
                 return;
             }else if(this.saupUpjong == '') {
-                alert('업종코드를 선택하세요.');
+                alert('업종구분를 선택하세요.');
                 return;
             }
 
@@ -763,6 +774,10 @@
                         }
                         if(this.adminList[i].adminEmail != '' && !this.emailCheck(this.adminList[i].adminEmail)){
                             alert('입력하신 이메일 주소가 올바르지 않습니다.\n이메일 주소를 확인하세요.');
+                            return;
+                        }
+                        if(this.adminList[i].adminSubsaup == undefined || this.adminList[i].adminSubsaup == ''){
+                            alert('회사코드를 입력하세요.');
                             return;
                         }
                     }
@@ -1042,6 +1057,12 @@
         companyCodeCh(idx: number){
             //console.log(idx);
             this.approvalList[idx].companyCode = this.approvalList[idx].companyCodeNm;
+        }
+
+        //사용자 회사코드 select 변경시 코드값 표시
+        adminCompanyCodeCh(idx: number){
+            //console.log(idx);
+            this.adminList[idx].adminSubsaupNm = this.adminList[idx].adminSubsaup;
         }
 
         //승인대역(대역폭, 건수) 선택시 기입력된 값 초기화

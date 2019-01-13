@@ -669,7 +669,7 @@
             let reqData : any = {
                 to : [account.email],
                 title : '현금영수증 비밀번호 초기화 안내 메일입니다.',
-                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://localhost:8081/login#/initPass 에서 비밀번호 초기화 하세요.',
+                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://211.39.150.112:8888 에서 비밀번호 초기화 하세요.',
                 cc : [''],
              };
             // api 데이터 호출

@@ -30,10 +30,10 @@
                         <td>
                             <input type="text" class="input sch_indcode01" v-model="saupId" title="사업자등록번호" readonly>
                             <input type="text" class="input sch_indcode02" v-model="shopNm" title="가맹점명" readonly>
-                            <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+                            <button type="button" id="" class="btn_sch01" @click="popupOpen" v-show="show">검색</button>
                         </td>
                         <th scope="row">거래일자</th>
-                        <td class="con_row01"><strong>{{ymd}}</strong> </td>
+                        <td class="con_row01"><strong>{{moment(nowTime, 'YYYYMMDDHHmmss').format('YYYY.MM.DD')}}</strong> </td>
                     </tr>
 
                     <tr>
@@ -64,7 +64,7 @@
                             <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa12" v-model="cultGb"><label for="aa12">도서/공연</label></span>
                             <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13" v-model="cultGb"><label for="aa13">대중교통</label></span>
                         </td>
-                        <th scope="row">회사코드</th>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="회사코드" v-model="compoanyCode">
                                 <option value="">선택</option>
@@ -160,7 +160,11 @@
             </div>
             <!-- tbl info bot -->
             <div class="tbl_info_bot">
-                <span class="chk_box"><input type="checkbox" id="aa01" v-model="noTax"  v-on:click="noTaxGbn"><label for="aa01">면세 및 간이과세자</label></span>
+                <span class="chk_box" >
+                    <input type="checkbox" id="aa01" v-on:click="noTaxGbn" >
+                    <!--v-model="noTax" -->
+                    <label for="aa01">면세 및 간이과세자</label>
+                </span>
             </div>
 
             <!-- btn bot -->
@@ -178,10 +182,10 @@
 </template>
 
 <script lang="ts">
-    import {format} from 'date-fns';
     import {Component, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
     import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
+    import  moment from 'moment'
     //import {common} from '../../../utill/common';
 
 
@@ -207,15 +211,14 @@
         bong: any = '0'; //봉사료
         supplyAmt: any = '0'; //공급가액
         vat: any = '0'; //부가세
-        //noTaxGbn: any = '';
-        noTax: boolean = false; //면세 및 간이과세
+        //Gbn: any = '';
+        noTax : boolean = false; //면세 및 간이과세
         perm : any = ''; //현금영수증 발급 결과
         saleDate : string = '';
         showModal1 : boolean= false; // 팝업
-        sendYmd : string = ''; // 현재날짜포맷
         regShow:boolean = false;
 
-        ymd: any = '';
+        // ymd: any = '';
 
         //popupData
         shopNm :string = "";
@@ -227,6 +230,11 @@
         confirmList: any = []; //고객신분확인
         geoguList: any = []; //발급용도
         productList: any = []; //상품구분
+
+        role: any = sessionStorage.getItem('role');
+        show : boolean = true;
+        nowTime: any =[];
+
 
         @Watch('positionGb') onChange(){
             if(this.positionGb == '6') { //자진발급이면 0100001234로 자동 입력
@@ -243,10 +251,10 @@
         }
         //면세 및 간이과세자 클릭
         noTaxGbn(){
-            if(this.noTax==true){
-                this.noTax = false;
-            }else{
+            if(this.noTax == false){
                 this.noTax = true;
+            }else{
+                this.noTax = false;
             }
             this.calculateAmt();
         }
@@ -277,6 +285,7 @@
                 this.supplyAmt = amt2; //공급가액
                 this.vat = vat2; //부가세
             }
+            console.log(3,this.noTax  )
         }
 
         bulkIssue() { //대량발송 화면 이동
@@ -409,7 +418,7 @@
 
             let reqData: any = {};
 
-            reqData['ymd'] = this.ymd; //거래일자
+            reqData['ymd'] = this.nowTime; //거래일자
 
             reqData['saupId'] = this.saupId; // 선택한 사업ID
             reqData['soluId'] = this.soluId; // 회사코드 선택
@@ -431,12 +440,11 @@
             // api 데이터 호출
             CommonBoardService.postListDatas(apiUrl, null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(response)
                     if (response.status == 201) { //현금영수증 발급 성공
                         //console.log('현금영수증 발급 성공');
                         this.perm = result.perm;
                         // 현금영수증 발급 완료 화면 이동
-                        this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm , reqDate : this.sendYmd}});
+                        this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm , reqDate : this.nowTime}});
                     } else {
                         Vue.swal({text: '현금영수증 발급에 실패하였습니다.'});
                         //console.log('현금영수증 발급 실패');
@@ -457,13 +465,27 @@
             //this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:'C39044964'}});
         }
         mounted() {
-            //거래일자(현재 일자) 가져오기
-            let d = new Date();
-            this.ymd = d.getFullYear() +'.'+ (d.getMonth() + 1) +'.'+ d.getDate();
-            this.sendYmd =  format(d,'YYYYMMDD')
-
+            if(this.role == '0001' || this.role == '0003' ){
+                this.show =true;
+            }else{
+                this.saupId = sessionStorage.saupId;
+                this.shopNm = sessionStorage.storeNm;
+                this.show =false;
+            }
             this.saupNo = sessionStorage.saupId;
             this.storeNm = sessionStorage.storeNm;
+
+            //거래일자(현재 일자) 가져오기
+            CommonBoardService.getListDatas('time', null, null).then((response) => {
+
+                    this.nowTime = moment(response.data.time,'YYYYMMDDHHmmss').format('YYYYMMDD')
+
+
+                }, (error) => {
+                    //this.$Progress.finish();
+                }
+            ).catch();
+
 
             this.getUpjongSelectList();
             this.getSinbunSelectList();
