@@ -115,12 +115,14 @@
                     <tr>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
+                            <input type="text" class="input form_post" title="우편번호" v-model="saupSubSaupCnt" disabled="disabled">
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                            <!--<select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupSubSaupList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>
-                            </select>
+                            </select>-->
                         </td>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td>
@@ -287,6 +289,8 @@
 
             <GajiBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
 
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+
         </div>
         <!-- //content -->
     </section>
@@ -299,15 +303,20 @@
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import AddressBox from '@/components/common/addressBox/addressBox.vue'
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
+    import CompanyCodePop from '@/components/contents/franchiseManage/CompanyCodePop.vue'
     import {environment} from '../../../utill/environment';
 
     @Component({
         components: {
-            BranchReg, AddressBox, GajiBox
+            BranchReg, AddressBox, GajiBox, CompanyCodePop
         }
     })
     export default class BranchReg extends Vue {
         message: any = '';
+
+        companyCodeYn:boolean =false; //회사코드 팝업 구분
+        loadCodeList : any = [];
+        companyCodeArr : any = ['001','003','006']
 
         soluId: any = ''; //현금영수증 사업자
 
@@ -326,6 +335,7 @@
         addr2: any = ''; //상세주소
         zipCode: any = ''; //우편번호
         saupSubSaup: any = ''; //회사코드
+        saupSubSaupCnt: any = ''; //회사코드 카운트
         saupUpjong: any = ''; //업종코드
 
         //gajumStat: any = ''; //가점상태
@@ -1066,6 +1076,24 @@
             }
             /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
         }
+
+        //회사코드 등록 팝업
+        subSaupPop(){
+            this.companyCodeYn = true;
+
+        }
+        getCodeList(data){ // 회사코드 선택 데이터 받는다
+            console.log('받은 회사코드')
+            console.log(data)
+            console.log('받은 회사코드 수 :: ' +data.length);
+
+            if(data!=null){
+                this.saupSubSaupCnt = data.length;
+            }
+
+            this.loadCodeList = data;
+        }
+
     }
 
 </script>
