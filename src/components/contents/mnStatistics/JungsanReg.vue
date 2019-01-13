@@ -40,10 +40,10 @@
             <!-- //search box -->
 
             <!-- cash title -->
-            <div class="cash_title">2018년 9월 현금영수증 국세청정산</div>
+            <div class="cash_title">{{dateFormat(nowDate)}} 현금영수증 국세청정산</div>
 
-            <div class="data_date01">작성일자 : 2018년 10월 15일</div>
-            <div class="data_date02">(2018년 10월 1일 기준)</div>
+            <div class="data_date01">작성일자 : {{nowDT}}</div>
+            <div class="data_date02">({{dateFormat(curDate)}} 기준)</div>
 
             <!-- tbl scroll x box -->
             <div class="tbl_scroll_x_box">
@@ -62,9 +62,9 @@
                         <th scope="col" rowspan="3">전체합계</th>
                     </tr>
                     <tr class="bg02">
-                        <th scope="col" colspan="4">국세청 기준단가 (<em class="fc_pt01">12.5</em>원)</th>
-                        <th scope="col" colspan="4">국세청 기준단가 (<em class="fc_pt01">11.5</em>원)</th>
-                        <th scope="col" colspan="4">국세청 기준단가 (<em class="fc_pt01">11.5</em>원)</th>
+                        <th scope="col" colspan="4">국세청 기준단가 (<em class="fc_pt01">{{jungsanRate.taxOffline}}</em>원)</th>
+                        <th scope="col" colspan="4">국세청 기준단가 (<em class="fc_pt01">{{jungsanRate.taxOnline}}</em>원)</th>
+                        <th scope="col" colspan="4">국세청 기준단가 (<em class="fc_pt01">{{jungsanRate.taxSelf}}</em>원)</th>
                     </tr>
                     <tr class="bg01">
                         <th scope="col">당월</th>
@@ -87,102 +87,102 @@
                         <th scope="row" rowspan="4">결제건수</th>
                         <th>승인건수</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineCur" @input="inputSetTax(realList['0'].data.offlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineRet" @input="inputSetTax(realList['0'].data.offlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineCancel" @input="inputSetTax(realList['0'].data.offlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineTotal" @input="inputSetTax(realList['0'].data.offlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineCur" @input="inputSetResultCount('0','offlineCur',1)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineRet" @input="inputSetResultCount('0','offlineRet',2)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineCancel" @input="inputSetResultCount('0','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineCur" @input="inputSetTax(realList['0'].data.onlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineRet" @input="inputSetTax(realList['0'].data.onlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineCancel" @input="inputSetTax(realList['0'].data.onlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineTotal" @input="inputSetTax(realList['0'].data.onlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineCur" @input="inputSetResultCount('0','onlineCur',5)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineRet" @input="inputSetResultCount('0','onlineRet',6)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineCancel" @input="inputSetResultCount('0','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfCur" @input="inputSetTax(realList['0'].data.selfCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfRet" @input="inputSetTax(realList['0'].data.selfRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfCancel" @input="inputSetTax(realList['0'].data.selfCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfTotal" @input="inputSetTax(realList['0'].data.selfTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfCur" @input="inputSetResultCount('0','selfCur',9)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfRet" @input="inputSetResultCount('0','selfRet',10)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfCancel" @input="inputSetResultCount('0','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.selfTotal" readonly></td>
                         <!--전체합계-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.total" @input="inputSetTax(realList['0'].data.total)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['0'].data.total" readonly></td>
                     </tr>
                     <tr>
                         <th scope="row">삭제건수</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineCur" @input="inputSetTax(realList['1'].data.offlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineRet" @input="inputSetTax(realList['1'].data.offlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineCancel" @input="inputSetTax(realList['1'].data.offlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineTotal" @input="inputSetTax(realList['1'].data.offlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineCur" @input="inputSetResultCount('1','offlineCur',1)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineRet" @input="inputSetResultCount('1','offlineRet',2)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineCancel" @input="inputSetResultCount('1','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineCur" @input="inputSetTax(realList['1'].data.onlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineRet" @input="inputSetTax(realList['1'].data.onlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineCancel" @input="inputSetTax(realList['1'].data.onlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineTotal" @input="inputSetTax(realList['1'].data.onlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineCur" @input="inputSetResultCount('1','onlineCur',5)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineRet" @input="inputSetResultCount('1','onlineRet',6)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineCancel" @input="inputSetResultCount('1','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfCur" @input="inputSetTax(realList['1'].data.selfCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfRet" @input="inputSetTax(realList['1'].data.selfRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfCancel" @input="inputSetTax(realList['1'].data.selfCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfTotal" @input="inputSetTax(realList['1'].data.selfTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfCur" @input="inputSetResultCount('1','selfCur',9)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfRet" @input="inputSetResultCount('1','selfRet',10)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfCancel" @input="inputSetResultCount('1','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.selfTotal" readonly></td>
                         <!--전체합계-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.total" @input="inputSetTax(realList['1'].data.total)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['1'].data.total" readonly></td>
                     </tr>
                     <tr>
                         <th scope="row">기타오류</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineCur" @input="inputSetTax(realList['2'].data.offlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineRet" @input="inputSetTax(realList['2'].data.offlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineCancel" @input="inputSetTax(realList['2'].data.offlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineTotal" @input="inputSetTax(realList['2'].data.offlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineCur" @input="inputSetResultCount('2','offlineCur',1)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineRet" @input="inputSetResultCount('2','offlineRet',2)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineCancel" @input="inputSetResultCount('2','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineCur" @input="inputSetTax(realList['2'].data.onlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineRet" @input="inputSetTax(realList['2'].data.onlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineCancel" @input="inputSetTax(realList['2'].data.onlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineTotal" @input="inputSetTax(realList['2'].data.onlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineCur" @input="inputSetResultCount('2','onlineCur',5)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineRet" @input="inputSetResultCount('2','onlineRet',6)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineCancel" @input="inputSetResultCount('2','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfCur" @input="inputSetTax(realList['2'].data.selfCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfRet" @input="inputSetTax(realList['2'].data.selfRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfCancel" @input="inputSetTax(realList['2'].data.selfCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfTotal" @input="inputSetTax(realList['2'].data.selfTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfCur" @input="inputSetResultCount('2','selfCur',9)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfRet" @input="inputSetResultCount('2','selfRet',10)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfCancel" @input="inputSetResultCount('2','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.selfTotal" readonly></td>
                         <!--전체합계-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.total" @input="inputSetTax(realList['2'].data.total)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['2'].data.total" readonly></td>
                     </tr>
                     <tr class="sum01">
                         <th scope="row">합계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineCur" @input="inputSetTax(realList['3'].data.offlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineRet" @input="inputSetTax(realList['3'].data.offlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineCancel" @input="inputSetTax(realList['3'].data.offlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineTotal" @input="inputSetTax(realList['3'].data.offlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineCancel" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineCur" @input="inputSetTax(realList['3'].data.onlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineRet" @input="inputSetTax(realList['3'].data.onlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineCancel" @input="inputSetTax(realList['3'].data.onlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineTotal" @input="inputSetTax(realList['3'].data.onlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineCancel" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfCur" @input="inputSetTax(realList['3'].data.selfCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfRet" @input="inputSetTax(realList['3'].data.selfRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfCancel" @input="inputSetTax(realList['3'].data.selfCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfTotal" @input="inputSetTax(realList['3'].data.selfTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfCancel" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.selfTotal" readonly></td>
                         <!--전체합계-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.total" @input="inputSetTax(realList['3'].data.total)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['3'].data.total" readonly></td>
                     </tr>
                     <tr class="sum02">
                         <th scope="row" colspan="2"><strong>조세지원액</strong></th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineCur" @input="inputSetTax(realList['4'].data.offlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineRet" @input="inputSetTax(realList['4'].data.offlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineCancel" @input="inputSetTax(realList['4'].data.offlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineTotal" @input="inputSetTax(realList['4'].data.offlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineCancel" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineCur" @input="inputSetTax(realList['4'].data.onlineCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineRet" @input="inputSetTax(realList['4'].data.onlineRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineCancel" @input="inputSetTax(realList['4'].data.onlineCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineTotal" @input="inputSetTax(realList['4'].data.onlineTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineCancel" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfCur" @input="inputSetTax(realList['4'].data.selfCur)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfRet" @input="inputSetTax(realList['4'].data.selfRet)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfCancel" @input="inputSetTax(realList['4'].data.selfCancel)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfTotal" @input="inputSetTax(realList['4'].data.selfTotal)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfCancel" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.selfTotal" readonly></td>
                         <!--전체합계-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.total" @input="inputSetTax(realList['4'].data.total)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['4'].data.total" readonly></td>
                     </tr>
                     <tr>
                         <th scope="row" rowspan="7">정산건수</th>
@@ -290,19 +290,19 @@
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineCur" @input="inputSetResultCount('10','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineRet" @input="inputSetResultCount('10','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineCancel" @input="inputSetResultCount('10','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineCur" @input="inputSetResultCount('10','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineRet" @input="inputSetResultCount('10','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineCancel" @input="inputSetResultCount('10','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfCur" @input="inputSetResultCount('10','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfRet" @input="inputSetResultCount('10','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfCancel" @input="inputSetResultCount('10','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['10'].data.total" readonly></td>
@@ -310,19 +310,19 @@
                     <tr class="sum01">
                         <th scope="row" colspan="2">합계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineCur" @input="inputSetResultCount('11','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineRet" @input="inputSetResultCount('11','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineCancel" @input="inputSetResultCount('11','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineCur" @input="inputSetResultCount('11','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineRet" @input="inputSetResultCount('11','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineCancel" @input="inputSetResultCount('11','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfCur" @input="inputSetResultCount('11','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfRet" @input="inputSetResultCount('11','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfCancel" @input="inputSetResultCount('11','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['11'].data.total" readonly></td>
@@ -373,19 +373,19 @@
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineCur" @input="inputSetResultCount('14','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineRet" @input="inputSetResultCount('14','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineCancel" @input="inputSetResultCount('14','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineCur" @input="inputSetResultCount('14','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineRet" @input="inputSetResultCount('14','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineCancel" @input="inputSetResultCount('14','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfCur" @input="inputSetResultCount('14','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfRet" @input="inputSetResultCount('14','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfCancel" @input="inputSetResultCount('14','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['14'].data.total" readonly></td>
@@ -434,19 +434,19 @@
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineCur" @input="inputSetResultCount('17','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineRet" @input="inputSetResultCount('17','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineCancel" @input="inputSetResultCount('17','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineCur" @input="inputSetResultCount('17','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineRet" @input="inputSetResultCount('17','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineCancel" @input="inputSetResultCount('17','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfCur" @input="inputSetResultCount('17','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfRet" @input="inputSetResultCount('17','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfCancel" @input="inputSetResultCount('17','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['17'].data.total" readonly></td>
@@ -454,19 +454,19 @@
                     <tr class="sum01">
                         <th scope="row" colspan="2">합계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineCur" @input="inputSetResultCount('18','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineRet" @input="inputSetResultCount('18','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineCancel" @input="inputSetResultCount('18','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineCur" @input="inputSetResultCount('18','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineRet" @input="inputSetResultCount('18','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineCancel" @input="inputSetResultCount('18','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfCur" @input="inputSetResultCount('18','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfRet" @input="inputSetResultCount('18','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfCancel" @input="inputSetResultCount('18','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['18'].data.total" readonly></td>
@@ -517,19 +517,19 @@
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineCur" @input="inputSetResultCount('21','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineRet" @input="inputSetResultCount('21','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineCancel" @input="inputSetResultCount('21','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineCur" @input="inputSetResultCount('21','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineRet" @input="inputSetResultCount('21','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineCancel" @input="inputSetResultCount('21','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfCur" @input="inputSetResultCount('21','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfRet" @input="inputSetResultCount('21','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfCancel" @input="inputSetResultCount('21','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['21'].data.total" readonly></td>
@@ -578,19 +578,19 @@
                     <tr class="sum02">
                         <th scope="row">소계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineCur" @input="inputSetResultCount('24','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineRet" @input="inputSetResultCount('24','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineCancel" @input="inputSetResultCount('24','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineCur" @input="inputSetResultCount('24','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineRet" @input="inputSetResultCount('24','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineCancel" @input="inputSetResultCount('24','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfCur" @input="inputSetResultCount('24','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfRet" @input="inputSetResultCount('24','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfCancel" @input="inputSetResultCount('24','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['24'].data.total" readonly></td>
@@ -598,19 +598,19 @@
                     <tr class="sum01">
                         <th scope="row" colspan="2">합계</th>
                         <!--비온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineCur" @input="inputSetResultCount('25','offlineCur',1)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineRet" @input="inputSetResultCount('25','offlineRet',2)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineCancel" @input="inputSetResultCount('25','offlineCancel',3)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.offlineTotal" readonly></td>
                         <!--온라인-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineCur" @input="inputSetResultCount('25','onlineCur',5)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineRet" @input="inputSetResultCount('25','onlineRet',6)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineCancel" @input="inputSetResultCount('25','onlineCancel',7)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.onlineTotal" readonly></td>
                         <!--자진발급-->
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfCur" @input="inputSetResultCount('25','selfCur',9)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfRet" @input="inputSetResultCount('25','selfRet',10)"></td>
-                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfCancel" @input="inputSetResultCount('25','selfCancel',11)"></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfCur" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfRet" readonly></td>
+                        <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfCancel" readonly></td>
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.selfTotal" readonly></td>
                         <!--전체합계-->
                         <td class="right"><input type="text" class="input form_price"  v-model="realList['25'].data.total" readonly></td>
@@ -682,10 +682,10 @@
             <div class="btn_bot">
                 <button type="button" @click="tempReg" class="btn_b01 bg02">임시저장</button>
                 <span class="form_sch">
-					<select id="" name="" class="select sch_save" title="저장">
-						<option>선택</option>
-						<option>가정산 저장</option>
-						<option>국세청 저장</option>
+					<select  class="select sch_save" title="저장" v-model="sendType">
+						<option value="">선택</option>
+						<option value="TEMP">가정산 저장</option>
+						<option value="TAX">국세청 저장</option>
 					</select>
 				</span>
                 <button type="button" @click="reg" class="btn_b01 bg01">저장</button>
@@ -716,6 +716,10 @@
         nowDate : any = "";  //정산월
         countTotal : any = [];
         jungsanData :any = [];
+        jungsanRate : any = [];
+        taxList : any = "";
+        nowDT :any = "";
+        sendType : string = "";
         realList : any = [
             {id:'0' , data: {}},{id:'1' , data: {}},{id:'2' , data: {}},{id:'3' , data: {}},{id:'4' , data: {}},{id:'5' , data: {}},{id:'6' , data: {}},{id:'7' , data: {}},
             {id:'8' , data: {}},{id:'9' , data: {}},{id:'10' , data: {}},{id:'11' , data: {}},{id:'12' , data: {}},{id:'13' , data: {}},{id:'14' , data: {}},{id:'15' , data: {}},
@@ -736,13 +740,28 @@
 
         created(){
             this.dateSet()
+            this.getRate()
         }
 
         dateSet(){
+            this.nowDT = moment(new Date()).format('YYYY-MM-DD'),
             this.curDate= moment(moment().startOf('month')).subtract(1,'month');
             this.preDate= moment(this.curDate).subtract(1, 'month')
             this.nowDate= moment(this.curDate).subtract(1, 'month')
 
+        }
+
+        getRate(){
+            let date = moment(this.curDate).format('YYYYMMDD')
+            CommonBoardService.getListDatas('statistics/jungsanrate/'+date,'rate',null).then(result=>{
+                 if(result.status==200){
+                     this.jungsanRate = result.data
+                 }
+            })
+        }
+
+        dateFormat(date){
+            return moment(date).format('YYYY-MM-DD')
         }
 
         roadData(){
@@ -755,7 +774,8 @@
             CommonBoardService.getListDatas('statistics/saupjajungsan/data',moment(this.nowDate).format('YYYYMM'),loadDatas).then(result=>{
                 if(result.status==200){
                     this.countTotal  = result.data.summary  // 정산합계
-                    let ObjectTax :any[]  = result.data.tax  // 정산합계
+                    this.taxList  =result.data.tax
+                    let ObjectTax :any[]  = result.data.tax  // 국세청자료
                     let ObjectList :any[]  = result.data.data   //
                     this.realList=[];
                     ObjectTax.filter((e,index)=>{
@@ -771,19 +791,37 @@
 
         }
 
+        colColumData3(colum,data,num){ //조세지원액
+            console.log(colum);
+            console.log(data);
+            console.log(this.jungsanRate.taxOnline)
+            if (data == 1 || data == 2 || data == 3) {
+                this.realList['4'].data[colum]  =  this.realList['3'].data[colum] * this.jungsanRate.taxOffline
+                this.realList['4'].data['offlineTotal'] =  this.nullCheck(Number(this.realList['3'].data['offlineTotal']))* this.jungsanRate.taxOffline
+                this.realList['4'].data['total'] = this.nullCheck(Number(this.realList['4'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['4'].data['onlineTotal']))+this.nullCheck(Number(this.realList['4'].data['selfTotal']))
+            }else if (data == 5 || data == 6 || data == 7) {
+                this.realList['4'].data[colum]  =  this.realList['3'].data[colum] * this.jungsanRate.taxOnline
+                this.realList['4'].data['onlineTotal'] = this.nullCheck(Number(this.realList['3'].data['onlineTotal'])) * this.jungsanRate.taxOnline
+                this.realList['4'].data['total'] = this.nullCheck(Number(this.realList['4'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['4'].data['onlineTotal']))+this.nullCheck(Number(this.realList['4'].data['selfTotal']))
+            }else if (data == 9 || data == 10 || data == 11) {
+                this.realList['4'].data[colum]  =  this.realList['3'].data[colum] * this.jungsanRate.taxSelf
+                this.realList['4'].data['selfTotal'] = this.nullCheck(Number(this.realList['3'].data['selfTotal']))* this.jungsanRate.taxSelf
+                this.realList['4'].data['total'] = this.nullCheck(Number(this.realList['4'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['4'].data['onlineTotal']))+this.nullCheck(Number(this.realList['4'].data['selfTotal']))
+            }
+        }
 
         colColumData2(row,data,num){
             if (data == 1 || data == 2 || data == 3) {
                 this.realList[num].data['offlineTotal'] =
-                    this.nullCheck(Number(this.realList[num].data['offlineCur'])) + this.nullCheck(Number(this.realList[num].data['offlineRet']))+ this.nullCheck(Number(this.realList[num].data['offlineCancel']))
+                    this.nullCheck(Number(this.realList[num].data['offlineCur'])) + this.nullCheck(Number(this.realList[num].data['offlineRet']))- this.nullCheck(Number(this.realList[num].data['offlineCancel']))
                 this.realList[num].data['total'] = this.nullCheck(Number(this.realList[num].data['offlineTotal']))+ this.nullCheck(Number(this.realList[num].data['onlineTotal']))+this.nullCheck(Number(this.realList[num].data['selfTotal']))
             }else if (data == 5 || data == 6 || data == 7) {
                 this.realList[num].data['onlineTotal'] =
-                    this.nullCheck(Number(this.realList[num].data['onlineCur'])) + this.nullCheck(Number(this.realList[num].data['onlineRet']))+ this.nullCheck(Number(this.realList[num].data['onlineCancel']))
+                    this.nullCheck(Number(this.realList[num].data['onlineCur'])) + this.nullCheck(Number(this.realList[num].data['onlineRet']))- this.nullCheck(Number(this.realList[num].data['onlineCancel']))
                 this.realList[num].data['total'] = this.nullCheck(Number(this.realList[num].data['offlineTotal']))+ this.nullCheck(Number(this.realList[num].data['onlineTotal']))+this.nullCheck(Number(this.realList[num].data['selfTotal']))
             }else if (data == 9 || data == 10 || data == 11) {
                 this.realList[num].data['selfTotal'] =
-                    this.nullCheck(Number(this.realList[num].data['selfCur'])) + this.nullCheck(Number(this.realList[num].data['selfRet']))+ this.nullCheck(Number(this.realList[num].data['selfCancel']))
+                    this.nullCheck(Number(this.realList[num].data['selfCur'])) + this.nullCheck(Number(this.realList[num].data['selfRet']))- this.nullCheck(Number(this.realList[num].data['selfCancel']))
                 this.realList[num].data['total'] = this.nullCheck(Number(this.realList[num].data['offlineTotal']))+ this.nullCheck(Number(this.realList[num].data['onlineTotal']))+this.nullCheck(Number(this.realList[num].data['selfTotal']))
             }
         }
@@ -793,7 +831,7 @@
             if (data == 1 || data == 2 || data == 3) {
                 // 콜->합계
                 this.realList[row].data['offlineTotal'] =
-                    this.nullCheck(Number(this.realList[row].data['offlineCur'])) + this.nullCheck(Number(this.realList[row].data['offlineRet']))+ this.nullCheck(Number(this.realList[row].data['offlineCancel']))
+                    this.nullCheck(Number(this.realList[row].data['offlineCur'])) + this.nullCheck(Number(this.realList[row].data['offlineRet']))- this.nullCheck(Number(this.realList[row].data['offlineCancel']))
                 // 콜->합계 로우더한것
                 this.realList[num.toString()].data['offlineTotal'] =  this.nullCheck(Number(this.realList[(num-2).toString()].data['offlineTotal'])) +   this.nullCheck(Number(this.realList[(num-1).toString()].data['offlineTotal']))
                 // 로우 전체 합계
@@ -801,12 +839,12 @@
             }
             else if (data == 5 || data == 6 || data == 7) {
                     this.realList[row].data['onlineTotal'] =
-                        this.nullCheck(Number(this.realList[row].data['onlineCur'])) + this.nullCheck(Number(this.realList[row].data['onlineRet'])) + this.nullCheck(Number(this.realList[row].data['onlineCancel']))
+                        this.nullCheck(Number(this.realList[row].data['onlineCur'])) + this.nullCheck(Number(this.realList[row].data['onlineRet'])) - this.nullCheck(Number(this.realList[row].data['onlineCancel']))
                 this.realList[num.toString()].data['onlineTotal'] =  this.nullCheck(Number(this.realList[(num-2).toString()].data['onlineTotal'])) +   this.nullCheck(Number(this.realList[(num-1).toString()].data['onlineTotal']))
                 this.realList[row].data['total'] = this.nullCheck(Number(this.realList[row].data['offlineTotal']))+ this.nullCheck(Number(this.realList[row].data['onlineTotal']))+this.nullCheck(Number(this.realList[row].data['selfTotal']))
             } else if (data == 9 || data == 10 || data == 11) {
                     this.realList[row].data['selfTotal'] =
-                        this.nullCheck(Number(this.realList[row].data['selfCur'])) + this.nullCheck(Number(this.realList[row].data['selfRet'])) + this.nullCheck(Number(this.realList[row].data['selfCancel']))
+                        this.nullCheck(Number(this.realList[row].data['selfCur'])) + this.nullCheck(Number(this.realList[row].data['selfRet'])) - this.nullCheck(Number(this.realList[row].data['selfCancel']))
                 this.realList[num.toString()].data['selfTotal'] =  this.nullCheck(Number(this.realList[(num-2).toString()].data['selfTotal'])) +   this.nullCheck(Number(this.realList[(num-1).toString()].data['selfTotal']))
                 this.realList[row].data['total'] = this.nullCheck(Number(this.realList[row].data['offlineTotal']))+ this.nullCheck(Number(this.realList[row].data['onlineTotal']))+this.nullCheck(Number(this.realList[row].data['selfTotal']))
             }
@@ -819,7 +857,14 @@
         // 그외 데이터 변경시
         inputSetResultCount(row , data ,col){ //정산건수 데이터변경시
 
-            if(row==5 || row==6){ // 소계 정산
+            if(row==0 || row == 1 || row==2 ){
+                this.realList['3'].data[data] =   this.nullCheck(Number(this.realList['0'].data[data])) - this.nullCheck(Number(this.realList['1'].data[data])) - this.nullCheck(Number(this.realList['2'].data[data]))
+                this.colColumData(row,col,3)  // 콜합계
+                this.realList['3'].data['total'] = this.nullCheck(Number(this.realList['3'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['3'].data['onlineTotal']))+this.nullCheck(Number(this.realList['3'].data['selfTotal']))
+                this.colColumData2(row,col,3)  // 콜별 계산
+                this.colColumData3(data,col,4)  //조세지원액변경
+
+            }else if(row==5 || row==6){ // 소계 정산
                 this.realList['7'].data[data] =   this.nullCheck(Number(this.realList['5'].data[data])) + this.nullCheck(Number(this.realList['6'].data[data]))
                 this.colColumData(row,col,7)  // 콜합계
                 this.realList['7'].data['total'] = this.nullCheck(Number(this.realList['7'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['7'].data['onlineTotal']))+this.nullCheck(Number(this.realList['7'].data['selfTotal']))
@@ -827,6 +872,7 @@
                 this.realList['11'].data[data]=   this.nullCheck(Number(this.realList['7'].data[data])) +  this.nullCheck(Number(this.realList['10'].data[data]))
                 this.realList['11'].data['total']=   this.nullCheck(Number(this.realList['11'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['11'].data['onlineTotal']))+this.nullCheck(Number(this.realList['11'].data['selfTotal']))
                 this.colColumData2(row,col,11)  // 콜합계
+                this.toTalCountResult()
 
             }else if(row==8 || row ==9){
                 this.realList['10'].data[data] =  this.nullCheck(Number(this.realList['8'].data[data])) + this.nullCheck(Number(this.realList['9'].data[data]))
@@ -837,6 +883,7 @@
                 this.realList['11'].data[data]=   this.nullCheck(Number(this.realList['7'].data[data])) +  this.nullCheck(Number(this.realList['10'].data[data]))
                 this.realList['11'].data['total']=   this.nullCheck(Number(this.realList['11'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['11'].data['onlineTotal']))+this.nullCheck(Number(this.realList['11'].data['selfTotal']))
                 this.colColumData2(row,col,11)  // 콜합계의 합계
+                this.toTalCountResult()
             }else if(row==12 || row ==13){
                 this.realList['14'].data[data] =  this.nullCheck(Number(this.realList['12'].data[data])) + this.nullCheck(Number(this.realList['13'].data[data]))
                 this.colColumData(row,col,14)  // 콜합계
@@ -847,6 +894,7 @@
                 this.realList['18'].data[data]=   this.nullCheck(Number(this.realList['14'].data[data])) +  this.nullCheck(Number(this.realList['17'].data[data]))
                 this.realList['18'].data['total']=   this.nullCheck(Number(this.realList['18'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['18'].data['onlineTotal']))+this.nullCheck(Number(this.realList['18'].data['selfTotal']))
                 this.colColumData2(row,col,18)
+                this.toTalCountResult()
 
             }else if(row==15 || row ==16){
                 this.realList['17'].data[data] =  this.nullCheck(Number(this.realList['15'].data[data])) + this.nullCheck(Number(this.realList['16'].data[data]))
@@ -858,6 +906,7 @@
                 this.realList['18'].data[data]=   this.nullCheck(Number(this.realList['14'].data[data])) +  this.nullCheck(Number(this.realList['17'].data[data]))
                 this.realList['18'].data['total']=   this.nullCheck(Number(this.realList['18'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['18'].data['onlineTotal']))+this.nullCheck(Number(this.realList['18'].data['selfTotal']))
                 this.colColumData2(row,col,18)
+                this.toTalCountResult()
             }else if(row==19 || row ==20){
                 this.realList['21'].data[data] =  this.nullCheck(Number(this.realList['19'].data[data])) + this.nullCheck(Number(this.realList['20'].data[data]))
                 this.colColumData(row,col,21)  // 콜합계
@@ -867,7 +916,7 @@
                 this.realList['25'].data[data]=   this.nullCheck(Number(this.realList['21'].data[data])) +  this.nullCheck(Number(this.realList['24'].data[data]))
                 this.realList['25'].data['total']=   this.nullCheck(Number(this.realList['25'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['25'].data['onlineTotal']))+this.nullCheck(Number(this.realList['25'].data['selfTotal']))
                 this.colColumData2(row,col,25)
-
+                this.toTalCountResult()
             }else if(row==22 || row ==23){
                 this.realList['24'].data[data] =  this.nullCheck(Number(this.realList['22'].data[data])) + this.nullCheck(Number(this.realList['23'].data[data]))
                 this.colColumData(row,col,24)  // 콜합계
@@ -877,12 +926,37 @@
                 this.realList['25'].data[data]=   this.nullCheck(Number(this.realList['21'].data[data])) +  this.nullCheck(Number(this.realList['24'].data[data]))
                 this.realList['25'].data['total']=   this.nullCheck(Number(this.realList['25'].data['offlineTotal']))+ this.nullCheck(Number(this.realList['25'].data['onlineTotal']))+this.nullCheck(Number(this.realList['25'].data['selfTotal']))
                 this.colColumData2(row,col,25)
+                this.toTalCountResult()
             }
 
         }
+        toTalCountResult(){
+            //당월정산
+            this.countTotal.receiptCount = this.nullCheck(Number(this.realList['10'].data['offlineCur'])) + this.nullCheck(Number(this.realList['10'].data['offlineRet'])) +this.nullCheck(Number(this.realList['10'].data['onlineCur'])) + this.nullCheck(Number(this.realList['10'].data['onlineRet']))
+                                            +this.nullCheck(Number(this.realList['10'].data['selfCur'])) + this.nullCheck(Number(this.realList['10'].data['selfRet']))
+            this.countTotal.receiptAmt =  this.nullCheck(Number(this.realList['24'].data['offlineCur'])) + this.nullCheck(Number(this.realList['24'].data['offlineRet'])) +this.nullCheck(Number(this.realList['24'].data['onlineCur'])) + this.nullCheck(Number(this.realList['24'].data['onlineRet']))
+                                             +this.nullCheck(Number(this.realList['24'].data['selfCur'])) + this.nullCheck(Number(this.realList['24'].data['selfRet']))
+            this.countTotal.receiptVat =    (this.nullCheck(Number(this.countTotal.receiptAmt)) / 10).toFixed(0)
+            this.countTotal.receiptTotal =  this.nullCheck(Number(this.countTotal.receiptAmt)) + this.nullCheck(Number(this.countTotal.receiptVat))
+            //취소정산
+            this.countTotal.receiptCancelCount = this.nullCheck(Number(this.realList['10'].data['offlineCancel'])) + this.nullCheck(Number(this.realList['10'].data['onlineCancel'])) +this.nullCheck(Number(this.realList['10'].data['selfCancel']))
+            this.countTotal.receiptCancelAmt =this.nullCheck(Number(this.realList['24'].data['offlineCancel'])) + this.nullCheck(Number(this.realList['24'].data['onlineCancel'])) +this.nullCheck(Number(this.realList['24'].data['selfCancel']))
+            this.countTotal.receiptCancelVat =  (this.nullCheck(Number(this.countTotal.receiptCancelAmt)) /10).toFixed(0)
+            this.countTotal.receiptCancelTotal=  this.nullCheck(Number(this.countTotal.receiptCancelAmt))+this.nullCheck(Number(this.countTotal.receiptCancelVat))
+            //소급정산
+            this.countTotal.receiptRetCount = this.countTotal.receiptRetCount
+            this.countTotal.receiptRetAmt = this.countTotal.receiptRetAmt
+            this.countTotal.receiptRetVat =  (this.nullCheck(Number(this.countTotal.receiptRetAmt)) / 10).toFixed(0)
+            this.countTotal.receiptRetTotal=  this.nullCheck(Number(this.countTotal.receiptRetVat))+this.nullCheck(Number(this.countTotal.receiptRetTotal))
+            //최종정산
+            this.countTotal.finalCount = this.nullCheck(Number(this.countTotal.receiptCount)) -  this.nullCheck(Number(this.countTotal.receiptCancelCount)) - this.nullCheck(Number(this.countTotal.receiptRetCount))
+            this.countTotal.finalAmt = this.nullCheck(Number(this.countTotal.receiptAmt)) - this.nullCheck(Number(this.countTotal.receiptCancelAmt))-this.nullCheck(Number(this.countTotal.receiptRetAmt))
+            this.countTotal.finalVat = (this.nullCheck(Number(this.countTotal.finalAmt)) / 10).toFixed(0)
+            this.countTotal.finalTotal = this.nullCheck(Number(this.countTotal.finalVat))+this.nullCheck(Number(this.countTotal.finalTotal))
+        }
 
         nullCheck(data){
-            if(data > 0 ){
+            if(data){
                 return data
             }else{
                 return 0
@@ -894,14 +968,71 @@
          * 임시저장
          */
         tempReg(){
-            this.$router.push({path:'receipSaupCount' });
+            if(this.sendType==''){
+                alert('저장 타입을 선택해주세요')
+                return ;
+            }else{
+                this.countTotal.jungsanType=this.sendType
+            }
+
+            let listReal : any = [];
+            this.realList.filter((e,index)=>{
+                if(index >4){
+                    listReal.push(e.data)
+                }
+            })
+
+            let object = {
+                curStandardDate : moment(this.curDate).format('YYYYMMDD'),
+                jungSanMonth : moment(this.nowDate).format('YYYYMM'),
+                previewStandardDate :  moment(this.preDate).format('YYYYMMDD'),
+                saupJaJungSanSummaryAddDto :  this.countTotal,
+                saupJaJungSanlList: listReal,
+                saupjaJungSanTaxList : this.taxList
+            }
+
+            CommonBoardService.postListDatas('statistics/saupjajungsan','temp',object).then(result=>{
+                if(result.status==201){
+                    alert('전송완료')
+                    // this.$router.push({path:'receipSaupCount' });
+                }
+            })
         }
 
         /**
          * 저장
          */
         reg(){
-            this.$router.push({path:'receipSaupCount' });
+            if(this.sendType==''){
+                alert('저장 타입을 선택해주세요')
+                return ;
+            }else{
+                this.countTotal.jungsanType=this.sendType
+            }
+
+            let listReal : any = [];
+            this.realList.filter((e,index)=>{
+                if(index >4){
+                listReal.push(e.data)
+                }
+            })
+
+            let object = {
+                curStandardDate : moment(this.curDate).format('YYYYMMDD'),
+                jungSanMonth : moment(this.nowDate).format('YYYYMM'),
+                previewStandardDate :  moment(this.preDate).format('YYYYMMDD'),
+                saupJaJungSanSummaryAddDto :  this.countTotal,
+                saupJaJungSanlList: listReal,
+                saupjaJungSanTaxList : this.taxList
+            }
+
+            CommonBoardService.postListDatas('statistics/saupjajungsan','ready',object).then(result=>{
+                if(result.status==201){
+                    alert('전송완료')
+                    // this.$router.push({path:'receipSaupCount' });
+                }
+            })
+
         }
 
     }

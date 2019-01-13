@@ -174,13 +174,17 @@
          */
 
             saveData(){
+            this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
+            this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
+            this.jungsanRule.regDt = moment(new Date()).format('YYYYMMDD') //
+
                 CommonBoardService.postListDatas('statistics' ,'jungsanrate', this.jungsanRule).then(result=>{
                     if(result.status ==200 || result.status==201){
                         Vue.swal({
                             text: '등록되었습니다',
                         }).then((result) => {
                             // 리스트로 이동
-                            this.$router.push({ name:'jungsanRuleSearch' }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            this.$router.push({ name:'jungsanRuleSearch' })
                         });
 
                     } else {

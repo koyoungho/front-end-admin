@@ -52,14 +52,14 @@
 
                     ],
                     totalColum: 10,
-                    apiUrl : 'receipt',
+                    apiUrl : 'ststistics/saupjajungsan',
                     onLoadList : true,  // onLoad 로딩 유무
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date3', title :'거래일', id: 'curStandardDate',id2:'', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                    {type: 'selectObject' , title :'구분',id: 'subSaup', name:'subSaup' , value: '' ,  api : '' , option : [{ name : '국세청정산' , value: '0' },{name : '가정산' , value: '1' }]},
-                    {type: 'select' , title :'상태',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '임시저장' , value: '0' },{name : '확정대기' , value: '1' },{ name : '수정요청' , value: '0' },{name : '확정' , value: '1' }]},
+                    {type: 'date3', title :'거래일', id: 'searchStartDate',id2:'searchEndDate', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'select' , title :'구분',id: 'gubun', name:'subSaup' , value: '' ,  api : '' , option : [{ name : '국세청정산' , value: 'TAX' },{name : '가정산' , value: 'TEMP' }]},
+                    {type: 'select' , title :'상태',id: 'status', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '임시저장' , value: 'TEMP' },{name : '확정대기' , value: '1' },{ name : '수정요청' , value: '0' },{name : '확정' , value: '1' }]},
                 ],
                 paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                 goSearch : "iocSearch",
