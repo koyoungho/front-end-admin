@@ -444,7 +444,7 @@
                     console.log(result.data)
                     this.saupjang = result.data
                 }else{
-                    Vue.swal({text: '조회실패'});
+                    alert('에러')
                 }
             })
         }
@@ -516,12 +516,15 @@
             }else if(account.addr2 == '' || account.addr2 == null){
                 Vue.swal({text:'상세주소를 입력하세요.'});
                 return;
-            }else if(account.accessIpFrom == '' || account.accessIpFrom == null){
+            /*}else if(account.accessIpFrom == '' || account.accessIpFrom == null){
                 Vue.swal({text:'접속IP 대역 시작점을 입력하세요.'});
+            /*}else if(account.accessIpFrom == '' || account.accessIpFrom == null){
+                alert('접속IP 대역 시작점을 입력하세요.')
                 return;
             }else if(account.accessIpTo == '' || account.accessIpTo == null) {
                 Vue.swal({text:'접속IP 대역 끝점을 입력하세요.'});
                 return;
+                */
             }else {
                 //수정 펑션 들어가는 곳!!!
                 this.updateInfo();

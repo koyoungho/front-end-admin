@@ -65,7 +65,7 @@
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
                                 <option value="1">법인사업자</option>
-                                <!--<option value="">선택</option>
+                                <!--<option value="">선택</option>listSend
                                 <template v-for="datas in saupGbnList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>-->
@@ -94,12 +94,14 @@
                     <tr>
                         <th scope="row">회사코드</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
+                            <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled">
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                            <!--<select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupSubSaupList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>
-                            </select>
+                            </select>-->
                         </td>
                         <th scope="row">업종구분</th>
                         <td>
@@ -265,8 +267,11 @@
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
 
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+
         </div>
         <!-- //content -->
+
     </section>
     <!-- //container -->
 
@@ -277,14 +282,19 @@
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import AddressBox from '@/components/common/addressBox/addressBox.vue'
     import {environment} from '../../../utill/environment';
+    import CompanyCodePop from '@/components/contents/franchiseManage/CompanyCodePop.vue'
 
     @Component({
         components: {
-            AddressBox
+            AddressBox, CompanyCodePop
         }
     })
     export default class FranchiseReg extends Vue {
         message: any = '';
+
+        companyCodeYn:boolean =false; //회사코드 팝업 구분
+        loadCodeList : any = [];
+        companyCodeArr : any = ['001','003','006']
 
         soluId: any = ''; //현금영수증 사업자
 
@@ -299,6 +309,7 @@
         addr2: any = ''; //상세주소
         zipCode: any = ''; //우편번호
         saupSubSaup: any = ''; //회사코드
+        saupSubSaupCnt: any = ''; //회사코드 카운트
         saupUpjong: any = ''; //업종코드
 
         //gajumStat: any = ''; //가점상태
@@ -394,6 +405,23 @@
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
             }
 
+        }
+
+        //회사코드 등록 팝업
+        subSaupPop(){
+            this.companyCodeYn = true;
+
+        }
+        getCodeList(data){ // 회사코드 선택 데이터 받는다
+            console.log('받은 회사코드')
+            console.log(data)
+            console.log('받은 회사코드 수 :: ' +data.length);
+
+            if(data!=null){
+                this.saupSubSaupCnt = data.length;
+            }
+
+            this.loadCodeList = data;
         }
 
         //승인대역 유효성 체크
@@ -903,6 +931,8 @@
         //관리자 ID 변경시 ID 중복확인 여부값 초기화
         chkIdCh(idx: number){
             this.adminList[idx].adminIdYn = '';
+            let idmsg = document.getElementById('adminid_msg'+idx); //중복 확인한 ROW 메시지
+            if(idmsg!=null){ idmsg.innerText = ''; }
         }
 
         //사용자ID 중복확인
@@ -911,8 +941,8 @@
             let idmsg = document.getElementById('adminid_msg'+idx); //중복 확인한 ROW 메시지
 
             if(id != null && id == ''){
-                alert('ID를 입력하세요.');
-                if(idmsg!=null){ idmsg.innerHTML = ''; }
+                //alert('ID를 입력하세요.');
+                if(idmsg!=null){ idmsg.innerHTML = 'ID를 입력하세요.'; }
                 return;
             }
             let reqData: any = {};
