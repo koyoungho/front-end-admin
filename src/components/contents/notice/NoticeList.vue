@@ -57,7 +57,6 @@
             // moment(this.ResultViewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD")
             let date=new Date();
             date.setFullYear(date.getFullYear()-3);
-            console.log(date);
 
             this.listItem= {
                 dataGrid: {
