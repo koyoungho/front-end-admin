@@ -6,7 +6,12 @@
         <div class="content">
             <div>
                 <h2 class="blind">{{titles}}</h2>
-                <h3>{{subTitle}}</h3>
+                <h3>{{subTitle}} </h3>
+
+                <div class="btn_top">
+                    <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
+                </div>
+
                 <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </div>
         </div>
@@ -83,9 +88,9 @@
                         {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
                         {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
                         {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
-                        {type: 'date2', title :'거래일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'date2', title :'거래일자', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         {type: 'select' , title :'발급용도',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
-                        {type: 'select' , title :'거래',id: 'dealType', name:'dealType' , value: '' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
+                        {type: 'select' , title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
                         {type: 'select' , title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '온라인' , value: 'Y' },{name : '오프라인' , value: 'N' }]},
                         {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
                         {type: 'input', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
@@ -107,6 +112,10 @@
 
 
         updated(){
+        }
+
+        downExel(){
+            alert("다운로드 준비중입니다.")
         }
     }
 

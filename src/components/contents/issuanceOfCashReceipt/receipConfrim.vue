@@ -82,7 +82,7 @@
                                             <th scope="row" colspan="2">거래일시</th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">{{moment(ResultViewRowItem.saleDate).format('YYYY.MM.DD')}}</td>
+                                            <td colspan="2">{{moment(ResultViewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="bg01">공급가액</th>
@@ -104,8 +104,7 @@
                                             <th scope="row" colspan="2">사업자등록번호</th>
                                         </tr>
                                         <tr>
-                                            <!--<td colspan="2">{{ResultViewRowItem.saupId}}</td>-->
-                                            <td colspan="2">{{ResultViewRowItem.saupId.substring(0,3)}}+"-"+{{ResultViewRowItem.saupId.substring(3,5)}}+"-"+{{ResultViewRowItem.saupId.substring(5,10)}}</td>
+                                            <td colspan="2">{{String(ResultViewRowItem.saupId).substring(0,3)}}-{{String(ResultViewRowItem.saupId).substring(3,5)}}-{{String(ResultViewRowItem.saupId).substring(5,10)}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" colspan="2">사업장전화번호</th>
@@ -211,11 +210,14 @@
 
             if( this.resultRecripKeyObj.trgu == '1' ){
                 this.titleSub =" - 현금결제취소";
+            }else{
+                this.titleSub="";
             }
 
             CommonBoardService.getListDatas('receipt', this.resultRecripKeyObj.regiDate+'/'+this.resultRecripKeyObj.perm , null).then((response) => {
                 this.ResultViewRowItem = response.data
-                console.log(' this.ResultViewRowItem',  this.ResultViewRowItem);
+
+
             }).catch();
         }
         makeHeader(val){
@@ -335,7 +337,7 @@
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">거래일시</th>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"width:65%; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+ moment(this.ResultViewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD")+"</td>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"width:65%; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+ moment(this.ResultViewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")+"</td>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" class=\"bg01\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#ffffff; text-align: center;\">공급가액</th>\n" +
