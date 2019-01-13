@@ -51,7 +51,7 @@
                                 <option value="0003">콜센터관리자</option>
                                 <option value="0004">가맹점관리자</option>
                                 <option value="0005">지점관리자</option>
-                                <option value="0006">매장관리자</option>
+                                <!--<option value="0006">매장관리자</option>-->
                             </select>
                         </td>
                         <th scope="row">계정상태</th>
