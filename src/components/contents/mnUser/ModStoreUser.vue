@@ -303,7 +303,7 @@
 
                         if(sessionStorage.role == '0001' ){ //시스템 관리자만 BL정보 수정가능
                             let blGbn = document.getElementById('blGbID');
-                            blGbn.removeAttribute('disabled');
+                            if(blGbn!=null){ blGbn.removeAttribute('disabled'); }
                         }
 
                         //this.blGbNm = result.blGbNm;
