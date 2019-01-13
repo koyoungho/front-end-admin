@@ -10,35 +10,35 @@
                 <button type="button" v-on:click="closePop" class="btn_close">Close</button>
             </div>
             <!-- popup body -->
-            <div class="popup_body">
-                <!-- popup content -->
-                <div class="popup_content page_code scroll_no">
+            <!--<div class="popup_body">-->
+                <!--&lt;!&ndash; popup content &ndash;&gt;-->
+                <!--<div class="popup_content page_code scroll_no">-->
 
-                    <!-- content  -->
-                    <div class="comcode_box">
-                        <ul class="comcode_list">
-                            <template v-for="ar in companyCodeList">
-                                <li>
-                                    <span class="">
-                                        <input type="checkbox"  v-model="checkBoxList" :value="ar.code" :id="ar.code" @change="checkData(ar.code)" v-bind:checked=true><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>
-                                        <!--<input type="checkbox"  v-model="ar.favYn"  :checked="ar.favYn=='Y'"  @click="checkData(ar.code,index)">{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span>-->
-                                    </span>
-                                </li>
-                            </template>
-                        </ul>
-                    </div>
-                    <!-- //popup content -->
-                    <!-- bottom area -->
-                    <div class="bottom_area">
-                        <!-- btn bot -->
-                        <div class="btn_bot">
-                            <button type="button" id="" class="btn_b01 bg02" v-on:click="closePop">취소</button>
-                            <button type="button" id="" class="btn_b01 bg01" v-on:click="closePopAndSave()">선택</button>
-                        </div>
-                    </div>
-                </div>
+                    <!--&lt;!&ndash; content  &ndash;&gt;-->
+                    <!--<div class="comcode_box">-->
+                        <!--<ul class="comcode_list">-->
+                            <!--<template v-for="ar in companyCodeList">-->
+                                <!--<li>-->
+                                    <!--<span class="">-->
+                                        <!--&lt;!&ndash;<input type="checkbox"  v-model="checkBoxList" :value="ar.code" :id="ar.code" @change="checkData(ar.code)" ><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<input type="checkbox"  v-model="ar.favYn"  :checked="ar.favYn=='Y'"  @click="checkData(ar.code,index)">{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span>&ndash;&gt;-->
+                                    <!--</span>-->
+                                <!--</li>-->
+                            <!--</template>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; //popup content &ndash;&gt;-->
+                    <!--&lt;!&ndash; bottom area &ndash;&gt;-->
+                    <!--<div class="bottom_area">-->
+                        <!--&lt;!&ndash; btn bot &ndash;&gt;-->
+                        <!--<div class="btn_bot">-->
+                            <!--<button type="button" id="" class="btn_b01 bg02" v-on:click="closePop">취소</button>-->
+                            <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="closePopAndSave()">선택</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </div>
+            <!--</div>-->
             <!-- //popup body -->
         </div>
         <!-- //popup -->
