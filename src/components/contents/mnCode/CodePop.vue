@@ -156,9 +156,11 @@
                     this.closePop()
                 }
             }).catch(e=>{
-                Vue.swal({text: e.message});
+                Vue.swal({text: e.data.message});
             })
         }
+
+
         update(){
             let Object :any=[];
             let apiAddr = "";

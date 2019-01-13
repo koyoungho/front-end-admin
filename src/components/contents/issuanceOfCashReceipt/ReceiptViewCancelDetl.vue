@@ -73,7 +73,7 @@
                                     <th scope="row" colspan="2">거래일시</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">{{moment(viewRowItem.saleDate).format("YYYY.MM.DD")}}</td>
+                                    <td colspan="2">{{moment(viewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="bg01">공급가액</th>
@@ -95,8 +95,7 @@
                                     <th scope="row" colspan="2">사업자등록번호</th>
                                 </tr>
                                 <tr>
-                                    <!--<td colspan="2">{{viewRowItem.saupId}}</td>-->
-                                    <td colspan="2">{{viewRowItem.saupId.substring(0,3)+"-"+viewRowItem.saupId.substring(3,5)+"-"+viewRowItem.saupId.substring(5,10)}}</td>
+                                    <td colspan="2">{{String(viewRowItem.saupId).substring(0,3)}}-{{String(viewRowItem.saupId).substring(3,5)}}-{{String(viewRowItem.saupId).substring(5,10)}}</td>
 
                                 </tr>
                                 <tr>
@@ -140,6 +139,7 @@
             <!-- grid box -->
             <div class="btn_top type03">  <!-- 20181112 type03 추가 -->
                 <template v-if="!bongsaBlock"><button type="button"  class="btn_m01 bg04" v-on:click="aceptTotalCount">취소 가능한 전체금액 불러오기</button></template>
+                <template v-else><span>* 봉사료가 입력된 승인 거래는 취소 시 부분 취소가 불가능 합니다.</span> </template>
             </div>
             <div class="grid_box col02">
                 <!-- col -->
@@ -175,10 +175,9 @@
                         </table>
                     </div>
                     <div class="tbl_info_bot">
-                        <template v-if="ghase=='checked'">
-                        <span class="chk_box">면세 및 간이과세자</span>
-                        </template>
-
+                        <span class="chk_box">
+                            <input type="checkbox" id="aa01" v-model="ghase"  disabled><label for="aa01">면세 및 간이과세자</label>
+                        </span>
                     </div>
                     <!-- //tbl list box -->
                 </div>
@@ -250,6 +249,9 @@
             </div>
 
             <h4>관련 발급 내역</h4>
+            <div class="btn_top">
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
+            </div>
             <!-- tbl list box -->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="onLoadListView"  v-on:listView="iocViewEvent"></ListComponent>
             <!-- //tbl list box -->
@@ -272,7 +274,8 @@
     import {CommonBoardService} from '../../../api/common.service';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import ReceipConfirm from '../../contents/issuanceOfCashReceipt/receipConfrim.vue';
-    import moment from 'moment'
+    import  moment from 'moment'
+    Vue.prototype.moment = moment;
 
     @Component({
         components: {
@@ -436,7 +439,6 @@
 
 
         iocViewEvent(data){
-            console.log(data)
             this.resultRecrip = data.row;
             this.popOn = true;
             // this.$modal.show(ReceipConfirm)
@@ -542,6 +544,13 @@
             }
 
         }
+
+        downExel(){
+            alert("다운로드 준비중입니다.")
+        }
+
+
+
     }
 
 
