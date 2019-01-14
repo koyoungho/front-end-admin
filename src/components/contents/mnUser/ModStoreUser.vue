@@ -471,7 +471,7 @@
             //사용자 정보
             reqData['email'] = this.email; //이메일
 
-            let accountId : string = sessionStorage.accountId;
+            let accountId : string = this.objectKey.row.id;
             //accountId = 'minitest';
 
             // api 데이터 호출
