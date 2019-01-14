@@ -83,7 +83,8 @@
         }
 
         listViewEvent(data){
-            this.$router.push({path:'jungsanDetail' ,query : { objKey : data.row.jsSeq }});
+            alert('준비중입니다')
+            // this.$router.push({path:'jungsanDetail' ,query : { objKey : data.row.jsSeq }});
         }
 
         /**
