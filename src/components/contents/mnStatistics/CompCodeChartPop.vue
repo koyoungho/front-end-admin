@@ -19,7 +19,7 @@
                         <ul class="comcode_list">
                             <template v-for="ar,index in companyCodeList">
                             <!--<li><span class="chk_box"><input type="checkbox"  v-model="checkBoxList" v-bind:value="ar.code"  @click="checkData(ar.code)"><label>{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span></label></span></li>-->
-                                <li><span class="chk_box"><input type="checkbox"  v-model="ar.favYn" @click="checkData(ar.code,index)"><label>{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span></label></span></li>
+                                <li><span class=""><input type="checkbox"   v-on:click="checkData(ar.code,index)"><label>{{ar.code}}<span class="company">{{ar.name}}</span></label></span></li>
                             </template>
                         </ul>
                     </div>
@@ -29,7 +29,7 @@
                         <!-- btn bot -->
                         <div class="btn_bot">
                             <button type="button" id="" class="btn_b01 bg02" v-on:click="closePop">취소</button>
-                            <button type="button" id="" class="btn_b01 bg01" v-on:click="closePopAndSave()">저장</button>
+                            <button type="button" id="" class="btn_b01 bg01" v-on:click="closePopAndSave()">적용</button>
                         </div>
                     </div>
                 </div>
@@ -89,35 +89,22 @@
             console.log(this.companyCodeList[index].favYn);
             if(this.companyCodeList[index].favYn =='Y'){
                 this.companyCodeList[index].favYn = 'N'
+                    CommonBoardService.deleteListDatas('company/account',data,null).then(response =>{
+                        if(response.status==200){
+                        }else{
+                            alert('저장 오류가 발생하였습니다')
+                        }
+                    })
             }else{
                 this.companyCodeList[index].favYn = 'Y'
+                    CommonBoardService.postListDatas('company/account',data,null).then(response =>{
+                        if(response.status==201){
+                        }else{
+                            alert('저장 오류가 발생하였습니다')
+                        }
+                    })
             }
-            console.log(this.companyCodeList[index].favYn);
-            let remove = 'N'
-            // this.checkBoxList.find(e=>{
-            //     if(e==data){ // 체크박스데이터안에 데이터있을경우
-            //      remove='Y'
-            //     }
-            // })
 
-
-            // if(remove=='Y'){
-            //     console.log('존재하니 삭제하라')
-            //     CommonBoardService.deleteListDatas('company/account',data,null).then(response =>{
-            //         if(response.status==200){
-            //         }else{
-            //             alert('저장 오류가 발생하였습니다')
-            //         }
-            //     })
-            // }else{
-            //     console.log('없으니 인서트하라')
-            //     CommonBoardService.postListDatas('company/account',data,null).then(response =>{
-            //         if(response.status==201){
-            //         }else{
-            //             alert('저장 오류가 발생하였습니다')
-            //         }
-            //     })
-            // }
         }
 
     }

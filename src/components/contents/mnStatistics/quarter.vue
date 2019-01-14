@@ -23,7 +23,7 @@
                                     <select  class="select sch_w100" title="회사코드" v-model="quarterYear" >
                                         <option value="">전체</option>
                                         <template v-for="e,index in 100">
-                                            <option  :value="index+2000">{{index+2000}}}</option>
+                                            <option  :value="index+2000">{{index+2000}}</option>
                                         </template>
                                     </select>
                                 </li>
@@ -41,8 +41,8 @@
                                     <label for="">구분</label>
                                     <select  class="select sch_w100" title="회사코드" v-model="gubun" >
                                         <option value="">전체</option>
-                                        <option value="0">국세청</option>
-                                        <option value="1">가정산</option>
+                                        <option value="TAX">국세청</option>
+                                        <option value="TEMP">가정산</option>
                                     </select>
                                 </li>
                             </ul>
@@ -56,10 +56,8 @@
                 <div class="bottom_area">
                     <!-- btn -->
                     <div class="btn_bot">
-                        <template v-if="fuct=='add'">
                             <button type="button" class="btn_b01 bg02" v-on:click="closePop">취소</button>
                             <button type="button" class="btn_b01 bg01" @click="codeAdd" v-show="regShow">추가</button>
-                        </template>
                     </div>
                 </div>
 
@@ -86,7 +84,7 @@
         @Prop() dataObject  !: any;
 
         regShow:boolean = false;
-        quarterYear :string = "";
+        quarterYear :string = "2019";
         quarter :string = "";
         gubun :string = "";
 
@@ -112,6 +110,10 @@
 
         closePop(){
             this.$emit('close');
+        }
+
+        codeAdd(){
+
         }
 
         quarterAdd(){

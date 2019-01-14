@@ -142,34 +142,6 @@
          * 파일다운로드
          * @param fileNm
          */
-        // download(fileNm, fileOrigin){
-        //     //파일 다운로드
-        //     axios({
-        //         url: environment.apiUrl +"/file/"+fileNm,
-        //         method: 'GET',
-        //         responseType: 'blob', // important
-        //         headers: {"x-auth-token": sessionStorage.accessToken}
-        //     }).then((response) => {
-        //         console.log(response);
-        //         const url = window.URL.createObjectURL(new Blob([response.data],{type: 'application/octet-stream'}));
-        //         console.log('url',url)
-        //         const link = document.createElement('a');
-        //
-        //         window.navigator.msSaveBlob(url,fileNm)
-        //
-        //         link.href = url;
-        //         link.target = "_blank";
-        //         link.download = fileOrigin;
-        //         link.click();
-        //         // link.setAttribute('download', fileOrigin); //or any other extension
-        //         // document.body.appendChild(link);
-        //         // link.click();
-        //         // document.body.removeChild(link);
-        //         // window.URL.revokeObjectURL(url);
-        //     });
-        // }
-
-        //fileNm, fileOrigin
         download(fileNm, fileOrigin) {
             axios({
                 url: environment.apiUrl +"/file/"+fileNm,
@@ -177,15 +149,14 @@
                 responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response)
                 // It is necessary to create a new blob object with mime-type explicitly set
                 // otherwise only Chrome works like it should
-                var newBlob = new Blob([response.data],{type: 'application/pdf'})
+                var newBlob = new Blob([response.data],{type: 'application/stream'})
 
                 // IE doesn't allow using a blob object directly as link href
                 // instead it is necessary to use msSaveOrOpenBlob
                 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                    window.navigator.msSaveOrOpenBlob(newBlob)
+                    window.navigator.msSaveOrOpenBlob(newBlob,fileOrigin)
                     return
                 }
 
@@ -193,8 +164,9 @@
                 // Create a link pointing to the ObjectURL containing the blob.
                 const data = window.URL.createObjectURL(newBlob)
                 var link = document.createElement('a')
+
                 link.href = data
-                link.download = fileOrigin + '.pdf'
+                link.download = fileOrigin
 
                 link.click()
                 setTimeout(function () {
