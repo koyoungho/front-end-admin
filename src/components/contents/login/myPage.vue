@@ -118,7 +118,7 @@
                             <input type="text" class="input form_w50" title="전화번호" v-model="account.newPassword">
                         </td>
                     </tr> -->
-                    <tr>
+                    <!--<tr>
                         <th scope="row">주소</th>
                         <td colspan="3">
                             <ul class="address_list">
@@ -134,7 +134,7 @@
                                 </li>
                             </ul>
                         </td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -291,9 +291,9 @@
              telnum : this.account['telnum'],
              email:this.account['email'],
              newPassword:this.account['password'],
-             zipCode:this.account['zipCode'],
-             addr1:this.account['addr1'],
-             addr2:this.account['addr2'],
+             //zipCode:this.account['zipCode'],
+             //addr1:this.account['addr1'],
+             //addr2:this.account['addr2'],
              role:this.account['role'],
              accessIpFrom: this.account['accessIpTo'],
              accessIpTo: this.account['accessIpFrom']

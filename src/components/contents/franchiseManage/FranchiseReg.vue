@@ -42,7 +42,7 @@
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
@@ -71,7 +71,7 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row">법인등록번호</th>
+                        <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
                         <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
@@ -94,7 +94,7 @@
                     <tr>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled">
+                            <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
                             <!--<select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
                                 <option value="">선택</option>
@@ -118,6 +118,7 @@
             </div>
             <!-- //tbl view box -->
 
+<!-- 승인대역, 관리자 정보 주석 처리
             <div class="title_area">
                 <h4>승인대역 정보</h4>
                 <div class="btn_tbl_top type01">
@@ -125,9 +126,7 @@
                 </div>
             </div>
 
-            <!-- tbl view box -->
             <div class="tbl_view_box">
-                <!-- tbl view01 -->
                 <table class="tbl_view01">
                     <caption>승인대역 정보</caption>
                     <colgroup>
@@ -152,7 +151,6 @@
                             <td>
                                 <input type="text" class="input form_branchcode" title="점코드" v-model="apro.jumCode" v-on:keyup="jumCodeCh(index)" maxlength="10" v-on:keydown="showKeyCode($event)">
                                 <input type="hidden" v-model="apro.jumCodeYn">
-                                <!--<button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode($event)">중복확인</button>-->
                                 <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode(index)">중복확인</button>
                                 <p class="info_msg" v-bind:id="apro.jumCodeMsg"></p>
                             </td>
@@ -190,12 +188,11 @@
                     </tbody>
                 </table>
             </div>
-            <!-- //tbl view box -->
 
-            <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
                 <button type="button" id="" class="btn_m01 bg01 del" v-on:click="delAproval">승인대역 삭제</button>
             </div>
+
 
             <div class="title_area">
                 <h4>관리자 정보</h4>
@@ -204,12 +201,9 @@
                 </div>
             </div>
 
-            <!-- account list -->
             <div class="account_list">
                 <div class="acc_col">
-                    <!-- tbl view box -->
                     <div class="tbl_view_box">
-                        <!-- tbl view01 -->
                         <table class="tbl_view01">
                             <caption>정보</caption>
                             <colgroup>
@@ -261,14 +255,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- //tbl view box -->
-                    <!-- btn tbl bot -->
+
                     <div class="btn_tbl_bot">
                         <button type="button" class="btn_m01 bg02 del" v-on:click="delAdmin">ID 계정삭제</button>
                     </div>
                 </div>
 
             </div>
+-->
 
             <!-- btn bot -->
             <div class="btn_bot">
@@ -438,6 +432,7 @@
         //승인대역 유효성 체크
         alrBandChk() {
 
+/* 승인대역 체크 주석처리함 end
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
@@ -490,7 +485,9 @@
                     }
                 }
             }
+승인대역 체크 주석처리함 end */
 
+            this.insertInfo(); //등록
         }
 
         //등록
@@ -529,6 +526,7 @@
             console.log(this.adminList)
             console.log('=======================================================')
 
+/* 승인대역 주석 처리함
             if(this.approvalList.length > 0){
                 for(let j=0; j<this.approvalList.length; j++){
                     if(this.approvalList[j].companyCode != undefined && this.approvalList[j].companyCode != '') { //회사코드가 있는 경우만 담기
@@ -547,11 +545,14 @@
             }
             console.log('승인대역 정보 확인');
             console.log(addData2);
+승인대역 주석 처리함 end */
             reqData['approvalBandAddDtos'] = addData2; //승인대역 정보 셋팅
 
             //let admData: any = {};
             let admData: any = {};
             let addData3 : any = []; //승인대역정보 배열
+
+/* 관리자 정보 주석처리함 sta
             if(this.adminList.length > 0){
                 for(let k=0; k<this.adminList.length; k++){
                     if(this.adminList[k].adminNm != undefined && this.adminList[k].adminNm != '') { //이름이 입력된 경우만 담기
@@ -568,6 +569,8 @@
                     }
                 }
             }
+관리자정보 주석 처리함 end */
+
             console.log('승인대역 정보 확인');
             console.log(addData3);
             reqData['accounts'] = addData3; //관리자 정보 셋팅
@@ -644,6 +647,8 @@
 //            this.insertInfo();
 //return;
 
+            let regNumber = /^[0-9]*$/;
+
             if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
                 return;
@@ -659,11 +664,17 @@
             }else if(this.repPhonenum == ''){
                 alert('전화번호를 입력하세요.');
                 return;
+            }else if(!regNumber.test(this.repPhonenum)){
+                alert('전화번호는 숫자로 입력하세요.');
+                return;
             }else if(this.saupType == ''){
                 alert('사업자구분을 선택하세요.');
                 return;
             }else if(this.saupType == '1' && this.lawNum == ''){ //사업자구분이 법인인 경우 필수
                 alert('법인등록번호를 입력하세요.');
+                return;
+            }else if(this.saupType == '1' && this.lawNum != '' && !regNumber.test(this.lawNum)){
+                alert('법인등록번호는 숫자로 입력하세요.');
                 return;
             }else if(this.zipCode == ''){
                 alert('우편번호를 입력하세요.');
@@ -682,6 +693,7 @@
                 return;
             }
 
+/* 승인대역 주석 처리함 sta
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
@@ -689,6 +701,10 @@
                         console.log('승인내역 건수 :: '+this.approvalList.length);
                         if(this.approvalList[i].jumCode == undefined || this.approvalList[i].jumCode == '') {
                             alert('점코드를 입력하세요.')
+                            return;
+                        }
+                        if(this.approvalList[i].jumCode != '' && !regNumber.test(this.approvalList[i].jumCode)) {
+                            alert('점코드는 숫자로 입력하세요.')
                             return;
                         }
                         if(this.approvalList[i].jumCodeYn == undefined || this.approvalList[i].jumCodeYn == '') {
@@ -716,41 +732,12 @@
                             return;
                         }
 
-                        //승인대역 대역폭 체크
-                        /*
-                        let bandChk : boolean = true;
-                        if(this.approvalList[i].aproGbn == '1' && this.approvalList[i].aproBandFrom != '' &&  this.approvalList[i].aproBandTo != '') { //승인대역이 대역폭이고 대역폭 시작, 끝이 있으면 체크
-                            //대역폭 정보
-                            let bandData: any = {};
-                            bandData['subSaup'] = this.approvalList[i].companyCodeNm; //회사코드
-                            bandData['approvedCode'] = this.approvalList[i].aproCode; //승인코드
-                            bandData['approvedbandFrom'] = this.approvalList[i].aproBandFrom; //시작 대역
-                            bandData['approvedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
-
-                            //승인대역 대역폭 사용가능 여부 확인
-                            console.log('대역폭 사용가능 여부 체크')
-                            CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
-                                    let result: any = response.data;
-                                    console.log(result)
-                                    if (result.code === '000') { //대역폭 사용가능
-                                        bandChk = false;
-                                    } else { //대역폭 사용 못함
-                                        alert(result.message)
-                                        bandChk = true;
-                                    }
-                                    if(bandChk == true){
-                                        return;
-                                    }
-                                }
-                                , (error) => {
-                                }
-                            ).catch();
-                        }*/
-
                     }
                 }
             }
+승인대역 주석처리함 end */
 
+/* 관리자정보 주석처리함 end
             //관리자 정보 체크
             if(this.adminList.length > 0){
                 for(let i=0; i<this.adminList.length; i++){
@@ -758,6 +745,10 @@
                         console.log('관리자 정보 건수 :: '+this.adminList.length);
                         if(this.adminList[i].adminPhonenum == undefined || this.adminList[i].adminPhonenum == '') {
                             alert('휴대폰번호를 입력하세요.');
+                            return;
+                        }
+                        if(this.adminList[i].adminPhonenum != '' && !regNumber.test(this.adminList[i].adminPhonenum)) {
+                            alert('휴대폰번호는 숫자로 입력하세요.');
                             return;
                         }
                         if(this.adminList[i].adminId == undefined || this.adminList[i].adminId == ''){
@@ -783,7 +774,7 @@
                     }
                 }
             }
-
+관리자정보 주석처리함 end */
 
             //다음 단계 functon 들어오는 곳!!
             //this.insertInfo();

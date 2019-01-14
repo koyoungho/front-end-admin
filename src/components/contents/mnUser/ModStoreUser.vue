@@ -112,11 +112,11 @@
                         <td>
                             <select id="blGbID" name="" class="select form_w100" title="BL 정보" v-model="blGb" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="0">BL 적용</option>
-                                <option value="1">BL 해지</option>
-                                <!--<template v-for="datas in blcodeList">
+                                <!--<option value="0">BL 적용</option>-->
+                                <!--<option value="1">BL 해지</option>-->
+                                <template v-for="datas in blcodeList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>-->
+                                </template>
                             </select>
                         </td>
                         <th scope="row">사업장 등록일</th>
@@ -496,6 +496,8 @@
         }
         //정보 변경시 validation 체크
         dataValidation() {
+            let regNumber = /^[0-9]*$/;
+
             if(this.storeNm == '') {
                 alert('사업장명을 입력하세요.');
                 return false;
@@ -505,6 +507,9 @@
             }else if(this.repPhonenum == '') {
                 alert('전화번호를 입력하세요.');
                 return false;
+            }else if(!regNumber.test(this.repPhonenum)){
+                alert('전화번호는 숫자로 입력하세요.');
+                return;
             }else if(this.aprvYn == null || this.aprvYn == '') {
                 alert('계정상태를 선택하세요.');
                 return false;

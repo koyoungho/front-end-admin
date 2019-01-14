@@ -14,7 +14,7 @@
                     <ul class="result_info">
                         <li><span class="sub">사업자등록번호 : </span>{{saupId}}</li>
                         <li><span class="sub">매장명 : </span>{{shopNm}}</li>
-                        <li><span class="sub">아이디 : </span>{{manageId}}</li>
+                        <!--<li><span class="sub">아이디 : </span>{{manageId}}</li>-->
                     </ul>
                 </div>
                 <p class="complete_result ok">가맹점 등록이 완료되었습니다.</p>

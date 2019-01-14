@@ -140,13 +140,14 @@
                     <tr>
                         <th scope="row">지점 상태</th>
                         <td colspan="3">
-                            <!--<select id="" name="" class="select form_w50" title="지점" disabled="disabled" v-model="gajumStatus">
+                            <select id="jijumStatusID" name="" class="select form_w50" title="가맹점" disabled="disabled" v-model="jijumStatus">
                                 <option value="">선택</option>
-                                <option value="0">정상</option>
-                                <option value="1">해지</option>
-                                <option value="2">해지신청</option>
-                            </select>-->
-                            <input type="text" class="input form_w50" title="지점" v-model="jijumStatus" disabled="disabled">
+                                <option value="0">승인신청</option>
+                                <option value="1">해지신청</option>
+                                <option value="2">정상</option>
+                                <option value="3">해지</option>
+                            </select>
+                            <!--<input type="text" class="input form_w50" title="지점" v-model="jijumStatus" disabled="disabled">-->
                         </td>
                     </tr>
                     <tr>
@@ -158,7 +159,7 @@
                     <tr>
                         <th scope="row">BL 정보</th>
                         <td colspan="3">
-                            <select id="blGbID" name="" class="select form_bl" title="BL 정보" v-model="blGb">
+                            <select id="blGbID" name="" class="select form_bl" title="BL 정보" v-model="blGb" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="0">BL적용</option>
                                 <option value="1">BL해지</option>
@@ -167,11 +168,34 @@
                             <input type="text" class="input form_bldate" title="BL 정보" disabled="disabled" v-model="blDate">
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <td>
+                            <input type="text" class="input form_post" title="우편번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                            <!--<select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupSubSaupList">
+                                    <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>-->
+                        </td>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupUpjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
             <!-- //tbl view box -->
 
+<!-- 임시 주석 처리 20190113
             <div class="title_area">
                 <h4>승인대역 정보</h4>
                 <div class="btn_tbl_top type01">
@@ -179,9 +203,7 @@
                 </div>
             </div>
 
-            <!-- tbl view box -->
             <div class="tbl_view_box">
-                <!-- tbl view01 -->
                 <table class="tbl_view01">
                     <caption>승인대역 정보</caption>
                     <colgroup>
@@ -241,9 +263,7 @@
                     </tbody>
                 </table>
             </div>
-            <!-- //tbl view box -->
 
-            <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
                 <button type="button" id="" class="btn_m01 bg01 del" v-on:click="delAproval">승인대역 삭제</button>
             </div>
@@ -255,12 +275,9 @@
                 </div>
             </div>
 
-            <!-- account list -->
             <div class="account_list">
                 <div class="acc_col">
-                    <!-- tbl view box -->
                     <div class="tbl_view_box">
-                        <!-- tbl view01 -->
                         <table class="tbl_view01">
                             <caption>정보</caption>
                             <colgroup>
@@ -310,22 +327,18 @@
                                         <option value="">선택</option>
                                         <option value="N">정상</option>
                                         <option value="Y">해지</option>
-                                        <!--<template v-for="datas in aproCodeList">
-                                            <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                        </template>-->
                                     </select>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- //tbl view box -->
-                    <!-- btn tbl bot -->
                     <div class="btn_tbl_bot">
                         <button type="button" class="btn_m01 bg02 del" v-on:click="delAdmin">ID 계정삭제</button>
                     </div>
                 </div>
             </div>
+임시 주석 처리 -->
 
             <!-- btn bot -->
             <div class="btn_bot">
@@ -334,6 +347,8 @@
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
+
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
         </div>
         <!-- //content -->
@@ -346,16 +361,21 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import AddressBox from '@/components/common/addressBox/addressBox.vue'
+    import CompanyCodePop from '@/components/contents/franchiseManage/CompanyCodePop.vue'
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
     @Component({
         components: {
-            BranchDetl, AddressBox
+            BranchDetl, AddressBox, CompanyCodePop
         },
     })
     export default class BranchDetl extends Vue {
         message: any = '';
+
+        companyCodeYn:boolean =false; //회사코드 팝업 구분
+        loadCodeList : any = [];
+        companyCodeArr : any = ['001','003','006']
 
         btnUpdShow: boolean = false; //수정권한
         topinfoShow : boolean = false; //상단 현금영수증, 가맹점, 지점 정보 표시
@@ -384,6 +404,7 @@
         addr2: any = ''; //상세주소
         zipCode: any = ''; //우편번호
         saupSubSaup: any = ''; //회사코드
+        saupSubSaupCnt: any = ''; //회사코드
         saupUpjong: any = ''; //업종코드
 
         jijumStatus: any = ''; //가맹점상태
@@ -533,8 +554,11 @@
                         this.zipCode = result.zipCode; //우편번호
                         this.addr1 = result.addr1; //주소
                         this.addr2 = result.addr2; //상세주소
-                        //this.saupSubSaup = result.subSaup; //회사코드
-                        //this.saupUpjong = result.upjong; //업종코드
+                        this.loadCodeList = result.subSaup; //회사코드
+                        if(result.subSaup != null && result.subSaup > 0){
+                            this.saupSubSaupCnt = result.subSaup.length; //회사코드 수
+                        }
+                        this.saupUpjong = result.upjong; //업종코드
                         this.jijumStatus = result.jijumStatus; //가맹점 상태
                         this.regiDate = this.dateFormat(result.regiDate); //사업장 등록일
                         this.canDate = this.dateFormat(result.canDate); //사업장 해지일
@@ -542,13 +566,17 @@
                         this.blGbNm = result.blGbNm; //BL상태
                         this.blDate = result.blDate; //BL등록일
 
-                        if(sessionStorage.role != '0001') { //시스템관리자만 변경 가능
+                        if(sessionStorage.role == '0001') { //시스템관리자만 변경 가능
                             let blGb = document.getElementById('blGbID');
-                            if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
+                            //if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
+                            if(blGb!=null){ blGb.removeAttribute('disabled'); }
+
+                            let jijumStsID = document.getElementById('jijumStatusID')
+                            if(jijumStsID!=null){ jijumStsID.removeAttribute('disabled'); }
                         }
                         //승인대역 정보
                         //console.log(result.aprvBands.length);
-
+/* 임시 주석처리 20190113
                         this.alrAproBandCnt = result.aprvBands.length; //기등록된 승인대역 카운트(승인대역 row 삭세시 체크)
                         this.alrAdminCnt = result.accounts.length; //기등록된 관리자정보 카운트(관리자정보 row 삭세시 체크)
 
@@ -602,6 +630,7 @@
                             console.log('관리자 정보 있음');
                             console.log(this.adminList.length)
                         }
+임시 주석 처리 20190113 */
 
                     }else{
 
@@ -616,8 +645,8 @@
             this.getSelectList('RECEIPT'); //현금영수증 사업자
             this.getSelectList('SEARCH'); //회사코드
             this.getSelectList('APRO'); //승인코드
-            //this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
-            //this.getSelectList('UPJONG'); //업종구분(사업장정보)
+            this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
+            this.getSelectList('UPJONG'); //업종구분(사업장정보)
         }
 
         //공통 select box 조회
@@ -736,8 +765,8 @@
         }
 
         validationChk(){
-//            this.updateInfo();
-//            return;
+
+            let regNumber = /^[0-9]*$/;
 
             /*if(this.soluId == ''{
                 alert('현금영수증 사업자를 선택하세요.');
@@ -755,6 +784,9 @@
             }else if(this.repPhonenum == ''){
                 alert('전화번호를 입력하세요.');
                 return;
+            }else if(!regNumber.test(this.repPhonenum)){
+                alert('전화번호는 숫자로 입력하세요.');
+                return;
                 /*}else if(this.saupType == ''){
                     alert('사업자구분을 선택하세요.');
                     return;
@@ -771,6 +803,12 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
+            }else if(this.saupSubSaupCnt == ''){
+                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
+                return;
+            }else if(this.saupUpjong == ''){
+                alert('업종코드를 선택하세요.');
+                return;
             // }else if(this.saupSubSaup == null || this.saupSubSaup == ''){
             //     alert('회사코드를 선택하세요.');
             //     return;
@@ -779,6 +817,7 @@
             //     return;
             }
 
+/* 임시 주석 처리 20190113
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
                     //console.log(this.approvalList[i].aproBandTo);
@@ -846,7 +885,7 @@
                     }
                 }
             }
-
+임시 주석 처리 20190113 */
             //승인대역 사용가능 여부 확인
             this.alrBandChk();
 
@@ -854,6 +893,7 @@
 
         alrBandChk() {
 
+/* 임시 주석 처리 20190113
             //승인대역 정보 사용가능여부 확인일 위해 담기
             let aproBand : any = {};
             let arayBand : any = [];
@@ -898,6 +938,9 @@
             }else{
                 this.updateInfo();
             }
+임시 주석 처리 20190113 */
+
+            this.updateInfo();
         }
 
         //수정
@@ -918,8 +961,8 @@
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
             saupData['addr2'] = this.addr2; //사업장 상세주소
-            //saupData['subSaup'] = this.saupSubSaup; //회사코드
-            //saupData['upjong'] = this.saupUpjong; //업종구분
+            saupData['subSaup'] = this.loadCodeList; //this.saupSubSaup; //회사코드
+            saupData['upjong'] = this.saupUpjong; //업종구분
 
             reqData['gajumId'] = this.gajumId; //가맹점 ID
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
@@ -928,6 +971,7 @@
             let aproData : any = {};
             let addData2 : any = []; //승인대역정보 배열
 
+/* 임시 주석 처리 20190113
             console.log('승인대역 정보 뿌리기')
             console.log(this.approvalList)
             console.log('관리자 정보 뿌리기')
@@ -949,6 +993,7 @@
                     }
                 }
             }
+임시 주석 처리 20190113 */
             console.log('승인대역 정보 확인');
             console.log(addData2);
             reqData['aprvBandAddDtos'] = addData2; //승인대역 정보 셋팅
@@ -956,6 +1001,7 @@
             //let admData: any = {};
             let admData: any = {};
             let addData3 : any = []; //승인대역정보 배열
+/* 임시 주석 처리 20190113
             if(this.adminList.length > 0){
                 for(let k=0; k<this.adminList.length; k++){
                     if(this.adminList[k].adminNm != undefined && this.adminList[k].adminNm != '') { //이름이 입력된 경우만 담기
@@ -971,6 +1017,7 @@
                     }
                 }
             }
+임시 주석 처리 20190113 */
             console.log('승인대역 정보 확인');
             console.log(addData3);
             reqData['reqGbn'] = 'branch'; //요청구분(필수값)
@@ -1233,6 +1280,25 @@
                 }
             }
         }
+
+        //회사코드 등록 팝업
+        subSaupPop(){
+            this.companyCodeYn = true;
+
+        }
+        getCodeList(data){ // 회사코드 선택 데이터 받는다
+            console.log('받은 회사코드')
+            console.log(data)
+            console.log('받은 회사코드 수 :: ' +data.length);
+
+            if(data!=null){
+                this.saupSubSaupCnt = data.length;
+            }
+
+            this.loadCodeList = data;
+        }
+
+
     }
 
 </script>

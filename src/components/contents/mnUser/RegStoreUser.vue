@@ -46,7 +46,7 @@
                     <tr>
                         <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType">
+                            <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="2">개인</option>
                                 <option value="1">법인</option>
@@ -56,7 +56,7 @@
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="10" v-on:keypress="numberChk($event)"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="10" v-on:keypress="numberChk($event)" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
@@ -150,7 +150,7 @@
                         <th scope="row" class="sub_msg01">ID<em class="form_req">*</em></th>
                         <td class="con_msg01">
                             <input type="text" class="input form_id" title="ID 입력" v-model="id" v-on:keyup="idInputChk">
-                            <input type="hidden" title="ID 중복확인 여부" v-model="idYn">
+                            <input type="text" title="ID 중복확인 여부" v-model="idYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkUserId(id)">중복확인</button>
                             <p class="info_msg" id="id_msg"></p>
                         </td>
@@ -309,7 +309,7 @@
 //            this.name = this.reName; //사용자 이름 (휴대폰 인증에서 넘겨준 이름으로 셋팅)
 //            this.phoneNum = this.rePhoneNum; //사용자 휴대폰 번호 (휴대폰 인증에서 넘겨준 이름으로 셋팅)
 
-            this.getSelectList('0001'); //사업자구분
+            //this.getSelectList('0001'); //사업자구분
             this.getSelectList('UPJONG'); //업종구분
             this.getSelectList('SUBSAUP'); //회사코드
 
@@ -476,7 +476,9 @@
         //휴대폰번호 등록여부 체크
         phonenumberChk(){
             let reqData: any = {};
-            reqData['checkString'] = this.phoneNum; //사업자등록번호
+            reqData['checkString'] = this.phoneNum;
+            reqData['checkSum'] = '';
+            reqData['checkType'] = 'USER';
 
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/phonenum', null, reqData).then((response) => {
@@ -514,8 +516,8 @@
             //regData['gender'] = this.reGender; //성별
             regData['saupType'] = this.saupType; //사업자구분
             regData['lawNum'] = this.lawNum; //법인등록번호
-            regData['addr1'] = this.addr1; //사업장 주소
             regData['zipCode'] = this.zipCode; //사업장 우편번호
+            regData['addr1'] = this.addr1; //사업장 주소
             regData['addr2'] = this.addr2; //사업장 상세주소
             regData['upjongCode'] = this.upjongCode; //업종구분
             regData['upjongCodeNm'] = this.upjongCodeNm; //업종구분명
@@ -593,6 +595,7 @@
         }
 
         dataValidation() {
+            let regNumber = /^[0-9]*$/;
             if(this.saupId == '') {
                 alert('사업자등록번호를 입력하세요.');
                 return false;
@@ -605,12 +608,15 @@
             }else if(this.repPhonenum == '') {
                 alert('전화번호를 입력하세요.');
                 return false;
-            }else if(this.saupType == '') {
+            }else if(!regNumber.test(this.repPhonenum)){
+                alert('전화번호는 숫자로 입력하세요.');
+                return;
+            /*}else if(this.saupType == '') {
                 alert('사업자구분을 선택하세요.');
                 return false;
             }else if(this.saupType == '1' && this.lawNum == '') {
                 alert('법인등록번호를 입력하세요.');
-                return false;
+                return false;*/
             }else if(this.addr1 == '') {
                 alert('사업장 주소를 입력하세요.');
                 return false;
@@ -620,10 +626,10 @@
             }else if(this.addr2 == '') {
                 alert('사업장 상세주소를 입력하세요.');
                 return false;
-            }else if(this.upjongCode == '') {
+            }else if(this.upjongCode == null || this.upjongCode == '') {
                 alert('업종구분을 선택하세요.');
                 return false;
-            }else if(this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
+            }else if(this.companyCode == null || this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
                 alert('회사코드를 선택하세요.');
                 return false;
             /*}else if((this.upjongCode == '0003' || this.upjongCode == '0002') && this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
@@ -641,6 +647,9 @@
             }else if(this.phoneNum == '') {
                 alert('사용자 휴대폰번호를 입력하세요.');
                 return false;
+            }else if(!regNumber.test(this.phoneNum)){
+                alert('사용자 휴대폰번호는 숫자로 입력하세요.');
+                return;
             }else if(this.id == '') {
                 alert('사용자 ID를 입력하세요.');
                 return false;
@@ -650,7 +659,7 @@
             }else if(this.email != '' && !this.emailCheck(this.email)) {
                 alert('입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.');
                 return false;
-            }else if(this.password == '') {
+            /*}else if(this.password == '') {
                 alert('비밀번호를 입력하세요.');
                 return false;
             }else if(this.passwordCon == '') {
@@ -659,11 +668,13 @@
             }else if(this.password != this.passwordCon) {
                 alert('비밀번호 확인을 잘못입력 하셨습니다.')
                 return false;
+                */
             }else if(this.idYn != 'Y') {
                 alert('사용자ID 중복체크를 하세요.');
                 return false;
             }else{
-                this.passwordChk(); //패스워드 유효성 체크
+                this.phonenumberChk();
+                //this.passwordChk(); //패스워드 유효성 체크
                 //return true;
             }
         }
@@ -843,14 +854,17 @@
 
         //사용자ID 중복확인
         chkUserId(id) {
+            let idmsg = document.getElementById('id_msg');
+
             if(id == ''){
                 alert('ID를 입력하세요.');
                 return;
             }
-            let idmsg = document.getElementById('id_msg');
 
+            let reqData : any = { checkString : id, checkType : 'USER' };
+;
             // api 데이터 호출
-            CommonBoardService.getListDatas('accounts/id', id, '').then((response) => {
+            CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
                     let result: any = response.data;
 
                     if (result.code == '000') {
@@ -1070,16 +1084,29 @@
                     this.storeNm = result.data.shopNm;
                     this.repNm = result.data.chipNm;
                     this.repPhonenum = result.data.telNum;
-
-
-
-
-
+                    this.saupType  = this.nullCheck(result.data.regiGb);
+                    this.lawNum = result.data.lawNum;
+                    this.zipCode = result.data.zipCode;
+                    this.addr1 = result.data.addr1;
+                    this.addr2 = result.data.addr2;
+                    this.upjongCode = this.nullCheck(result.data.upjong);
+                    this.companyCode = this.nullCheck(result.data.subSaup);
 
                 }else{
                     Vue.swal({text: '에러'});
                 }
             })
+        }
+
+        // Null체크
+        nullCheck(val){
+            if(val == null){
+                return '';
+            }else if(val == ''){
+                return '';
+            }else{
+                return val;
+            }
         }
 
     }
