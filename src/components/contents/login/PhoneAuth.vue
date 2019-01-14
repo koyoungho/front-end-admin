@@ -81,17 +81,6 @@
                 this.reqGbn = this.reqObjectKey.reqGbn;
                 this.nextUrl = this.reqObjectKey.nextPage;
 
-                console.log('넘겨받은 가맹점 정보');
-                console.log(this.reqObjectKey);
-                console.log('사업장 정보');
-                console.log(this.reqObjectKey.saupjangDto)
-                console.log('승인대역 정보');
-                console.log(this.reqObjectKey.aprvBandAddDtos);
-                console.log('관리자 정보');
-                console.log(this.reqObjectKey.accounts);
-                console.log('호출할 API 정보 및 다음 이동 URL')
-                console.log(this.reqObjectKey.reqGbn);
-                console.log(this.reqObjectKey.nextPage);
 
             }else{
                 alert('접근할수 없습니다');
@@ -129,23 +118,17 @@
                 // api 데이터 호출(사업자등록번호 유효성 체크)
                 CommonBoardService.postListDatas('otp', null, reqData).then((response) => {
                         let result: any = response.data;
-                        console.log(result);
                         if (result != null && result.code == '000') {
-                            console.log('OTP 발송 성공')
                             this.startTimer();
                             //this.confirmButton = true;
                         } else {
-                            console.log('OTP 발송 실패')
                             clearInterval(this.interval)
                         }
                     }
                     , (error) => {
-                        console.log('인증번호 발송 실패');
                         console.log(error);
                     }
                 ).catch((response) => {
-                    console.log('인증번호 발송 실패');
-                    console.log(response);
                 });
             }
         }
@@ -153,14 +136,6 @@
         //인증번호 검증
         chkAuthNumber(){
 
-            console.log('가맹정 정보 있는지 확인')
-            console.log(this.reqObjectKey)
-            console.log('사업장 정보');
-            console.log(this.reqObjectKey.saupjangDto)
-            console.log('승인대역 정보');
-            console.log(this.reqObjectKey.aprvBandAddDtos);
-            console.log('관리자 정보');
-            console.log(this.reqObjectKey.accounts);
 
             if(this.authNumber == ''){
                 alert('전송된 인증번호를 입력하세요.');

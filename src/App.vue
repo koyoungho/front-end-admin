@@ -30,14 +30,11 @@
         });
 
         if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy' || menuName == 'termsCheck' || menuName == 'regPass' || menuName == 'kmcResult' ) { // 공용페이지 접근시 통과
-          console.log('예외페이지 처리라 그냥 넘어간다');
           next();
         } else {
           if (sessionStorage.accessToken) { // 토큰
             // console.log('라우터에 접근 토큰이 있으면 1 ㅇㅋ');
             if (loginOk) { // 메타확인
-              // console.log('체크해야되면 2 ㅇㅋ');
-              // console.log('검사할 유알엘일경우 메뉴체크');
               let result = 'sucess';
               let authMenu = sessionStorage.getItem('authMenu');
               let menu = JSON.parse(authMenu);
