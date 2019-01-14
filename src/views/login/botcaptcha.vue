@@ -11,7 +11,7 @@
       methods: {
           //이미지 새로고침
           imgRefresh(){
-              this.$el.children[0].src = "http://211.39.150.112/api/captcha?ran="+ Math.random();
+              this.$el.children[0].src = "http://211.39.150.96:8888/api/captcha?ran="+ Math.random();
           }
       }
   };
