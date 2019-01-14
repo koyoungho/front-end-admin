@@ -467,85 +467,38 @@
         downloadSample(){
 
             //파일 다운로드
-
+            let fileName : string = '매장일괄등록 양식.xlsx';
             axios({
-                url: environment.apiUrl + '/file/sample/store',
+                url: environment.apiUrl +"/file/sample/store",
                 method: 'GET',
-                responseType: 'arraybuffer', // important
+                responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response);
-                let url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
-                let make_url = '';
-                if(url.indexOf('http') < 0){ //http가 없으면
-                    let arrUrl = url.split(':');
-                    console.log('IE !!!!!!!!!!!!!!!!!!!!!')
-                    console.log(arrUrl[1])
-                    console.log(arrUrl[1].toLowerCase())
-                    make_url = arrUrl[0] + ':' + window.location.origin + '/' + arrUrl[1].toLowerCase();
-                    url = make_url;
-                }
-                /*
-                let link = document.createElement('a');
-                //link.href = url;
-                link.setAttribute('href', url); //or any other extension
-                link.setAttribute('download', 'sample.xlsx'); //or any other extension
-                //document.body.appendChild(link);
-                link.click();*/
-
-                let link = document.createElement('a')
-                link.href = url
-                link.download = 'event.xlsx'
-                link.click()
-
-            });
-
-            /*axios({
-                method: 'GET',
-                url: environment.apiUrl + '/file/sample/store',
-                responseType: 'arraybuffer',
-                data: null
-            }).then(function(response) {
-                let blob = new Blob([response.data], { type: 'application/pdf' })
-                let link = document.createElement('a')
-                link.href = window.URL.createObjectURL(blob)
-                link.download = 'Report.xlsx'
-                link.click()
-            })*/
-/*
-            axios({
-                url: environment.apiUrl + '/file/sample/store',
-                method: 'GET',
-                responseType: 'blob',
-                headers: {"x-auth-token": sessionStorage.accessToken}
-            }).then(function(response) {
-                console.log('응답값')
                 console.log(response)
-                let blob = environment.apiUrl +new Blob([response.data], { type: response.headers['content-type'] })
-                let link = document.createElement('a')
-                link.href = window.URL.createObjectURL(blob)
-                link.download = 'event.xlsx'
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+                link.href = data
+                link.download = fileName
                 link.click()
-
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
             })
-*/
-            /*
-            CommonBoardService.getListDatas('file/sample/store', null, null).then((response) => {
-                    let result: any = response.data;
-                    console.log(result)
-                    if (result.length > 0) {
-                        console.log('샘플 다운로드 성공')
-                    } else {
-                        console.log('샘플 다운로드 오류')
-                    }
-                }
-                , (error) => {
-                    console.log(error)
-                }
-            ).catch();
-            */
         }
-
     }
 
 </script>

@@ -191,8 +191,21 @@
 
                 if(data.row.role == '0006'){ // 매장 사용자
 
-                    this.$router.push({ name:'modStoreUser' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    if(sessionStorage.role == '0001'){ //시스템관리자
+                        //this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        this.$router.push({ name:'modStoreUser' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    }else if(sessionStorage.role == '0003'){ //콜센터는 인증화면
 
+                        data['entranceUrl'] = 'mnUserList';
+                        data['nextUrl'] = 'modStoreUser';
+                        console.log(data)
+                        //OTP인증 화면으로 이동
+                        this.$router.push({ name:'franchiseOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
+                        //OTP인증 화면으로 이동
+                        //this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        //this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                    }
                 }else{ // 관리자*/
 
                     if(sessionStorage.role == '0001'){ //시스템관리자
@@ -215,6 +228,40 @@
                     //this.rowData = data.row;
                     //this.popComfirm();
 
+                    //파일 다운로드
+                    let fileName : string = data.row.saupFileNm;
+                    axios({
+                        url: environment.apiUrl +"/file/"+fileName,
+                        method: 'GET',
+                        responseType: 'blob', // important
+                        headers: {"x-auth-token": sessionStorage.accessToken}
+                    }).then((response) => {
+                        console.log(response)
+                        // It is necessary to create a new blob object with mime-type explicitly set
+                        // otherwise only Chrome works like it should
+                        var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                        // IE doesn't allow using a blob object directly as link href
+                        // instead it is necessary to use msSaveOrOpenBlob
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                            return
+                        }
+
+                        // For other browsers:
+                        // Create a link pointing to the ObjectURL containing the blob.
+                        const data = window.URL.createObjectURL(newBlob)
+                        var link = document.createElement('a')
+                        link.href = data
+                        link.download = fileName
+                        link.click()
+                        setTimeout(function () {
+                            // For Firefox it is necessary to delay revoking the ObjectURL
+                            window.URL.revokeObjectURL(data)
+                        }, 100)
+                    })
+
+                    /*
                     let server: any = environment.apiUrl;
                     let param: any = '/file/' + data.row.saupFileNm;
                     //파일 다운로드
@@ -231,7 +278,8 @@
                         link.setAttribute('download', data.row.saupFileNm); //or any other extension
                         document.body.appendChild(link);
                         link.click();
-                    });
+                    });*/
+
                 }
 
             }

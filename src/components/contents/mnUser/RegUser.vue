@@ -204,7 +204,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Watch} from "vue-property-decorator";
     import {CommonBoardService} from '../../../api/common.service';
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
@@ -280,7 +280,7 @@
             }
         created(){
             this.commonCode();
-            this.authMenuList();
+            //this.authMenuList();
 
             this.accountStatus = '0'; //계정상태 정상(0)으로 셋팅
 
@@ -302,6 +302,13 @@
         mounted(){
 
         }
+
+        @Watch('accountLevel') onLevelChange(){
+            if(this.accountLevel != ''){
+                this.authMenuList(this.accountLevel);
+            }
+        }
+
         commonCode(){
             // CommonBoardService.postListDatas('validattion','null',this.model).then(e=>{
             //   디폴트 코드 로딩하기
@@ -549,9 +556,13 @@
         }
 
         //메뉴 사용 권한 리스트 뿌리기
-        authMenuList(){
+        authMenuList(role){
 
-            let role = sessionStorage.role;
+            if(role==''){
+                return;
+            }
+
+            //let role = sessionStorage.role;
 
             CommonBoardService.getListDatas('menu/role/'+role, null, null).then(result=>{
                 if(result.status==200){

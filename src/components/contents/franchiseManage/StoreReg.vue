@@ -79,26 +79,26 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row">사업자등록번호</th>
+                        <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td colspan="2">
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p>
                         </td>
-                        <th scope="row">사업장명</th>
+                        <th scope="row">사업장명<em class="form_req">*</em></th>
                         <td colspan="2"><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
                     </tr>
                     <tr>
-                        <th scope="row">대표자명</th>
+                        <th scope="row">대표자명<em class="form_req">*</em></th>
                         <td colspan="2"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
-                        <th scope="row">전화번호</th>
+                        <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td colspan="2">
                             <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="20">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">사업자구분</th>
+                        <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td colspan="2">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType">
                                 <option value="">선택</option>
@@ -110,11 +110,11 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row">법인등록번호</th>
+                        <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
                         <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
                     </tr>
                     <tr>
-                        <th scope="row">주소</th>
+                        <th scope="row">주소<em class="form_req">*</em></th>
                         <td colspan="5">
                             <ul class="address_list">
                                 <li class="con01">
@@ -132,16 +132,12 @@
                     </tr>
                     <tr>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="SW 제공회사" v-model="subCompany">
-                                <option value="">선택</option>
-                                <template v-for="datas in subCompanyList">
-                                    <option v-bind:value=datas.code>{{datas.name}}</option>
-                                </template>
-                            </select>
+                        <td colspan="2">
+                            <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
                         </td>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td>
+                        <td colspan="2">
                             <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
                                 <option value="">선택</option>
                                 <template v-for="datas in upjongList">
@@ -149,14 +145,16 @@
                                 </template>
                             </select>
                         </td>
-                        <th scope="row">요양기관기호<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="요양기관기호" v-model="gikanId"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">요양기관기호</th>
+                        <td colspan="5"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <!-- //tbl view box -->
-
+<!--
             <div class="title_area">
                 <h4>승인대역 정보</h4>
                 <div class="btn_tbl_top type01">
@@ -164,9 +162,7 @@
                 </div>
             </div>
 
-            <!-- tbl view box -->
             <div class="tbl_view_box">
-                <!-- tbl view01 -->
                 <table class="tbl_view01">
                     <caption>승인대역 정보</caption>
                     <colgroup>
@@ -226,9 +222,7 @@
                     </tbody>
                 </table>
             </div>
-            <!-- //tbl view box -->
 
-            <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
                 <button type="button" id="" class="btn_m01 bg01 del" v-on:click="delAproval">승인대역 삭제</button>
             </div>
@@ -240,12 +234,9 @@
                 </div>
             </div>
 
-            <!-- account list -->
             <div class="account_list">
                 <div class="acc_col">
-                    <!-- tbl view box -->
                     <div class="tbl_view_box">
-                        <!-- tbl view01 -->
                         <table class="tbl_view01">
                             <caption>정보</caption>
                             <colgroup>
@@ -279,14 +270,12 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- //tbl view box -->
-                    <!-- btn tbl bot -->
                     <div class="btn_tbl_bot">
                         <button type="button" id="" class="btn_m01 bg02 del" v-on:click="delAdmin">ID 계정삭제</button>
                     </div>
                 </div>
             </div>
-
+임시 주석 처리 -->
             <br></br>
             <div class="account_list">
                 <div class="acc_col">
@@ -338,6 +327,8 @@
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
             <GajijumBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal1 = false"></GajijumBox>
 
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+
         </div>
         <!-- //content -->
     </section>
@@ -350,15 +341,20 @@
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
     import GajijumBox from '@/components/contents/franchiseManage/GajijumBox.vue';
+    import CompanyCodePop from '@/components/contents/franchiseManage/CompanyCodePop.vue'
     import {environment} from '../../../utill/environment';
 
     @Component({
         components: {
-            StoreReg, AddressBox, GajijumBox
+            StoreReg, AddressBox, GajijumBox, CompanyCodePop
         },
     })
     export default class StoreReg extends Vue {
         message: any = '';
+
+        companyCodeYn:boolean =false; //회사코드 팝업 구분
+        loadCodeList : any = [];
+        companyCodeArr : any = ['001','003','006']
 
         regbtnShow: boolean = false; //등록버튼 권한
 
@@ -383,6 +379,7 @@
         zipCode: any = ''; //우편번호
         upjong: any = ''; //업종구분
         subCompany: any = ''; //회사코드
+        subCompanyCnt: any = ''; //회사코드
         gikanId: any = ''; //요양기관기호
 
         //gajumStat: any = ''; //가점상태
@@ -497,7 +494,7 @@
 
         //승인대역 유효성 체크
         alrBandChk() {
-
+/* 임시 주석 처리
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
@@ -553,6 +550,9 @@
                     }
                 }
             }
+임시 주석 처리 */
+
+            this.fileUpload();
 
         }
 
@@ -612,7 +612,7 @@
             saupData['saupType'] = this.saupType; //사업자구분
             saupData['lawNum'] = this.lawNum; //법인등록번호
             saupData['upjong'] = this.upjong; //업종코드
-            saupData['subSaup'] = this.subCompany; //사업자구분
+            saupData['subSaup'] = this.loadCodeList; //this.subCompany; //사업자구분
             saupData['gikanId'] = this.gikanId; //요양기간 번호
             saupData['zipCode'] = this.zipCode; //사업장 우편번호
             saupData['addr1'] = this.addr1; //사업장 주소
@@ -626,6 +626,7 @@
             let aproData : any = {};
             let addData2 : any = []; //승인대역정보 배열
 
+/* 임시 주석 처리
             console.log('승인대역 정보 뿌리기')
             console.log(this.approvalList)
             console.log('관리자 정보 뿌리기')
@@ -648,6 +649,7 @@
                     }
                 }
             }
+임시 주석 처리 */
             console.log('승인대역 정보 확인');
             console.log(addData2);
             reqData['approvalBand'] = addData2; //승인대역 정보 셋팅
@@ -655,6 +657,7 @@
             //let admData: any = {};
             let admData: any = {};
             let addData3 : any = []; //사용자 정보 배열
+/* 임시 주석 처리
             if(this.adminList.length > 0){
                 for(let k=0; k<this.adminList.length; k++){
                     if(this.adminList[k].adminNm != undefined && this.adminList[k].adminNm != '') { //이름이 입력된 경우만 담기
@@ -670,6 +673,7 @@
                     }
                 }
             }
+임시 주석 처리 */
             console.log('승인대역 정보 확인');
             console.log(addData3);
             reqData['accounts'] = addData3; //관리자 정보 셋팅
@@ -743,8 +747,7 @@
         }
 
         validationChk(){
-//            this.insertInfo();
-//return;
+            let regNumber = /^[0-9]*$/;
 
             if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
@@ -767,11 +770,20 @@
             }else if(this.repPhonenum == ''){
                 alert('전화번호를 입력하세요.');
                 return;
+            }else if(!regNumber.test(this.repPhonenum)){
+                alert('전화번호는 숫자로 입력하세요.');
+                return;
             }else if(this.saupType == ''){
                 alert('사업자구분을 선택하세요.');
                 return;
             }else if(this.saupType == '1' && this.lawNum == ''){ //법인사업자 경우만 체크
                 alert('법인등록번호를 입력하세요.');
+                return;
+            }else if(this.saupType == '1' && this.lawNum.length != 13){ //법인사업자 경우만 체크
+                alert('법인등록번호는 13자리로 입력하세요.');
+                return;
+            }else if(this.saupType == '1' && !regNumber.test(this.lawNum)){ //법인사업자 경우만 체크
+                alert('법인등록번호는 숫자로 입력하세요.');
                 return;
             }else if(this.zipCode == ''){
                 alert('우편번호 버튼을 클릭하여 우편번호를 입력하세요.');
@@ -782,17 +794,18 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.subCompany == ''){
-                alert('회사코드를 선택하세요.');
+            }else if(this.subCompanyCnt == ''){
+                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
                 return;
             }else if(this.upjong == ''){
                 alert('업종구분을 선택하세요.');
                 return;
-            }else if(this.upjong == '0005' && (this.gikanId == '' || this.gikanId == null)){
+            }else if((this.upjong == '005' || this.upjong == '006') && (this.gikanId == '' || this.gikanId == null)){
                 alert('요양기관기호를 입력하세요.');
                 return;
             }
 
+/* 임시 주석 처리
             //승인대역 정보 체크
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
@@ -858,6 +871,7 @@
                     }
                 }
             }
+임시 주석 처리 */
 
             if(this.fileUploadGbn == '1' && this.uploadFileNm == ''){
                 alert('사업자등록증사본 파일을 첨부 하세요.');
@@ -1184,6 +1198,24 @@
                 event.target.value='';
             }
             /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
+        }
+
+        //회사코드 등록 팝업
+        subSaupPop(){
+            this.companyCodeYn = true;
+
+        }
+        getCodeList(data){ // 회사코드 선택 데이터 받는다
+            console.log('받은 회사코드')
+            console.log(data)
+            console.log('받은 회사코드 수 :: ' +data.length);
+
+            if(data!=null){
+                //this.saupSubSaupCnt = data.length;
+                this.subCompanyCnt = data.length;
+            }
+
+            this.loadCodeList = data;
         }
 
     }
