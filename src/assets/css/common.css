@@ -1280,7 +1280,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 .popup_wrapper .popup_body .popup_content.page_storenumber { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:515px;}
 .popup_wrapper .popup_body .popup_content.page_storenumber .tbl_scroll {height:320px;}
-.popup_wrapper .popup_body .popup_content.page_cash01 { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:850px;} /* 현금영수증 */
+.popup_wrapper .popup_body .popup_content.page_cash01 { position: relative; padding:30px 15px 30px 15px; overflow: hidden;} /* 현금영수증 */
 .popup_wrapper .popup_body .popup_content.page_code .btn_code_area {padding-top:10px; text-align: right;}
 
 /* layer small */
