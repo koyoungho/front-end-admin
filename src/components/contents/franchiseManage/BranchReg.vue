@@ -280,7 +280,7 @@
 
             <GajiBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
 
-            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="loadCodeList" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
         </div>
         <!-- //content -->

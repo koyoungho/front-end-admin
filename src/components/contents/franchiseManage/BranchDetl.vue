@@ -348,7 +348,7 @@
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
 
-            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="loadCodeList" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
         </div>
         <!-- //content -->
@@ -546,7 +546,7 @@
                         this.jijumShopNm = result.jijumShopNm; //지점명
                         //this.saupNo = result.saupId; //사업자 번호
                         this.saupId = result.jijumSaupId; //사업자등록번호
-                        this.storeNm = result.jijumShopNm;; //사업자명
+                        this.storeNm = result.jijumShopNm; //사업자명
                         this.repNm = result.chipNm; //대표자명
                         this.repPhonenum = result.telNum; //전화번호
                         this.saupType = result.saupType; //사업구분
@@ -555,7 +555,7 @@
                         this.addr1 = result.addr1; //주소
                         this.addr2 = result.addr2; //상세주소
                         this.loadCodeList = result.subSaup; //회사코드
-                        if(result.subSaup != null && result.subSaup > 0){
+                        if(result.subSaup != null && result.subSaup.length > 0){
                             this.saupSubSaupCnt = result.subSaup.length; //회사코드 수
                         }
                         this.saupUpjong = result.upjong; //업종코드

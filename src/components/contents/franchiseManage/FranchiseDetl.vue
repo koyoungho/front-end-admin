@@ -333,7 +333,7 @@
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
 
-            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="companyCodeArr" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
+            <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="loadCodeList" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
         </div>
         <!-- //content -->
@@ -530,7 +530,10 @@
                         this.zipCode = result.zipCode; //우편번호
                         this.addr1 = result.addr1; //주소
                         this.addr2 = result.addr2; //상세주소
-                        //this.saupSubSaup = result.subSaup; //회사코드
+                        this.loadCodeList = result.subSaup; //회사코드
+                        if(result.subSaup != null && result.subSaup.length > 0){
+                            this.saupSubSaupCnt = result.subSaup.length;
+                        }
                         this.saupUpjong = result.upjong; //업종구분
                         this.gajumStatus = result.gajumStatus; //가맹점 상태
                         this.regiDate = this.dateFormat(result.regiDate); //사업장 등록일

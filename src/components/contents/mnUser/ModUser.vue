@@ -58,9 +58,9 @@
                                 <option value="">선택</option>
                                 <option value="0">정상</option>
                                 <option value="1">승인대기</option>
-                                <option value="2">해지대기</option>
-                                <option value="3">사용중지</option>
-                                <option value="4">해지</option>
+                                <option value="2">사용중지</option>
+                                <option value="3">해지</option>
+                                <option value="4">해지신청</option>
                             </select>
                         </td>
                     </tr>
@@ -669,7 +669,7 @@
             let reqData : any = {
                 to : [account.email],
                 title : '현금영수증 비밀번호 초기화 안내 메일입니다.',
-                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://211.39.150.112:8888 에서 비밀번호 초기화 하세요.',
+                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://211.39.150.96:8888 에서 비밀번호 초기화 하세요.',
                 cc : [''],
              };
             // api 데이터 호출

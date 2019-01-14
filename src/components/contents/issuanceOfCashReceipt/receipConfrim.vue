@@ -189,6 +189,7 @@
 
         created(){
             this.makeHeader('hide');
+            this.getNow();
 
         }
         //돔렌더링완료시 진행
