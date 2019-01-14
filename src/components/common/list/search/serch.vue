@@ -342,7 +342,6 @@
 
         //선택한 가맹점,지점 정보 셋팅(지점 등록화면 상단의 지점 정보)
         setGaJijumData(data) {
-            console.log(data)
             this.searchItem.filter(e=>{
                 if(e.id=='gajumId'){
                     e.value=data.gajumId;

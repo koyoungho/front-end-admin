@@ -338,7 +338,6 @@
         dataVal(listIndex, columIndex,$event){
             let trObject : any = document.getElementById(listIndex)
             let nowLineOk :boolean = true;
-            console.log(this.dataGridDetail.dataGrid.columControl[columIndex].id)
 
             if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixPerm') {
                 if (this.listData[listIndex].fixPerm.length != 9) {
@@ -392,7 +391,6 @@
                 }
             }
             else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rstCode') {
-                console.log('rsnCode || ' + this.listData[listIndex].rstCode )
                 if(this.listData[listIndex].rstCode !='null'){
                     trObject.setAttribute('style','')
                 }else{
@@ -421,7 +419,6 @@
             else{
                 this.lineCheckOk = false;
                 trObject.setAttribute('style','background:red')
-                console.log('다입력안됨')
             }
         }
 
