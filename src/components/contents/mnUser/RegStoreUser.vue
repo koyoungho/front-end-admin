@@ -1098,16 +1098,5 @@
             })
         }
 
-        // Null체크
-        nullCheck(val){
-            if(val == null){
-                return '';
-            }else if(val == ''){
-                return '';
-            }else{
-                return val;
-            }
-        }
-
     }
 </script>
