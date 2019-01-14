@@ -345,9 +345,7 @@
             initPass['newPass'] = this.pwdConfirm; //패스워드
             // api 데이터 호출
             CommonBoardService.updateListData('accounts',this.resultId+'/password', initPass).then((response) => {
-                console.log(response)
-                    if (response.status == 200) {
-                        alert('변경이 완료되었습니다')
+                    if (response.data.code == '000') {
                         this.$router.push({name:'login'})
                     } else {
                         //alert(response.data.message);
