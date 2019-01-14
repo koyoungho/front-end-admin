@@ -97,10 +97,16 @@
         show(div){
 
             if(div == 'chart'){
+                if(this.tabShow){
+                    this.searchDate[0] = moment(new Date()).subtract(6, 'month');
+                }
                 this.chartShow =true;
                 this.listShow =false;
                 this.tabShow =false;
             }else if(div == 'list'){
+                if(this.tabShow){
+                    this.searchDate[0] = moment(new Date()).subtract(6, 'month');
+                }
                 this.chartShow =false;
                 this.listShow =true;
                 this.tabShow =false;
@@ -136,7 +142,6 @@
                 this.$children['2'].gajumStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
                 this.$children['2'].receuptStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
             }else{ // 요약
-
                 let timeChange = moment(new Date()).subtract(7, 'day')
                 this.searchDate = [timeChange,new Date()]
                 this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(new Date()).format("YYYYMMDD"));
