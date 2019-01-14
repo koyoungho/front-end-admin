@@ -82,7 +82,7 @@
         }
 
         created(){
-            let now = moment(new Date()).subtract(6, 'month');
+            let now = moment(new Date()).subtract(3, 'month');
             this.searchDate = [now,new Date()]
 
         }
@@ -98,14 +98,14 @@
 
             if(div == 'chart'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(new Date()).subtract(6, 'month');
+                    this.searchDate[0] = moment(new Date()).subtract(3, 'month');
                 }
                 this.chartShow =true;
                 this.listShow =false;
                 this.tabShow =false;
             }else if(div == 'list'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(new Date()).subtract(6, 'month');
+                    this.searchDate[0] = moment(new Date()).subtract(3, 'month');
                 }
                 this.chartShow =false;
                 this.listShow =true;
