@@ -309,7 +309,6 @@
        this.showModal= true;
     }
     setDataAddr(data) {
-        console.log(data)
         this.account['addr1'] = data.addr;
         this.account['zipCode'] = data.zip;
     }
