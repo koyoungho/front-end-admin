@@ -247,6 +247,7 @@
                     if(e.calenderCount > 1){
                         this.showMode='range'
                     }
+
                 }else if(e.type=='input'){
                       e.value='';
                 }else if(e.type=='input2'){
@@ -308,7 +309,22 @@
         }
 
         SearchButton(){
-            this.$emit('SearchToList', this.searchItem);
+            let checkYn = 'Y'
+            this.searchItem.filter(e=> {
+                if (e.type == 'date3') {
+                    if(e.validation==true){
+                        if(!e.searchStartDate){
+                            checkYn='N'
+                        }
+                    }
+                }
+            })
+            if( checkYn=='N'){
+                alert('오류발생월을 입력해주세요')
+            }else{
+                this.$emit('SearchToList', this.searchItem);
+            }
+
         }
 
         resetData(){
@@ -356,9 +372,9 @@
 </script>
 
 <style>
-  /*.mx-calendar-content .cell.actived {*/
-    /*background-color: #fa0b40 !important;*/
-  /*}*/
+  .mx-calendar-content .cell.actived {
+    background-color: #fa0b40 !important;
+  }
   /*.mx-calendar-content .cell.disabled {*/
     /*cursor: not-allowed;*/
     /*color: black!important;*/
