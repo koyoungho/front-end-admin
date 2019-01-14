@@ -77,6 +77,8 @@
 
             console.log('회사코드 받은 값')
             console.log(this.companyCodeVal)
+
+            this.checkBoxList=this.companyCodeVal
         }
 
         mounted(){

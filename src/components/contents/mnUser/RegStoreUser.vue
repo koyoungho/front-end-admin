@@ -149,8 +149,8 @@
                     <tr>
                         <th scope="row" class="sub_msg01">ID<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <input type="text" class="input form_id" title="ID 입력" v-model="id" v-on:keyup="idInputChk">
-                            <input type="text" title="ID 중복확인 여부" v-model="idYn">
+                            <input type="text" class="input form_id" title="ID 입력" v-model="id">
+                            <input type="hidden" title="ID 중복확인 여부" v-model="idYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkUserId(id)">중복확인</button>
                             <p class="info_msg" id="id_msg"></p>
                         </td>
@@ -376,6 +376,12 @@
                 let bit_file = document.getElementById('btnFile');
                 if(bit_file != null) {  bit_file.setAttribute('style', 'display:none'); }
             }*/
+        }
+
+        @Watch('id') onIdChange(){
+            this.idYn = '';
+            let idmsg = document.getElementById('id_msg');
+            if(idmsg!=null){ idmsg.innerHTML = ''; }
         }
 
         updateScore (data) {

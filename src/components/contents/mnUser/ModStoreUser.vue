@@ -306,6 +306,9 @@
                             if(blGbn!=null){ blGbn.removeAttribute('disabled'); }
                         }
 
+                        if(result.upjongCode != null && result.upjongCode != '001' && result.upjongCode != '002' && result.upjongCode != '003' && result.upjongCode != '003' )
+
+
                         //this.blGbNm = result.blGbNm;
                         //사용자에서는 업종구분 수정 불가능
                         //let obj = document.getElementById('upjongCodeID');  //업종구분

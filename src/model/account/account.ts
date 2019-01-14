@@ -15,6 +15,7 @@ export class Account { // 계정정보
     zipCode :string = ""
     password : string = "";
     passwordConfirm : string = "";
+    regDt : string = "";
 }
 
 
