@@ -4,7 +4,7 @@
 
     <!-- tbl info top -->
     <div class="tbl_info_top">
-      <div v-show="loading">
+      <div id="loading_bar" v-show="loading">
           <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->

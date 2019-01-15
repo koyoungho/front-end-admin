@@ -1363,3 +1363,16 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   .quick_banner .quick {position:fixed; left:calc(50% + 443px);}
   .quick_banner .page_top {position:fixed; left:calc(50% + 443px);}
 }
+
+/* Loading bar */
+#loading_bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
