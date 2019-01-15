@@ -14,7 +14,7 @@
 .top_header .logo > a {display:block; width:250px; height:30px; font-size:0; line-height:0; text-indent: -999em;}
 
 .gnb {position: absolute; top:0; width:100%; height:42px; margin-top:70px; text-align:center; background: #fff; border-top:1px solid #dedede; border-bottom:1px solid #dedede; z-index:2000;}
-.gnb_bg {display:none; position: absolute; top:40px; left:50%; right:0; margin-left:-491px; width: 982px; z-index: 110; height:300px; border: 1px solid #dedede;}
+.gnb_bg {display:none; position: absolute; top:40px; left:50%; right:0; margin-left:-491px; width: 982px; z-index: 110; height:300px;}
 .gnb .gnb_list {position: relative; width:984px; margin:0 auto; padding-left:0px;padding-right:0px;}
 .gnb .gnb_list > li {position: relative; float:left; width:196px; margin:0 0 0 0; border-right:1px solid #dedede; background: #fff;}
 .gnb .gnb_list > li:first-child {width:200px; border-left:1px solid #dedede;}
@@ -144,7 +144,7 @@ h3.login {font-family:'NanumB'; font-size: 26px; color:#212121; text-align: cent
 h4 {font-family:"NanumB"; font-size:16px; color:#212121; padding:0 0 0 20px; margin:38px 0 16px 0; background:url('../images/icon_bull01.png') no-repeat 0px 3px;}
 h4:nth-of-type(1) {margin-top:-10px;}
 h4.first {margin:28px 0 16px 0;}
-h4.first span {font-size: 13px;  float: right; color: #999;}
+h4.first span {font-size: 12px; float: right; color: #999; margin-top: 10px;}
 h4.con {position:relative; font-family:"NanumB"; font-size:20px; color:#212121; padding:0 0 0 0; margin:30px 0 10px 0; background:none;}
 h4.con:after {background:none;}
 h5.con {position:relative; font-family:"NanumB"; font-size:16px; color:#212121; padding:0 0 0 10px; margin:20px 0 10px 0;}
@@ -1180,7 +1180,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .btn_m01.bg02 {background:#ffffff; color:#212121; border: 1px solid #c6c6c6;}
 .btn_m01.bg03 {background:#f8f8f8; color:#212121; border: 1px solid #c6c6c6;}
 .btn_m01.bg04 {background:#ffffff; color:#da291c; border: 1px solid #da291c; padding-left:20px; padding-right:20px;}
-.btn_m01.bg05 {background:#5aad73; color:#ffffff; border: 1px solid #5aad73;}
+.btn_m01.bg05 {background:#5aad73; color:#ffffff; border: 1px solid #5aad73; float:right; margin-top:15px;}
 .btn_m01.add, .btn_m01.del, .btn_m01.reg {padding:0 14px 0 30px;}
 .btn_m01.sch {padding:0 14px 0 35px;}
 .btn_m01.add:after {content:''; position:absolute; top:10px; left:13px; width:16px; height:10px;background:url('../images/icon.png') no-repeat -58px -114px;}
@@ -1280,7 +1280,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 .popup_wrapper .popup_body .popup_content.page_storenumber { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:515px;}
 .popup_wrapper .popup_body .popup_content.page_storenumber .tbl_scroll {height:320px;}
-.popup_wrapper .popup_body .popup_content.page_cash01 { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:850px;} /* 현금영수증 */
+.popup_wrapper .popup_body .popup_content.page_cash01 { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:890px;} /* 현금영수증 */
 .popup_wrapper .popup_body .popup_content.page_code .btn_code_area {padding-top:10px; text-align: right;}
 
 /* layer small */
