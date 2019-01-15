@@ -503,7 +503,7 @@ select.wide {width:100%;}
 .search_box .search_list > li > input.sch_indcode02 {width:162px !important; margin-left:10px;} /* 사업자등록번호02 */
 .search_box .search_list > li > select {width:140px;}
 .search_box .search_list > li .chk_box {margin-top:10px;}
-.search_box .search_list > li .rdo_box {margin-top:7px;}
+.search_box .search_list > li .rdo_box {margin-top:7px; vertical-align:middle;}
 .search_box .search_list > li .btn .btn_s01.bg01 {width:90px;}
 .search_box.label01 .search_list > li > label {width:100px;} /* 사업자 번호 */
 .search_box .btn_area {display: inline-block; width: 100%; padding:0 0 20px 0; text-align:right;}
@@ -1202,7 +1202,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .btn_b02.bg01 {background:#da291c;}
 .btn_b02.bg02 {color:#212121; background:#ffffff; border: 1px solid #c6c6c6;}
 
-.btn_sch01 {font-size:0; line-height: 0; width:20px; height:20px; margin-top:6px; background:url('../images/icon.png') no-repeat -22px -112px;}
+.btn_sch01 {font-size:0; line-height: 0; width:20px; height:20px; margin:8px 0 0 -35px; position: absolute; background:url('../images/icon.png') no-repeat -22px -112px;}
 
 /* 버튼 위치 */
 .btn_top {text-align:right; margin-top:-70px; margin-bottom:36px;}
@@ -1376,3 +1376,13 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   justify-content: center;
   align-items: center;
 }
+
+
+/* SearchBox css */
+.search_box.page_new .search_list > li {text-align: right;}
+
+.w25 {width: 25%}
+.w33 {width: 33%}
+.w50 {width: 50%}
+
+.text_left {text-align: left !important;}
