@@ -159,24 +159,19 @@
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: this.soluVal , disable : this.soluDis , api : 'code/issuer' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
-                        //{type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: '' ,  api : '' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
-                        //{type: 'selectCode' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : '' , option : [{ codeNm : '할리스커피 가산' , code: '0093434' },{codeNm : '온누리 사업장' , code: '0093433' },{codeNm : '컴앤프로정보기술㈜' , code: '0070650' },{codeNm : '창훈이 롯데' , code: '0093432' },{codeNm : '한스치과의원' , code: '0093032' }]},
-                        //{type: 'selectObject' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : 'saupjang/gajum/summary' , option : [{ name: '', code:''}]},
-                        {type: 'inputPop2' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: this.gajumVal , disable : this.gajumDis,  api : '' , option : ''},
-                        //{type: 'selectCode' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : '' , option : [{ codeNm : '앤드컴 가산점' , code: '0001' },{codeNm : '창훈이 롯데' , code: '0001' },{codeNm : '할리스커피 가산' , code: '0001' },{codeNm : '메디팜 강남1점' , code: '0002' }]},
-                        //{type: 'selectCode' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : 'saupjang/jijum/summary' , option : [{ codeNm: '', code:''}]},
-                        {type: 'inputPop2' , title :'지점',id: 'jijumId', name:'jijumId' , value: this.jijumVal , disable : this.jijumDis ,  api : '' , option : ''},
-                        {type: 'selectCode' , title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상 ' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기 ' , code: '2' },{codeNm : '해지' , code: '3' }]},
-                        {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
-                        {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
-                        {type: 'date2', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                        {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
-                        {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
+                        {type: 'selectCode' ,class:'w33',liNull:false, title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: this.soluVal , disable : this.soluDis , api : 'code/issuer' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
+                        {type: 'inputPop2' ,class:'w33',liNull:false, title :'가맹점',id: 'gajumId', name:'gajumId' , value: this.gajumVal , disable : this.gajumDis,  api : '' , option : ''},
+                        {type: 'inputPop2' ,class:'w33',liNull:false, title :'지점',id: 'jijumId', name:'jijumId' , value: this.jijumVal , disable : this.jijumDis ,  api : '' , option : ''},
+                        {type: 'selectCode' ,class:'w33',liNull:false, title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상 ' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기 ' , code: '2' },{codeNm : '해지' , code: '3' }]},
+                        {type: 'selectCode' ,class:'w33 ',liNull:true, title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
+                        {type: 'radio' ,class:'w25',liNull:false, title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
+                        {type: 'date2',class:'w25',liNull:false, title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'select' ,class:'w25',liNull:false, title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
+                        {type: 'input',class:'w25 text_left',liNull:false, title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
                     ],
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                     goSearch : "iocSearch",
-                    searchClass : 'search_box page_store03',
+                    searchClass : 'search_box page_new',
                     searchClass2 : 'search_list'
                 }
 
