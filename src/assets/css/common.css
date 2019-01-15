@@ -759,7 +759,7 @@ select.wide {width:100%;}
 .comcode_box {overflow-x:auto; overflow-y: auto; width:420px; height:400px; margin:0 auto; border:1px solid #dedede; padding:20px;}
 .comcode_box .comcode_list li {padding:18px 0 0 0;}
 .comcode_box .comcode_list li:first-child {padding-top:0;}
-.comcode_box .comcode_list li >.chk_box {display:inline-block; width:100%;}
+.comcode_box .comcode_list li >.chk_box {position:relative; display:inline-block; width:100%;}
 .comcode_box .comcode_list li >.chk_box > label {display:inline-block; width:100%;}
 
 .code_mgt {width:100%; margin:0 auto}
