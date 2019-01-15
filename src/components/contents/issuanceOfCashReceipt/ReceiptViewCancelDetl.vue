@@ -388,7 +388,7 @@
                 else{
 
                     if(this.receiptOk ==false){
-                        alert('취소 가능한 전체금액을 확인해주세요')
+                        Vue.swal({text: '취소 가능한 전체금액을 확인해주세요'});
                         return ;
                     }else{
 
@@ -396,14 +396,14 @@
                         if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
                             this.canAceptTotal = 0;
                             this.canBong = 0;
-                            alert('취소 가능한 금액을 초과하였습니다')
+                            Vue.swal({text: '취소 가능한 금액을 초과하였습니다'})
                             return;
                         }else if(Number(this.canBongOrigin) < Number(this.canBong)){
-                            alert('면세 및 간이과세자 입니다')
+                            Vue.swal({text: '면세 및 간이과세자 입니다'})
                             this.canBong = 0;
                             return;
                         }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
-                            alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                            Vue.swal({text: '취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다'})
                             return;
                         }else{
                         this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong))); // 공급가액 : (합계+봉사료) * 1.1
@@ -413,16 +413,16 @@
                         if(Number(this.canAceptTotalOrigin) < Number(this.canAceptTotal)) {
                             this.canAceptTotal = 0;
                             this.canBong = 0;
-                            alert('취소 가능한 금액을 초과하였습니다')
+                            Vue.swal({text: '취소 가능한 금액을 초과하였습니다'})
                             return;
                         }else if(Number(this.canBongOrigin) < Number(this.canBong)){
                             console.log(this.canBongOrigin + "<" + this.canBong + '봉사료')
-                            alert('기존봉사료를 초과할수 없습니다')
+                            Vue.swal({text:'기존봉사료를 초과할수 없습니다'})
                             this.canBong = 0;
                             return;
                         }else if(Number(this.canAceptTotalOrigin) < (Number(this.canAceptTotal) - Number(this.canBong))){
                             console.log(this.canAceptTotalOrigin +"<"+ this.canAceptTotal + '+' +this.canBong + '합계금액안맞음' )
-                            alert('취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다')
+                            Vue.swal({text: '취소 가능금액과 봉사료가 원거래취소가능한금액을 초과하였습니다'})
                             return;
                         }else {
                             this.canTotal = Math.round((Number(this.canAceptTotal) - Number(this.canBong)) / 1.1); // 공급가액 : (합계+봉사료) * 1.1
@@ -472,7 +472,7 @@
         cancleReceipView(){
             this.objectKey = this.$route.params.objectKey
             if(!this.objectKey){
-                alert('접근할수 없습니다')
+                Vue.swal({text:'접근할수 없습니다'})
                 this.$router.push({name:'receiptViewCancel'});
             }else{
                 CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
@@ -500,12 +500,12 @@
             };
 
             if( this.canAceptTotal < 1 ){
-                alert('취소 금액이 존재하지않습니다')
+                Vue.swal({text:'취소 금액이 존재하지않습니다'})
             }
             else if(this.canTotal < 1){
-                alert('공급가액이 존재하지않습니다')
+                Vue.swal({text:'공급가액이 존재하지않습니다'})
             }else if(this.receiptOk ==false){
-                alert('취소 가능한 전체금액을 확인해주세요')
+                Vue.swal({text:'취소 가능한 전체금액을 확인해주세요'})
             }
             else{
                 // saleDate}/{perm}/cancel
@@ -546,7 +546,7 @@
         }
 
         downExel(){
-            alert("다운로드 준비중입니다.")
+            Vue.swal({text:"다운로드 준비중입니다."})
         }
 
 

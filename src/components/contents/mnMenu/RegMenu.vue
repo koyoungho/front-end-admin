@@ -245,16 +245,16 @@
         validationChk(){
 
             if(this.groupCode == ''){
-                alert('상위메뉴를 선택하세요.');
+                Vue.swal({text:'상위메뉴를 선택하세요.'});
                 return;
             }else if(this.name == ''){
-                alert('메뉴명을 입력하세요.');
+                Vue.swal({text:'메뉴명을 입력하세요.'});
                 return;
             }else if(this.useYn == ''){
-                alert('사용 여부를 선택하세요.');
+                Vue.swal({text:'사용 여부를 선택하세요.'});
                 return;
             }else if(this.menuPath == ''){
-                alert('메뉴경로를 입력하세요.');
+                    Vue.swal({text:'메뉴경로를 입력하세요.'});
                 return;
             }else{
 
@@ -402,14 +402,14 @@
                     //let result: any = response.data;
                     //console.log(result);
                     if (response.status == 200 || response.status == 201) {
-                        alert('메뉴 권한이 등록되었습니다.')
+                        Vue.swal({text:'메뉴 권한이 등록되었습니다.'})
                         //메뉴 등록 완료
                         //this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnMenu'})
                         //this.$router.push('/home/mnUserList');
                         this.$router.push('/home/mnMenu');
                     } else {
-                        alert('메뉴 등록에 실패하였습니다.\n다시 시도하세요.');
+                        Vue.swal({text:'메뉴 등록에 실패하였습니다.\n다시 시도하세요.'});
                         return;
                     }
                 }
