@@ -1238,7 +1238,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 #popup_cash01 {top:700px;}
 
 .popup_modal {background-color: rgb(0, 0, 0); position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; opacity: 0.7; z-index: 1200; cursor: pointer;}
-.popup_wrapper {display: block; background:transparent; position: absolute; top:180px; left: 50%; margin-left:-275px; border-radius:5px; border-top-left-radius: 0px; border-top-right-radius: 0px; box-shadow:0 2px 10px rgba(0,0,0,0.3);  z-index: 1300;}
+.popup_wrapper {display: block; background:transparent; position: absolute; top:50%; left: 50%; border-radius:5px; border-top-left-radius: 0px; border-top-right-radius: 0px; box-shadow:0 2px 10px rgba(0,0,0,0.3); z-index: 1300; transform: translate(-50%, -50%);}
 .popup_wrapper .popup_header {display:block; height:50px; line-height:50px; background:#d32c25; border:1px solid #d32c25; border-radius:5px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding:0 15px; border-bottom:1px solid #ebebeb;}
 .popup_wrapper .popup_header > h2 {display:inline-block; font-family:'NanumB'; font-size:18px; color:#fff; margin:0;    margin-top: 13px}
 .popup_wrapper .popup_header .btn_close {position:absolute; display: inline-block; z-index: 101; top:15px; right:15px; width: 20px; height: 20px; line-height: 0; z-index:100;
@@ -1266,7 +1266,6 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper .popup_body .bottom_area .btn_bot {padding-top:20px;}
 .popup_wrapper .btn_b01, .popup_wrapper .btn_b02 {min-width:100px; height:38px; line-height:38px; margin-left:3px; margin-right:3px;}
 
-.popup_wrapper.large {margin-left:-350px;}
 .popup_wrapper .popup_body .popup_content.page_sch { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:515px;}
 .popup_wrapper .popup_body .popup_content.page_sch .search_box.type01 .search_inner .search_list > li > label {width:80px;}
 .popup_wrapper .popup_body .popup_content.page_sch .tbl_scroll {height:200px;}
@@ -1284,7 +1283,6 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper .popup_body .popup_content.page_code .btn_code_area {padding-top:10px; text-align: right;}
 
 /* layer small */
-.popup_wrapper.small {margin-left:-210px;}
 .popup_wrapper.small .popup_body .popup_content {height:auto; padding:26px 30px 22px 30px;}
 
 /* layer alert */
@@ -1293,7 +1291,6 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper.alert .popup_body .popup_content {height:auto; padding:6px 30px 22px 30px;}
 
 #popup_receipt.popup_wrapper .popup_body .receipt > img {width:100%; height:auto; border:2px solid #7f7f7f;} /* 사업자등록증 사본 */
-#popup_code.popup_wrapper {top:100px;}
 
 
 @media print {
