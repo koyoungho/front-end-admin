@@ -536,11 +536,11 @@
                         }
                         this.saupUpjong = result.upjong; //업종구분
                         this.gajumStatus = result.gajumStatus; //가맹점 상태
-                        this.regiDate = this.dateFormat(result.regiDate); //사업장 등록일
-                        this.canDate = this.dateFormat(result.canDate); //사업장 해지일
+                        this.regiDate = this.dateFormat_hms(result.regiDate); //사업장 등록일
+                        this.canDate = this.dateFormat_hms(result.canDate); //사업장 해지일
                         this.blGb = result.blGb; //BL구분(시스템 관리자만 변경가능)
                         this.blGbNm = result.blGbNm; //BL상태
-                        this.blDate = result.blDate; //BL등록일
+                        this.blDate = this.dateFormat_hms(result.blDate); //BL등록일
 
                         if(sessionStorage.role == '0001') { //시스템관리자만 변경 가능
                             let blGb = document.getElementById('blGbID');
@@ -1280,6 +1280,14 @@
             }
 
             this.loadCodeList = data;
+        }
+
+        dateFormat_hms(data){
+            if(data == null || data == ''){
+                return '';
+            }else {
+                return moment(data, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
+            }
         }
 
     }

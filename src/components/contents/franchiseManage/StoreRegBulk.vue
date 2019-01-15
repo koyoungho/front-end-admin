@@ -233,7 +233,7 @@
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
             console.log(menuList)
-            let programId = 'storeRegBulk'; //메뉴ID
+            let programId = 'storeList'; //메뉴ID
             for(let i=0; i<menuList.length; i++){
                 for(let j=0; j<menuList[i].subMenuDtos.length; j++){
 
