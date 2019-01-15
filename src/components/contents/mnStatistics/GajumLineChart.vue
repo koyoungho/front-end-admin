@@ -2,18 +2,13 @@
     <div>
         <h4>가맹점 현황</h4>
         <!-- grid chart box -->
+        <div v-show="loading1">
+            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+        </div>
+
         <div class="grid_chart_box col02">
-            <!--<div class="col">-->
-                <!--&lt;!&ndash;<ul class="chart_list">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li class="on"><a href="#">전체</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">KT</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">롯데</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">가입</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">해지</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-            <!--</div>-->
             <div class="col" style ="width:100%">
-                <div class="chart_box">
+                <div class="chart_box" >
                     <ve-line :data="chartDataJoin" :settings="ChartSettingsJoin" height="280px"></ve-line>
                 </div>
             </div>
@@ -21,6 +16,9 @@
 
         <h4>현금영수증 발행 현황</h4>
         <!-- grid chart box -->
+        <div  v-show="loading2">
+        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+        </div>
         <div class="grid_chart_box col02">
             <div class="col">
                 <ul class="chart_list">
@@ -32,8 +30,7 @@
                 </ul>
             </div>
             <div class="col">
-                <div class="chart_box">
-                    <!--<img src="../../../assets/images/img_chart01.png" alt="" style="margin:30px 50px 0 50px">-->
+                <div class="chart_box" >
                     <ve-line v-bind:data="chartDataCash" v-bind:settings="ChartSettingsCash" height="280px"></ve-line>
 
                 </div>
@@ -49,11 +46,13 @@
     import {format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
 
         components: {
             GajumLineChart
+            , VueSimpleSpinner
         }
     })
     export default class GajumLineChart extends Vue {
@@ -68,6 +67,9 @@
         dateArray2 : any = [];
         chart1 : boolean = false;
         OringinChart : any = "";
+
+        loading1 :boolean= false;
+        loading2 :boolean= false;
 
         ChartSettingsJoin :any = {
             labelMap: {
@@ -117,6 +119,8 @@
         }
 
         created(){
+            this.loading1 = true;
+            this.loading2 = true;
         }
 
         mounted(){
@@ -124,7 +128,7 @@
         }
 
         gajumStatisticsChart(date1,date2){
-            // this.chart1=true;
+            this.loading1=true;
             CommonBoardService.getListDatas('statistics','gajum',{responseType:'CHART',searchStartDate: date1 , searchEndDate: date2 }).then(result=>{
                 if(result.status==200) {
                     this.gajumList = result.data
@@ -132,13 +136,17 @@
                     result.data.filter(e=>{
                         this.chartDataJoin.rows.push(e)
                     })
+                }else{
 
                 }
+                this.loading1 = false;
             }).catch(e=>{
+                this.loading1=false;
             })
         }
 
         receuptStatisticsChart(date1,date2){
+            this.loading2=true;
             CommonBoardService.getListDatas('statistics','receipt',{responseType:'CHART',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                 if(result.status==200){
                     console.log(result)
@@ -149,7 +157,9 @@
                     })
                     this.OringinChart = this.chartDataCash.columns
                 }
+                this.loading2=false;
             }).catch(e=>{
+                this.loading2=false;
             })
         }
     }

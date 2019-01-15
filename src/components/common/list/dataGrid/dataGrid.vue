@@ -5,7 +5,6 @@
     <!-- tbl info top -->
     <div class="tbl_info_top">
       <div v-show="loading">
-        <!--<ClipLoader class="custom-class" :loading="loading" :size="35" :sizeUnit="`px`"  :color='`#D0021B`'></ClipLoader>-->
           <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->
