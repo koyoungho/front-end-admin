@@ -230,7 +230,6 @@
                 showCancelButton: true,
                 showCloseButton: true,
                 reverseButtons: true
-
             }).then((result) => {
 
                 CommonBoardService.deleteListDatas('terms/temp/'+ this.termsType, this.termsOrder_old, null).then((response) => {

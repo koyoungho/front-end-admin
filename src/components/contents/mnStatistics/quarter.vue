@@ -113,11 +113,12 @@
         }
 
         codeAdd(){
-
-        }
-
-        quarterAdd(){
-
+            let Object :any = [];
+            // CommonBoardService.postListDatas('statistics/saupjajungsan','addbungi',Object).then(result=>{
+            //     if(result.status==201){
+            //         Vue.swal({text: '저장되었습니다'});
+            //     }
+            // })
         }
 
     }

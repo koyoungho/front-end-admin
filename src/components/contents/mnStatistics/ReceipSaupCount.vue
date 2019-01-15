@@ -98,8 +98,8 @@
          * 신규분기정산등록
          */
         newQuarterReg(){
-            Vue.swal({text: '준비중입니다'});
-            // this.popupYns=true;
+            // Vue.swal({text: '준비중입니다'});
+            this.popupYns=true;
         }
         /**
          * 정산룰조회
