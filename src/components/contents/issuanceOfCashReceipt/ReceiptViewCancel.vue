@@ -4,16 +4,14 @@
         <!--<resize-observer @notify="handleResize"/>-->
 
         <div class="content">
-            <div>
-                <h2 class="blind">{{titles}}</h2>
-                <h3>{{subTitle}} </h3>
+            <h2 class="blind">{{titles}}</h2>
+            <h3>{{subTitle}} </h3>
 
-                <div class="btn_top">
-                    <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
-                </div>
-
-                <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+            <div class="btn_top">
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
             </div>
+
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
         </div>
         <!-- //content -->
     </section>

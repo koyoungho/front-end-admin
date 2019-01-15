@@ -10,9 +10,10 @@
         <!-- //content -->
 
         <div class="btn_bot type03">
-            <button type="button" id="" class="btn_b01 bg02" v-on:click="goCancel">취소</button>
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" v-show="regShow">임시저장</button>
+            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
             <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
+            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentCancel"  v-show="regShow">제출취소</button>
+            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentTax"  v-show="regShow">국세청제출</button>
         </div>
         </div>
     </section>
@@ -142,41 +143,97 @@
 
         }
 
-        //취소
-        goCancel(){
-
-        }
-
         //제출
         goPresent(){
             //
-            Vue.swal({text: '준비중입니다'});
 
-            // if(!this.listItem.search[4].searchStartDate){
-            //     Vue.swal({text: '오류발생월을 선택해주세요'});
-            //     return;
-            // }else{
-            //     let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
-            //
-            // }
+            if(!this.listItem.search[4].searchStartDate){
+                Vue.swal({text: '오류발생월을 선택해주세요'});
+                return;
+            }else{
+                let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
+                let subSaup = this.listItem.search[0].value
+
+                Vue.swal({
+                    text: '제출하시겠습니까?',
+                    showCancelButton: true,
+                    showCloseButton: true,
+                }).then((result) => {
+                    CommonBoardService.putListData('receupt-error/innerfix', errorMonth + '/' + subSaup, null).then(result => {
+                        if (result.status == 200) {
+                            Vue.swal({text: '제출이 반영되었습니다'});
+                        }
+                        else {
+                        }
+                    }).catch(error => {
+                    })
+                })
+            }
+
         }
 
-        //저장
+        goPresentCancel(){
+            let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
+            let subSaup = this.listItem.search[0].value
+            Vue.swal({
+                text: '제출취소하시겠습니까?',
+                showCancelButton: true,
+                showCloseButton: true,
+            }).then((result) => {
+                CommonBoardService.putListData('receupt-error/innerfix', errorMonth + '/' + subSaup, null).then(result => {
+                    if (result.status == 200) {
+                        Vue.swal({text: '제출이 취소 되었습니다'});
+                    }
+                    else {
+                    }
+                }).catch(error => {
+                })
+            })
+        }
+
+        goPresentTax(){
+            let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
+            Vue.swal({
+                text: '국세청 제출하시겠습니까?',
+                showCancelButton: true,
+                showCloseButton: true,
+            }).then((result) => {
+                CommonBoardService.putListData('receupt-error/innerfix', errorMonth, null).then(result => {
+                    if (result.status == 200) {
+                        Vue.swal({text: '국세청 제출이 반영되었습니다'});
+                    }
+                    else {
+                    }
+                }).catch(error => {
+
+                })
+            })
+        }
+
+        //임시저장
         goInsert(){
-            Vue.swal({text: '준비중입니다'});
-            // alert('준비중입니다')
-        //     let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
-        //     let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
-        //
-        //     if(checkTrue){
-        //             console.log(ObjectData)
-        //
-        //         CommonBoardService.putListData('receupt-error' , null , ObjectData).then(result=>{
-        //             if(result.status==200){
-        //                 Vue.swal({text: '수정되었습니다'});
-        //             }
-        //         })
-        //     }
+            if(!this.listItem.search[4].searchStartDate){
+                Vue.swal({text: '오류발생월을 선택해주세요'});
+                return;
+            }else{
+                let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
+                let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
+
+                if(ObjectData) {
+
+                    if (ObjectData.length > 0){
+                        CommonBoardService.putListData('receupt-error', null, ObjectData).then(result => {
+                            if (result.status == 200) {
+                                Vue.swal({text: '임시 저장을 완료 하였습니다'});
+                            }
+                        })
+                    }else{
+                        Vue.swal({text: '데이터가 존재하지않습니다'});
+                    }
+                }else{
+                    Vue.swal({text: '데이터가 존재하지않습니다'});
+                }
+            }
         }
 
     }

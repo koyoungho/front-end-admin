@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://211.39.150.112",
+    "target": "http://211.39.150.96:8888",
     "secure": false,
     "logLevel": "info",
     "pathRewrite": {
