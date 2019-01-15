@@ -124,10 +124,12 @@
          */
         toPolicyList(){
 
+            this.objectKey['hisSeq'] = this.hisSeq;
+
             if(this.routeNm == 'policyDetail'){
-                this.$router.push({name:'policyList', params:{hisSeq:this.hisSeq}});
+                this.$router.push({name:'policyList', params:{objectKey:this.objectKey}});
             }else{
-                this.$router.push({name:'personalList', params:{hisSeq:this.hisSeq}});
+                this.$router.push({name:'personalList', params:{objectKey:this.objectKey}});
 
             }
 

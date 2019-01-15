@@ -32,7 +32,7 @@
                             </select>
                             <span class="form_area">
                             <span class="chk_box right">
-                                <input type="checkbox" id="aa01" v-model="importantYnB" v-on:click="changeYn"><label for="aa01">중요공지</label>
+                                <input type="checkbox" id="aa01" v-on:click="changeYn"><label for="aa01">중요공지</label>
                             </span>
                         </span>
                         </td>
