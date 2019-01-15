@@ -502,7 +502,7 @@ select.wide {width:100%;}
 .search_box .search_list > li > input.sch_appuser {width:196px !important;} /* 고객명 */
 .search_box .search_list > li > input.sch_indcode02 {width:162px !important; margin-left:10px;} /* 사업자등록번호02 */
 .search_box .search_list > li > select {width:140px;}
-.search_box .search_list > li .chk_box {margin-top:10px;}
+.search_box .search_list > li .chk_box {margin-top:7px; vertical-align:middle;}
 .search_box .search_list > li .rdo_box {margin-top:7px; vertical-align:middle;}
 .search_box .search_list > li .btn .btn_s01.bg01 {width:90px;}
 .search_box.label01 .search_list > li > label {width:100px;} /* 사업자 번호 */
@@ -1382,8 +1382,15 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 /* SearchBox css */
 .search_box.page_new .search_list > li {text-align: right;}
 
+.w15 {width: 15%}
+.w20 {width: 20%}
 .w25 {width: 25%}
-.w33 {width: 33%}
+.w30 {width: 30%}
+.w33 {width: 33.3%}
 .w50 {width: 50%}
+.w100 {width: 100%}
 
+.inline {display : inline}
+.text_center {text-align: center !important;}
 .text_left {text-align: left !important;}
+.placeLeft {left: 10px !important;}

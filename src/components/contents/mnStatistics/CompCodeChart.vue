@@ -1,6 +1,9 @@
 <template>
     <!-- container -->
     <section id="container">
+        <div id="loading_bar" v-show="loading">
+          <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+        </div>
         <!-- content  -->
         <div class="content">
             <h2 class="blind">통계관리</h2>
@@ -312,11 +315,12 @@
     import {CcChart} from '../../../model/chart/compCodeChart';
     import {CcChartAcount} from '../../../model/chart/compCodeChartAccount';
     import moment from 'moment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
 
         components: {
-            CompCodeChart, CompCodeChartPop
+            CompCodeChart, CompCodeChartPop , VueSimpleSpinner
         }
     })
     export default class CompCodeChart extends Vue {
@@ -337,6 +341,7 @@
         loadCodeList : any = [];
         loadCode : boolean = false;
         regShow : boolean = false;
+        loading :boolean = false;
 
         lang : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],
@@ -427,7 +432,7 @@
         }
 
         compCodeChart(){
-
+            this.loading= true;
             if(this.loadCode){
               this.loadCodeList = this.loadCodeList
             }else{
@@ -444,6 +449,7 @@
                                 this.monthCount=true;
                             }
                         })
+                        this.loading= false;
                     }
             }).catch(e=>{
 

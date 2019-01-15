@@ -8,7 +8,7 @@
         <template v-for="item in searchItem">
 
           <template v-if="item.type=='date2'" >
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==1">
                 <span class="form_cal">
@@ -23,10 +23,13 @@
                 </span>
               </template>
             </li>
+            <template v-if="item.liNull">
+            <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
 
           <template v-if="item.type=='date3'" >
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==1">
                 <span class="form_cal">
@@ -41,90 +44,123 @@
                 </span>
               </template>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
 
           <template v-if="item.type=='input'">
-            <li>
+            <li :class="item.class">
               <template v-if="item.title !=''"><label for="aa">{{item.title}}</label></template>
               <template v-if="item.title ==''"><input type="text"  v-model="item.value"   class="input sch_appuser"></template>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
 
           <template v-if="item.type=='input2'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  :title="item.title"  :placeholder="item.placeholder">
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='select'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                 <option value="">선택</option>
                 <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='selectObject'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                 <option value="">선택</option>
                 <option v-for="tt in item.option" :value="tt.code" >{{tt.name}}</option>
               </select>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='selectCode'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
                 <select v-model="item.value"  class="select form_w100" title="발급용도 선택" v-bind:disabled="item.disable">
                   <option value="">선택</option>
                   <option v-for="tt in item.option" :value="tt.code">{{tt.codeNm}}</option>
                 </select>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='radio'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <span v-for="radioItem in item.option" class="rdo_box" >
                 <input type="radio" name="radioBox"  :value="radioItem.value" v-model="item.value"  ><label for="aa11">{{radioItem.name}}</label>
               </span>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='check'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <span class="chk_box" v-for="checkItem in item.option">
               <input type="checkbox" v-model="checkItem.value" ><label for="aa01">{{checkItem.name}}</label>
             </span>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='popup'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
                 <input type="text"  class="input" v-model="item.value" readonly>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='inputPop'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
               <template v-if="!item.disable"> <!-- 가맹점관리자는 검색 못함(자신것만 볼수 있음) -->
                 <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
               </template>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='inputPop2'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
               <template v-if="!item.disable"> <!-- 지점관리자는 검색 못함(자신것만 볼수 있음) -->
                 <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen($event, item)">검색</button>
               </template>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
           <template v-if="item.type=='selectYYMM'">
-            <li>
+            <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                 <option value="">선택</option>
@@ -135,6 +171,9 @@
                 <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
             </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
           </template>
         </template>
       </ul>

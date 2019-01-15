@@ -62,7 +62,7 @@
                         <td>
                             <span class="rdo_box"><input type="radio" name="chk" value="0" id="aa11" checked="checked" v-model="cultGb"><label for="aa11">일반</label></span>
                             <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa12" v-model="cultGb"><label for="aa12">도서/공연</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13" v-model="cultGb"><label for="aa13">대중교통</label></span>
+                            <!--<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13" v-model="cultGb"><label for="aa13">대중교통</label></span>-->
                         </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
@@ -374,20 +374,21 @@
             }else if(this.positionGb == ''){
                 Vue.swal({text: '고객신분확인을 선택하세요.'});
                 return;
-            }else if(this.positionGb != '' && this.confirm == '') {
-                if (this.positionGb == '1') { //휴대폰
+
+            }else if(this.positionGb != '' && this.confirm == ''){
+                if(this.positionGb == '1'){ //휴대폰
                     Vue.swal({text: '고객신분확인에 휴대폰 번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '2') { //주민등록번호
+                }else if(this.positionGb == '2'){ //주민등록번호
                     Vue.swal({text: '고객신분확인에 주민등록번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '3') { //사업자등록번호
+                }else if(this.positionGb == '3'){ //사업자등록번호
                     Vue.swal({text: '고객신분확인에 사업자등록번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '4') { //카드번호
+                }else if(this.positionGb == '4'){ //카드번호
                     Vue.swal({text: '고객신분확인에 현금영수증 카드번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '5') { //QR번호
+                }else if(this.positionGb == '5'){ //QR번호
                     Vue.swal({text: '고객신분확인에 QR번호를 입력하세요.'});
                     return;
                 }

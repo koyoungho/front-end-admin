@@ -64,7 +64,7 @@
                             {columName : '거래일자' ,id : 'saleDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat:'YYYY.MM.DD'},
                             {columName : '승인번호' ,id : 'perm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                             {columName : '금액' ,id : 'totamt', type:'money', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'text-align: right' } ,
-                            {columName : '발급용도' ,id : 'geogu',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '발급용도' ,id : 'geoguNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '거래구분' ,id : 'trgu',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소' , options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }]  }, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '회사코드' ,id : 'subSaup',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
                             {columName : '사업자번호' ,id : 'saupId',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  },
@@ -78,8 +78,8 @@
                         apiUrl : 'receipt',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
-                        mTotalControl : [{totalTitle : '합계 금액' , id: 'totalAmt' , value : '' },{totalTitle : '봉사료' , id: 'bong' , value : '' },{totalTitle : '공급가액' , id: 'amt' , value : '' },
-                            {totalTitle : '부가세' , id: 'vat' , value : '' }]
+                        mTotalControl : [{totalTitle : '합계 금액' , id: 'totalAmt' , value : '' },{totalTitle : '합계봉사료' , id: 'bong' , value : '' },{totalTitle : '합계공급가액' , id: 'amt' , value : '' },
+                            {totalTitle : '합계부가세' , id: 'vat' , value : '' }]
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
@@ -87,7 +87,7 @@
                         {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
                         {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
                         {type: 'date2', title :'거래일자', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                        {type: 'select' , title :'발급용도',id: 'issuePurpose', name:'issuePurpose' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
+                        {type: 'select' , title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
                         {type: 'select' , title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
                         {type: 'select' , title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '온라인' , value: 'Y' },{name : '오프라인' , value: 'N' }]},
                         {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},

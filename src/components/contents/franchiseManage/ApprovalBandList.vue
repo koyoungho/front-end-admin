@@ -69,18 +69,18 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: 'code/aprvcode',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: 'N'}, {codeNm: '등록',code: 'Y'}]},
-                    {type: 'date2', title :'등록일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                    {type: 'select',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}]},
-                    {type: 'input', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
+                    {type: 'selectObject' ,class:'w33',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
+                    {type: 'selectCode',class:'w33',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: 'code/aprvcode',option: [{name: '', value: ''}]},
+                    {type: 'selectCode',class:'w33',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: 'N'}, {codeNm: '등록',code: 'Y'}]},
+                    {type: 'date2',class:'w33', title :'등록일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'select',class:'w33',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}]},
+                    {type: 'input',class:'w33 text_left', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                 ],
                 paging: {currentPage: 1, lastPage: 0, viewPageSize: 10, totalRecords: 0, from: 0, to: 0, perPage: 10},
                 goSearch: "iocSearch",
-                searchClass: 'search_box page_store04',
+                searchClass: 'search_box page_new',
                 searchClass2: 'search_list'
             }
 
