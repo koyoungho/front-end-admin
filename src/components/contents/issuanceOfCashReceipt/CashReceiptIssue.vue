@@ -366,11 +366,14 @@
             this.vat = '0'; //부가세
         }
         receiptIssue() { //현금영수증 발급
+            let regNumber = /^[0-9]*$/;
 
-            if(this.positionGb == '') {
+            if(this.geogu == ''){
+                Vue.swal({text: '발급용도를 선택하세요.'});
+                return;
+            }else if(this.positionGb == ''){
                 Vue.swal({text: '고객신분확인을 선택하세요.'});
                 return;
-
             }else if(this.positionGb != '' && this.confirm == '') {
                 if (this.positionGb == '1') { //휴대폰
                     Vue.swal({text: '고객신분확인에 휴대폰 번호를 입력하세요.'});
@@ -396,6 +399,10 @@
             }
             else if(this.positionGb != '' && this.confirm != ''){
                 if(this.positionGb == '1'){ //휴대폰 11자리까지
+                    if(!regNumber.test(this.confirm)){
+                        Vue.swal({text: '휴대폰 번호는 숫자만 입력가능합니다.'});
+                        return;
+                    }
                     if(this.confirm.length > 11){
                         Vue.swal({text: '휴대폰 번호는 11자리까지 입력가능합니다.'});
                         return;
@@ -404,6 +411,10 @@
                         return;
                     }
                 }else if(this.positionGb == '2'){ //주민등록번호 13자리
+                    if(!regNumber.test(this.confirm)){
+                        Vue.swal({text: '주민등록번호는 숫자만 입력가능합니다.'});
+                        return;
+                    }
                     if(this.confirm.length != 13){
                         Vue.swal({text: '주민등록번호를 확인하세요'});
                         return;
@@ -414,11 +425,19 @@
                         saupNo1 = saupNo1.substring(2, 1);
                     }
                     if ((saupNo1 >= 1 && saupNo1 < 81) || (saupNo1 >= 89 && saupNo1 <= 99)) { //개인
+                        if(!regNumber.test(this.confirm)){
+                            Vue.swal({text: '사업자등록번호는 숫자만 입력가능합니다.'});
+                            return;
+                        }
                         if(this.confirm.length != 10){ //개인은 10자리
                             Vue.swal({text: '사업자등록번호는 10자리로 입력하세요.'});
                             return;
                         }
                     } else { //법인
+                        if(!regNumber.test(this.confirm)){
+                            Vue.swal({text: '법인 사업자등록번호는 숫자만 입력가능합니다.'});
+                            return;
+                        }
                         if(this.confirm.length != 13){ //법인은 13자리
                             Vue.swal({text: '법인 사업자등록번호는 13자리로 입력하세요.'});
                             return;
@@ -426,30 +445,43 @@
                     }
                 }else if(this.positionGb == '4'){ //카드번호
                     if(this.confirm.indexOf('15442020') > -1){ //현금영수증 전공
+                        if(!regNumber.test(this.confirm)){
+                            Vue.swal({text: '현금영수증 전용카드는 숫자만 입력가능합니다.'});
+                            return;
+                        }
                         if(this.confirm.length != 18) {
                             Vue.swal({text: '현금영수증 전용카드는 18자리를 입력하세요'});
                             return;
                         }
                     }else{
-                        Vue.swal({text: '카드번호는 16자리로 입력하세요'});
-                        return;
+                        if(!regNumber.test(this.confirm)){
+                            Vue.swal({text: '카드번호는 숫자만 입력가능합니다.'});
+                            return;
+                        }
+                        if(this.confirm.length != 16) {
+                            Vue.swal({text: '카드번호는 16자리로 입력하세요'});
+                            return;
+                        }
                     }
                 }else if(this.positionGb == '5'){ //QR번호
+                    if(!regNumber.test(this.confirm)){
+                        Vue.swal({text: 'QR번호는 숫자만 입력가능합니다.'});
+                        return;
+                    }
                     if(this.confirm.length != 20){
                         Vue.swal({text: 'QR번호는 20자리로 입력하세요.'});
                         return;
                     }
                 }else if(this.positionGb == '6'){ //자진발급
+                    if(!regNumber.test(this.confirm)){
+                        Vue.swal({text: '자진발급번호는 숫자만 입력가능합니다.'});
+                        return;
+                    }
                     if(this.confirm != '0100001234'){
                         Vue.swal({text: '자진발급번호를 바르게 입력하세요.'});
                         return;
                     }
                 }
-            }
-
-            if(this.geogu == ''){
-            Vue.swal({text: '발급용도를 선택하세요.'});
-            return;
             }
             if(this.soluId == ''){
                 Vue.swal({text: '발급 사업자가 존재하지않습니다'});
@@ -536,7 +568,6 @@
             CommonBoardService.getListDatas('time', null, null).then((response) => {
 
                     this.nowTime = moment(response.data.time,'YYYYMMDDHHmmss').format('YYYYMMDD')
-
 
                 }, (error) => {
                     //this.$Progress.finish();
