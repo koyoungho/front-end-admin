@@ -646,11 +646,6 @@
 
                     this.listOragin = result.data;
 
-                    if(result.totalRecords){
-                    this.totalCount = result.totalRecords;
-                    }else{
-                    this.totalCount = result.data.length
-                    }
 
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
 
@@ -722,6 +717,11 @@
                     }
                     else {
 
+                    }
+                    if(result.totalRecords){
+                        this.totalCount = result.totalRecords;
+                    }else{
+                        this.totalCount = this.listData.length
                     }
                     this.loading = false;
                     // this.$Progress.finish();

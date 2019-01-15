@@ -25,7 +25,7 @@
                         <td><input type="text" class="input form_w100" title="이름" v-model="name"></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="phoneNum">
+                            <input type="text" class="input form_w100" title="휴대폰번호" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum">
                         </td>
                     </tr>
                     <tr>
@@ -112,7 +112,7 @@
                     <tr>
                         <th scope="row">사업자등록번호</th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdCh()" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''" v-model="saupId" v-on:keyup="saupIdCh()" maxlength="10">
                             <input type="hidden" v-model="saupIdChkYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="saupInfo(saupId)">찾기</button>
                         </td>
@@ -124,7 +124,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="saupjang.chipNm" disabled="disabled"></td>
                         <th scope="row">전화번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호" v-model="saupjang.telNum" disabled="disabled">
+                            <input type="text" class="input form_w100" title="전화번호" @input="validationCheck(saupjang.telNum,'number')=='N' ? saupjang.telNum='' : ''"  v-model="saupjang.telNum" disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -621,6 +621,18 @@
                     Vue.swal({text: '에러'});
                 }
             })
+        }
+
+        validationCheck(val,type){
+            let regNumber = /^[0-9]*$/;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
+            }
         }
 
 

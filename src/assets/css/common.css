@@ -759,7 +759,7 @@ select.wide {width:100%;}
 .comcode_box {overflow-x:auto; overflow-y: auto; width:420px; height:400px; margin:0 auto; border:1px solid #dedede; padding:20px;}
 .comcode_box .comcode_list li {padding:18px 0 0 0;}
 .comcode_box .comcode_list li:first-child {padding-top:0;}
-.comcode_box .comcode_list li >.chk_box {display:inline-block; width:100%;}
+.comcode_box .comcode_list li >.chk_box {position:relative; display:inline-block; width:100%;}
 .comcode_box .comcode_list li >.chk_box > label {display:inline-block; width:100%;}
 
 .code_mgt {width:100%; margin:0 auto}
@@ -1294,15 +1294,16 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 
 @media print {
-  #header, #header2,#footer {display: none;}
+  #header, #header2, #footer {display: none;}
   .no_print {display: none !important;}
-  .print_area col:nth-child(1) {width: 40% !important;}
-  .print_area col:nth-child(2) {width: 60% !important;}
-  .print_area .right col:nth-child(1) {width: 45% !important;}
-  .print_area .right col:nth-child(2) {width: 55% !important;}
-  #popup_cash01 {top:100px; box-shadow:0 0px 0px rgba(0,0,0,0);}
+  .print_area {width: 100% !important;margin-top:5px;}
+ 
+  #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0);}
   #popup_header,#bottom_area {display: none;}
 
+  @page {
+    size: 200mm 200mm;
+  }
 }
 
 /* media 480  */
