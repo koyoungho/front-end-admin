@@ -289,7 +289,7 @@
                     "\t\t\t\t\t\t<tbody><tr>\n" +
                     "\t\t\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"http://211.39.150.112/img/img_logo.07141310.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
                     "\t\t\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:18px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\">" + today + "</td>\n" +
-                    "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\">관리자용</td>\n" +
+                    "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\">사용자용</td>\n" +
                     "\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t</tbody>\n" +
                     "\t\t\t\t\t</table>\n" +
@@ -426,7 +426,7 @@
 
                 let reqData: any = {};
                 reqData['to'] = [mailAddress]; //메일 수신자
-                reqData['title'] = '현금영수증 발급 완료'; //메일 제목
+                reqData['title'] = '현금영수증 발급 취소'; //메일 제목
                 reqData['message'] = mailMessage; //메일 내용
                 reqData['cc'] = [''];
                 // <img src="images/mail/img_tel01.png" width="16" height="16" alt="케이티/롯데정보통신 현금영수증" style="vertical-align: middle; border:0;margin-right:5px;">

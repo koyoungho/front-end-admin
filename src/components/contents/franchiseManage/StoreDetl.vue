@@ -1320,6 +1320,25 @@
             this.loadCodeList = data;
         }
 
+        //
+        dateFormat_hms(data, format){
+            let bef_format : string = '';
+            let aft_format : string = '';
+
+            if(format == 'hms'){ //년월일 시분초
+                bef_format = 'YYYYMMDDHHmmss';
+                aft_format = 'YYYY.MM.DD HH:mm:ss';
+            }else if(format == 'ymd'){ //년월일
+                bef_format = 'YYYYMMDD';
+                aft_format = 'YYYY.MM.DD';
+            }
+            if(data == null || data == ''){
+                return '';
+            }else {
+                return moment(data, bef_format).format(aft_format)
+            }
+        }
+
     }
 
 </script>

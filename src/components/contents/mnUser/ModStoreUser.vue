@@ -282,6 +282,7 @@
 
             // api 데이터 호출
             CommonBoardService.getListDatas('accounts/storemember/'+reqId, null, reqData).then((response) => {
+                    //console.log('1111111111111')
                     let result: any = response.data;
                     console.log(result)
                     if (result != null) {
@@ -306,8 +307,10 @@
                             if(blGbn!=null){ blGbn.removeAttribute('disabled'); }
                         }
 
-                        if(result.upjongCode != null && result.upjongCode != '001' && result.upjongCode != '002' && result.upjongCode != '003' && result.upjongCode != '003' )
-
+                        let upjong : any = '001,002,003,004,005,006,007,008';
+                        if(upjong.indexOf(result.upjongCode) < 0){
+                            this.upjongCode = '000';
+                        }
 
                         //this.blGbNm = result.blGbNm;
                         //사용자에서는 업종구분 수정 불가능
@@ -315,17 +318,16 @@
                         //if(obj!=null){ obj.setAttribute('disabled', 'disabled'); }
                         //let obj2 = document.getElementById('subSaupID'); //회사코드
                         //if(obj2!=null){ obj2.setAttribute('disabled', 'disabled'); }
-
+                        //console.log(result.accRegDt)
                         //사용자
                         this.name = result.name;
                         this.phoneNum = result.phoneNum;
                         this.id = result.id;
                         this.email = result.email;
-                        this.regDt = result.regDt; //사업장 등록일
+                        this.regDt = this.dateFormat_hms(result.regDt); //사업장 등록일
                         //this.password = result.password;
-                        this.lastConnDt = this.dateFormat(result.lastConnDt); //최종접속일시
-                        this.accRegDt = result.accRegDt; //사용자 등록일
-
+                        this.lastConnDt = this.dateFormat_hms(result.lastConnDt); //최종접속일시
+                        this.accRegDt = this.dateFormat_hms(result.accRegDt); //사용자 등록일
                     } else {
                         //console.log('조회 실패');
                     }
@@ -722,6 +724,14 @@
                 else {
                     this.confirmResult = false;
                 }
+            }
+        }
+
+        dateFormat_hms(data){
+            if(data == null || data == ''){
+                return '';
+            }else {
+                return moment(data, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
             }
         }
 

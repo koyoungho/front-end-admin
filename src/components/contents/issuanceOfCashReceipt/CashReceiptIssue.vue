@@ -478,7 +478,7 @@
 
             let reqData: any = {};
 
-            reqData['ymd'] = this.nowTime; //거래일자
+            //reqData['ymd'] = this.nowTime; //거래일자
 
             reqData['saupId'] = this.saupId; // 선택한 사업ID
             reqData['soluId'] = this.soluId; // 회사코드 선택
@@ -493,7 +493,7 @@
             reqData['positionGb'] = this.positionGb; //고객신분확인 선택
             reqData['subSaup'] = this.compoanyCode; //상품구분
             reqData['memo'] = this.memo; //메모
-            reqData['trgu'] = '0'; //거래구분(0:승인)으로 고정
+            //reqData['trgu'] = '0'; //거래구분(0:승인)으로 고정
 
             let apiUrl = 'receipt';
 
@@ -517,9 +517,6 @@
             ).catch((response) =>  {
                 //console.log('response code check!!');
                 //console.log(response);
-                if(response.status.toString() == '401'){ // 토큰오류(401)면 로그인 이동
-                    this.$router.push('/login')
-                }
             });
             //this.$router.push('/home/cashReceiptIssueView')
             //this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:'C39044964'}});
