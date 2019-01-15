@@ -502,7 +502,7 @@ select.wide {width:100%;}
 .search_box .search_list > li > input.sch_appuser {width:196px !important;} /* 고객명 */
 .search_box .search_list > li > input.sch_indcode02 {width:162px !important; margin-left:10px;} /* 사업자등록번호02 */
 .search_box .search_list > li > select {width:140px;}
-.search_box .search_list > li .chk_box {margin-top:10px;}
+.search_box .search_list > li .chk_box {margin-top:7px; vertical-align:middle;}
 .search_box .search_list > li .rdo_box {margin-top:7px; vertical-align:middle;}
 .search_box .search_list > li .btn .btn_s01.bg01 {width:90px;}
 .search_box.label01 .search_list > li > label {width:100px;} /* 사업자 번호 */

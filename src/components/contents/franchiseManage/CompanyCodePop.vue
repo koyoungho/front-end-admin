@@ -19,7 +19,7 @@
                         <ul class="comcode_list">
                             <template v-for="ar in companyCodeList">
                                 <li>
-                                    <span class="">
+                                    <span class="chk_box">
                                         <input type="checkbox"  v-model="checkBoxList" :value="ar.code" :id="ar.code" @change="checkData(ar.code)"><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>
                                         <!--<input type="checkbox"  v-model="ar.favYn"  :checked="ar.favYn=='Y'"  @click="checkData(ar.code,index)">{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span>-->
                                     </span>
