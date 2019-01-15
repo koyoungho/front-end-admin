@@ -248,10 +248,11 @@
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
             </div>
 
-            <h4>관련 발급 내역</h4>
-            <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
-            </div>
+            <h4>관련 발급 내역
+                <span class="btn_top">
+                    <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
+                </span>
+            </h4>
             <!-- tbl list box -->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="onLoadListView"  v-on:listView="iocViewEvent"></ListComponent>
             <!-- //tbl list box -->

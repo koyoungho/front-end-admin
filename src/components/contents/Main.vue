@@ -21,6 +21,12 @@
                                 <i class="icon_main m01"></i>
                                 <span class="sub">가맹점 등록</span>
                             </a>
+                        </li>                                                
+                        <li>
+                            <a v-on:click="menuChk('branchReg')">
+                                <i class="icon_main m05"></i>
+                                <span class="sub">지점 등록</span>
+                            </a>
                         </li>
                         <li>
                             <a v-on:click="menuChk('storeReg')">
@@ -41,12 +47,6 @@
                             </a>
                         </li>
                         <li>
-                            <a v-on:click="menuChk('cashInstitution')">
-                                <i class="icon_main m05"></i>
-                                <span class="sub">가맹점 해지</span>
-                            </a>
-                        </li>
-                        <li>
                             <a v-on:click="menuChk('noticeList')">
                                 <i class="icon_main m06"></i>
                                 <span class="sub">공지사항</span>
@@ -59,9 +59,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.nts.go.kr/">
+                            <a href="https://www.hometax.go.kr/" target="_blank">
                                 <i class="icon_main m08"></i>
-                                <span class="sub">국세청<br>현금영수증</span>
+                                <span class="sub">국세청 홈택스</span>
                             </a>
                         </li>
                     </ul>

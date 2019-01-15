@@ -13,115 +13,114 @@
             </header>
             <!-- //header -->
         </div>
-    <!-- container -->
-    <section id="container">
+        <!-- container -->
+        <section id="container">
 
-        <h3 class="login">{{title}}</h3>
+            <h3 class="login">{{title}}</h3>
 
-        <!-- login wrap  -->
-        <div class="login_wrap">
-            <!-- login_box -->
-            <div class="login_box type01" v-show="otpTrue==false">
-                <p class="login_text" >비밀번호를 초기화 하기 위해서는 가입시 등록하신 이름과 <br>휴대폰 번호화 사업자등록번호를 입력해주시기 바랍니다</p>
-                <fieldset class="login_form" >
-                    <legend> 로그인 </legend>
-                    <!-- login -->
-                    <ul class="login">
-                        <li class="form_name">
-                            <input type="text"  size="" maxlength="" placeholder="이름" class="name" title="이름 입력" v-model="inputName">
-                        </li>
-                        <li class="form_tel">
-                            <input type="text"  size="" maxlength="" placeholder="휴대폰 번호" class="tel" title="휴대폰 입력" v-model="phoneNum">
-                        </li>
-                        <li class="form_ind">
-                            <input type="text"  size="" maxlength="" placeholder="사업자 등록번호" class="tel" title="사업자 등록번호 입력" v-model="saupId">
-                        </li>
-                    </ul>
-                    <!-- cert box -->
-                    <div class="cert_box">
-                        <p class="form_cert">
-                            <input type="text" v-model="otpNumber" size="" maxlength="" placeholder="인증번호 6자리 숫자 입력" class="cert2" title="인증번호 6자리 숫자 입력">
-                            <button type="button" id="" class="btn_m01 bg03" v-on:click="optCall" v-show="confirmButton==false">인증번호 받기</button>
-                            <button type="button" id="" class="btn_m01 bg03" v-on:click="optCallConfirm" v-show="confirmButton==true">확인</button>
-                        </p>
-                        <p class="form_time">
-                            <span class="time_count">{{message}}</span>
-                        </p>
-                    </div>
-                </fieldset>
-                <div class="btn_area" v-show="otpTrue==false">
-                    <button type="button" v-on:click="searchCancel()"   class="btn_b01 bg02">취소</button>
-                    <button type="button" v-on:click="changePwd()"   class="btn_b01 bg01">변경</button>
-                </div>
-                <div class="info_bot" v-show="otpTrue==false">
-                    <span class="text_type03">휴대폰 번호가 바뀌었을 시 휴대폰 본인인증으로 변경해 주세요.</span>
-                    <span class="btn_cert_area"><button type="button"  class="btn_s01 bg03" v-on:click="kcmPop">휴대폰 본인인증</button></span>
-                </div>
-            </div>
-            <div class="login_box type01" v-show="otpTrue==true">
-                <p class="login_text"> 사용하고자 하는 비밀번호를 입력해주시기 바랍니다</p>
-                <fieldset class="login_form">
-                    <legend> 로그인 </legend>
-                    <!-- login -->
-                    <ul class="login">
+            <!-- login wrap  -->
+            <div class="login_wrap">
+                <!-- login_box -->
+                <div class="login_box type01" v-show="otpTrue==false">
+                    <p class="login_text" >비밀번호를 초기화 하기 위해서는 가입시 등록하신 이름과 <br>휴대폰 번호화 사업자등록번호를 입력해주시기 바랍니다</p>
+                    <fieldset class="login_form" >
+                        <legend> 로그인 </legend>
+                        <!-- login -->
                         <ul class="login">
-                            <li class="form_pw">
-                                <input type="password"  class="pw" v-model="pwdChange" size="" maxlength="" placeholder="비밀번호"  title="비밀번호 입력" id="password"  autocomplete="current-password">
+                            <li class="form_name">
+                                <input type="text"  size="" maxlength="" placeholder="이름" class="name" title="이름 입력" v-model="inputName">
                             </li>
-                            <li class="form_pwcom" >
-                                <input type="password" class="pw"  v-model="pwdConfirm"  size="" maxlength="" placeholder="비밀번호 확인"  id="passwordconf" title="비밀번호 확인 입력" autocomplete="new-password">
+                            <li class="form_tel">
+                                <input type="text"  size="" maxlength="" placeholder="휴대폰 번호" class="tel" title="휴대폰 입력" v-model="phoneNum">
+                            </li>
+                            <li class="form_ind">
+                                <input type="text"  size="" maxlength="" placeholder="사업자 등록번호" class="tel" title="사업자 등록번호 입력" v-model="saupId">
                             </li>
                         </ul>
-                    </ul>&nbsp;
-                    <p class="info_msg fc_pt01">{{valueChecks}}</p>
-                </fieldset>
-                <!-- btn area -->
-                <div class="btn_area">
-                    <button type="button" v-on:click="searchCancel()"  class="btn_b01 bg02">취소</button>
-                    <button type="button" v-on:click="savePwd"   class="btn_b01 bg01">등록</button>
+                        <!-- cert box -->
+                        <div class="cert_box">
+                            <p class="form_cert">
+                                <input type="text" v-model="otpNumber" size="" maxlength="" placeholder="인증번호 6자리 숫자 입력" class="cert2" title="인증번호 6자리 숫자 입력">
+                                <button type="button" id="" class="btn_m01 bg03" v-on:click="optCall" v-show="confirmButton==false">인증번호 받기</button>
+                                <button type="button" id="" class="btn_m01 bg03" v-on:click="optCallConfirm" v-show="confirmButton==true">확인</button>
+                            </p>
+                            <p class="form_time">
+                                <span class="time_count">{{message}}</span>
+                            </p>
+                        </div>
+                    </fieldset>
+                    <div class="btn_area" v-show="otpTrue==false">
+                        <button type="button" v-on:click="searchCancel()"   class="btn_b01 bg02">취소</button>
+                        <button type="button" v-on:click="changePwd()"   class="btn_b01 bg01">변경</button>
+                    </div>
+                    <div class="info_bot" v-show="otpTrue==false">
+                        <span class="text_type03">휴대폰 번호가 바뀌었을 시 휴대폰 본인인증으로 변경해 주세요.</span>
+                        <span class="btn_cert_area"><button type="button"  class="btn_s01 bg03" v-on:click="kcmPop">휴대폰 본인인증</button></span>
+                    </div>
+                </div>
+                <div class="login_box type01" v-show="otpTrue==true">
+                    <p class="login_text"> 사용하고자 하는 비밀번호를 입력해주시기 바랍니다</p>
+                    <fieldset class="login_form">
+                        <legend> 로그인 </legend>
+                        <!-- login -->
+                        <ul class="login">
+                            <ul class="login">
+                                <li class="form_pw">
+                                    <input type="password"  class="pw" v-model="pwdChange" size="" maxlength="" placeholder="비밀번호"  title="비밀번호 입력" id="password"  autocomplete="current-password">
+                                </li>
+                                <li class="form_pwcom" >
+                                    <input type="password" class="pw"  v-model="pwdConfirm"  size="" maxlength="" placeholder="비밀번호 확인"  id="passwordconf" title="비밀번호 확인 입력" autocomplete="new-password">
+                                </li>
+                            </ul>
+                        </ul>&nbsp;
+                        <p class="info_msg fc_pt01">{{valueChecks}}</p>
+                    </fieldset>
+                    <!-- btn area -->
+                    <div class="btn_area">
+                        <button type="button" v-on:click="searchCancel()"  class="btn_b01 bg02">취소</button>
+                        <button type="button" v-on:click="savePwd"   class="btn_b01 bg01">등록</button>
+                    </div>
+                </div>
+                
+                <!-- //login_box -->
+            </div>
+            <!-- //login wrap  -->
+
+        </section>
+        <!-- //container -->
+        <footer id="footer">
+            <!-- quick banner -->
+            <div class="quick_banner">
+                <div class="quick">
+                    <span class="sub">고객센터</span>
+                    <p class="cont">
+                        <span class="tel">(02)<strong>2074-0340</strong></span>
+                        <span class="text">평일 09:30~18:00</span>
+                    </p>
+                </div>
+                <span class="page_top" @click="top"><a>TOP</a></span>
+
+            </div>
+
+            <div class="footer_wrap">
+                <ul class="footer_links">
+                    <li><a href="https://www.kt.com/">(주) 케이티</a></li>
+                    <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
+                    <li><a v-on:click="policyDiv('site')">이용약관</a></li>
+                    <li><a v-on:click="policyDiv('user')">개인보호처리방침</a></li>
+                </ul>
+                <div class="footer_address">
+                    <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
+                        <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
+                        <span class="tel">문의전화 02-2074-0340</span> / <span class="fax">팩스번호 02-2074-6089</span>
+                    </p>
+                    <p class="footer_text02">Copyright ⓒ 2019 KT corporation & LDCC. <span class="rights">All rights reserved.</span></p>
                 </div>
             </div>
-            <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
-            <!-- //login_box -->
-        </div>
-        <!-- //login wrap  -->
+        </footer>
 
-    </section>
-    <!-- //container -->
-    <footer id="footer">
-        <!-- quick banner -->
-        <div class="quick_banner">
-            <div class="quick">
-                <span class="sub">고객센터</span>
-                <p class="cont">
-                    <span class="tel">(02)<strong>2074-0340</strong></span>
-                    <span class="text">평일 09:30~18:00</span>
-                </p>
-            </div>
-            <span class="page_top" @click="top"><a>TOP</a></span>
-
-        </div>
-
-        <div class="footer_wrap">
-            <ul class="footer_links">
-                <li><a href="https://www.kt.com/">(주) 케이티</a></li>
-                <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
-                <li><a v-on:click="policyDiv('site')">이용약관</a></li>
-                <li><a v-on:click="policyDiv('user')">개인보호처리방침</a></li>
-            </ul>
-            <div class="footer_address">
-                <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
-                    <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
-                    <span class="tel">문의전화 02-2074-0340</span> / <span class="fax">팩스번호 02-2074-6089</span>
-                </p>
-                <p class="footer_text02">Copyright ⓒ 2019 KT corporation & LDCC. <span class="rights">All rights reserved.</span></p>
-            </div>
-        </div>
-    </footer>
-
+        <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
     </div>
-
-
 </template>
 
 <script lang="ts">

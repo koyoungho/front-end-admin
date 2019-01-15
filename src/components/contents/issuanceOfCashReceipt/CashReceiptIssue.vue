@@ -85,7 +85,7 @@
             </div>
             <!-- //tbl view box -->
             <h4 class="first">거래 금액 <em class="form_req">*</em>
-                <span>(* "거래금액"란에 입력하시면 "공급가액과 부가세"가 자동으로 분배됩니다.)</span>
+                <span>("거래금액"란에 입력하시면 "공급가액과 부가세"가 자동으로 분배됩니다. 봉사료가 입력된 승인 거래는 취소 시 부분 취소가 불가능 합니다.)</span>
             </h4> <!-- 2018-11-06 추가 -->
             <!-- grid box -->
             <div class="grid_box col02 tbl_blank01">
