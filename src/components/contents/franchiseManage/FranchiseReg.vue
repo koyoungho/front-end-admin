@@ -42,7 +42,7 @@
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
@@ -55,7 +55,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="20">
+                            <input type="text" class="input form_w100"  @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''" title="전화번호" v-model="repPhonenum" maxlength="20">
                         </td>
                     </tr>
                     <tr>
@@ -71,8 +71,14 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
+                        <template v-if="saupType=='1'">
+                        <th scope="row">법인등록번호<em class="form_req">*</em></th>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" @input="validationCheck(lawNum,'number')=='N' ? lawNum='' : ''" v-on:keydown="showKeyCode($event)"></td>
+                        </template>
+                        <template v-else>
+                            <th scope="row"></th>
+                            <td></td>
+                        </template>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
@@ -673,7 +679,11 @@
             }else if(this.saupType == '1' && this.lawNum == ''){ //사업자구분이 법인인 경우 필수
                 alert('법인등록번호를 입력하세요.');
                 return;
-            }else if(this.saupType == '1' && this.lawNum != '' && !regNumber.test(this.lawNum)){
+            }else if(this.saupType == '1' && this.lawNum != 13) { //사업자구분이 법인인
+                alert('법인사업자의 자리수가 맞지않습니다');
+                return;
+            }
+            else if(this.saupType == '1' && this.lawNum != '' && !regNumber.test(this.lawNum)){
                 alert('법인등록번호는 숫자로 입력하세요.');
                 return;
             }else if(this.zipCode == ''){
@@ -1091,11 +1101,15 @@
             /* 48~57:일반 숫자키 코드, 96~105:숫자키패드 숫자키 코드 */
         }
 
-        numberChk(val){
+        validationCheck(val,type){
             let regNumber = /^[0-9]*$/;
-            if(!regNumber.test(val)){
-                alert('숫자만 입력 가능합니다.');
-                return false;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
             }
         }
     }

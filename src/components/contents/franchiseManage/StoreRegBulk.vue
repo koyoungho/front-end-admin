@@ -37,7 +37,7 @@
                                 </template>
                                 <option value="0000011">롯데쇼핑㈜본점</option>
                             </select>-->
-                            <input type="text" class="input form_industry" title="가맹점번호" v-model="gajumId">
+                            <input type="text" class="input form_industry" title="가맹점번호" v-model="gajumId" readonly>
                             <!--<input type="text" class="input form_w45" title="가맹점명" v-model="gajumNm">-->
                             <button type="button" id="" class="btn_sch01" v-if="regbtnShow" @click="gajiPopupOpen">검색</button>
                         </td>
@@ -51,7 +51,7 @@
                                 <option value="0001">롯데쇼핑㈜본점</option>
                                 <option value="0003">롯데쇼핑㈜영등포점</option>
                             </select>-->
-                            <input type="text" class="input form_industry" title="지점번호" v-model="jijumId">
+                            <input type="text" class="input form_industry" title="지점번호" v-model="jijumId" readonly>
                             <!--<input type="text" class="input form_w45" title="지점번호" v-model="jijumNm">-->
                             <button type="button" id="" class="btn_sch01" v-if="regbtnShow" @click="gajiPopupOpen">검색</button>
                         </td>

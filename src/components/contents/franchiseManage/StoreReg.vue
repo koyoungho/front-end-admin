@@ -20,7 +20,7 @@
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
-                        <select id="" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId">
+                        <select id="" name="" class="select form_w100"  title="현금영수증 사업자" v-model="soluId">
                             <option value="">선택</option>
                             <template v-for="datas in receiptSaupList">
                                 <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -81,7 +81,7 @@
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td colspan="2">
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p>
@@ -94,7 +94,7 @@
                         <td colspan="2"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td colspan="2">
-                            <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="20">
+                            <input type="text" class="input form_w100" title="전화번호" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''"  v-model="repPhonenum" maxlength="20">
                         </td>
                     </tr>
                     <tr>
@@ -110,8 +110,14 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
+                        <template v-if="saupType=='1'">
+                        <th scope="row">법인등록번호<em class="form_req">*</em></th>
+                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" @input="validationCheck(lawNum,'number')=='N' ? lawNum='' : ''"  v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
+                        </template>
+                        <template v-else>
+                            <th scope="row"></th>
+                            <td colspan="2"></td>
+                        </template>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
@@ -1216,6 +1222,18 @@
             }
 
             this.loadCodeList = data;
+        }
+
+        validationCheck(val,type){
+            let regNumber = /^[0-9]*$/;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
+            }
         }
 
     }

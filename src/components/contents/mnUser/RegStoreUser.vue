@@ -27,7 +27,7 @@
                     <tr>
                         <th scope="row" class="sub_msg01">사업자등록번호<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId" v-model="saupId" v-on:keyup="saupIdChk" v-on:keypress="numberChk($event)"  maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-model="saupId" v-on:keyup="saupIdChk" v-on:keypress="numberChk($event)"  maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" class="btn_s01 bg04" id="btnRegConfirm" v-on:click="saupInfo(saupId)">등록확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
@@ -40,7 +40,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum">
+                            <input type="text" class="input form_w100" title="전화번호 입력" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''" v-model="repPhonenum">
                         </td>
                     </tr>
                     <tr>
@@ -143,7 +143,7 @@
                         <td><input type="text" class="input form_name" title="이름"  v-model="name"></td>
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호 입력" v-model="phoneNum">
+                            <input type="text" class="input form_w100" title="휴대폰번호 입력" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum">
                         </td>
                     </tr>
                     <tr>
@@ -603,19 +603,19 @@
         dataValidation() {
             let regNumber = /^[0-9]*$/;
             if(this.saupId == '') {
-                alert('사업자등록번호를 입력하세요.');
+                Vue.swal({ text: '사업자등록번호를 입력하세요.'});
                 return false;
             }else if(this.storeNm == '') {
-                alert('사업장명을 입력하세요.');
+                Vue.swal({ text: '사업장명을 입력하세요.'});
                 return false;
             }else if(this.repNm == '') {
-                alert('대표자명을 입력하세요.');
+                Vue.swal({ text: '대표자명을 입력하세요.'});
                 return false;
             }else if(this.repPhonenum == '') {
-                alert('전화번호를 입력하세요.');
+                Vue.swal({ text: '전화번호를 입력하세요.'});
                 return false;
             }else if(!regNumber.test(this.repPhonenum)){
-                alert('전화번호는 숫자로 입력하세요.');
+                Vue.swal({ text: '전화번호는 숫자로 입력하세요.'});
                 return;
             /*}else if(this.saupType == '') {
                 alert('사업자구분을 선택하세요.');
@@ -624,19 +624,19 @@
                 alert('법인등록번호를 입력하세요.');
                 return false;*/
             }else if(this.addr1 == '') {
-                alert('사업장 주소를 입력하세요.');
+                Vue.swal({ text: '사업장 주소를 입력하세요'});
                 return false;
             }else if(this.zipCode == '') {
-                alert('사업장 우편번호를 입력하세요.');
+                Vue.swal({ text: '사업장 우편번호를 입력하세요.'});
                 return false;
             }else if(this.addr2 == '') {
-                alert('사업장 상세주소를 입력하세요.');
+                Vue.swal({ text: '사업장 상세주소를 입력하세요.'});
                 return false;
             }else if(this.upjongCode == null || this.upjongCode == '') {
-                alert('업종구분을 선택하세요.');
+                Vue.swal({ text: '업종구분을 선택하세요'});
                 return false;
             }else if(this.companyCode == null || this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
-                alert('회사코드를 선택하세요.');
+                Vue.swal({ text: '회사코드를 선택하세요'});
                 return false;
             /*}else if((this.upjongCode == '0003' || this.upjongCode == '0002') && this.companyCode == '') { //업종구분이 택배사(0003), 신문사(0002) 경우
                 alert('회사코드를 선택하세요.');
@@ -648,22 +648,22 @@
                 alert('사업자등록증사본 파일을 첨부 하세요.');
                 return false;*/
             }else if(this.name == '') {
-                alert('사용자 이름을 입력하세요.');
+                Vue.swal({ text: '사용자 이름을 입력하세요.'});
                 return false;
             }else if(this.phoneNum == '') {
-                alert('사용자 휴대폰번호를 입력하세요.');
+                Vue.swal({ text: '사용자 휴대폰번호를 입력하세요'});
                 return false;
             }else if(!regNumber.test(this.phoneNum)){
-                alert('사용자 휴대폰번호는 숫자로 입력하세요.');
+                Vue.swal({ text: '사용자 휴대폰번호는 숫자로 입력하세요.'});
                 return;
             }else if(this.id == '') {
-                alert('사용자 ID를 입력하세요.');
+                Vue.swal({ text: '사용자 ID를 입력하세요'});
                 return false;
             }else if(this.email == '') {
-                alert('이메일 주소를 입력하세요.');
+                Vue.swal({ text: '이메일 주소를 입력하세요..'});
                 return false;
             }else if(this.email != '' && !this.emailCheck(this.email)) {
-                alert('입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.');
+                Vue.swal({ text: '입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.'});
                 return false;
             /*}else if(this.password == '') {
                 alert('비밀번호를 입력하세요.');
@@ -676,7 +676,7 @@
                 return false;
                 */
             }else if(this.idYn != 'Y') {
-                alert('사용자ID 중복체크를 하세요.');
+                Vue.swal({ text: '사용자ID 중복체크를 하세요'});
                 return false;
             }else{
                 this.phonenumberChk();
@@ -863,7 +863,7 @@
             let idmsg = document.getElementById('id_msg');
 
             if(id == ''){
-                alert('ID를 입력하세요.');
+                Vue.swal({ text: '아이디를 확인하세요.'});
                 return;
             }
 
@@ -891,7 +891,7 @@
             ).catch((response) => {
                 console.log(response);
                 this.idYn = '';
-                alert('입력한 아이디를 확인하세요.');
+                Vue.swal({ text: '입력한 아이디를 확인하세요.'});
             });
         }
 
@@ -1104,5 +1104,16 @@
             })
         }
 
+        validationCheck(val,type){
+            let regNumber = /^[0-9]*$/;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
+            }
+        }
     }
 </script>
