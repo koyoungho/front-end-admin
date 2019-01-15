@@ -83,7 +83,6 @@
                         })
 
                     } else { //
-                        console.log(response);
                     }
                 }
                 , (error) => {

@@ -255,7 +255,7 @@
             this.objectKey = this.$route.params.reqParams;
 
             if(!this.objectKey) {
-                alert('접근할수 없습니다')
+                Vue.swal({text:'접근할수 없습니다'})
                 //this.$router.push({name: 'mnUser'});
                 this.$router.push('/home/mnUser');
             }
@@ -482,17 +482,17 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result != null) {
-                        alert('사용자 계정 정보가 변경되었습니다.');
+                        Vue.swal({text:'사용자 계정 정보가 변경되었습니다.'});
                         this.$router.push({name:'mnUserList'})
                         //this.confirmResult = false; //다시 수정시 본인인증 진행
                     } else {
-                        alert('사용자 정보 변경 중 오류가 발생하였습니다.');
+                        Vue.swal({text:'사용자 정보 변경 중 오류가 발생하였습니다.'});
                         //this.confirmResult = false; //다시 수정시 본인인증 진행
                     }
                 }
                 , (error) => {
                     //console.log(error);
-                    alert('사용자 정보 변경 중 오류가 발생하였습니다.');
+                    Vue.swal({text:'사용자 정보 변경 중 오류가 발생하였습니다.'});
                 }
             ).catch();
 
@@ -502,19 +502,19 @@
             let regNumber = /^[0-9]*$/;
 
             if(this.storeNm == '') {
-                alert('사업장명을 입력하세요.');
+                Vue.swal({text:'사업장명을 입력하세요.'});
                 return false;
             }else if(this.repNm == '') {
-                alert('대표자명을 입력하세요.');
+                Vue.swal({text:'대표자명을 입력하세요.'});
                 return false;
             }else if(this.repPhonenum == '') {
-                alert('전화번호를 입력하세요.');
+                Vue.swal({text:'전화번호를 입력하세요.'});
                 return false;
             }else if(!regNumber.test(this.repPhonenum)){
-                alert('전화번호는 숫자로 입력하세요.');
+                Vue.swal({text:'전화번호는 숫자로 입력하세요.'});
                 return;
             }else if(this.aprvYn == null || this.aprvYn == '') {
-                alert('계정상태를 선택하세요.');
+                Vue.swal({text:'계정상태를 선택하세요.'});
                 return false;
                 /*
                 }else if(this.saupType == '') {
@@ -525,16 +525,16 @@
                     return false;
                 */
             }else if(this.addr1 == '') {
-                alert('사업장 주소를 입력하세요.');
+                Vue.swal({text:'사업장 주소를 입력하세요.'});
                 return false;
             }else if(this.zipCode == '') {
-                alert('사업장 우편번호를 입력하세요.');
+                Vue.swal({text:'사업장 우편번호를 입력하세요.'});
                 return false;
             }else if(this.addr2 == '') {
-                alert('사업장 상세주소를 입력하세요.');
+                Vue.swal({text:'사업장 상세주소를 입력하세요.'});
                 return false;
             }else if(this.upjongCode == null || this.upjongCode == '') { //업종구분 변경 안됨(20181210)
-                alert('업종구분을 선택하세요.');
+                Vue.swal({text:'업종구분을 선택하세요.'});
                 return false;
                 //업종구분 변경 안됨(20181210)
             //}else if((this.upjongCode == '0003' || this.upjongCode == '0002') && this.subSaup == '') { //업종구분이 택배사(0003), 신문(0002) 경우에만 체크
@@ -542,16 +542,16 @@
                 //alert('회사코드를 선택하세요.');
                 //return false;
             }else if(this.subSaup == null || this.subSaup == '') {
-                alert('회사코드를 선택하세요.');
+                Vue.swal({text:'회사코드를 선택하세요.'});
                 return false;
             }else if(this.blGb == null || this.blGb == '') {
-                alert('BL정보를 선택하세요.');
+                Vue.swal({text:'BL정보를 선택하세요.'});
                 return false;
             }else if(this.email == '') {
-                alert('이메일 주소를 입력하세요.');
+                Vue.swal({text:'이메일 주소를 입력하세요.'});
                 return false;
             }else if(this.email != '' && !this.emailCheck(this.email)) {
-                alert('입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.');
+                Vue.swal({text:'입력하신 메일 주소가 올바르지 않습니다.\n메일 주소를 확인하세요.'});
                 return false;
             }else{
 
@@ -616,12 +616,12 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result != null) {
-                        alert('ID 계정이 해지되었습니다.');
+                        Vue.swal({text:'ID 계정이 해지되었습니다.'});
                         this.$store.dispatch('LOGOUT')
                             .then(() => this.$router.push('home/main') )
                             .catch(({message}) => {} )
                     } else {
-                        alert('ID 계정이 해지시 오류가 발생하였습니다.');
+                        Vue.swal({text:'ID 계정이 해지시 오류가 발생하였습니다.'});
                         //this.confirmResult = false; //다시 수정시 본인인증 진행
                     }
                 }

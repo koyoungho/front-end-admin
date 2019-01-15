@@ -244,7 +244,7 @@
 
         menuView(){//메뉴 상세정보
             if(!this.objectKey){
-                alert('접근할수 없습니다')
+                Vue.swal({text:'접근할수 없습니다'})
                 this.$router.push({name:'mnMenuList'});
             }else{
                 let mCode = this.objectKey.menuCode; //메뉴코드
@@ -369,28 +369,21 @@
 
         validationChk(){
 
-            /*
             if(this.groupCode == ''){
-                alert('상위메뉴를 선택하세요.');
+                Vue.swal({text:'상위메뉴를 선택하세요.'})
                 return;
             }else if(this.name == ''){
-                alert('메뉴명을 입력하세요.');
+                Vue.swal({text:'메뉴명을 입력하세요.'});
                 return;
             }else if(this.useYn == ''){
-                alert('사용 여부를 선택하세요.');
+                Vue.swal({text:'사용 여부를 선택하세요.'});
                 return;
             }else if(this.menuPath == ''){
-                alert('메뉴경로를 입력하세요.');
+                Vue.swal({text:'메뉴경로를 입력하세요.'});
                 return;
             }else{
-
-                //this.insertInfo();
-
+                this.insertInfo();
             }
-*/
-
-            this.insertInfo();
-
         }
 
         insertInfo(){
@@ -534,13 +527,13 @@
                     console.log('수정결과 확인!!');
                     console.log(response)
                     if (response.status == 200) {
-                        alert('메뉴 권한이 수정되었습니다.')
+                        Vue.swal({text:'메뉴 권한이 수정되었습니다.'})
                         //메뉴 수정 완료
                         //this.$router.push({ name:'mnMenuList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnMenu'})
                         this.$router.push('/home/mnMenu');
                     } else {
-                        alert('메뉴 수정에 실패하였습니다.\n다시 시도하세요.');
+                        Vue.swal({text:'메뉴 수정에 실패하였습니다.\n다시 시도하세요.'});
                         return;
                     }
                 }
