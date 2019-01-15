@@ -223,9 +223,9 @@
 
             if(this.perm == '' || this.perm == undefined){
                 Vue.swal({text:'접근할수 없습니다'})
-                this.perm='C39025154'
-                this.saleDate='20190215'
-                //this.$router.push({name:'cashReceiptIssue'});
+                //this.perm='C39025154'
+                //this.saleDate='20190215'
+                this.$router.push({name:'cashReceiptIssue'});
             }
 
             // api 데이터 호출
