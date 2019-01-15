@@ -2,6 +2,7 @@
 
     <!-- container -->
     <section id="container">
+
         <!-- content  -->
         <div class="content">
             <h2 class="blind">통계관리</h2>
@@ -11,10 +12,10 @@
             <h4 class="blind">기간조회</h4>
 
             <!-- search box -->
-            <div class="search_box type02 page_stats04">
+            <div class="search_box type02 page_new">
                 <div class="search_inner">
                     <ul class="search_list">
-                        <li>
+                        <li class="w100">
                             <label for="">기간</label>
                             <span class="form_cal">
                                 <template v-if="tabShow">
@@ -28,7 +29,7 @@
                             </span>
                         </li>
                     </ul>
-                    <span class="btn_req_area"><button type="button" class="btn_m01 bg01" @click="btnClick">조회</button></span>
+                    <span class="btn_req_area"><button type="button" class="btn_m01 bg01" style="margin-bottom: 4px" @click="btnClick">조회</button></span>
                 </div>
             </div>
             <!-- //search box -->
@@ -82,7 +83,7 @@
         }
 
         created(){
-            let now = moment(new Date()).subtract(3, 'month');
+            let now = moment(new Date()).subtract(11, 'month');
             this.searchDate = [now,new Date()]
 
         }
@@ -98,14 +99,14 @@
 
             if(div == 'chart'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(new Date()).subtract(3, 'month');
+                    this.searchDate[0] = moment(new Date()).subtract(11, 'month');
                 }
                 this.chartShow =true;
                 this.listShow =false;
                 this.tabShow =false;
             }else if(div == 'list'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(new Date()).subtract(3, 'month');
+                    this.searchDate[0] = moment(new Date()).subtract(11, 'month');
                 }
                 this.chartShow =false;
                 this.listShow =true;

@@ -3,12 +3,12 @@
     <section id="container">
         <!-- content  -->
         <div class="content">
+            <div id="loading_bar" v-show="loading">
+                <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+            </div>
             <h2 class="blind">통계관리</h2>
-
             <h3>사업자번호별 거래현황</h3>
-
             <!-- btn top -->
-
             <!-- search box -->
             <div class="search_box page_stats02">
                 <ul class="search_list">
@@ -306,11 +306,12 @@
     import {CcChart} from '../../../model/chart/compCodeChart';
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
     import moment from 'moment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
 
         components: {
-             CompCodeChartPop,GajiBox
+             CompCodeChartPop,GajiBox,VueSimpleSpinner
         }
     })
     export default class saupNumberChart extends Vue {
@@ -327,6 +328,7 @@
         saupId : string="";
         storeId : string ="";
         showModal1 : boolean = false;
+        loading :boolean =false;
 
         lang : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],
@@ -367,6 +369,7 @@
                 alert('회사코드를 선택해주세요')
                 return ;
             }
+            this.loading =true;
             let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMM') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMM') , subSaup : this.companyCode ,saupId: this.saupId}
             CommonBoardService.getListDatas('statistics','saupid',Object).then(result=>{
                 if(result.status==200){
@@ -376,6 +379,7 @@
                             this.monthCount=true;
                         }
                     })
+                    this.loading =false;
                 }
             }).catch(e=>{
                 console.log(e.message)

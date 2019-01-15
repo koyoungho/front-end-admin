@@ -1382,8 +1382,15 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 /* SearchBox css */
 .search_box.page_new .search_list > li {text-align: right;}
 
+.w15 {width: 15%}
+.w20 {width: 20%}
 .w25 {width: 25%}
-.w33 {width: 33%}
+.w30 {width: 30%}
+.w33 {width: 33.3%}
 .w50 {width: 50%}
+.w100 {width: 100%}
 
+.inline {display : inline}
+.text_center {text-align: center !important;}
 .text_left {text-align: left !important;}
+.placeLeft {left: 10px !important;}

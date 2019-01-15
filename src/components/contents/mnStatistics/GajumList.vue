@@ -2,13 +2,16 @@
 <div>
     <h4>가맹점 현황</h4>
     <!-- tbl list box -->
+    <div id="loading_bar" v-show="loading">
+        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+    </div>
     <div class="tbl_scroll_x_box">
         <!-- tbl list01 -->
         <table class="tbl_list04 type03 page_stats04">
             <caption>가맹점 현황</caption>
             <colgroup>
                 <col width="120px">
-                <col span="13" width="80px">
+                <col :span="dateArray.length+2" width="80px">
             </colgroup>
             <thead>
             <tr>
@@ -87,11 +90,12 @@
     import {addMonths, differenceInCalendarMonths, differenceInMonths, format} from 'date-fns';
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
 
         components: {
-            GajumList
+            GajumList,VueSimpleSpinner,
         }
     })
     export default class GajumList extends Vue {
@@ -105,6 +109,7 @@
         dateArrayCount : number = 0;
         dateArray2 : any = [];
         dateArray2Count : number = 0;
+        loading :boolean = false;
 
         dateFormats(date) {
             let dates = '';
@@ -139,6 +144,7 @@
         }
 
         gajumStatistics(date1,date2){
+            this.loading=true;
              CommonBoardService.getListDatas('statistics','gajum',{responseType:'GRID',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                   if(result.status==200){
                       console.log(result)
@@ -172,7 +178,9 @@
                           })
                           e['total'] = totalCount
                       })
+                      this.loading=false
                   }
+
              }).catch(e=>{
              })
         }
