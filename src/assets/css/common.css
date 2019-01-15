@@ -503,7 +503,7 @@ select.wide {width:100%;}
 .search_box .search_list > li > input.sch_indcode02 {width:162px !important; margin-left:10px;} /* 사업자등록번호02 */
 .search_box .search_list > li > select {width:140px;}
 .search_box .search_list > li .chk_box {margin-top:10px;}
-.search_box .search_list > li .rdo_box {margin-top:7px;}
+.search_box .search_list > li .rdo_box {margin-top:7px; vertical-align:middle;}
 .search_box .search_list > li .btn .btn_s01.bg01 {width:90px;}
 .search_box.label01 .search_list > li > label {width:100px;} /* 사업자 번호 */
 .search_box .btn_area {display: inline-block; width: 100%; padding:0 0 20px 0; text-align:right;}
@@ -759,7 +759,7 @@ select.wide {width:100%;}
 .comcode_box {overflow-x:auto; overflow-y: auto; width:420px; height:400px; margin:0 auto; border:1px solid #dedede; padding:20px;}
 .comcode_box .comcode_list li {padding:18px 0 0 0;}
 .comcode_box .comcode_list li:first-child {padding-top:0;}
-.comcode_box .comcode_list li >.chk_box {display:inline-block; width:100%;}
+.comcode_box .comcode_list li >.chk_box {position:relative; display:inline-block; width:100%;}
 .comcode_box .comcode_list li >.chk_box > label {display:inline-block; width:100%;}
 
 .code_mgt {width:100%; margin:0 auto}
@@ -1202,7 +1202,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .btn_b02.bg01 {background:#da291c;}
 .btn_b02.bg02 {color:#212121; background:#ffffff; border: 1px solid #c6c6c6;}
 
-.btn_sch01 {font-size:0; line-height: 0; width:20px; height:20px; margin-top:6px; background:url('../images/icon.png') no-repeat -22px -112px;}
+.btn_sch01 {font-size:0; line-height: 0; width:20px; height:20px; margin:8px 0 0 -35px; position: absolute; background:url('../images/icon.png') no-repeat -22px -112px;}
 
 /* 버튼 위치 */
 .btn_top {text-align:right; margin-top:-70px; margin-bottom:36px;}
@@ -1294,15 +1294,16 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 
 @media print {
-  #header, #header2,#footer {display: none;}
+  #header, #header2, #footer {display: none;}
   .no_print {display: none !important;}
-  .print_area col:nth-child(1) {width: 40% !important;}
-  .print_area col:nth-child(2) {width: 60% !important;}
-  .print_area .right col:nth-child(1) {width: 45% !important;}
-  .print_area .right col:nth-child(2) {width: 55% !important;}
-  #popup_cash01 {top:100px; box-shadow:0 0px 0px rgba(0,0,0,0);}
+  .print_area {width: 100% !important;margin-top:5px;}
+ 
+  #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0);}
   #popup_header,#bottom_area {display: none;}
 
+  @page {
+    size: 200mm 200mm;
+  }
 }
 
 /* media 480  */
@@ -1363,3 +1364,26 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   .quick_banner .quick {position:fixed; left:calc(50% + 443px);}
   .quick_banner .page_top {position:fixed; left:calc(50% + 443px);}
 }
+
+/* Loading bar */
+#loading_bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* SearchBox css */
+.search_box.page_new .search_list > li {text-align: right;}
+
+.w25 {width: 25%}
+.w33 {width: 33%}
+.w50 {width: 50%}
+
+.text_left {text-align: left !important;}

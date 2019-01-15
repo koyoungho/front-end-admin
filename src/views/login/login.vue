@@ -54,7 +54,7 @@
             <h2>공지사항</h2>
             <ul class="notice_list">
               <template v-if="noticeList.length > 0">
-                <li v-for="noticeList in noticeList">
+                <li v-for="noticeList in noticeList" v-on:click="goNoticeDetl(noticeList.seq)">
                   <a>{{noticeList.title}}</a>
                   <span class="date">{{formatDates(noticeList.updDt)}}</span>
                 </li>
@@ -128,6 +128,7 @@
       </div>
     </footer>
     <OtpCheck v-if="otpChecks" v-on:menuChk ="checkMenu" v-bind:loginId=id @close="otpChecks=false"></OtpCheck>
+    <NoticeDetail v-if="noticeShow"  v-bind:seq=seq @close="noticeShow=false"></NoticeDetail>
   </div>
 </template>
 
@@ -136,10 +137,12 @@
     import OtpCheck from '../../components/contents/login/otpCheck.vue'
     import {CommonBoardService} from "../../api/common.service";
     import moment from 'moment'
+    import NoticeDetail from '../../components/contents/login/NoticeDetail.vue'
 
     @Component({
         components: {
             Login,OtpCheck
+            ,NoticeDetail
         }
     })
     export default class Login extends Vue {
@@ -147,6 +150,8 @@
         id : string = "";
         password : string = "";
         noticeList: any = [];
+        noticeShow : boolean = false;
+        seq: string = "";
 
         created() {
             if (sessionStorage.accessToken) {
@@ -342,6 +347,13 @@
             formattedDates = moment(date).format("YYYY.MM.DD");
             return formattedDates;
         }
+
+        goNoticeDetl(seq){
+            this.noticeShow = true;
+            this.seq = seq;
+        }
+
+
 
     }
 
