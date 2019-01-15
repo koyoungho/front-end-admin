@@ -219,6 +219,7 @@ export default new Router({
         {path:'/termsCheck', name:'termsCheck', component: TermsCheck ,meta: {authRequired: false}}, //약관동의
         {path:'/regPass', name:'regPass', component: RegPass ,meta: {authRequired: false}}, //비밀번호 등록
         {path:'/kmcResult', name:'kmcResult', component: kmcResult ,meta: {authRequired: false}}, //Kmc 인증 결과
+        {path:'/kmcResult', name:'kmcResult', component: kmcResult ,meta: {authRequired: false}}, //Kmc 인증 결과
         {
             path: "/secure",
             name: "secure",

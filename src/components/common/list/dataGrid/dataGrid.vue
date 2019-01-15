@@ -22,15 +22,15 @@
         <dd>
           <input type="text" v-model="mTotalCount" value="5,000" class="input form_price" title="합계금액" readonly=""> 원
         </dd>
-        <dt>봉사료</dt>
+        <dt>합계봉사료</dt>
         <dd>
           <input type="text" v-model="mServiceCharge" class="input form_price" title="봉사료" readonly=""> 원
         </dd>
-        <dt>공급가액</dt>
+        <dt>합계공급가액</dt>
         <dd>
           <input type="text" v-model="mSupplyValue" class="input form_price" title="공급가액" readonly=""> 원
         </dd>
-        <dt>부가세</dt>
+        <dt>합계부가세</dt>
         <dd>
           <input type="text" v-model="mSurtax" class="input form_price" title="부가세" readonly=""> 원
         </dd>
@@ -160,7 +160,7 @@
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
-                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)">
+                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)" style="text-align: left">
                       <template v-if="listData[index].importantYn == 'Y'"> <i class="icon notice">공지</i></template>
                       <span v-bind:style="colColor(indexs)">{{rows}} </span>
                       <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>

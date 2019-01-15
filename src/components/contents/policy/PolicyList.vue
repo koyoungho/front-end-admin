@@ -59,9 +59,12 @@
             this.objectKey = this.$route.params.objectKey;
             this.hisSeq = this.$route.params.hisSeq;
 
+            console.log(this.objectKey);
+
             if(!this.objectKey ){
-                Vue.swal({text: '접근할수 없습니다'});
-                this.$router.push({name:'policyHistoryList'});
+                Vue.swal({text: '접근할수 없습니다'}).then((result) => {
+                    this.$router.push({name: 'policyHistoryList'});
+                })
             }
 
             if (this.hisSeq == null || this.hisSeq == undefined) {

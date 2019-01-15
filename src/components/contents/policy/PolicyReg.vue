@@ -178,6 +178,10 @@
                 ).catch();
             }else{//수정
 
+                reqData ={};
+
+                reqData['title'] = this.title;
+                reqData['content'] = this.content;
                 reqData['newTermsOrder'] = this.termsOrder_new;
 
                 CommonBoardService.updateListData('terms/temp/'+ this.termsType, this.termsOrder_old, reqData).then((response) => {
@@ -187,9 +191,9 @@
                                 text: '수정되었습니다'
                             }).then((result) => {
                                 // 리스트로 이동
-                                //     this.toPolicyTempList();//목록으로
+                                this.toPolicyTempList();//목록으로
                             });
-                        } else { //메일 전송 실패
+                        } else { //수정실패
                             Vue.swal({ text: '수정 실패 되었습니다.'});
                             console.log(response);
                         }

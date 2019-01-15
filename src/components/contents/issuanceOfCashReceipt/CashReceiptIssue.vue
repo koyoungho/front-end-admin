@@ -62,7 +62,7 @@
                         <td>
                             <span class="rdo_box"><input type="radio" name="chk" value="0" id="aa11" checked="checked" v-model="cultGb"><label for="aa11">일반</label></span>
                             <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa12" v-model="cultGb"><label for="aa12">도서/공연</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13" v-model="cultGb"><label for="aa13">대중교통</label></span>
+                            <!--<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13" v-model="cultGb"><label for="aa13">대중교통</label></span>-->
                         </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
@@ -371,20 +371,20 @@
                 Vue.swal({text: '고객신분확인을 선택하세요.'});
                 return;
 
-            }else if(this.positionGb != '' && this.confirm == '') {
-                if (this.positionGb == '1') { //휴대폰
+            }else if(this.positionGb != '' && this.confirm == ''){
+                if(this.positionGb == '1'){ //휴대폰
                     Vue.swal({text: '고객신분확인에 휴대폰 번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '2') { //주민등록번호
+                }else if(this.positionGb == '2'){ //주민등록번호
                     Vue.swal({text: '고객신분확인에 주민등록번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '3') { //사업자등록번호
+                }else if(this.positionGb == '3'){ //사업자등록번호
                     Vue.swal({text: '고객신분확인에 사업자등록번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '4') { //카드번호
+                }else if(this.positionGb == '4'){ //카드번호
                     Vue.swal({text: '고객신분확인에 현금영수증 카드번호를 입력하세요.'});
                     return;
-                } else if (this.positionGb == '5') { //QR번호
+                }else if(this.positionGb == '5'){ //QR번호
                     Vue.swal({text: '고객신분확인에 QR번호를 입력하세요.'});
                     return;
                 }
@@ -393,92 +393,32 @@
                     alert('고객성명을 입력하세요.');
                     return;
                  */
-            }
-            else if(this.positionGb != '' && this.confirm != ''){
-                if(this.positionGb == '1'){ //휴대폰 11자리까지
-                    if(this.confirm.length > 11){
-                        Vue.swal({text: '휴대폰 번호는 11자리까지 입력가능합니다.'});
-                        return;
-                    }else if(this.confirm.length < 10){
-                        Vue.swal({text: '휴대폰 번호를 확인하세요'});
-                        return;
-                    }
-                }else if(this.positionGb == '2'){ //주민등록번호 13자리
-                    if(this.confirm.length != 13){
-                        Vue.swal({text: '주민등록번호를 확인하세요'});
-                        return;
-                    }
-                }else if(this.positionGb == '3'){ //사업자등록번호 10자리
-                    let saupNo1 = this.saupNo.substring(2, 4);
-                    if (saupNo1.substring(0, 1) == 0) {
-                        saupNo1 = saupNo1.substring(2, 1);
-                    }
-                    if ((saupNo1 >= 1 && saupNo1 < 81) || (saupNo1 >= 89 && saupNo1 <= 99)) { //개인
-                        if(this.confirm.length != 10){ //개인은 10자리
-                            Vue.swal({text: '사업자등록번호는 10자리로 입력하세요.'});
-                            return;
-                        }
-                    } else { //법인
-                        if(this.confirm.length != 13){ //법인은 13자리
-                            Vue.swal({text: '법인 사업자등록번호는 13자리로 입력하세요.'});
-                            return;
-                        }
-                    }
-                }else if(this.positionGb == '4'){ //카드번호
-                    if(this.confirm.indexOf('15442020') > -1){ //현금영수증 전공
-                        if(this.confirm.length != 18) {
-                            Vue.swal({text: '현금영수증 전용카드는 18자리를 입력하세요'});
-                            return;
-                        }
-                    }else{
-                        Vue.swal({text: '카드번호는 16자리로 입력하세요'});
-                        return;
-                    }
-                }else if(this.positionGb == '5'){ //QR번호
-                    if(this.confirm.length != 20){
-                        Vue.swal({text: 'QR번호는 20자리로 입력하세요.'});
-                        return;
-                    }
-                }else if(this.positionGb == '6'){ //자진발급
-                    if(this.confirm != '0100001234'){
-                        Vue.swal({text: '자진발급번호를 바르게 입력하세요.'});
-                        return;
-                    }
-                }
-            }
-
-            if(this.geogu == ''){
-            Vue.swal({text: '발급용도를 선택하세요.'});
-            return;
-            }
-            if(this.soluId == ''){
+            }else if(this.geogu == ''){
+                Vue.swal({text: '발급용도를 선택하세요.'});
+                return;
+            }else if(this.soluId == ''){
                 Vue.swal({text: '발급 사업자가 존재하지않습니다'});
                 return;
-            }
-            if(this.compoanyCode == ''){ //신문사, 택배사만 체크
+            }else if(this.compoanyCode == ''){ //신문사, 택배사만 체크
                 Vue.swal({text: '회사코드를 선택하세요.'});
                 return;
-            }
-            if(this.cultGb == ''){
+            }else if(this.cultGb == ''){
                 Vue.swal({text: '지출구분을 선택하세요.'});
                 return;
-            }
-            if(this.totalAmt == ''){
+            }else if(this.totalAmt == ''){
                 Vue.swal({text: '거래금액을 입력하세요.'});
                 return;
-            }
-            if(this.totalAmt == '0'){
+            }else if(this.totalAmt == '0'){
                 Vue.swal({text: '거래금액을 바르게 입력하세요.'});
                 return;
-            }
-            if(this.bong == ''){
+            }else if(this.bong == ''){
                 Vue.swal({text: '봉사료를 입력하세요.'});
                 return;
             }
 
             let reqData: any = {};
 
-            //reqData['ymd'] = this.nowTime; //거래일자
+            reqData['ymd'] = this.nowTime; //거래일자
 
             reqData['saupId'] = this.saupId; // 선택한 사업ID
             reqData['soluId'] = this.soluId; // 회사코드 선택
@@ -493,7 +433,7 @@
             reqData['positionGb'] = this.positionGb; //고객신분확인 선택
             reqData['subSaup'] = this.compoanyCode; //상품구분
             reqData['memo'] = this.memo; //메모
-            //reqData['trgu'] = '0'; //거래구분(0:승인)으로 고정
+            reqData['trgu'] = '0'; //거래구분(0:승인)으로 고정
 
             let apiUrl = 'receipt';
 
@@ -517,6 +457,9 @@
             ).catch((response) =>  {
                 //console.log('response code check!!');
                 //console.log(response);
+                if(response.status.toString() == '401'){ // 토큰오류(401)면 로그인 이동
+                    this.$router.push('/login')
+                }
             });
             //this.$router.push('/home/cashReceiptIssueView')
             //this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:'C39044964'}});
@@ -559,6 +502,8 @@
                     }
                 }
             }
+
+
 
             // let upjong = sessionStorage.upJong; //일반-0001, 신문사-0002, 택배사-0003, 학원-0004
             // if(upjong == '0002' || upjong == '0003'){ //업종이 신문사, 택배사인 경우에만 상품구분이 보임
@@ -638,17 +583,6 @@
             CommonBoardService.getListDatas('company',null,null).then(e=>{
 
             });
-        }
-        validationCheck(val,type){
-            let regNumber = /^[0-9]*$/;
-            if(type=='number'){
-                if(!regNumber.test(val)){
-                    Vue.swal({ text: '숫자만가능합니다'});
-                    return 'N';
-                }
-            }
-            else{
-            }
         }
     }
 </script>
