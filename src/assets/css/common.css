@@ -1180,7 +1180,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .btn_m01.bg02 {background:#ffffff; color:#212121; border: 1px solid #c6c6c6;}
 .btn_m01.bg03 {background:#f8f8f8; color:#212121; border: 1px solid #c6c6c6;}
 .btn_m01.bg04 {background:#ffffff; color:#da291c; border: 1px solid #da291c; padding-left:20px; padding-right:20px;}
-.btn_m01.bg05 {background:#5aad73; color:#ffffff; border: 1px solid #5aad73; float:right; margin-top:15px;}
+.btn_m01.bg05 {background:#5aad73; color:#ffffff; border: 1px solid #5aad73;}
 .btn_m01.add, .btn_m01.del, .btn_m01.reg {padding:0 14px 0 30px;}
 .btn_m01.sch {padding:0 14px 0 35px;}
 .btn_m01.add:after {content:''; position:absolute; top:10px; left:13px; width:16px; height:10px;background:url('../images/icon.png') no-repeat -58px -114px;}
@@ -1235,7 +1235,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper.medium {width:550px;}
 .popup_wrapper.large {width:700px;}
 .Pstyle {background:#fff; display: none; position: relative; width: auto; margin:10px 10px;}
-#popup_cash01 {top:700px;}
+/* #popup_cash01 {top:700px;} */
 
 .popup_modal {background-color: rgb(0, 0, 0); position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; opacity: 0.7; z-index: 1200; cursor: pointer;}
 .popup_wrapper {display: block; background:transparent; position: absolute; top:50%; left: 50%; border-radius:5px; border-top-left-radius: 0px; border-top-right-radius: 0px; box-shadow:0 2px 10px rgba(0,0,0,0.3); z-index: 1300; transform: translate(-50%, -50%);}
