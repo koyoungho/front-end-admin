@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
 
     <!-- container -->
     <section id="container">
@@ -27,20 +27,20 @@
                     <tr>
                         <th scope="row" class="sub_msg01">사업자등록번호<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-model="saupId" v-on:keyup="saupIdChk" v-on:keypress="numberChk($event)"  maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" class="btn_s01 bg04" id="btnRegConfirm" v-on:click="saupInfo(saupId)">등록확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
-                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명 입력" v-model="storeNm"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명 입력" v-model="storeNm" maxlength="30"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm"></td>
+                        <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''" v-model="repPhonenum">
+                            <input type="text" class="input form_w100" title="전화번호 입력" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''" v-model="repPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="10" v-on:keypress="numberChk($event)" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="13" v-on:keypress="numberChk($event)" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
@@ -67,10 +67,10 @@
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBox1(postText)">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소 입력" v-model="addr1" maxlength="50">
+                                    <input type="text" class="input form_address01" title="주소 입력" v-model="addr1" maxlength="40">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소 입력" v-model="addr2" maxlength="50">
+                                    <input type="text" class="input form_address02" title="상세 주소 입력" v-model="addr2" maxlength="40">
                                 </li>
                             </ul>
                         </td>
@@ -140,23 +140,23 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_name" title="이름"  v-model="name"></td>
+                        <td><input type="text" class="input form_name" title="이름"  v-model="name" maxlength="20"></td>
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호 입력" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum">
+                            <input type="text" class="input form_w100" title="휴대폰번호 입력" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_msg01">ID<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <input type="text" class="input form_id" title="ID 입력" v-model="id">
+                            <input type="text" class="input form_id" title="ID 입력" v-model="id" maxlength="16">
                             <input type="hidden" title="ID 중복확인 여부" v-model="idYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkUserId(id)">중복확인</button>
                             <p class="info_msg" id="id_msg"></p>
                         </td>
                         <th scope="row" class="sub_msg01">이메일주소<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" >
+                            <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" maxlength="30">
                             <!--<p class="info_msg">이미 등록된 아이디 입니다.</p>-->
                         </td>
                     </tr>

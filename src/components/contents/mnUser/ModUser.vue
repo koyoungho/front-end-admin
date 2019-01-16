@@ -25,7 +25,7 @@
                         <td><input type="text" class="input form_w100" title="이름" disabled="disabled" v-model="account.name" ></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum">
+                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum" @input="validationCheck(account.phoneNum,'number')=='N' ? account.phoneNum='' : ''" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                         </td>
                         <th scope="row">이메일주소</th>
                         <td>
-                            <input type="text" class="input form_w100" title="이메일주소" v-model="account.email">
+                            <input type="text" class="input form_w100" title="이메일주소" v-model="account.email" maxlength="30">
                         </td>
                     </tr>
                     <tr>
@@ -89,10 +89,10 @@
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소" v-model="account.addr1">
+                                    <input type="text" class="input form_address01" title="주소" v-model="account.addr1" maxlength="40">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소" v-model="account.addr2">
+                                    <input type="text" class="input form_address02" title="상세 주소" v-model="account.addr2" maxlength="40">
                                 </li>
                             </ul>
                         </td>
@@ -109,7 +109,7 @@
                         <th scope="row">등록일</th>
                         <td><input type="text" class="input form_w100" title="등록일" v-model="account.lastConnDt" disabled="disabled"></td>
                         <th scope="row">해지일</th>
-                        <td><input type="text" class="input form_w100 fc_pt01" value="2018.11.20" title="해지일" v-model="account.cancelDt" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100 fc_pt01" value="" title="해지일" v-model="account.cancelDt" disabled="disabled"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -734,6 +734,18 @@
 
                     return formatDate;
                 }
+            }
+        }
+
+        validationCheck(val,type){
+            let regNumber = /^[0-9]*$/;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
             }
         }
 

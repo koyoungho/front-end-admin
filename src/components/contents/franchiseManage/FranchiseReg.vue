@@ -59,7 +59,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">사업자구분</th>
+                        <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType">
                                 <option value="">선택</option>

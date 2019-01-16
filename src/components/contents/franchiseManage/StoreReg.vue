@@ -306,6 +306,9 @@
                                                 <input type="file" @change="uploadFile($event)" />
                                                 <span>파일찾기</span>
                                             </label>
+                                            <label class="upload btn_s01 bg03" id="btnFileRm" v-on:click="fileRemove">
+                                                <span>파일삭제</span>
+                                            </label>
                                         </div>
                                         <p class="form_info">
                                             <span class="send_text" style="padding: 93px">(* 사업자등록증 사본 이미지 는  jpg.png.tiff.pdf 파일 형식으로 업로드 해주세요.)</span> <!-- 20181210 수정 -->
@@ -565,7 +568,7 @@
         //파일 등록
         fileUpload(){
 
-            if(this.file != null && this.file != '') {
+            if(this.fileUploadGbn == '1' &&this.file != null && this.file != '') { //파일업로드 선택이고 파일이 있으면 등록
 
                 let formData = new FormData();
                 formData.append('file', this.file);
@@ -1222,6 +1225,11 @@
             }
 
             this.loadCodeList = data;
+        }
+
+        fileRemove(){
+            this.file = '';
+            this.uploadFileNm = '';
         }
 
         validationCheck(val,type){
