@@ -170,7 +170,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" class="btn_b01 bg02" v-on:click="receiptInit()">초기화</button>
-                <button type="button" class="btn_b01 bg01" v-on:click="receiptIssue()" v-show="regShow">발급</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="receiptIssue()" v-show="regShow" v-if="receiptIssueBtn">발급</button>
             </div>
 
         </div>
@@ -235,6 +235,7 @@
         show : boolean = true;
         nowTime: any =[];
 
+        receiptIssueBtn : boolean = true;
 
         @Watch('positionGb') onChange(){
             if(this.positionGb == '6') { //자진발급이면 0100001234로 자동 입력
@@ -557,15 +558,20 @@
 
             let apiUrl = 'receipt';
 
+            this.receiptIssueBtn = false;
             // api 데이터 호출
             CommonBoardService.postListDatas(apiUrl, null, reqData).then((response) => {
                     let result: any = response.data;
                     if (response.status == 201) { //현금영수증 발급 성공
+                        this.receiptIssueBtn = true;
+
                         //console.log('현금영수증 발급 성공');
                         this.perm = result.perm;
                         // 현금영수증 발급 완료 화면 이동
                         this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm , reqDate : this.nowTime}});
                     } else {
+                        this.receiptIssueBtn = true;
+
                         Vue.swal({text: '현금영수증 발급에 실패하였습니다.'});
                         //console.log('현금영수증 발급 실패');
                         //console.log(result);
@@ -573,10 +579,12 @@
                 }
                 , (error) => {
                     //this.$Progress.finish();
+                    this.receiptIssueBtn = true;
                 }
             ).catch((response) =>  {
                 //console.log('response code check!!');
                 //console.log(response);
+                this.receiptIssueBtn = true;
             });
             //this.$router.push('/home/cashReceiptIssueView')
             //this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:'C39044964'}});
