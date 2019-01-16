@@ -7,7 +7,7 @@
         <div class="content">
             <h2 class="blind">통계관리</h2>
 
-            <h3>가맹점 증감 현황</h3>
+            <h3>서비스 이용 현황</h3>
 
             <h4 class="blind">기간조회</h4>
 

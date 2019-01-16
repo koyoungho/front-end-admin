@@ -13,13 +13,13 @@
               <template v-if="item.calenderCount==1">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
-                             :first-day-of-week="1"  :format="item.default" :width="item.width"  ></date-picker>
+                             :first-day-of-week="1"  :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
               <template v-else="item.calenderCount==2">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
-                             :first-day-of-week="1" range :format="item.default" :width="item.width" ></date-picker>
+                             :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
             </li>
@@ -34,13 +34,13 @@
               <template v-if="item.calenderCount==1">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate" v-on:change="dateChangeEvent"  :lang="lang" :type="item.dateType"
-                             :first-day-of-week="1"  :format="item.default" :width="item.width"  ></date-picker>
+                             :first-day-of-week="1"  :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
               <template v-else="item.calenderCount==2">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
-                             :first-day-of-week="1" range :format="item.default" :width="item.width"  ></date-picker>
+                             :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
             </li>
@@ -361,7 +361,15 @@
             if( checkYn=='N'){
                 alert('오류발생월을 입력해주세요')
             }else{
+                let name = this.$route.name
+                let object :Object= this.searchItem
+                let menu = {menuId: name ,listDt : object}
+                this.$store.commit('SEARCHLISTINPUT', {menu})
                 this.$emit('SearchToList', this.searchItem);
+
+                this.$store.commit('SEARCHLISTOUT')
+
+                // console.log(this.$store.dispatch('GET', {menu}))
             }
 
         }
