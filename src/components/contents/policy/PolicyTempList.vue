@@ -77,7 +77,7 @@
 
 
             } else if (routeNm == 'personalTempList') {
-                this.titleNm = '개인보호처리방침';
+                this.titleNm = '개인정보처리방침';
                 this.termsType = "user";
             }
 

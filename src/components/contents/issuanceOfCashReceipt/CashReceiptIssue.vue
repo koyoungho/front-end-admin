@@ -53,7 +53,7 @@
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
                             </select>
-                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20">
+                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20" id="confirmID">
                         </td>
 
                     </tr>
@@ -239,8 +239,12 @@
         @Watch('positionGb') onChange(){
             if(this.positionGb == '6') { //자진발급이면 0100001234로 자동 입력
                 this.confirm = '0100001234';
+                let confirmID = document.getElementById('confirmID')
+                if(confirmID!=null){ confirmID.setAttribute('disabled', 'disabled') }
             }else{
                 this.confirm = '';
+                let confirmID = document.getElementById('confirmID')
+                if(confirmID!=null){ confirmID.removeAttribute('disabled') }
             }
         }
         @Watch('totalAmt') onTotalamtChange(){ //거래금액 변경시
@@ -249,6 +253,21 @@
         @Watch('bong') onBongChange(){ //봉사료 변경시
             this.calculateAmt();
         }
+
+        @Watch('geogu') onGeoguChange(){ //발급용도 변경시
+            this.positionGb = '';
+            if(this.geogu == '0'){ //소득공제
+                this.confirm = '';
+                this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{codeNm : '주민등록번호' , code: '2' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' },{codeNm : '자진발급' , code: '6' }];
+            }else if(this.geogu == '1'){ //지출증빙
+                this.confirm = '';
+                this.confirmList = [{ codeNm : '사업자등록번호' , code: '3' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' }];
+            }else{
+                this.confirm = '';
+                this.getSinbunSelectList(); //고객신분코드 조회
+            }
+        }
+
         //면세 및 간이과세자 클릭
         noTaxGbn(){
             if(this.noTax == false){
@@ -504,8 +523,16 @@
                 Vue.swal({text: '거래금액을 바르게 입력하세요.'});
                 return;
             }
+            if(this.totalAmt.length > 1 && this.totalAmt.indexOf('0') == 0){
+                alert('거래금액을 바르게 입력하세요.');
+                return;
+            }
             if(this.bong == ''){
                 Vue.swal({text: '봉사료를 입력하세요.'});
+                return;
+            }
+            if(this.bong.length > 1 && this.bong.indexOf('0') == 0){
+                alert('봉사료를 바르게 입력하세요.');
                 return;
             }
 
