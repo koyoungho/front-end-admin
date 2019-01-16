@@ -73,10 +73,10 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름</th>
-                        <td><input type="text" class="input form_w100" title="이름" disabled="disabled" v-model="account.name"></td>
+                        <td><input type="text"  class="input form_w100"  title="이름" disabled="disabled" v-model="account.name"></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum">
+                            <input type="text" class="input form_w100"  title="휴대폰번호" v-model="account.phoneNum">
                         </td>
                     </tr>
                     <tr>
@@ -206,6 +206,7 @@
      $modal : any;
 
      created(){
+         console.log(this.$refs)
         this.accountInfo();
          this.saupInfo();
          this.gajumInfo();
