@@ -8,7 +8,7 @@
             <h3>{{subTitle}} </h3>
 
             <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
             </div>
 
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
@@ -35,7 +35,7 @@
         listOn : boolean = true;
         setDate =  format(new Date(),'YYYYMMDD')
         titles: string = '발급조회 및 취소'; // 제목
-        subTitle: string = '현금영수증 발급조회 및 취소'; //서브타이틀
+        subTitle: string = '발급조회 및 취소'; //서브타이틀
         windowResize : boolean = false; // 리사이즈
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
@@ -83,19 +83,20 @@
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
-                        {type: 'popup', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
-                        {type: 'inputPop', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
-                        {type: 'date2', title :'거래일자', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                        {type: 'select' , title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
-                        {type: 'select' , title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
-                        {type: 'select' , title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '온라인' , value: 'Y' },{name : '오프라인' , value: 'N' }]},
-                        {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
-                        {type: 'input', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
+                        {type: 'selectObject' ,class:'w30', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
+                        {type: 'popup',class:'w30 ', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
+                        {type: 'inputPop',class:'w30 text_left', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
+                        {type: 'select' ,class:'w30', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
+                        {type: 'select' ,class:'w30', title :'거래구분',id: 'trgu', name:'trgu' , value: '0' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
+                        {type: 'select' ,class:'w30', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '온라인' , value: 'Y' },{name : '오프라인' , value: 'N' }]},
+                        {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'approval' , option : [{ name : '거래일' , value: 'approval' },{ name : '취소일' , value: 'cancel' }] },
+                        {type: 'date2',class:'w25 text_left', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
+                        {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                     ],
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                     goSearch : "iocSearch",
-                    searchClass : 'search_box page_cash01',
+                    searchClass : 'search_box page_new',
                     searchClass2 : 'search_list'
                 }
 

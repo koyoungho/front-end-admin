@@ -155,7 +155,7 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th scope="col">취소가능금액</th>
+                                <th scope="col"> <font COLOR="red"> 취소가능금액 </font></th>
                                 <th scope="col">봉사료</th>
                             </tr>
                             </thead>
@@ -247,12 +247,10 @@
             <div class="btn_bot type01" v-if="onlineYn == 'Y' ">
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
             </div>
-
-            <h4>관련 발급 내역
-                <span class="btn_top">
-                    <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel">Excel 다운로드</button>
-                </span>
-            </h4>
+            <h4>관련 발급 내역 및 출력</h4>
+            <div style="text-align:right">
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
+            </div>
             <!-- tbl list box -->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="onLoadListView"  v-on:listView="iocViewEvent"></ListComponent>
             <!-- //tbl list box -->
