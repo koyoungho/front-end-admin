@@ -25,7 +25,7 @@
                         <td><input type="text" class="input form_w100" title="이름" disabled="disabled" v-model="account.name" ></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum">
+                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum" @input="validationCheck(account.phoneNum,'number')=='N' ? account.phoneNum='' : ''" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                         </td>
                         <th scope="row">이메일주소</th>
                         <td>
-                            <input type="text" class="input form_w100" title="이메일주소" v-model="account.email">
+                            <input type="text" class="input form_w100" title="이메일주소" v-model="account.email" maxlength="30">
                         </td>
                     </tr>
                     <tr>
@@ -75,10 +75,6 @@
                         <td class="con01" colspan="3">
                             <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
                         </td>
-                        <!--<th scope="row">전화번호</th>
-                        <td class="con01">
-                            <input type="text" class="input form_w100" title="전화번호" v-model="account.telNum">
-                        </td>-->
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -89,10 +85,10 @@
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소" v-model="account.addr1">
+                                    <input type="text" class="input form_address01" title="주소" v-model="account.addr1" maxlength="40">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소" v-model="account.addr2">
+                                    <input type="text" class="input form_address02" title="상세 주소" v-model="account.addr2" maxlength="40">
                                 </li>
                             </ul>
                         </td>
@@ -109,7 +105,7 @@
                         <th scope="row">등록일</th>
                         <td><input type="text" class="input form_w100" title="등록일" v-model="account.lastConnDt" disabled="disabled"></td>
                         <th scope="row">해지일</th>
-                        <td><input type="text" class="input form_w100 fc_pt01" value="2018.11.20" title="해지일" v-model="account.cancelDt" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100 fc_pt01" value="" title="해지일" v-model="account.cancelDt" disabled="disabled"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -282,6 +278,7 @@
         oldRole : any = ''; //이전 role
 
         saupjangSajin : boolean = false; //사업자등록증 뷰 여부
+        saupFileNm : any = '';
 
         auth : any = "";
         addressBox : boolean = false;
@@ -369,9 +366,9 @@
                    //this.setData()
                    this.account = result.data;
                    this.oldRole = result.data.role;
-                   if(result.data.aprvYn != null && result.data.aprvYn != 'Y'){ //승인이 안된경우만 사업자등록증 확인 보여줌
+                   /*if(result.data.aprvYn != null && result.data.aprvYn != 'Y'){ //승인이 안된경우만 사업자등록증 확인 보여줌
                        this.saupjangSajin = true;
-                   }
+                   }*/
 
                    let arrList : any = [];
                    let objList : any = {};
@@ -693,24 +690,38 @@
             //this.rowData = data.row;
             //this.popComfirm();
 
-            let server: any = environment.apiUrl;
-            let param: any = '/file/' + '20190102154913_J0341559.JPG';
-            let fileNm : string = '20190102154913_J0341559.JPG';
             //파일 다운로드
+            let fileName : string = this.saupFileNm;
             axios({
-                url: server + param,
+                url: environment.apiUrl +"/file/"+fileName,
                 method: 'GET',
                 responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response);
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', fileNm); //or any other extension
-                document.body.appendChild(link);
-                link.click();
-            });
+                console.log(response)
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+                link.href = data
+                link.download = fileName
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+            })
 
         }
 
@@ -734,6 +745,18 @@
 
                     return formatDate;
                 }
+            }
+        }
+
+        validationCheck(val,type){
+            let regNumber = /^[0-9]*$/;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
             }
         }
 

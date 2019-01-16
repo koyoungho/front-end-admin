@@ -30,6 +30,8 @@
             <div class="sch_info_bot">
                 <p class="text_file">
                     모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.
+                    </br>
+                    파일 명은 영문자와 숫자,  파일 확장 자는 소문자 txt로 작성 되어야 합니다.
                 </p>
             </div>
 

@@ -99,7 +99,7 @@
                 this.termsType = "SITE";
                 this.menuCheck = "policyHistoryList";
             } else if (routeNm == 'personalReg') {
-                this.titleNm = '개인보호처리방침';
+                this.titleNm = '개인정보처리방침';
                 this.termsType = "USER";
                 this.menuCheck = "personalHistoryList";
             }

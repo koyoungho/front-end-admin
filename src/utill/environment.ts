@@ -1,8 +1,8 @@
 
 export const environment = {
     production: false,
-    // apiUrl : "http://211.39.150.112:8888/api", //서비스 API 로컬용.
-    apiUrl : "http://211.39.150.96:8888/api", //서비스 API
+    //apiUrl : "http://211.39.150.112:80/admin/api", //서비스 API 로컬용.
+    apiUrl : "http://211.39.150.96:8888/api", //서비스 API 로컬용.
     addressKey : "U01TX0FVVEgyMDE4MTEwNzE2MTEyMTEwODI4NTU=", // 주소 오픈API 키
     addressApiUrl : "http://www.juso.go.kr/addrlink/addrLinkApi.do", // 주소 URL
 

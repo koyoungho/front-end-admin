@@ -131,6 +131,8 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {CommonBoardService} from "../../api/common.service";
     import moment from 'moment'
+    import axios from 'axios';
+    import {environment} from '@/utill/environment';
     // Vue.prototype.moment = moment;
 
 
@@ -207,9 +209,44 @@
         /**
          * 매뉴얼다운로드
          */
-        manual(){
-            this.$router.push({name:'noticeDetl', params:{seq:'195'}})
+        manual() {
+            let fileOrigin ='manual_admin.pdf';
+
+            axios({
+                url: environment.apiUrl + "/file/manual/admin",
+                method: 'GET',
+                responseType : 'blob', // important
+                headers : { "x-auth-token" : sessionStorage.accessToken}
+            }).then((response) => {
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data], {type: 'application/pdf'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob, fileOrigin)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+
+                link.href = data
+                link.download = fileOrigin
+
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+
+            })
+
         }
+
 
     };
 </script>

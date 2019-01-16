@@ -102,7 +102,7 @@
                 }
 
             }else if(routeNm == 'personalHistoryList' ){
-                this.titleNm ='개인보호처리방침';
+                this.titleNm ='개인정보처리방침';
                 this.termsType="user";
 
                 // 메뉴별 권한 확인

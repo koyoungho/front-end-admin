@@ -75,17 +75,17 @@ export default new Vuex.Store({
         },
         LOGOUT (state) {
             //state.accessToken = null
-            // CommonBoardService.deleteListDatas('auth', null, null).then((response) => {
-            //         let result: any = response.data;
-            //         if (result != null && result.code == '000') {
-            //             console.log('token delete success');
-            //         }
-            //     }
-            //     , (error) => {
-            //         console.log('token delete fail');
-            //     })
-            // sessionStorage.clear(); //세션스토리지 삭제
-            sessionStorage.clear();
+            // token 삭제
+            CommonBoardService.deleteListDatas('auth', null, null).then((response) => {
+                let result: any = response.data;
+                if (result != null && result.code == '000') {
+                    console.log('token delete success');
+                }
+            }
+            , (error) => {
+                console.log('token delete fail');
+            })
+            sessionStorage.clear(); //세션스토리지 삭제
         },
         INFO_SET(state, data) {
             sessionStorage.role = data.role;

@@ -120,7 +120,7 @@
                     {progId:'policyList',groupCode : '0005', name: '시스템관리', value : '', dept: '', auth: ''
                         ,subMenuDtos:[
                             {name:'약관 관리', progId : 'policyHistoryList',sub: 'sub'},
-                            {name:'개인보호처리방침', progId : 'personalHistoryList',sub: 'sub'},
+                            {name:'개인정보처리방침', progId : 'personalHistoryList',sub: 'sub'},
                             {name:'계정 권한 관리', progId : 'mnUser',sub: 'sub'},
                             {name:'메뉴 권한 관리', progId : 'mnMenu',sub: 'sub'},
                             {name:'코드관리', progId : 'mnCode',sub: 'sub'},

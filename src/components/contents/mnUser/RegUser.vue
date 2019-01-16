@@ -22,23 +22,23 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름</th>
-                        <td><input type="text" class="input form_w100" title="이름" v-model="name"></td>
+                        <td><input type="text" class="input form_w100" title="이름" v-model="name" maxlength="20"></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum">
+                            <input type="text" class="input form_w100" title="휴대폰번호" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">ID</th>
                         <td>
-                            <input type="text" class="input form_id" title="ID" v-model="id" v-on:keyup="idCh()">
+                            <input type="text" class="input form_id" title="ID" v-model="id" v-on:keyup="idCh()" maxlength="16">
                             <input type="hidden" v-model="idChkYn">
                             <button type="button" id="" class="btn_s01 bg04" @click="idChk()">중복확인</button>
                             <p class="info_msg" id="id_msg"></p>
                         </td>
                         <th scope="row">이메일주소</th>
                         <td>
-                            <input type="text" class="input form_w100" title="이메일주소" v-model="email">
+                            <input type="text" class="input form_w100" title="이메일주소" v-model="email" maxlength="30">
                         </td>
                     </tr>
                     <tr>
@@ -75,10 +75,10 @@
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소" v-model="addr1">
+                                    <input type="text" class="input form_address01" title="주소" v-model="addr1" maxlength="40">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소" v-model="addr2">
+                                    <input type="text" class="input form_address02" title="상세 주소" v-model="addr2" maxlength="40">
                                 </li>
                             </ul>
                         </td>
@@ -86,9 +86,9 @@
                     <tr>
                         <th scope="row">접속IP 대역</th>
                         <td colspan="3">
-                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpFrom" maxlegnth="14">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpFrom" maxlegnth="15">
                             <span class="period_form">-</span>
-                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpTo" maxlength="14">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpTo" maxlength="15">
                         </td>
                     </tr>
                     </tbody>
@@ -583,10 +583,10 @@
                         rowData['createYn'] = e.createYn;
                         rowData['updateYn'] = e.updateYn;
                         rowData['deleteYn'] = e.deleteYn;
-                        rowData['readGbn'] = false;
-                        rowData['createGbn'] = false;
-                        rowData['updateGbn'] = false;
-                        rowData['deleteGbn'] = false;
+                        rowData['readGbn'] = true;
+                        rowData['createGbn'] = true;
+                        rowData['updateGbn'] = true;
+                        rowData['deleteGbn'] = true;
                         rowData['readId'] = e.menuCode + rowCnt;
                         rowData['createId'] = e.menuCode + rowCnt;
                         rowData['updateId'] = e.menuCode + rowCnt;
@@ -598,7 +598,7 @@
                     this.menuList = arrData;
 
                 }else{
-                    Vue.swal({text: '에러'});
+                    //Vue.swal({text: '에러'});
                 }
             })
 

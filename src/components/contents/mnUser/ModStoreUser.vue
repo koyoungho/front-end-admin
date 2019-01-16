@@ -30,14 +30,14 @@
                             <input type="text" class="input form_industry" title="사업자등록번호 입력" disabled="disabled" v-model="saupId">
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
-                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명 입력" v-model="storeNm"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명 입력" v-model="storeNm" maxlength="30"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm"></td>
+                        <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum">
+                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" maxlength="12" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''">
                         </td>
                     </tr>
                     <tr>
@@ -70,6 +70,12 @@
                             </select>
                         </td>
                     </tr>
+                    <tr v-if="saupjangSajin">
+                        <th scope="row">사업자등록증 확인</th>
+                        <td class="con01" colspan="3">
+                            <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
                         <td colspan="3">
@@ -79,10 +85,10 @@
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBox1(postText)">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소 입력" v-model="addr1">
+                                    <input type="text" class="input form_address01" title="주소 입력" v-model="addr1" maxlength="40">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소 입력" v-model="addr2">
+                                    <input type="text" class="input form_address02" title="상세 주소 입력" v-model="addr2" maxlength="40">
                                 </li>
                             </ul>
                         </td>
@@ -159,7 +165,7 @@
                         </td>
                         <th scope="row">이메일주소<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email">
+                            <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" maxlength="30">
                         </td>
                     </tr>
                     <tr>
@@ -198,6 +204,8 @@
     import {CommonBoardService} from "../../../api/common.service"; // 본인인증
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
     //import KmcConfirm from '../../common/kmc/kmcConfirm.vue';
+    import axios from 'axios';
+    import {environment} from '../../../utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
@@ -250,6 +258,8 @@
 
         objectKey : any = "";
 
+        saupjangSajin : boolean = false; //사업자등록증 뷰 여부
+
         created() {
 
             this.objectKey = this.$route.params.reqParams;
@@ -301,6 +311,10 @@
                         this.upjongCode = result.upjongCode;
                         this.subSaup = result.companyCode;
                         this.blGb = result.blGb;
+                        this.saupFileNm = result.saupFileNm;
+                        if(this.aprvYn == 'N'){
+                            this.saupjangSajin = true;
+                        }
 
                         if(sessionStorage.role == '0001' ){ //시스템 관리자만 BL정보 수정가능
                             let blGbn = document.getElementById('blGbID');
@@ -672,7 +686,7 @@
             let reqData : any = {
                 to : [this.email],
                 title : '현금영수증 비밀번호 초기화 안내 메일입니다.',
-                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://211.39.150.112/#/login 에서 비밀번호 초기화 하세요.',
+                message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://211.39.150.96/ 에서 비밀번호 초기화 하세요.',
                 cc : [''],
             };
             // api 데이터 호출
@@ -733,6 +747,59 @@
             }else {
                 return moment(data, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
             }
+        }
+
+        validationCheck(val,type){
+            let regNumber = /^[0-9]*$/;
+            if(type=='number'){
+                if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return 'N';
+                }
+            }
+            else{
+            }
+        }
+
+        downloadFile(){
+
+            console.log('사업자등록증 파일 다운로드');
+            //this.rowData = data.row;
+            //this.popComfirm();
+
+            //파일 다운로드
+            let fileName : string = this.saupFileNm;
+            axios({
+                url: environment.apiUrl +"/file/"+fileName,
+                method: 'GET',
+                responseType: 'blob', // important
+                headers: {"x-auth-token": sessionStorage.accessToken}
+            }).then((response) => {
+                console.log(response)
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+                link.href = data
+                link.download = fileName
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+            })
+
         }
 
     }

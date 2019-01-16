@@ -112,10 +112,10 @@ export default new Router({
                 {path:'main', name:'main', component: Main ,meta: {authRequired: true} }, //메인
                 // {path:'chgPass',component: ChgPass }, //비밀번호 변경
                 {path:'phoneAuth', name:'phoneAuth', component: PhoneAuth ,meta: {authRequired: true} }, //핸드폰 인증
-                {path:'policy', name:'policy', component:Policy ,meta: {authRequired: false}}, //이용약관 및 개인보호처리방침
+                {path:'policy', name:'policy', component:Policy ,meta: {authRequired: false}}, //이용약관 및 개인정보처리방침
 
                 //정보변경
-                {path:'myPage', name:'myPage', component: MyPage ,meta: {authRequired: true}}, //이용약관 및 개인보호처리방침
+                {path:'myPage', name:'myPage', component: MyPage ,meta: {authRequired: true}}, //이용약관 및 개인정보처리방침
 
                 //가맹점관리
                 {path:'franchiseList', name:'franchiseList', component: FranchiseList ,meta: {authRequired: true}}, //가맹점관리 리스트
