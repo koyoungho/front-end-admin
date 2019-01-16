@@ -133,7 +133,7 @@
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="saupjang.zipCode" disabled="disabled">
-                                    <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
+                                    <!--<button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>-->
                                 </li>
                                 <li class="con02">
                                     <input type="text" class="input form_address01" title="주소" v-model="saupjang.addr1" disabled="disabled">
