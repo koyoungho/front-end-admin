@@ -72,7 +72,7 @@
             if(this.termsType == 'site' ){
                 this.titleNm ='이용약관'
             }else if(this.termsType == 'user' ){
-                this.titleNm ='개인보호처리방침'
+                this.titleNm ='개인정보처리방침'
             }
 
             this.bindContent();//본문호출
