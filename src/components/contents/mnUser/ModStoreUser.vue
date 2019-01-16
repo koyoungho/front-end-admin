@@ -298,7 +298,7 @@
                     if (result != null) {
                         //console.log('조회 성공');
 
-                        this.saupId = result.saupId;
+                        this.saupId = this.saupnoFormat(result.saupId);
                         this.storeNm = result.storeNm;
                         this.repNm = result.repNm;
                         this.repPhonenum = result.repPhonenum;
@@ -801,6 +801,16 @@
             })
 
         }
+
+        amtComma(num){
+            return  Number(num).toLocaleString()
+        }
+
+        saupnoFormat(val) {
+            return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+        }
+
+
 
     }
 </script>

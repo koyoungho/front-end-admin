@@ -14,8 +14,8 @@ export default class WebApi<T>{
             },
             error=>{
                 if(error.code=401){
-                    // sessionStorage.clear()
-                    // window.location.href='/#/login'
+                    sessionStorage.clear()
+                    window.location.href='/#/login'
                 }
                 else{
                     // window.location.href='/#/error'

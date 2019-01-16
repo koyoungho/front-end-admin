@@ -156,7 +156,7 @@
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
                         // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
-                        {type: 'selectCode' ,class:'w30 text_center', title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : '' , option : [{ codeNm : '시스템 관리자' , code: '0001' },{codeNm : '콜센터 관리자' , code: '0003' },{codeNm : '사업자 관리자' , code: '0002' },{codeNm : '가맹점 관리자' , code: '0004' },{codeNm : '지점 관리자' , code: '0005' },{codeNm : '매장 관리자(일반 사용자)' , code: '0006' }]},
+                        {type: 'selectCode' ,class:'w30 text_center', title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : '' , code: '0006', option : [{ codeNm : '시스템 관리자' , code: '0001' },{codeNm : '콜센터 관리자' , code: '0003' },{codeNm : '사업자 관리자' , code: '0002' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
                         {type: 'selectCode' ,class:'w30 text_left',liNull:true, title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
                         {type: 'date2',class:'w25', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
