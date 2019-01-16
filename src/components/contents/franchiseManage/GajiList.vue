@@ -23,7 +23,7 @@
                                     <option value="saupId">사업자등록번호</option>
                                     <option value="shopNm">사업장명</option>
                                 </select>
-                                <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord">
+                                <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord" v-on:keyup.enter="searchGajum">
                             </li>
                         </ul>
                         <span class="btn_req_area"><button type="button" class="btn_m01 bg01" v-on:click="searchGajum">조회</button></span>

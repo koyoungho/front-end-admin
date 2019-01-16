@@ -245,7 +245,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot type01" v-if="onlineYn == 'Y' ">
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow" v-if="cancleReceipActionBtn">발급취소</button>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
             <div style="text-align:right">
@@ -310,6 +310,8 @@
         onLoadListView : any = false;
         regShow: boolean =false;
         bongsaBlock :boolean= false;
+
+        cancleReceipActionBtn : boolean = true;
 
         created(){
             // 메뉴별 권한 확인
@@ -508,6 +510,7 @@
             }
             else{
                 // saleDate}/{perm}/cancel
+                this.cancleReceipActionBtn = false;
                 CommonBoardService.updateListData('receipt', this.objectKey.saleDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
                     this.openReceiptPop(response.data);
                 }).catch();
@@ -515,6 +518,7 @@
         }
 
         openReceiptPop(response){
+            this.cancleReceipActionBtn = true;
             this.receiptOk = false;
             this.cancleReceipView();
         }

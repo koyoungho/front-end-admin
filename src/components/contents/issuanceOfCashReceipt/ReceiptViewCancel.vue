@@ -77,9 +77,9 @@
                         totalColum: 10,
                         apiUrl : 'receipt',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
-                        mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
-                        mTotalControl : [{totalTitle : '합계 금액' , id: 'totalAmt' , value : '' },{totalTitle : '합계봉사료' , id: 'bong' , value : '' },{totalTitle : '합계공급가액' , id: 'amt' , value : '' },
-                            {totalTitle : '합계부가세' , id: 'vat' , value : '' }]
+                        // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                        // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalAmt' , value : '' },{totalTitle : '합계봉사료' , id: 'bong' , value : '' },{totalTitle : '합계공급가액' , id: 'amt' , value : '' },
+                        //     {totalTitle : '합계부가세' , id: 'vat' , value : '' }]
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
@@ -99,6 +99,10 @@
                     searchClass : 'search_box page_new',
                     searchClass2 : 'search_list'
                 }
+
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.listItem.search  = this.$store.state.searchList.listDt
+            }
 
         }
         mounted() {

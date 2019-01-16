@@ -71,7 +71,7 @@
                 search: [
                     {type: 'selectObject' ,class:'w33',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
                     {type: 'selectCode',class:'w33',title: '승인코드',id: 'lpermid',name: 'lpermid',value: '',api: 'code/aprvcode',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',class:'w33',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: 'N'}, {codeNm: '등록',code: 'Y'}]},
+                    {type: 'selectCode',class:'w33 text_left',title: '상태',id: 'aprvYn',name: 'aprvYn',value: '',api: '',option: [{codeNm: '승인대기', code: 'N'}, {codeNm: '등록',code: 'Y'}]},
                     {type: 'date2',class:'w33', title :'등록일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'select',class:'w33',title: '검색',id: 'searchType',name: 'searchType',value: '',api: '',option: [{name: '사업장명', value: '0'}, {name: '사업자등록번호', value: '1'}]},
                     {type: 'input',class:'w33 text_left', title: '', id: 'searchWord', name: 'searchWord', value: '', api: '', option: ''},

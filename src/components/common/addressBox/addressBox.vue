@@ -18,15 +18,12 @@
           <div class="post_box">
             <!-- search post box -->
             <p class="search_post_box">
-              <input type="text" v-model="addressData" class="input sch_post"
-                     placeholder="도로명 + 건물번호, 건물명, 지번을 입력하세요." title="주소 입력">
-              <span class="btn_post_area"><button type="button" class="btn_m01 bg03"
-                                                  v-on:click="getAddressLoding()">검색</button></span>
+              <input type="text" v-model="addressData" class="input sch_post" placeholder="도로명 + 건물번호, 건물명, 지번을 입력하세요." title="주소 입력" v-on:keyup.enter="getAddressLoding()">
+              <span class="btn_post_area"><button type="button" class="btn_m01 bg03" v-on:click="getAddressLoding()">검색</button></span>
             </p>
             <!-- info box -->
             <div class="info_box" v-show="total < 1">
-              <p class="info_text"><em class="fc_pt01">건물번호</em> 또는 <em class="fc_pt01">번지수</em>를 같이 입력하면 더
-                빨라요!</p>
+              <p class="info_text"><em class="fc_pt01">건물번호</em> 또는 <em class="fc_pt01">번지수</em>를 같이 입력하면 더 빨라요!</p>
               <ul class="cont_list02">
                 <li>가산디지털2로 179 (도로명 + 건물번호)</li>
                 <li>롯데정보통신 (건물명, 아파트명)</li>

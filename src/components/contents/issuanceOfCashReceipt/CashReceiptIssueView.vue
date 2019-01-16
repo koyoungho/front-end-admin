@@ -411,7 +411,7 @@
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">거래일시</th>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"width:65%; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.nowTimehms + "</td>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"width:65%; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.saleDate + "</td>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" class=\"bg01\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#ffffff; text-align: center;\">공급가액</th>\n" +
@@ -464,7 +464,7 @@
                 "\t\t\t\t\t<td width=\"30\"></td></tr>\n" +
                 "\t\t\t\t<tr><td colspan=\"3\" height=\"40\"></td></tr>\n" +
                 "\t\t\t\t<tr><td colspan=\"3\" style=\"border-top:1px solid #dedede; padding-top:34px;padding-left:21px;padding-right:21px;padding-bottom:13px;background:#ffffff;font-size:12px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:22px\">\n" +
-                "\t\t\t\t\t발신전용 메일입니다. 궁금하신 사항은 현금영수증 <a href=\"#\" style=\"color:#212121;text-decoration:underline\" target=\"_blank\">고객센터</a>로 연락 주시면 성심 성의껏 상담해드리겠습니다.<br>타인이 회원님의 이메일을 잘못 입력한 경우 메일이 발송될 수 있습니다.<br>잘못 수신된 메일이라면 현금영수증 고객센터 1:1 문의하기를 이용해주시기 바랍니다.\n" +
+                "\t\t\t\t\t발신전용 메일입니다. 궁금하신 사항은 현금영수증 고객센터로 연락 주시면 성심 성의껏 상담해드리겠습니다.<br>타인이 회원님의 이메일을 잘못 입력한 경우 메일이 발송될 수 있습니다.<br>잘못 수신된 메일이라면 현금영수증 고객센터 1:1 문의하기를 이용해주시기 바랍니다.\n" +
                 "\t\t\t\t</td></tr>\n" +
                 "\t\t\t\t<tr><td colspan=\"3\" style=\"padding-left:21px;padding-right:21px;padding-bottom:37px;background:#ffffff;font-size:12px;font-family:Helvetica;color:#939393;line-height:17px\">\n" +
                 "\t\t\t\t\tCopyright ⓒ 2019 KT corporation & LDCC. All rights reserved.\n" +

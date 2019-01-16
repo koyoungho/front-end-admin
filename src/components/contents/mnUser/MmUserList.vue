@@ -155,19 +155,19 @@
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
-                        {type: 'date2', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
-                        {type: 'selectCode' , title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : '' , option : [{ codeNm : '시스템관리자' , code: '0001' },{codeNm : '콜센터관리자' , code: '0003' },{codeNm : '사업자 관리자' , code: '0002' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
-                        {type: 'selectCode' , title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
-                        {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '소속회사' , value: 'shopNm' }]},
-                        {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' },
+                        {type: 'selectCode' ,class:'w30 text_center', title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : '' , code: '0006', option : [{ codeNm : '시스템관리자' , code: '0001' },{codeNm : '현금영수증사업자' , code: '0002' },{codeNm : '콜센터관리자' , code: '0003' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
+                        {type: 'selectCode' ,class:'w30 text_left',liNull:true, title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
+                        {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
+                        {type: 'date2',class:'w25', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '사업장명' , value: 'shopNm' }]},
+                        {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                         // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                         // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                     ],
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                     goSearch : "iocSearch",
-                    searchClass : 'search_box page_system03',
+                    searchClass : 'search_box page_new',
                     searchClass2 : 'search_list'
                 }
 
