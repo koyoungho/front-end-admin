@@ -75,10 +75,6 @@
                         <td class="con01" colspan="3">
                             <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
                         </td>
-                        <!--<th scope="row">전화번호</th>
-                        <td class="con01">
-                            <input type="text" class="input form_w100" title="전화번호" v-model="account.telNum">
-                        </td>-->
                     </tr>
                     <tr>
                         <th scope="row">주소</th>
@@ -282,6 +278,7 @@
         oldRole : any = ''; //이전 role
 
         saupjangSajin : boolean = false; //사업자등록증 뷰 여부
+        saupFileNm : any = '';
 
         auth : any = "";
         addressBox : boolean = false;
@@ -369,9 +366,9 @@
                    //this.setData()
                    this.account = result.data;
                    this.oldRole = result.data.role;
-                   if(result.data.aprvYn != null && result.data.aprvYn != 'Y'){ //승인이 안된경우만 사업자등록증 확인 보여줌
+                   /*if(result.data.aprvYn != null && result.data.aprvYn != 'Y'){ //승인이 안된경우만 사업자등록증 확인 보여줌
                        this.saupjangSajin = true;
-                   }
+                   }*/
 
                    let arrList : any = [];
                    let objList : any = {};
@@ -693,24 +690,38 @@
             //this.rowData = data.row;
             //this.popComfirm();
 
-            let server: any = environment.apiUrl;
-            let param: any = '/file/' + '20190102154913_J0341559.JPG';
-            let fileNm : string = '20190102154913_J0341559.JPG';
             //파일 다운로드
+            let fileName : string = this.saupFileNm;
             axios({
-                url: server + param,
+                url: environment.apiUrl +"/file/"+fileName,
                 method: 'GET',
                 responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response);
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', fileNm); //or any other extension
-                document.body.appendChild(link);
-                link.click();
-            });
+                console.log(response)
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+                link.href = data
+                link.download = fileName
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+            })
 
         }
 

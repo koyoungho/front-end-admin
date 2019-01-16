@@ -53,7 +53,7 @@
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
                             </select>
-                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20">
+                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20" id="confirmID">
                         </td>
 
                     </tr>
@@ -239,8 +239,12 @@
         @Watch('positionGb') onChange(){
             if(this.positionGb == '6') { //자진발급이면 0100001234로 자동 입력
                 this.confirm = '0100001234';
+                let confirmID = document.getElementById('confirmID')
+                if(confirmID!=null){ confirmID.setAttribute('disabled', 'disabled') }
             }else{
                 this.confirm = '';
+                let confirmID = document.getElementById('confirmID')
+                if(confirmID!=null){ confirmID.removeAttribute('disabled') }
             }
         }
         @Watch('totalAmt') onTotalamtChange(){ //거래금액 변경시

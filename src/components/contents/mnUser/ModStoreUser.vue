@@ -70,6 +70,12 @@
                             </select>
                         </td>
                     </tr>
+                    <tr v-if="saupjangSajin">
+                        <th scope="row">사업자등록증 확인</th>
+                        <td class="con01" colspan="3">
+                            <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
                         <td colspan="3">
@@ -198,6 +204,8 @@
     import {CommonBoardService} from "../../../api/common.service"; // 본인인증
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
     //import KmcConfirm from '../../common/kmc/kmcConfirm.vue';
+    import axios from 'axios';
+    import {environment} from '../../../utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
@@ -250,6 +258,8 @@
 
         objectKey : any = "";
 
+        saupjangSajin : boolean = false; //사업자등록증 뷰 여부
+
         created() {
 
             this.objectKey = this.$route.params.reqParams;
@@ -301,6 +311,10 @@
                         this.upjongCode = result.upjongCode;
                         this.subSaup = result.companyCode;
                         this.blGb = result.blGb;
+                        this.saupFileNm = result.saupFileNm;
+                        if(this.aprvYn == 'N'){
+                            this.saupjangSajin = true;
+                        }
 
                         if(sessionStorage.role == '0001' ){ //시스템 관리자만 BL정보 수정가능
                             let blGbn = document.getElementById('blGbID');
@@ -745,6 +759,47 @@
             }
             else{
             }
+        }
+
+        downloadFile(){
+
+            console.log('사업자등록증 파일 다운로드');
+            //this.rowData = data.row;
+            //this.popComfirm();
+
+            //파일 다운로드
+            let fileName : string = this.saupFileNm;
+            axios({
+                url: environment.apiUrl +"/file/"+fileName,
+                method: 'GET',
+                responseType: 'blob', // important
+                headers: {"x-auth-token": sessionStorage.accessToken}
+            }).then((response) => {
+                console.log(response)
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+                link.href = data
+                link.download = fileName
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+            })
+
         }
 
     }
