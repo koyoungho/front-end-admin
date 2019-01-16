@@ -48,6 +48,9 @@
 
                     <!-- tbl scroll box -->
                     <div class="tbl_scroll_box">
+                        <div id="loading_bar" v-show="loading">
+                            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+                        </div>
                         <!-- tbl list02 -->
                         <table class="tbl_list02">
                             <caption>검색 목록</caption>
@@ -202,10 +205,11 @@
 
     import {Component, Vue, Prop} from "vue-property-decorator";
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            GajijumList
+            GajijumList, VueSimpleSpinner
         },
     })
     export default class GajijumList extends Vue {
@@ -240,6 +244,8 @@
         paggingStr: any = [];
         total: number = 0;
         pageNum: number = 1;
+
+        loading :boolean= false;
 
         //돔생성전 호출자
         created() {
@@ -324,6 +330,7 @@
                 //perPage  : this.PAGEBLOCK,
             }
 
+            this.loading = true;
             CommonBoardService.getListData('gajum/popup', null, reqData).then((response) => {
                     //console.log(response)
                     //this.responseData = response.data;
@@ -338,9 +345,11 @@
                         rowData['gajuGbn'] = 'gajum';
                         putData.push(rowData);
                     });
-                    this.responseData = putData
+                    this.responseData = putData;
+                    this.loading = false;
                 }
                 , (error) => {
+                    this.loading = false;
                 }
             ).catch();
         }

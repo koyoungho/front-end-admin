@@ -40,6 +40,9 @@
             </div>
             <!-- post scroll -->
             <div class="post_scroll">
+                <div id="loading_bar" v-show="loading">
+                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+                </div>
               <!-- post list -->
               <ul class="post_list">
                 <li v-for="address in responseAddressData">
@@ -93,11 +96,11 @@
     import {environment} from '@/utill/environment';
     import axios from 'axios';
     import {Component, Vue} from 'vue-property-decorator';
-
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            AddressBox
+            AddressBox, VueSimpleSpinner
         }
     })
     export default class AddressBox extends Vue {
@@ -127,6 +130,8 @@
 
         cssStyle : string = `<div class="popup_modal" v-bind:style="#header {position : ""}"></div>`
 
+        loading :boolean= false;
+
         //돔생성전 호출자
         created() {
 
@@ -155,6 +160,7 @@
             // searchData ={
             //     currentPage : this.pageNum , countPerPage :this.PAGEBLOCK , keyword : this.addressData , confmKey : this.confmKey , resultType :  this.resultType
             // }
+            this.loading = true;
             // 로딩바
             this.pageMake();
 
@@ -167,10 +173,11 @@
                         this.pageSize = parseInt(response.data.results['common'].countPerPage);
                         this.PAGEBLOCK = parseInt(response.data.results['common'].countPerPage);
                         this.pageMake();
-
+                        this.loading = false;
                     }
                     , error => {
-                        this.$Progress.finish();
+                        //this.$Progress.finish();
+                        this.loading = false;
                     }
                 ).catch(
             );
