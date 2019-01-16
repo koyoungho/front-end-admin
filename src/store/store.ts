@@ -14,7 +14,8 @@ const resourceHost =  environment.apiUrl
 
 export default new Vuex.Store({
     state: {
-        accessToken: null
+        accessToken: null,
+        searchList :[],
     },
     getters: {
     },
@@ -91,6 +92,12 @@ export default new Vuex.Store({
             sessionStorage.code = data.code;
             sessionStorage.message = data.message;
             sessionStorage.failCnt = data.failCnt;
+        },
+        SEARCHLISTINPUT(state,{menu}){
+            state.searchList = menu
+        },
+        SEARCHLISTOUT(state){
+             return state.searchList
         }
     },
     actions: {

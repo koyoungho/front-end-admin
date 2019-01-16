@@ -100,6 +100,10 @@
                     searchClass2 : 'search_list'
                 }
 
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.listItem.search  = this.$store.state.searchList.listDt
+            }
+
         }
         mounted() {
         }

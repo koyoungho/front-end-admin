@@ -361,7 +361,15 @@
             if( checkYn=='N'){
                 alert('오류발생월을 입력해주세요')
             }else{
+                let name = this.$route.name
+                let object :Object= this.searchItem
+                let menu = {menuId: name ,listDt : object}
+                this.$store.commit('SEARCHLISTINPUT', {menu})
                 this.$emit('SearchToList', this.searchItem);
+
+                this.$store.commit('SEARCHLISTOUT')
+
+                // console.log(this.$store.dispatch('GET', {menu}))
             }
 
         }
