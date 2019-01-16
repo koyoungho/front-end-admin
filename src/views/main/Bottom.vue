@@ -17,7 +17,7 @@
                 <li><a href="https://www.kt.com/" target="_blank" title="새창으로 열기">(주) 케이티</a></li> <!-- 20181120 수정 -->
                 <li><a href="https://www.ldcc.co.kr/" target="_blank" title="새창으로 열기">롯데정보통신 (주)</a></li> <!-- 20181120 수정 -->
                 <li v-on:click="policyDiv('site')"><a>이용약관</a></li>
-                <li v-on:click="policyDiv('user')"><a>개인보호처리방침</a></li>
+                <li v-on:click="policyDiv('user')"><a>개인처리방침</a></li>
             </ul>
             <div class="footer_address">
                 <p class="footer_text01">

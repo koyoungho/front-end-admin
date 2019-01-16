@@ -41,8 +41,8 @@
                         <td>
                             <select name="" class="select form_w100" title="발급용도 선택" v-model="geogu">
                                 <option value="">선택</option>
-                                    <option value="0">소득공제</option>
-                                    <option value="1">지출증빙</option>
+                                    <option value="0">현금(소득공제)</option>
+                                    <option value="1">현금(지출증빙)</option>
                             </select>
                         </td>
                         <th scope="row">고객신분확인<em class="form_req">*</em></th>
