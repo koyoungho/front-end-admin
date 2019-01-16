@@ -606,6 +606,7 @@
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
                     let result : any = '';
 
+                    if(response.data.data.length > 0 || response.data.length > 0){
                     if(response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
                         result = response.data;
                     }else{
@@ -658,7 +659,7 @@
                         nowData = result
                     }
 
-                    if (nowData.length > 0) { // 데이터 키맵에 맞게 매핑하기
+                    if (nowData.length > 0 ) { // 데이터 키맵에 맞게 매핑하기
                         nowData.filter((e,indexs) => {
                             let Objects = {};
                             Object.keys(e).forEach((key) => {
@@ -713,7 +714,9 @@
                             });
                             // 예외 컬러처리에 필요한 로우데이터 생성
                             this.listData.push(numberObject);
+
                         });
+                      }
                     }
                     else {
 
@@ -731,6 +734,7 @@
                     // this.$Progress.finish();
                 }
             ).catch();
+            this.loading = false;
         }
 
         rowView(row, searchData, index, key) {  // 로우클릭시 검색데이터 로우열 전체 데이터를 이벤트로 전송한다

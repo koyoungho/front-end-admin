@@ -20,7 +20,13 @@
                             <ul class="search_list">
                                 <li>
                                     <label>{{div_str}} 코드</label>
-                                    <input type="text" class="input sch_code" title="코드명" v-model="getCodes">
+                                  <template v-if="fuct=='add'">
+                                    <input type="text" class="input sch_code" title="코드명" v-model="getCodes" >
+                                  </template>
+                                  <template v-else>
+                                    <input type="text" class="input sch_code" title="코드명" v-model="getCodes" readonly>
+                                  </template>
+
                                 </li>
                                 <li>
                                     <label>{{div_str}} 코드명</label>
