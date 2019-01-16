@@ -80,6 +80,9 @@
                   <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
                       <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
                   </template>
+                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
+                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
+                  </template>
                   <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
                     <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
                   </template>
@@ -95,6 +98,7 @@
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
                 <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
               </template>
+
             </template>
             <!-- top 헤더가 없을경우 -->
             <template v-if="!dataGridDetail.dataGrid.columTopHeader">
@@ -126,6 +130,9 @@
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
                 <th>{{columNames.columName}}</th>
               </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
+                <th>{{columNames.columName}}</th>
+              </template>
             </template>
             </template>
         </tr>
@@ -142,6 +149,9 @@
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
                 <td >{{rows}}</td>
+              </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='bizNum'">
+                <td >{{saupnoFormat(rows)}}</td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
                   <td  v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right" >
@@ -799,6 +809,12 @@
         getListData(){
             this.$emit('listData', this.listData)
         }
+
+        saupnoFormat(val) {
+            return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+        }
+
+
     }
 
 </script>

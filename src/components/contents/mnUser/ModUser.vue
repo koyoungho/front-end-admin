@@ -67,7 +67,7 @@
                     <tr>
                         <th scope="row">최종접속일시</th>
                         <td colspan="3">
-                            <input type="text" class="input form_w50" title="최종접속일시" disabled="disabled" v-model="account.lastConnDt">
+                            <input type="text" class="input form_w50" title="최종접속일시" disabled="disabled" v-model="lastConnDt">
                         </td>
                     </tr>
                     <tr v-if="saupjangSajin">
@@ -103,9 +103,9 @@
                     </tr>
                     <tr>
                         <th scope="row">등록일</th>
-                        <td><input type="text" class="input form_w100" title="등록일" v-model="account.lastConnDt" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100" title="등록일" v-model="regDt" disabled="disabled"></td>
                         <th scope="row">해지일</th>
-                        <td><input type="text" class="input form_w100 fc_pt01" value="" title="해지일" v-model="account.cancelDt" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100 fc_pt01" value="" title="해지일" v-model="cancelDt" disabled="disabled"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -132,7 +132,7 @@
                     <tr>
                         <th scope="row">사업자등록번호</th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupjang.saupId" disabled="disabled">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" disabled="disabled">
                             <!--<button type="button" id="" class="btn_s01 bg04">중복확인</button>-->
                             <!--<p class="info_msg">이미 등록된 사업자 번호입니다.</p>-->
                         </td>
@@ -275,10 +275,15 @@
         gajum : Gajum[]=[];
         saupjang : Saupjang[]=[];
 
+        saupId:string ='';
+
         oldRole : any = ''; //이전 role
 
         saupjangSajin : boolean = false; //사업자등록증 뷰 여부
         saupFileNm : any = '';
+        lastConnDt:string  ="";
+        regDt:string ="";
+        cancelDt:string ="";
 
         auth : any = "";
         addressBox : boolean = false;
@@ -354,6 +359,15 @@
 
         }
 
+        // 날짜 포맷
+        dateFormat(val){
+            if(val == null || val == ''){
+                return '';
+            }else{
+                return moment(val, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
+            }
+        }
+
         accountInfo(id,auth){
             let reqData = { id: id ,role: auth }
             CommonBoardService.getListDatas('accounts/'+id, null, reqData).then(result=>{
@@ -363,8 +377,15 @@
                    this.saupInfo(result.data.saupId); //조회된 사업자등록번호로 사업장 정보 조회
                    this.account = result.data
 
+                   console.log( this.account);
+
                    //this.setData()
-                   this.account = result.data;
+
+                   this.lastConnDt =this.dateFormat(result.data.lastConnDt)
+                   this.regDt = this.dateFormat(result.data.regDt)
+                   this.cancelDt = this.dateFormat(result.data.cancelDt)
+
+
                    this.oldRole = result.data.role;
                    /*if(result.data.aprvYn != null && result.data.aprvYn != 'Y'){ //승인이 안된경우만 사업자등록증 확인 보여줌
                        this.saupjangSajin = true;
@@ -440,6 +461,7 @@
                     console.log('사업장 정보 조회')
                     console.log(result.data)
                     this.saupjang = result.data
+                    this.saupId = this.saupnoFormat( result.data.saupId)
                 }else{
                     alert('에러')
                 }
@@ -725,28 +747,7 @@
 
         }
 
-        // 날짜 포맷
-        dateFormat(val: string){
-            if(val == undefined || val == ''){
-                return '';
-            }else{
-                if(val.length != 14){
-                    return '';
-                }else{
-                    let y1 : number  = Number(val.substring(0, 4));
-                    let m1 : number = Number(val.substring(4,6));
-                    let d1 : number = Number(val.substring(6,8));
-                    let hH : number = Number(val.substring(8,10));
-                    let mM : number = Number(val.substring(10,12));
-                    let sS : number = Number(val.substring(12));
 
-                    let date = new Date(y1, m1, d1, hH, mM, sS); //날짜로 변경
-                    let formatDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
-
-                    return formatDate;
-                }
-            }
-        }
 
         validationCheck(val,type){
             let regNumber = /^[0-9]*$/;
@@ -759,6 +760,11 @@
             else{
             }
         }
+
+        saupnoFormat(val) {
+            return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+        }
+
 
     }
 </script>

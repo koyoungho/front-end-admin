@@ -22,7 +22,7 @@
               <!-- cert box -->
               <div class="cert_box">
                 <p class="form_cert row01">
-                  <input type="text" id="" name="" size=""  autofocus="autofocus" maxlength="6"   placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber">
+                  <input type="text" id="" name="" size="" maxlength="" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber" v-on:keyup.enter="optCallConfirm(otpNumber)">
                   <span class="time_count2">{{message}}</span>
                   <button type="button" id="" class="btn_m01 bg01" @click="optCallConfirm(otpNumber)">인증번호 확인</button>
                 </p>

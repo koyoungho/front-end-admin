@@ -18,15 +18,12 @@
           <div class="post_box">
             <!-- search post box -->
             <p class="search_post_box">
-              <input type="text" v-model="addressData" class="input sch_post"
-                     placeholder="도로명 + 건물번호, 건물명, 지번을 입력하세요." title="주소 입력">
-              <span class="btn_post_area"><button type="button" class="btn_m01 bg03"
-                                                  v-on:click="getAddressLoding()">검색</button></span>
+              <input type="text" v-model="addressData" class="input sch_post" placeholder="도로명 + 건물번호, 건물명, 지번을 입력하세요." title="주소 입력" v-on:keyup.enter="getAddressLoding()">
+              <span class="btn_post_area"><button type="button" class="btn_m01 bg03" v-on:click="getAddressLoding()">검색</button></span>
             </p>
             <!-- info box -->
             <div class="info_box" v-show="total < 1">
-              <p class="info_text"><em class="fc_pt01">건물번호</em> 또는 <em class="fc_pt01">번지수</em>를 같이 입력하면 더
-                빨라요!</p>
+              <p class="info_text"><em class="fc_pt01">건물번호</em> 또는 <em class="fc_pt01">번지수</em>를 같이 입력하면 더 빨라요!</p>
               <ul class="cont_list02">
                 <li>가산디지털2로 179 (도로명 + 건물번호)</li>
                 <li>롯데정보통신 (건물명, 아파트명)</li>
@@ -43,6 +40,9 @@
             </div>
             <!-- post scroll -->
             <div class="post_scroll">
+                <div id="loading_bar" v-show="loading">
+                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+                </div>
               <!-- post list -->
               <ul class="post_list">
                 <li v-for="address in responseAddressData">
@@ -96,11 +96,11 @@
     import {environment} from '@/utill/environment';
     import axios from 'axios';
     import {Component, Vue} from 'vue-property-decorator';
-
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            AddressBox
+            AddressBox, VueSimpleSpinner
         }
     })
     export default class AddressBox extends Vue {
@@ -130,6 +130,8 @@
 
         cssStyle : string = `<div class="popup_modal" v-bind:style="#header {position : ""}"></div>`
 
+        loading :boolean= false;
+
         //돔생성전 호출자
         created() {
 
@@ -158,6 +160,7 @@
             // searchData ={
             //     currentPage : this.pageNum , countPerPage :this.PAGEBLOCK , keyword : this.addressData , confmKey : this.confmKey , resultType :  this.resultType
             // }
+            this.loading = true;
             // 로딩바
             this.pageMake();
 
@@ -170,10 +173,11 @@
                         this.pageSize = parseInt(response.data.results['common'].countPerPage);
                         this.PAGEBLOCK = parseInt(response.data.results['common'].countPerPage);
                         this.pageMake();
-
+                        this.loading = false;
                     }
                     , error => {
-                        this.$Progress.finish();
+                        //this.$Progress.finish();
+                        this.loading = false;
                     }
                 ).catch(
             );

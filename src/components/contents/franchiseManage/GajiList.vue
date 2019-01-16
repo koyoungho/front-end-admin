@@ -23,7 +23,7 @@
                                     <option value="saupId">사업자등록번호</option>
                                     <option value="shopNm">사업장명</option>
                                 </select>
-                                <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord">
+                                <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord" v-on:keyup.enter="searchGajum">
                             </li>
                         </ul>
                         <span class="btn_req_area"><button type="button" class="btn_m01 bg01" v-on:click="searchGajum">조회</button></span>
@@ -33,6 +33,9 @@
 
                 <!-- tbl scroll box -->
                 <div class="tbl_scroll_box">
+                    <div id="loading_bar" v-show="loading">
+                        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+                    </div>
                     <!-- tbl list02 -->
                     <table class="tbl_list02">
                         <caption>검색 목록</caption>
@@ -113,10 +116,11 @@
 
     import {Component, Vue} from "vue-property-decorator";
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            GajiList
+            GajiList, VueSimpleSpinner
         },
     })
     export default class GajiList extends Vue {
@@ -139,6 +143,8 @@
         paggingStr: any = [];
         total: number = 0;
         pageNum: number = 1;
+
+        loading :boolean= false;
 
         //돔생성전 호출자
         created() {
@@ -205,10 +211,11 @@
                 //perPage  : this.PAGEBLOCK,
             }
 
+            this.loading = true;
             CommonBoardService.getListData('gajum/popup', null, reqData).then((response) => {
                 //console.log(response)
                     this.responseData = response.data;
-
+                    this.loading = false;
                     /*this.total = parseInt(response.data.totalRecords);
                     this.pageNum = parseInt(response.data.currentPage);
                     this.pageSize = parseInt(response.data.perPage);
@@ -216,6 +223,7 @@
                     this.pageMake();*/
                 }
                 , (error) => {
+                    this.loading = false;
                 }
             ).catch();
         }
