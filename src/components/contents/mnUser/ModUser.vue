@@ -747,28 +747,7 @@
 
         }
 
-        // 날짜 포맷
-        dateFormat(val: string){
-            if(val == undefined || val == ''){
-                return '';
-            }else{
-                if(val.length != 14){
-                    return '';
-                }else{
-                    let y1 : number  = Number(val.substring(0, 4));
-                    let m1 : number = Number(val.substring(4,6));
-                    let d1 : number = Number(val.substring(6,8));
-                    let hH : number = Number(val.substring(8,10));
-                    let mM : number = Number(val.substring(10,12));
-                    let sS : number = Number(val.substring(12));
 
-                    let date = new Date(y1, m1, d1, hH, mM, sS); //날짜로 변경
-                    let formatDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
-
-                    return formatDate;
-                }
-            }
-        }
 
         validationCheck(val,type){
             let regNumber = /^[0-9]*$/;
