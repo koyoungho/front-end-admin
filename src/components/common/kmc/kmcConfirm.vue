@@ -9,7 +9,7 @@
         <h2>본인인증</h2>
         <a  class="btn_close b-close" v-on:click="closeKcmNull()">Close</a>
       </div>
-      <div class="popup_body" style="width: 418px;height: 500px">
+      <div class="popup_body" style="width: 418px;height: 580px">
         <!-- popup content -->
         <!--<form  v-bind:="sendCerticication" name="kmcForm" id="kmcForm"  target="cert"   method="post" >-->
         <!--<input type="hidden" name="tr_cert" v-bind:value="tr_cert">-->
