@@ -1,10 +1,16 @@
 
 export const environment = {
     production: false,
-    //apiUrl : "http://211.39.150.112:80/admin/api", //서비스 API 로컬용.
-    apiUrl : "http://211.39.150.96:8888/api", //서비스 API 로컬용.
+    apiUrl : "http://211.39.150.96:8888/api", //서비스 API 실서버.
+    // apiUrl : "http://211.39.150.112:80/admin/api", //서비스 API 개발서버.
+    imgApiUrl : "http://211.39.150.96:8888",   // 서비스 메일이미지 실서버
+    // imgApiUrl : "http://211.39.150.112",    // 서비스 메일이미지 개발서버
+
     addressKey : "U01TX0FVVEgyMDE4MTEwNzE2MTEyMTEwODI4NTU=", // 주소 오픈API 키
     addressApiUrl : "http://www.juso.go.kr/addrlink/addrLinkApi.do", // 주소 URL
+
+
+
 
     //본인인증 코드 및 주소
     selfCertificationUrl :   'https://www.kmcert.com/kmcis/web/kmcisReq.jsp',

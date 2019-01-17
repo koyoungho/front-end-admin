@@ -728,8 +728,8 @@
                         });
                       }
                     }
-                    else {
 
+                    else {
                     }
                     if(result.totalRecords){
                         this.totalCount = result.totalRecords;
@@ -743,8 +743,10 @@
                     this.loading = false;
                     // this.$Progress.finish();
                 }
-            ).catch();
-            this.loading = false;
+            ).catch(e=>{
+                this.loading = false;
+            });
+
         }
 
         rowView(row, searchData, index, key) {  // 로우클릭시 검색데이터 로우열 전체 데이터를 이벤트로 전송한다

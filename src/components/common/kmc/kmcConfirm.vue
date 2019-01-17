@@ -102,7 +102,7 @@
             CommonBoardService.getListData('kmc/cert', null, '')
                 .then((response) => {
                         this.tr_cert = response.data.cert;
-                        this.tr_url = 'http://211.39.150.96:8888/#/kmcResult';
+                        this.tr_url = environment.apiUrl+'/#/kmcResult';
                         this.sendCerticication();
                     }
                     , error => {
