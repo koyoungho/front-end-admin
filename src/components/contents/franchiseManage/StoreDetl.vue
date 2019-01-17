@@ -1014,7 +1014,7 @@
 
             let saupNo : any = '';
             if(this.saupId.length == 10){
-                saupNo = this.saupId.substring(2, 4);
+                saupNo = this.saupId.substring(3, 5);
                 if(saupNo.substring(0,1) == 0){
                     saupNo = saupNo.substring(2,1)
                 }

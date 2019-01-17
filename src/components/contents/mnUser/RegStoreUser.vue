@@ -348,7 +348,7 @@
 
                             //사업자 구분
                             if(this.nullCheck(result.saupType) == '') {
-                                let saupNo = result.saupId.substring(2, 4);
+                                let saupNo = result.saupId.substring(3, 5);
                                 if (saupNo.substring(0, 1) == 0) {
                                     saupNo = saupNo.substring(2, 1)
                                 }
@@ -604,7 +604,10 @@
         dataValidation() {
             let regNumber = /^[0-9]*$/;
             if(this.saupId == '') {
-                Vue.swal({text:'사업자등록번호를 입력하세요.'});
+                Vue.swal({text: '사업자등록번호를 입력하세요.'});
+                return false;
+            }else if(this.saupIdYn == ''){
+                Vue.swal({text: '사업자등록번호 등록확인하세요.'});
                 return false;
             }else if(this.storeNm == '') {
                 Vue.swal({text:'사업장명을 입력하세요.'});
@@ -922,7 +925,7 @@
 
             let saupNo : any = '';
             if(this.saupId.length == 10){
-                saupNo = this.saupId.substring(2, 4);
+                saupNo = this.saupId.substring(3, 5);
                 if(saupNo.substring(0,1) == 0){
                     saupNo = saupNo.substring(2,1)
                 }
@@ -1090,6 +1093,7 @@
                     //this.saupIdChkYn = 'Y';
 
                     if(result.data != null && result.data != ""){
+                        this.saupIdYn = 'Y';
                         this.saupId = result.data.saupId;
                         this.storeNm = result.data.shopNm;
                         this.repNm = result.data.chipNm;
@@ -1102,7 +1106,8 @@
                         this.upjongCode = this.nullCheck(result.data.upjong);
                         this.companyCode = this.nullCheck(result.data.subSaup);
                     }else{
-                        Vue.swal({text: '등록된 사업장정보가 없습니다. 신규사업장으로 등록합니다.'});
+                        Vue.swal({text: '등록된 사업장정보가 없습니다. 사업장등록번호를 확인하세요.'});
+                        this.saupIdYn = '';
                         this.storeNm = "";
                         this.repNm = "";
                         this.repPhonenum = "";
@@ -1116,7 +1121,7 @@
                     }
                     let saupNo : any = '';
                     if(this.saupId.length == 10){
-                        saupNo = this.saupId.substring(2, 4);
+                        saupNo = this.saupId.substring(3, 5);
                         if(saupNo.substring(0,1) == 0){
                             saupNo = saupNo.substring(2,1)
                         }
