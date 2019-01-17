@@ -26,7 +26,7 @@ export default class WebApi<T>{
 
     newApi(){
         this.headers =  {"Access-Control-Allow-Origin": "*", "Content-Type": "application/json;charset=utf-8" ,"Access": "application/json"
-            ,"x-auth-token": sessionStorage.accessToken };
+            ,"x-auth-token": sessionStorage.accessToken ,Pragma: 'no-cache'};
     }
 
     //삭제api
