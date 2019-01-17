@@ -50,7 +50,6 @@
         listItem: any = []
 
         created(){
-            this.originItem  = this.listItem.dataGrid.columControl
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -127,6 +126,7 @@
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.listItem.search  = this.$store.state.searchList.listDt
             }
+            this.originItem  = this.listItem.dataGrid.columControl
 
         }
 
