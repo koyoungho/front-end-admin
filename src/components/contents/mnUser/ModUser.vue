@@ -212,6 +212,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="removeAccount" v-show="regShow">계정해지</button>-->
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk" v-show="regShow">정보변경</button>
             </div>
 
@@ -678,8 +679,35 @@
             console.log(da);
         }
 
+        removeAccount(){
+            let account : any = this.account;
+            let reqData : any = { role : account.role };
+
+            // api 데이터 호출(계정 정보 수정)
+            CommonBoardService.deleteListData('accounts', account.id, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result);
+                    if (result.code == '000') {
+                        //계정 해지 완료
+                        //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        //this.$router.push({name:'mnUserList'})
+                        this.$router.push('/home/mnUser');
+                    } else {
+                        Vue.swal({text:'계정 해지에 실패하였습니다. 다시 시도하세요.'});
+                        return;
+                    }
+                }
+                , (error) => {
+                    //console.log(error);
+                }
+            ).catch((response) => {
+                //console.log(response);
+            });
+
+        }
+
         //비밀번호 초기화
-        initPassword(){
+        initPassword1(){
 
             let account : any = this.account;
 
@@ -691,6 +719,114 @@
                 message : '현금영수증 비빌번호 초기화 안내입니다.\nhttp://211.39.150.96:8888 에서 비밀번호 초기화 하세요.',
                 cc : [''],
              };
+            // api 데이터 호출
+            CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
+                    console.log(response);
+                    if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
+                        Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
+                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                    console.log(error);
+                }
+            ).catch();
+
+        }
+
+        initPassword() { //메일 발송
+
+            let account : any = this.account;
+            //let dt = new Date();
+            //let sendDate = this.nowTimehms;
+            //let regId = this.id;
+            //let regNm = this.name;
+
+            let mailMessage : string = ''; //메일 메시지 내용
+            mailMessage = "<html lang=\"ko\">\n" +
+                "<head>\n" +
+                "\t<meta charset=\"utf-8\">\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;background-color:#f0f0f0;letter-spacing:0px\">\n" +
+                "\t<tbody><tr><td align=\"center\">\n" +
+                "    <div style=\"max-width:720px; margin:0 auto\">\n" +
+                "\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:40px auto;background-color:#fff; border:1px solid #dedede; border-top:2px solid #da291c; -webkit-text-size-adjust:100%;text-align:left\">\n" +
+                "\t\t\t<tbody><tr><td width=\"30\"></td><td>\n" +
+                "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:30px auto 0;background-color:#fff;-webkit-text-size-adjust:100%;text-align:left\">\n" +
+                "\t\t\t\t<tbody><tr>\n" +
+                "\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"http://211.39.150.96/img/img_logo.07141310.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
+                "\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:13px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\"></td>\n" +
+                "\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\"></td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t</td><td width=\"30\"></td></tr>\n" +
+                "\t\t\t<tr><td width=\"30\"></td><td style=\"vertical-align: top;\">\n" +
+                "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:60px;\">\n" +
+                "\t\t\t\t<tbody>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:26px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; letter-spacing: -1px;\">[Hellocash 현금영수증] 관리자에 의한 계정 비밀번호 초기화 안내 메일</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; padding-top:24px;\">안녕하세요.</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">저희 KT 롯데정보통신 현금 영수증 서비스를 이용해 주시는 회원님께 감사 드립니다.</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">아래 링크 주소를 클릭하여 비밀번호를 설정 하신 후 서비스를 이용해 주시기 바랍니다.</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"tbl_view02\" style=\"width:100%; border-top:1px solid #dedede; margin-top:20px\">\n" +
+                "\t\t\t\t<colgroup>\n" +
+                "\t\t\t\t\t<col width=\"30%\">\n" +
+                "\t\t\t\t\t<col width=\"70%\">\n" +
+                "\t\t\t\t</colgroup>\n" +
+                "\t\t\t\t<tbody>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<th scope=\"row\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 30px; border-right:1px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">ID</th>\n" +
+                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+account.id+"</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<th scope=\"row\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 30px; border-right:1px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">이름</th>\n" +
+                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+account.name+"</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
+                "\t\t\t\t<tbody>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a href=\"http://211.39.150.96:8888\" target=\"_blank\" style=\"color:#008aff;\">http://211.39.150.96:8888</a> (패스워드 변경 주소링크)</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t</td>\n" +
+                "\t\t\t<td width=\"30\"></td></tr>\n" +
+                "\t\t\t<tr><td colspan=\"3\" height=\"40\"></td></tr>\n" +
+                "\t\t\t<tr><td colspan=\"3\" style=\"border-top:1px solid #dedede; padding-top:34px;padding-left:21px;padding-right:21px;padding-bottom:13px;background:#ffffff;font-size:12px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:22px\">\n" +
+                "\t\t\t\t본 메일은 Hellocash 현금영수증 이용에 관한 안내와 공지를 위한 발신 전용 메일입니다.<br>\n" +
+                "\t\t\t\t따라서 본 메일에는 수신거부 장치가 장착되어 있지 않습니다.<br>문의전화 02-2074-0340 / 팩스번호 : 02-2074-6089\n" +
+                "\t\t\t\t</td></tr>\n" +
+                "\t\t\t<tr><td colspan=\"3\" style=\"padding-left:21px;padding-right:21px;padding-bottom:37px;background:#ffffff;font-size:12px;font-family:Helvetica;color:#939393;line-height:17px\">\n" +
+                "\t\t\t\t\tCopyright ⓒ 2019 KT corporation & LDCC. All rights reserved.\n" +
+                "\t\t\t\t</td></tr>\n" +
+                "\t\t</tbody></table>\n" +
+                "        </div>\n" +
+                "      </td></tr>\n" +
+                "  </table>\n" +
+                "\t</td></tr>\n" +
+                "</tbody></table>\n" +
+                "</body>\n" +
+                "</html>";
+
+            let reqData : any = {
+                to : [account.email],
+                title : '[Hellocash 현금영수증]비밀번호 초기화 안내 메일입니다.',
+                message : mailMessage,
+                cc : [''],
+            };
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     console.log(response);
