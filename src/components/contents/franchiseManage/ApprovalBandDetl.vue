@@ -230,7 +230,12 @@
                         this.oldJumCode = result.jumCode; //변경시 체크를 위한 점코드
                         this.jumCodeYn = 'Y';
                         this.aproCode = result.aprvCode; //승인코드
-                        this.aproStatus = result.aprvYn; //승인상태
+                        if(result.aprvYn != null && result.aprvYn == 'Y'){ //승인상태
+                            this.aproStatus = '등록';
+                        }else{
+                            this.aproStatus = '미승인';
+                        }
+                        //this.aproStatus = result.aprvYn; //승인상태
                         this.aproBandFrom = result.aprvPermFrom; //시작점
                         this.oldAproBandFrom = result.aprvPermFrom; //변경시 체크를 위한 시작점
                         this.aproBandTo = result.aprvPermTo; //끝점
@@ -513,7 +518,6 @@
                 return val;
             }
         }
-
     }
 
 </script>

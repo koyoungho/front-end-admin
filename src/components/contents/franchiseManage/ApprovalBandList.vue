@@ -58,7 +58,7 @@
                         {columName: '승인대역(끝)',id: 'lpermto',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '건수',id: 'count',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                         {columName: '등록일',id: 'regDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '상태',id: 'aprvYn',type: 'text',width: '6%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '상태',id: 'aprvYnNm',type: 'text',width: '6%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
                     ],
                     totalColum: 10,
                     apiUrl: 'approvalband',
