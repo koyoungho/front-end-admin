@@ -128,9 +128,6 @@
                 this.listItem.search  = this.$store.state.searchList.listDt
             }
 
-            console.log(this.listItem.search)
-
-
         }
 
 
@@ -157,29 +154,6 @@
                 this.$router.push({ name:'branchDetl' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
             }
         }
-
-        // 와이드 창줄어들시 모바일용으로 윈도우 사이즈 재는곳
-        // handleResize(){
-        // if(window.innerWidth < 482){
-        //     if(this.windowResize ==true){
-        //
-        //     }else{
-        //         // this.listItem.dataGrid.columControl= this.listItem.dataGrid.columControl.filter(e=>{
-        //         //        return this.exceptColum.find(s=>{
-        //         //         if(e.id !=s.id){
-        //         //             return e
-        //         //         }
-        //         //     })
-        //         // })
-        //         this.windowResize =true
-        //     }
-        // }else{
-        //     if(this.windowResize==false){
-        //     }else{
-        //     this.listItem.dataGrid.columControl = this.originItem;
-        //     this.windowResize =false;
-        //     }
-        // }
 
         // }
         updated(){
