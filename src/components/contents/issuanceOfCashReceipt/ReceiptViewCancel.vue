@@ -102,6 +102,7 @@
 
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.listItem.search  = this.$store.state.searchList.listDt
+                // 온로드리스트 선택사항
             }
 
         }
