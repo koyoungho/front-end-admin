@@ -24,6 +24,9 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import {CommonBoardService} from '../../../api/common.service';
+    import moment from 'moment';
+    import axios from 'axios'
+    import {environment} from '@/utill/environment';
 
     @Component({
         components: {
@@ -88,7 +91,7 @@
                         {type: 'inputPop',class:'w30 text_left', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
                         {type: 'select' ,class:'w30', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
                         {type: 'select' ,class:'w30', title :'거래구분',id: 'trgu', name:'trgu' , value: '0' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
-                        {type: 'select' ,class:'w30', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
+                        {type: 'select2' ,class:'w30', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'approval' , option : [{ name : '거래일' , value: 'approval' },{ name : '취소일' , value: 'cancel' }] },
                         {type: 'date2',class:'w25 text_left', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
@@ -109,7 +112,7 @@
         }
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
-            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[6].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[5].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
 
@@ -118,7 +121,72 @@
         }
 
         downExel(){
-            Vue.swal({text:"다운로드 준비중입니다."});
+
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const nowKo_str =  this.formatDates(nowKo);
+
+            console.log(this.listItem.search);
+
+            let reqData ={}
+
+            reqData['currentPage'] =  this.listItem.paging.currentPage ;//검색페이지
+            reqData['perPage'] = this.listItem.paging.perPage ; //페이지당 row 수
+
+            reqData['subSaup'] =this.listItem.search[0].value; //회사코드
+            reqData['saupId'] =this.listItem.search[1].value;//사업자등록번호
+
+            reqData['geogu'] =this.listItem.search[3].value; //발급 용도
+            reqData['trgu'] =this.listItem.search[4].value; //거래구분(승인 : 0 , 취소 : 1)
+            reqData['onlineYn']= this.listItem.search[5].value;//온라인여부(온라인 : Y, 오프라인 : N)
+            reqData['searchDateType']= this.listItem.search[6].value;//검색일 종류
+            reqData['searchEndDate ']=this.listItem.search[7].searchStartDate[0];//검색 종료일
+            reqData['searchStartDate']= this.listItem.search[7].searchStartDate[1];//검색 시작일
+            reqData['searchType'] =this.listItem.search[8].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
+            reqData['searchWord'] =this.listItem.search[9].value;//검색어
+
+            console.log(this.listItem.search[5].value);
+
+            let fileOrigin = "cash_history_"+nowKo_str+".xls"
+
+            axios({
+                url: environment.apiUrl + "/receipt/excel",
+                method: 'GET',
+                responseType : 'blob', // important
+                data : reqData,
+                headers : { "x-auth-token" : sessionStorage.accessToken }
+            }).then((response) => {
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data], {type: 'application/vnd.ms-excel'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob, fileOrigin)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+
+                link.href = data
+                link.download = fileOrigin
+
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+
+            })
+
+        }
+
+        formatDates(date) {
+            return moment(date, 'YYYYMMDDHHmmss').format('YYYYMMDD')
         }
     }
 

@@ -80,6 +80,17 @@
               <li :class="item.class" style=height:50px><label for="aa"></label></li>
             </template>
           </template>
+          <template v-if="item.type=='select2'">
+            <li :class="item.class">
+              <label for="aa">{{item.title}}</label>
+              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+                <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
+              </select>
+            </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
+          </template>
           <template v-if="item.type=='selectObject'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
