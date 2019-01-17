@@ -274,7 +274,8 @@
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import ReceipConfirm from '../../contents/issuanceOfCashReceipt/receipConfrim.vue';
     import  moment from 'moment'
-    Vue.prototype.moment = moment;
+    import axios from 'axios'
+    import {environment} from '@/utill/environment';
 
     @Component({
         components: {
@@ -549,6 +550,50 @@
         }
 
         downExel(){
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const nowKo_str =  this.formatDates(nowKo);
+
+            let fileOrigin = "cash_history_detail_"+nowKo_str+".xls"
+
+            axios({
+                // url: environment.apiUrl + "/receipts/excel",
+                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel",
+                method: 'GET',
+                responseType : 'blob', // important
+                headers : { "x-auth-token" : sessionStorage.accessToken }
+            }).then((response) => {
+                // It is necessary to create a new blob object with mime-type explicitly set
+                // otherwise only Chrome works like it should
+                var newBlob = new Blob([response.data], {type: 'application/vnd.ms-excel'})
+
+                // IE doesn't allow using a blob object directly as link href
+                // instead it is necessary to use msSaveOrOpenBlob
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob, fileOrigin)
+                    return
+                }
+
+                // For other browsers:
+                // Create a link pointing to the ObjectURL containing the blob.
+                const data = window.URL.createObjectURL(newBlob)
+                var link = document.createElement('a')
+
+                link.href = data
+                link.download = fileOrigin
+
+                link.click()
+                setTimeout(function () {
+                    // For Firefox it is necessary to delay revoking the ObjectURL
+                    window.URL.revokeObjectURL(data)
+                }, 100)
+
+            })
+
+
+
+
+
             Vue.swal({text:"다운로드 준비중입니다."})
         }
 
@@ -562,6 +607,10 @@
             }
             else{
             }
+        }
+
+        formatDates(date) {
+            return moment(date, 'YYYYMMDDHHmmss').format('YYYYMMDD')
         }
 
 
