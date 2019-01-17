@@ -3,7 +3,7 @@ export const environment = {
     production: false,
     apiUrl : "http://211.39.150.96:8888/api", //서비스 API 실서버.
     // apiUrl : "http://211.39.150.112:80/admin/api", //서비스 API 개발서버.
-    imgApiUrl : "http://211.39.150.96",   // 서비스 메일이미지 실서버
+    imgApiUrl : "http://211.39.150.96:8888",   // 서비스 메일이미지 실서버
     // imgApiUrl : "http://211.39.150.112",    // 서비스 메일이미지 개발서버
 
     addressKey : "U01TX0FVVEgyMDE4MTEwNzE2MTEyMTEwODI4NTU=", // 주소 오픈API 키
