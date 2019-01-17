@@ -57,6 +57,13 @@
                 this.shopNm = sessionStorage.getItem('storeNm');
                 this.show =true;
             }
+            // 뒤로가기를 눌렀을경우 온로드한다
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.listItem.search  = this.$store.state.searchList.listDt
+                this.onLoadListView = true;
+
+            }
+
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
@@ -99,11 +106,6 @@
                     searchClass : 'search_box page_new',
                     searchClass2 : 'search_list'
                 }
-
-            if(this.$store.state.searchList.menuId==this.$route.name){
-                this.listItem.search  = this.$store.state.searchList.listDt
-                // 온로드리스트 선택사항
-            }
 
         }
         mounted() {
