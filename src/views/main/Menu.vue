@@ -6,7 +6,7 @@
       <ul class="gnb_list" >
         <!--<li v-for="menu in menuItem" v-bind:class="menu.on"><a >{{menu.name}}</a></li>-->
         <template v-for="menu in menuItem" >
-        <li><a  title="페이지 이동"  v-bind:id="menu.groupCode" v-on:mouseover="menuOver" v-on:click="menuClick(sub.groupCode,menu.groupCode)" v-bind:class="menu.sub">{{menu.name}}</a>
+        <li><a  title="페이지 이동"  v-bind:id="menu.groupCode" v-on:mouseover="menuOver"  v-bind:class="menu.sub">{{menu.name}}</a>
           <div class="depth02"  v-bind:style="menuStyle " >
             <ul>
               <li v-for="sub in menu.subMenuDtos"><a v-on:click="menuClick(sub.progId,menu.groupCode)" ><span class="sub" v-on:mouseover="menuOver" v-bind:id="menu.groupCode">{{sub.name}}</span></a></li>
