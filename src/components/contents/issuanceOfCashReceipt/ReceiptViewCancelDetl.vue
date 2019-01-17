@@ -510,7 +510,7 @@
             }
             else{
                 // saleDate}/{perm}/cancel
-                this.cancleReceipActionBtn = false;
+                // this.cancleReceipActionBtn = false;
                 CommonBoardService.updateListData('receipt', this.objectKey.saleDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
                     this.openReceiptPop(response.data);
                 }).catch();

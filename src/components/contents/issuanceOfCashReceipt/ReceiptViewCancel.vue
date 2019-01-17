@@ -57,11 +57,9 @@
                 this.shopNm = sessionStorage.getItem('storeNm');
                 this.show =true;
             }
-            // 뒤로가기를 눌렀을경우 온로드한다
+            // 바로 로딩확인
             if(this.$store.state.searchList.menuId==this.$route.name){
-                this.listItem.search  = this.$store.state.searchList.listDt
                 this.onLoadListView = true;
-
             }
 
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -107,12 +105,17 @@
                     searchClass2 : 'search_list'
                 }
 
+            // 검색조건 갱신
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.listItem.search  = this.$store.state.searchList.listDt
+            }
+
         }
         mounted() {
         }
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
-            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[6].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[5].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
 

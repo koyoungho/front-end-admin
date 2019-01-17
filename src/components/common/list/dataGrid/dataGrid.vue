@@ -728,8 +728,8 @@
                         });
                       }
                     }
-                    else {
 
+                    else {
                     }
                     if(result.totalRecords){
                         this.totalCount = result.totalRecords;
@@ -743,7 +743,9 @@
                     this.loading = false;
                     // this.$Progress.finish();
                 }
-            ).catch();
+            ).catch(e=>{
+                this.loading = false;
+            });
 
         }
 
