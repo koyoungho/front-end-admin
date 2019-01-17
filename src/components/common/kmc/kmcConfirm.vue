@@ -1,7 +1,7 @@
 <template>
   <div >
     <div v-html="cssStyle"></div>
-    <div id="popup1" class="popup_wrapper Pstyle" tabindex="0" style="display:block;width: 420px;;">
+    <div id="popup1" class="popup_wrapper Pstyle" tabindex="0" style="display:block;width: 420px;">
       <!-- style="display:block;"  삭제 -->
       <!-- popup header -->
       <div class="popup_header">

@@ -6,7 +6,7 @@
         <div class="content page_joinapp">
             <h2 class="blind">사용자 계정 등록</h2>
 
-            <h3>계정 등록</h3>
+            <h3>사용자 계정 등록</h3>
 
             <h4>사업장 기본 정보 <span class="sub_cf">(사업자 등록증 상의 정보)</span></h4>
 
@@ -46,7 +46,7 @@
                     <tr>
                         <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType" disabled="disabled">
+                            <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType">
                                 <option value="">선택</option>
                                 <option value="2">개인</option>
                                 <option value="1">법인</option>
@@ -56,7 +56,7 @@
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="13" v-on:keypress="numberChk($event)" disabled="disabled"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="13" v-on:keypress="numberChk($event)"></td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
@@ -542,7 +542,7 @@
                     console.log(response)
                     if (result != null && result != '') {
                         //console.log('가맹점 등록 성공');
-                        //this.sendMail(); //가입완료 메일 발송
+                        this.sendMail(); //가입완료 메일 발송
                         //this.$router.push({name:"franchiseRegStep3", params:{reqId:result.id, reqSaupId:result.saupId, reqStoreNm:result.storeNm}});
                         this.$router.push('/home/mnUser');
                     } else {
@@ -617,12 +617,18 @@
             }else if(!regNumber.test(this.repPhonenum)){
                 Vue.swal({text:'전화번호는 숫자로 입력하세요.'});
                 return;
-            /*}else if(this.saupType == '') {
+            }else if(this.saupType == '') {
                 alert('사업자구분을 선택하세요.');
                 return false;
-            }else if(this.saupType == '1' && this.lawNum == '') {
+            }else if(this.saupType == '1' && this.lawNum == '') { //사업자구분이 법인인 경우 체크
                 alert('법인등록번호를 입력하세요.');
-                return false;*/
+                return false;
+            }else if(this.saupType == '1' && this.lawNum != '' && !regNumber.test(this.lawNum)) { //사업자구분이 법인인 경우 체크
+                alert('법인등록번호는 숫자만 입력하세요.');
+                return false;
+            }else if(this.saupType == '1' && this.lawNum != '' && this.lawNum.length != 13) { //사업자구분이 법인인 경우 체크
+                alert('법인등록번호는 13자리로 입력하세요.');
+                return false;
             }else if(this.addr1 == '') {
                 Vue.swal({text:'사업장 주소를 입력하세요.'});
                 return false;
@@ -925,22 +931,16 @@
                 }else{ //법인
                     this.saupType = '1';
                 }
-                /*
-                if((saupNo >= 1 && saupNo < 80) || (saupNo >= 90 && saupNo <= 99) || (saupNo == 89) || (saupNo == 80)){
-                    console.log('개인')
-                }else{
-                    console.log('법인')
-                }*/
             }
 
         }
 
         sendMail() { //메일 발송
 
-            let dt = new Date();
-            let sendDate = moment(dt).format('YYYY-MM-DD HH:mm:ss'); //메일 발송일자
-            let regId = this.id;
-            let regNm = this.name;
+            //let dt = new Date();
+            //let sendDate = moment(dt).format('YYYY-MM-DD HH:mm:ss'); //메일 발송일자
+            //let regId = this.id;
+            //let regNm = this.name;
 
             let mailMessage : string = ''; //메일 메시지 내용
             mailMessage = "<html lang=\"ko\">\n" +
@@ -955,9 +955,9 @@
                 "\t\t\t<tbody><tr><td width=\"30\"></td><td>\n" +
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:30px auto 0;background-color:#fff;-webkit-text-size-adjust:100%;text-align:left\">\n" +
                 "\t\t\t\t<tbody><tr>\n" +
-                "\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"images/mail/img_logo01.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
-                "\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:13px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\">"+sendDate+"</td>\n" +
-                "\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\">사용자용</td>\n" +
+                "\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"http://211.39.150.96/img/img_logo.07141310.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
+                "\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:13px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\"></td>\n" +
+                "\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\"></td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
@@ -966,13 +966,13 @@
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:60px;\">\n" +
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:26px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; letter-spacing: -1px;\">[Hellocash 현금영수증] 온라인 가맹점 회원가입 감사메일</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:26px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; letter-spacing: -1px;\">[Hellocash 현금영수증] 관리자에 의한 신규 사용자 계정 생성 완료 메일</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; padding-top:24px;\">안녕하세요.</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">저희 KT 롯데정보통신 현금 영수증 서비스를 이용해 주시는 회원님께 감사 드립니다.<br>투명한 거래를 위한 KT 롯데 정보통신 현금영수증 사이트 신규 가맹점 회원 가입을 환영합니다.</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">저희 KT 롯데정보통신 현금 영수증 서비스를 이용해 주시는 회원님께 감사 드립니다.<br>투명한 거래를 위한 KT 롯데 정보통신 현금영수증 사이트 신규 회원 가입이 완료되었습니다.</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">아래 링크 주소를 클릭하여 비밀번호를 설정 하신 후 서비스를 이용해 주시기 바랍니다.</td>\n" +
@@ -987,18 +987,18 @@
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t<th scope=\"row\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 30px; border-right:1px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">ID</th>\n" +
-                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+regId+"</td>\n" +
+                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+this.id+"</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t<th scope=\"row\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 30px; border-right:1px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">이름</th>\n" +
-                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+regNm+"</td>\n" +
+                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+this.name+"</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a href=\"http://211.39.150.112\" target=\"_blank\" style=\"color:#008aff;\">http://211.39.150.112</a> (패스워드 변경 주소링크)</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a href=\"http://211.39.150.96\" target=\"_blank\" style=\"color:#008aff;\">http://211.39.150.96</a> (패스워드 변경 주소링크)</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
@@ -1023,7 +1023,7 @@
 
             let reqData: any = {};
             reqData['to'] = [this.email]; //메일 수신자
-            reqData['title'] = '[Hellocash 혐금영수증]온라인 가맹점 회원가입 감사메일'; //메일 제목
+            reqData['title'] = '[Hellocash 혐금영수증]관리자에 의한 신규 사용자 계정 생성 완료 메일'; //메일 제목
             reqData['message'] = mailMessage; //메일 내용
             reqData['cc'] = [''];
 
@@ -1073,7 +1073,7 @@
 
         //사업장 정보 조회
         saupInfo(saupId){
-            if(saupId == ''){
+            if(saupId == null || saupId == ''){
                 Vue.swal({text: '사업자등록번호를 입력하세요.'});
                 return;
             }
@@ -1086,21 +1086,50 @@
                     //this.saupjang = result.data;
                     //this.saupIdChkYn = 'Y';
 
-                    this.saupId = result.data.saupId;
-                    this.storeNm = result.data.shopNm;
-                    this.repNm = result.data.chipNm;
-                    this.repPhonenum = result.data.telNum;
-                    this.saupType  = this.nullCheck(result.data.regiGb);
-                    this.lawNum = result.data.lawNum;
-                    this.zipCode = result.data.zipCode;
-                    this.addr1 = result.data.addr1;
-                    this.addr2 = result.data.addr2;
-                    this.upjongCode = this.nullCheck(result.data.upjong);
-                    this.companyCode = this.nullCheck(result.data.subSaup);
-
+                    if(result.data != null && result.data != ""){
+                        this.saupId = result.data.saupId;
+                        this.storeNm = result.data.shopNm;
+                        this.repNm = result.data.chipNm;
+                        this.repPhonenum = result.data.telNum.replace(/-/gi, "");
+                        this.saupType  = this.nullCheck(result.data.regiGb);
+                        this.lawNum = result.data.lawNum;
+                        this.zipCode = result.data.zipCode;
+                        this.addr1 = result.data.addr1;
+                        this.addr2 = result.data.addr2;
+                        this.upjongCode = this.nullCheck(result.data.upjong);
+                        this.companyCode = this.nullCheck(result.data.subSaup);
+                    }else{
+                        Vue.swal({text: '등록된 사업장정보가 없습니다. 신규사업장으로 등록합니다.'});
+                        this.storeNm = "";
+                        this.repNm = "";
+                        this.repPhonenum = "";
+                        this.saupType  = "";
+                        this.lawNum = "";
+                        this.zipCode = "";
+                        this.addr1 = "";
+                        this.addr2 = "";
+                        this.upjongCode = "";
+                        this.companyCode = "";
+                    }
+                    let saupNo : any = '';
+                    if(this.saupId.length == 10){
+                        saupNo = this.saupId.substring(2, 4);
+                        if(saupNo.substring(0,1) == 0){
+                            saupNo = saupNo.substring(2,1)
+                        }
+                        if((saupNo >= 1 && saupNo < 81) || (saupNo >= 89 && saupNo <= 99)){ //개인
+                            this.saupType = '2';
+                        }else{ //법인
+                            this.saupType = '1';
+                        }
+                    }
                 }else{
-                    Vue.swal({text: '에러'});
+                    Vue.swal({text: '등록된 사업장정보가 없습니다. 신규사업장으로 등록합니다.'});
                 }
+            },(error) => {
+                //this.$Progress.finish();
+                console.log(error);
+
             })
         }
 
