@@ -49,7 +49,7 @@
 
         created(){
 
-            if(this.role == '0001' || this.role == '0003' ){
+            if(this.role == '0001' || this.role == '0002' || this.role == '0003'){
                 this.onLoadListView = false;
                 this.show =false;
             }else{
@@ -57,27 +57,22 @@
                 this.shopNm = sessionStorage.getItem('storeNm');
                 this.show =true;
             }
-            // 바로 로딩확인
-            if(this.$store.state.searchList.menuId==this.$route.name){
-                this.onLoadListView = true;
-            }
-
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                            {columName : '거래일자' ,id : 'saleDate',type:'date', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat:'YYYY.MM.DD'},
-                            {columName : '승인번호' ,id : 'perm',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                            {columName : '거래일자' ,id : 'saleDate',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat:'YYYY.MM.DD'},
+                            {columName : '승인번호' ,id : 'perm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                             {columName : '금액' ,id : 'totamt', type:'money', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'text-align: right' } ,
                             {columName : '발급용도' ,id : 'geoguNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '거래' ,id : 'trgu',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소' , options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }]  }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '거래구분' ,id : 'trgu',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소' , options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }]  }, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '회사코드' ,id : 'subSaup',type:'text', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
                             {columName : '사업자번호' ,id : 'saupId',type:'bizNum', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  },
                             {columName : 'ID명' ,id : 'loginid',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '신분확인' ,id : 'comfirm',type:'text', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '신분확인' ,id : 'comfirm',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '고객명' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             // {columName : '메모' ,id : 'memo',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '처리' ,id : 'taxSend',type:'text', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' },
+                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' },
                         ],
                         totalColum: 10,
                         apiUrl : 'receipt',
@@ -105,7 +100,6 @@
                     searchClass2 : 'search_list'
                 }
 
-            // 검색조건 갱신
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.listItem.search  = this.$store.state.searchList.listDt
             }
@@ -115,7 +109,7 @@
         }
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
-            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[5].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[6].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
 
