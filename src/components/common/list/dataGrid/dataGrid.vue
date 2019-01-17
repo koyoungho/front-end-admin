@@ -144,7 +144,7 @@
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
-                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows+'@'+index+'@'+dataGridDetail.dataGrid.columControl[indexs].returnKey" v-model="checkBoxDatas"><label for=""></label></span>
+                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows+'@'+index+'@'+dataGridDetail.dataGrid.columControl[indexs].returnKey+'@'+datas.role" v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
@@ -780,31 +780,37 @@
             if(this.checkBoxDatas != null && this.checkBoxDatas.length > 0){
                 for(let i=0; i<this.checkBoxDatas.length; i++){
                     let sData = {};
+                    //console.log(this.checkBoxDatas[i])
                     let splitData = this.checkBoxDatas[i].split('@');
+                    //console.log('id : '+splitData[1] + ' | role: '+splitData[4]);
                     sData['id'] = splitData[1]; //id
-                    sData['role'] = splitData[2]; //role
+                    sData['role'] = splitData[4]; //role
                     arayData.push(sData);
                 }
-                reqData['selectedId'] = arayData;
+                reqData['accountApprovalUpdateDtos'] = arayData;
             }
+            //console.log('계정 승인')
+            //console.log(arayData)
 
-/*
+
             // api 데이터 호출
-            CommonBoardService.getListDatas('accounts/approval', null, reqData).then((response) => {
-                    let result: any = response.data;
-                    //console.log(result)
-                    if (result.code == '000') {
-                        console.log('승인 처리 성공');
+            CommonBoardService.updateListData('accounts/ids/approval', null, arayData).then((response) => {
+                    //let result: any = response.data;
+                    console.log(response)
+                    if (response.status == 200) {
+                        Vue.swal({text: '계정 승인처리 되었습니다.'});
                         this.$emit('authCompl'); //승인처리 완료후 페이지 로딩
                     } else {
-                        console.log('승인 처리 실패')
+                        Vue.swal({text: '계정 승인처리 실패하였습니다. 다시 시도하세요'});
+                        //console.log('승인 처리 실패')
                     }
                 }
                 , (error) => {
-                    console.log(error)
+                    Vue.swal({text: '계정 승인처리 실패하였습니다. 다시 시도하세요'});
+                    //console.log(error)
                 }
             ).catch();
-*/
+
 
         }
 

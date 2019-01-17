@@ -228,6 +228,7 @@
         saupType : any = ''; //사업자구분
         lawNum : any = ''; //법인번호
         aprvYn : any = ''; //계정상태
+        oldAprvYn : any = ''; //이전 계정상태
         zipCode : any = ''; //우편번호
         addr1 : any = ''; //주소
         addr2 : any = ''; //상세주소
@@ -309,6 +310,7 @@
                         this.saupType = result.saupType;
                         this.lawNum = result.lawNum;
                         this.aprvYn = result.aprvYn;
+                        this.oldAprvYn = result.aprvYn;
                         this.zipCode = result.zipCode;
                         this.addr1 = result.addr1;
                         this.addr2 = result.addr2;
@@ -503,6 +505,9 @@
                     //console.log(result)
                     if (result != null) {
                         Vue.swal({text:'사용자 계정 정보가 변경되었습니다.'});
+                        if(this.aprvYn == 'Y' && this.oldAprvYn == 'N'){ //계정 승인 처리시
+                            this.sendMailAprv();
+                        }
                         this.$router.push({name:'mnUserList'})
                         //this.confirmResult = false; //다시 수정시 본인인증 진행
                     } else {
@@ -564,9 +569,9 @@
             }else if(this.subSaup == null || this.subSaup == '') {
                 Vue.swal({text:'회사코드를 선택하세요.'});
                 return false;
-            }else if(this.blGb == null || this.blGb == '') {
-                Vue.swal({text:'BL정보를 선택하세요.'});
-                return false;
+            //}else if(this.blGb == null || this.blGb == '') {
+            //    Vue.swal({text:'BL정보를 선택하세요.'});
+            //    return false;
             }else if(this.email == '') {
                 Vue.swal({text:'이메일 주소를 입력하세요.'});
                 return false;
@@ -837,6 +842,8 @@
             //let sendDate = this.nowTimehms;
             //let regId = this.id;
             //let regNm = this.name;
+            let imgsrc = environment.imgApiUrl+"/img/img_logo.07141310.png"; //로고
+            let userUrl = environment.userUrl+"/#/home/initPass"; //온라인 가맹점 사용자 URL
 
             let mailMessage : string = ''; //메일 메시지 내용
             mailMessage = "<html lang=\"ko\">\n" +
@@ -851,7 +858,7 @@
                 "\t\t\t<tbody><tr><td width=\"30\"></td><td>\n" +
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:30px auto 0;background-color:#fff;-webkit-text-size-adjust:100%;text-align:left\">\n" +
                 "\t\t\t\t<tbody><tr>\n" +
-                "\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"http://211.39.150.96/img/img_logo.07141310.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
+                "\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img :src="+imgsrc+" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
                 "\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:13px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\"></td>\n" +
                 "\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\"></td>\n" +
                 "\t\t\t\t</tr>\n" +
@@ -894,7 +901,7 @@
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a href=\"http://211.39.150.96\" target=\"_blank\" style=\"color:#008aff;\">http://211.39.150.96</a> (패스워드 변경 주소링크)</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a :href="+userUrl+" target=\"_blank\" style=\"color:#008aff;\">"+userUrl+"</a> (패스워드 변경 주소링크)</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
@@ -928,6 +935,120 @@
                     console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
                         Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
+                    }
+                }
+                , (error) => {
+                    //this.$Progress.finish();
+                    console.log(error);
+                }
+            ).catch();
+
+        }
+
+        //승인처리시 메일 발송
+        sendMailAprv() { //메일 발송
+
+            //let account : any = this.account;
+            //let dt = new Date();
+            //let sendDate = this.nowTimehms;
+            //let regId = this.id;
+            //let regNm = this.name;
+            let imgsrc = environment.imgApiUrl+"/img/img_logo.07141310.png"; //로고
+            let userUrl = environment.userUrl; //온라인 가맹점 사용자 URL
+
+            let mailMessage : string = ''; //메일 메시지 내용
+            mailMessage = "<html lang=\"ko\">\n" +
+                "<head>\n" +
+                "\t<meta charset=\"utf-8\">\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;background-color:#f0f0f0;letter-spacing:0px\">\n" +
+                "\t<tbody><tr><td align=\"center\">\n" +
+                "    <div style=\"max-width:720px; margin:0 auto\">\n" +
+                "\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:40px auto;background-color:#fff; border:1px solid #dedede; border-top:2px solid #da291c; -webkit-text-size-adjust:100%;text-align:left\">\n" +
+                "\t\t\t<tbody><tr><td width=\"30\"></td><td>\n" +
+                "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:30px auto 0;background-color:#fff;-webkit-text-size-adjust:100%;text-align:left\">\n" +
+                "\t\t\t\t<tbody><tr>\n" +
+                "\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img :src="+imgsrc+" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
+                "\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:13px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\"></td>\n" +
+                "\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\"></td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t</td><td width=\"30\"></td></tr>\n" +
+                "\t\t\t<tr><td width=\"30\"></td><td style=\"vertical-align: top;\">\n" +
+                "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:60px;\">\n" +
+                "\t\t\t\t<tbody>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:26px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; letter-spacing: -1px;\">[Hellocash 현금영수증] 관리자에 의한 계정 승인 완료 안내 메일</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121; padding-top:24px;\">안녕하세요.</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">저희 KT 롯데정보통신 현금 영수증 서비스를 이용해 주시는 회원님께 감사 드립니다. </td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">가입하신 KT 롯데정보통신 현금 영수증 서비스의 계정 승인이 완료되었습니다. </td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">아래 링크 주소를 클릭하여 서비스를 이용해 주시기 바랍니다.</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t\t<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"tbl_view02\" style=\"width:100%; border-top:1px solid #dedede; margin-top:20px\">\n" +
+                "\t\t\t\t<colgroup>\n" +
+                "\t\t\t\t\t<col width=\"30%\">\n" +
+                "\t\t\t\t\t<col width=\"70%\">\n" +
+                "\t\t\t\t</colgroup>\n" +
+                "\t\t\t\t<tbody>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<th scope=\"row\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 30px; border-right:1px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">ID</th>\n" +
+                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+this.id+"</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<th scope=\"row\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; color:#505050; height:50px; line-height: 50px; padding:0 18px 0 30px; border-right:1px solid #dedede; background:#fafafa; border-bottom:1px solid #dedede; text-align:left; vertical-align:top;\">이름</th>\n" +
+                "\t\t\t\t\t<td style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#505050; height:50px; line-height: 50px; padding:0 18px 0 20px; background:#ffffff; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">"+this.name+"</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
+                "\t\t\t\t<tbody>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">현금영수증 사이트 링크 주소 :  <a :href="+userUrl+" target=\"_blank\" style=\"color:#008aff;\">"+userUrl+"</a></td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t</tbody>\n" +
+                "\t\t\t\t</table>\n" +
+                "\t\t\t</td>\n" +
+                "\t\t\t<td width=\"30\"></td></tr>\n" +
+                "\t\t\t<tr><td colspan=\"3\" height=\"40\"></td></tr>\n" +
+                "\t\t\t<tr><td colspan=\"3\" style=\"border-top:1px solid #dedede; padding-top:34px;padding-left:21px;padding-right:21px;padding-bottom:13px;background:#ffffff;font-size:12px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:22px\">\n" +
+                "\t\t\t\t본 메일은 Hellocash 현금영수증 이용에 관한 안내와 공지를 위한 발신 전용 메일입니다.<br>\n" +
+                "\t\t\t\t따라서 본 메일에는 수신거부 장치가 장착되어 있지 않습니다.<br>문의전화 02-2074-0340 / 팩스번호 : 02-2074-6089\n" +
+                "\t\t\t\t</td></tr>\n" +
+                "\t\t\t<tr><td colspan=\"3\" style=\"padding-left:21px;padding-right:21px;padding-bottom:37px;background:#ffffff;font-size:12px;font-family:Helvetica;color:#939393;line-height:17px\">\n" +
+                "\t\t\t\t\tCopyright ⓒ 2019 KT corporation & LDCC. All rights reserved.\n" +
+                "\t\t\t\t</td></tr>\n" +
+                "\t\t</tbody></table>\n" +
+                "        </div>\n" +
+                "      </td></tr>\n" +
+                "  </table>\n" +
+                "\t</td></tr>\n" +
+                "</tbody></table>\n" +
+                "</body>\n" +
+                "</html>";
+
+            let reqData : any = {
+                to : [this.email],
+                title : '[Hellocash 현금영수증] 현금영수증 서비스 계정 승인 완료 안내 메일',
+                message : mailMessage,
+                cc : [''],
+            };
+            // api 데이터 호출
+            CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
+                    console.log(response);
+                    if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
+                        //Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {
