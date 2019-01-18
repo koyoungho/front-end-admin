@@ -181,6 +181,7 @@
         mailId : any = "";
         resultRecripKeyObj : any ="";
         titleSub : string ="";
+        titleMail : string ="";
         originId : any = "header2";
         nowTime : string ="";
 
@@ -215,8 +216,10 @@
 
             if( this.resultRecripKeyObj.trgu == '1' ){
                 this.titleSub =" - 현금결제취소";
+                this.titleMail = "취소"
             }else{
                 this.titleSub="";
+                this.titleMail = ""
             }
 
             CommonBoardService.getListDatas('receipt', this.resultRecripKeyObj.regiDate+'/'+this.resultRecripKeyObj.perm , null).then((response) => {
@@ -288,8 +291,8 @@
                     "\t\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:30px auto 0;background-color:#fff;-webkit-text-size-adjust:100%;text-align:left\">\n" +
                     "\t\t\t\t\t\t<tbody><tr>\n" +
                     "\t\t\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"http://211.39.150.112/img/img_logo.07141310.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
-                    "\t\t\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:18px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\">" + today + "</td>\n" +
-                    "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\">사용자용</td>\n" +
+                    "\t\t\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:18px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\"></td>\n" +
+                    "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\"></td>\n" +
                     "\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t</tbody>\n" +
                     "\t\t\t\t\t</table>\n" +
@@ -304,7 +307,7 @@
                     "\t\t\t\t\t\t\t</colgroup>\n" +
                     "\t\t\t\t\t\t\t<thead>\n" +
                     "\t\t\t\t\t\t\t<tr>\n" +
-                    "\t\t\t\t\t\t\t\t<th scope=\"col\" colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:16px; color:#212121; padding:15px 20px 15px 20px; border-right:0px solid #dedede;border-bottom:1px solid #dedede;background:#f2f2f2; text-align: left\">현금영수증 (고객용)</th>\n" +
+                    "\t\t\t\t\t\t\t\t<th scope=\"col\" colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:16px; color:#212121; padding:15px 20px 15px 20px; border-right:0px solid #dedede;border-bottom:1px solid #dedede;background:#f2f2f2; text-align: left\">현금영수증 (고객용) "+this.titleMail+"</th>\n" +
                     "\t\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t\t</thead>\n" +
                     "\t\t\t\t\t\t\t<tbody>\n" +
@@ -387,7 +390,7 @@
                     "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#fafafa; text-align: left;\">사업장전화번호</th>\n" +
                     "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
-                    "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.ResultViewRowItem.charTel + "</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.nullCheck(this.ResultViewRowItem.charTel) + "</td>\n" +
                     "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t\t\t\t\t</tbody>\n" +
                     "\t\t\t\t\t\t\t\t\t</table>\n" +
@@ -397,7 +400,7 @@
                     "\t\t\t\t\t\t\t\t<th scope=\"col\" colspan=\"2\" style=\"height:50px; color:#505050;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; padding-left:20px; border-bottom:1px solid #dedede; background:#f7f7f7; text-align: left;\">사업장 주소</th>\n" +
                     "\t\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t\t<tr>\n" +
-                    "\t\t\t\t\t\t\t\t<td colspan=\"2\" class=\"con01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; height:50px; border-bottom:1px solid #dedede; vertical-align: top; padding:15px 20px 15px 20px; line-height:20px;\">" + this.ResultViewRowItem.saupCaddr + "</td>\n" +
+                    "\t\t\t\t\t\t\t\t<td colspan=\"2\" class=\"con01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; height:50px; border-bottom:1px solid #dedede; vertical-align: top; padding:15px 20px 15px 20px; line-height:20px;\">" + this.nullCheck(this.ResultViewRowItem.saupCaddr) + "</td>\n" +
                     "\t\t\t\t\t\t\t</tr>\n" +
                     "\t\t\t\t\t\t\t<tr>\n" +
                     "\t\t\t\t\t\t\t\t<td colspan=\"2\" class=\"con01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; height:50px; border-bottom:1px solid #dedede; vertical-align: top;padding:15px 20px 15px 20px; line-height:20px;\">\n" +
@@ -412,7 +415,7 @@
                     "\t\t\t\t\t<td width=\"30\"></td></tr>\n" +
                     "\t\t\t\t<tr><td colspan=\"3\" height=\"40\"></td></tr>\n" +
                     "\t\t\t\t<tr><td colspan=\"3\" style=\"border-top:1px solid #dedede; padding-top:34px;padding-left:21px;padding-right:21px;padding-bottom:13px;background:#ffffff;font-size:12px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:22px\">\n" +
-                    "\t\t\t\t\t발신전용 메일입니다. 궁금하신 사항은 현금영수증 <a href=\"#\" style=\"color:#212121;text-decoration:underline\" target=\"_blank\">고객센터</a>로 연락 주시면 성심 성의껏 상담해드리겠습니다.<br>타인이 회원님의 이메일을 잘못 입력한 경우 메일이 발송될 수 있습니다.<br>잘못 수신된 메일이라면 현금영수증 고객센터 1:1 문의하기를 이용해주시기 바랍니다.\n" +
+                    "\t\t\t\t\t발신전용 메일입니다. 궁금하신 사항은 현금영수증 고객센터로 연락 주시면 성심 성의껏 상담해드리겠습니다.<br>타인이 회원님의 이메일을 잘못 입력한 경우 메일이 발송될 수 있습니다.<br>잘못 수신된 메일이라면 현금영수증 고객센터 1:1 문의하기를 이용해주시기 바랍니다.\n" +
                     "\t\t\t\t</td></tr>\n" +
                     "\t\t\t\t<tr><td colspan=\"3\" style=\"padding-left:21px;padding-right:21px;padding-bottom:37px;background:#ffffff;font-size:12px;font-family:Helvetica;color:#939393;line-height:17px\">\n" +
                     "\t\t\t\t\tCopyright ⓒ 2019 KT corporation & LDCC. All rights reserved.\n" +
@@ -461,6 +464,15 @@
         }
         updated(){
         }
+
+        nullCheck(val){
+            if(val == null || val == ''){
+                return '';
+            }else{
+                return val;
+            }
+        }
+
     }
 
 </script>

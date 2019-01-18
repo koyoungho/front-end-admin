@@ -679,7 +679,7 @@
             }else if(this.saupType == '1' && this.lawNum == ''){ //사업자구분이 법인인 경우 필수
                 alert('법인등록번호를 입력하세요.');
                 return;
-            }else if(this.saupType == '1' && this.lawNum != 13) { //사업자구분이 법인인
+            }else if(this.saupType == '1' && this.lawNum.length != 13) { //사업자구분이 법인인
                 alert('법인사업자의 자리수가 맞지않습니다');
                 return;
             }
