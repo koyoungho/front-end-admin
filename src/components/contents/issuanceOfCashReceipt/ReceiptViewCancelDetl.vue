@@ -554,7 +554,7 @@
             const  nowKo= nowUTC.add(9, 'hours')// 한국시간
             const nowKo_str =  this.formatDates(nowKo);
 
-            let fileOrigin = "cash_history_detail_"+nowKo_str+".xls"
+            let fileOrigin = "cash_history_detail_"+nowKo_str+".xlsx"
 
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
