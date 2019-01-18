@@ -28,6 +28,7 @@
     import {environment} from '../../../utill/environment';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import {format} from 'date-fns';
+    import  moment from 'moment'
 
     @Component({
         components: {
@@ -47,7 +48,6 @@
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
         regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
-        setDate =  format(new Date(),'YYYYMMDD');
 
         soluVal : string = ''; //현금영수증사업자
         soluDis : boolean = false; //현금영수증사업자 disabled 여부
@@ -56,53 +56,15 @@
         jijumVal : string = ''; //지점
         jijumDis : boolean = false; //지점 disabled 여부
 
-        listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
-            {
-                dataGrid: {
-                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '순번' ,id : 'rnum',type:'number', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
-                        {columName : '사업장명' ,id : 'shopNm',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        {columName : '사업자등록번호' ,id : 'saupId',type:'text', width : '16%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '매장번호' ,id : 'storId',type:'text', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '업종' ,id : 'upjong',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : '매장상태' ,id : 'storStsNm',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '등록일' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}
-                    ],
-                    totalColum: 8,
-                    apiUrl : 'store',
-                    onLoadList : true,  // onLoad 로딩 유무
-                    //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
-                    //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
-                    //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
-                },
-                // 아이디는 실제 컬럼값을 넣어주면됩니다.
-                search: [
-                    {type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: '' ,  api : 'code/issuer' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
-                    //{type: 'selectCode' , title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: '' ,  api : '' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
-                    //{type: 'selectCode' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : '' , option : [{ codeNm : '할리스커피 가산' , code: '0093434' },{codeNm : '온누리 사업장' , code: '0093433' },{codeNm : '컴앤프로정보기술㈜' , code: '0070650' },{codeNm : '창훈이 롯데' , code: '0093432' },{codeNm : '한스치과의원' , code: '0093032' }]},
-                    //{type: 'selectObject' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : 'saupjang/gajum/summary' , option : [{ name: '', code:''}]},
-                    {type: 'inputPop2' , title :'가맹점',id: 'gajumId', name:'gajumId' , value: '' ,  api : '' , option : ''},
-                    //{type: 'selectCode' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : '' , option : [{ codeNm : '앤드컴 가산점' , code: '0001' },{codeNm : '창훈이 롯데' , code: '0001' },{codeNm : '할리스커피 가산' , code: '0001' },{codeNm : '메디팜 강남1점' , code: '0002' }]},
-                    //{type: 'selectCode' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : 'saupjang/jijum/summary' , option : [{ codeNm: '', code:''}]},
-                    {type: 'inputPop2' , title :'지점',id: 'jijumId', name:'jijumId' , value: '' ,  api : '' , option : ''},
-                    {type: 'selectCode' , title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상 ' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기 ' , code: '2' },{codeNm : '해지' , code: '3' }]},
-                    {type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
-                    {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
-                    {type: 'date2', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                    {type: 'select' , title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
-                    {type: 'input', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
-                ],
-                paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
-                goSearch : "iocSearch",
-                searchClass : 'search_box page_store03',
-                searchClass2 : 'search_list'
-            }
+        listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
 
         //돔생성전 호출자
         created() {
 
             //this.getSelectList('RECEIPT');
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -165,7 +127,7 @@
                         {type: 'selectCode' ,class:'w33',liNull:false, title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상 ' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기 ' , code: '2' },{codeNm : '해지' , code: '3' }]},
                         {type: 'selectCode' ,class:'w33 ',liNull:true, title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
                         {type: 'radio' ,class:'w25',liNull:false, title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
-                        {type: 'date2',class:'w25',liNull:false, title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'date2',class:'w25',liNull:false, title :'', id: 'date', name:'date', searchStartDate: [beforeOneDKo,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         {type: 'select' ,class:'w25',liNull:false, title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
                         {type: 'input',class:'w25 text_left',liNull:false, title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
                     ],

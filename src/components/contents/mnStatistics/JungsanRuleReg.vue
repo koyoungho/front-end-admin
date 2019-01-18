@@ -148,7 +148,8 @@
         }
     })
     export default class JungsanRuleReg extends Vue {
-        searchStartDate :any = [new Date(),new Date()];
+        searchStartDate :any = [];
+        nowKo : any ='';
         langs : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],
             months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -164,9 +165,16 @@
 
 
             created(){
+                const  nowUTC =  moment().utc() ; //UTC시간
+               this.nowKo= nowUTC.add(9, 'hours')// 한국시간
+                // const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
+
+                this.searchStartDate=[this.nowKo, this.nowKo]
+
                 this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
                 this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
-                this.jungsanRule.regDt = moment(new Date()).format('YYYYMMDD') // 등록날짜를 보내야되나요?
+                this.jungsanRule.regDt = moment(this.nowKo).format('YYYYMMDD') // 등록날짜를 보내야되나요?
+
             }
 
         /**
@@ -176,7 +184,7 @@
             saveData(){
             this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
             this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
-            this.jungsanRule.regDt = moment(new Date()).format('YYYYMMDD') //
+            this.jungsanRule.regDt = moment(this.nowKo).format('YYYYMMDD') //
 
                 CommonBoardService.postListDatas('statistics' ,'jungsanrate', this.jungsanRule).then(result=>{
                     if(result.status ==200 || result.status==201){

@@ -318,11 +318,11 @@
         ChartModel : CcChart[] = [];
         companyCodeList : any = []; // 회사코드
         companyCode : string = "";
-        searchStartDate = [new Date(),new Date()];
+        searchStartDate:any = []
         searchEndDate = "";
         dateOne: any =  "";
         dateTwo: any =  "";
-        nowDate : any = new Date();
+        // nowDate : any = new Date();
         showMode : string = "single";
         monthCount : boolean = false;
         saupId : string="";
@@ -341,6 +341,10 @@
         }
 
         created(){ // api 데이터
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+
+            this.searchStartDate =[nowKo, nowKo]
             this.companyList()
         }
 

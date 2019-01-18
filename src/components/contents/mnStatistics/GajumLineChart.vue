@@ -62,7 +62,7 @@
         gajumCount : number = 0;
         receiptList : Object = [];
         receiptCount : number = 0;
-        nowDate : any = new Date();
+        // nowDate : any = new Date();
         dateArray : any = [];
         dateArray2 : any = [];
         chart1 : boolean = false;

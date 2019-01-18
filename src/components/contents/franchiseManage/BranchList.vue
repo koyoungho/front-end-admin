@@ -24,6 +24,7 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import {format} from 'date-fns';
+    import  moment from 'moment'
 
     @Component({
         components: {
@@ -39,7 +40,6 @@
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
         regbtnShow : boolean = false; //신규등록 버튼 보여주는지 여부
-        setDate =  format(new Date(),'YYYYMMDD');
 
         soluVal : string = ''; //현금영수증사업자
         soluDis : boolean = false; //disabled 여부
@@ -50,6 +50,9 @@
         listItem: any = []
 
         created(){
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -110,7 +113,7 @@
                         //{type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : '' , option : [{ codeName : '휴업' , code: '1' },{codeName : '수기BL' , code: '11' },{codeName : '수기BL취소' , code: '17' },{codeName : '폐업' , code: '2' },{codeName : '신용카드위장' , code: '3' },{codeName : '현금위장' , code: '4' },{codeName : '신용카드/현금위장' , code: '5' },{codeName : '현금영수증발급불가' , code: '6' },{codeName : '적용취소' , code: '7' },{codeName : '삭제된사업자' , code: '8' }]},
                         //{type: 'selectCode' , title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
                         {type: 'radio' ,class:'w20', title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
-                        {type: 'date2',class:'w30 text_left', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'date2',class:'w30 text_left', title :'', id: 'date', name:'date', searchStartDate: [beforeOneDKo,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         {type: 'select' ,class:'w20', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: '0' },{name : '사업자등록번호' , value: '1' },{name : '대표자명' , value: '2' }]},
                         {type: 'input',class:'w30 text_left', title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' },
                         //{type: 'hidden', title :'', id: 'gajumId', name:'gajumId' , value: '0093032',   api : '' , option : '' }

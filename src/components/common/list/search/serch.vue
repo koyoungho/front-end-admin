@@ -207,6 +207,7 @@
     import {CommonBoardService} from '../../../../api/common.service';
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
     import GajijumBox from '@/components/contents/franchiseManage/GajijumBox.vue'
+    import  moment from 'moment'
     // see docs for available options
 
     @Component({
@@ -236,7 +237,7 @@
         // dateStyle : any = 'left : 0px';
         dateOne: any =  "";
         dateTwo: any =  "";
-        nowDate : any = new Date();
+        nowDate : any ='';
         showMode : string = "single";
 
         lang : any =  {
@@ -278,6 +279,11 @@
         }
 
         created() {
+
+            const  nowUTC =  moment().utc() ; //UTC시간
+            this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+
+
             this.searchStyle = this.searchItemDetail.searchClass
             this.searchStyle2 = this.searchItemDetail.searchClass2
 
@@ -393,8 +399,8 @@
                     if(e.disable == true) { //로그인 권한에 따라 변경하지 못하는 값
                     }else{
                         e.value="";
-                        e.searchStartDate = this.formatDates(new Date());
-                        e.searchEndDate =this.formatDates(new Date());
+                        e.searchStartDate = this.formatDates( this.nowDate);
+                        e.searchEndDate =this.formatDates( this.nowDate);
                     }
                 }
             })
