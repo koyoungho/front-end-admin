@@ -81,7 +81,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="20">
+                            <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -516,6 +516,14 @@
         //취소
         cancelInfo() {
             this.$router.push('/home/franchiseList')
+        }
+
+        @Watch('repPhonenum') changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.repPhonenum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.repPhonenum = '';
+            }
         }
 
         //상세정보 보이기

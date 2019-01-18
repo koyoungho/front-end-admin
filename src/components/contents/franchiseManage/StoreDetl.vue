@@ -78,32 +78,30 @@
                     <caption>사업장 기본 정보</caption>
                     <colgroup>
                         <col width="17%">
-                        <col width="19%">
-                        <col width="14%">
-                        <col width="19%">
-                        <col width="15%">
-                        <col width="18%">
+                        <col width="33%">
+                        <col width="17%">
+                        <col width="33%">
                     </colgroup>
                     <tbody>
                     <tr>
                         <th scope="row">사업자등록번호</th>
-                        <td colspan="2">
+                        <td colspan="1">
                             <input type="text" class="input form_industry" title="사업자등록번호" disabled="disabled" v-model="saupId">
                         </td>
-                        <th scope="row">사업장명</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
+                        <th scope="row">사업장명<em class="form_req">*</em></th>
+                        <td colspan="1"><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
                     </tr>
                     <tr>
-                        <th scope="row">대표자명</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
-                        <th scope="row">전화번호</th>
-                        <td colspan="2">
+                        <th scope="row">대표자명<em class="form_req">*</em></th>
+                        <td colspan="1"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
+                        <th scope="row">전화번호<em class="form_req">*</em></th>
+                        <td colspan="1">
                             <input type="text" class="input form_w100" title="전화번호" v-model="telNum" maxlength="20">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">사업자구분</th>
-                        <td colspan="2">
+                        <td colspan="1">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
@@ -115,11 +113,11 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
+                        <td colspan="1"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
                     </tr>
                     <tr>
-                        <th scope="row">주소</th>
-                        <td colspan="5">
+                        <th scope="row">주소<em class="form_req">*</em></th>
+                        <td colspan="3">
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="zipCode" disabled="disabled">
@@ -136,7 +134,7 @@
                     </tr>
                     <tr>
                         <th scope="row">매장 상태</th>
-                        <td colspan="5">
+                        <td colspan="3">
                             <!--<input type="text" class="input form_w50" title="지점" v-model="storeStatus" disabled="disabled">-->
                             <select id="storeStatusID" name="" class="select form_bl" title="매장 상태" v-model="storeStatus" disabled="disabled">
                                 <option value="">선택</option>
@@ -149,13 +147,13 @@
                     </tr>
                     <tr>
                         <th scope="row">사업장 등록일</th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="등록일" disabled="disabled" v-model="regiDate"></td>
+                        <td colspan="1"><input type="text" class="input form_w100" title="등록일" disabled="disabled" v-model="regiDate"></td>
                         <th scope="row">사업장 수정일</th>
-                        <td colspan="2"><input type="text" class="input form_w100 fc_pt01" value="2018.11.20" title="사업장 해지일" disabled="disabled" v-model="canDate"></td>
+                        <td colspan="1"><input type="text" class="input form_w100 fc_pt01" value="2018.11.20" title="사업장 해지일" disabled="disabled" v-model="canDate"></td>
                     </tr>
                     <tr>
                         <th scope="row">BL 정보</th>
-                        <td colspan="5">
+                        <td colspan="3">
                             <select id="blGbID" name="" class="select form_bl" title="BL 정보" v-model="blGb" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="0">BL적용</option>
@@ -166,13 +164,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드</th>
-                        <td colspan="2">
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <td colspan="1">
                             <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
                         </td>
-                        <th scope="row">업종구분</th>
-                        <td colspan="2">
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
+                        <td colspan="1">
                             <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
                                 <option value="">선택</option>
                                 <template v-for="datas in upjongList">
@@ -182,8 +180,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">요양기관기호</th>
-                        <td colspan="5"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId"></td>
+                        <th scope="row">요양기관기호<template v-if="upjong == '002'||upjong == '003'"><em class="form_req">*</em></template></th>
+                        <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -505,6 +503,14 @@
 
 
 
+        }
+
+        @Watch('telNum') changeTelNum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.telNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.telNum = '';
+            }
         }
 
         //상세정보 보이기
@@ -908,10 +914,10 @@
                 return;
             /*}else if(this.saupType == ''){
                 alert('사업자구분을 선택하세요.');
-                return;*/
+                return;
             }else if(this.saupType == '1' && this.lawNum == ''){ //법인사업자 경우만 체크
                 alert('법인등록번호를 입력하세요.');
-                return;
+                return;*/
             }else if(this.zipCode == ''){
                 alert('우편번호 버튼을 클릭하여 우편번호를 입력하세요.');
                 return;
@@ -927,7 +933,7 @@
             }else if(this.upjong == ''){
                 alert('업종구분을 선택하세요.');
                 return;
-            }else if(this.upjong == '0005' && (this.gikanId == '' || this.gikanId == null)){ // 업종구분이 병원, 의원인 경우 필수입력
+            }else if((this.upjong == '002' || this.upjong == '003') && (this.gikanId == null || this.gikanId == '')){ // 업종구분이 병원, 의원인 경우 필수입력
                 alert('요양기관기호를 입력하세요.');
                 return;
             }

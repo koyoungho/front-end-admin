@@ -71,35 +71,33 @@
                     <caption>사업장 기본 정보</caption>
                     <colgroup>
                         <col width="17%">
-                        <col width="19%">
-                        <col width="14%">
-                        <col width="19%">
-                        <col width="15%">
-                        <col width="18%">
+                        <col width="33%">
+                        <col width="17%">
+                        <col width="33%">
                     </colgroup>
                     <tbody>
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
-                        <td colspan="2">
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-on:keyup="saupIdChk" maxlength="10" v-on:keydown="showKeyCode($event)">
+                        <td colspan="1">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p>
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
+                        <td colspan="1"><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명<em class="form_req">*</em></th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
+                        <td colspan="1"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
-                        <td colspan="2">
-                            <input type="text" class="input form_w100" title="전화번호" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''"  v-model="repPhonenum" maxlength="20">
+                        <td colspan="1">
+                            <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">사업자구분<em class="form_req">*</em></th>
-                        <td colspan="2">
+                        <td colspan="1">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType">
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
@@ -112,16 +110,16 @@
                         </td>
                         <template v-if="saupType=='1'">
                         <th scope="row">법인등록번호<em class="form_req">*</em></th>
-                        <td colspan="2"><input type="text" class="input form_w100" title="법인등록번호" @input="validationCheck(lawNum,'number')=='N' ? lawNum='' : ''"  v-model="lawNum" maxlength="13" v-on:keydown="showKeyCode($event)"></td>
+                        <td colspan="1"><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13"></td>
                         </template>
                         <template v-else>
                             <th scope="row"></th>
-                            <td colspan="2"></td>
+                            <td colspan="1"></td>
                         </template>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
-                        <td colspan="5">
+                        <td colspan="3">
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="zipCode" disabled="disabled">
@@ -138,12 +136,12 @@
                     </tr>
                     <tr>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
-                        <td colspan="2">
+                        <td colspan="1">
                             <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
                         </td>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td colspan="2">
+                        <td colspan="1">
                             <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
                                 <option value="">선택</option>
                                 <template v-for="datas in upjongList">
@@ -154,7 +152,7 @@
                     </tr>
                     <tr>
                         <th scope="row">요양기관기호</th>
-                        <td colspan="5"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId"></td>
+                        <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId" maxlength="20"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -490,6 +488,30 @@
             if(this.upjong == '0002' || this.upjong == '0003') { //업종구분이 신문사(0002), 택배사(0003) 이면 회사코드 조회
                 //this.getSelectList('SUBSAUP');
             }else{
+            }
+        }
+
+        @Watch('repPhonenum') changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.repPhonenum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.repPhonenum = '';
+            }
+        }
+
+        @Watch('saupId') changeSaupId(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.saupId)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.saupId = '';
+            }
+        }
+
+        @Watch('lawNum') changeLawNum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.lawNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.lawNum = '';
             }
         }
 

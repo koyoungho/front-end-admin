@@ -73,10 +73,10 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름</th>
-                        <td><input type="text"  class="input form_w100"  title="이름" disabled="disabled" v-model="account.name"></td>
+                        <td><input type="text"  class="input form_w100"  title="이름" disabled="disabled" v-model="account.name" maxlength="20"></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100"  title="휴대폰번호" v-model="account.phoneNum">
+                            <input type="text" class="input form_w100"  title="휴대폰번호" v-model="account.phoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -189,6 +189,8 @@
     import {CommonBoardService} from "../../../api/common.service";
     import {Account} from '../../../model/account/account';
     import AddressBox from '@/components/common/addressBox/addressBox.vue'
+    import moment from 'moment'
+    Vue.prototype.moment = moment;
 
     @Component({
         components: {
@@ -211,12 +213,32 @@
          this.saupInfo();
          this.gajumInfo();
          this.jijumInfo();
+     }
+
+     mounted(){
+
+
+
+     }
+
+    @Watch('account.phoneNum') changePhoneNum(){
+        let account : any = this.account;
+        let regNumber = /^[0-9]*$/;
+        if(!regNumber.test(account.phoneNum)){
+            Vue.swal({ text: '숫자만가능합니다'});
+            account.phoneNum = '';
         }
+    }
 
     accountInfo(){
         CommonBoardService.getListDatas('accounts','myself',null).then(result=>{
             if(result.status==200){
-                this.account = result.data
+                this.account = result.data;
+
+                let accounts : any = this.account;
+                if(accounts != null && accounts.lastConnDt != ''){
+                    accounts.lastConnDt = this.dateFormat(accounts.lastConnDt);
+                }
             }
         })
     }
@@ -313,6 +335,17 @@
         this.account['addr1'] = data.addr;
         this.account['zipCode'] = data.zip;
     }
+
+    // 날짜 포맷
+    dateFormat(val){
+        if(val == null || val == ''){
+            return '';
+        }else{
+            return moment(val, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
+        }
+    }
+
+
     }
 </script>
 

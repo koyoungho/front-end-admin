@@ -53,7 +53,7 @@
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
                             </select>
-                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20" id="confirmID" @input="validationCheck(confirm,'number')=='N' ? confirm='' : ''">
+                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20" id="confirmID">
                         </td>
 
                     </tr>
@@ -109,11 +109,11 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" class="input form_price" title="거래금액 입력" v-model="totalAmt" maxlength="9" @input="validationCheck(totalAmt,'number')=='N' ? totalAmt=0 : ''" v-on:keydown="numberChk($event)">
+                                    <input type="text" class="input form_price" title="거래금액 입력" v-model="totalAmt" maxlength="9">
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" class="input form_price" title="봉사료 입력" v-model="bong" maxlength="9" @input="validationCheck(bong,'number')=='N' ? bong=0 : ''" v-on:keydown="numberChk($event)">
+                                    <input type="text" class="input form_price" title="봉사료 입력" v-model="bong" maxlength="9">
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -249,9 +249,21 @@
             }
         }
         @Watch('totalAmt') onTotalamtChange(){ //거래금액 변경시
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.totalAmt)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.totalAmt = '0';
+                return;
+            }
             this.calculateAmt();
         }
         @Watch('bong') onBongChange(){ //봉사료 변경시
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.bong)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.bong = '0';
+                return;
+            }
             this.calculateAmt();
         }
 
@@ -266,6 +278,14 @@
             }else{
                 this.confirm = '';
                 this.getSinbunSelectList(); //고객신분코드 조회
+            }
+        }
+
+        @Watch('confirm') changeConfirm(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.confirm)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.confirm = '';
             }
         }
 

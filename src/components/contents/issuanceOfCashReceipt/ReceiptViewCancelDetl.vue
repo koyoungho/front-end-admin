@@ -162,12 +162,12 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <template v-if="bongsaBlock"><input type="text" v-model="canAceptTotal"  @input="validationCheck(canAceptTotal,'number')=='N' ? canAceptTotal=0 : ''"  class="input form_price" title="거래금액 입력" disabled></template>
-                                    <template v-else><input type="text" v-model="canAceptTotal" @input="validationCheck(canAceptTotal,'number')=='N' ? canAceptTotal=0 : ''"  class="input form_price" title="거래금액 입력"></template>
+                                    <template v-if="bongsaBlock"><input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력" disabled></template>
+                                    <template v-else><input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력"></template>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" v-model="canBong" @input="validationCheck(canBong,'number')=='N' ? canBong=0 : ''"  class="input form_price" title="봉사료 입력" disabled>
+                                    <input type="text" v-model="canBong" class="input form_price" title="봉사료 입력" disabled>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -361,12 +361,24 @@
         }
 
         @Watch('canAceptTotal') onTotalamtChange(){ //합계 변경시
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.canAceptTotal.toString())){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.canAceptTotal = 0;
+                return;
+            }
             if(Number(this.canAceptTotal) == 0){
             }else{
                 this.resetCash()
             }
         }
         @Watch('canBong') onBongChange(){ //봉사료 변경시
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.canBong.toString())){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.canBong = 0;
+                return;
+            }
             if(Number(this.canBong) == 0){
             }else{
                 this.resetCash()

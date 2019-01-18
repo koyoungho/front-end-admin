@@ -37,7 +37,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" maxlength="12" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''">
+                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -281,9 +281,20 @@
             this.getSelectList('SUBSAUP'); //회사코드
             this.getSelectList('BL'); //BL코드
 
+            this.infoDetail(); //상세조회
+
         }
 
         mounted() {
+
+            // this.getSelectList('0001'); //사업자구분
+            // this.getSelectList('UPJONG'); //업종구분
+            // this.getSelectList('SUBSAUP'); //회사코드
+            // this.getSelectList('BL'); //BL코드
+
+        }
+
+        infoDetail(){
 
             let reqId : string = this.objectKey.row.id;
             let reqRole : string = this.objectKey.row.role;
@@ -359,11 +370,14 @@
                 //console.log('response code check!!');
             });
 
-            // this.getSelectList('0001'); //사업자구분
-            // this.getSelectList('UPJONG'); //업종구분
-            // this.getSelectList('SUBSAUP'); //회사코드
-            // this.getSelectList('BL'); //BL코드
+        }
 
+        @Watch('repPhonenum') changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.repPhonenum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.repPhonenum = '';
+            }
         }
 
         //공통 select box 조회

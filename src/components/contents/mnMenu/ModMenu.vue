@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                         <th scope="row">메뉴명<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="메뉴명" v-model="name"></td>
+                        <td><input type="text" class="input form_w100" title="메뉴명" v-model="name" maxlength="20"></td>
                         <th scope="row">메뉴 코드</th>
                         <td>
                             <input type="text" class="input form_w100" title="메뉴 코드" disabled="disabled" v-model="menuCode">
@@ -52,11 +52,11 @@
                     </tr>
                     <tr>
                         <th scope="row">메뉴 경로<em class="form_req">*</em></th>
-                        <td colspan="3"><input type="text" class="input form_w100" title="메뉴 경로" v-model="menuPath"></td>
+                        <td colspan="3"><input type="text" class="input form_w100" title="메뉴 경로" v-model="menuPath" maxlength="30"></td>
                     </tr>
                     <tr>
                         <th scope="row">메뉴 설명</th>
-                        <td colspan="3"><input type="text" class="input form_w100" title="메뉴 설명" v-model="memo"></td>
+                        <td colspan="3"><input type="text" class="input form_w100" title="메뉴 설명" v-model="memo" maxlength="30"></td>
                     </tr>
                     </tbody>
                 </table>

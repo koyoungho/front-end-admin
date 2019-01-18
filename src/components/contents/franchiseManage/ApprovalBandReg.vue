@@ -72,7 +72,7 @@
                             </div>
                             <div class="form_col approval">
                                 <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="aproGbn"><label for="aa12">건수</label></span>
-                                <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 시작점" v-model="aproCnt">
+                                <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 시작점" v-model="aproCnt" maxlength="7">
                             </div>
                         </td>
                     </tr>
@@ -218,6 +218,10 @@
         }
 
         @Watch('jumCode') changeJumcode(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.jumCode)){
+                Vue.swal({ text: '숫자만가능합니다'});
+            }
             //console.log('회사코드')
             let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
             if(saupmsg != null){ saupmsg.innerHTML = ""; }

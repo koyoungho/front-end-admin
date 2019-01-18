@@ -167,6 +167,7 @@
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
+    import {environment} from '../../../utill/environment';
     import moment from 'moment'
     Vue.prototype.moment = moment;
     @Component({
@@ -274,8 +275,9 @@
                 return;
             }
 
-            if(this.nowTime != '' && this.nowTime != undefined) {
-                let today = moment(this.nowTime, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
+            //if(this.nowTime != '' && this.nowTime != undefined) {
+                //let today = moment(this.nowTime, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss');
+                let imgsrc = environment.imgApiUrl+"/img/img_logo.07141310.png"; //로고
 
                 let mailMessage: string = ''; //메일 메시지 내용
                 mailMessage = "<html lang='ko'>\n" +
@@ -290,7 +292,7 @@
                     "\t\t\t\t<tbody><tr><td width=\"30\"></td><td>\n" +
                     "\t\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:30px auto 0;background-color:#fff;-webkit-text-size-adjust:100%;text-align:left\">\n" +
                     "\t\t\t\t\t\t<tbody><tr>\n" +
-                    "\t\t\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img src=\"http://211.39.150.112/img/img_logo.07141310.png\" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
+                    "\t\t\t\t\t\t\t<td><a href=\"\" target=\"_blank\"><img :src="+imgsrc+" width=\"238\" height=\"28\" alt=\"케이티/롯데정보통신 현금영수증\" style=\"border:0;margin-right:5px;\"></a></td>\n" +
                     "\t\t\t\t\t\t\t<td style=\"padding-top:10px; text-align:right; padding-right:0px;padding-bottom:18px;font-size:13px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:17px\"></td>\n" +
                     "\t\t\t\t\t\t\t<td style=\"width:100px;text-align: right; padding-bottom:13px;font-size:20px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#212121;line-height:17px;font-weight: bold;\"></td>\n" +
                     "\t\t\t\t\t\t</tr>\n" +
@@ -449,7 +451,7 @@
                         //this.$Progress.finish();
                     }
                 ).catch();
-            }
+            //}
         }
 
 
