@@ -432,7 +432,7 @@
             let saupmsg = document.getElementById('saupid_msg');
 
             if(no == ''){
-                Vue.swal({text:'사업자등록번호를 입력하세요.'});
+                if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호를 입력하세요'; }
                 return;
             }else if(no.length != 10){
                 if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호 길이가 부적합 합니다.'; }
@@ -576,6 +576,7 @@
                     if (result != null && result != '') {
                         //console.log('가맹점 등록 성공');
                         this.sendMail(); //가입완료 메일 발송
+                        Vue.swal({text: '계정 정보를 등록하였습니다'});
                         //this.$router.push({name:"franchiseRegStep3", params:{reqId:result.id, reqSaupId:result.saupId, reqStoreNm:result.storeNm}});
                         this.$router.push('/home/mnUser');
                     } else {
@@ -636,7 +637,8 @@
         dataValidation() {
             let regNumber = /^[0-9]*$/;
             if(this.saupId == '') {
-                Vue.swal({text: '사업자등록번호를 입력하세요.'});
+                let saupmsg = document.getElementById('saupid_msg');
+                if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호를 입력하세요'; }
                 return false;
             }else if(this.saupIdYn == ''){
                 Vue.swal({text: '사업자등록번호 등록확인하세요.'});
@@ -1068,10 +1070,10 @@
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     if (response.status.toString() == '201' || response.status.toString() == '200') { //메일 전송 완료
-                        console.log('메일 발송 성공');
+                        Vue.swal({text: '메일이 발송되었습니다'});
                         //console.log(response);
                     } else { //메일 전송 실패
-                        console.log('메일 발송 실패');
+                        Vue.swal({text: '메일 발송이 실패하였습니다'});
                         //console.log(response);
                     }
                 }
@@ -1112,7 +1114,8 @@
         //사업장 정보 조회
         saupInfo(saupId){
             if(saupId == null || saupId == ''){
-                Vue.swal({text: '사업자등록번호를 입력하세요.'});
+                let saupmsg = document.getElementById('saupid_msg');
+                if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호를 입력하세요'; }
                 return;
             }
 
@@ -1144,7 +1147,8 @@
                         this.upjongCode = this.nullCheck(result.data.upjong);
                         this.companyCode = this.nullCheck(result.data.subSaup);
                     }else{
-                        Vue.swal({text: '등록된 사업장정보가 없습니다. 사업장등록번호를 확인하세요.'});
+                        let saupmsg = document.getElementById('saupid_msg');
+                        if(saupmsg!=null){ saupmsg.innerHTML = '등록된 사업장정보가 없습니다. 사업장등록번호를 확인하세요.'; }
                         this.saupIdYn = '';
                         this.storeNm = "";
                         this.repNm = "";

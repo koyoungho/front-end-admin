@@ -145,8 +145,8 @@
 
             <!-- btn bot -->
             <div class="btn_bot no_print">
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="receiptPrint">영수증 출력</button>
-                <button type="button" id="" class="btn_b01 bg02" v-on:click="receiptConfirm">확인</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="receiptPrint">영수증 출력</button>
+                <button type="button" class="btn_b01 bg02" v-on:click="receiptConfirm">확인</button>
             </div>
 
         </div>
@@ -195,6 +195,7 @@
         nowTimehms : string = '';
 
         mailAddr : any = '';
+        trgu : any = '';
 
         /**
          * 현재시간 가져오기
@@ -252,6 +253,7 @@
                         //this.cultGb = result.cultGb; //지출구분
                         this.cultGbNm = this.nullCheck(result.cultGbNm); //지출구분
                         this.memo = this.nullCheck(result.memo); //메모
+                        this.trgu = result.trgu; //메모
                     } else {
                         console.log(result);
                     }
@@ -483,6 +485,7 @@
             reqData['message'] = mailMessage; //메일 내용
             reqData['cc'] = [''];
 
+
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     if (response.status.toString() == '201' || response.status.toString() == '200') { //메일 전송 완료
@@ -498,6 +501,7 @@
             ).catch();
 
         }
+
         //메일 주소 정규표현식 체크
         email_check( email ) {
             var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -519,19 +523,11 @@
             }else if(num == 0 || num == '0'){
                 return '0';
             }else{
-                let len, point, str;
-
-                num = num + "";
-                point = num.length % 3 ;
-                len = num.length;
-
-                str = num.substring(0, point);
-                while (point < len) {
-                    if (str != "") str += ",";
-                    str += num.substring(point, point + 3);
-                    point += 3;
+                if(this.trgu == '1' &&  num !='0'){
+                    return '-'+  Number(num).toLocaleString();
+                }else {
+                    return Number(num).toLocaleString();
                 }
-                return str;
             }
         }
 
@@ -540,7 +536,7 @@
         }
 
         nullCheck(val){
-            if(val == null || val == ''){
+            if(val == null || val == '' ||val ==undefined){
                 return '';
             }else{
                 return val;

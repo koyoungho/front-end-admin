@@ -7,7 +7,7 @@
 
             <h3>계정 등록</h3>
 
-            <h4>사용자 정보</h4>
+            <h4>관리자 정보</h4>
             <!-- tbl view box -->
             <div class="tbl_view_box">
                 <!-- tbl view01 -->
@@ -557,6 +557,7 @@
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnUserList'})
                         this.sendMail();
+                        Vue.swal({text: '계정 정보가 등록되었습니다'});
                         this.$router.push('/home/mnUser');
                         //this.$router.push({name:'policyTempList'});
                     } else {
@@ -739,11 +740,10 @@
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     if (response.status.toString() == '201' || response.status.toString() == '200') { //메일 전송 완료
-                        console.log('메일 발송 성공');
-                        //console.log(response);
+                        Vue.swal({text: '계정등록 메일이 발송되었습니다.'});
                     } else { //메일 전송 실패
                         console.log('메일 발송 실패');
-                        //console.log(response);
+                        Vue.swal({text: '메일이 전송 실패하였습니다'});
                     }
                 }
                 , (error) => {

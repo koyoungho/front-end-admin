@@ -107,7 +107,7 @@
                             {columName : '등급명' ,id : 'roleNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '등급' ,id : 'role',type:'hidden', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
                             {columName : '소속' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '상태' ,id : 'accountStatus',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
+                            {columName : '상태' ,id : 'accountStatus',type:'fileDown', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                             {columName : '등록일' ,id : 'regDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
@@ -138,7 +138,9 @@
                     searchClass2 : 'search_list'
                 }
             this.originItem  = this.listItem.dataGrid.columControl
-
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.listItem.search  = this.$store.state.searchList.listDt
+            }
 
         }
 
@@ -186,71 +188,72 @@
                 }
 
             }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
-
-                if(data.row.saupFileNm == null || data.row.saupFileNm == ''){
-                    Vue.swal({text: '사업자등록증 파일이 없습니다.'});
-                    return;
-                }else {
-                    console.log('사업자등록증 파일 다운로드');
-                    //this.rowData = data.row;
-                    //this.popComfirm();
-
-                    //파일 다운로드
-                    let fileName : string = data.row.saupFileNm;
-                    axios({
-                        url: environment.apiUrl +"/file/"+fileName,
-                        method: 'GET',
-                        responseType: 'blob', // important
-                        headers: {"x-auth-token": sessionStorage.accessToken}
-                    }).then((response) => {
-                        console.log(response)
-                        // It is necessary to create a new blob object with mime-type explicitly set
-                        // otherwise only Chrome works like it should
-                        var newBlob = new Blob([response.data],{type: 'application/xlsx'})
-
-                        // IE doesn't allow using a blob object directly as link href
-                        // instead it is necessary to use msSaveOrOpenBlob
-                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                            window.navigator.msSaveOrOpenBlob(newBlob,fileName)
-                            return
-                        }
-
-                        // For other browsers:
-                        // Create a link pointing to the ObjectURL containing the blob.
-                        const data = window.URL.createObjectURL(newBlob)
-                        var link = document.createElement('a')
-                        link.href = data
-                        link.download = fileName
-                        link.click()
-                        setTimeout(function () {
-                            // For Firefox it is necessary to delay revoking the ObjectURL
-                            window.URL.revokeObjectURL(data)
-                        }, 100)
-                    })
-
-                    /*
-                    let server: any = environment.apiUrl;
-                    let param: any = '/file/' + data.row.saupFileNm;
-                    //파일 다운로드
-                    axios({
-                        url: server + param,
-                        method: 'GET',
-                        responseType: 'blob', // important
-                        headers: {"x-auth-token": sessionStorage.accessToken}
-                    }).then((response) => {
-                        console.log(response);
-                        const url = window.URL.createObjectURL(new Blob([response.data]));
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.setAttribute('download', data.row.saupFileNm); //or any other extension
-                        document.body.appendChild(link);
-                        link.click();
-                    });*/
-
-                }
-
+                this.fileDownLoad(data)
             }
 
+        }
+        fileDownLoad(data){
+            if(data.row.saupFileNm == null || data.row.saupFileNm == ''){
+                Vue.swal({text: '사업자등록증 파일이 없습니다.'});
+                return;
+            }else {
+                console.log('사업자등록증 파일 다운로드');
+                //this.rowData = data.row;
+                //this.popComfirm();
+
+                //파일 다운로드
+                let fileName : string = data.row.saupFileNm;
+                axios({
+                    url: environment.apiUrl +"/file/"+fileName,
+                    method: 'GET',
+                    responseType: 'blob', // important
+                    headers: {"x-auth-token": sessionStorage.accessToken}
+                }).then((response) => {
+                    console.log(response)
+                    // It is necessary to create a new blob object with mime-type explicitly set
+                    // otherwise only Chrome works like it should
+                    var newBlob = new Blob([response.data],{type: 'application/xlsx'})
+
+                    // IE doesn't allow using a blob object directly as link href
+                    // instead it is necessary to use msSaveOrOpenBlob
+                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveOrOpenBlob(newBlob,fileName)
+                        return
+                    }
+
+                    // For other browsers:
+                    // Create a link pointing to the ObjectURL containing the blob.
+                    const data = window.URL.createObjectURL(newBlob)
+                    var link = document.createElement('a')
+                    link.href = data
+                    link.download = fileName
+                    link.click()
+                    setTimeout(function () {
+                        // For Firefox it is necessary to delay revoking the ObjectURL
+                        window.URL.revokeObjectURL(data)
+                    }, 100)
+                })
+
+                /*
+                let server: any = environment.apiUrl;
+                let param: any = '/file/' + data.row.saupFileNm;
+                //파일 다운로드
+                axios({
+                    url: server + param,
+                    method: 'GET',
+                    responseType: 'blob', // important
+                    headers: {"x-auth-token": sessionStorage.accessToken}
+                }).then((response) => {
+                    console.log(response);
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', data.row.saupFileNm); //or any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                });*/
+
+            }
         }
 
         // }
