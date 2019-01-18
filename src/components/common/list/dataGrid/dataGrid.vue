@@ -115,6 +115,9 @@
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
                 <th>{{columNames.columName}}</th>
               </template>
+              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='fileDown'">
+                <th>{{columNames.columName}}</th>
+              </template>
               <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
                 <th>{{columNames.columName}}</th>
               </template>
@@ -179,8 +182,12 @@
                   <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
                  </template>
-
               </template>
+              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
+                <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}<br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font></span></td>
+              </template>
+
+
               <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'" >
                 <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)" ></td>

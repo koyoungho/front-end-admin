@@ -258,15 +258,15 @@
 
     saveInfo(){
          if(this.account['password'] == null || this.account['password'] == ''){
-             alert('패스워드를 입력해주세요')
+             Vue.swal({text: '패스워드를 입력해주세요'});
              return;
          }
          if(this.account['passwordConfirm'] == null || this.account['passwordConfirm'] == ""){
-             alert('패스워드 확인을 입력해주세요')
+             Vue.swal({text: '패스워드 확인을 입력해주세요'});
              return;
          }
         if(this.account['password'] !=  this.account['passwordConfirm']){
-            alert('패스워드가 같지않습니다')
+            Vue.swal({text: '패스워드가 같지 않습니다'});
             return;
         }
 
@@ -280,7 +280,7 @@
                 if(result.data.code=='000')
                 this.saveAction();
                 else{
-                   alert(result.data.message)
+                    Vue.swal({text: result.data.message});
                 }
             }
         })
@@ -301,7 +301,7 @@
          }
         CommonBoardService.putListData('accounts','myself/'+this.account['id'], data).then(result=>{
             if(result.status==200){
-                alert('수정이완료 되었습니다')
+                Vue.swal({text: '수정이완료 되었습니다'});
             }
         })
     }

@@ -39,8 +39,10 @@
                         <div class="code_list_box">
                             <!-- code head -->
                             <div class="code_head">
-                                <div class="title">코드그룹</div>
-                                <div class="title">코드명</div>
+                                <template v-if="company == true"><div class="title">회사코드</div>
+                                    <div class="title">코드명</div></template>
+                                <template v-else><div class="title">업종코드</div>
+                                    <div class="title">업종명</div></template>
                             </div>
                             <!-- code body -->
                             <div class="code_body tbl_scroll">
@@ -74,8 +76,10 @@
                         <div class="code_list_box">
                             <!-- code head -->
                             <div class="code_head">
-                                <div class="title">상세코드</div>
-                                <div class="title">코드명</div>
+                                <template v-if="company == true"><div class="title">회사 서브코드</div>
+                                    <div class="title">코드명</div></template>
+                                <template v-else><div class="title">업종 서브코드</div>
+                                    <div class="title">업종명</div></template>
                             </div>
                             <!-- code body -->
                             <div class="code_body tbl_scroll">
@@ -131,10 +135,10 @@
         clickCode :string = "";
         saupId : string ="";
         upjongCode : string = "";
-        title1: string ="회사 코드 그룹";
-        subTitle1: string ="회사 서브 코드";
-        title2: string ="공통 코드 그룹";
-        subTitle2: string ="서브 공통코드";
+        title1: string ="회사코드 관리";
+        subTitle1: string ="회사 서브 관리";
+        title2: string ="공통 관리";
+        subTitle2: string ="공통 서브 관리";
         counter : number =0;
         selecteds : string = "";
         selectedp : string = "";

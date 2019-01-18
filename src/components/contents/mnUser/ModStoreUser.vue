@@ -482,8 +482,8 @@
             }*/
 
             let reqData : any = {};
-
-            reqData['saupId'] = this.saupId; //사업자등록번호
+            let rep = this.saupId
+            reqData['saupId'] = rep.replace(/-/gi,""); //사업자등록번호
             reqData['storeNm'] = this.storeNm; //사업장명
             reqData['repNm'] = this.repNm; //대표자명
             reqData['repPhonenum'] = this.repPhonenum; //대표자 전화번호
@@ -499,7 +499,7 @@
             let accountId : string = this.objectKey.row.id;
             //accountId = 'minitest';
 
-            // api 데이터 호출
+            // // api 데이터 호출
             CommonBoardService.putListData('accounts/storemember/'+accountId, null, reqData).then((response) => {
                     let result: any = response.data;
                     //console.log(result)
