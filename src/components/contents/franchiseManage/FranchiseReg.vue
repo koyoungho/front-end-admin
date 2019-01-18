@@ -55,7 +55,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100"  @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''" title="전화번호" v-model="repPhonenum" maxlength="20">
+                            <input type="text" class="input form_w100"   title="전화번호" v-model="repPhonenum" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''">
                         </td>
                     </tr>
                     <tr>
@@ -1103,9 +1103,13 @@
 
         validationCheck(val,type){
             let regNumber = /^[0-9]*$/;
+            let check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
             if(type=='number'){
-                if(!regNumber.test(val)){
+                if(!regNumber.test(val) || check.test(val)){
                     Vue.swal({ text: '숫자만가능합니다'});
+                    return "Y";
+                }
+                else {
                     return 'N';
                 }
             }

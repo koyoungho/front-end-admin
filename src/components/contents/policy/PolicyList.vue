@@ -74,7 +74,7 @@
             this.listItem= {
                 dataGrid: {
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '순번', type:'number', id : 'termsOrder', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                        {columName : '순번', type:'text', id : 'termsOrder', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                         {columName : '제목', type:'text', id : 'detTitle', width : '70%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                     ],
                     totalColum: 2,
