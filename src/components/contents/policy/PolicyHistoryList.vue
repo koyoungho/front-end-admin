@@ -30,6 +30,7 @@
     import {Component, Vue, Watch} from "vue-property-decorator";
     import {CommonBoardService} from "../../../api/common.service";
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import  moment from 'moment'
 
     import format from 'date-fns/format'
 
@@ -47,7 +48,7 @@
         startPage: any = '';
         columControl: any = [];
         searchStartDate_str: any = '';
-        searchEndDate_str: any =  format(new Date(),'YYYYMMDD');
+        searchEndDate_str: any =  '';
         originItem : any = {} // 오리지널데이터
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
         regShow : boolean = false;
@@ -82,6 +83,9 @@
          * 페이지 분기 - 셀렉트 박스 리스트호출
          */
         pageDiv(){
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
             let routeNm = this.$route.name;
             if(routeNm == 'policyHistoryList' ) {
@@ -119,9 +123,6 @@
                 }
             }
 
-            let date=new Date();
-            date.setFullYear(date.getFullYear()-3);
-
             this.listItem={
                 dataGrid: {
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
@@ -136,7 +137,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date2', title :'등록일', id: 'date' , name:'date',searchStartDate: [date ,new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'date2', title :'등록일', id: 'date' , name:'date',searchStartDate: [beforeOneYKo ,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'textNone', title :'termsType', id: 'termsType' , name:'termsType', value: this.termsType} ,
                 ],
                 searchClass: 'search_box page_system01',

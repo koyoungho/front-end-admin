@@ -70,8 +70,9 @@
         listShow:boolean=false;
         chartShow:boolean=true;
         tabShow:boolean=false;
-        searchDate :any  = [new Date(),new Date()];
+        searchDate :any  = [];
         searchEndDate = "";
+        nowKo:any ='';
         lang : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],
             months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -83,8 +84,12 @@
         }
 
         created(){
-            let now = moment(new Date()).subtract(11, 'month');
-            this.searchDate = [now,new Date()]
+
+            const  nowUTC =  moment().utc() ; //UTC시간
+            this.nowKo= nowUTC.add(9, 'hours')// 한국시간
+
+            let now = moment(this.nowKo).subtract(11, 'month');
+            this.searchDate = [now,this.nowKo]
 
         }
         mounted(){
@@ -99,14 +104,14 @@
 
             if(div == 'chart'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(new Date()).subtract(11, 'month');
+                    this.searchDate[0] = moment(this.nowKo).subtract(11, 'month');
                 }
                 this.chartShow =true;
                 this.listShow =false;
                 this.tabShow =false;
             }else if(div == 'list'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(new Date()).subtract(11, 'month');
+                    this.searchDate[0] = moment(this.nowKo).subtract(11, 'month');
                 }
                 this.chartShow =false;
                 this.listShow =true;
@@ -129,9 +134,9 @@
                 this.$children['2'].gajumStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
                 this.$children['2'].receuptStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
             }else{ // 요약
-                let timeChange = moment(new Date()).subtract(7, 'day')
-                this.searchDate = [timeChange,new Date()]
-                this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(new Date()).format("YYYYMMDD"));
+                let timeChange = moment(this.nowKo).subtract(7, 'day')
+                this.searchDate = [timeChange,this.nowKo]
+                this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(this.nowKo).format("YYYYMMDD"));
             }
         }
 
@@ -143,9 +148,9 @@
                 this.$children['2'].gajumStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
                 this.$children['2'].receuptStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
             }else{ // 요약
-                let timeChange = moment(new Date()).subtract(7, 'day')
-                this.searchDate = [timeChange,new Date()]
-                this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(new Date()).format("YYYYMMDD"));
+                let timeChange = moment(this.nowKo).subtract(7, 'day')
+                this.searchDate = [timeChange,this.nowKo]
+                this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(this.nowKo).format("YYYYMMDD"));
             }
         }
 

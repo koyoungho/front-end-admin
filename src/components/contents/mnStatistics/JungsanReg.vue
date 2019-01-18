@@ -737,14 +737,19 @@
                 dateRange: '정산기간'
             }
         }
+        nowKo:any='';
 
         created(){
+            const  nowUTC =  moment().utc() ; //UTC시간
+           this.nowKo= nowUTC.add(9, 'hours')// 한국시간
+
+
             this.dateSet()
             this.getRate()
         }
 
         dateSet(){
-            this.nowDT = moment(new Date()).format('YYYY-MM-DD'),
+            this.nowDT = moment(this.nowKo).format('YYYY-MM-DD'),
             this.curDate= moment(moment().startOf('month')).subtract(1,'month');
             this.preDate= moment(this.curDate).subtract(1, 'month')
             this.nowDate= moment(this.curDate).subtract(1, 'month')

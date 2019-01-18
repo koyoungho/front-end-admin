@@ -30,6 +30,7 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
+    import  moment from 'moment'
 
     @Component({
         components: {
@@ -54,9 +55,9 @@
 
         created(){
 
-            // moment(this.ResultViewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD")
-            let date=new Date();
-            date.setFullYear(date.getFullYear()-3);
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
             this.listItem= {
                 dataGrid: {
@@ -75,7 +76,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [date ,new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [beforeOneYKo , nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{name : '관리자' , value: 'ADM' },{name : '사용자' , value: 'USR' }]},
                     {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
                 ],
