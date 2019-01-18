@@ -55,7 +55,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100"   title="전화번호" v-model="repPhonenum" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''">
+                            <input type="number" class="input form_w100"   title="전화번호" v-model="repPhonenum" v-bind:maxlength="'5'">
                         </td>
                     </tr>
                     <tr>
