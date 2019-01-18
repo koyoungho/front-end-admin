@@ -461,7 +461,7 @@
                         return;
                     }
                 }else if(this.positionGb == '3'){ //사업자등록번호 10자리
-                    let saupNo1 = this.saupNo.substring(2, 4);
+                    let saupNo1 = this.saupNo.substring(3, 5);
                     if (saupNo1.substring(0, 1) == 0) {
                         saupNo1 = saupNo1.substring(2, 1);
                     }
@@ -509,8 +509,8 @@
                         Vue.swal({text: 'QR번호는 숫자만 입력가능합니다.'});
                         return;
                     }
-                    if(this.confirm.length != 20){
-                        Vue.swal({text: 'QR번호는 20자리로 입력하세요.'});
+                    if(this.confirm.length != 12){
+                        Vue.swal({text: 'QR번호는 12자리로 입력하세요.'});
                         return;
                     }
                 }else if(this.positionGb == '6'){ //자진발급

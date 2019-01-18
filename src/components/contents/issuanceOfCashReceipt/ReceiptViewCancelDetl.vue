@@ -516,6 +516,9 @@
             if( this.canAceptTotal < 1 ){
                 Vue.swal({text:'취소 금액이 존재하지않습니다'})
             }
+            else if( this.canAceptTotal.toString().length > 1 && this.canAceptTotal.toString().indexOf('0') == 0){
+                alert('취소금액을 확인하세요.')
+            }
             else if(this.canTotal < 1){
                 Vue.swal({text:'공급가액이 존재하지않습니다'})
             }else if(this.receiptOk ==false){

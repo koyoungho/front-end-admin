@@ -221,7 +221,7 @@
         scoreEmail : number = 0;
 
         //사업장 기본 정보
-        saupId: string = ''; //사업자등록번호
+        saupId: any = ''; //사업자등록번호
         //alrSaupId: string = ''; //기 등록된 사업자 번호 여부
         storeNm: string = ''; //사업장명
         repNm: string = ''; //대표자명
@@ -1115,8 +1115,9 @@
                 Vue.swal({text: '사업자등록번호를 입력하세요.'});
                 return;
             }
+
             let regNumber = /^[0-9]*$/;
-            if(!regNumber.test(saupId)){
+            if(!regNumber.test(this.saupId)){
                 Vue.swal({ text: '숫자만가능합니다'});
                 return;
             }
