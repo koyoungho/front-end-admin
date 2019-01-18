@@ -13,82 +13,83 @@
             <!-- //header -->
         </div>
 
-    <!-- container -->
-    <section id="container">
-        <!-- content  -->
-        <div class="content">
-            <h2 class="blind">현금영수증 제도 안내</h2>
+        <!-- container -->
+        <section id="container">
+            <!-- content  -->
+            <div class="content">
+                <h2 class="blind">현금영수증 제도 안내</h2>
 
-            <h3>온라인 가맹점 가입 신청</h3>
+                <h3>온라인 가맹점 가입 신청</h3>
 
-            <p class="sub_text type02">가입하시기 전에 반드시 <a href="#" class="link01" v-on:click="policyDiv('user');">개인정보취급방침</a>을 읽어보신 후 가입신청을 하시기 바랍니다.<br>KT는
-                회원님의 개인정보보호에 최선을 다하고 있으며, 관련법률에 근거하지 않거나 회원님의 동의 없이 기재하신 개인정보가 공개되거나 제3자에게 제공되지 않습니다.<br>자세한 내용은 아래에서 확인하시길
-                바랍니다.</p>
+                <p class="sub_text type02">가입하시기 전에 반드시 <a class="link01" v-on:click="policyDiv('user');">개인정보취급방침</a>을 읽어보신 후 가입신청을 하시기 바랍니다.<br>KT는
+                    회원님의 개인정보보호에 최선을 다하고 있으며, 관련법률에 근거하지 않거나 회원님의 동의 없이 기재하신 개인정보가 공개되거나 제3자에게 제공되지 않습니다.<br>자세한 내용은 아래에서 확인하시길
+                    바랍니다.</p>
 
-            <p class="agree_all"><span class="chk_box"><input type="checkbox" v-model="bb01" id="checkAll" v-on:click="termsAllCheck($event)"><label for="bb01"><em class="fc_pt01">전체동의 하기</em></label></span></p>
-            <!-- agree_box -->
-            <dl class="agree_box">
-                <dt>
-                    <span class="chk_box right"><input type="checkbox"  v-model="aa01" id="aa01" ><label for="aa01">서비스 이용 약관 동의</label></span>
-                </dt>
-                <dd>
-                    <div class="agree_inner">
-                        <template v-for="item in serviceList">
-                            <h3 class="agree">{{item.detTitle}}</h3>
-                            <p class="text" v-html="item.detContent"></p>
-                        </template>
-                    </div>
-                </dd>
-            </dl>
-            <!-- //agree_box -->
+                <p class="agree_all">
+          <span class="chk_box">
+              <input type="checkbox" v-model="checkAll" id="bb01" v-on:click="termsAllCheck($event)"><label for="bb01"><em class="fc_pt01">전체동의 하기</em></label>
+          </span>
+                </p>
+                <!-- agree_box -->
+                <dl class="agree_box">
+                    <dt>
+                        <span class="chk_box right"><input type="checkbox"  v-model="aa01" id="aa01"><label for="aa01">서비스 이용 약관 동의</label></span>
+                    </dt>
+                    <dd>
+                        <div class="agree_inner">
+                            <template v-for="item in serviceList">
+                                <h3 class="agree">{{item.detTitle}}</h3>
+                                <p class="text" v-html="item.detContent"></p>
+                            </template>
+                        </div>
+                    </dd>
+                </dl>
+                <!-- //agree_box -->
 
-            <!-- agree_box -->
-            <dl class="agree_box">
-                <dt>
-                    <span class="chk_box right"><input type="checkbox" v-model="aa02" id="aa02"><label for="aa02">개인정보 수집 및 이용 동의</label></span>
-                </dt>
-                <dd>
-                    <div class="agree_inner">
-                        <template v-for="item in privateList">
-                            <h3 class="agree">{{item.detTitle}}</h3>
-                            <p class="text" v-html="item.detContent"></p>
-                        </template>
-                    </div>
-                </dd>
-            </dl>
-            <!-- //agree_box -->
+                <!-- agree_box -->
+                <dl class="agree_box">
+                    <dt>
+                        <span class="chk_box right"><input type="checkbox" v-model="aa02" id="aa02"><label for="aa02">개인정보 수집 및 이용 동의</label></span>
+                    </dt>
+                    <dd>
+                        <div class="agree_inner">
+                            <template v-for="item in privateList">
+                                <h3 class="agree">{{item.detTitle}}</h3>
+                                <p class="text" v-html="item.detContent"></p>
+                            </template>
+                        </div>
+                    </dd>
+                </dl>
+                <!-- //agree_box -->
 
-            <!-- agree_box -->
-            <dl class="agree_box">
-                <dt>
-          <span class="chk_box right"><input type="checkbox" v-model="aa03" id="aa03" ><label
-                  for="aa03">고객편의 제공을 위한 업무 위탁</label></span>
-                </dt>
-                <dd>
-                    <div class="agree_inner">
-                        고객편의 제공을 위한 업무 위탁 내용입니다.
-                        <br><br><br><br><br><br>
-                        <!--
-                        <template v-for="item in privateList">
-                            <h4 class="agree">{{item.detTitle}}</h4>
-                            <p class="text">{{item.detContent}}</p>
-                        </template>
-                        -->
-                    </div>
-                </dd>
-            </dl>
-            <!-- //agree_box -->
+                <!-- agree_box -->
+                <dl class="agree_box">
+                    <dt>
+                        <span class="chk_box right"><input type="checkbox" v-model="aa03" id="aa03" ><label for="aa03">고객편의 제공을 위한 업무 위탁</label></span>
+                    </dt>
+                    <dd>
+                        <div class="agree_inner">
+                            <p class="text" >
+                                고객편의 제공을 위한 업무 약관 내용<br>
 
-            <!-- btn bot -->
-            <div class="btn_bot">
-                <button type="button" id="" v-on:click="phoneAuth" class="btn_b02 bg01">본인인증</button>
+
+
+                            </p>
+                        </div>
+                    </dd>
+                </dl>
+                <!-- //agree_box -->
+
+                <!-- btn bot -->
+                <div class="btn_bot">
+                    <button type="button" id="" v-on:click="phoneAuth()" class="btn_b02 bg01">본인인증</button>
+                </div>
+
             </div>
-
-        </div>
-        <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
-        <!-- //content -->
-    </section>
-    <!-- //container -->
+            <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
+            <!-- //content -->
+        </section>
+        <!-- //container -->
 
         <footer id="footer">
             <!-- quick banner -->
