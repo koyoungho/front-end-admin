@@ -42,7 +42,7 @@
                     <tr>
                         <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-on:keyup="saupIdChk" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
@@ -55,7 +55,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="number" class="input form_w100"   title="전화번호" v-model="repPhonenum" v-bind:maxlength="'5'">
+                            <input type="text" class="input form_w100"   title="전화번호" v-model="repPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +73,7 @@
                         </td>
                         <template v-if="saupType=='1'">
                         <th scope="row">법인등록번호<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" @input="validationCheck(lawNum,'number')=='N' ? lawNum='' : ''" v-on:keydown="showKeyCode($event)"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13"></td>
                         </template>
                         <template v-else>
                             <th scope="row"></th>
@@ -416,6 +416,30 @@
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
             }
 
+        }
+
+        @Watch('repPhonenum') changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+                if(!regNumber.test(this.repPhonenum)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    this.repPhonenum = '';
+                }
+        }
+
+        @Watch('saupId') changeSaupId(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.saupId)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.saupId = '';
+            }
+        }
+
+        @Watch('lawNum') changeLawNum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.lawNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.lawNum = '';
+            }
         }
 
         //회사코드 등록 팝업

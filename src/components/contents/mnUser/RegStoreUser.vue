@@ -27,7 +27,7 @@
                     <tr>
                         <th scope="row" class="sub_msg01">사업자등록번호<em class="form_req">*</em></th>
                         <td class="con_msg01">
-                            <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId"  @input="validationCheck(saupId,'number')=='N' ? saupId='' : ''"  v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
+                            <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId" v-on:keyup="saupIdChk" v-model="saupId" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" class="btn_s01 bg04" id="btnRegConfirm" v-on:click="saupInfo(saupId)">등록확인</button>
                             <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
@@ -40,7 +40,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" @input="validationCheck(repPhonenum,'number')=='N' ? repPhonenum='' : ''" v-model="repPhonenum" maxlength="12">
+                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="13" v-on:keypress="numberChk($event)"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="13"></td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
@@ -143,7 +143,7 @@
                         <td><input type="text" class="input form_name" title="이름"  v-model="name" maxlength="20"></td>
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호 입력" @input="validationCheck(phoneNum,'number')=='N' ? phoneNum='' : ''" v-model="phoneNum" maxlength="12">
+                            <input type="text" class="input form_w100" title="휴대폰번호 입력" v-model="phoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -383,6 +383,38 @@
             this.idYn = '';
             let idmsg = document.getElementById('id_msg');
             if(idmsg!=null){ idmsg.innerHTML = ''; }
+        }
+
+        /*@Watch('saupId') changeSaupId(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.saupId)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.saupId = '';
+            }
+        }*/
+
+        @Watch('repPhonenum') changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.repPhonenum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.repPhonenum = '';
+            }
+        }
+
+        @Watch('lawNum') changeLawNm(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.lawNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.lawNum = '';
+            }
+        }
+
+        @Watch('phoneNum') changePhoneNum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.phoneNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.phoneNum = '';
+            }
         }
 
         updateScore (data) {
@@ -1084,6 +1116,11 @@
             if(saupId == null || saupId == ''){
                 let saupmsg = document.getElementById('saupid_msg');
                 if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호를 입력하세요'; }
+                return;
+            }
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(saupId)){
+                Vue.swal({ text: '숫자만가능합니다'});
                 return;
             }
 

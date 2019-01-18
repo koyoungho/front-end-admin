@@ -25,7 +25,7 @@
                         <td><input type="text" class="input form_w100" title="이름" disabled="disabled" v-model="account.name" ></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum" @input="validationCheck(account.phoneNum,'number')=='N' ? account.phoneNum='' : ''" maxlength="12">
+                            <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -225,7 +225,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Watch} from "vue-property-decorator";
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
     import {CommonBoardService} from '../../../api/common.service';
     import {Account} from '../../../model/account/account';
@@ -358,6 +358,15 @@
                 }
             }
 
+        }
+
+        @Watch('account.phoneNum') changePhoneNum(){
+            let account : any = this.account;
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(account.phoneNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                account.phoneNum = '';
+            }
         }
 
         // 날짜 포맷
