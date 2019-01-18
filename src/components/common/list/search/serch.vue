@@ -198,6 +198,7 @@
     </div>
     <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
     <GajijumBox v-if="showModal2" v-bind:gajumNum="gajumNo" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
+    <SaupBox v-if="showModal3"  v-on:selectedSaup="setSaupData" @saupClose="showModal3 = false"></SaupBox>
   </div>
 </template>
 
@@ -207,12 +208,13 @@
     import {CommonBoardService} from '../../../../api/common.service';
     import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
     import GajijumBox from '@/components/contents/franchiseManage/GajijumBox.vue'
+    import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
     import  moment from 'moment'
     // see docs for available options
 
     @Component({
         components: {
-            Search,GajiBox,GajijumBox
+            Search,GajiBox,GajijumBox,SaupBox
         }
     })
     export default class Search extends Vue {
@@ -255,6 +257,8 @@
 
         // 가맹점 지점 팝업
         showModal2 : boolean = false;
+        // 사업장 검색 팝업
+        showModal3 : boolean = false;
         gajumNo : string  = ''; //가맹점ID
 
         dateChangeEvent(date){
@@ -268,7 +272,7 @@
         }
 
         popupOpen(){
-            this.showModal1= true;
+            this.showModal3= true;
         }
 
         gajiPopupOpen(event, data){
@@ -427,6 +431,20 @@
                     e.value=data.gajumId;
                 }else if(e.id=='jijumId'){
                     e.value = data.jijumId;
+                }
+            })
+        }
+        // 선택한 사업장 정보검색
+        setSaupData(data) {
+            // this.storeId = data.storeId; // 매장번호 번호
+            // this.saupId = data.saupId; //사업자 번호
+            // this.shopNm = data.shopNm; //가맹점명
+
+            this.searchItem.filter(e=>{
+                if(e.id=='saupId'){
+                    e.value=data.saupId;
+                }else if(e.id=='shopNm'){
+                    e.value = data.shopNm;
                 }
             })
         }

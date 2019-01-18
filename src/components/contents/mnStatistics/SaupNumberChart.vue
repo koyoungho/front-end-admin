@@ -294,7 +294,7 @@
 
         </div>
         <!-- //content -->
-        <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
+        <SaupBox v-if="showModal1"  v-on:selectedSaup="setSaupData" @saupClose="showModal1 = false"></SaupBox>
     </section>
     <!-- //container -->
 </template>
@@ -304,14 +304,14 @@
     import CompCodeChartPop from "@/components/contents/mnStatistics/CompCodeChartPop.vue";
     import {CommonBoardService} from '../../../api/common.service';
     import {CcChart} from '../../../model/chart/compCodeChart';
-    import GajiBox from '@/components/contents/franchiseManage/GajiList.vue'
+    import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
     import moment from 'moment';
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
 
         components: {
-             CompCodeChartPop,GajiBox,VueSimpleSpinner
+             CompCodeChartPop,SaupBox,VueSimpleSpinner
         }
     })
     export default class saupNumberChart extends Vue {
@@ -352,7 +352,7 @@
             this.showModal1= true;
         }
         //선택한 가맹점 정보 셋팅(지점 등록화면 상단의 지점 정보)
-        setGajiData(data) {
+        setSaupData(data) {
               this.saupId=data.saupId
         }
         mounted(){
