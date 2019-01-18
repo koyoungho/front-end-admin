@@ -122,7 +122,11 @@
                 }
         }
         dateCheck(data){
-            if(moment(data).format('YYYYMM') == moment(new Date()).format('YYYYMM')){
+
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+
+            if(moment(data).format('YYYYMM') == moment(nowKo).format('YYYYMM')){
                 this.regShow = false;
             }else{
                 this.regShow = true;

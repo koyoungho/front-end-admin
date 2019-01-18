@@ -35,6 +35,7 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import {format} from 'date-fns';
+    import  moment from 'moment'
 
     @Component({
         components: {
@@ -52,44 +53,15 @@
         originItem: any = {} // 오리지널데이터
         exceptColum: any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
         regbtnShow: boolean = false; //신규등록 버튼 보여주는지 여부
-        setDate = format(new Date(), 'YYYYMMDD');
-        listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
-            {
-                dataGrid: {
-                    columControl: [  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName: '순번', id: 'rnum', type: 'number',width: '8%',height: '', size: '', mobile: 'N', cols: '', rows: '', rowColors: ''},
-                        //{columName: '회사코드', id: 'subSaup', type: 'text', width: '10%', height: '', size: '', mobile: 'N', cols: '',rows: '' },
-                        //{columName: '회사명', id: 'shopNm', type: 'text', width: '18%', height: '', size: '', mobile: 'N', cols: '', rows: '', colColors: 'color: #008aff'},
-                        {columName: '승인코드', id: 'aprvCode', type: 'text', width: '12%', height: '', size: '', mobile: 'N', cols: '', rows: '' , colColors: 'color: #008aff'},
-                        {columName: '승인대역(시작)',id: 'aprvFrom',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '승인대역(끝)', id: 'aprvTo', type: 'text', width: '12%', height: '', size: '', mobile: 'N', cols: '', rows: ''},
-                        {columName: '단일최대건수',id: 'perCount',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '등록일',id: 'regDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                        {columName: '수정일',id: 'updDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
-                    ],
-                    totalColum: 9,
-                    apiUrl: 'approvalband/range',
-                    onLoadList: true,  // onLoad 로딩 유무
-                    //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
-                    //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
-                    //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
-                },
-                // 아이디는 실제 컬럼값을 넣어주면됩니다.
-                search: [
-                    {type: 'date2', title :'등록일', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                    //{type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',title: '승인코드',id: 'aprvCode',name: 'aprvCode',value: '',api: 'code/aprvcode', option: [{name: '', value: ''}]},
-                    // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
-                    // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
-                ],
-                paging: {currentPage: 1, lastPage: 0, viewPageSize: 10, totalRecords: 0, from: 0, to: 0, perPage: 10},
-                goSearch: "iocSearch",
-                searchClass: 'search_box page_store05',
-                searchClass2: 'search_list'
-            }
+        listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
+
 
         //돔생성전 호출자
         created() {
+
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -105,6 +77,40 @@
                 }
             }
             console.log('승인대역 범위 등록 권한 확인 ?? :: ' + this.regbtnShow)
+            this.listItem=
+            {
+                dataGrid: {
+                    columControl: [  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                        {columName: '순번', id: 'rnum', type: 'number',width: '8%',height: '', size: '', mobile: 'N', cols: '', rows: '', rowColors: ''},
+                        //{columName: '회사코드', id: 'subSaup', type: 'text', width: '10%', height: '', size: '', mobile: 'N', cols: '',rows: '' },
+                        //{columName: '회사명', id: 'shopNm', type: 'text', width: '18%', height: '', size: '', mobile: 'N', cols: '', rows: '', colColors: 'color: #008aff'},
+                        {columName: '승인코드', id: 'aprvCode', type: 'text', width: '12%', height: '', size: '', mobile: 'N', cols: '', rows: '' , colColors: 'color: #008aff'},
+                        {columName: '승인대역(시작)',id: 'aprvFrom',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '승인대역(끝)', id: 'aprvTo', type: 'text', width: '12%', height: '', size: '', mobile: 'N', cols: '', rows: ''},
+                        {columName: '단일최대건수',id: 'perCount',type: 'text',width: '12%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '등록일',id: 'regDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                        {columName: '수정일',id: 'updDt',type: 'text',width: '8%',height: '',size: '',mobile: 'N',cols: '',rows: ''},
+                    ],
+                        totalColum: 9,
+                        apiUrl: 'approvalband/range',
+                        onLoadList: true,  // onLoad 로딩 유무
+                    //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                    //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
+                    //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
+                },
+                // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                search: [
+                    {type: 'date2', title :'등록일', id: 'date', name:'date', searchStartDate: [beforeOneDKo,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                    //{type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
+                    {type: 'selectCode',title: '승인코드',id: 'aprvCode',name: 'aprvCode',value: '',api: 'code/aprvcode', option: [{name: '', value: ''}]},
+                    // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
+                    // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
+                ],
+                    paging: {currentPage: 1, lastPage: 0, viewPageSize: 10, totalRecords: 0, from: 0, to: 0, perPage: 10},
+                goSearch: "iocSearch",
+                    searchClass: 'search_box page_store05',
+                searchClass2: 'search_list'
+            }
 
         }
 

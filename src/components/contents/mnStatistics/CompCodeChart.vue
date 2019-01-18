@@ -331,7 +331,7 @@
         upjongCodeList : any = "";  //  업종코드
         upjongCode : string = "";
         popupYn:boolean =false;
-        searchStartDate = [new Date() , new Date()];
+        searchStartDate: any= [];
         searchEndDate = "";
         dateOne: any =  "";
         dateTwo: any =  "";
@@ -365,7 +365,13 @@
         }
 
 
-        created(){ // api 데이터
+        created(){
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+
+            this.searchStartDate =[nowKo, nowKo]
+
+            // api 데이터
             // this.searchStartDate =  this.nowDate
             // this.searchEndDate =  this.nowDate
             this.companyList()

@@ -36,7 +36,7 @@
     export default class ReceiptViewCancel extends Vue {
         // 리스트 변수
         listOn : boolean = true;
-        setDate =  format(new Date(),'YYYYMMDD')
+        // setDate =  format(new Date(),'YYYYMMDD')
         titles: string = '발급조회 및 취소'; // 제목
         subTitle: string = '발급 내역 조회/취소'; //서브타이틀
         windowResize : boolean = false; // 리사이즈
@@ -49,8 +49,15 @@
         listData:any ={};
         shopNm:any ="";
         show : boolean = true;
+        nowKo_str: any ='';
 
         created(){
+
+            const  nowUTC =  moment().utc() ; //UTC시간
+            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
+
+            this.nowKo_str =  this.formatDates(nowKo);
 
             if(this.role == '0001' || this.role == '0002' || this.role == '0003'){
                 this.onLoadListView = false;
@@ -93,7 +100,7 @@
                         {type: 'select' ,class:'w30', title :'거래구분',id: 'trgu', name:'trgu' , value: '0' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
                         {type: 'select2' ,class:'w30', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'approval' , option : [{ name : '거래일' , value: 'approval' },{ name : '취소일' , value: 'cancel' }] },
-                        {type: 'date2',class:'w25 text_left', title :'', id: 'date', name:'date', searchStartDate: [new Date(),new Date()] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'date2',class:'w25 text_left', title :'', id: 'date', name:'date', searchStartDate: [beforeOneDKo, nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                         {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
                         {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                     ],
@@ -122,12 +129,6 @@
 
         downExel(){
 
-            const  nowUTC =  moment().utc() ; //UTC시간
-            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
-            const nowKo_str =  this.formatDates(nowKo);
-
-            console.log(this.listItem.search);
-
             let reqData ={}
 
             reqData['currentPage'] =  this.listItem.paging.currentPage ;//검색페이지
@@ -140,20 +141,18 @@
             reqData['trgu'] =this.listItem.search[4].value; //거래구분(승인 : 0 , 취소 : 1)
             reqData['onlineYn']= this.listItem.search[5].value;//온라인여부(온라인 : Y, 오프라인 : N)
             reqData['searchDateType']= this.listItem.search[6].value;//검색일 종류
-            reqData['searchEndDate ']=this.listItem.search[7].searchStartDate[0];//검색 종료일
-            reqData['searchStartDate']= this.listItem.search[7].searchStartDate[1];//검색 시작일
+            reqData['searchEndDate']=this.formatDates(this.listItem.search[7].searchStartDate[0]);//검색 종료일
+            reqData['searchStartDate']= this.formatDates(this.listItem.search[7].searchStartDate[1]);//검색 시작일
             reqData['searchType'] =this.listItem.search[8].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
             reqData['searchWord'] =this.listItem.search[9].value;//검색어
 
-            console.log(this.listItem.search[5].value);
-
-            let fileOrigin = "cash_history_"+nowKo_str+".xls"
+            let fileOrigin = "cash_history_"+this.nowKo_str+".xlsx"
 
             axios({
                 url: environment.apiUrl + "/receipt/excel",
                 method: 'GET',
                 responseType : 'blob', // important
-                data : reqData,
+                params : reqData,
                 headers : { "x-auth-token" : sessionStorage.accessToken }
             }).then((response) => {
                 // It is necessary to create a new blob object with mime-type explicitly set
