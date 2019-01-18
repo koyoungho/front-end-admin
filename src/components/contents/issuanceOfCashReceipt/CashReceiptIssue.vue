@@ -53,7 +53,7 @@
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
                                 </template>
                             </select>
-                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20" id="confirmID">
+                            <input type="text" class="input form_userint" title="고객신분 입력" v-model="confirm" maxlength="20" id="confirmID" @input="validationCheck(confirm,'number')=='N' ? confirm='' : ''">
                         </td>
 
                     </tr>
@@ -525,15 +525,16 @@
                 return;
             }
             if(this.totalAmt.length > 1 && this.totalAmt.indexOf('0') == 0){
-                alert('거래금액을 바르게 입력하세요.');
+                //alert('거래금액을 바르게 입력하세요.');
+                Vue.swal({text: '거래금액을 바르게 입력하세요.'});
                 return;
             }
             if(this.bong == ''){
-                Vue.swal({text: '봉사료를 입력하세요.'});
-                return;
+                this.bong = 0;
             }
             if(this.bong.length > 1 && this.bong.indexOf('0') == 0){
-                alert('봉사료를 바르게 입력하세요.');
+                //alert('봉사료를 바르게 입력하세요.');
+                Vue.swal({text: '봉사료를 바르게 입력하세요.'});
                 return;
             }
 
