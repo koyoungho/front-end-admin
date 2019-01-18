@@ -1105,12 +1105,16 @@
             let regNumber = /^[0-9]*$/;
             let check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
             if(type=='number'){
-                if(!regNumber.test(val) || check.test(val)){
+                if(check.test(val)){
                     Vue.swal({ text: '숫자만가능합니다'});
-                    return "Y";
+                    return "N";
                 }
-                else {
-                    return 'N';
+                else if(!regNumber.test(val)){
+                    Vue.swal({ text: '숫자만가능합니다'});
+                    return "N";
+                }
+                else{
+                    return "Y"
                 }
             }
             else{
