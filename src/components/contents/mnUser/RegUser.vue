@@ -71,7 +71,7 @@
                         <td colspan="3">
                             <ul class="address_list">
                                 <li class="con01">
-                                    <input type="text" class="input form_post" title="우편번호" v-model="zipCode">
+                                    <input type="text" class="input form_post" title="우편번호" v-model="zipCode" disabled="disabled">
                                     <button type="button" id="" class="btn_s01 bg03" @click="addressBoxOn">우편번호</button>
                                 </li>
                                 <li class="con02">
@@ -650,6 +650,7 @@
             //let regNm = this.name;
             let imgsrc = environment.imgApiUrl+"/img/img_logo.07141310.png"; //로고
             let siteUrl = environment.imgApiUrl;
+            let termsUrl = environment.imgApiUrl+"/#/termsCheck?id="+this.id; //약관동의 링크에 id 포함
 
             let mailMessage : string = ''; //메일 메시지 내용
             mailMessage = "<html lang=\"ko\">\n" +
@@ -707,7 +708,7 @@
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a :href="+siteUrl+" target=\"_blank\" style=\"color:#008aff;\">+siteUrl+</a> (패스워드 변경 주소링크)</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 등록 링크 주소 :  <a :href="+termsUrl+" target=\"_blank\" style=\"color:#008aff;\">"+termsUrl+"</a> (패스워드 등록 주소링크)</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
