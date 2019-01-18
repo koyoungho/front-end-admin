@@ -601,12 +601,6 @@
                 }, 100)
 
             })
-
-
-
-
-
-            Vue.swal({text:"다운로드 준비중입니다."})
         }
 
         validationCheck(val,type){
