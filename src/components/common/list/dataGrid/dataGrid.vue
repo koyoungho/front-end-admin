@@ -178,7 +178,7 @@
                   </template>
                   <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
                     <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
-              </template>
+                 </template>
 
               </template>
               <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
@@ -616,16 +616,16 @@
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
                     let result : any = '';
 
-                    if(response.data.data.length > 0 || response.data.length > 0){
                     if(response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
-                        result = response.data;
+                        result = response.data  // 페이징있는것들
                     }else{
-                        result = response;
-
+                        result = response.data;   // 페이징 없음 로우데이터만있음
                     }
+
 
                     this.listData = [];
                     this.checkBoxDatas=[];
+
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
                         this.mTotalCount = (result.extra.totalAmt).toLocaleString();
@@ -662,12 +662,12 @@
 
                     let nowData :any = []
 
-
                     if(result.data){
                         nowData = result.data;
                     }else{
                         nowData = result
                     }
+
 
                     if (nowData.length > 0 ) { // 데이터 키맵에 맞게 매핑하기
                         nowData.filter((e,indexs) => {
@@ -727,8 +727,6 @@
 
                         });
                       }
-                    }
-
                     else {
                     }
                     if(result.totalRecords){
