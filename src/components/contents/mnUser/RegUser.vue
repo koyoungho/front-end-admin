@@ -46,11 +46,11 @@
                         <td>
                             <select id="" name="" class="select form_w100" title="계정등급" v-model="accountLevel">
                                 <option value="">선택</option>
-                                <option value="0001">시스템관리자</option>
-                                <option value="0002">현금영수증사업자</option>
-                                <option value="0003">콜센터관리자</option>
-                                <option value="0004">가맹점관리자</option>
-                                <option value="0005">지점관리자</option>
+                                <!--<option value="0001">시스템 관리자</option>-->
+                                <option value="0002">사업자 관리자</option>
+                                <option value="0003">콜센터 관리자</option>
+                                <option value="0004">가맹점 관리자</option>
+                                <option value="0005">지점 관리자</option>
                                 <!--<option value="0006">매장관리자</option>-->
                             </select>
                         </td>

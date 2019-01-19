@@ -689,7 +689,13 @@
                         //계정 수정 완료
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnUserList'})
-                        this.$router.push('/home/mnUser');
+
+                        Vue.swal({text:'변경이 정상 처리 되었습니다.' }).then((result) => {
+                            // 리스트로 이동
+                            this.$router.push('/home/mnUser');
+                        });
+
+
                     } else {
                         Vue.swal({text:'계정 정보 수정에 실패하였습니다. 다시 시도하세요.'});
                         return;
@@ -699,7 +705,7 @@
                     //console.log(error);
                 }
             ).catch((response) => {
-                //console.log(response);
+                console.log("ㅁㅁㅁㅁ",response);
             });
 
 
