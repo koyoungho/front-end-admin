@@ -40,7 +40,7 @@
                     <!-- btn area -->
                     <div class="btn_area">
                         <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelPass">취소</button>
-                        <button type="button" id="" class="btn_b01 bg01" v-on:click="insertInfo">등록</button>
+                        <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">등록</button>
                     </div>
                 </div>
                 <!-- //login_box -->
@@ -137,17 +137,40 @@
             */
         }
 
-        insertInfo() {
-            if(this.password == ''){
+        validationChk() {
+            if (this.password == '') {
                 alert('비밀번호를 입력하세요.');
                 return;
-            }else if(this.conPassword == '') {
+            } else if (this.conPassword == '') {
                 alert('비밀번호 확인을 입력하세요.');
                 return;
-            }else if(this.password != this.conPassword){
+            } else if (this.password != this.conPassword) {
                 alert('비밀번호를 확인하세요.');
                 return;
             }
+
+            let reqData: any = {};
+            reqData['checkString'] = this.password; //변경 패스워드
+            reqData['checkSum'] = this.id; //ID
+
+            // api 데이터 호출
+            CommonBoardService.postListDatas('validation/passwd', null, reqData).then((response) => {
+                    let result: any = response.data;
+                    if (result.code == '000') {
+                        this.passChange();
+                    } else {
+                        //alert(result.message); //alert 메시지
+                        this.valueChecks = result.message;
+                        return;
+                    }
+                }
+            ).catch((response) => {
+                //console.log('response code check!!');
+                this.valueChecks = response.data.message;
+            });
+        }
+
+        passChange() {
 
             let reqData : any = { id : this.id, newPass : this.password };
 
@@ -156,6 +179,7 @@
                     console.log(response)
                     if (response.status == 200) {
                         alert('비밀번호 등록이 완료되었습니다')
+                        this.termsAgree(); //약관동의 호출
                         this.$router.push({name:'login'})
                     } else {
                         alert(response.data.message);
@@ -173,6 +197,26 @@
                 this.valueChecks = response.data.message;
                 //this.passChk = false;
                 //alert('비밀번호 변경중 오류가 발생하였습니다.\n다시 시도하세요.')
+            });
+        }
+
+        termsAgree(){
+            // api 데이터 호출
+            CommonBoardService.postListData('accounts',this.id+'/terms', null).then((response) => {
+                    console.log(response)
+                    if (response.status == 200 || response.status == 200) {
+                        console.log('약관동의 완료')
+
+                        //this.$router.push({name:'login'})
+                    } else {
+                        console.log(response)
+                        return;
+                    }
+                }
+                , (error) => {
+                    console.log(error)
+                }
+            ).catch((response) =>  {
             });
         }
 
