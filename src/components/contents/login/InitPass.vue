@@ -74,6 +74,10 @@
                             </ul>
                         </ul>&nbsp;
                         <p class="info_msg fc_pt01">{{valueChecks}}</p>
+                        <p style="text-align: left">
+                            * 비밀번호는 (숫자+문자 등 2가지 조합의 경우 10자리) <br>
+                            또는 (숫자+문자+특수문자 등 3가지 조합의 경우 8자리)로 만들어 주세요
+                        </p>
                     </fieldset>
                     <!-- btn area -->
                     <div class="btn_area">
