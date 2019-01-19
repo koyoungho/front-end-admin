@@ -19,9 +19,9 @@
             <div class="content">
                 <h2 class="blind">현금영수증 제도 안내</h2>
 
-                <h3>온라인 가맹점 가입 신청</h3>
+                <h3>현금영수증 서비스 약관 동의</h3>
 
-                <p class="sub_text type02">가입하시기 전에 반드시 <a class="link01" v-on:click="policyDiv('user');">개인정보취급방침</a>을 읽어보신 후 가입신청을 하시기 바랍니다.<br>KT는
+                <p class="sub_text type02">현금영수증 서비스를 사용하시기전 아래 약관을 읽어보신 후 서비스 약관에 동의하여 주시기 바랍니다.<br>KT는
                     회원님의 개인정보보호에 최선을 다하고 있으며, 관련법률에 근거하지 않거나 회원님의 동의 없이 기재하신 개인정보가 공개되거나 제3자에게 제공되지 않습니다.<br>자세한 내용은 아래에서 확인하시길
                     바랍니다.</p>
 
@@ -70,7 +70,7 @@
                     <dd>
                         <div class="agree_inner">
                             <p class="text" >
-                                고객편의 제공을 위한 업무 약관 내용<br>
+                                고객편의 제공을 위한 업무 위탁 내용<br>
 
 
 
@@ -143,12 +143,24 @@
         aa01: boolean = false;
         aa02: boolean = false;
         aa03: boolean = false;
+        checkAll: boolean = false;
 
         serviceList : any = {};
         privateList : any = {};
         customerList : any = {};
 
+        paramId : any = '';
+
         created(){
+
+            this.paramId = this.$route.query.id; //url로 들어온 id값 받기
+
+            console.log("들어온 Id 확인");
+            console.log(this.paramId)
+            if(this.paramId == null || this.paramId == ''){
+                alert('잘못된 접근입니다.')
+                this.$router.push('/login');
+            }
 
             this.getTerms('site'); //서비스 이용 약관
             this.getTerms('user'); //개인정보 수집 및 이용동의
@@ -214,19 +226,19 @@
                 return;
             }
 
-            this.showConfirm = true; //본인인증 화면 보이기
+//            this.showConfirm = true; //본인인증 화면 보이기
 
-            // let reqData: any = {};
-            // reqData['birthday'] = '20010101'; //생년월일
-            // reqData['gender'] = '0'; //성별
-            // reqData['name'] = '김창현'; //이름
-            // reqData['phoneNum'] = '01027047329'; //전화번호
-            // reqData['id'] = 'test123'; //아이디
+             let reqData: any = {};
+             reqData['birthday'] = '20010101'; //생년월일
+             reqData['gender'] = '0'; //성별
+             reqData['name'] = '금나래'; //이름
+             reqData['phoneNum'] = '01027047329'; //전화번호
+             reqData['id'] = 'keumnara12'; //아이디
             //
-            // this.$router.push({name:"regPass", params:{ reqParams : reqData }});
+             this.$router.push({name:"regPass", params:{ reqParams : reqData }});
 
             //약관동의
-            CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
+            /*CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
                     if (response.status == 200 || response.status == 200) {
                         //alert('변경이 완료되었습니다')
                         this.$router.push({name:'main'})
@@ -237,7 +249,7 @@
                 }
             ).catch((response) =>  {
 
-            });
+            });*/
         }
 
         top(){
@@ -269,7 +281,7 @@
                     //console.log('본인인증 후 값 넘기기전')
                     console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
 
-                    this.$router.push({name:"RegPass", params:{ reqData }});
+                    this.$router.push({name:"regPass", params:{ reqData }});
                 }
                 else {
 
