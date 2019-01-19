@@ -622,8 +622,6 @@
             return moment(date, 'YYYYMMDDHHmmss').format('YYYYMMDD')
         }
 
-
-
     }
 
 
