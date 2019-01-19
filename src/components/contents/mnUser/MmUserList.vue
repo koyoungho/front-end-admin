@@ -191,12 +191,13 @@
 
                 }
 
-            }else if(data.key=='accountStatus' && data.row.accountStatus == '0'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
+            }else if(data.key=='status' && data.row.status == '0'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
                 this.fileDownLoad(data)
             }
 
         }
         fileDownLoad(data){
+            alert('1');
             if(data.row.saupFileNm == null || data.row.saupFileNm == ''){
                 Vue.swal({text: '사업자등록증 파일이 없습니다.'});
                 return;

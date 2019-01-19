@@ -16,6 +16,8 @@ export class Account { // 계정정보
     password : string = "";
     passwordConfirm : string = "";
     regDt : string = "";
+    status : string = "";
+    statusNm : string ="";
 }
 
 
