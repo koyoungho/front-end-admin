@@ -5,19 +5,19 @@
     <div v-bind:class="searchStyle" v-if="searchItem.length > 0">
       <!--{{searchItemDetail}}-->
       <ul v-bind:class="searchStyle2">
-        <template v-for="item in searchItem">
+        <template v-for="item,index in searchItem">
 
           <template v-if="item.type=='date2'" >
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==1">
-                <span class="form_cal">
+                <span class="form_cal" >
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
                              :first-day-of-week="1"  :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
               <template v-else="item.calenderCount==2">
-                <span class="form_cal">
+                <span class="form_cal" @click="setDate(index)">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
                              :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
@@ -282,6 +282,12 @@
             this.showModal2= true;
         }
 
+        setDate(index){
+            if(this.searchItem[index].setDates.length > 0 ){
+            this.searchItem[index].searchStartDate = this.searchItem[index].setDates
+            }
+        }
+
         created() {
 
             const  nowUTC =  moment().utc() ; //UTC시간
@@ -403,7 +409,7 @@
                     if(e.disable == true) { //로그인 권한에 따라 변경하지 못하는 값
                     }else{
                         e.value="";
-                        e.searchStartDate = this.formatDates( this.nowDate);
+                        e.searchStartDate = [];
                         e.searchEndDate =this.formatDates( this.nowDate);
                     }
                 }
