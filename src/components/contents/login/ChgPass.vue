@@ -32,7 +32,7 @@
                 </p>
                 <!-- btn area -->
                 <div class="btn_area">
-                    <button type="button" v-on:click="nextChange()" id="" class="btn_b01 bg02">다음에 변경</button>
+                    <!--<button type="button" v-on:click="nextChange()" id="" class="btn_b01 bg02">다음에 변경</button>-->
                     <button type="button" v-on:click="passwordChk()" id="" class="btn_b01 bg01">변경</button>
                 </div>
             </div>
