@@ -39,6 +39,7 @@
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
         regShow : boolean = false; //신규등록 버튼 보여주는지 여부
         searchGbn : any = '';
+        onLoadListView : boolean = false;
 
         soluVal : string = ''; //현금영수증사업자
         soluDis : boolean = false;
@@ -59,6 +60,9 @@
             //console.log('세션 정보 확인!!')
             //console.log(sessionStorage)
 
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.onLoadListView = true;
+            }
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
@@ -73,7 +77,7 @@
                         ],
                         totalColum: 9,
                         apiUrl : 'gajum',
-                        onLoadList : true,  // onLoad 로딩 유무
+                        onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                         //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
                         //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
@@ -111,7 +115,9 @@
                 }
             }
             console.log('등록 권한 확인 ?? :: ' + this.regShow)
-
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.listItem.search  = this.$store.state.searchList.listDt
+            }
 
         }
 

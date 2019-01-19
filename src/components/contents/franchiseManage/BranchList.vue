@@ -45,7 +45,7 @@
         soluDis : boolean = false; //disabled 여부
         gajumVal : string = ''; //가맹점
         gajumDis : boolean = false; //disabled 여부
-        onLoadListView :boolean = true;
+        onLoadListView :boolean = false;
 
         listItem: any = []
 

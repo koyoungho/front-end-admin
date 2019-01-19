@@ -58,11 +58,13 @@
                         <td>
                             <select id="" name="" class="select form_w100" title="계정상태" v-model="accountStatus" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="0">정상</option>
-                                <option value="1">승인대기</option>
+                                <option value="0">승인대기</option>
+                                <option value="1">정상</option>
                                 <option value="2">해지대기</option>
-                                <option value="3">사용중지</option>
-                                <option value="4">해지</option>
+                                <option value="3">해지</option>
+                                <option value="4">잠금</option>
+                                <option value="5">휴먼</option>
+                                <option value="6">사용중지</option>
                             </select>
                         </td>
                     </tr>
@@ -502,7 +504,7 @@
             reqData['id'] = this.id;
             reqData['email'] = this.email;
             reqData['role'] = this.accountLevel; //계정등급
-            reqData['accountStatus'] = this.accountStatus; //계정상태
+            reqData['status'] = this.accountStatus; //계정상태
             reqData['zipCode'] = this.zipCode;
             reqData['addr1'] = this.addr1;
             reqData['addr2'] = this.addr2;

@@ -54,13 +54,15 @@
                         </td>
                         <th scope="row">계정상태</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정상태" v-model="account.accountStatus">
+                            <select id="" name="" class="select form_w100" title="계정상태" v-model="account.status">
                                 <option value="">선택</option>
-                                <option value="0">정상</option>
-                                <option value="1">승인대기</option>
-                                <option value="2">사용중지</option>
+                                <option value="0">승인대기</option>
+                                <option value="1">정상</option>
+                                <option value="2">해지대기</option>
                                 <option value="3">해지</option>
-                                <option value="4">해지신청</option>
+                                <option value="4">잠금</option>
+                                <option value="5">휴먼</option>
+                                <option value="6">사용중지</option>
                             </select>
                         </td>
                     </tr>
@@ -530,7 +532,7 @@
             }else if(account.role == '' || account.role == null){
                 Vue.swal({text:'계정등급을 선택하세요.'});
                 return;
-            }else if(account.accountStatus == '' || account.accountStatus == null){
+            }else if(account.status == '' || account.status == null){
                 Vue.swal({text:'계정상태를 선택하세요.'});
                 return;
             //}else if(account.telNum == '' || account.telNum == null){
@@ -585,7 +587,7 @@
             reqData['email'] = account.email;
             reqData['role'] = account.role; //계정등급
             reqData['oldRole'] = this.oldRole; //이전계정등급
-            reqData['accountStatus'] = account.accountStatus; //계정상태
+            reqData['status'] = account.status; //계정상태
             reqData['telNum'] = account.telNum;
             reqData['zipCode'] = account.zipCode;
             reqData['addr1'] = account.addr1;
