@@ -69,11 +69,11 @@
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '순번' ,id : 'rnum',type:'number', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                             {columName : '사업장명' ,id : 'shopNm',type:'text', width : '24%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                            {columName : '사업자등록번호' ,id : 'saupId',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '사업자등록번호' ,id : 'saupId',type:'bizNum', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '가맹점번호' ,id : 'gajumId',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '가맹점상태' ,id : 'gajumStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
                             {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '등록일' ,id : 'regiDate',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}
+                            {columName : '등록일' ,id : 'regiDate',type:'date', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat: 'YYYY.MM.DD' }
                         ],
                         totalColum: 9,
                         apiUrl : 'gajum',

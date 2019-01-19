@@ -23,11 +23,16 @@
               <div class="cert_box">
                 <p class="form_cert row01">
                   <input type="text" id="" name="" size="" maxlength="" autofocus="autofocus" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber" v-on:keyup.enter="optCallConfirm(otpNumber)">
-                  <span class="time_count2">{{message}}</span>
-                  <button type="button" id="" class="btn_m01 bg01" @click="optCallConfirm(otpNumber)">인증번호 확인</button>
+                  <span class="time_count2" style="right: 228px">{{message}}</span>
+                  <a><span style="margin-left: 10px" v-on:click="reTrans">재전송</span></a>
                 </p>
               </div>
-            </div>
+              <div class="cert_box">
+                <p class="form_cert row01">
+                  <button type="button" class="btn_m01 bg01" @click="optCallConfirm(otpNumber)">인증번호 확인</button>
+                </p>
+              </div>
+          </div>
             <!-- //login_box -->
           </div>
         </div>
@@ -112,15 +117,15 @@
             }
 
             let otp = {
-                id: "",
-                name: this.inputName,
-                saupId:this.saupId,
-                phoneNum : this.phoneNum
-            }
-            CommonBoardService.postListDatas('otp',null,otp)
-                .then(result => {
-                    if(result.data.code=='000'){
-                        this.startTimer();
+                        id: "",
+                        name: this.inputName,
+                        saupId:this.saupId,
+                        phoneNum : this.phoneNum
+                      }
+                      CommonBoardService.postListDatas('otp',null,otp)
+                              .then(result => {
+                                if(result.data.code=='000'){
+                                  this.startTimer();
                     }
                     else{
                         clearInterval(this.interval)
@@ -234,6 +239,29 @@
 
             sessionStorage.clear();
         }
+
+      reTrans(){
+        let otp = {
+          id: this.loginId,
+          name: this.inputName,
+          saupId:this.saupId,
+          phoneNum : this.phoneNum
+        }
+
+        console.log(this.loginId);
+        CommonBoardService.postListDatas('otp',null,otp)
+                .then(result => {
+                  if(result.data.code=='000'){
+                    this.startTimer();
+                  }
+                  else{
+                    clearInterval(this.interval)
+                  }
+
+                }).catch(e=>{
+          alert('본인인증정보가 불일치합니다')
+        })
+      }
 
 
 

@@ -340,6 +340,10 @@
                 Vue.swal({text: '아이디를 입력하세요.'});
                 return;
             }
+            if(this.noHangle(this.id ) == true ) {
+                Vue.swal({text: 'ID는 한글이 입력되지 않습니다.'});
+                return;
+            }
 
             let id_msg = document.getElementById('id_msg');
 
@@ -457,6 +461,9 @@
                 return;
             }else if(this.email == ''){
                 Vue.swal({text: '이메일 주소를 입력하세요.'});
+                return;
+            }else if(! this.email_check(this.email)){
+                Vue.swal({text: '이메일 형식에 맞지 않습니다.'});
                 return;
             }else if(this.accountLevel == ''){
                 Vue.swal({text: '계정등급을 확인하세요.'});
@@ -766,6 +773,19 @@
             }
             else{
             }
+        }
+
+        //메일 주소 정규표현식 체크
+        email_check( email ) {
+            var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return (email != '' && email != 'undefined' && regex.test(email));
+        }
+
+        noHangle(val){
+            var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+            let check_boolean = check.test(val);
+
+            return check_boolean;
         }
 
 

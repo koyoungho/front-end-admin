@@ -2,7 +2,7 @@
     <!-- container -->
     <section id="container">
 
-        <h2 class="login">비밀번호 변경</h2>
+        <h3 class="login">비밀번호 변경</h3>
 
         <!-- login wrap  -->
         <div class="login_wrap">
@@ -26,6 +26,10 @@
                         </li>
                     </ul>
                 </fieldset>
+                <p style="text-align: left">
+                    * 비밀번호는 (숫자+문자 등 2가지 조합의 경우 10자리) <br>
+                    또는 (숫자+문자+특수문자 등 3가지 조합의 경우 8자리)로 만들어 주세요
+                </p>
                 <!-- btn area -->
                 <div class="btn_area">
                     <button type="button" v-on:click="nextChange()" id="" class="btn_b01 bg02">다음에 변경</button>

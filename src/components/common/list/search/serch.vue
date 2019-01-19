@@ -386,17 +386,45 @@
                 }
             })
             if( checkYn=='N'){
-                alert('오류발생월을 입력해주세요')
+              Vue.swal({text:"오류발생월을 입력해주세요"})
             }else{
                 let name = this.$route.name
                 let object :Object= this.searchItem
-                let menu = {menuId: name ,listDt : object}
-                this.$store.commit('SEARCHLISTINPUT', {menu})
-                this.$emit('SearchToList', this.searchItem);
 
-                this.$store.commit('SEARCHLISTOUT')
+                const  beforeOneY = moment(this.nowDate).subtract(1, 'years');//1년전 날짜
+                if(name == 'receiptViewCancel') {//발급내역조회
 
-                // console.log(this.$store.dispatch('GET', {menu}))
+                  const searchEndDate = this.formatDates(object[7].searchStartDate[1]);
+                  const searchStartDate = this.formatDates(object[7].searchStartDate[0]);
+                  const range = moment(searchStartDate).isBetween(beforeOneY, this.nowDate); // true
+
+                  if (range == false) {
+                    Vue.swal({text:"현재일 기준 최대 검색가능기간은 1년이며 3개월 범위로 조회 가능합니다."})
+                  } else {
+                      const endDateBeforeThreeM = moment(searchEndDate).subtract(3, 'months');// 3개월 전 날짜
+                      const rangeLimit = moment(searchStartDate).isBetween(endDateBeforeThreeM, searchEndDate); // true
+
+                      if (rangeLimit == true || (searchEndDate == searchStartDate)) {
+
+                        let name = this.$route.name
+                        let object: Object = this.searchItem
+                        let menu = {menuId: name, listDt: object}
+                        this.$store.commit('SEARCHLISTINPUT', {menu})
+                        this.$emit('SearchToList', this.searchItem);
+
+                        this.$store.commit('SEARCHLISTOUT')
+                      } else {
+                        Vue.swal({text:"검색가능기간은 3개월입니다."})
+                      }
+                  }
+                }else{//다른 페이지
+
+                  let menu = {menuId: name ,listDt : object}
+                  this.$store.commit('SEARCHLISTINPUT', {menu})
+                  this.$emit('SearchToList', this.searchItem);
+
+                  this.$store.commit('SEARCHLISTOUT')
+                }
             }
 
         }
