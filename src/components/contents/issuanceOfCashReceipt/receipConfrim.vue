@@ -385,7 +385,7 @@
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#fafafa; text-align: left;\">사업자등록번호</th>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.ResultViewRowItem.saupId + "</td>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.saupnoFormat(this.ResultViewRowItem.saupId) + "</td>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#fafafa; text-align: left;\">사업장전화번호</th>\n" +
@@ -495,7 +495,7 @@
         }
 
         saupnoFormat(val) {
-            return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+            return String(val).substring(0, 3) + '-' + String(val).substring(3, 5) + '-' + String(val).substring(5, 10);
         }
 
     }
