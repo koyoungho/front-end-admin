@@ -14,9 +14,9 @@
                 <!-- popup content -->
                 <div class="popup_content page_cash01">
                     <!-- tbl grid wrap -->
-                    <div class="tbl_grid_wrap">
+                    <div class="tbl_grid_wrap print_area">
                         <!-- tbl grid01 -->
-                        <table class="tbl_grid01 print_area">
+                        <table class="tbl_grid01">
                             <caption>현금영수증</caption>
                             <colgroup>
                                 <col class="col_mob" width="50%">

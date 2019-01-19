@@ -6,7 +6,7 @@
         <div class="content">
             <h2 class="blind">현금영수증 발급</h2>
 
-            <h3>현금영수증 (소득공제)</h3>
+            <h3 class="no_print">현금영수증 (소득공제)</h3>
 
             <!-- tbl grid wrap -->
             <div class="tbl_grid_wrap">
