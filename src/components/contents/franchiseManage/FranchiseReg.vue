@@ -615,7 +615,7 @@
                     if (result != null) {
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
-                        this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
                     } else {
                         //if(saupmsg != null){
@@ -681,6 +681,9 @@
 
             if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
+                return;
+            }else if(this.saupIdYn  == ''){
+                alert('사업자등록번호 중복확인을 해주세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
