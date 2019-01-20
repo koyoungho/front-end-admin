@@ -204,8 +204,6 @@
             //보안로직포함할곳
             this.$store.dispatch('LOGIN', {id, password})
                 .then((result) => {
-                    console.log('로그인 확인 여부');
-                    console.log(result);
                     if (result == 'success') {
                         this.checkAuth();
                     }
@@ -229,7 +227,6 @@
             }
 
             if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초로그인시
-                console.log('최초 로그인 한 경우 ip null!!  lastDt null!!')
                 this.$router.push({name:'termsCheck'});
             }else {
 
@@ -289,8 +286,6 @@
         }
 
         checkAuth(){
-            //console.log('otp 인증 화면 보이기전 세션 확인!!!')
-            //console.log(sessionStorage)
             this.otpChecks=true
             /*if(sessionStorage.role=='0001'){
                 this.otpChecks=true

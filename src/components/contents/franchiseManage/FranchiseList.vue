@@ -57,8 +57,6 @@
                 this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
                 this.soluDis = true;
             }
-            //console.log('세션 정보 확인!!')
-            //console.log(sessionStorage)
 
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.onLoadListView = true;
@@ -114,7 +112,6 @@
                     }
                 }
             }
-            console.log('등록 권한 확인 ?? :: ' + this.regShow)
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.listItem.search  = this.$store.state.searchList.listDt
             }
@@ -127,17 +124,14 @@
         }
 
         checkBoxEvent(data){
-            console.log(data); // 체크한데이터 받는다
         }
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
-            console.log('상세페이지 이동')
             //console.log(row)
             if(sessionStorage.role == '0003'){ //콜센터는 휴대폰 인증
                 row['entranceUrl'] = 'franchiseList';
                 row['nextUrl'] = 'franchiseDetl';
-                console.log(row)
                 //OTP인증 화면으로 이동
                 this.$router.push({ name:'franchiseOtp' , params: { reqParams : row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
             }else{
