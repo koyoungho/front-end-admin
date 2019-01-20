@@ -124,18 +124,23 @@
         phoneNum : any = ''; //수신자 전화번호
         saupId : any = ''; //사업장번호
         sendOtpYn : boolean = false; //otp전송 여부
+        role : any = '';
 
         created(){
 
             this.reqParam = this.$route.params.reqParams;
 
+            //console.log('넘겨 받은 값')
+            //console.log(this.reqParam)
+
             if(!this.reqParam){
                 alert('접근할수 없습니다')
-                this.$router.push({name:'franchiseList'});
+                this.$router.push({name:this.reqParam.entranceUrl});
             }else{
                 this.name = this.reqParam.row.name;
                 this.saupId = this.reqParam.row.saupId;
                 this.id = this.reqParam.row.id;
+                this.role = this.reqParam.row.role;
             }
 
             clearInterval(this.interval)
@@ -196,6 +201,12 @@
                 alert('휴대폰 번호를 입력하세요.');
                 return;
             }
+            let apiUrl : string = '';
+            if(this.role == '0006'){ //콜센터용 사용자 인증
+                apiUrl = 'otp/callcenter/user/'+this.id;
+            }else{
+                apiUrl = 'otp';
+            }
 
             let otp = {
                 id: this.id,
@@ -203,17 +214,31 @@
                 saupId: this.saupId,
                 phoneNum : this.phoneNum
             }
-            CommonBoardService.postListDatas('otp',null,otp)
+            CommonBoardService.postListDatas(apiUrl,null,otp)
                 .then(result => {
-                    if(result.data.code=='000'){
-                        this.sendOtpYn = true;
+                    //console.log('OTP 발송 결과')
+                    //console.log(result)
 
-                        this.startTimer();
-                    }
-                    else{
-                        this.sendOtpYn = false;
-
-                        clearInterval(this.interval)
+                    if(this.role == '0006'){ //매장사용자용
+                        if(result.status==200){
+                            alert('인증번호가 발송되었습니다.');
+                            this.sendOtpYn = true;
+                            this.startTimer();
+                        }
+                        else{
+                            this.sendOtpYn = false;
+                            clearInterval(this.interval)
+                        }
+                    }else{ //관리자용
+                        if(result.data.code=='000'){
+                            alert('인증번호가 발송되었습니다.');
+                            this.sendOtpYn = true;
+                            this.startTimer();
+                        }
+                        else{
+                            this.sendOtpYn = false;
+                            clearInterval(this.interval)
+                        }
                     }
 
                 }).catch(e=>{
@@ -233,15 +258,35 @@
                 alert('인증번호를 입력하세요.');
                 return;
             }
+            if(this.message=='0:00'){
+                alert('인증번호 시간이 만료되었습니다. 다시 인증번호를 전송하세요.')
+                this.otpNumber = '';
+                this.message = '';
+                return;
+            }
 
-            let otp = {
+            let apiUrl : string = '';
+            let otp : any = {};
+            if(this.role == '0006'){ //콜센터용 사용자 OTP인증
+                apiUrl = 'otp/callcenter/user/verify/'+this.otpNumber+"/"+this.id;
+            }else{
+                apiUrl = 'otp'+this.otpNumber;
+                otp = {
+                    id: this.id,
+                    name: this.name,
+                    saupId: this.saupId,
+                    phoneNum : this.phoneNum
+                };
+            }
+
+            /*let otp = {
                 id: this.id,
                 name: this.name,
                 saupId: this.saupId,
                 phoneNum : this.phoneNum
-            }
+            }*/
             if(this.otpNumber){
-                CommonBoardService.postListDatas('otp/', this.otpNumber, otp)
+                CommonBoardService.postListDatas(apiUrl, null, otp)
                     .then(result => {
                         if(result.data.code=='000'){
                             alert('인증되었습니다' )

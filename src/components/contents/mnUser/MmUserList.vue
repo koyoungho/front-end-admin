@@ -10,7 +10,7 @@
             <!-- btn top -->
             <div class="btn_top" v-if="regbtnShow">
                 <button type="button" class="btn_m01 bg02" v-on:click="regStoreUser">사용자 계정 등록</button>
-                <button type="button" class="btn_m01 bg02" v-on:click="regUser">관리자 계정 등록</button>
+                <button type="button" class="btn_m01 bg02" v-if="adminRegBtn" v-on:click="regUser">관리자 계정 등록</button>
             </div>
 
             <!-- search box -->
@@ -60,6 +60,8 @@
         callVal : string = ''; //계정 등급
         callDis : boolean = false;
 
+        adminRegBtn : boolean = true;
+
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
 
         created(){
@@ -94,6 +96,8 @@
             if(sessionStorage.role == '0003'){ //콜센터는 매장관리등급만 조회가능
                 this.callVal = '0006';
                 this.callDis = true;
+
+                this.adminRegBtn = false; //콜센터 계정은 관리자계정 등록 버튼 안나옴
             }
 
             if(this.$store.state.searchList.menuId==this.$route.name){
@@ -173,7 +177,7 @@
                         data['nextUrl'] = 'modStoreUser';
                         console.log(data)
                         //OTP인증 화면으로 이동
-                        this.$router.push({ name:'franchiseOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                        this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
                         //OTP인증 화면으로 이동
                         //this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식

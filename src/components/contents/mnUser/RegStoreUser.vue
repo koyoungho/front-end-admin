@@ -40,7 +40,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" maxlength="12">
+                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" @keyup="changeRepPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" maxlength="13"></td>
+                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" @keyup="changeLawNm" maxlength="13"></td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
@@ -143,7 +143,7 @@
                         <td><input type="text" class="input form_name" title="이름"  v-model="name" maxlength="20"></td>
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호 입력" v-model="phoneNum" maxlength="12">
+                            <input type="text" class="input form_w100" title="휴대폰번호 입력" v-model="phoneNum" @keyup="changePhoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -393,7 +393,7 @@
             }
         }*/
 
-        @Watch('repPhonenum') changeRepPhonenum(){
+        @Watch('repPhonenum11') changeRepPhonenum(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.repPhonenum)){
                 Vue.swal({ text: '숫자만가능합니다'});
@@ -401,7 +401,7 @@
             }
         }
 
-        @Watch('lawNum') changeLawNm(){
+        @Watch('lawNum11') changeLawNm(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.lawNum)){
                 Vue.swal({ text: '숫자만가능합니다'});
@@ -409,7 +409,31 @@
             }
         }
 
-        @Watch('phoneNum') changePhoneNum(){
+        @Watch('phoneNum11') changePhoneNum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.phoneNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.phoneNum = '';
+            }
+        }
+
+        changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.repPhonenum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.repPhonenum = '';
+            }
+        }
+
+        changeLawNm(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.lawNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.lawNum = '';
+            }
+        }
+
+        changePhoneNum(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.phoneNum)){
                 Vue.swal({ text: '숫자만가능합니다'});
@@ -981,6 +1005,7 @@
             //let regNm = this.name;
             let imgsrc = environment.imgApiUrl+"/img/img_logo.07141310.png"; //로고
             let userUrl = environment.userUrl; //온라인 가맹점 사용자 URL
+            let termsUrl = environment.userUrl+"/#/home/termsCheck?id="+this.id;
 
             let mailMessage : string = ''; //메일 메시지 내용
             mailMessage = "<html lang=\"ko\">\n" +
@@ -1038,7 +1063,7 @@
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a href="+userUrl+" target=\"_blank\" style=\"color:#008aff;\">"+userUrl+"</a> (패스워드 변경 주소링크)</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a href="+termsUrl+" target=\"_blank\" style=\"color:#008aff;\">"+termsUrl+"</a> (패스워드 변경 주소링크)</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
@@ -1070,10 +1095,10 @@
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
                     if (response.status.toString() == '201' || response.status.toString() == '200') { //메일 전송 완료
-                        Vue.swal({text: '메일이 발송되었습니다'});
+                        //Vue.swal({text: '메일이 발송되었습니다'});
                         //console.log(response);
                     } else { //메일 전송 실패
-                        Vue.swal({text: '메일 발송이 실패하였습니다'});
+                        //Vue.swal({text: '메일 발송이 실패하였습니다'});
                         //console.log(response);
                     }
                 }
