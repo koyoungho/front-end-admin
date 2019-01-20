@@ -43,12 +43,14 @@
                                 <col width="68px">
                                 <col width="100px">
                                 <col width="100px">
-                                <col width="400px">
+                                <col width="100px">
+                                <col width="300px">
                             </colgroup>
                             <thead>
                             <tr>
                                 <th scope="col">선택</th>
                                 <th scope="col">매장 번호</th>
+                                <th scope="col">회사</th>
                                 <th scope="col">사업자번호</th>
                                 <th scope="col">사업장명</th>
                             </tr>
@@ -62,13 +64,15 @@
                                     <col width="68px">
                                     <col width="100px">
                                     <col width="100px">
-                                    <col width="383px">
+                                    <col width="100px">
+                                    <col width="283">
                                 </colgroup>
                                 <tbody>
                                 <template v-for="datas in responseData">
                                 <tr>
                                     <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
                                     <td>{{datas.storeId}}</td>
+                                    <td>{{datas.subSaupNm}}</td>
                                     <td>{{datas.saupId}}</td>
                                     <td class="left">{{datas.shopNm}}</td>
                                 </tr>
@@ -150,6 +154,7 @@
             selectedRow['saupId'] = obj.saupId;
             selectedRow['shopNm'] = obj.shopNm;
             selectedRow['soluId'] = obj.soluId;
+            selectedRow['subSaup'] = obj.subSaup;
             this.$emit('selectedSaup', selectedRow); //선택한 매장번호만값 넘김
             this.$emit('saupClose')
         }

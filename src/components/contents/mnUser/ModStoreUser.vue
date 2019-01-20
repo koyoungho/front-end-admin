@@ -58,16 +58,10 @@
                     <tr>
                         <th scope="row">계정상태<em class="form_req">*</em></th>
                         <td colspan="3">
-                            <select id="" name="" class="select form_w50" title="사업자 선택" v-model="aprvYn">
-                                <option value="">선택</option>
-                                <option value="Y">승인</option>
-                                <option value="N">승인대기</option>
-                                <!--<option value="">정상</option>-->
-                                <!--<option value="1">승인대기</option>-->
-                                <!--<option value="2">해지대기</option>-->
-                                <!--<option value="3">사용중지</option>-->
-                                <!--<option value="4">해지</option>-->
-                            </select>
+                            <span style="vertical-align: bottom">{{statusNm}}</span>
+                            <template v-if="status !='6'">
+                                <span class="chk_box" id="ts" style="margin-left: 50px;" ><input type="checkbox"  @click="useStop($event)"><label for="ts">사용중지</label></span>
+                            </template>
                         </td>
                     </tr>
                     <tr v-if="saupjangSajin">
@@ -186,9 +180,41 @@
 
             <!-- btn bot -->
             <div class="btn_bot cols">
-                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
-                <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="removeAccount" v-show="regShow">계정해지</button>-->
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation">정보 변경</button>
+    
+                <template v-if="status=='0'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('1')" >승인</button>
+                </template>
+                <template v-if="status=='1'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('3')" >해지</button>
+                </template>
+                <template v-if="status=='2'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('1')" >정상</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('3')" >해지</button>
+                </template>
+                <template v-if="status=='3'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                </template>
+                <template v-if="status=='4'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                </template>
+                <template v-if="status=='5'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                </template>
+                <template v-if="status=='6'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelModify">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('10')" >정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('1')" >정상</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="dataValidation('3')" >해지</button>
+                </template>
             </div>
             <AddressBox v-if="showModal1" v-bind:postData="postText" v-on:selectedValue="setDataAddr1" @close="showModal1 = false"></AddressBox>
         </div>
@@ -220,15 +246,16 @@
         //본인인증
         showConfirm: boolean = false;
         confirmResult: boolean = false;
-
+        checkVal : boolean = false;
         saupId : any = ''; //사업자등록번호
         storeNm : any = ''; //사업장명
         repNm : any = ''; //대표자명
         repPhonenum : any = ''; //대표 전화번호
         saupType : any = ''; //사업자구분
         lawNum : any = ''; //법인번호
-        aprvYn : any = ''; //계정상태
-        oldAprvYn : any = ''; //이전 계정상태
+        status : any = ''; //계정상태
+        statusNm : string = ''; // 상태명
+        oldStatus : any = ''; //이전 계정상태
         zipCode : any = ''; //우편번호
         addr1 : any = ''; //주소
         addr2 : any = ''; //상세주소
@@ -294,6 +321,14 @@
 
         }
 
+        useStop(event){
+            if(event.target.checked==true){
+                this.checkVal = true;
+            }else{
+                this.checkVal = false;
+            }
+        }
+
         infoDetail(){
 
             let reqId : string = this.objectKey.row.id;
@@ -320,8 +355,8 @@
                         this.repPhonenum = result.repPhonenum;
                         this.saupType = result.saupType;
                         this.lawNum = result.lawNum;
-                        this.aprvYn = result.aprvYn;
-                        this.oldAprvYn = result.aprvYn;
+                        this.status = result.status;
+                        this.oldStatus = result.status;
                         this.zipCode = result.zipCode;
                         this.addr1 = result.addr1;
                         this.addr2 = result.addr2;
@@ -329,7 +364,7 @@
                         this.subSaup = result.companyCode;
                         this.blGb = result.blGb;
                         this.saupFileNm = result.saupFileNm;
-                        if(this.aprvYn == 'N'){
+                        if(this.status == '0'){
                             this.saupjangSajin = true;
                         }
 
@@ -501,7 +536,7 @@
             reqData['storeNm'] = this.storeNm; //사업장명
             reqData['repNm'] = this.repNm; //대표자명
             reqData['repPhonenum'] = this.repPhonenum; //대표자 전화번호
-            reqData['aprvYn'] = this.aprvYn; //계정상태
+            reqData['status'] = this.status; //계정상태
             reqData['zipCode'] = this.zipCode; //우편번호
             reqData['addr1'] = this.addr1; //주소
             reqData['addr2'] = this.addr2; //상세주소
@@ -519,7 +554,7 @@
                     //console.log(result)
                     if (result != null) {
                         Vue.swal({text:'사용자 계정 정보가 변경되었습니다.'});
-                        if(this.aprvYn == 'Y' && this.oldAprvYn == 'N'){ //계정 승인 처리시
+                        if(this.status == '1' && this.oldStatus == '0'){ //계정 승인 처리시
                             this.sendMailAprv();
                         }
                         this.$router.push({name:'mnUserList'})
@@ -537,7 +572,16 @@
 
         }
         //정보 변경시 validation 체크
-        dataValidation() {
+        dataValidation(val) {
+
+            if(val=='10') {
+                if(this.checkVal==true){
+                    this.status='6'
+                }
+            }else{
+                this.status=val
+            }
+            
             let regNumber = /^[0-9]*$/;
 
             if(this.storeNm == '') {
@@ -552,7 +596,7 @@
             }else if(!regNumber.test(this.repPhonenum)){
                 Vue.swal({text:'전화번호는 숫자로 입력하세요.'});
                 return;
-            }else if(this.aprvYn == null || this.aprvYn == '') {
+            }else if(this.status == null || this.status == '') {
                 Vue.swal({text:'계정상태를 선택하세요.'});
                 return false;
                 /*
