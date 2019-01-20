@@ -244,6 +244,21 @@
         receiptIssueBtn : boolean = true;
 
         @Watch('positionGb') onChange(){
+
+            let confirmID = document.getElementById('confirmID')
+
+            if(this.positionGb == '1'){ //휴대전화
+                if(confirmID!=null){ confirmID.setAttribute('maxlength', '11') }
+            }else if(this.positionGb == '2'){ //주민등록번호
+                if(confirmID!=null){ confirmID.setAttribute('maxlength', '13') }
+            }else if(this.positionGb == '3'){ //사업자등록번호
+                if(confirmID!=null){ confirmID.setAttribute('maxlength', '10') }
+            }else if(this.positionGb == '4'){ //카드번호
+                if(confirmID!=null){ confirmID.setAttribute('maxlength', '19') }
+            }else if(this.positionGb == '5') { //QR코드
+                if (confirmID != null) { confirmID.setAttribute('maxlength', '12') }
+            }
+
             if(this.positionGb == '6') { //자진발급이면 0100001234로 자동 입력
                 this.confirm = '0100001234';
                 let confirmID = document.getElementById('confirmID')
@@ -292,10 +307,11 @@
                 this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{codeNm : '주민등록번호' , code: '2' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' },{codeNm : '자진발급' , code: '6' }];
             }else if(this.geogu == '1'){ //지출증빙
                 this.confirm = '';
-                this.confirmList = [{ codeNm : '사업자등록번호' , code: '3' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' }];
+                this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{ codeNm : '사업자등록번호' , code: '3' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' }];
             }else{
                 this.confirm = '';
-                this.getSinbunSelectList(); //고객신분코드 조회
+                this.confirmList = [];
+                //this.getSinbunSelectList(); //고객신분코드 조회
             }
         }
 
@@ -457,16 +473,21 @@
                  */
             }
             else if(this.positionGb != '' && this.confirm != ''){
-                if(this.positionGb == '1'){ //휴대폰 11자리까지
+                if(this.positionGb == '1'){ //휴대폰 10~11자리까지
                     if(!regNumber.test(this.confirm)){
                         Vue.swal({text: '휴대폰 번호는 숫자만 입력가능합니다.'});
                         return;
                     }
-                    if(this.confirm.length > 11){
-                        Vue.swal({text: '휴대폰 번호는 11자리까지 입력가능합니다.'});
+                    if(this.confirm.length > 1 && this.confirm.indexOf('01') == 0){
+                        alert('휴대폰번호는 01로 시작하도록 입력하세요.');
                         return;
-                    }else if(this.confirm.length < 10){
-                        Vue.swal({text: '휴대폰 번호를 확인하세요'});
+                    }
+                    if(this.confirm.length < 10){
+                        alert('휴대폰번호는 10자리 이상 입력하세요.');
+                        return;
+                    }
+                    if(this.confirm.length > 11){
+                        alert('휴대폰번호는 11자리까지 입력가능합니다.');
                         return;
                     }
                 }else if(this.positionGb == '2'){ //주민등록번호 13자리
@@ -475,63 +496,64 @@
                         return;
                     }
                     if(this.confirm.length != 13){
-                        Vue.swal({text: '주민등록번호를 확인하세요'});
+                        alert('주민등록번호는 13자리로 입력하세요.');
+                        return;
+                    }
+                    if(!this.juminNumChk()){
+                        alert('주민등록번호를 바르게 확인하세요.');
                         return;
                     }
                 }else if(this.positionGb == '3'){ //사업자등록번호 10자리
-                    let saupNo1 = this.saupNo.substring(3, 5);
-                    if (saupNo1.substring(0, 1) == 0) {
-                        saupNo1 = saupNo1.substring(2, 1);
+                    if(!regNumber.test(this.confirm)){
+                        alert('사업자등록번호는 숫자만 입력가능합니다.');
+                        return;
                     }
-                    if ((saupNo1 >= 1 && saupNo1 < 81) || (saupNo1 >= 89 && saupNo1 <= 99)) { //개인
-                        if(!regNumber.test(this.confirm)){
-                            Vue.swal({text: '사업자등록번호는 숫자만 입력가능합니다.'});
-                            return;
-                        }
-                        if(this.confirm.length != 10){ //개인은 10자리
-                            Vue.swal({text: '사업자등록번호는 10자리로 입력하세요.'});
-                            return;
-                        }
-                    } else { //법인
-                        if(!regNumber.test(this.confirm)){
-                            Vue.swal({text: '법인 사업자등록번호는 숫자만 입력가능합니다.'});
-                            return;
-                        }
-                        if(this.confirm.length != 13){ //법인은 13자리
-                            Vue.swal({text: '법인 사업자등록번호는 13자리로 입력하세요.'});
-                            return;
-                        }
+                    if(this.confirm.length > 0 && this.confirm.indexOf('0') == 0){
+                        alert('사업자등록번호는 0으로 시작할수 없습니다.');
+                        return;
+                    }
+                    if(this.confirm.length != 10){ //개인은 10자리
+                        alert('사업자등록번호는 10자리로 입력하세요.');
+                        return;
+                    }
+                    if(!this.checkBizID()){
+                        alert('사업자등록번호를 바르게 입력하세요.');
+                        return;
                     }
                 }else if(this.positionGb == '4'){ //카드번호
                     if(this.confirm.indexOf('15442020') > -1){ //현금영수증 전공
                         if(!regNumber.test(this.confirm)){
-                            Vue.swal({text: '현금영수증 전용카드는 숫자만 입력가능합니다.'});
+                            alert('현금영수증 전용카드는 숫자만 입력가능합니다.');
                             return;
                         }
                         if(this.confirm.length != 18) {
-                            Vue.swal({text: '현금영수증 전용카드는 18자리를 입력하세요'});
+                            alert('현금영수증 전용카드는 18자리를 입력하세요.');
                             return;
                         }
                     }else{
                         if(!regNumber.test(this.confirm)){
-                            Vue.swal({text: '카드번호는 숫자만 입력가능합니다.'});
+                            alert('카드번호는 숫자만 입력가능합니다.');
                             return;
                         }
-                        if(this.confirm.length != 16) {
-                            Vue.swal({text: '카드번호는 16자리로 입력하세요'});
+                        if(this.confirm.length < 13) {
+                            alert('카드번호는 13자리 이상 입력하세요.');
                             return;
                         }
                     }
                 }else if(this.positionGb == '5'){ //QR번호
                     if(!regNumber.test(this.confirm)){
-                        Vue.swal({text: 'QR번호는 숫자만 입력가능합니다.'});
+                        alert('QR코드는 숫자만 입력가능합니다.');
+                        return;
+                    }
+                    if(this.confirm.indexOf('126') == -1){ //QR코드는 126으로 시작해야 함
+                        alert('QR코드는 126으로 시작하도록 입력하세요.');
                         return;
                     }
                     if(this.confirm.length != 12){
-                        Vue.swal({text: 'QR번호는 12자리로 입력하세요.'});
+                        alert('QR코드는 12자리로 입력하세요.');
                         return;
                     }
-                }else if(this.positionGb == '6'){ //자진발급
+                }/*else if(this.positionGb == '6'){ //자진발급
                     if(!regNumber.test(this.confirm)){
                         Vue.swal({text: '자진발급번호는 숫자만 입력가능합니다.'});
                         return;
@@ -540,7 +562,7 @@
                         Vue.swal({text: '자진발급번호를 바르게 입력하세요.'});
                         return;
                     }
-                }
+                }*/
             }
             if(this.soluId == ''){
                 Vue.swal({text: '발급 사업자가 존재하지않습니다'});
@@ -569,6 +591,10 @@
             }
             if(this.bong == ''){
                 this.bong = 0;
+            }
+            if(Number(this.supplyAmt) < Number(this.bong)){
+                alert('봉사료가 공급가액보다 큰 액수입니다.');
+                return;
             }
             if(this.bong.length > 1 && this.bong.indexOf('0') == 0){
                 //alert('봉사료를 바르게 입력하세요.');
@@ -757,6 +783,71 @@
             else{
             }
         }
+
+        juminNumChk() { //주민등록번호 체크
+            //console.log(this.confirm.substring(0, 6))
+            //console.log(this.confirm.substring(6, 13))
+
+            let num1 = this.confirm.substring(0, 6);
+            let num2 = this.confirm.substring(6, 13);
+
+            let arrNum1 = new Array(); // 주민번호 앞자리숫자 6개를 담을 배열
+            let arrNum2 = new Array(); // 주민번호 뒷자리숫자 7개를 담을 배열
+
+            // -------------- 주민번호 -------------
+
+            for (let i = 0; i < num1.length; i++) {
+                arrNum1[i] = num1.charAt(i);
+            } // 주민번호 앞자리를 배열에 순서대로 담는다.
+
+            for (let i = 0; i < num2.length; i++) {
+                arrNum2[i] = num2.charAt(i);
+            } // 주민번호 뒷자리를 배열에 순서대로 담는다.
+
+            var tempSum = 0;
+
+            for (let i = 0; i < num1.length; i++) {
+                tempSum += arrNum1[i] * (2 + i);
+            } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+
+            for (let i = 0; i < num2.length - 1; i++) {
+                if (i >= 2) {
+                    tempSum += arrNum2[i] * i;
+                }
+                else {
+                    tempSum += arrNum2[i] * (8 + i);
+                }
+            } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+
+            if ((11 - (tempSum % 11)) % 10 != arrNum2[6]) {
+                //alert("올바른 주민번호가 아닙니다.");
+                //num1.value = "";
+                //num2.value = "";
+                //num1.focus();
+                return false;
+            } else {
+                //alert("올바른 주민등록번호 입니다.");
+                return true;
+            }
+        }
+
+        checkBizID(){ //사업장등록번호 유효성 체크
+            let bizID = this.confirm;
+            let checkID = new Array(1, 3, 7, 1, 3, 7, 1, 3, 5, 1);
+            let i, chkSum=0, c2, remander;
+            bizID = bizID.replace(/-/gi,'');
+
+            for (let i=0; i<=7; i++) chkSum += checkID[i] * bizID.charAt(i);
+            c2 = "0" + (checkID[8] * bizID.charAt(8));
+            c2 = c2.substring(c2.length - 2, c2.length);
+            chkSum += Math.floor(c2.charAt(0)) + Math.floor(c2.charAt(1));
+            remander = (10 - (chkSum % 10)) % 10 ;
+
+            if (Math.floor(bizID.charAt(9)) == remander) return true ; // OK!
+            return false;
+        }
+
+
     }
 </script>
 
