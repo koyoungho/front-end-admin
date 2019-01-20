@@ -67,6 +67,10 @@
                 this.shopNm = sessionStorage.getItem('storeNm');
                 this.show =true;
             }
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.onLoadListView=true;
+            }
+
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {

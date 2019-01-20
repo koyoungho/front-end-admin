@@ -349,6 +349,7 @@
             // api 데이터 호출
             CommonBoardService.updateListData('accounts',this.resultId+'/password', initPass).then((response) => {
                     if (response.data.code == '000') {
+                        alert('비밀번호 변경이 완료 되었습니다')
                         this.$router.push({name:'login'})
                     } else {
                         //alert(response.data.message);
