@@ -93,7 +93,7 @@
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'selectObject' ,class:'w30', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
+                        {type: 'selectObjectSearchList' ,class:'w30', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
                         {type: 'popup',class:'w30 ', title :'사업장등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
                         {type: 'inputPop',class:'w30 text_left', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
                         {type: 'select' ,class:'w30', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},

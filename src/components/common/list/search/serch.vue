@@ -91,6 +91,22 @@
               <li :class="item.class" style=height:50px><label for="aa"></label></li>
             </template>
           </template>
+          <template v-if="item.type=='selectObjectSearchList'">
+            <li :class="item.class">
+              <label for="aa">{{item.title}}</label>
+              <!--<select v-model="item.value"  class="select form_w50" title="발급용도 선택">-->
+                <!--<option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>-->
+              <!--</select>-->
+              <model-list-select :list="item.option"
+                                 v-model="item.value"
+                                 option-value="code"
+                                 option-text="name"
+                                 style="height :15px; width:200px ; float: right ; bottom: 3px"></model-list-select >
+            </li>
+            <template v-if="item.liNull">
+              <li :class="item.class" style=height:50px><label for="aa"></label></li>
+            </template>
+          </template>
           <template v-if="item.type=='selectObject'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
@@ -358,7 +374,25 @@
                         }
                     ).catch();
                     }
-                }else if(e.type=='radio'){
+                }else if(e.type=='selectObjectSearchList'){
+                    if(e.api ==''){
+                        this.selectObjects[e.name] = e.option;
+                    }else{
+                        CommonBoardService.getListDatas(e.api, null, '').then((response) => {
+                                let result: any = response.data;
+                                // console.log(result)
+
+                                if (result.length > 0) {
+                                    e.option = result;
+                                } else {
+                                }
+                            }
+                            , (error) => {
+                            }
+                        ).catch();
+                    }
+                }
+                else if(e.type=='radio'){
 
                 }else if(e.type=='check'){
 
