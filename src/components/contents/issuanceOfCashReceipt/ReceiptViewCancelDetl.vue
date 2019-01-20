@@ -573,7 +573,7 @@
 
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
-                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel",
+                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
                 method: 'GET',
                 responseType : 'blob', // important
                 headers : { "x-auth-token" : sessionStorage.accessToken }
