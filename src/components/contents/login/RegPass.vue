@@ -111,10 +111,8 @@
         reqParams : any = '';
 
         created(){
-            console.log('regPass.vue')
             this.reqParams = this.$route.params.reqParams;
 
-            console.log(this.reqParams)
 
             if(!this.reqParams){
                 alert('접근할수 없습니다')
@@ -180,7 +178,6 @@
 
             // api 데이터 호출
             CommonBoardService.updateListData('accounts',this.id+'/password', reqData).then((response) => {
-                    console.log(response)
                     if (response.status == 200) {
                         alert('비밀번호 등록이 완료되었습니다')
                         this.termsAgree(); //약관동의 호출
@@ -197,7 +194,6 @@
                     return;
                 }
             ).catch((response) =>  {
-                //console.log(response)
                 this.valueChecks = response.data.message;
                 //this.passChk = false;
                 //alert('비밀번호 변경중 오류가 발생하였습니다.\n다시 시도하세요.')
@@ -207,18 +203,14 @@
         termsAgree(){
             // api 데이터 호출
             CommonBoardService.postListData('accounts',this.id+'/terms', null).then((response) => {
-                    console.log(response)
                     if (response.status == 200 || response.status == 200) {
-                        console.log('약관동의 완료')
 
                         //this.$router.push({name:'login'})
                     } else {
-                        console.log(response)
                         return;
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch((response) =>  {
             });

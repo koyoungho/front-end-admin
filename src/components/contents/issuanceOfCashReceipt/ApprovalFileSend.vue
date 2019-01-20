@@ -121,18 +121,15 @@
 
                 CommonBoardService.postListDatas('approval/file', null, formData).then((response) => {
                         let result: any = response.status;
-                        // console.log(response);
 
                         if (result=='201') {
                             Vue.swal({text: "파일이 등록 되었습니다."});
                             this.uploadFileNm ="";
 
                         } else {
-                            console.log('파일 등록 실패');
                         }
                     }
                     , (error) => {
-                        console.log(error)
                     }
                 ).catch();
             }

@@ -148,7 +148,6 @@
 
         }
         selectedRow(obj) {
-            //console.log(obj);
             let selectedRow : any  = {};
             selectedRow['storeId'] = obj.storeId;
             selectedRow['saupId'] = obj.saupId;

@@ -58,13 +58,11 @@
         }
 
         created() {
-            //console.log("Home created :: "+this.menuShow)
 
             //20분마다 sessionStorage.accessToken 갱신
             setInterval(this.tokenRefresh, (1000 * 60) * 10 );
         }
         mounted() {
-            //console.log("Home mounted :: " +this.menuShow)
         }
 
         //20분마다 accessToken 갱신

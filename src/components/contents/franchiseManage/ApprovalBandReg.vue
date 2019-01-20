@@ -164,11 +164,9 @@
                 aprvCount : this.aproCnt,
                 jumcode : this.jumCode
             };
-            console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
             CommonBoardService.postListDatas('approvalband', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         alert('승인대역이 등록되었습니다.')
                         this.$router.push('/home/approvalBandList')
@@ -177,10 +175,8 @@
                     }
                 }
                 , (error) => {
-                    //console.log(error);
                 }
             ).catch((response) => {
-                //console.log(response);
             });
 
             //this.$router.push('/home/approvalBandList')
