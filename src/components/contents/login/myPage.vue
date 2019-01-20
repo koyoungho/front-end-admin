@@ -208,7 +208,6 @@
      $modal : any;
 
      created(){
-         console.log(this.$refs)
         this.accountInfo();
          this.saupInfo();
          this.gajumInfo();

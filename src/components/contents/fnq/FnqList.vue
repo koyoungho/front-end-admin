@@ -206,7 +206,6 @@
         dataEvent(es){
             //데이터 로딩된후 이벤트를 받으면  변경된 페이지 정보를 전달해준다.
             if(es.lastPage > 0){
-                console.log(this.$children['0']);
                 this.$children['0'].defaultPaging(es)
                 this.$children['0'].arrayPaging(es);
             }

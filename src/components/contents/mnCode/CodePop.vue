@@ -138,7 +138,6 @@
                 // 컴퍼니
                 apiAddr = 'company';
                 Object = {code : this.getCodes , name: this.getNames , saupId : this.getSaupId , upjongCode : this.getUpjong}
-                console.log(Object)
             }
             else{
                 apiAddr = 'code';
