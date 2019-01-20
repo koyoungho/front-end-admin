@@ -66,7 +66,6 @@
                     }
                 }
             }
-            console.log('등록 권한 확인 ?? :: ' + this.regbtnShow)
 
             if(sessionStorage.role == '0002') { //현금영수증 사업자
                 this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
@@ -139,18 +138,15 @@
         }
 
         checkBoxEvent(data){
-            console.log(data); // 체크한데이터 받는다
         }
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
 
-            console.log('상세페이지 이동')
             //console.log(row)
             if(sessionStorage.role == '0003'){ //콜센터는 휴대폰 인증
                 row['entranceUrl'] = 'branchList';
                 row['nextUrl'] = 'branchDetl';
-                console.log(row)
                 //OTP인증 화면으로 이동
                 this.$router.push({ name:'franchiseOtp' , params: { reqParams : row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
             }else{

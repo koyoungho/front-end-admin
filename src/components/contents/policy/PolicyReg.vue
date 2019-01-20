@@ -173,7 +173,6 @@
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
                 }
                 ).catch();
             }else{//수정
@@ -195,12 +194,10 @@
                             });
                         } else { //수정실패
                             Vue.swal({ text: '수정 실패 되었습니다.'});
-                            console.log(response);
                         }
                     }
                     , (error) => {
                         //this.$Progress.finish();
-                        console.log(error);
                     }
                 ).catch();
             }
@@ -237,7 +234,6 @@
             }).then((result) => {
 
                 CommonBoardService.deleteListDatas('terms/temp/'+ this.termsType, this.termsOrder_old, null).then((response) => {
-                    console.log(response);
                     if (response.status.toString() == '200') { //성공
                         if (result.value) {
                             Vue.swal({
@@ -248,12 +244,10 @@
                         }
                     } else { //
                         Vue.swal({text: '삭제실패'});
-                        console.log(response);
                     }
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
                 }).catch();
              })
         }

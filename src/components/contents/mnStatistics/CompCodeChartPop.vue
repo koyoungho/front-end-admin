@@ -86,7 +86,6 @@
         }
 
         checkData(data,index){
-            console.log(this.companyCodeList[index].favYn);
             if(this.companyCodeList[index].favYn =='Y'){
                 this.companyCodeList[index].favYn = 'N'
                     CommonBoardService.deleteListDatas('company/account',data,null).then(response =>{

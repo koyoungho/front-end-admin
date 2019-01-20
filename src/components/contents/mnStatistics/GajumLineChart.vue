@@ -149,7 +149,6 @@
             this.loading2=true;
             CommonBoardService.getListDatas('statistics','receipt',{responseType:'CHART',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                 if(result.status==200){
-                    console.log(result)
                     this.receiptList = result.data
                     this.chartDataCash.rows=[];
                     result.data.filter(e=>{

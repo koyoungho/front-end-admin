@@ -351,9 +351,6 @@
         //돔생성전 호출자
         created() {
 
-            console.log('세선정보 확인===========>>>>>')
-            console.log(sessionStorage)
-            console.log('세선정보 확인===========<<<<<')
 
             //시스템관리자(0001), 현금영수증사업자(0002), 콜센터관리자(0003)만 등록버튼 보임
             if(sessionStorage.role == '0001' || sessionStorage.role == '0002' || sessionStorage.role == '0003'){
@@ -448,9 +445,6 @@
 
         }
         getCodeList(data){ // 회사코드 선택 데이터 받는다
-            console.log('받은 회사코드')
-            console.log(data)
-            console.log('받은 회사코드 수 :: ' +data.length);
 
             if(data!=null){
                 this.saupSubSaupCnt = data.length;
@@ -550,11 +544,6 @@
             let aproData : any = {};
             let addData2 : any = []; //승인대역정보 배열
 
-            console.log('승인대역 정보 뿌리기')
-            console.log(this.approvalList)
-            console.log('관리자 정보 뿌리기')
-            console.log(this.adminList)
-            console.log('=======================================================')
 
 /* 승인대역 주석 처리함
             if(this.approvalList.length > 0){
@@ -601,17 +590,12 @@
             }
 관리자정보 주석 처리함 end */
 
-            console.log('승인대역 정보 확인');
-            console.log(addData3);
             reqData['accounts'] = addData3; //관리자 정보 셋팅
 
-            console.log('최종 등록 정보 확인');
-            console.log(reqData);
 
             // api 데이터 호출(가맹점 등록)
             CommonBoardService.postListDatas('gajum', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
@@ -625,10 +609,8 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                 }
             ).catch((response) => {
-                console.log(response);
             });
 
 
@@ -664,7 +646,6 @@
         }
         //관리자 삭제
         delAdmin() {
-            console.log(this.adminList.length)
             let admCnt = this.adminList.length;
             if(admCnt > 1){
                 //this.approvalList.$remove(1)
@@ -859,10 +840,7 @@
 
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/saupid', null, reqData).then((response) => {
-                console.log(response)
-                console.log(response.status)
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         this.saupIdYn = 'Y';
                         if(saupmsg != null){
@@ -879,19 +857,15 @@
                 }
                 , (error) => {
                     //console.log('가맹점 등록 오류');
-                    console.log(error);
                     this.saupIdYn = '';
                 }
             ).catch((response) => {
-                console.log(response);
                 this.saupIdYn = '';
             });
         }
 
         //점코드 유효성 체크
         chkJumCode(idx: number) {
-            console.log('===================')
-            console.log(idx)
 
             if(this.saupId == ''){
                 alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
@@ -924,7 +898,6 @@
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         if(saupmsg != null){
                             saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
@@ -938,12 +911,10 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                     this.approvalList[idx].jumCodeYn = '';
                 }
             ).catch((response) => {
                 this.approvalList[idx].jumCodeYn = '';
-                console.log(response);
             });
         }
 
@@ -994,7 +965,6 @@
             // api 데이터 호출
             CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code == '000') {
                         this.adminList[idx].adminIdYn = 'Y';
                         if(idmsg!=null){ idmsg.innerHTML = '사용 가능한 아이디입니다.'; }
@@ -1005,11 +975,9 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                     this.adminList[idx].adminIdYn = '';
                 }
             ).catch((response) => {
-                console.log(response);
                 this.adminList[idx].adminIdYn = '';
             });
         }
@@ -1054,11 +1022,9 @@
                             this.saupUpjongList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 

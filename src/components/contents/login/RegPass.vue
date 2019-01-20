@@ -167,7 +167,6 @@
                     }
                 }
             ).catch((response) => {
-                //console.log('response code check!!');
                 this.valueChecks = response.data.message;
             });
         }

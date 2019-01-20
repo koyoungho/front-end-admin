@@ -426,7 +426,6 @@
                    this.saupInfo(result.data.saupId); //조회된 사업자등록번호로 사업장 정보 조회
                    this.account = result.data
 
-                   console.log( this.account);
 
                    //this.setData()
 
@@ -507,8 +506,6 @@
         saupInfo(saupId){
             CommonBoardService.getListDatas('saupjang',saupId,null).then(result=>{
                 if(result.status==200){
-                    console.log('사업장 정보 조회')
-                    console.log(result.data)
                     this.saupjang = result.data
                     this.saupId = this.saupnoFormat( result.data.saupId)
                 }else{
@@ -521,8 +518,6 @@
 
 
             let account : any = this.account;
-            console.log('form 정보 확인')
-            console.log(account);
 
             if(val=='10') {
                 if(this.checkVal==true){
@@ -678,8 +673,6 @@
             });
             reqData['menuList'] = arrData
 
-            console.log('최종 요청값 확인')
-            console.log(reqData)
 
             // api 데이터 호출(계정 정보 수정)
             CommonBoardService.updateListData('accounts', account.id, reqData).then((response) => {
@@ -702,10 +695,8 @@
                     }
                 }
                 , (error) => {
-                    //console.log(error);
                 }
             ).catch((response) => {
-                console.log("ㅁㅁㅁㅁ",response);
             });
 
 
@@ -733,14 +724,12 @@
 
         //주소 셋팅
         setDataAddr1(e){
-            console.log(e);
             // 주소값 리턴 받기
             let account : any = this.account;
             account.zipCode = e.zip;
             account.addr1 = e.addr;
         }
         checkBoxEvent(da){
-            console.log(da);
         }
 
         removeAccount(){
@@ -775,7 +764,6 @@
 
             let account : any = this.account;
 
-            console.log("비밀번호 초기화")
 
             let reqData : any = {
                 to : [account.email],
@@ -785,14 +773,12 @@
              };
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
-                    console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
                         Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
                 }
             ).catch();
 
@@ -895,14 +881,12 @@
             };
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
-                    console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
                         Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
                 }
             ).catch();
 
@@ -910,7 +894,6 @@
 
         downloadFile(){
 
-            console.log('사업자등록증 파일 다운로드');
             //this.rowData = data.row;
             //this.popComfirm();
 
@@ -922,7 +905,6 @@
                 responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response)
                 // It is necessary to create a new blob object with mime-type explicitly set
                 // otherwise only Chrome works like it should
                 var newBlob = new Blob([response.data],{type: 'application/xlsx'})

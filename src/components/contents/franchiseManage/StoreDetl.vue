@@ -922,7 +922,6 @@
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
                     if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
-                        console.log('승인내역 건수 :: '+this.approvalList.length);
                         if(this.approvalList[i].jumCode == undefined || this.approvalList[i].jumCode == '') {
                             alert('점코드를 입력하세요.')
                             return;
@@ -1043,7 +1042,6 @@
                     }
                 }
                 , (error) => {
-                    //console.log('가맹점 등록 오류');
                     //this.saupIdYn = '';
                 }
             ).catch((response) => {

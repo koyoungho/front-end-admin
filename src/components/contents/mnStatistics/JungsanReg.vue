@@ -789,7 +789,6 @@
                     ObjectList.filter((e,index)=>{
                         this.realList.push({id:index+6+'' , data: e})
                     })
-                    console.log(this.realList);
                 }
 
             })
@@ -797,9 +796,6 @@
         }
 
         colColumData3(colum,data,num){ //조세지원액
-            console.log(colum);
-            console.log(data);
-            console.log(this.jungsanRate.taxOnline)
             if (data == 1 || data == 2 || data == 3) {
                 this.realList['4'].data[colum]  =  this.realList['3'].data[colum] * this.jungsanRate.taxOffline
                 this.realList['4'].data['offlineTotal'] =  this.nullCheck(Number(this.realList['3'].data['offlineTotal']))* this.jungsanRate.taxOffline
@@ -856,7 +852,6 @@
         }
 
         inputSetTax(){ //국세청 데이터변경시
-            console.log('offList Data Change')
         }
 
         // 그외 데이터 변경시
