@@ -1182,9 +1182,7 @@
             let reqData: any = {};
             let apiUrl : string = '';
 
-            if(code == '0001'){ //사업자구분:0001
-                apiUrl = 'pcodes/'+code+'/codes';
-            }else if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
+            if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
@@ -1203,9 +1201,7 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result.length > 0) {
-                        if(code == '0001'){ //사업자구분
-                            this.saupGbnList = result;
-                        }else if(code == 'APRO'){ //승인코드
+                        if(code == 'APRO'){ //승인코드
                             this.aproCodeList = result;
                         }else if(code == 'SEARCH'){ //회사코드
                             this.companyCodeList = result;
