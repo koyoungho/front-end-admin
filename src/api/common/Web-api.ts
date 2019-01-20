@@ -13,8 +13,8 @@ export default class WebApi<T>{
                 return response
             },
             error=>{
-                if(error.code==401){
-                    console.log(401)
+            console.log(error)
+                if(error.status==401){
                     sessionStorage.clear()
                     window.location.href='/#/login'
                 }

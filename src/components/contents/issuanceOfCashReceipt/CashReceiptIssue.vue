@@ -66,12 +66,19 @@
                         </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="회사코드" v-model="compoanyCode">
-                                <option value="">선택</option>
-                                <template v-for="datas in productList">
-                                    <option v-bind:value=datas.code>{{datas.name}}</option>
-                                </template>
-                            </select>
+                                <model-list-select :list="productList"
+                                                   v-model="compoanyCode"
+                                                   option-value="code"
+                                                   option-text="name"
+                                                   style="height :10px"
+                                                    >
+                                </model-list-select >
+                            <!--<select id="" name="" class="select form_w100" title="회사코드" v-model="compoanyCode">-->
+                                <!--<option value="">선택</option>-->
+                                <!--<template v-for="datas in productList">-->
+                                    <!--<option v-bind:value=datas.code>{{datas.name}}</option>-->
+                                <!--</template>-->
+                            <!--</select>-->
                         </td>
                     </tr>
                     <tr>
@@ -186,8 +193,7 @@
     import {CommonBoardService} from '../../../api/common.service';
     import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
     import  moment from 'moment'
-    //import {common} from '../../../utill/common';
-
+    import { ModelListSelect } from 'vue-search-select'
 
     @Component({
         components: {
@@ -217,7 +223,7 @@
         saleDate : string = '';
         showModal1 : boolean= false; // 팝업
         regShow:boolean = false;
-
+        compoanySearch: string = "";
         // ymd: any = '';
 
         //popupData
@@ -248,6 +254,18 @@
                 if(confirmID!=null){ confirmID.removeAttribute('disabled') }
             }
         }
+        selectCcode(){     // 롯데
+            let Object = this.productList;
+
+            Object = this.productList.filter(e => {
+                return e.name.includes(this.compoanySearch)
+            })
+            this.productList = Object;
+            // return this.productList.filter(e => {
+            //     return e.name.includes(this.compoanySearch)
+            //    })
+        }
+
         @Watch('totalAmt') onTotalamtChange(){ //거래금액 변경시
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.totalAmt)){
@@ -723,6 +741,7 @@
             this.saupId = data.saupId; //사업자 번호
             this.shopNm = data.shopNm; //가맹점명
             this.soluId = data.soluId; //가맹점명
+            this.compoanyCode = data.subSaup
             CommonBoardService.getListDatas('company',null,null).then(e=>{
 
             });
@@ -740,3 +759,8 @@
         }
     }
 </script>
+
+<style >
+    .dropdown.icon {display: none !important;}
+    .ui.search.dropdown > .text {bottom: 4px}
+</style>

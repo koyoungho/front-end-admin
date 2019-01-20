@@ -33,6 +33,10 @@ Vue.use(VueSweetalert2 , alertOptions);
 import Spinner from 'vue-simple-spinner'
 Vue.use(Spinner)
 
+import {ModelListSelect} from 'vue-search-select'
+Vue.component('ModelListSelect',ModelListSelect)
+
+
 /** editor**/
 import tinymce from 'vue-tinymce-editor'
 Vue.component('tinymce', tinymce)
