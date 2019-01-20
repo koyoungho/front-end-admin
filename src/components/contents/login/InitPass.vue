@@ -363,7 +363,6 @@
                     return;
                 }
             ).catch((response) =>  {
-                console.log(response)
                 alert('비밀번호 변경중 오류가 발생하였습니다.\n다시 시도하세요.')
             });
         }

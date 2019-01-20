@@ -157,13 +157,10 @@
         }
 
         checkBoxEvent(data){
-            console.log(data); // 체크한데이터 받는다
         }
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(data){
-            console.log('클릭 데이터 표시')
-            console.log(data)
             if(data.key=='id'){ //ID 클릭시
 
                 if(data.row.role == '0006'){ // 매장 사용자
@@ -175,7 +172,6 @@
 
                         data['entranceUrl'] = 'mnUserList';
                         data['nextUrl'] = 'modStoreUser';
-                        console.log(data)
                         //OTP인증 화면으로 이동
                         this.$router.push({ name:'mnUserOtp' , params: { reqParams : data } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
@@ -206,7 +202,6 @@
                 Vue.swal({text: '사업자등록증 파일이 없습니다.'});
                 return;
             }else {
-                console.log('사업자등록증 파일 다운로드');
                 //this.rowData = data.row;
                 //this.popComfirm();
 
@@ -218,7 +213,6 @@
                     responseType: 'blob', // important
                     headers: {"x-auth-token": sessionStorage.accessToken}
                 }).then((response) => {
-                    console.log(response)
                     // It is necessary to create a new blob object with mime-type explicitly set
                     // otherwise only Chrome works like it should
                     var newBlob = new Blob([response.data],{type: 'application/xlsx'})
@@ -253,7 +247,6 @@
                     responseType: 'blob', // important
                     headers: {"x-auth-token": sessionStorage.accessToken}
                 }).then((response) => {
-                    console.log(response);
                     const url = window.URL.createObjectURL(new Blob([response.data]));
                     const link = document.createElement('a');
                     link.href = url;

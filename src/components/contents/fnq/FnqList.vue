@@ -12,7 +12,7 @@
                 <button type="button" class="btn_m01 bg02" v-on:click="regFnq">자주묻는 질문 등록</button>
             </div>
 
-            <template v-if="role == '0001' || role == '0003'">
+            <template v-if="role == '0001' || role == '0003' ||  role == '0002'">
                 <!--리스트-->
                 <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </template>
@@ -206,7 +206,6 @@
         dataEvent(es){
             //데이터 로딩된후 이벤트를 받으면  변경된 페이지 정보를 전달해준다.
             if(es.lastPage > 0){
-                console.log(this.$children['0']);
                 this.$children['0'].defaultPaging(es)
                 this.$children['0'].arrayPaging(es);
             }

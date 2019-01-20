@@ -59,7 +59,6 @@
             this.saupId = this.reqObjectKey.saupjangDto.saupId; //사업자등록번호
             this.shopNm = this.reqObjectKey.saupjangDto.shopNm; //매장명
 
-            console.log(this.reqObjectKey.accounts.length)
             if(this.reqObjectKey.accounts != null && this.reqObjectKey.accounts.length < 2){
                 this.manageId = this.reqObjectKey.accounts[0].id;
             }else if(this.reqObjectKey.accounts != null && this.reqObjectKey.accounts.length > 1){

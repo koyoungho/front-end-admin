@@ -164,11 +164,9 @@
                 aprvCount : this.aproCnt,
                 jumcode : this.jumCode
             };
-            console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
             CommonBoardService.postListDatas('approvalband', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         alert('승인대역이 등록되었습니다.')
                         this.$router.push('/home/approvalBandList')
@@ -177,10 +175,8 @@
                     }
                 }
                 , (error) => {
-                    //console.log(error);
                 }
             ).catch((response) => {
-                //console.log(response);
             });
 
             //this.$router.push('/home/approvalBandList')
@@ -198,7 +194,6 @@
         }
 
         @Watch('companyCode') onChange(){
-            console.log('회사코드')
             this.companyCd = this.companyCode;
         }
 
@@ -256,7 +251,6 @@
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         if(saupmsg != null){
                             saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
@@ -270,12 +264,10 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                     this.jumCodeYn = '';
                 }
             ).catch((response) => {
                 this.jumCodeYn = '';
-                console.log(response);
             });
         }
 
@@ -327,12 +319,10 @@
             };
 
             //승인대역 대역폭 사용가능 여부 확인
-            console.log('대역폭 사용가능 여부 체크')
             //승인대역 대역폭 체크
             let bandChk : boolean = true;
             CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code === '000') { //대역폭 사용가능
                         bandChk = false;
                     } else { //대역폭 사용 못함
@@ -381,7 +371,6 @@
                             //this.receiptSaupList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {

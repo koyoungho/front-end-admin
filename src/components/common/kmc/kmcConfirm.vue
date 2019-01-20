@@ -9,12 +9,15 @@
         <h2>본인인증</h2>
         <a  class="btn_close b-close" v-on:click="closeKcmNull()">Close</a>
       </div>
-      <div class="popup_body" style="width: 418px;height: 643px">
-        <!-- popup content -->
-        <!--<form  v-bind:="sendCerticication" name="kmcForm" id="kmcForm"  target="cert"   method="post" >-->
-        <!--<input type="hidden" name="tr_cert" v-bind:value="tr_cert">-->
-        <!--<input type="hidden" name="tr_url"  v-bind:value="tr_url">-->
-        <!--</form>-->
+      <div class="popup_body" style="width: 418px;height: 713px">
+        <div >
+          <p class="sub_text">
+            <a v-on:click="IeShow" >
+              IE 에서 본인인증 창이 보이지 않을때 해결방법 <strong>▶ Help</strong>
+            </a>
+          </p>
+        </div>
+
         <iframe name="cert" id="cert" style="width:100%; height:100%; border:none;"   v-on:load ="eventGet"></iframe>
       </div>
     </div>
@@ -23,7 +26,10 @@
       <input type="hidden"  name="tr_cert" :value="tr_cert">
       <input type="hidden"  name="tr_url" :value="tr_url">
     </form>
+    <ieShowFrm v-show="ieShowYn" @close="ieShowYn=false"></ieShowFrm>
   </div>
+
+
 </template>
 
 
@@ -32,10 +38,11 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import {environment} from '../../../utill/environment';
+    import ieShowFrm from "@/components/common/kmc/ieShowFrm.vue";
 
     @Component({
         components: {
-            kmcConfirm
+            kmcConfirm, ieShowFrm
         }
     })
     export default class kmcConfirm extends Vue {
@@ -48,6 +55,7 @@
         result : boolean = false;
         tr_cert: any = '';
         tr_url: any = '';
+        ieShowYn :boolean =false;
 
 
         //돔생성전 호출자
@@ -151,14 +159,17 @@
             }
         }
 
-
-
         updated() {
             this.$nextTick(function () {
                 this.eventGet()
             });
             // data 값 변조하면됨 Y / N   1,2? 이런값들 변경시 필요함
         }
+
+      IeShow(){
+        this.ieShowYn = true;
+      }
+
     }
 
 </script>

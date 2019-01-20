@@ -155,7 +155,6 @@
 
         }
         selectedRow(obj) {
-            //console.log(obj);
             let selectedRow : any  = {};
             selectedRow['gajumId'] = obj.gajumId;
             selectedRow['saupId'] = obj.saupId;

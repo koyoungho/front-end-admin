@@ -427,7 +427,6 @@
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
-            console.log(menuList)
             let programId = 'storeList'; //메뉴ID
             for(let i=0; i<menuList.length; i++){
                 for(let j=0; j<menuList[i].subMenuDtos.length; j++){
@@ -532,7 +531,6 @@
 
                 CommonBoardService.getListDatas('store/'+this.saupId, null, null).then((response) => {
                     let result: any =  response.data;
-                    console.log(result)
                     if(result != null){
                         this.getSelectList('APRO'); //승인코드
 
@@ -590,7 +588,6 @@
                         }
 /* 임시 주석 처리
                         //승인대역 정보
-                        console.log(result.approvalBandList.length);
 
                         this.alrAproBandCnt = result.approvalBandList.length; //기등록된 승인대역 카운트(승인대역 row 삭세시 체크)
                         this.alrAdminCnt = result.accountList.length; //기등록된 관리자정보 카운트(관리자정보 row 삭세시 체크)
@@ -618,8 +615,6 @@
                                 this.approvalList[a].aproGbn = '2';
                             }
 
-                            console.log('승인대역 정보 있음');
-                            console.log(this.approvalList.length)
                         }
 
                         //관리자 정보
@@ -642,8 +637,6 @@
                             this.adminList[a].adminIdYn = 'Y'; //기존 등록건은 ID 중복확인을 한것으로 함
                             this.adminList[a].lastConnDate = '2018.12.01 15:35:13'; //변경해야해!!
 
-                            console.log('관리자 정보 있음');
-                            console.log(this.adminList.length)
                         }
 임시 주석 처리 */
                     }else{
@@ -683,8 +676,6 @@
                 for(let i=0; i<this.approvalList.length; i++){
                     if(this.approvalList[i].inputDisGbn != true && this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
 
-                        console.log('승인내역 사용가능 여부 확인!!!!!!!!!!!!!!!!!! ');
-                        console.log('승인내역 건수 :: '+this.approvalList.length);
 
                         //승인대역 대역폭 체크
                         let bandChk : boolean = true;
@@ -697,10 +688,8 @@
                             bandData['newApprovedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
 
                             //승인대역 대역폭 사용가능 여부 확인
-                            console.log('대역폭 사용가능 여부 체크')
                             CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
                                     let result: any = response.data;
-                                    console.log(result)
                                     if (result.code === '000') { //대역폭 사용가능
                                         bandChk = false;
                                     } else { //대역폭 사용 못함
@@ -771,11 +760,6 @@
             let aproData : any = {};
             let addData2 : any = []; //승인대역정보 배열
 /* 임시 주석 처리
-            console.log('승인대역 정보 뿌리기')
-            console.log(this.approvalList)
-            console.log('관리자 정보 뿌리기')
-            console.log(this.adminList)
-            console.log('=======================================================')
 
             if(this.approvalList.length > 0){
                 for(let j=0; j<this.approvalList.length; j++){
@@ -794,7 +778,6 @@
                 }
             }
 임시 주석 처리 */
-            console.log(addData2);
             reqData['approvalBand'] = addData2; //승인대역 정보 셋팅
 
             //let admData: any = {};
@@ -824,7 +807,6 @@
             // api 데이터 호출(매장 tnwjd)
             CommonBoardService.updateListData('store/'+this.saupId, null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         alert('매장 정보가 수정되었습니다.');
                         this.$router.push({name:'storeList'});
@@ -836,7 +818,6 @@
                 , (error) => {
                 }
             ).catch((response) => {
-                console.log(response);
             });
 
             //지점등록 완료 화면으로 이동
@@ -887,7 +868,6 @@
         }
         //관리자 삭제
         delAdmin() {
-            console.log(this.adminList.length)
             let admCnt = this.adminList.length;
             if(admCnt > 1){
                 //this.approvalList.$remove(1)
@@ -950,7 +930,6 @@
             if(this.approvalList.length > 0){
                 for(let i=0; i<this.approvalList.length; i++){
                     if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
-                        console.log('승인내역 건수 :: '+this.approvalList.length);
                         if(this.approvalList[i].jumCode == undefined || this.approvalList[i].jumCode == '') {
                             alert('점코드를 입력하세요.')
                             return;
@@ -1071,11 +1050,9 @@
                     }
                 }
                 , (error) => {
-                    //console.log('가맹점 등록 오류');
                     //this.saupIdYn = '';
                 }
             ).catch((response) => {
-                console.log(response);
                 //this.saupIdYn = '';
             });
         }
@@ -1097,7 +1074,6 @@
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         if(saupmsg != null){
                             saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
@@ -1115,7 +1091,6 @@
                 }
             ).catch((response) => {
                 this.approvalList[idx].jumCodeYn = '';
-                console.log(response);
             });
         }
 
@@ -1224,7 +1199,6 @@
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 
@@ -1238,14 +1212,12 @@
 
         //사업장 주소 셋팅
         setDataAddr(data) {
-            //console.log(data)
             this.addr1 = data.addr;
             this.zipCode = data.zip;
         }
 
         //회사코드 select 변경시 코드값 표시
         companyCodeCh(idx: number){
-            //console.log(idx);
             this.approvalList[idx].companyCode = this.approvalList[idx].companyCodeNm;
         }
 

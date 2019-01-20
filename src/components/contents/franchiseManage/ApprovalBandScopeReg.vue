@@ -125,11 +125,9 @@
 
             let reqParam : any = { 'addDto' : reqData };
 
-            console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
             CommonBoardService.postListDatas('approvalband/range', null, reqData).then((response) => {
                     //let result: any = response.data;
-                    console.log(response);
                     if(response.status == 200 || response.status == 201) {
                         alert('승인대역 범위 등록되었습니다.')
                         this.$router.push('/home/approvalBandScopeList')
@@ -144,7 +142,6 @@
                     }
                 }
             ).catch((response) => {
-                console.log(response);
             });
 
             //this.$router.push('/home/approvalBandList')
@@ -200,12 +197,10 @@
             };
 
             //승인대역 대역폭 사용가능 여부 확인
-            console.log('승인대역폭 사용가능 여부 체크')
             //승인대역 대역폭 체크
             let bandChk : boolean = true;
             CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code === '000') { //대역폭 사용가능
                         bandChk = false;
                     } else { //대역폭 사용 못함
@@ -254,11 +249,9 @@
                             //this.receiptSaupList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 

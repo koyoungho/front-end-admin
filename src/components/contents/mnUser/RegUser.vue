@@ -353,7 +353,6 @@
             }
             CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code === '000') {
                         this.idChkYn = 'Y'
                         if(id_msg!=null){ id_msg.innerHTML = '사용가능한 ID입니다.'; }
@@ -388,10 +387,8 @@
                 checkString : this.saupId,
                 checkSum : ''
             }
-            console.log('사업자등록번호 사용가능 여부 체크')
             CommonBoardService.postListDatas('validation/saupid', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code === '000') {
                         //this.saupIdChkYn = 'Y'
                         if(saupid_msg!=null){ saupid_msg.innerHTML = '사용가능한 사업자등록번호입니다.'; }
@@ -497,7 +494,6 @@
 
         //계정 등록
         insertInfo(){
-            console.log('계정등록')
 
             let chkList : any = this.menuList; //메뉴 권한 정보
 
@@ -560,7 +556,6 @@
             // api 데이터 호출(계정 정보 수정)
             CommonBoardService.postListData('accounts', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         //계정 수정 완료
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
@@ -578,7 +573,6 @@
                     console.log(error);
                 }
             ).catch((response) => {
-                console.log(response);
             });
 
         }

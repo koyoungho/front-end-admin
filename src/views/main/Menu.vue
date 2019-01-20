@@ -75,10 +75,6 @@
                     }
                 }
             }
-            console.log('조회권한 있음 ?? :: ' + readShow)
-            console.log('등록권한 있음 ?? :: ' + regShow)
-            console.log('수정권한 있음 ?? :: ' + updShow)
-            console.log('삭제권한 있음 ?? :: ' + delShow)
 */
             /*
             if (this.menuItem == null) {

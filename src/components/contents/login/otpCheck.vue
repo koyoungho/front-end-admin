@@ -24,7 +24,7 @@
                 <p class="form_cert row01">
                   <input type="text" id="" name="" size="" maxlength="" autofocus="autofocus" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber" v-on:keyup.enter="optCallConfirm(otpNumber)">
                   <span class="time_count2" style="right: 228px">{{message}}</span>
-                  <a><span style="margin-left: 10px" v-on:click="reTrans">재전송</span></a>
+                  <!--<a><span style="margin-left: 10px" v-on:click="reTrans">재전송</span></a>-->
                 </p>
               </div>
               <div class="cert_box">
@@ -180,13 +180,8 @@
                 //보안로직포함할곳
                 this.$store.dispatch('OTP_LOGIN', {auth_opt, id})
                     .then((result) => {
-                        console.log('OTP 인증 여부');
-                        console.log(result);
                         if (result == 'success') {
                             sessionStorage.setItem('sisMgtToken',sessionStorage.accountId)
-                            console.log('@@@@@ OPT인증 후 세션 확인 시작!!!')
-                            console.log(sessionStorage)
-                            console.log('@@@@@ OPT인증 후 세션 확인 끝###')
 
                             this.$emit('menuChk');
                             //메뉴권한 부분 추가
@@ -248,7 +243,6 @@
           phoneNum : this.phoneNum
         }
 
-        console.log(this.loginId);
         CommonBoardService.postListDatas('otp',null,otp)
                 .then(result => {
                   if(result.data.code=='000'){

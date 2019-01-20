@@ -223,8 +223,6 @@
             this.getSelectList('GROUP');
 
             this.objectKey = this.$route.params.objectKey;
-            console.log('넘겨받은 값 확인');
-            console.log(this.objectKey);
 
             this.menuView(); //메뉴 정보 조회
 
@@ -250,7 +248,6 @@
                 let mCode = this.objectKey.menuCode; //메뉴코드
                 CommonBoardService.getListDatas('menu-manage', mCode, null).then((response) => {
                     let result: any =  response.data;
-                    console.log(result)
                     if(result != null){
                         this.groupCode = result.groupCode;
                         this.name = result.name;
@@ -351,7 +348,6 @@
                         }
 
                     }else{
-                        console.log('메뉴 조회 실패')
                     }
                     //this.onLoadListView = true;
                 }).catch();
@@ -445,13 +441,6 @@
             let arayObj : any = [];
             let authRow : any = {};
 
-            console.log('system: '+system);
-            console.log('saupja: '+saupja);
-            console.log('call: '+call);
-            console.log('gajum: '+gajum);
-            console.log('jijum: '+jijum);
-            console.log('jijum length: '+jijum.length);
-
             for(let i=0;i<menuAuth.length;i++){ //5개의 관리자
                 authRow = {};
                 if(menuAuth[i] == 'system'){
@@ -519,13 +508,9 @@
             }
 
             reqData['menuRole'] = arayObj;
-            console.log('최종값 확인');
-            console.log(reqData);
 
             // api 데이터 호출(메뉴 등록)
             CommonBoardService.updateListData('menu-manage', this.menuCode, reqData).then((response) => {
-                    console.log('수정결과 확인!!');
-                    console.log(response)
                     if (response.status == 200) {
                         Vue.swal({text:'메뉴 권한이 수정되었습니다.'})
                         //메뉴 수정 완료
@@ -538,10 +523,8 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                 }
             ).catch((response) => {
-                console.log(response);
             });
 
         }
@@ -574,11 +557,9 @@
                             this.menuGroupList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 

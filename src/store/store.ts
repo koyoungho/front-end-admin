@@ -79,11 +79,9 @@ export default new Vuex.Store({
             CommonBoardService.deleteListDatas('auth', null, null).then((response) => {
                 let result: any = response.data;
                 if (result != null && result.code == '000') {
-                    console.log('token delete success');
                 }
             }
             , (error) => {
-                console.log('token delete fail');
             })
             sessionStorage.clear(); //세션스토리지 삭제
         },
@@ -107,9 +105,7 @@ export default new Vuex.Store({
             // 로그인결과 리턴해줌
             return CommonBoardService.postListDatas('auth', null,{id, password})
                 .then(({data}) => {
-                    console.log('login check!!')
                     if(data.code=='000'){
-                        console.log(data)
                         commit('LOGIN', data)
                         //commit('INFO_SET', data)
                         return "success"
@@ -127,19 +123,15 @@ export default new Vuex.Store({
             let apiUrl = 'otp/'+auth_opt+'/login';
             return CommonBoardService.postListDatas(apiUrl, null,{id})
                 .then(({data}) => {
-                    console.log('otp login check!!')
-                    console.log(data)
                     if(data.code=='000'){
                         //commit('LOGIN', data)
                         commit('OTP_LOGIN', data)
                         return "success"
                     }else{ // 응답코드가 000이 아닌경우에도 세션스토리지에 값 넣어줌
-                        console.log('OTP 인증코드가 맞지않습니다1.')
                         commit('INFO_SET', data)
                         return "noinfo"
                     }
                 }).catch(e=>{
-                        console.log('OTP 인증코드가 맞지않습니다2.')
                         return 'fail'
                     }
                 )

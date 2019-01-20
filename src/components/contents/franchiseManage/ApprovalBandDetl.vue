@@ -153,7 +153,6 @@
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
-            console.log(menuList)
             let programId = 'approvalBandList'; //메뉴ID
             for(let i=0; i<menuList.length; i++){
                 for(let j=0; j<menuList[i].subMenuDtos.length; j++){
@@ -167,8 +166,6 @@
                     }
                 }
             }
-            console.log('수정 권한 확인 ?? :: ' + this.btnUpdShow)
-            console.log('삭제 권한 확인 ?? :: ' + this.btnDelShow)
 
             this.getSelectList('SEARCH'); //회사코드
             this.getSelectList('APRO'); //승인코드
@@ -200,7 +197,6 @@
 
             CommonBoardService.deleteListDatas('approvalband', null, reqData).then((response) => {
                 let result: any =  response.data;
-                console.log(response)
                 if(result != null){
                     alert('승인대역이 삭제되었습니다.')
                     this.$router.push('/home/approvalBandList')
@@ -213,8 +209,6 @@
         //상세정보 조회
         detailView(){
             this.objectKey = this.$route.params.objectKey;
-            console.log('넘겨받은 값 확인');
-            console.log(this.objectKey);
 
             if(!this.objectKey){
                 alert('접근할수 없습니다')
@@ -229,7 +223,6 @@
 
                 CommonBoardService.getListDatas('approvalband/'+this.aproCode, null, reqData).then((response) => {
                     let result: any =  response.data;
-                    console.log(result)
                     if(result != null){
                         this.saupId = result.saupId; //사업자등록번호
                         this.companyCode = result.subSaup; // 회사코드 select
@@ -281,11 +274,9 @@
                 newJumcode : this.jumCode,
                 originJumcode : this.oldJumCode
             };
-            console.log('승인대역 등록')
             // api 데이터 호출(승인대역 등록)
             CommonBoardService.updateListData('approvalband', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         alert('승인대역이 수정되었습니다.')
                         this.$router.push('/home/approvalBandList')
@@ -315,7 +306,6 @@
         }
 
         @Watch('companyCode') onChange(){
-            console.log('회사코드')
             this.companyCd = this.companyCode;
         }
 
@@ -364,7 +354,6 @@
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         if(saupmsg != null){
                             saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
@@ -378,12 +367,10 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                     this.jumCodeYn = '';
                 }
             ).catch((response) => {
                 this.jumCodeYn = '';
-                console.log(response);
             });
         }
 
@@ -431,12 +418,10 @@
             };
 
             //승인대역 대역폭 사용가능 여부 확인
-            console.log('대역폭 사용가능 여부 체크')
             //승인대역 대역폭 체크
             let bandChk : boolean = true;
             CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code === '000') { //대역폭 사용가능
                         bandChk = false;
                     } else { //대역폭 사용 못함
@@ -502,11 +487,9 @@
                             //this.receiptSaupList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 

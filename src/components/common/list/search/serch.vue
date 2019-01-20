@@ -360,7 +360,6 @@
                         let optVal :string = e.optVal
                     CommonBoardService.getListDatas(e.api, null, '').then((response) => {
                             let result: any = response.data;
-                            // console.log(result)
 
                             if (result.length > 0) {
                                 e.option = result;
@@ -380,7 +379,6 @@
                     }else{
                         CommonBoardService.getListDatas(e.api, null, '').then((response) => {
                                 let result: any = response.data;
-                                // console.log(result)
 
                                 if (result.length > 0) {
                                     e.option = result;

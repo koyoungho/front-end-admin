@@ -365,10 +365,6 @@
         //돔생성전 호출자
         created() {
 
-            console.log('세선정보 확인===========>>>>>')
-            console.log(sessionStorage)
-            console.log('세선정보 확인===========<<<<<')
-
             //data: {
             //승인대역 정보
             this.approvalList = [
@@ -448,8 +444,6 @@
                 for(let i=0; i<this.approvalList.length; i++){
                     if(this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != ''){ //회사코드를 선택하면 승인대역 정보는 필수 입력항목이 됨
 
-                        console.log('승인내역 사용가능 여부 확인!!!!!!!!!!!!!!!!!! ');
-                        console.log('승인내역 건수 :: '+this.approvalList.length);
 
                         //승인대역 대역폭 체크
                         let bandChk : boolean = true;
@@ -462,7 +456,6 @@
                             bandData['newApprovedbandTo'] = this.approvalList[i].aproBandTo; //끝 대역
 
                             //승인대역 대역폭 사용가능 여부 확인
-                            console.log('대역폭 사용가능 여부 체크')
                             CommonBoardService.postListDatas('validation/approvedband', null, bandData).then((response) => {
                                     let result: any = response.data;
                                     console.log(result)
@@ -527,15 +520,9 @@
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
 
             //승인대역 정보
-            //let aproData: any = [];
             let aproData : any = {};
             let addData2 : any = []; //승인대역정보 배열
 
-            // console.log('승인대역 정보 뿌리기')
-            // console.log(this.approvalList)
-            // console.log('관리자 정보 뿌리기')
-            // console.log(this.adminList)
-            // console.log('=======================================================')
 
 /* 임시 주석 처리 20190113
             if(this.approvalList.length > 0){
@@ -555,8 +542,6 @@
                 }
             }
 임시 주석 처리 20190113 */
-            console.log('승인대역 정보 확인');
-            console.log(addData2);
             reqData['approvalBandAddDtos'] = addData2; //승인대역 정보 셋팅
 
             //let admData: any = {};
@@ -581,18 +566,13 @@
             }
 임시 주석 처리 20190113 */
 
-            console.log('승인대역 정보 확인');
-            console.log(addData3);
             reqData['accounts'] = addData3; //관리자 정보 셋팅
 
-            console.log('최종 등록 정보 확인');
-            console.log(reqData);
 
 
             // api 데이터 호출(가맹점 등록)
             CommonBoardService.postListDatas('jijum', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null) {
                         //지점등록 완료 화면으로 이동
                         this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
@@ -602,10 +582,8 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                 }
             ).catch((response) => {
-                console.log(response);
             });
 
             //지점등록 완료 화면으로 이동
@@ -643,7 +621,6 @@
         }
         //관리자 삭제
         delAdmin() {
-            console.log(this.adminList.length)
             let admCnt = this.adminList.length;
             if(admCnt > 1){
                 //this.approvalList.$remove(1)
@@ -830,7 +807,6 @@
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/saupid', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         this.saupIdYn = 'Y';
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
@@ -847,19 +823,15 @@
                 }
                 , (error) => {
                     //console.log('가맹점 등록 오류');
-                    console.log(error);
                     this.saupIdYn = '';
                 }
             ).catch((response) => {
-                console.log(response);
                 this.saupIdYn = '';
             });
         }
 
         //점코드 유효성 체크
         chkJumCode(idx: number) {
-            console.log('===================')
-            console.log(idx)
 
             if(this.saupId == ''){
                 alert('사업자등록번호를 입력하셔야 확인이 가능합니다.');
@@ -887,7 +859,6 @@
             // api 데이터 호출(사업자등록번호 유효성 체크)
             CommonBoardService.postListDatas('validation/jumcode', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result);
                     if (result != null && result.code == '000') {
                         if(saupmsg != null){
                             saupmsg.innerHTML = "사용가능한 점코드입니다."; //화면에 메시지 보이기
@@ -901,12 +872,10 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                     this.approvalList[idx].jumCodeYn = '';
                 }
             ).catch((response) => {
                 this.approvalList[idx].jumCodeYn = '';
-                console.log(response);
             });
         }
 
@@ -955,7 +924,6 @@
             // api 데이터 호출
             CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
                     let result: any = response.data;
-                    console.log(result)
                     if (result.code == '000') {
                         this.adminList[idx].adminIdYn = 'Y';
                         if(idmsg!=null){ idmsg.innerHTML = '사용 가능한 아이디입니다.'; }
@@ -966,11 +934,9 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
                     this.adminList[idx].adminIdYn = '';
                 }
             ).catch((response) => {
-                console.log(response);
                 this.adminList[idx].adminIdYn = '';
             });
         }
@@ -1015,11 +981,9 @@
                             this.saupUpjongList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 
@@ -1062,7 +1026,6 @@
 
         //가맹점 팝업 보임
         gajiBox(text) {
-            console.log(text)
             this.showModal1 = true;
             //this.postText = "서울시금천구";
         }
@@ -1092,9 +1055,6 @@
 
         }
         getCodeList(data){ // 회사코드 선택 데이터 받는다
-            console.log('받은 회사코드')
-            console.log(data)
-            console.log('받은 회사코드 수 :: ' +data.length);
 
             if(data!=null){
                 this.saupSubSaupCnt = data.length;

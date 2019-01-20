@@ -79,7 +79,6 @@
                     }
                 }
             }
-            console.log('등록 권한 확인 ?? :: ' + this.regbtnShow)
 
             if(sessionStorage.role == '0002') { //현금영수증 사업자
                 this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
@@ -150,13 +149,10 @@
         //돔렌더링완료시 진행
         mounted() {
             let comCode = document.getElementById('soluId');
-            console.log('soluId')
-            console.log(comCode)
             //comCode.childNodes() = this.receiptSaupList;
         }
 
         checkBoxEvent(data){
-            console.log(data); // 체크한데이터 받는다
         }
 
         // 뷰페이지 클릭이벤트 받아서 여는곳
@@ -165,7 +161,6 @@
             if(sessionStorage.role == '0003'){
                 row['entranceUrl'] = 'storeList';
                 row['nextUrl'] = 'storeDetl';
-                console.log(row)
                 //OTP인증 화면으로 이동
                 this.$router.push({ name:'franchiseOtp' , params: { reqParams : row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
             }else{
@@ -203,7 +198,6 @@
             // api 데이터 호출
             CommonBoardService.getListDatas(apiUrl, null, reqData).then((response) => {
                     let result: any = response.data;
-                    //console.log(result)
                     if (result.length > 0) {
                         if(code == 'APRO'){ //승인코드
                             //this.aproCodeList = result;
@@ -229,11 +223,9 @@
                             this.receiptSaupList = arrData;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 

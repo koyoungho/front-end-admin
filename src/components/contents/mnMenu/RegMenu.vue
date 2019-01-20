@@ -318,12 +318,6 @@
             let arayObj : any = [];
             let authRow : any = {};
 
-            console.log('system: '+system);
-            console.log('saupja: '+saupja);
-            console.log('call: '+call);
-            console.log('gajum: '+gajum);
-            console.log('jijum: '+jijum);
-            console.log('jijum length: '+jijum.length);
 
             for(let i=0;i<menuAuth.length;i++){ //5개의 관리자
                 authRow = {};
@@ -392,8 +386,6 @@
             }
 
             reqData['menuRole'] = arayObj;
-            console.log('최종값 확인');
-            console.log(reqData);
 
             // api 데이터 호출(매뉴 등록)
             CommonBoardService.postListDatas('menu-manage', null, reqData).then((response) => {
@@ -414,10 +406,8 @@
                     }
                 }
                 , (error) => {
-                    console.log('error : '+error);
                 }
             ).catch((response) => {
-                console.log('catch : '+response);
             });
 
         }
@@ -450,11 +440,9 @@
                             this.menuGroupList = result;
                         }
                     } else {
-                        console.log('코드리스트 조회 오류')
                     }
                 }
                 , (error) => {
-                    console.log(error)
                 }
             ).catch();
 

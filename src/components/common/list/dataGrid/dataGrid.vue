@@ -185,7 +185,7 @@
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
                 <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}
-                  <template v-if="saupFileNm!=null">
+                  <template v-if="listData[index].saupFileNm">
                   <br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font>
                   </template>
                 </span></td>
@@ -403,7 +403,6 @@
                 }
             }
             else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rsnCode'){
-                console.log('rsnCode || ' + this.listData[listIndex].rsnCode )
                 if(this.listData[listIndex].rsnCode !='null'){
                     trObject.setAttribute('style','')
                 }else{
@@ -428,7 +427,6 @@
                 else{
                     this.lineCheckOk = false;
                 }
-                console.log('다입력됨')
             }
             else if( (this.listData[listIndex].fixPerm =='' || this.listData[listIndex].fixPerm ==null) && (this.listData[listIndex].fixDate ==''  || this.listData[listIndex].fixDate ==null)
                 && (this.listData[listIndex].fixSaleDate=='' || this.listData[listIndex].fixSaleDate==null)
@@ -810,7 +808,6 @@
             // api 데이터 호출
             CommonBoardService.updateListData('accounts/ids/approval', null, arayData).then((response) => {
                     //let result: any = response.data;
-                    console.log(response)
                     if (response.status == 200) {
                         Vue.swal({text: '계정 승인처리 되었습니다.'});
                         this.$emit('authCompl'); //승인처리 완료후 페이지 로딩

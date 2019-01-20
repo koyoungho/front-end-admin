@@ -33,7 +33,6 @@
           next();
         } else {
           if (sessionStorage.accessToken) { // 토큰
-            // console.log('라우터에 접근 토큰이 있으면 1 ㅇㅋ');
             if (loginOk) { // 메타확인
               let result = 'sucess';
               let authMenu = sessionStorage.getItem('authMenu');
@@ -63,7 +62,6 @@
               }
             } else { // 메타체크안하는 파일일경우 그냥 넘김
               next();
-              // console.log('메타체크안함 넘김');
             }
           }
           else {  // 토큰이 없을경우 무조건 로그인페이지로 돌림

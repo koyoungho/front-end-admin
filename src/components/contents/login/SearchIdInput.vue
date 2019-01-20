@@ -307,7 +307,6 @@
             if(response){
                 if (response.success == 'Y') {
                     //let reqData: any = {};
-                    console.log(response);
                     if(response.id == null || response.id == ''){ //조회된 ID없음
                         alert('아이디가 존재하지 않습니다');
                         this.$router.push({path: '/searchIdInput'});

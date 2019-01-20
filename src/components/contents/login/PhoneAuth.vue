@@ -126,7 +126,6 @@
                         }
                     }
                     , (error) => {
-                        console.log(error);
                     }
                 ).catch((response) => {
                 });
@@ -152,7 +151,6 @@
                     // api 데이터 호출(OTP 인증번호 검증)
                     CommonBoardService.postListDatas('otp', this.authNumber, authData).then((response) => {
                             let result: any = response.data;
-                            console.log(result);
                             if (result != null && result.code == '000') {
                                 //this.confirmButton = false;
                                 this.authId = result.extra; //인증 완료후 받은 ID
@@ -165,10 +163,8 @@
                             }
                         }
                         , (error) => {
-                            console.log(error);
                         }
                     ).catch((response) => {
-                        console.log(response);
                     });
                 }else{
                     alert('전송된 인증번호를 입력하세요.');
@@ -178,17 +174,11 @@
         }
 
         updateInfo(){
-            console.log('수정 API 찌르기 직전');
-            console.log(this.reqObjectKey.gajumId);
-            console.log(this.reqObjectKey);
-            console.log(this.nextUrl);
             let apiUrl = '';
 
             let reqData = this.reqObjectKey;
             reqData['accountId'] = this.authId; //opt인증받은 ID 있어야 수정가능(필수!!)
 
-            console.log('OBJECT로 변경');
-            console.log(reqData);
 
             if(this.reqObjectKey != null){
                 if(this.reqGbn == 'branch'){ //지점 수정
@@ -208,11 +198,6 @@
             }
 
             CommonBoardService.updateListData(apiUrl, null, reqData).then((response) => {
-                    console.log('수정 API 결과 11')
-                    console.log(response)
-                    //let result: any = response.data;
-                    console.log('수정 API 결과 22')
-                    //console.log(result)
                     //if (result.code === '000' || ) { //성공
                     if (response.status == 200) { //성공
                         alert('수정되었습니다.');

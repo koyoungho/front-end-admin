@@ -250,11 +250,7 @@
         //돔생성전 호출자
         created() {
 
-            console.log('가맹점 ID 확인#####')
-            console.log(this.gajumNum)
-
             if(this.gajumNum != null && this.gajumNum != ''){
-                console.log('가맹점 검색 감추기!!')
                 this.gajumId = this.gajumNum; //가맹점 ID 셋팅
                 this.gajumHide = false; //가맹점 검색 감추기
                 this.jijumShow = true; //지점 검색 보이기
@@ -267,7 +263,6 @@
 
         }
         selectedRow(obj) {
-            console.log(obj);
 
             if(obj.gajuGbn == 'gajum'){ //가맹점 선택인 경우
                 this.jijumBtnShow = true;
@@ -282,15 +277,12 @@
                 selectedRow['jijumId'] = obj.jijumId; //지점 ID
                 selectedRow['jijumSaupId'] = obj.saupId; //지점 사업자번호
                 selectedRow['jijumNm'] = obj.shopNm; //지점명
-                console.log('지점 선택!!!')
-                console.log(selectedRow);
                 this.$emit('selectedGaJijum', selectedRow); //선택한 가맹점만 값 넘김
                 this.$emit('gajiumClose')
             }
         }
 
         selectedJijumRow(obj) {
-            console.log(obj);
 
             let selectedRow: any = {};
             selectedRow['gajumId'] = this.gajumId; //가맹점 ID
@@ -299,8 +291,6 @@
             selectedRow['jijumId'] = obj.jijumId; //지점 ID
             selectedRow['jijumSaupId'] = obj.saupId; //지점 사업자번호
             selectedRow['jijumNm'] = obj.shopNm; //지점명
-            console.log('지점 선택!!!')
-            console.log(selectedRow);
             this.$emit('selectedGaJijum', selectedRow); //선택한 가맹점만 값 넘김
             this.$emit('gajiumClose')
         }
