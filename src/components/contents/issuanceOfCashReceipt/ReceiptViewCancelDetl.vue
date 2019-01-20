@@ -248,9 +248,9 @@
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow" v-if="cancleReceipActionBtn">발급취소</button>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
-            <div style="text-align:right">
-                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
-            </div>
+            <!--<div style="text-align:right">-->
+                <!--<button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>-->
+            <!--</div>-->
             <!-- tbl list box -->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="onLoadListView"  v-on:listView="iocViewEvent"></ListComponent>
             <!-- //tbl list box -->
@@ -573,7 +573,7 @@
 
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
-                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel",
+                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
                 method: 'GET',
                 responseType : 'blob', // important
                 headers : { "x-auth-token" : sessionStorage.accessToken }
