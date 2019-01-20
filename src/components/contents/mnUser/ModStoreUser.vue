@@ -356,6 +356,7 @@
                         this.saupType = result.saupType;
                         this.lawNum = result.lawNum;
                         this.status = result.status;
+                        this.statusNm = result.statusNm
                         this.oldStatus = result.status;
                         this.zipCode = result.zipCode;
                         this.addr1 = result.addr1;
