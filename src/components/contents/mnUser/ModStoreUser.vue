@@ -37,7 +37,7 @@
                         <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
-                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" maxlength="12">
+                            <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" @keyup="changeRepPhonenum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
@@ -408,7 +408,15 @@
 
         }
 
-        @Watch('repPhonenum') changeRepPhonenum(){
+        @Watch('repPhonenum1') changeRepPhonenum(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.repPhonenum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.repPhonenum = '';
+            }
+        }
+
+        changeRepPhonenum(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.repPhonenum)){
                 Vue.swal({ text: '숫자만가능합니다'});

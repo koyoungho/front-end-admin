@@ -184,7 +184,11 @@
                  </template>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
-                <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}<br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font></span></td>
+                <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}
+                  <template v-if="saupFileNm!=null">
+                  <br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font>
+                  </template>
+                </span></td>
               </template>
 
 
