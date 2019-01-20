@@ -408,7 +408,7 @@
 
         }
 
-        @Watch('repPhonenum1') changeRepPhonenum(){
+        @Watch('repPhonenum1') changeRepPhonenum1(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.repPhonenum)){
                 Vue.swal({ text: '숫자만가능합니다'});

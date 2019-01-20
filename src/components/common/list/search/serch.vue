@@ -467,7 +467,11 @@
             this.searchItem.filter(e=>{
                 if(e.type=='radio' ){
 
-                }else{
+                }
+                else if(e.id=='onlineYn'){
+
+                }else
+                {
                     if(e.disable == true) { //로그인 권한에 따라 변경하지 못하는 값
                     }else{
                         e.value="";
