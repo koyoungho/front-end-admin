@@ -393,7 +393,7 @@
             }
         }*/
 
-        @Watch('repPhonenum11') changeRepPhonenum(){
+        @Watch('repPhonenum11') changeRepPhonenum1(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.repPhonenum)){
                 Vue.swal({ text: '숫자만가능합니다'});
@@ -401,7 +401,7 @@
             }
         }
 
-        @Watch('lawNum11') changeLawNm(){
+        @Watch('lawNum11') changeLawNm1(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.lawNum)){
                 Vue.swal({ text: '숫자만가능합니다'});
@@ -409,7 +409,7 @@
             }
         }
 
-        @Watch('phoneNum11') changePhoneNum(){
+        @Watch('phoneNum11') changePhoneNum1(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.phoneNum)){
                 Vue.swal({ text: '숫자만가능합니다'});
