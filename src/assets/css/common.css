@@ -1294,9 +1294,9 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 
 @media print {
-  #header, #header2, #footer {display: none;}
+  #header, #header2, #footer,h3 {display: none;}
   .no_print {display: none !important;}
-  .print_area {width: 100% !important;margin-top:5px;}
+  .print_area {width: 100% !important; margin-top: 5px}
  
   #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0);}
   #popup_header,#bottom_area {display: none;}
@@ -1305,6 +1305,8 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
     size: 200mm 200mm;
   }
 }
+
+
 
 /* media 480  */
 @media only screen and (max-width: 480px) {
@@ -1377,6 +1379,20 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   justify-content: center;
   align-items: center;
 }
+
+/* Loading bar */
+#loading_bar2 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
 /* SearchBox css */

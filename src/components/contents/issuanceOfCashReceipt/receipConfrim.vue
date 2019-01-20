@@ -14,9 +14,9 @@
                 <!-- popup content -->
                 <div class="popup_content page_cash01">
                     <!-- tbl grid wrap -->
-                    <div class="tbl_grid_wrap">
+                    <div class="tbl_grid_wrap print_area">
                         <!-- tbl grid01 -->
-                        <table class="tbl_grid01 print_area">
+                        <table class="tbl_grid01">
                             <caption>현금영수증</caption>
                             <colgroup>
                                 <col class="col_mob" width="50%">
@@ -124,7 +124,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="con01">
-                                    <span class="text01">현금영수증 문의 <a href="#"><i class="icon tel"></i> 126-1-1</a></span>
+                                    <span class="text01">현금영수증 문의 ☎ 126-1-1</span>
                                     <span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>
                                 </td>
                             </tr>
@@ -385,7 +385,7 @@
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#fafafa; text-align: left;\">사업자등록번호</th>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.ResultViewRowItem.saupId + "</td>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"2\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px;color:#212121; height:50px; line-height: 50px; padding:0 18px 0 20px; border-right:0px solid #dedede; border-bottom:1px solid #dedede; text-align:left; word-wrap:break-word;\">" + this.saupnoFormat(this.ResultViewRowItem.saupId) + "</td>\n" +
                 "\t\t\t\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t<th scope=\"row\" colspan=\"2\" style=\"color:#505050; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size: 14px; height:50px; line-height: 50px; padding:0 18px 0 20px; border-bottom:1px solid #dedede; background:#fafafa; text-align: left;\">사업장전화번호</th>\n" +
@@ -405,7 +405,7 @@
                 "\t\t\t\t\t\t\t</tr>\n" +
                 "\t\t\t\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t\t\t\t<td colspan=\"2\" class=\"con01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; height:50px; border-bottom:1px solid #dedede; vertical-align: top;padding:15px 20px 15px 20px; line-height:20px;\">\n" +
-                "\t\t\t\t\t\t\t\t\t<span class=\"text01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; display:block; padding:5px 0; color:#212121;\">현금영수증 문의 <a href=\"#\" style=\"text-decoration:none;color:#555;\">: 126-1-1</a></span>\n" +
+                "\t\t\t\t\t\t\t\t\t<span class=\"text01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; display:block; padding:5px 0; color:#212121;\">현금영수증 문의 <a href=\"#\" style=\"text-decoration:none;color:#555;\"> ☎ 126-1-1</a></span>\n" +
                 "\t\t\t\t\t\t\t\t\t<span class=\"text01\" style=\"font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:14px; display:block; padding:5px 0;\">국세청 홈택스 : <a href=\"http://www.hometax.go.kr\" target=\"_blank\" title=\"새창열기\" class=\"link02\" style=\"color:#008aff; font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; text-decoration:underline;\">www.hometax.go.kr</a></span>\n" +
                 "\t\t\t\t\t\t\t\t</td>\n" +
                 "\t\t\t\t\t\t\t</tr>\n" +
@@ -416,7 +416,7 @@
                 "\t\t\t\t\t<td width=\"30\"></td></tr>\n" +
                 "\t\t\t\t<tr><td colspan=\"3\" height=\"40\"></td></tr>\n" +
                 "\t\t\t\t<tr><td colspan=\"3\" style=\"border-top:1px solid #dedede; padding-top:34px;padding-left:21px;padding-right:21px;padding-bottom:13px;background:#ffffff;font-size:12px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393;line-height:22px\">\n" +
-                "\t\t\t\t\t발신전용 메일입니다. 궁금하신 사항은 현금영수증 고객센터로 연락 주시면 성심 성의껏 상담해드리겠습니다.<br>타인이 회원님의 이메일을 잘못 입력한 경우 메일이 발송될 수 있습니다.<br>잘못 수신된 메일이라면 현금영수증 고객센터 1:1 문의하기를 이용해주시기 바랍니다.\n" +
+                "\t\t\t\t\t발신전용 메일입니다. 궁금하신 사항은 현금영수증 고객센터로 연락 주시면 성심 성의껏 상담해드리겠습니다.<br>타인이 회원님의 이메일을 잘못 입력한 경우 메일이 발송될 수 있습니다.<br>잘못 수신된 메일이라면 현금영수증 고객센터 02-2674-0340 를 이용해주시기 바랍니다.\n" +
                 "\t\t\t\t</td></tr>\n" +
                 "\t\t\t\t<tr><td colspan=\"3\" style=\"padding-left:21px;padding-right:21px;padding-bottom:37px;background:#ffffff;font-size:12px;font-family:Helvetica;color:#939393;line-height:17px\">\n" +
                 "\t\t\t\t\tCopyright ⓒ 2019 KT corporation & LDCC. All rights reserved.\n" +
@@ -495,7 +495,7 @@
         }
 
         saupnoFormat(val) {
-            return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+            return String(val).substring(0, 3) + '-' + String(val).substring(3, 5) + '-' + String(val).substring(5, 10);
         }
 
     }

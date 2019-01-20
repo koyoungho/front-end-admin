@@ -551,19 +551,22 @@
                         searchData['searchEndDate'] =  e.searchEndDate
 
                 }else if (e.type == 'date2') {  //날짜
-                    if(e.searchStartDate.length>0) {
-                        if (e.dateType == 'date') {
-                            searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
-                            searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
-                        } else if (e.dateType == 'month') {
-                            searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMM')
-                            searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMM')
-                        } else {
-                            searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
-                            searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                       if(!e.searchStartDate[0] || !e.searchStartDate[1]){
+                           e.searchStartDate = [];
+                       }else{
+                      if(e.searchStartDate.length>0) {
+                          if (e.dateType == 'date') {
+                              searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                              searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                          } else if (e.dateType == 'month') {
+                              searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMM')
+                              searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMM')
+                          } else {
+                              searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                              searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                          }
                         }
-                    }
-
+                       }
                 }else if (e.type == 'date3') {  //날짜
                     if(e.calenderCount==1){ //1개짜리일때
                         if(e.searchStartDate) {
@@ -576,6 +579,9 @@
                             }
                         }
                     }else{ //2개짜리일때
+                        if(!e.searchStartDate[0] || !e.searchStartDate[1]){
+                            e.searchStartDate = [];
+                        }else{
                         if(e.searchStartDate.length > 0 ){
                         if(e.dateType == 'date'){
                             searchData[e.id] = moment(e.searchStartDate[0]).format('YYYYMMDD')
@@ -588,6 +594,7 @@
                             searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMMDD')
                         }
                         }
+                     }
                     }
                 }
 
@@ -824,8 +831,6 @@
         saupnoFormat(val) {
             return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
         }
-
-
     }
 
 </script>

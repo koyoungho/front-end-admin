@@ -5,19 +5,19 @@
     <div v-bind:class="searchStyle" v-if="searchItem.length > 0">
       <!--{{searchItemDetail}}-->
       <ul v-bind:class="searchStyle2">
-        <template v-for="item in searchItem">
+        <template v-for="item,index in searchItem">
 
           <template v-if="item.type=='date2'" >
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
               <template v-if="item.calenderCount==1">
-                <span class="form_cal">
+                <span class="form_cal" >
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
                              :first-day-of-week="1"  :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
               <template v-else="item.calenderCount==2">
-                <span class="form_cal">
+                <span class="form_cal" @click="setDate(index)">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
                              :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
@@ -282,6 +282,12 @@
             this.showModal2= true;
         }
 
+        setDate(index){
+            if(this.searchItem[index].setDates.length > 0 ){
+            this.searchItem[index].searchStartDate = this.searchItem[index].setDates
+            }
+        }
+
         created() {
 
             const  nowUTC =  moment().utc() ; //UTC시간
@@ -380,17 +386,45 @@
                 }
             })
             if( checkYn=='N'){
-                alert('오류발생월을 입력해주세요')
+              Vue.swal({text:"오류발생월을 입력해주세요"})
             }else{
                 let name = this.$route.name
                 let object :Object= this.searchItem
-                let menu = {menuId: name ,listDt : object}
-                this.$store.commit('SEARCHLISTINPUT', {menu})
-                this.$emit('SearchToList', this.searchItem);
 
-                this.$store.commit('SEARCHLISTOUT')
+                const  beforeOneY = moment(this.nowDate).subtract(1, 'years');//1년전 날짜
+                if(name == 'receiptViewCancel') {//발급내역조회
 
-                // console.log(this.$store.dispatch('GET', {menu}))
+                  const searchEndDate = this.formatDates(object[7].searchStartDate[1]);
+                  const searchStartDate = this.formatDates(object[7].searchStartDate[0]);
+                  const range = moment(searchStartDate).isBetween(beforeOneY, this.nowDate); // true
+
+                  if (range == false) {
+                    Vue.swal({text:"현재일 기준 최대 검색가능기간은 1년이며 3개월 범위로 조회 가능합니다."})
+                  } else {
+                      const endDateBeforeThreeM = moment(searchEndDate).subtract(3, 'months');// 3개월 전 날짜
+                      const rangeLimit = moment(searchStartDate).isBetween(endDateBeforeThreeM, searchEndDate); // true
+
+                      if (rangeLimit == true || (searchEndDate == searchStartDate)) {
+
+                        let name = this.$route.name
+                        let object: Object = this.searchItem
+                        let menu = {menuId: name, listDt: object}
+                        this.$store.commit('SEARCHLISTINPUT', {menu})
+                        this.$emit('SearchToList', this.searchItem);
+
+                        this.$store.commit('SEARCHLISTOUT')
+                      } else {
+                        Vue.swal({text:"검색가능기간은 3개월입니다."})
+                      }
+                  }
+                }else{//다른 페이지
+
+                  let menu = {menuId: name ,listDt : object}
+                  this.$store.commit('SEARCHLISTINPUT', {menu})
+                  this.$emit('SearchToList', this.searchItem);
+
+                  this.$store.commit('SEARCHLISTOUT')
+                }
             }
 
         }
@@ -403,7 +437,7 @@
                     if(e.disable == true) { //로그인 권한에 따라 변경하지 못하는 값
                     }else{
                         e.value="";
-                        e.searchStartDate = this.formatDates( this.nowDate);
+                        e.searchStartDate = [];
                         e.searchEndDate =this.formatDates( this.nowDate);
                     }
                 }

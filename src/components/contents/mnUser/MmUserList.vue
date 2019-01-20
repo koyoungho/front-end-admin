@@ -56,7 +56,7 @@
         setDate:any =  '';
         originItem : any = {} // 오리지널데이터
         exceptColum : any = [] // 리사이즈 됬을경우 숨겨져야할 컬럼
-
+        onLoadListView : boolean = false;
         callVal : string = ''; //계정 등급
         callDis : boolean = false;
 
@@ -96,6 +96,10 @@
                 this.callDis = true;
             }
 
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.onLoadListView = true;
+            }
+
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
@@ -107,14 +111,14 @@
                             {columName : '등급명' ,id : 'roleNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '등급' ,id : 'role',type:'hidden', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
                             {columName : '소속' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '상태' ,id : 'accountStatus',type:'fileDown', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
+                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                             {columName : '등록일' ,id : 'regDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                         ],
                         totalColum: 9, //
                         apiUrl : 'accounts',
-                        onLoadList : true,  // onLoad 로딩 유무
+                        onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                         // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
                         //     {totalTitle : '부가세' , id: 'surtax' , value : '' }]
@@ -124,9 +128,9 @@
                     search: [
                         // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
                         {type: 'selectCode' ,class:'w30 text_center', title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : '' , code: '0006', option : [{ codeNm : '시스템 관리자' , code: '0001' },{codeNm : '콜센터 관리자' , code: '0003' },{codeNm : '사업자 관리자' , code: '0002' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
-                        {type: 'selectCode' ,class:'w30 text_left',liNull:true, title :'상태',id: 'aprvStatus', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '사용중지' , code: '3' },{codeNm : '해지' , code: '4' }]},
+                        {type: 'selectCode' ,class:'w30 text_left',liNull:true, title :'상태',id: 'status', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '승인대기' , code: '0' },{codeNm : '정상' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '해지' , code: '3' },{codeNm : '잠금' , code: '4' },{codeNm : '휴먼' , code: '5' },{codeNm : '사용중지' , code: '6' }]},
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
-                        {type: 'date2',class:'w25', title :'', id: 'date', name:'date', searchStartDate:[ beforeOneDKo, nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'date2',class:'w25', title :'', id: 'date', name:'date', searchStartDate:[] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD' , setDates: [beforeOneDKo,nowKo]},
                         {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '사업장명' , value: 'shopNm' }]},
                         {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                         // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
@@ -187,12 +191,13 @@
 
                 }
 
-            }else if(data.key=='accountStatus' && data.row.accountStatus == '승인대기'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
+            }else if(data.key=='status' && data.row.status == '0'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
                 this.fileDownLoad(data)
             }
 
         }
         fileDownLoad(data){
+            alert('1');
             if(data.row.saupFileNm == null || data.row.saupFileNm == ''){
                 Vue.swal({text: '사업자등록증 파일이 없습니다.'});
                 return;

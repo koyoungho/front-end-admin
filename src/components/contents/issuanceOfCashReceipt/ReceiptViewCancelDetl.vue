@@ -116,7 +116,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" class="con01">
-                            <span class="text01">현금영수증 문의 <a href="#"><i class="icon tel"></i> 126-1-1</a></span>
+                            <span class="text01">현금영수증 문의 ☎ 126-1-1 </span>
                             <span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>
                         </td>
                     </tr>
@@ -621,8 +621,6 @@
         formatDates(date) {
             return moment(date, 'YYYYMMDDHHmmss').format('YYYYMMDD')
         }
-
-
 
     }
 

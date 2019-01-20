@@ -46,11 +46,11 @@
                         <td>
                             <select id="" name="" class="select form_w100" title="계정등급" v-model="accountLevel">
                                 <option value="">선택</option>
-                                <option value="0001">시스템관리자</option>
-                                <option value="0002">현금영수증사업자</option>
-                                <option value="0003">콜센터관리자</option>
-                                <option value="0004">가맹점관리자</option>
-                                <option value="0005">지점관리자</option>
+                                <!--<option value="0001">시스템 관리자</option>-->
+                                <option value="0002">사업자 관리자</option>
+                                <option value="0003">콜센터 관리자</option>
+                                <option value="0004">가맹점 관리자</option>
+                                <option value="0005">지점 관리자</option>
                                 <!--<option value="0006">매장관리자</option>-->
                             </select>
                         </td>
@@ -58,11 +58,13 @@
                         <td>
                             <select id="" name="" class="select form_w100" title="계정상태" v-model="accountStatus" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="0">정상</option>
-                                <option value="1">승인대기</option>
+                                <option value="0">승인대기</option>
+                                <option value="1">정상</option>
                                 <option value="2">해지대기</option>
-                                <option value="3">사용중지</option>
-                                <option value="4">해지</option>
+                                <option value="3">해지</option>
+                                <option value="4">잠금</option>
+                                <option value="5">휴먼</option>
+                                <option value="6">사용중지</option>
                             </select>
                         </td>
                     </tr>
@@ -338,6 +340,10 @@
                 Vue.swal({text: '아이디를 입력하세요.'});
                 return;
             }
+            if(this.noHangle(this.id ) == true ) {
+                Vue.swal({text: 'ID는 한글이 입력되지 않습니다.'});
+                return;
+            }
 
             let id_msg = document.getElementById('id_msg');
 
@@ -456,6 +462,9 @@
             }else if(this.email == ''){
                 Vue.swal({text: '이메일 주소를 입력하세요.'});
                 return;
+            }else if(! this.email_check(this.email)){
+                Vue.swal({text: '이메일 형식에 맞지 않습니다.'});
+                return;
             }else if(this.accountLevel == ''){
                 Vue.swal({text: '계정등급을 확인하세요.'});
                 return;
@@ -502,7 +511,7 @@
             reqData['id'] = this.id;
             reqData['email'] = this.email;
             reqData['role'] = this.accountLevel; //계정등급
-            reqData['accountStatus'] = this.accountStatus; //계정상태
+            reqData['status'] = this.accountStatus; //계정상태
             reqData['zipCode'] = this.zipCode;
             reqData['addr1'] = this.addr1;
             reqData['addr2'] = this.addr2;
@@ -764,6 +773,19 @@
             }
             else{
             }
+        }
+
+        //메일 주소 정규표현식 체크
+        email_check( email ) {
+            var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return (email != '' && email != 'undefined' && regex.test(email));
+        }
+
+        noHangle(val){
+            var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+            let check_boolean = check.test(val);
+
+            return check_boolean;
         }
 
 

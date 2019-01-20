@@ -55,6 +55,7 @@
         gajumDis : boolean = false; //가맹점 disabled 여부
         jijumVal : string = ''; //지점
         jijumDis : boolean = false; //지점 disabled 여부
+        onLoadListView : boolean = false;
 
         listItem: any = {} // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
 
@@ -99,6 +100,10 @@
                 this.jijumDis = true;
             }
 
+            if(this.$store.state.searchList.menuId==this.$route.name){
+                this.onLoadListView = true;
+            }
+
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
                 {
                     dataGrid: {
@@ -114,7 +119,7 @@
                         ],
                         totalColum: 8,
                         apiUrl : 'store',
-                        onLoadList : true,  // onLoad 로딩 유무
+                        onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         //mTotal : false , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                         //mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
                         //    {totalTitle : '부가세' , id: 'surtax' , value : '' }]
@@ -127,7 +132,7 @@
                         {type: 'selectCode' ,class:'w33',liNull:false, title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : '' , option : [{ codeNm : '정상 ' , code: '0' },{codeNm : '승인대기' , code: '1' },{codeNm : '해지대기 ' , code: '2' },{codeNm : '해지' , code: '3' }]},
                         {type: 'selectCode' ,class:'w33 ',liNull:true, title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
                         {type: 'radio' ,class:'w25',liNull:false, title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
-                        {type: 'date2',class:'w25',liNull:false, title :'', id: 'date', name:'date', searchStartDate: [beforeOneDKo,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
+                        {type: 'date2',class:'w25',liNull:false, title :'', id: 'date', name:'date', searchStartDate: [] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: [beforeOneDKo,nowKo]},
                         {type: 'select' ,class:'w25',liNull:false, title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
                         {type: 'input',class:'w25 text_left',liNull:false, title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
                     ],
@@ -137,6 +142,9 @@
                     searchClass2 : 'search_list'
                 }
 
+              if(this.$store.state.searchList.menuId==this.$route.name){
+                  this.listItem.search  = this.$store.state.searchList.listDt
+              }
         }
 
         //돔렌더링완료시 진행

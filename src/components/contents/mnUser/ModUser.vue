@@ -54,15 +54,12 @@
                         </td>
                         <th scope="row">계정상태</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정상태" v-model="account.accountStatus">
-                                <option value="">선택</option>
-                                <option value="0">정상</option>
-                                <option value="1">승인대기</option>
-                                <option value="2">사용중지</option>
-                                <option value="3">해지</option>
-                                <option value="4">해지신청</option>
-                            </select>
+                           <span style="vertical-align: bottom">{{account.statusNm}}</span>
+                            <template v-if="account.status !='6'">
+                            <span class="chk_box" id="ts" style="margin-left: 50px;" ><input type="checkbox"  @click="useStop($event)"><label for="ts">사용중지</label></span>
+                            </template>
                         </td>
+
                     </tr>
                     <tr>
                         <th scope="row">최종접속일시</th>
@@ -211,10 +208,50 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
+                <template v-if="account.status=='0'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('1')" v-show="regShow">승인</button>
+                </template>
+                <template v-if="account.status=='1'">
                 <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
-                <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="removeAccount" v-show="regShow">계정해지</button>-->
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk" v-show="regShow">정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('3')" v-show="regShow">해지</button>
+                </template>
+                <template v-if="account.status=='2'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('1')" v-show="regShow">정상</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('3')" v-show="regShow">해지</button>
+                </template>
+                <template v-if="account.status=='3'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                </template>
+                <template v-if="account.status=='4'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                </template>
+                <template v-if="account.status=='5'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                </template>
+                <template v-if="account.status=='6'">
+                    <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelUpdate">취소</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('10')" v-show="regShow">정보변경</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('1')" v-show="regShow">정상</button>
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk('3')" v-show="regShow">해지</button>
+                </template>
             </div>
+
+            <!-- 승인 일경우 해지 ,사용중지
+    해지 일경우 버튼 없음
+   승인 대기 -> 승인
+   사용중지 -> 정상 ,해지
+   해지대기 ->  정상 , 해지
+   잠금  ->  none
+   휴먼 -> none
+   -->
 
         </div>
         <AddressBox v-if="addressBox" v-on:selectedValue="setDataAddr1" @close="addressBox = false"></AddressBox>
@@ -285,6 +322,8 @@
         lastConnDt:string  ="";
         regDt:string ="";
         cancelDt:string ="";
+
+        checkVal :boolean  = false;
 
         auth : any = "";
         addressBox : boolean = false;
@@ -478,11 +517,21 @@
             })
         }
 
-        validationChk(){
+        validationChk(val){
+
+
             let account : any = this.account;
             console.log('form 정보 확인')
             console.log(account);
-/*
+
+            if(val=='10') {
+                if(this.checkVal==true){
+                    this.account['status']='6'
+                }
+            }else{
+                this.account['status']=val
+            }
+/*s
             let checkBoxData = this.$children['0'].$children['1'].chkDatas;
 
             console.log('메뉴 체크 권한 데이터')
@@ -530,7 +579,7 @@
             }else if(account.role == '' || account.role == null){
                 Vue.swal({text:'계정등급을 선택하세요.'});
                 return;
-            }else if(account.accountStatus == '' || account.accountStatus == null){
+            }else if(account.status == '' || account.status == null){
                 Vue.swal({text:'계정상태를 선택하세요.'});
                 return;
             //}else if(account.telNum == '' || account.telNum == null){
@@ -585,7 +634,7 @@
             reqData['email'] = account.email;
             reqData['role'] = account.role; //계정등급
             reqData['oldRole'] = this.oldRole; //이전계정등급
-            reqData['accountStatus'] = account.accountStatus; //계정상태
+            reqData['status'] = account.status; //계정상태
             reqData['telNum'] = account.telNum;
             reqData['zipCode'] = account.zipCode;
             reqData['addr1'] = account.addr1;
@@ -640,7 +689,13 @@
                         //계정 수정 완료
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnUserList'})
-                        this.$router.push('/home/mnUser');
+
+                        Vue.swal({text:'변경이 정상 처리 되었습니다.' }).then((result) => {
+                            // 리스트로 이동
+                            this.$router.push('/home/mnUser');
+                        });
+
+
                     } else {
                         Vue.swal({text:'계정 정보 수정에 실패하였습니다. 다시 시도하세요.'});
                         return;
@@ -650,7 +705,7 @@
                     //console.log(error);
                 }
             ).catch((response) => {
-                //console.log(response);
+                console.log("ㅁㅁㅁㅁ",response);
             });
 
 
@@ -893,7 +948,13 @@
             })
 
         }
-
+        useStop(event){
+            if(event.target.checked==true){
+                this.checkVal = true;
+            }else{
+                this.checkVal = false;
+            }
+        }
 
 
         validationCheck(val,type){

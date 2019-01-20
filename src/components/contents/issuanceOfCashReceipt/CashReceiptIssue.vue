@@ -8,7 +8,7 @@
             <h3>현금영수증 발급</h3>
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg05" v-on:click="bulkIssue">Excel 일괄 발급</button>
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="bulkIssue">Excel 일괄 등록</button>
             </div>
 
             <p class="req_info">(<em class="form_req">*</em>)는 필수항목입니다.</p>
