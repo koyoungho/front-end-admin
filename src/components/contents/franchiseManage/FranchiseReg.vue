@@ -615,7 +615,7 @@
                     if (result != null) {
                         //사업자등록번호 유효성 체크에 이상이 없으면 기 등록된 사업장등록번호인지 한번 더 체크
 //                        this.chkSaupNoAlr(no);
-                        this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                            this.$router.push({ name:'franchiseRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
 
                     } else {
                         //if(saupmsg != null){
@@ -681,6 +681,9 @@
 
             if(this.soluId == ''){
                 alert('현금영수증 사업자를 선택하세요.');
+                return;
+            }else if(this.saupIdYn  == ''){
+                alert('사업자등록번호 중복확인을 해주세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
@@ -1020,9 +1023,7 @@
             let reqData: any = {};
             let apiUrl : string = '';
 
-            if(code == '0001'){ //사업자구분:0001
-                apiUrl = 'pcodes/'+code+'/codes';
-            }else if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
+            if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
@@ -1041,9 +1042,7 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result.length > 0) {
-                        if(code == '0001'){ //사업자구분
-                            this.saupGbnList = result;
-                        }else if(code == 'APRO'){ //승인코드
+                        if(code == 'APRO'){ //승인코드
                             this.aproCodeList = result;
                         }else if(code == 'SEARCH'){ //회사코드
                             this.companyCodeList = result;
