@@ -288,7 +288,9 @@
             if(this.otpNumber){
                 CommonBoardService.postListDatas(apiUrl, null, otp)
                     .then(result => {
-                        if(result.data.code=='000'){
+                        console.log(result)
+
+                        if(result.status==200){
                             alert('인증되었습니다' )
                             this.result = true;
 
@@ -299,8 +301,7 @@
                             this.reset();
 
                             //계정정보 상세화면 이동
-                            this.$router.push({ name:'modUser' , params: { current : this.reqParam.searchOption , val : this.reqParam.row.id , val2 : this.reqParam.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-
+                            this.$router.push({ name:this.reqParam.nextUrl , params: { reqParams : this.reqParam , current : this.reqParam.searchOption , val : this.reqParam.row.id , val2 : this.reqParam.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         }
                         else{
                             clearInterval(this.interval)
