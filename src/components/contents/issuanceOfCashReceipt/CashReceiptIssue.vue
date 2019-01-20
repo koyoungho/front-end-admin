@@ -478,7 +478,7 @@
                         Vue.swal({text: '휴대폰 번호는 숫자만 입력가능합니다.'});
                         return;
                     }
-                    if(this.confirm.length > 1 && this.confirm.indexOf('01') == 0){
+                    if(this.confirm.length > 1 && this.confirm.indexOf('01') != 0){
                         alert('휴대폰번호는 01로 시작하도록 입력하세요.');
                         return;
                     }
