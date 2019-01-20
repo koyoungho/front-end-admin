@@ -96,7 +96,7 @@
                         <td colspan="1"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td colspan="1">
-                            <input type="text" class="input form_w100" title="전화번호" v-model="telNum" maxlength="20">
+                            <input type="text" class="input form_w100" title="전화번호" v-model="telNum" @keyup="changeTelNum" maxlength="20">
                         </td>
                     </tr>
                     <tr>
@@ -505,7 +505,15 @@
 
         }
 
-        @Watch('telNum') changeTelNum(){
+        @Watch('telNum1') changeTelNum1(){
+            let regNumber = /^[0-9]*$/;
+            if(!regNumber.test(this.telNum)){
+                Vue.swal({ text: '숫자만가능합니다'});
+                this.telNum = '';
+            }
+        }
+
+        changeTelNum(){
             let regNumber = /^[0-9]*$/;
             if(!regNumber.test(this.telNum)){
                 Vue.swal({ text: '숫자만가능합니다'});
@@ -1186,7 +1194,7 @@
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
-                apiUrl = 'code/aprvcode';
+                apiUrl = 'code/approvalcode';
             }else if(code == 'RECEIPT') { //현금영수증 사업자 코드 -- get
                 apiUrl = 'code/issuer';
             }else if(code == 'UPJONG'){ //업종코드
