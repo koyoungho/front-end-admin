@@ -216,7 +216,7 @@
 
             if( this.resultRecripKeyObj.trgu == '1' ){
                 this.titleSub =" - 현금결제취소";
-                this.titleMail = " - 현금결제취소"
+                this.titleMail = " - 취소"
             }else{
                 this.titleSub="";
                 this.titleMail = ""
@@ -431,7 +431,7 @@
 
                         let reqData: any = {};
                         reqData['to'] = [mailAddress]; //메일 수신자
-                        reqData['title'] = '현금영수증 발급 취소'; //메일 제목
+                        reqData['title'] = '현금영수증 발급' +this.titleMail; //메일 제목
                         reqData['message'] = mailMessage; //메일 내용
                         reqData['cc'] = [''];
                         // <img src="images/mail/img_tel01.png" width="16" height="16" alt="케이티/롯데정보통신 현금영수증" style="vertical-align: middle; border:0;margin-right:5px;">
