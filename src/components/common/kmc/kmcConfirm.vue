@@ -107,7 +107,7 @@
         }
         getBlaindLoding() {
             // api 요청코드 암호화 요청
-            CommonBoardService.getListData('kmc/cert', null, {reqUrl: environment.imgApiUrl+'/#'+ this.$route.fullPath})
+            CommonBoardService.getListData('kmc/cert', null, {reqUrl: environment.imgApiUrl+':8888/#'+ this.$route.fullPath})
                 .then((response) => {
                         this.tr_cert = response.data.cert;
                         this.tr_url = environment.apiUrl+'/#/kmcResult';
