@@ -8,6 +8,9 @@ export const environment = {
     addressKey : "U01TX0FVVEgyMDE4MTEwNzE2MTEyMTEwODI4NTU=", // 주소 오픈API 키
     addressApiUrl : "https://www.juso.go.kr/addrlink/addrLinkApi.do", // 주소 URL
 
+
+
+
     //본인인증 코드 및 주소
     selfCertificationUrl :   'https://www.kmcert.com/kmcis/web/kmcisReq.jsp',
 
