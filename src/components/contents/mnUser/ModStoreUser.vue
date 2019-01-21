@@ -365,7 +365,7 @@
                         this.subSaup = result.companyCode;
                         this.blGb = result.blGb;
                         this.saupFileNm = result.saupFileNm;
-                        if(this.status == '0'){
+                        if(this.status == '0' && result.saupFileNm != null && result.saupFileNm != ''){ //승인대기이고 파일이 있으며
                             this.saupjangSajin = true;
                         }
 
