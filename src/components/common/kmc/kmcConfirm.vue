@@ -110,7 +110,7 @@
             CommonBoardService.getListData('kmc/cert', null, {reqUrl: environment.imgApiUrl+':8888/#'+ this.$route.fullPath})
                 .then((response) => {
                         this.tr_cert = response.data.cert;
-                        this.tr_url = 'http://211.39.150.112:8888/api/#/kmcResult';
+                        this.tr_url = 'http://211.39.150.112:8888/#/kmcResult';
                         this.sendCerticication();
                     }
                     , error => {
