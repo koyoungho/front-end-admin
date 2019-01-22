@@ -485,6 +485,10 @@
 
         cancleReceipView(){
             this.objectKey = this.$route.params.objectKey
+            let keyVal = '';
+            if(this.objectKey.trgu=='0'){
+                this.objectKey.oriAprv = this.objectKey.perms
+            }
             if(!this.objectKey){
                 Vue.swal({text:'접근할수 없습니다'})
                 this.$router.push({name:'receiptViewCancel'});
