@@ -76,7 +76,7 @@
 
         eventGet(){
             if(this.result == false){
-                this.resultValue =  setInterval(this.wating,2000)
+                this.resultValue =  setInterval(this.wating,3000)
                 this.result=true;
             }
 
@@ -107,10 +107,10 @@
         }
         getBlaindLoding() {
             // api 요청코드 암호화 요청
-            CommonBoardService.getListData('kmc/cert', null, '')
+            CommonBoardService.getListData('kmc/cert', null, {reqUrl: environment.imgApiUrl+'/#'+ this.$route.fullPath})
                 .then((response) => {
                         this.tr_cert = response.data.cert;
-                        this.tr_url = environment.apiUrl+'/#/kmcResult';
+                        this.tr_url = environment.imgApiUrl+'/#/kmcResult';
                         this.sendCerticication();
                     }
                     , error => {

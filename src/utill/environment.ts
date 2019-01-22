@@ -5,6 +5,10 @@ export const environment = {
     imgApiUrl : "https://admin.hellocash.co.kr",   // 서비스 메일이미지 실서버
     userUrl : "https://www.hellocash.co.kr",   // 온라인 가맹점 사용자 URL
 
+    // apiUrl : "http://211.39.150.112:8888/api", //서비스 API 개발서버.siteUrl
+    // imgApiUrl : "http://211.39.150.112:8888",    // 서비스 메일이미지 개발서버
+    // userUrl : "http://211.39.150.112",    // 서비스 메일이미지 개발서버
+
     addressKey : "U01TX0FVVEgyMDE4MTEwNzE2MTEyMTEwODI4NTU=", // 주소 오픈API 키
     addressApiUrl : "https://www.juso.go.kr/addrlink/addrLinkApi.do", // 주소 URL
 
