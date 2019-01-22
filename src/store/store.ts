@@ -85,6 +85,10 @@ export default new Vuex.Store({
             })
             sessionStorage.clear(); //세션스토리지 삭제
         },
+        TIMEOUT (state) {
+            sessionStorage.clear(); //세션스토리지 삭제
+            window.location.href ="/#/login"
+        },
         INFO_SET(state, data) {
             sessionStorage.role = data.role;
             sessionStorage.code = data.code;
