@@ -76,7 +76,7 @@
 
         eventGet(){
             if(this.result == false){
-                this.resultValue =  setInterval(this.wating,3000)
+                this.resultValue = setInterval(this.wating,3000)
                 this.result=true;
             }
 

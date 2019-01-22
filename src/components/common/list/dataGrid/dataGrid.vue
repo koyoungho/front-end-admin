@@ -147,7 +147,7 @@
             <template v-for="(rows,key,indexs) in datas">
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
                 <td>
-                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@'+rows+'@'+index+'@'+dataGridDetail.dataGrid.columControl[indexs].returnKey+'@'+datas.role" v-model="checkBoxDatas"><label for=""></label></span>
+                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@$'+rows+'@$'+index+'@$'+dataGridDetail.dataGrid.columControl[indexs].returnKey+'@$'+datas.role" v-model="checkBoxDatas"><label for=""></label></span>
                 </td>
               </template>
               <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
@@ -304,10 +304,10 @@
         @Watch('checkBoxDatas') onChangeCheckBox() { // 체크박스 선택시 및 데이터 전달하는곳
             let rowData :any=[]
             this.checkBoxDatas.filter(e=>{
-                let dt1 = e.split('@')[0]
-                let dt2 = e.split('@')[1]
-                let dt3 = e.split('@')[2]
-                let dt4 = e.split('@')[3]
+                let dt1 = e.split('@$')[0]
+                let dt2 = e.split('@$')[1]
+                let dt3 = e.split('@$')[2]
+                let dt4 = e.split('@$')[3]
                 let dt4Key = "";
                 let row = this.listOragin[dt3];
                 rowData.push({key:dt1 , value : dt2 , withKey : row[dt4] })
@@ -445,7 +445,7 @@
                     // 중복제거
                     let tempDelCheck :any[] = [];
                     this.checkBoxDatas.filter((e)=>{
-                        if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
+                        if(e.split('@$')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
                             tempDelCheck.push(e);
                         }
                 })
@@ -455,7 +455,7 @@
                 this.listData.filter((e,index)=>{
                     Object.keys(e).forEach((s,count)=>{
                         if(indexs==count){
-                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[indexs].id+'@'+e[s]+'@'+index+'@'+this.dataGridDetail.dataGrid.columControl[indexs].returnKey);
+                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[indexs].id+'@$'+e[s]+'@$'+index+'@$'+this.dataGridDetail.dataGrid.columControl[indexs].returnKey);
                         }
                     })
                 })
@@ -463,7 +463,7 @@
             }else{  // 체크박스내용삭제
                 let tempDelCheck :any[] = [];
                 this.checkBoxDatas.filter((e)=>{
-                    if(e.split('@')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
+                    if(e.split('@$')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
                         tempDelCheck.push(e);
                     }
                 })
@@ -709,7 +709,7 @@
 
                                     if (menuHeaderkey == Objectskey) {
                                         if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){  // 체크박스일경우 현재데이터를 체크박스에 담아논다
-                                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@'+Objects[Objectskey]+'@'+indexs+'@'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
+                                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@$'+Objects[Objectskey]+'@$'+indexs+'@$'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
                                         }
                                         let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 데이터코드값이 Y,N ; 전송 , 미전송  같은 문자열치환할때 사용
                                         let selectOption = this.dataGridDetail.dataGrid.columControl[index].selectOptionApi // 옵션데이터를 받아와야하는경우
@@ -793,7 +793,7 @@
                 for(let i=0; i<this.checkBoxDatas.length; i++){
                     let sData = {};
                     //console.log(this.checkBoxDatas[i])
-                    let splitData = this.checkBoxDatas[i].split('@');
+                    let splitData = this.checkBoxDatas[i].split('@$');
                     //console.log('id : '+splitData[1] + ' | role: '+splitData[4]);
                     sData['id'] = splitData[1]; //id
                     sData['role'] = splitData[4]; //role

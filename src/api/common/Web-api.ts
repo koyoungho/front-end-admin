@@ -2,7 +2,6 @@
 // 공용 클래스 api  / 환경설정 임포트 / 모델임포트
 import axios from 'axios';
 import {environment} from '@/utill/environment';
-import {Vue} from 'vue-property-decorator';
 
 export default class WebApi<T>{
     ApiUrl : string = environment.apiUrl
@@ -18,13 +17,11 @@ export default class WebApi<T>{
             if (error.response.status === 401 || error.response.code === 401 ) { // if the error is 401 and hasent already been retried
                 // originalRequest._retry = true
                 sessionStorage.clear()
-                alert('세션이 만료 되었습니다 로그인으로 이동합니다')
                 window.location.href = '/#/login'
             }
             if (error.response.status === 404 || error.response.code === 401 ) {
                 // originalRequest._retry = true
                 sessionStorage.clear()
-                alert('세션이 만료 되었습니다 로그인으로 이동합니다')
                 window.location.href = '/#/login'
                 return
             }
