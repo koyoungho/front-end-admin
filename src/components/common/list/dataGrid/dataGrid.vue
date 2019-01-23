@@ -5,7 +5,7 @@
     <!-- tbl info top -->
     <div class="tbl_info_top">
       <div id="loading_bar" v-show="loading">
-          <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+          <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->
       <template>

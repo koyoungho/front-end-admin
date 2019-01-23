@@ -41,7 +41,7 @@
             <!-- post scroll -->
             <div class="post_scroll">
                 <div id="loading_bar" v-show="loading">
-                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
                 </div>
               <!-- post list -->
               <ul class="post_list">

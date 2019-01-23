@@ -3,7 +3,7 @@
     <h4>가맹점 현황</h4>
     <!-- tbl list box -->
     <div id="loading_bar" v-show="loading">
-        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
     </div>
     <div class="tbl_scroll_x_box">
         <!-- tbl list01 -->
