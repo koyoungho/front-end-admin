@@ -311,8 +311,8 @@
         onLoadListView : any = false;
         regShow: boolean =false;
         bongsaBlock :boolean= false;
-
         cancleReceipActionBtn : boolean = true;
+
 
         created(){
             // 메뉴별 권한 확인
@@ -478,16 +478,17 @@
                 }else{
                     this.bongsaBlock = false
                 }
-
+                Vue.swal({ text: '취소 가능한 금액은' + this.canAceptTotal + '원 입니다' });
                 this.receiptOk = true;
             }).catch();
         }
 
         cancleReceipView(){
             this.objectKey = this.$route.params.objectKey
+
             let keyVal = '';
             if(this.objectKey.trgu=='0'){
-                this.objectKey.oriAprv = this.objectKey.perms
+                this.objectKey.oriAprv = this.objectKey.perm
             }
             if(!this.objectKey){
                 Vue.swal({text:'접근할수 없습니다'})
