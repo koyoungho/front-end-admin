@@ -3,7 +3,7 @@
         <h4>가맹점 현황</h4>
         <!-- grid chart box -->
         <div v-show="loading1">
-            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
         </div>
 
         <div class="grid_chart_box col02">
@@ -17,7 +17,7 @@
         <h4>현금영수증 발행 현황</h4>
         <!-- grid chart box -->
         <div  v-show="loading2">
-        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
         </div>
         <div class="grid_chart_box col02">
             <div class="col">

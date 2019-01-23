@@ -49,7 +49,7 @@
                     <!-- tbl scroll box -->
                     <div class="tbl_scroll_box">
                         <div id="loading_bar" v-show="loading">
-                            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+                            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
                         </div>
                         <!-- tbl list02 -->
                         <table class="tbl_list02">
