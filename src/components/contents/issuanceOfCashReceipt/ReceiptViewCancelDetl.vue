@@ -1,5 +1,8 @@
 <template>
     <section id="container">
+      <div id="loading_bar" v-show="loading222">
+        <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="loading..." />
+      </div>
         <div class="content no_print">
             <!--<resize-observer @notify="handleResize"/>-->
             <h3>{{subtitle}}</h3>
@@ -313,8 +316,11 @@
         bongsaBlock :boolean= false;
         cancleReceipActionBtn : boolean = true;
 
+        loading222 : boolean = false
+
 
         created(){
+
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
             let programId = 'cashReceiptIssue'; //메뉴ID
@@ -459,6 +465,8 @@
         }
 
         aceptTotalCount(){
+            this.loading222 = true;
+
             CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
@@ -482,11 +490,12 @@
                 Vue.swal({ text: '취소 가능한 금액은 ' + Number(tot).toLocaleString() + ' 원 입니다' });
                 this.receiptOk = true;
             }).catch();
+
+            this.loading222 = false;
         }
 
         cancleReceipView(){
             this.objectKey = this.$route.params.objectKey
-            console.log(this.objectKey);
 
             let keyVal = '';
             if(this.objectKey.trgu=='0'){
@@ -512,6 +521,8 @@
         }
 
         cancleReceipAction(){
+
+
             let data :any= {
                 canSayu: this.canSayu,
                 cancelAmt: this.canTotal,
