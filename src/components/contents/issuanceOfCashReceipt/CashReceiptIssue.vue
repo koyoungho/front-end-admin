@@ -85,7 +85,7 @@
                         <th scope="row">고객성명</th>
                         <td><input type="text" class="input form_w100" title="고객성명 입력" maxlength="20" v-model="custNm"></td>
                         <th scope="row">메모</th>
-                        <td><input type="text" class="input form_w100" title="메모 입력" maxlength="30" v-model="memo"></td>
+                        <td><input type="text" class="input form_w100" title="메모 입력" maxlength="12" v-model="memo"></td>
                     </tr>
                     </tbody>
                 </table>
