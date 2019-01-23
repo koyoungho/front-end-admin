@@ -478,7 +478,8 @@
                 }else{
                     this.bongsaBlock = false
                 }
-                Vue.swal({ text: '취소 가능한 금액은' + this.canAceptTotal + '원 입니다' });
+                let tot :number = this.canAceptTotal
+                Vue.swal({ text: '취소 가능한 금액은 ' + Number(tot).toLocaleString() + ' 원 입니다' });
                 this.receiptOk = true;
             }).catch();
         }
