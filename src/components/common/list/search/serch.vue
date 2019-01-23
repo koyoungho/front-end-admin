@@ -156,7 +156,7 @@
           <template v-if="item.type=='popup'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-                <input type="text"  class="input" v-model="item.value" readonly>
+                <input type="text"  class="input" v-model="item.value">
             </li>
             <template v-if="item.liNull">
               <li :class="item.class" style=height:50px><label for="aa"></label></li>

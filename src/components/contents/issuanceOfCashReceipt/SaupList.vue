@@ -68,14 +68,21 @@
                                     <col width="283">
                                 </colgroup>
                                 <tbody>
-                                <template v-for="datas in responseData">
-                                <tr>
-                                    <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
-                                    <td>{{datas.storeId}}</td>
-                                    <td>{{datas.subSaupNm}}</td>
-                                    <td>{{datas.saupId}}</td>
-                                    <td class="left">{{datas.shopNm}}</td>
-                                </tr>
+                                <template v-if="responseData != null && responseData.length > 0">
+                                    <template v-for="datas in responseData">
+                                    <tr>
+                                        <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
+                                        <td>{{datas.storeId}}</td>
+                                        <td>{{datas.subSaupNm}}</td>
+                                        <td>{{datas.saupId}}</td>
+                                        <td class="left">{{datas.shopNm}}</td>
+                                    </tr>
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center">데이터가 없습니다.</td>
+                                    </tr>
                                 </template>
                                 </tbody>
                             </table>
