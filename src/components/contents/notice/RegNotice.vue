@@ -32,7 +32,7 @@
                             </select>
                             <span class="form_area">
                             <span class="chk_box right">
-                                <input type="checkbox" id="aa01" v-on:click="changeYn"><label for="aa01">중요공지</label>
+                                <input type="checkbox" id="aa01" v-model="importantYn"><label for="aa01">중요공지</label>
                             </span>
                         </span>
                         </td>
@@ -109,14 +109,13 @@
         viewType:string="ALL";
         content:string="";
         attFileYn : string ="";
-        importantYnB : boolean =false;
-        importantYn : string ="N";
+        //importantYnB : boolean =false;
+        importantYn : boolean = false;
         files:any=[];
         uploadFileNames: any=[];
         regShow : boolean= false;
         delShow : boolean= false;
         showModal:boolean= true;
-
 
         mounted(){
             this.seq=this.$route.params.seq;
@@ -169,7 +168,8 @@
                         this.files = oldFile;
 
                         if(result.importantYn =='Y'){
-                            this.importantYnB = true;
+                            //this.importantYnB = true;
+                            this.importantYn = true;
                         }
                     }
                 }
@@ -181,7 +181,7 @@
 
         /**
          * 체크박스 제어
-         */
+         *//*
         changeYn(){
             if(this.importantYnB==false){
                 this.importantYnB = true;
@@ -190,7 +190,7 @@
                 this.importantYnB = false
                 this.importantYn = "N";
             }
-        }
+        }*/
 
         /**
          * 취소(목록으로)
@@ -245,8 +245,12 @@
             reqData['viewType'] = this.viewType;
             reqData['content'] = this.content;
             reqData['uploadFileNames'] = this.uploadFileNames;
-            reqData['importantYn'] = this.importantYn;
-            reqData['importantYn'] = this.importantYn;
+            //qData['importantYn'] = this.importantYn;
+            if(this.importantYn == true){
+                reqData['importantYn'] = 'Y'
+            }else{
+                reqData['importantYn'] = 'N'
+            }
 
             if(this.seq == undefined ||  this.seq == '') {//등록
                 CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
