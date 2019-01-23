@@ -213,6 +213,7 @@
             this.loading = true;
             CommonBoardService.getListData('gajum/popup', null, reqData).then((response) => {
                 //console.log(response)
+                if(response.data != null) {
                     this.responseData = response.data;
                     this.loading = false;
                     /*this.total = parseInt(response.data.totalRecords);
@@ -220,6 +221,7 @@
                     this.pageSize = parseInt(response.data.perPage);
                     this.PAGEBLOCK = parseInt(response.data.perPage);
                     this.pageMake();*/
+                }
                 }
                 , (error) => {
                     this.loading = false;

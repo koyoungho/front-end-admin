@@ -324,10 +324,11 @@
             CommonBoardService.getListData('gajum/popup', null, reqData).then((response) => {
                     //console.log(response)
                     //this.responseData = response.data;
-                    let arrData : any = response.data;
-                    let rowData : any = {};
-                    let putData : any = [];
-                    arrData.filter(e=>{
+                if(response.data != null) {
+                    let arrData: any = response.data;
+                    let rowData: any = {};
+                    let putData: any = [];
+                    arrData.filter(e => {
                         rowData = {};
                         rowData['gajumId'] = e.gajumId;
                         rowData['saupId'] = e.saupId;
@@ -337,6 +338,7 @@
                     });
                     this.responseData = putData;
                     this.loading = false;
+                }
                 }
                 , (error) => {
                     this.loading = false;
@@ -352,6 +354,7 @@
             this.responseData = [];
             CommonBoardService.getListData('jijum/'+this.gajumId, null, null).then((response) => {
                     //console.log(response)
+                if(response.data != null) {
                     this.responseData = response.data;
 
                     /*this.total = parseInt(response.data.totalRecords);
@@ -359,6 +362,7 @@
                     this.pageSize = parseInt(response.data.perPage);
                     this.PAGEBLOCK = parseInt(response.data.perPage);
                     this.pageMake();*/
+                }
                 }
                 , (error) => {
                 }
