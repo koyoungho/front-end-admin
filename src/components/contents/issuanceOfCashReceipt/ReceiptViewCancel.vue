@@ -123,8 +123,6 @@
         }
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
-            let parentKey = '';
-
             this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[5].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 

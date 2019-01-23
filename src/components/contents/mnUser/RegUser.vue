@@ -336,6 +336,16 @@
 
         //아이디 중복 체크
         idChk(){
+
+            let regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+            let id = this.id
+
+            if(regExp.test(id)){
+                alert('ID 는 숫자와 문자만 입력해주세요');
+                return ;
+            }
+
+
             if(this.id == ''){
                 Vue.swal({text: '아이디를 입력하세요.'});
                 return;

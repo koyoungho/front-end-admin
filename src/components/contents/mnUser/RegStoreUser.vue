@@ -660,6 +660,7 @@
 
         dataValidation() {
             let regNumber = /^[0-9]*$/;
+
             if(this.saupId == '') {
                 let saupmsg = document.getElementById('saupid_msg');
                 if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호를 입력하세요'; }
@@ -929,6 +930,12 @@
         //사용자ID 중복확인
         chkUserId(id) {
             let idmsg = document.getElementById('id_msg');
+
+            let regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+            if(regExp.test(id)){
+                Vue.swal({ text: 'ID 는 숫자와 문자만 입력해주세요'});
+                return ;
+            }
 
             if(id == ''){
                 Vue.swal({ text: '아이디를 확인하세요.'});

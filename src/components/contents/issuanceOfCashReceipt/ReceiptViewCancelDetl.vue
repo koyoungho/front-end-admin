@@ -486,6 +486,7 @@
 
         cancleReceipView(){
             this.objectKey = this.$route.params.objectKey
+            console.log(this.objectKey);
 
             let keyVal = '';
             if(this.objectKey.trgu=='0'){
