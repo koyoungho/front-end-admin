@@ -112,15 +112,18 @@
                             {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '아이디' ,id :'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                             {columName : '이름' ,id : 'name',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '등급명' ,id : 'roleNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '등급' ,id : 'role',type:'hidden', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
-                            {columName : '소속' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
+                            {columName : '휴대폰번호' ,id : 'phoneNum',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '사업자번호' ,id : 'saupId',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '사업장명' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '회사코드' ,id : 'subSaup',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '등급명' ,id : 'roleNm',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '등급' ,id : 'role',type:'hidden', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
+                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                             {columName : '등록일' ,id : 'regDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                         ],
-                        totalColum: 9, //
+                        totalColum: 12, //
                         apiUrl : 'accounts',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
@@ -135,7 +138,7 @@
                         {type: 'selectCode' ,class:'w30 text_left',liNull:true, title :'상태',id: 'status', name:'aprvStatus' , value: '' ,  api : '' , option : [{ codeNm : '승인대기' , code: '0' },{codeNm : '정상' , code: '1' },{codeNm : '해지대기' , code: '2' },{codeNm : '해지' , code: '3' },{codeNm : '잠금' , code: '4' },{codeNm : '휴먼' , code: '5' },{codeNm : '사용중지' , code: '6' }]},
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
                         {type: 'date2',class:'w25', title :'', id: 'date', name:'date', searchStartDate:[] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD' , setDates: [beforeOneDKo,nowKo]},
-                        {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '사업자등록번호' , value: 'saupId' },{name : '사업장명' , value: 'shopNm' }]},
+                        {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '아이디' , value: 'id' },{name : '이름' , value: 'name' },{name : '휴대폰번호' , value: 'phoneNum' },{name : '사업자등록번호' , value: 'saupId' },{name : '사업장명' , value: 'shopNm' }]},
                         {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                         // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                         // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
