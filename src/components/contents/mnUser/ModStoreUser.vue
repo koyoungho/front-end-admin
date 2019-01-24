@@ -128,7 +128,7 @@
             <!-- //tbl view box -->
 
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01" v-on:click="initPassword">비밀번호 초기화</button>
+                <button type="button" id="" class="btn_m01 bg01" v-on:click="getEncrptId">비밀번호 초기화</button>
             </div>
 
             <h4>사용자 정보</h4>
@@ -289,6 +289,8 @@
         objectKey : any = "";
 
         saupjangSajin : boolean = false; //사업자등록증 뷰 여부
+
+        encryptId : string = ''; //암호화된 ID
 
         created() {
 
@@ -901,6 +903,27 @@
 
         }
 
+        //암호화 ID 조회
+        getEncrptId(){
+
+            CommonBoardService.getListData('code/uuid', this.id, null).then((response) => {
+                    let result: any = response.data;
+                    //console.log(response);
+                    //console.log(result);
+                    if (response.status == 200 || response.status == 201) {
+                        this.encryptId = result.code;
+                        this.initPassword(); //실제 메일 발송
+                    } else {
+                        Vue.swal({text:'메일 발송에 실패하였습니다. 다시 시도하세요.'});
+                    }
+                }
+                , (error) => {
+                    //console.log(error);
+                }
+            ).catch((response) => {
+                //console.log(response);
+            });
+        }
 
         initPassword() { //메일 발송
 
@@ -910,7 +933,7 @@
             //let regId = this.id;
             //let regNm = this.name;
             let imgsrc = environment.imgApiUrl+"/img/img_logo.07141310.png"; //로고
-            let userUrl = environment.userUrl+"/#/home/initPass"; //온라인 가맹점 사용자 URL
+            let userUrl = environment.userUrl+"/#/home/regPassEmail?id="+this.encryptId; //온라인 가맹점 사용자 URL
 
             let mailMessage : string = ''; //메일 메시지 내용
             mailMessage = "<html lang=\"ko\">\n" +
@@ -969,6 +992,9 @@
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
                 "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 초기화 링크 주소 :  <a :href="+userUrl+" target=\"_blank\" style=\"color:#008aff;\">"+userUrl+"</a> (패스워드 변경 주소링크)</td>\n" +
+                "\t\t\t\t</tr>\n" +
+                "\t\t\t\t<tr>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">(* PW 초기화 링크 주소가 클릭되지 않을때 마우스로 복사해서 주소창에 넣고 변경해 주세요.)</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
