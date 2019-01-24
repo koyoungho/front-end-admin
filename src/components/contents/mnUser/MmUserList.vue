@@ -184,7 +184,7 @@
                     }
                 }else{ // 관리자*/
 
-                    if(sessionStorage.role == '0001'){ //시스템관리자
+                    if(sessionStorage.role == '0001' || sessionStorage.role == '0002'){ //시스템관리자,영수증사업자
                         this.$router.push({ name:'modUser' , params: { current : data.searchOption , val : data.row.id , val2 : data.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                     }else if(sessionStorage.role == '0003'){ //콜센터는 인증화면
                         //OTP인증 화면으로 이동
