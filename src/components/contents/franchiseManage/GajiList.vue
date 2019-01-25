@@ -114,7 +114,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Prop} from "vue-property-decorator";
     import {CommonBoardService, CommonListService} from '../../../api/common.service';
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
@@ -124,6 +124,8 @@
         },
     })
     export default class GajiList extends Vue {
+
+        @Prop() soluId !: any;
 
         gajiGbn : string = ''; //가맹점,지점 구분(1-가맹점, 2-지점)
 
@@ -200,12 +202,23 @@
                 return;
             }
 
+            //soluId 셋팅
+            let soluNo : string = '';
+            if(sessionStorage.role == '0002'){
+                soluNo = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
+            }else{
+                if(this.soluId != undefined && this.soluId != null && this.soluId != ''){
+                    soluNo = this.soluId;
+                }
+            }
+
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.
             // 넣어진 페이지 데이터에 의해 페이징 페이지 생성 이벤트는 페이지번호 옴겨와야한다
             // 검색데이터
             let reqData = {
                 searchType : this.searchType,
                 searchWord : this.searchWord,
+                soluId : soluNo
                 //currentPage : this.pageNum,
                 //perPage  : this.PAGEBLOCK,
             }

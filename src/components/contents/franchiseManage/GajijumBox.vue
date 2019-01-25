@@ -23,7 +23,7 @@
                                         <option value="saupId">사업자등록번호</option>
                                         <option value="shopNm">사업장명</option>
                                     </select>
-                                    <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord" v-on:keyup.enter="searchGajum">
+                                    <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord" v-on:keyup.enter="searchGajum" v->
                                 </li>
                             </ul>
                             <span class="btn_req_area"><button type="button" class="btn_m01 bg01" v-on:click="searchGajum">조회</button></span>
@@ -80,6 +80,8 @@
                                     <col width="383px">
                                 </colgroup>
                                 <template v-if="gajiGbn == true">
+
+                                    <template v-if="responseData.length > 0">
                                     <tbody v-for="datas in responseData">
                                     <tr>
                                         <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
@@ -88,16 +90,34 @@
                                         <td class="left">{{datas.shopNm}}</td>
                                     </tr>
                                     </tbody>
+                                    </template>
+                                    <template v-else>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="4" style="text-align: center">데이터가 없습니다.</td>
+                                        </tr>
+                                        </tbody>
+                                    </template>
+
                                 </template>
                                 <template v-if="gajiGbn != true">
-                                    <tbody v-for="datas in responseData">
-                                    <tr>
-                                        <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
-                                        <td>{{datas.jijumId}}</td>
-                                        <td>{{datas.saupId}}</td>
-                                        <td class="left">{{datas.shopNm}}</td>
-                                    </tr>
-                                    </tbody>
+                                    <template v-if="responseData.length > 0">
+                                        <tbody v-for="datas in responseData">
+                                        <tr>
+                                            <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
+                                            <td>{{datas.jijumId}}</td>
+                                            <td>{{datas.saupId}}</td>
+                                            <td class="left">{{datas.shopNm}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </template>
+                                    <template v-else>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="4" style="text-align: center">데이터가 없습니다.</td>
+                                        </tr>
+                                        </tbody>
+                                    </template>
                                 </template>
                             </table>
                         </div>
@@ -214,8 +234,9 @@
     })
     export default class GajijumList extends Vue {
 
-        @Prop() gajumNum !: any;
-        gajumNumber : string = this.gajumNum;
+        @Prop() listInfo !: any; //매장관리에서 넘어옴
+        @Prop() loginInfo !: any; //매장등록에서 넘어옴
+        //gajumNumber : string = this.gajumNum;
         gajumHide : boolean = true;
         jijumShow : boolean = false;
 
@@ -247,19 +268,48 @@
 
         loading :boolean= false;
 
+        soluId : any = '';
+        //gajumId : any = '';
+        searchWordDis : boolean = false;
+
         //돔생성전 호출자
         created() {
 
-            if(this.gajumNum != null && this.gajumNum != ''){
-                this.gajumId = this.gajumNum; //가맹점 ID 셋팅
-                this.gajumHide = false; //가맹점 검색 감추기
-                this.jijumShow = true; //지점 검색 보이기
-                this.jijumBtnShow = false; //지점 검색 버튼 감추기
+            //console.log('넘어온 값')
+            //console.log(this.listInfo)
+
+            if(this.listInfo != undefined && this.listInfo != null && this.listInfo != ''){
+                if(this.listInfo.gajumId==undefined || this.listInfo.gajumId==null){
+                    this.gajumHide = true; //가맹점 검색 감추기
+                    this.jijumShow = true; //지점 검색 보이기
+                    this.jijumBtnShow = false; //지점 검색 버튼 감추기
+                }else{
+                    this.gajumHide = false; //가맹점 검색 감추기
+                    this.jijumShow = true; //지점 검색 보이기
+                }
+                this.gajumId = this.listInfo.gajumId; //가맹점 ID 셋팅
             }
 
         }
         //돔렌더링완료시 진행
         mounted(){
+
+            //console.log('넘긴값 확인')
+            //console.log(this.loginInfo)
+
+            if(this.loginInfo!=undefined && this.loginInfo!=null && this.loginInfo != ''){
+                if(this.loginInfo.role == '0002'){ //영수증사업자
+                    this.soluId = this.loginInfo.soluId;
+                }else if(this.loginInfo.role == '0004'){ //가맹점관리자
+                    this.soluId = this.loginInfo.soluId;
+                    this.gajumId = this.loginInfo.gajumId;
+                    this.searchWordDis = true;
+                    this.gajumHide = false;
+                    this.jijumShow = true;
+                }else{
+                    this.soluId = this.loginInfo.soluId;
+                }
+            }
 
         }
         selectedRow(obj) {
@@ -271,12 +321,20 @@
                 this.gajumNo = obj.saupId;
             }else { //지점 선택인 경우
                 let selectedRow: any = {};
-                selectedRow['gajumId'] = this.gajumId; //가맹점 ID
-                selectedRow['gajumSaupId'] = this.gajumNo; //가맹점 사업자번호
-                selectedRow['gajumNm'] = this.gajumNm; //가맹점명
-                selectedRow['jijumId'] = obj.jijumId; //지점 ID
-                selectedRow['jijumSaupId'] = obj.saupId; //지점 사업자번호
-                selectedRow['jijumNm'] = obj.shopNm; //지점명
+
+                if(sessionStorage.role == '0004'){
+                    selectedRow['jijumId'] = obj.jijumId; //지점 ID
+                    selectedRow['jijumSaupId'] = obj.saupId; //지점 사업자번호
+                    selectedRow['jijumNm'] = obj.shopNm; //지점명
+                }else{
+                    selectedRow['gajumId'] = this.gajumId; //가맹점 ID
+                    selectedRow['gajumSaupId'] = this.gajumNo; //가맹점 사업자번호
+                    selectedRow['gajumNm'] = this.gajumNm; //가맹점명
+                    selectedRow['jijumId'] = obj.jijumId; //지점 ID
+                    selectedRow['jijumSaupId'] = obj.saupId; //지점 사업자번호
+                    selectedRow['jijumNm'] = obj.shopNm; //지점명
+                }
+
                 this.$emit('selectedGaJijum', selectedRow); //선택한 가맹점만 값 넘김
                 this.$emit('gajiumClose')
             }
@@ -310,12 +368,17 @@
                 return;
             }
 
+            if(this.loginInfo!=null){
+                this.soluId = this.loginInfo.soluId == null ? '' : this.loginInfo.soluId;
+            }
+
             // 토탈페이지 및 페이징관련 데이터는 다시 페이지 오브젝트에 넣어야한다.
             // 넣어진 페이지 데이터에 의해 페이징 페이지 생성 이벤트는 페이지번호 옴겨와야한다
             // 검색데이터
             let reqData = {
                 searchType : this.searchType,
                 searchWord : this.searchWord,
+                soluId : this.soluId
                 //currentPage : this.pageNum,
                 //perPage  : this.PAGEBLOCK,
             }

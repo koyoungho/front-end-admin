@@ -20,7 +20,7 @@
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
-                        <select id="" name="" class="select form_w100"  title="현금영수증 사업자" v-model="soluId">
+                        <select id="soluIdCon" name="" class="select form_w100"  title="현금영수증 사업자" v-model="soluId" :disabled="soluIdDis == true">
                             <option value="">선택</option>
                             <template v-for="datas in receiptSaupList">
                                 <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -59,7 +59,7 @@
 
             <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01 sch" v-on:click="gajiBox(postText)">가맹점 검색</button>
+                <button type="button" id="" class="btn_m01 bg01 sch" v-on:click="gajiBox(postText)" v-if="franchiseSerchBtn">가맹점 검색</button>
             </div>
 
             <h4>사업장 기본 정보 <span class="sub_cf">(사업자 등록증 상의 정보)</span></h4>
@@ -135,11 +135,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드<em class="form_req">*</em></th>
-                        <td colspan="1">
-                            <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
-                        </td>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td colspan="1">
                             <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
@@ -149,9 +144,14 @@
                                 </template>
                             </select>
                         </td>
+                        <th scope="row">회사코드</th>
+                        <td colspan="1">
+                            <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <th scope="row">요양기관기호</th>
+                    <tr v-if="upjong=='002'||upjong=='003'">
+                        <th scope="row">요양기관기호<em class="form_req">*</em></th>
                         <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId" maxlength="20"></td>
                     </tr>
                     </tbody>
@@ -280,12 +280,11 @@
                 </div>
             </div>
 임시 주석 처리 -->
-            <br></br>
+
+            <!--<br></br>
             <div class="account_list">
                 <div class="acc_col">
-                    <!-- tbl view box -->
                     <div class="tbl_view_box">
-                        <!-- tbl view01 -->
                         <table class="tbl_view01">
                             <caption>정보</caption>
                             <colgroup>
@@ -309,13 +308,13 @@
                                             </label>
                                         </div>
                                         <p class="form_info">
-                                            <span class="send_text" style="padding: 93px">(* 사업자등록증 사본 이미지 는  jpg.png.tiff.pdf 파일 형식으로 업로드 해주세요.)</span> <!-- 20181210 수정 -->
+                                            <span class="send_text" style="padding: 93px">(* 사업자등록증 사본 이미지 는  jpg.png.tiff.pdf 파일 형식으로 업로드 해주세요.)</span>
                                         </p>
                                     </div>
                                     <div class="form_row send">
                                         <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="fileUploadGbn"><label for="aa12">팩스 전송</label></span>
-                                        <p class="form_info">: 가입 신청 후 2일 이내에  02-2074-6089 으로 팩스를 전송해 주시기 바랍니다. <br> <!-- 20181112 수정 -->
-                                            <span class="send_text">(* 팩스 전송 후 온라인 가맹점 가입 승인 까지는 영업 일 기준 3~4일의 시간이 소요 될 수 있습니다.)</span> <!-- 20181112 수정 -->
+                                        <p class="form_info">: 가입 신청 후 2일 이내에  02-2074-6089 으로 팩스를 전송해 주시기 바랍니다. <br>
+                                            <span class="send_text">(* 팩스 전송 후 온라인 가맹점 가입 승인 까지는 영업 일 기준 3~4일의 시간이 소요 될 수 있습니다.)</span>
                                         </p>
                                     </div>
                                 </td>
@@ -324,7 +323,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- btn bot -->
             <div class="btn_bot" v-if="regbtnShow">
@@ -332,7 +331,7 @@
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
-            <GajijumBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal1 = false"></GajijumBox>
+            <GajijumBox v-if="showModal1" v-bind:postData="postText1" v-bind:loginInfo="loginInfo" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal1 = false"></GajijumBox>
 
             <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="loadCodeList" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
@@ -366,6 +365,7 @@
         regbtnShow: boolean = false; //등록버튼 권한
 
         soluId: any = ''; //현금영수증 사업자
+        soluIdDis: boolean = false; //현금영수증사업자 disabeld 여부
 
         gajumId: any = ''; //가맹점 번호
         gajumSaupId: any = ''; //사업자 번호
@@ -421,6 +421,10 @@
         aproIdx : number = 0;
         admIdx : number = 0;
 
+        franchiseSerchBtn : boolean = true;
+
+        loginInfo : any = {};
+
         //돔생성전 호출자
         created() {
 
@@ -437,6 +441,40 @@
                     }
                 }
             }
+
+//this.gajumInfo(); //가맹점정보
+//this.jijumInfo(); //지점정보
+            if(sessionStorage.role=='0002'){ //현금영수증사업자(영수증사업자 default)
+                this.soluId = '0002';
+                //this.soluId = sessionStorage.soluId;
+                this.soluIdDis = true;
+
+            }else if(sessionStorage.role=='0004'){ //가맹점관리자(가맹점 정보 default)
+                this.soluId = sessionStorage.soluId;
+                this.soluIdDis = true;
+
+                this.gajumInfo(); //가맹점정보
+
+                // this.gajumId = sessionStorage.gajumId;
+                // this.gajumSaupId = '';
+                // this.gajumNm = '';
+            }else if(sessionStorage.role=='0005'){ //지점관리자(가맹점, 지점정보 default)
+                this.soluId = sessionStorage.soluId;
+                this.soluIdDis = true;
+
+                this.gajumInfo(); //가맹점정보
+                this.jijumInfo(); //지점정보
+
+                this.franchiseSerchBtn = false; //가맹점 검색 버튼 hidden
+
+                // this.gajumId = '';          //가맹점번호
+                // this.gajumSaupId = '';      //가맹점 사업자번호
+                // this.gajumNm = '';          //가맹점명
+                // this.jijumId = '';          //지점번호
+                // this.jijumNo = '';          //지점 사업자번호
+                // this.jijumNm = '';          //지점명
+            }
+
 
             //승인대역 정보
             this.approvalList = [
@@ -479,9 +517,29 @@
             this.getSelectList('SUBSAUP'); //회사코드(사업장)
         }
 
+        gajumInfo(){ //가맹점정보
+            CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/gajum',null).then(result=>{
+                if(result.status==200){
+                    this.gajumId = result.data.gajumId;
+                    this.gajumSaupId = result.data.saupId;
+                    this.gajumNm = result.data.shopNm;
+                }
+            })
+        }
+
+        jijumInfo(){ //지점정보
+            CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/jijum',null).then(result=>{
+                if(result.status==200){
+                    this.jijumId = result.data.jijumId;
+                    this.jijumNo = result.data.saupId;
+                    this.jijumNm = result.data.shopNm;
+                }
+            })
+        }
+
         @Watch('upjong') onChange(){
-            if(this.upjong == '0002' || this.upjong == '0003') { //업종구분이 신문사(0002), 택배사(0003) 이면 회사코드 조회
-                //this.getSelectList('SUBSAUP');
+            if(this.upjong == '006' || this.upjong == '007') { //업종구분이 신문사(0002), 택배사(0003) 이면 회사코드 조회
+                //this.getSelectList(this.upjong);
             }else{
             }
         }
@@ -512,6 +570,13 @@
 
         //돔렌더링완료시 진행
         mounted() {
+
+            //현금영수증사업자 경우 자동 셋팅
+            if(sessionStorage.role == '0002'){
+                this.soluId = sessionStorage.soluId;
+                let soluIdCon = document.getElementById('soluIdCon');
+                if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
+            }
         }
 
         bulkReg(){
@@ -578,8 +643,8 @@
             }
 임시 주석 처리 */
 
-            this.fileUpload();
-
+            //this.fileUpload(); 파일 업로드 부분 빼기
+            this.insertInfo();
         }
 
         //파일 등록
@@ -697,8 +762,7 @@
 임시 주석 처리 */
             reqData['accounts'] = addData3; //관리자 정보 셋팅
 
-            reqData['saupFileNm'] = this.resultFileNm; //관리자 정보 셋팅
-
+            //reqData['saupFileNm'] = this.resultFileNm; //관리자 정보 셋팅
 
             // api 데이터 호출(매장 등록)
             CommonBoardService.postListDatas('store', null, reqData).then((response) => {
@@ -807,13 +871,13 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.subCompanyCnt == ''){
-                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
-                return;
             }else if(this.upjong == ''){
                 alert('업종구분을 선택하세요.');
                 return;
-            }else if((this.upjong == '005' || this.upjong == '006') && (this.gikanId == '' || this.gikanId == null)){
+            /*}else if((this.upjong == '006' || this.upjong == '007') && this.subCompanyCnt == ''){ //택배사, 학원은 회사코드 필수
+                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
+                return;*/
+            }else if((this.upjong == '002' || this.upjong == '003') && (this.gikanId == '' || this.gikanId == null)){ //병원, 위원은 요양기관입력 필수
                 alert('요양기관기호를 입력하세요.');
                 return;
             }
@@ -886,10 +950,10 @@
             }
 임시 주석 처리 */
 
-            if(this.fileUploadGbn == '1' && this.uploadFileNm == ''){
+            /*if(this.fileUploadGbn == '1' && this.uploadFileNm == ''){
                 alert('사업자등록증사본 파일을 첨부 하세요.');
                 return;
-            }
+            }*/
 
             //다음 단계 functon 들어오는 곳!!
             //this.insertInfo();
@@ -1082,7 +1146,7 @@
             let apiUrl : string = '';
 
             if(code == 'SEARCH'){ //회사코드(SEARCH-사용가능한것만 조회) -- get
-                reqData['searchType'] = 'SEARCH';
+                //reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
                 apiUrl = 'code/aprvcode';
@@ -1092,6 +1156,8 @@
                 apiUrl = 'code/upjong';
             }else if(code == 'SUBSAUP'){ //SW제공회사
                 //reqData['upjongCode'] = this.upjong;
+                apiUrl = 'company';
+            }else if(code=='006'||code=='007'){ //택배사, 학원
                 apiUrl = 'company';
             }
 
@@ -1110,6 +1176,8 @@
                             this.upjongList = result; //업종코드
                         }else if(code == 'SUBSAUP'){
                             this.subCompanyList = result; //회사코드
+                        }else if(code == '006' || code == '007'){ //택배사, 학원
+                            this.companyCodeList;
                         }
                     } else {
                     }
@@ -1158,6 +1226,17 @@
         //가맹점 팝업 보임
         gajiBox(text) {
             console.log(text)
+
+
+
+            if(sessionStorage.role=='0002'){ //현금영수증사업자(영수증사업자 default)
+                this.loginInfo = { role : '0002' , soluId : this.soluId }
+            }else if(sessionStorage.role=='0004'){ //가맹점관리자(가맹점 정보 default)
+                this.loginInfo = { role : '0004' , soluId : this.soluId , gajumId : this.gajumId, gajumNo : this.gajumSaupId }
+            }else{
+                this.loginInfo = { role : sessionStorage.role , soluId : this.soluId }
+            }
+
             this.showModal1 = true;
             //this.postText = "서울시금천구";
         }
@@ -1165,12 +1244,24 @@
         //선택한 가맹점 정보 셋팅(지점 등록화면 상단의 지점 정보)
         setGaJijumData(data) {
             console.log('받은 가맹점 정보 :: ' + data)
-            this.gajumId = data.gajumId; //가맹점 번호
-            this.gajumSaupId = data.gajumSaupId; //가맹점 사업자 번호
-            this.gajumNm = data.gajumNm; //가맹점명
-            this.jijumId = data.jijumId; //지점 번호
-            this.jijumNo = data.jijumSaupId; //지점 사업자 번호
-            this.jijumNm = data.jijumNm; //지점명
+
+            if(sessionStorage.role == '0004'){ //가맹점관리자는 지점만 셋팅
+
+                this.jijumId = data.jijumId; //지점 번호
+                this.jijumNo = data.jijumSaupId; //지점 사업자 번호
+                this.jijumNm = data.jijumNm; //지점명
+
+            }else{
+
+                this.gajumId = data.gajumId; //가맹점 번호
+                this.gajumSaupId = data.gajumSaupId; //가맹점 사업자 번호
+                this.gajumNm = data.gajumNm; //가맹점명
+                this.jijumId = data.jijumId; //지점 번호
+                this.jijumNo = data.jijumSaupId; //지점 사업자 번호
+                this.jijumNm = data.jijumNm; //지점명
+
+            }
+
         }
 
         uploadFile(event: any) { //파일 업로드

@@ -84,7 +84,10 @@
                 this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
                 this.soluDis = true;
             }else if(sessionStorage.role == '0004'){ //가맹점관리자
-                this.soluVal = '';
+                console.log('세션 값 확인')
+                console.log('id : '+sessionStorage.soluId)
+
+                this.soluVal = sessionStorage.soluId;
                 this.soluDis = true;
 
                 this.gajumVal = sessionStorage.gajumId == null ? '' : sessionStorage.gajumId;
