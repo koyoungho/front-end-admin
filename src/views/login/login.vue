@@ -220,10 +220,14 @@
         loginChk() { //로그인 코드별 화면 분기
             let nextPage = '';
 
-            if(sessionStorage.termsYn != null && sessionStorage.termsYn != 'Y'){ //약관동의 화면 이동
+            /*if(sessionStorage.termsYn != null && sessionStorage.termsYn != 'Y'){ //약관동의 화면 이동
                 this.$router.push({name:'termsCheck', query:{ id:sessionStorage.accountId }})
                 return;
-            }
+            }*/
+
+            /*if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초로그인시
+                this.$router.push({name:'termsCheck'});
+            }*/
 
             //비밀번호 5회 틀릴시 계점 잠긴 상태
             if (sessionStorage.failCnt > 4) {
@@ -234,7 +238,15 @@
             if (sessionStorage.code == '000') { // 로그인 성공 -> 메인화면 이동
                 nextPage = 'main';
 
-                alert('최종 접속정보\n 현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n 최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n 최종 접속 IP 주소 : '+sessionStorage.lastIp);
+                let alertMsg : string = '';
+                if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초 로그인
+                    alertMsg = '최종 접속정보\n현재 접속 IP 주소 : ' + sessionStorage.currentIp;
+                }else{
+                    alertMsg = '최종 접속정보\n현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n최종 접속 IP 주소 : '+sessionStorage.lastIp;
+                }
+
+                alert(alertMsg);
+
             } else if (sessionStorage.code == '001') { // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
                 nextPage = 'chgPass';
 
