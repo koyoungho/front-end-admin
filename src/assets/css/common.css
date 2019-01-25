@@ -1303,7 +1303,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
   @page {
     size: A4;
-    size: 160mm 180mm;
+    size: 160mm 200mm;
   }
 }
 
