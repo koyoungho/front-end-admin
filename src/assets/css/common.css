@@ -1302,6 +1302,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   #popup_header,#bottom_area {display: none !important;}
 
   @page {
+    size: A4;
     size: 160mm 180mm;
   }
 }
