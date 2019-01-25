@@ -8,7 +8,7 @@
             <h3>{{subtitle}}</h3>
             <h4>현금영수증 발급 조회</h4>   <!-- 20181112 수정 -->
             <!-- tbl grid wrap -->
-            <div class="tbl_grid_wrap">
+            <div class="tbl_grid_wrap" >
                 <!-- tbl grid01 -->
                 <table class="tbl_grid01">
                     <caption>현금영수증</caption>
@@ -251,9 +251,9 @@
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow" v-if="cancleReceipActionBtn">발급취소</button>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
-            <!--<div style="text-align:right">-->
-                <!--<button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>-->
-            <!--</div>-->
+            <div style="text-align:right">
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
+            </div>
             <!-- tbl list box -->
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="onLoadListView"  v-on:listView="iocViewEvent"></ListComponent>
             <!-- //tbl list box -->

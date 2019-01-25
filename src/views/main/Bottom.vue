@@ -6,7 +6,7 @@
             <div class="quick">
                 <span class="sub">고객센터</span>
                 <p class="cont">
-                    <span class="tel">(02)<strong>2074-0340</strong></span>
+                    <span class="tel"><strong>(02)</strong><strong>2074-0340</strong></span>
                     <span class="text">평일 09:30~18:00</span>
                 </p>
             </div>
