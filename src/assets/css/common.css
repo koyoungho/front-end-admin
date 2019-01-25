@@ -1293,17 +1293,17 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 #popup_receipt.popup_wrapper .popup_body .receipt > img {width:100%; height:auto; border:2px solid #7f7f7f;} /* 사업자등록증 사본 */
 
 
-@media print {
-  #header, #header2, #footer,h3 {display: none !important;}
-  .no_print {display: none !important;}
-  .print_area {width: 60% !important; margin-top: 5px ;}
- 
-  #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0);}
-  #popup_header,#bottom_area {display: none !important;}
 
+
+@media print {
+  #header, #header, #footer, h3 {display: none;}
+  .no_print {display: none !important;}
+  .print_area {width: 100% !important;}
+  /*.print_area2 {width: 60% !important; margin-top: 150px;margin-left : 120px}*/
+  #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0); }
+  #popup_header,#bottom_area {display: none;}
   @page {
-    size: A4;
-    size: 140mm 180mm;
+    size: A4
   }
 }
 

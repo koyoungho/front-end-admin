@@ -8,7 +8,7 @@
             <h3>{{subtitle}}</h3>
             <h4>현금영수증 발급 조회</h4>   <!-- 20181112 수정 -->
             <!-- tbl grid wrap -->
-            <div class="tbl_grid_wrap">
+            <div class="tbl_grid_wrap" >
                 <!-- tbl grid01 -->
                 <table class="tbl_grid01">
                     <caption>현금영수증</caption>
