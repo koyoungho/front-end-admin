@@ -21,28 +21,28 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row">이름</th>
+                        <th scope="row">이름<em class="form_req">*</em></th>
                         <td><input type="text" class="input form_w100" title="이름" v-model="name" maxlength="20"></td>
-                        <th scope="row">휴대폰번호</th>
+                        <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="휴대폰번호" v-model="phoneNum" maxlength="12">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">ID</th>
+                        <th scope="row">ID<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_id" title="ID" v-model="id" v-on:keyup="idCh()" maxlength="16">
                             <input type="hidden" v-model="idChkYn">
                             <button type="button" id="" class="btn_s01 bg04" @click="idChk()">중복확인</button>
                             <p class="info_msg" id="id_msg"></p>
                         </td>
-                        <th scope="row">이메일주소</th>
+                        <th scope="row">이메일주소<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="이메일주소" v-model="email" maxlength="30">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">계정등급</th>
+                        <th scope="row">계정등급<em class="form_req">*</em></th>
                         <td>
                             <select id="" name="" class="select form_w100" title="계정등급" v-model="accountLevel">
                                 <option value="">선택</option>
@@ -56,16 +56,7 @@
                         </td>
                         <th scope="row">계정상태</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정상태" v-model="accountStatus" disabled="disabled">
-                                <option value="">선택</option>
-                                <option value="0">승인대기</option>
-                                <option value="1">정상</option>
-                                <option value="2">해지대기</option>
-                                <option value="3">해지</option>
-                                <option value="4">잠금</option>
-                                <option value="5">휴먼</option>
-                                <option value="6">사용중지</option>
-                            </select>
+                            <input type="input" class="select form_w100" title="계정상태" value="승인" disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -86,8 +77,17 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <td colspan="1">
+                            <select name="" class="select form_w100" title="회사코드" v-model="subSaupCode">
+                                <option value="">선택</option>
+                                <template v-for="datas in subSaupList">
+                                    <option v-bind:value=datas.code>{{datas.name}}</option>
+                                </template>
+                            </select>
+                        </td>
                         <th scope="row">접속IP 대역</th>
-                        <td colspan="3">
+                        <td colspan="1">
                             <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpFrom" maxlegnth="15">
                             <span class="period_form">-</span>
                             <input type="text" class="input form_conip" title="접속IP 대역" v-model="accessIpTo" maxlength="15">
@@ -112,7 +112,7 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row">사업자등록번호</th>
+                        <th scope="row">사업자등록번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdCh()" maxlength="10">
                             <input type="hidden" v-model="saupIdChkYn">
@@ -231,6 +231,7 @@
         zipCode: any = ''; //우편번호
         addr1: any = ''; //주소
         addr2: any = ''; //상세주소
+        subSaupCode: any = ''; //회사코드
         accessIpFrom: any = ''; //접속IP 시작
         accessIpTo: any = ''; //접속IP 끝
 
@@ -242,6 +243,8 @@
         regShow :boolean =false;
 
         saupjang : Saupjang[]=[];
+
+        subSaupList : any = {};
 
         model : any = [];
         auth : any = "";
@@ -285,7 +288,7 @@
             this.commonCode();
             //this.authMenuList();
 
-            this.accountStatus = '0'; //계정상태 정상(0)으로 셋팅
+            this.accountStatus = '1'; //계정상태 정상(1)으로 셋팅
 
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -329,6 +332,9 @@
         }
 
         commonCode(){
+
+            this.getSelectList('SUBSAUP');
+
             // CommonBoardService.postListDatas('validattion','null',this.model).then(e=>{
             //   디폴트 코드 로딩하기
             // })
@@ -409,6 +415,7 @@
                     }
                 }
                 , (error) => {
+
                 }
             ).catch();
         }
@@ -475,7 +482,10 @@
             }else if(this.accountLevel == ''){
                 Vue.swal({text: '계정등급을 확인하세요.'});
                 return;
-            }else if(this.zipCode == ''){
+            }else if(this.subSaupCode == ''){
+                Vue.swal({text: '회사코드를 선택하세요.'});
+                return;
+            /*}else if(this.zipCode == ''){
                 Vue.swal({text: '우편번호 버튼을 클릭하여 주소를 선택하세요.'});
                 return;
             }else if(this.addr1 == ''){
@@ -489,7 +499,7 @@
                 return;
             }else if(this.accessIpTo == ''){
                 Vue.swal({text: '접속IP 끝 대역을 입력하세요.'});
-                return;
+                return;*/
             }else if(this.saupId == ''){
                 Vue.swal({text: '사업자등록번호를 입력 하세요.'});
                 return;
@@ -521,6 +531,7 @@
             reqData['zipCode'] = this.zipCode;
             reqData['addr1'] = this.addr1;
             reqData['addr2'] = this.addr2;
+            reqData['subSaup'] = this.subSaupCode;
             reqData['accessIpFrom'] = this.accessIpFrom;
             reqData['accessIpTo'] = this.accessIpTo;
             reqData['saupId'] = this.saupId;
@@ -644,15 +655,18 @@
             }
 
             CommonBoardService.getListDatas('saupjang',saupId,null).then(result=>{
-                if(result.status==200){
-                    console.log('사업장 정보 조회')
+                if(result.status==200 && result.data!=null){
                     console.log(result.data)
                     this.saupjang = result.data;
                     this.saupIdChkYn = 'Y';
                 }else{
-                    Vue.swal({text: '에러'});
+                    Vue.swal({text: '미등록된 사업자등록번호입니다. 등록후 사용하세요.'});
                 }
-            })
+            }, (error) => {
+                Vue.swal({text: '미등록된 사업자등록번호입니다. 등록후 사용하세요.'});
+                }
+            ).catch((response) => {
+            });
         }
 
         sendMail() { //메일 발송
@@ -790,6 +804,37 @@
             let check_boolean = check.test(val);
 
             return check_boolean;
+        }
+
+//공통 select box 조회
+        getSelectList(code: string){
+            if(code == ''){
+                return;
+            }
+
+            let reqData: any = {};
+            let apiUrl : string = '';
+
+            if(code == 'SUBSAUP') { //회사코드(사업장정보)
+                reqData['searchType'] = 'SEARCH';
+                apiUrl = 'company';
+            }
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas(apiUrl, null, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result)
+                    if (result.length > 0) {
+                        if(code == 'SUBSAUP'){
+                            this.subSaupList = result;
+                        }
+                    } else {
+                    }
+                }
+                , (error) => {
+                }
+            ).catch();
+
         }
 
 

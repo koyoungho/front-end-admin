@@ -220,68 +220,68 @@
         loginChk() { //로그인 코드별 화면 분기
             let nextPage = '';
 
+            if(sessionStorage.termsYn != null && sessionStorage.termsYn != 'Y'){ //약관동의 화면 이동
+                this.$router.push({name:'termsCheck', query:{ id:sessionStorage.accountId }})
+                return;
+            }
+
             //비밀번호 5회 틀릴시 계점 잠긴 상태
             if (sessionStorage.failCnt > 4) {
                 alert('비밀번호를 5회이상 틀려서 계정이 잠긴 상태입니다.\n고객센터에 문의하세요.');
                 return;
             }
 
-            if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초로그인시
-                this.$router.push({name:'termsCheck'});
-            }else {
+            if (sessionStorage.code == '000') { // 로그인 성공 -> 메인화면 이동
+                nextPage = 'main';
 
-                if (sessionStorage.code == '000') { // 로그인 성공 -> 메인화면 이동
-                    nextPage = 'main';
+                alert('최종 접속정보\n 현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n 최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n 최종 접속 IP 주소 : '+sessionStorage.lastIp);
+            } else if (sessionStorage.code == '001') { // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
+                nextPage = 'chgPass';
 
-                    alert('최종 접속정보\n 현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n 최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n 최종 접속 IP 주소 : '+sessionStorage.lastIp);
-                } else if (sessionStorage.code == '001') { // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
-                    nextPage = 'chgPass';
+            } else if (sessionStorage.code == '002') { //휴면계정 -> 비밀번호 초기화 화면 이동
+                //nextPage = 'phoneAuth'
 
-                } else if (sessionStorage.code == '002') { //휴면계정 -> 비밀번호 초기화 화면 이동
-                    //nextPage = 'phoneAuth'
-
-                    if (confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')) {
-                        nextPage = 'initPass';
-                    } else {
-                        return;
-                    }
-                } else if (sessionStorage.code == '003') { //비밀번호 불일치
-                    nextPage = 'notPass';
-
-                    alert('로그인 정보가 맞지 않습니다.\n' + sessionStorage.failCnt + '회 실패. 5회 실패시에는 해당 계정의 접속이 차단됩니다.');
-                    return;
-                } else if (sessionStorage.code == '004') { //비밀번호 5회이상 틀린 틀림 -> 비밀번호 초기화
+                if (confirm('1년이상 접속하지 않아 접속이 차단되었습니다. 재사용 하시려면 휴대폰 본인인증이 필요합니다.')) {
                     nextPage = 'initPass';
-
-                    alert('로그인을 5회 실패하여 계정 접속을 차단합니다. 아이디 찾기, 비밀번호 초기화로 계정 로그인 정보를 확인하시기 바랍니다.');
-                    //return;
-                } else if (sessionStorage.code == '005') { //사업자등록번호로 로그인
-                    sessionStorage.saupYn = 'Y'; //가맹점 신규 등록화면에서 사업장정보 조회시 필요
-                    nextPage = 'saupLogin';
-                } else if (sessionStorage.code == '006') { //동일IP로 로그인
-                    alert('다른 기기로 접속하여 접속을 해제합니다.');
-                    return;
-                } else if (sessionStorage.code == '007') { //IP 불일치
-                    alert('다른 곳에서 계정이 사용중 입니다. 기존 접속 계정을 로그아웃 후 다시 시도해 주기시 바랍니다.');
-                    return;
-                } else if (sessionStorage.code == '008') { //해지
-                    alert('계정이 해지된 사용자 입니다.');
-                    return;
-                } else if (sessionStorage.code == '009') { //승인 대기
-                    alert('승인 대기 중 입니다.');
-                    return;
                 } else {
-                    alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.');
                     return;
                 }
+             } else if (sessionStorage.code == '003') { //비밀번호 불일치
+                nextPage = 'notPass';
 
-                // 로그인완료 메뉴로딩완료시  OTP인증 이동한다 무조건 1회성 단 시스템관리자를 제외한 다른권한은 정보변경 및 내용조회시 재인증
+                alert('로그인 정보가 맞지 않습니다.\n' + sessionStorage.failCnt + '회 실패. 5회 실패시에는 해당 계정의 접속이 차단됩니다.');
+                return;
+            } else if (sessionStorage.code == '004') { //비밀번호 5회이상 틀린 틀림 -> 비밀번호 초기화
+                nextPage = 'initPass';
 
-                // 인증페이지이동
-                this.$router.push('home/' + nextPage);
-                //this.$router.push(nextPage);
-
+                alert('로그인을 5회 실패하여 계정 접속을 차단합니다. 아이디 찾기, 비밀번호 초기화로 계정 로그인 정보를 확인하시기 바랍니다.');
+                //return;
+            } else if (sessionStorage.code == '005') { //사업자등록번호로 로그인
+                sessionStorage.saupYn = 'Y'; //가맹점 신규 등록화면에서 사업장정보 조회시 필요
+                nextPage = 'saupLogin';
+            } else if (sessionStorage.code == '006') { //동일IP로 로그인
+                alert('다른 기기로 접속하여 접속을 해제합니다.');
+                return;
+            } else if (sessionStorage.code == '007') { //IP 불일치
+                alert('다른 곳에서 계정이 사용중 입니다. 기존 접속 계정을 로그아웃 후 다시 시도해 주기시 바랍니다.');
+                return;
+            } else if (sessionStorage.code == '008') { //해지
+                alert('계정이 해지된 사용자 입니다.');
+                return;
+            } else if (sessionStorage.code == '009') { //승인 대기
+                alert('승인 대기 중 입니다.');
+                return;
+            } else {
+                alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.');
+                return;
             }
+
+            // 로그인완료 메뉴로딩완료시  OTP인증 이동한다 무조건 1회성 단 시스템관리자를 제외한 다른권한은 정보변경 및 내용조회시 재인증
+
+            // 인증페이지이동
+            this.$router.push('home/' + nextPage);
+            //this.$router.push(nextPage);
+
 
         }
 

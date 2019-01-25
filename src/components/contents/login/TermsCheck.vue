@@ -231,15 +231,19 @@
             }
 
 //            this.showConfirm = true; //본인인증 화면 보이기
-
+            /*
              let reqData: any = {};
              reqData['birthday'] = '20010101'; //생년월일
              reqData['gender'] = '0'; //성별
              reqData['name'] = '금나래'; //이름
              reqData['phoneNum'] = '01027047329'; //전화번호
              reqData['id'] = 'keumnara12'; //아이디
-            //
-             this.$router.push({name:"regPass", params:{ reqParams : reqData }});
+            */
+
+             //this.termsAgree();
+
+            let reqData : any = { id: this.paramId };
+            this.$router.push({name:'regPass', params:{reqParams:reqData }});
 
             //약관동의
             /*CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
@@ -254,6 +258,23 @@
             ).catch((response) =>  {
 
             });*/
+        }
+
+        termsAgree(){
+            //약관동의
+            CommonBoardService.postListData('accounts',this.paramId+'/terms', null).then((response) => {
+                    if (response.status == 200 || response.status == 200) {
+                        //alert('변경이 완료되었습니다')
+                        console.log('약관등록완료!!')
+                        //this.$router.push({name:'main'})
+                    }
+                }
+                , (error) => {
+                }
+            ).catch((response) =>  {
+
+            });
+
         }
 
         top(){
