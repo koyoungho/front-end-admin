@@ -52,8 +52,10 @@
         soluVal : string = ''; //현금영수증사업자
         soluDis : boolean = false; //현금영수증사업자 disabled 여부
         gajumVal : string = ''; //가맹점
+        gajumNmVal : string = ''; //가맹점명
         gajumDis : boolean = false; //가맹점 disabled 여부
         jijumVal : string = ''; //지점
+        jijumNmVal : string = ''; //지점명
         jijumDis : boolean = false; //지점 disabled 여부
         onLoadListView : boolean = false;
 
@@ -93,12 +95,14 @@
                 this.gajumVal = sessionStorage.gajumId == null ? '' : sessionStorage.gajumId;
                 this.gajumDis = true;
             }else if(sessionStorage.role == '0005') { //지점관리자
-                this.soluVal = '';
+                this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
                 this.soluDis = true;
 
                 this.gajumVal = sessionStorage.gajumId == null ? '' : sessionStorage.gajumId;
+                this.gajumNmVal = sessionStorage.gajumNm == null ? '' : sessionStorage.gajumNm;
                 this.gajumDis = true;
                 this.jijumVal = sessionStorage.jijumId == null ? '' : sessionStorage.jijumId;
+                this.jijumNmVal = sessionStorage.jijumNm == null ? '' : sessionStorage.jijumNm;
                 this.jijumDis = true;
             }
 
@@ -117,7 +121,7 @@
                             {columName : '업종' ,id : 'upjong',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '매장상태' ,id : 'storStsNm',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '등록일' ,id : 'regiDate',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}
+                            {columName : '등록일' ,id : 'regiDate',type:'date', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat: 'YYYY.MM.DD'}
                         ],
                         totalColum: 8,
                         apiUrl : 'store',
@@ -129,8 +133,18 @@
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
                         {type: 'selectCode' ,class:'w33',liNull:false, title :'현금영수증사업자',id: 'soluId', name:'soluId' , value: this.soluVal , disable : this.soluDis , api : 'code/issuer' , option : [{codeNm : '(주)롯데정보통신', code: '0001'},{codeNm : '주식회사 케이티', code: '0002'},{codeNm : '앤드컴', code: '0003'}]},
+
+                        // {type: 'inputPop2' ,class:'w33',liNull:false, title :'가맹점',id: 'gajumNm', name:'gajumNm' , value: this.gajumNmVal , disable : this.gajumDis,  api : '' , option : ''},
+                        // {type: 'hidden' ,class:'w33 ',liNull:false, title :'가맹점ID',id: 'gajumId', name:'gajumId' , value: this.gajumVal ,  api : '' , option : ''},
                         {type: 'inputPop2' ,class:'w33',liNull:false, title :'가맹점',id: 'gajumId', name:'gajumId' , value: this.gajumVal , disable : this.gajumDis,  api : '' , option : ''},
+                        // {type: 'hidden' ,class:'w33 ',liNull:false, title :'가맹점ID',id: 'gajumNm', name:'gajumNm' , value: this.gajumNmVal ,  api : '' , option : ''},
+
+
+                        //{type: 'inputPop2' ,class:'w33 text_center',liNull:false, title :'지점',id: 'jijumNm', name:'jijumNm' , value: this.jijumNmVal , disable : this.jijumDis ,  api : '' , option : ''},
+                        //{type: 'hidden' ,class:'w33 ',liNull:false, title :'지점ID',id: 'jijumId', name:'jijumId' , value: this.jijumVal ,  api : '' , option : ''},
                         {type: 'inputPop2' ,class:'w33 text_center',liNull:false, title :'지점',id: 'jijumId', name:'jijumId' , value: this.jijumVal , disable : this.jijumDis ,  api : '' , option : ''},
+                        // {type: 'hidden' ,class:'w33 ',liNull:false, title :'지점ID',id: 'jijumNm', name:'jijumNm' , value: this.jijumNmVal ,  api : '' , option : ''},
+
                         {type: 'selectCode' ,class:'w33',liNull:false, title :'매장상태',id: 'storeStatus', name:'storeStatus' , value: '' ,  api : 'code/storestatus' , option : [{ codeNm : '' , code: '' }]},
                         {type: 'selectCode' ,class:'w33 ',liNull:true, title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
                         {type: 'radio' ,class:'w25',liNull:false, title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },

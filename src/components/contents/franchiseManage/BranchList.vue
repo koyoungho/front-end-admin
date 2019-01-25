@@ -94,7 +94,7 @@
                             {columName : '지점번호' ,id : 'jijumId',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '지점상태' ,id : 'jijumStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
                             {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '등록일' ,id : 'regDt',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '등록일' ,id : 'regDt',type:'date', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat: 'YYYY.MM.DD'},
                         ],
                         totalColum: 8,
                         apiUrl : 'jijum',

@@ -73,13 +73,13 @@
                         <td>
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" disabled="disabled">
                         </td>
-                        <th scope="row">사업장명</th>
+                        <th scope="row">사업장명<em class="form_req">*</em></th>
                         <td><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
                     </tr>
                     <tr>
-                        <th scope="row">대표자명</th>
+                        <th scope="row">대표자명<em class="form_req">*</em></th>
                         <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
-                        <th scope="row">전화번호</th>
+                        <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" @keyup="changeRepPhonenum" maxlength="12">
                         </td>
@@ -101,7 +101,7 @@
                         <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
                     </tr>
                     <tr>
-                        <th scope="row">주소</th>
+                        <th scope="row">주소<em class="form_req">*</em></th>
                         <td colspan="3">
                             <ul class="address_list">
                                 <li class="con01">
@@ -142,10 +142,9 @@
                         <td colspan="3">
                             <select id="jijumStatusID" name="" class="select form_w50" title="가맹점" disabled="disabled" v-model="jijumStatus">
                                 <option value="">선택</option>
-                                <option value="0">승인신청</option>
-                                <option value="1">해지신청</option>
-                                <option value="2">정상</option>
-                                <option value="3">해지</option>
+                                <template v-for="datas in storeStatList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                             <!--<input type="text" class="input form_w50" title="지점" v-model="jijumStatus" disabled="disabled">-->
                         </td>
@@ -169,6 +168,15 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupUpjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_post" title="우편번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
@@ -179,15 +187,6 @@
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>
                             </select>-->
-                        </td>
-                        <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in saupUpjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
                         </td>
                     </tr>
                     </tbody>
@@ -434,6 +433,7 @@
         aproCodeList: any = {}; //승인코드
         saupSubSaupList: any = {}; //사업장정보의 회사코드
         saupUpjongList: any = {}; //사업장정보의 업종코드
+        storeStatList: any = {}; //가맹점 상태
 
         aproIdx : number = 0;
         admIdx : number = 0;
@@ -444,13 +444,13 @@
         //돔생성전 호출자
         created() {
 
-            console.log('세션정보===============>>>>>')
-            console.log(sessionStorage)
-            console.log('세션정보===============<<<<<')
+            //console.log('세션정보===============>>>>>')
+            //console.log(sessionStorage)
+            //console.log('세션정보===============<<<<<')
 
             //메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
-            console.log(menuList)
+            //console.log(menuList)
             let programId = 'branchList'; //메뉴ID
             for(let i=0; i<menuList.length; i++){
                 for(let j=0; j<menuList[i].subMenuDtos.length; j++){
@@ -461,7 +461,7 @@
                     }
                 }
             }
-            console.log('수정 권한 확인 ?? :: ' + this.btnUpdShow)
+            //console.log('수정 권한 확인 ?? :: ' + this.btnUpdShow)
 
             this.approvalList = [
                 {
@@ -663,6 +663,7 @@
             this.getSelectList('APRO'); //승인코드
             this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
             this.getSelectList('UPJONG'); //업종구분(사업장정보)
+            this.getSelectList('storeStat'); //가맹점 상태
         }
 
         //공통 select box 조회
@@ -686,6 +687,8 @@
                 apiUrl = 'company';
             }else if(code == 'UPJONG'){ //업종코드
                 apiUrl = 'code/upjong';
+            }else if(code == 'storeStat'){ //가맹점 상태 코드
+                apiUrl = 'code/storestatus';
             }
 
             // api 데이터 호출
@@ -703,6 +706,8 @@
                             this.saupSubSaupList = result;
                         }else if(code == 'UPJONG'){
                             this.saupUpjongList = result;
+                        }else if(code == 'storeStat'){ //가맹점 상태 코드
+                            this.storeStatList = result;
                         }
                     } else {
                         console.log('코드리스트 조회 오류')

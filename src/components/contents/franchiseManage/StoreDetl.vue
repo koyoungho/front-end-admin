@@ -164,11 +164,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드</th>
-                        <td colspan="1">
-                            <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
-                        </td>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td colspan="1">
                             <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
@@ -178,10 +173,15 @@
                                 </template>
                             </select>
                         </td>
+                        <th scope="row">회사코드</th>
+                        <td colspan="1">
+                            <input type="text" class="input form_post" title="회사코드" v-model="subCompanyCnt" disabled="disabled"> 개
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <th scope="row">요양기관기호<template v-if="upjong == '002'||upjong == '003'"><em class="form_req">*</em></template></th>
-                        <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId"></td>
+                    <tr v-if="upjong=='002'||upjong=='003'">
+                        <th scope="row">요양기관기호<em class="form_req">*</em></th>
+                        <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId" maxlength="10"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -564,6 +564,9 @@
                             this.addr1 = result.saupjang.addr1;
                             this.addr2 = result.saupjang.addr2;
                             this.upjong = this.nullCheck(result.saupjang.upjong);
+                            if(result.saupjang.upjong == '002'||result.saupjang.upjong == '003'){ //병원,의원이면 요양기관 표시
+
+                            }
                             this.loadCodeList = result.saupjang.subSaup;
                             if(result.saupjang.subSaup != null && result.saupjang.subSaup.length > 0){
                                 this.subCompanyCnt = result.saupjang.subSaup.length;

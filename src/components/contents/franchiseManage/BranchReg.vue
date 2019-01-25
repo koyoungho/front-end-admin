@@ -82,7 +82,7 @@
                     <tr>
                         <th scope="row">사업자구분<em class="form_req">*</em></th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType">
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
                                 <option value="1">법인사업자</option>
