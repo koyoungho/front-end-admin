@@ -7,9 +7,9 @@
             <h2 class="blind">{{titles}}</h2>
             <h3>{{subTitle}} </h3>
 
-            <!--<div class="btn_top">-->
-                <!--<button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>-->
-            <!--</div>-->
+            <div class="btn_top">
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
+            </div>
 
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
         </div>
