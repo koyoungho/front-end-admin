@@ -72,6 +72,7 @@ export default new Vuex.Store({
             sessionStorage.storeId = accessToken.storeId; //상점ID
             sessionStorage.storeNm = accessToken.storeNm; //상점명
             sessionStorage.subSaup = accessToken.subSaup; //회사코드
+            sessionStorage.termsYn = accessToken.termsYn; //약관동의 여부
         },
         LOGOUT (state) {
             //state.accessToken = null
