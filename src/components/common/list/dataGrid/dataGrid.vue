@@ -67,178 +67,224 @@
             <!-- top 헤더가 존재할경우 -->
             <template v-if="dataGridDetail.dataGrid.columTopHeader">
 
-                  <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
-                    <th scope="col">
-                      <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
-                        <span class="chk_box"><input type="checkbox" v-on:click="checkAlls(columNames.id,index)" v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label id=""><span class="blind">전체선택</span></label></span>
-                      </template>
-                      <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
-                      {{columNames.columName}}
-                      </template>
-                    </th>
-                  </template>
-                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
-                      <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-                  </template>
-                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
-                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-                  </template>
-                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
-                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-                  </template>
-                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
-                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-                  </template>
-                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
-                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-                  </template>
-                  <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='input'">
-                    <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-                  </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
-                <template v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true"><th>{{columNames.columName}}</th></template>
-              </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
+                                <th scope="col">
+                                    <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
+                                        <span class="chk_box"><input type="checkbox"
+                                                                     v-on:click="checkAlls(columNames.id,index)"
+                                                                     v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label
+                                                id=""><span class="blind">전체선택</span></label></span>
+                                    </template>
+                                    <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
+                                        {{columNames.columName}}
+                                    </template>
+                                </th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='input'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
+                                <template
+                                        v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                    <th>{{columNames.columName}}</th>
+                                </template>
+                            </template>
 
-            </template>
-            <!-- top 헤더가 없을경우 -->
-            <template v-if="!dataGridDetail.dataGrid.columTopHeader">
-              <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
-                <th scope="col">
-                  <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
-                    <span class="chk_box"><input type="checkbox" v-on:click="checkAlls(columNames.id,index)" v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label id=""><span class="blind">전체선택</span></label></span>
-                  </template>
-                  <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
-                    {{columNames.columName}}
-                  </template>
-                </th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
-                <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='fileDown'">
-                <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
-                <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
-                <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
-               <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='input'">
-                <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
-                <th>{{columNames.columName}}</th>
-              </template>
-              <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
-                <th>{{columNames.columName}}</th>
-              </template>
-            </template>
-            </template>
-        </tr>
-        </thead>
+                        </template>
+                        <!-- top 헤더가 없을경우 -->
+                        <template v-if="!dataGridDetail.dataGrid.columTopHeader">
+                            <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
+                                <th scope="col">
+                                    <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
+                                        <span class="chk_box"><input type="checkbox"
+                                                                     v-on:click="checkAlls(columNames.id,index)"
+                                                                     v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label
+                                                id=""><span class="blind">전체선택</span></label></span>
+                                    </template>
+                                    <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
+                                        {{columNames.columName}}
+                                    </template>
+                                </th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='number'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='fileDown'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='money'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='date'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='text'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='input'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='select'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
+                                <th>{{columNames.columName}}</th>
+                            </template>
+                        </template>
+                    </template>
+                </tr>
+                </thead>
 
-        <tbody>
-        <template v-if="listData.length > 0">
-          <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" :id="index" >
-            <template v-for="(rows,key,indexs) in datas">
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
-                <td>
-                  <span class="chk_box"><input type="checkbox"  :value="dataGridDetail.dataGrid.columControl[indexs].id+'@$'+rows+'@$'+index+'@$'+dataGridDetail.dataGrid.columControl[indexs].returnKey+'@$'+datas.role" v-model="checkBoxDatas"><label for=""></label></span>
-                </td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
-                <td >{{rows}}</td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='bizNum'">
-                <td >{{saupnoFormat(rows)}}</td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
-                  <td  v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right" >
-                    <span v-bind:style="colColor(indexs)">{{ minusCheck(Number(rows).toLocaleString(),index)}}</span>
-                  </td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
-                <td>
+                <tbody>
+                <template v-if="listData.length > 0">
+                    <tr v-for="(datas,index) in listData" v-bind:class="rowColor(index,datas)" :id="index">
+                        <template v-for="(rows,key,indexs) in datas">
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='checkBox'">
+                                <td>
+                                    <span class="chk_box"><input type="checkbox"
+                                                                 :value="dataGridDetail.dataGrid.columControl[indexs].id+'@$'+rows+'@$'+index+'@$'+dataGridDetail.dataGrid.columControl[indexs].returnKey+'@$'+datas.role"
+                                                                 v-model="checkBoxDatas"><label for=""></label></span>
+                                </td>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='number'">
+                                <td>{{rows}}</td>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='bizNum'">
+                                <td>{{saupnoFormat(rows)}}</td>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
+                                <td v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right">
+                                    <span v-bind:style="colColor(indexs)">{{ minusCheck(Number(rows).toLocaleString(),index)}}</span>
+                                </td>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
+                                <td>
                   <span v-bind:style="colColor(indexs)">
                     <template v-if="rows != null">
                          {{moment(rows,'YYYYMMDDHHmmss').format(dataGridDetail.dataGrid.columControl[indexs].dateFormat)}}
                     </template>
                     <template v-else> - </template>
                   </span>
-                  </td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
-                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
-                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)" style="text-align: left">
-                      <template v-if="listData[index].importantYn == 'Y'"> <i class="icon notice">공지</i></template>
-                      <span v-bind:style="colColor(indexs)">{{rows}} </span>
-                      <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
-                    </td>
-                  </template>
-                  <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
-                    <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span></td>
-                 </template>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
-                <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}
+                                </td>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
+                                <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                                    <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                        v-bind:style="fontColor(indexs,rows)" style="text-align: left">
+                                        <template v-if="listData[index].importantYn == 'Y'"><i
+                                                class="icon notice">공지</i></template>
+                                        <span v-bind:style="colColor(indexs)">{{rows}} </span>
+                                        <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
+                                    </td>
+                                </template>
+                                <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                                    <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                        v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span>
+                                    </td>
+                                </template>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
+                                <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                    v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}
                   <template v-if="listData[index].saupFileNm">
                   <br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font>
                   </template>
                 </span></td>
-              </template>
+                            </template>
 
 
-              <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'" >
-                <td><input type="text"  class="input form_w100"  v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]" @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)" ></td>
-              </template>
-              <!--주의 셀렉트박스는 공용보다 하나의 별개추가된 부분입니다-->
-              <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'">
-                <td>
-                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='1'">
-                    <select class="select form_w100" v-model="listData[index].rsnCode" @change="dataVal(index,indexs)" :aria-disabled="disableVal(index)">
-                      <option value="null">선택</option>
-                      <option v-for="commonList1 in dataGridDetail.dataGrid.commonSelectListOne"  v-bind:value="commonList1.code">{{commonList1.codeNm}}</option>
-                    </select>
-                  </template>
-                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='2'">
-                    <select class="select form_w100" v-model="listData[index].rstCode" @change="dataVal(index,indexs)">
-                      <option value="null">선택</option>
-                      <option v-for="commonList2 in dataGridDetail.dataGrid.commonSelectListTwo"  v-bind:value="commonList2.code">{{commonList2.codeNm}}</option>
-                    </select>
-                  </template>
-              </td>
-              </template>
-            </template>
-          </tr>
+                            <!--주의 인풋박스는 공용보다 하나의 별개추가된 부분입니다-->
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='input'">
+                                <td><input type="text" class="input form_w100"
+                                           v-model="listData[index][dataGridDetail.dataGrid.columControl[indexs].id]"
+                                           @input="dataVal(index,indexs,$event)" :aria-disabled="disableVal(index)">
+                                </td>
+                            </template>
+                            <!--주의 셀렉트박스는 공용보다 하나의 별개추가된 부분입니다-->
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='select'">
+                                <td>
+                                    <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='1'">
+                                        <select class="select form_w100" v-model="listData[index].rsnCode"
+                                                @change="dataVal(index,indexs)" :aria-disabled="disableVal(index)">
+                                            <option value="null">선택</option>
+                                            <option v-for="commonList1 in dataGridDetail.dataGrid.commonSelectListOne"
+                                                    v-bind:value="commonList1.code">{{commonList1.codeNm}}
+                                            </option>
+                                        </select>
+                                    </template>
+                                    <template v-if="dataGridDetail.dataGrid.columControl[indexs].selectList=='2'">
+                                        <select class="select form_w100" v-model="listData[index].rstCode"
+                                                @change="dataVal(index,indexs)">
+                                            <option value="null">선택</option>
+                                            <option v-for="commonList2 in dataGridDetail.dataGrid.commonSelectListTwo"
+                                                    v-bind:value="commonList2.code">{{commonList2.codeNm}}
+                                            </option>
+                                        </select>
+                                    </template>
+                                </td>
+                            </template>
+                        </template>
+                    </tr>
+                </template>
+
+                <template v-if="listData.length < 1">
+                    <tr>
+                        <template v-if="dataGridDetail.dataGrid.apiUrl == 'accounts'">
+                            <!-- 계정 권한 관리 화면은 columControl에 hidden이 있기때문 totalColum 으로 함 -->
+                            <td v-bind:colspan="dataGridDetail.dataGrid.totalColum" class="no_data">조회된 내용이 없습니다.</td>
+                        </template>
+                        <template v-if="dataGridDetail.dataGrid.apiUrl != 'accounts'">
+                            <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이
+                                없습니다.
+                            </td>
+                        </template>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
+        <!-- //tbl list box -->
+        <!-- btn tbl bot -->
+        <template v-if="authButton"> <!--계정 권한 관리에서 사용-->
+            <div class="btn_tbl_bot">
+                <button type="button" id="" class="btn_m01 bg01" v-on:click="accountAuth">승인</button>
+            </div>
         </template>
 
-        <template v-if="listData.length < 1">
-          <tr>
-              <template v-if="dataGridDetail.dataGrid.apiUrl == 'accounts'"> <!-- 계정 권한 관리 화면은 columControl에 hidden이 있기때문 totalColum 으로 함 -->
-                <td v-bind:colspan="dataGridDetail.dataGrid.totalColum" class="no_data">조회된 내용이 없습니다.</td>
-              </template>
-              <template v-if="dataGridDetail.dataGrid.apiUrl != 'accounts'">
-                <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이 없습니다.</td>
-              </template>
-          </tr>
-        </template>
-        </tbody>
-      </table>
     </div>
-    <!-- //tbl list box -->
-    <!-- btn tbl bot -->
-    <template v-if="authButton"> <!--계정 권한 관리에서 사용-->
-      <div class="btn_tbl_bot">
-        <button type="button" id="" class="btn_m01 bg01" v-on:click="accountAuth">승인</button>
-      </div>
-    </template>
-
-  </div>
 </template>
 
 
@@ -268,14 +314,14 @@
         windowSize: any = '';  // 윈도우 사이즈 체크
         publicPageing: any = '';  // 페이징
         menuHeader: any = {};  // 메뉴헤더생성
-        bgColor : any = ""; // 배경색
-        trColor : any = ""; // tr 컬러
-        lineColumName : string="";
-        lineColumIndex :  number = 10000;  // 라인컬러 인덱스
-        checkBoxDatas :any[]= [];  // 체크박스 체크데이터리스트
-        selectAll : boolean = false; // 전체선택옵션
-        tableOriginCss= this.dataGridDetail.dataGrid.tableClass==null ? 'tbl_scroll_box' :  this.dataGridDetail.dataGrid.tableClass  // 테이블 스크롤 없는것
-        tableOriginCss2= this.dataGridDetail.dataGrid.tableClass2==null ? 'tbl_list01 page_inquiry' :  this.dataGridDetail.dataGrid.tableClass2 // 테이블 스크롤 있는것
+        bgColor: any = ""; // 배경색
+        trColor: any = ""; // tr 컬러
+        lineColumName: string = "";
+        lineColumIndex: number = 10000;  // 라인컬러 인덱스
+        checkBoxDatas: any[] = [];  // 체크박스 체크데이터리스트
+        selectAll: boolean = false; // 전체선택옵션
+        tableOriginCss = this.dataGridDetail.dataGrid.tableClass == null ? 'tbl_scroll_box' : this.dataGridDetail.dataGrid.tableClass  // 테이블 스크롤 없는것
+        tableOriginCss2 = this.dataGridDetail.dataGrid.tableClass2 == null ? 'tbl_list01 page_inquiry' : this.dataGridDetail.dataGrid.tableClass2 // 테이블 스크롤 있는것
 
         // 토탈합계
         mTotalCount: number = 0;
@@ -285,190 +331,192 @@
 
         authButton: boolean = false; //승인버튼 보이기
         //인풋 벨리데이션 체크
-        styleCss : string = "";
-        inputString : string = "";
-        lineCheckOk : boolean = true;
-        dataStatus : string = '';
-        loading :boolean= false;
+        styleCss: string = "";
+        inputString: string = "";
+        lineCheckOk: boolean = true;
+        dataStatus: string = '';
+        loading: boolean = false;
 
         //오류내역용 변수
-        innerFixYn : string ='';
-        taxfixYn  : string ='';
+        innerFixYn: string = '';
+        taxfixYn: string = '';
 
         @Watch('listOnLoad') onChange() {
             this.getCommonListData();
         }
+
         @Watch('dataGridDetail') onChange2() {
             this.getCommonListData();
         }
+
         @Watch('checkBoxDatas') onChangeCheckBox() { // 체크박스 선택시 및 데이터 전달하는곳
-            let rowData :any=[]
-            this.checkBoxDatas.filter(e=>{
+            let rowData: any = []
+            this.checkBoxDatas.filter(e => {
                 let dt1 = e.split('@$')[0]
                 let dt2 = e.split('@$')[1]
                 let dt3 = e.split('@$')[2]
                 let dt4 = e.split('@$')[3]
                 let dt4Key = "";
                 let row = this.listOragin[dt3];
-                rowData.push({key:dt1 , value : dt2 , withKey : row[dt4] })
+                rowData.push({key: dt1, value: dt2, withKey: row[dt4]})
             })
-           this.$emit('checkBoxEvent', rowData)
+            this.$emit('checkBoxEvent', rowData)
 
             // 계정권한관리 화면이고, 계정권한관리 리스트에서 체크박스에 체크 건이 있고, 시스템관리자이거나 콜센터관리자이면 승인버튼 보임
-            if(this.dataGridDetail.dataGrid.acntAuthMng == true && this.checkBoxDatas != null && this.checkBoxDatas.length > 0 && (sessionStorage.role == '0001' || sessionStorage.role == '0003')){
+            if (this.dataGridDetail.dataGrid.acntAuthMng == true && this.checkBoxDatas != null && this.checkBoxDatas.length > 0 && (sessionStorage.role == '0001' || sessionStorage.role == '0003' || sessionStorage.role == '0002')) {
                 this.authButton = true;
-            }else{
+            } else {
                 this.authButton = false;
             }
         }
 
-        minusCheck(data,index){
-            if(this.listData[index].trgu=='취소'){
-                return '-'+ data
-            }else{
-            return data
+        minusCheck(data, index) {
+            if (this.listData[index].trgu == '취소') {
+                return '-' + data
+            } else {
+                return data
             }
         }
 
-        headerCheck(columName,index){  // 헤더 로우스가 존재할경우 그리지않는 체크헤더
+        headerCheck(columName, index) {  // 헤더 로우스가 존재할경우 그리지않는 체크헤더
             // alert(columName+'||'+ index)
-            let result : boolean = false;
-            if(this.dataGridDetail.dataGrid.columTopHeader[0].level.length < 1){
-              return result
-            }else{
-              this.dataGridDetail.dataGrid.columTopHeader[0].level.filter((e)=>{
-                      if(e.headerName == columName){
-                          //로우체크
-                          if(e.rows > 1){
-                              result = true;
-                          }
-                          else{
-                              result = false;
-                          }
-                      }
-              })
-              return result;
+            let result: boolean = false;
+            if (this.dataGridDetail.dataGrid.columTopHeader[0].level.length < 1) {
+                return result
+            } else {
+                this.dataGridDetail.dataGrid.columTopHeader[0].level.filter((e) => {
+                    if (e.headerName == columName) {
+                        //로우체크
+                        if (e.rows > 1) {
+                            result = true;
+                        }
+                        else {
+                            result = false;
+                        }
+                    }
+                })
+                return result;
             }
         }
 
-        disableVal(index){
-            return this.listOragin[index].innerFixYn =='Y' ? true : false
+        disableVal(index) {
+            return this.listOragin[index].innerFixYn == 'Y' ? true : false
         }
 
-        dataVal(listIndex, columIndex,$event){
-            let trObject : any = document.getElementById(listIndex)
-            let nowLineOk :boolean = true;
+        dataVal(listIndex, columIndex, $event) {
+            let trObject: any = document.getElementById(listIndex)
+            let nowLineOk: boolean = true;
 
-            if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixPerm') {
+            if (this.dataGridDetail.dataGrid.columControl[columIndex].id == 'fixPerm') {
                 if (this.listData[listIndex].fixPerm.length != 9) {
-                    if(this.listData[listIndex].fixPerm.length < 1){
-                        $event.target.style=''
+                    if (this.listData[listIndex].fixPerm.length < 1) {
+                        $event.target.style = ''
                     }
-                    else{
+                    else {
                         nowLineOk = false;
-                    $event.target.style='background:red'
-                        trObject.setAttribute('style','background:red')
+                        $event.target.style = 'background:red'
+                        trObject.setAttribute('style', 'background:red')
                     }
                 }
-                else{
-                    $event.target.style=''
+                else {
+                    $event.target.style = ''
                 }
             }
-            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixDate'){
-                if(this.listData[listIndex].fixDate.length != 8) {
-                    if(this.listData[listIndex].fixDate.length < 1){
-                        $event.target.style=''
+            else if (this.dataGridDetail.dataGrid.columControl[columIndex].id == 'fixDate') {
+                if (this.listData[listIndex].fixDate.length != 8) {
+                    if (this.listData[listIndex].fixDate.length < 1) {
+                        $event.target.style = ''
                     }
-                    else{
+                    else {
                         nowLineOk = false;
-                        $event.target.style='background:red'
-                        trObject.setAttribute('style','background:red')
+                        $event.target.style = 'background:red'
+                        trObject.setAttribute('style', 'background:red')
                     }
                 }
-                else{
-                    $event.target.style=''
+                else {
+                    $event.target.style = ''
                 }
             }
-            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='fixSaleDate'){
-                if(this.listData[listIndex].fixSaleDate.length != 8) {
-                    if(this.listData[listIndex].fixSaleDate.length < 1){
-                        $event.target.style=''
+            else if (this.dataGridDetail.dataGrid.columControl[columIndex].id == 'fixSaleDate') {
+                if (this.listData[listIndex].fixSaleDate.length != 8) {
+                    if (this.listData[listIndex].fixSaleDate.length < 1) {
+                        $event.target.style = ''
                     }
-                    else{
+                    else {
                         nowLineOk = false;
-                        $event.target.style='background:red'
+                        $event.target.style = 'background:red'
                     }
-                }else{
-                    $event.target.style=''
+                } else {
+                    $event.target.style = ''
                 }
             }
-            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rsnCode'){
-                if(this.listData[listIndex].rsnCode !='null'){
-                    trObject.setAttribute('style','')
-                }else{
+            else if (this.dataGridDetail.dataGrid.columControl[columIndex].id == 'rsnCode') {
+                if (this.listData[listIndex].rsnCode != 'null') {
+                    trObject.setAttribute('style', '')
+                } else {
                     nowLineOk = false;
                 }
             }
-            else if(this.dataGridDetail.dataGrid.columControl[columIndex].id=='rstCode') {
-                if(this.listData[listIndex].rstCode !='null'){
-                    trObject.setAttribute('style','')
-                }else{
+            else if (this.dataGridDetail.dataGrid.columControl[columIndex].id == 'rstCode') {
+                if (this.listData[listIndex].rstCode != 'null') {
+                    trObject.setAttribute('style', '')
+                } else {
                     nowLineOk = false;
-                    trObject.setAttribute('style','background:red')
+                    trObject.setAttribute('style', 'background:red')
                 }
             }
 
-            if(this.listData[listIndex].fixPerm && this.listData[listIndex].fixDate
-                && this.listData[listIndex].fixSaleDate && this.listData[listIndex].rsnCode && this.listData[listIndex].rstCode){
-                if(nowLineOk){
+            if (this.listData[listIndex].fixPerm && this.listData[listIndex].fixDate
+                && this.listData[listIndex].fixSaleDate && this.listData[listIndex].rsnCode && this.listData[listIndex].rstCode) {
+                if (nowLineOk) {
                     this.lineCheckOk = true;
-                trObject.setAttribute('style','')
+                    trObject.setAttribute('style', '')
                 }
-                else{
+                else {
                     this.lineCheckOk = false;
                 }
             }
-            else if( (this.listData[listIndex].fixPerm =='' || this.listData[listIndex].fixPerm ==null) && (this.listData[listIndex].fixDate ==''  || this.listData[listIndex].fixDate ==null)
-                && (this.listData[listIndex].fixSaleDate=='' || this.listData[listIndex].fixSaleDate==null)
-                && (this.listData[listIndex].rsnCode=='null' ||  this.listData[listIndex].rsnCode==null) && (this.listData[listIndex].rstCode=='null' || this.listData[listIndex].rstCode==null)){
+            else if ((this.listData[listIndex].fixPerm == '' || this.listData[listIndex].fixPerm == null) && (this.listData[listIndex].fixDate == '' || this.listData[listIndex].fixDate == null)
+                && (this.listData[listIndex].fixSaleDate == '' || this.listData[listIndex].fixSaleDate == null)
+                && (this.listData[listIndex].rsnCode == 'null' || this.listData[listIndex].rsnCode == null) && (this.listData[listIndex].rstCode == 'null' || this.listData[listIndex].rstCode == null)) {
                 this.lineCheckOk = true;
-                trObject.setAttribute('style','')
+                trObject.setAttribute('style', '')
             }
-            else{
+            else {
                 this.lineCheckOk = false;
-                trObject.setAttribute('style','background:red')
+                trObject.setAttribute('style', 'background:red')
             }
         }
 
-        checkAlls(id,indexs){  // 전체 체크박스선택
+        checkAlls(id, indexs) {  // 전체 체크박스선택
             if (!this.dataGridDetail.dataGrid.columControl[indexs].checkVal) {
-                    // 중복제거
-                    let tempDelCheck :any[] = [];
-                    this.checkBoxDatas.filter((e)=>{
-                        if(e.split('@$')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
-                            tempDelCheck.push(e);
-                        }
-                })
-                this.checkBoxDatas = tempDelCheck;
-
-                // 전체로우 추가
-                this.listData.filter((e,index)=>{
-                    Object.keys(e).forEach((s,count)=>{
-                        if(indexs==count){
-                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[indexs].id+'@$'+e[s]+'@$'+index+'@$'+this.dataGridDetail.dataGrid.columControl[indexs].returnKey);
-                        }
-                    })
-                })
-                this.dataGridDetail.dataGrid.columControl[indexs].checkVal=true;
-            }else{  // 체크박스내용삭제
-                let tempDelCheck :any[] = [];
-                this.checkBoxDatas.filter((e)=>{
-                    if(e.split('@$')[0] !=this.dataGridDetail.dataGrid.columControl[indexs].id){
+                // 중복제거
+                let tempDelCheck: any[] = [];
+                this.checkBoxDatas.filter((e) => {
+                    if (e.split('@$')[0] != this.dataGridDetail.dataGrid.columControl[indexs].id) {
                         tempDelCheck.push(e);
                     }
                 })
                 this.checkBoxDatas = tempDelCheck;
-                this.dataGridDetail.dataGrid.columControl[indexs].checkVal=false;
+
+                // 전체로우 추가
+                this.listData.filter((e, index) => {
+                    Object.keys(e).forEach((s, count) => {
+                        if (indexs == count) {
+                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[indexs].id + '@$' + e[s] + '@$' + index + '@$' + this.dataGridDetail.dataGrid.columControl[indexs].returnKey);
+                        }
+                    })
+                })
+                this.dataGridDetail.dataGrid.columControl[indexs].checkVal = true;
+            } else {  // 체크박스내용삭제
+                let tempDelCheck: any[] = [];
+                this.checkBoxDatas.filter((e) => {
+                    if (e.split('@$')[0] != this.dataGridDetail.dataGrid.columControl[indexs].id) {
+                        tempDelCheck.push(e);
+                    }
+                })
+                this.checkBoxDatas = tempDelCheck;
+                this.dataGridDetail.dataGrid.columControl[indexs].checkVal = false;
             }
 
         }
@@ -477,17 +525,17 @@
         created() {
         }
 
-        numberFormatCount(index){  // 넘버링시 전체값 받아서 변경하는값
+        numberFormatCount(index) {  // 넘버링시 전체값 받아서 변경하는값
 
             let nowNumber = 0;
-            if(this.dataGridDetail.paging.totalRecords){
-            let nowPage = Number(this.dataGridDetail.paging.currentPage)
-            let nowTotal = Number(this.dataGridDetail.paging.totalRecords) ;
-            let viewPageSize = Number(this.dataGridDetail.paging.perPage)
-             nowNumber = nowTotal-(nowPage-1) * viewPageSize-index
+            if (this.dataGridDetail.paging.totalRecords) {
+                let nowPage = Number(this.dataGridDetail.paging.currentPage)
+                let nowTotal = Number(this.dataGridDetail.paging.totalRecords);
+                let viewPageSize = Number(this.dataGridDetail.paging.perPage)
+                nowNumber = nowTotal - (nowPage - 1) * viewPageSize - index
             }
-            else{
-                nowNumber = index+1
+            else {
+                nowNumber = index + 1
             }
             return nowNumber
         }
@@ -498,28 +546,29 @@
                     return "date_del"
                 }
                 // 오류내역때문에 추가
-                if(this.listOragin[index].innerYn=='Y'){
+                if (this.listOragin[index].innerYn == 'Y') {
                     return "date_del"
                 }
             }
         }
 
-        fontColor(index,rows){  // 폰트컬러변경시사용
-            if(rows == this.dataGridDetail.dataGrid.columControl[index].textValue){
+        fontColor(index, rows) {  // 폰트컬러변경시사용
+            if (rows == this.dataGridDetail.dataGrid.columControl[index].textValue) {
                 return this.dataGridDetail.dataGrid.columControl[index].fontColors
             }
         }
-        colColor(index){  // 콜컬러변경
+
+        colColor(index) {  // 콜컬러변경
             return this.dataGridDetail.dataGrid.columControl[index].colColors
         }
 
         //돔렌더링완료시 진행
         mounted() {
             // 랜더링후 라인텍스트 색을바꿀때사용
-            this.dataGridDetail.dataGrid.columControl.filter((e,index)=>{
-                if(e.lineValue){
+            this.dataGridDetail.dataGrid.columControl.filter((e, index) => {
+                if (e.lineValue) {
                     this.lineColumName = e.id;
-                    this.lineColumIndex = index ;
+                    this.lineColumIndex = index;
                 }
             })
 
@@ -548,30 +597,30 @@
 
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
-                if (e.type == 'date' ) {  //날짜
-                        searchData['searchStartDate'] = e.searchStartDate
-                        searchData['searchEndDate'] =  e.searchEndDate
+                if (e.type == 'date') {  //날짜
+                    searchData['searchStartDate'] = e.searchStartDate
+                    searchData['searchEndDate'] = e.searchEndDate
 
-                }else if (e.type == 'date2') {  //날짜
-                       if(!e.searchStartDate[0] || !e.searchStartDate[1]){
-                           e.searchStartDate = [];
-                       }else{
-                      if(e.searchStartDate.length>0) {
-                          if (e.dateType == 'date') {
-                              searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
-                              searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
-                          } else if (e.dateType == 'month') {
-                              searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMM')
-                              searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMM')
-                          } else {
-                              searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
-                              searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
-                          }
+                } else if (e.type == 'date2') {  //날짜
+                    if (!e.searchStartDate[0] || !e.searchStartDate[1]) {
+                        e.searchStartDate = [];
+                    } else {
+                        if (e.searchStartDate.length > 0) {
+                            if (e.dateType == 'date') {
+                                searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                                searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                            } else if (e.dateType == 'month') {
+                                searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMM')
+                                searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMM')
+                            } else {
+                                searchData['searchStartDate'] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                                searchData['searchEndDate'] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                            }
                         }
-                       }
-                }else if (e.type == 'date3') {  //날짜
-                    if(e.calenderCount==1){ //1개짜리일때
-                        if(e.searchStartDate) {
+                    }
+                } else if (e.type == 'date3') {  //날짜
+                    if (e.calenderCount == 1) { //1개짜리일때
+                        if (e.searchStartDate) {
                             if (e.dateType == 'date') {
                                 searchData[e.id] = moment(e.searchStartDate).format('YYYYMMDD')
                             } else if (e.dateType == 'month') {
@@ -580,23 +629,23 @@
                                 searchData[e.id] = moment(e.searchStartDate).format('YYYYMMDD')
                             }
                         }
-                    }else{ //2개짜리일때
-                        if(!e.searchStartDate[0] || !e.searchStartDate[1]){
+                    } else { //2개짜리일때
+                        if (!e.searchStartDate[0] || !e.searchStartDate[1]) {
                             e.searchStartDate = [];
-                        }else{
-                        if(e.searchStartDate.length > 0 ){
-                        if(e.dateType == 'date'){
-                            searchData[e.id] = moment(e.searchStartDate[0]).format('YYYYMMDD')
-                            searchData[e.id2] =  moment(e.searchStartDate[1]).format('YYYYMMDD')
-                        }else if(e.dateType == 'month'){
-                            searchData[e.id] =  moment(e.searchStartDate[0]).format('YYYYMM')
-                            searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMM')
-                        }else{
-                            searchData[e.id] =  moment(e.searchStartDate[0]).format('YYYYMMDD')
-                            searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                        } else {
+                            if (e.searchStartDate.length > 0) {
+                                if (e.dateType == 'date') {
+                                    searchData[e.id] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                                    searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                                } else if (e.dateType == 'month') {
+                                    searchData[e.id] = moment(e.searchStartDate[0]).format('YYYYMM')
+                                    searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMM')
+                                } else {
+                                    searchData[e.id] = moment(e.searchStartDate[0]).format('YYYYMMDD')
+                                    searchData[e.id2] = moment(e.searchStartDate[1]).format('YYYYMMDD')
+                                }
+                            }
                         }
-                        }
-                     }
                     }
                 }
 
@@ -630,17 +679,17 @@
             this.loading = true;
             // api 데이터 호출
             CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.apiUrl, null, searchData).then((response) => {
-                    let result : any = '';
+                    let result: any = '';
 
-                    if(response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
+                    if (response.data.data) {  // api 값중에 형태가 data 를 빼서써야하는경우 와 그냥 그대로 쓰는경우 response.data.data 가 없으면 그냥 배열이 담긴것으로 판단한다
                         result = response.data  // 페이징있는것들
-                    }else{
+                    } else {
                         result = response;   // 페이징 없음 로우데이터만있음
                     }
 
 
                     this.listData = [];
-                    this.checkBoxDatas=[];
+                    this.checkBoxDatas = [];
 
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
@@ -655,16 +704,16 @@
                     });
 
                     // 오류전문때문에 추가한부분
-                    if(this.dataGridDetail.dataGrid.commonApiOneUse){
-                        CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.commonApiOne,null,null).then(result=>{
-                            if(result.status==200){
-                            this.dataGridDetail.dataGrid.commonSelectListOne = result.data
+                    if (this.dataGridDetail.dataGrid.commonApiOneUse) {
+                        CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.commonApiOne, null, null).then(result => {
+                            if (result.status == 200) {
+                                this.dataGridDetail.dataGrid.commonSelectListOne = result.data
                             }
                         })
                     }
-                    if(this.dataGridDetail.dataGrid.commonApiTwoUse){
-                        CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.commonApiTwo,null,null).then(result=>{
-                            if(result.status==200){
+                    if (this.dataGridDetail.dataGrid.commonApiTwoUse) {
+                        CommonBoardService.getListDatas(this.dataGridDetail.dataGrid.commonApiTwo, null, null).then(result => {
+                            if (result.status == 200) {
                                 this.dataGridDetail.dataGrid.commonSelectListTwo = result.data
                             }
                         })
@@ -676,15 +725,15 @@
 
                     this.pageSet(result.from, result.to, result.lastPage, result.perPage, result.totalRecords, result.viewPageSize);
 
-                    let nowData :any = []
+                    let nowData: any = []
 
-                    if(result.data){
+                    if (result.data) {
                         nowData = result.data;
-                    }else{
+                    } else {
                         nowData = result
                     }
-                    if (nowData.length > 0 ) { // 데이터 키맵에 맞게 매핑하기
-                        nowData.filter((e,indexs) => {
+                    if (nowData.length > 0) { // 데이터 키맵에 맞게 매핑하기
+                        nowData.filter((e, indexs) => {
                             let Objects = {};
                             Object.keys(e).forEach((key) => {
                                 if (this.menuHeader[key] == key) {
@@ -692,60 +741,60 @@
                                 }
                             });
                             let numberObject = {};
-                            Object.keys(this.menuHeader).forEach((menuHeaderkey,index) => { // 헤더순서에 맞게 받은키값을돌리면서 해당데이터를 넣는다
-                                if(this.dataGridDetail.dataGrid.columControl[index].type=='number'){ // 넘버링일경우 따로만들어서 컬럼값에 담는다
+                            Object.keys(this.menuHeader).forEach((menuHeaderkey, index) => { // 헤더순서에 맞게 받은키값을돌리면서 해당데이터를 넣는다
+                                if (this.dataGridDetail.dataGrid.columControl[index].type == 'number') { // 넘버링일경우 따로만들어서 컬럼값에 담는다
                                     numberObject[menuHeaderkey] = this.numberFormatCount(indexs)
                                 }
-                                else{
-                                Object.keys(Objects).forEach((Objectskey,indexsss) => {
-                                    if(indexsss==0){
-                                        //오류내역관리때문에 추가
-                                        if(Objectskey =='innerFixYn'){
-                                             this.innerFixYn=Objects[Objectskey]
-                                        }else if(Objectskey =='taxfixYn'){
-                                            this.taxfixYn=Objects[Objectskey]
+                                else {
+                                    Object.keys(Objects).forEach((Objectskey, indexsss) => {
+                                        if (indexsss == 0) {
+                                            //오류내역관리때문에 추가
+                                            if (Objectskey == 'innerFixYn') {
+                                                this.innerFixYn = Objects[Objectskey]
+                                            } else if (Objectskey == 'taxfixYn') {
+                                                this.taxfixYn = Objects[Objectskey]
+                                            }
                                         }
-                                    }
 
-                                    if (menuHeaderkey == Objectskey) {
-                                        if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){  // 체크박스일경우 현재데이터를 체크박스에 담아논다
-                                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id+'@$'+Objects[Objectskey]+'@$'+indexs+'@$'+this.dataGridDetail.dataGrid.columControl[index].returnKey)
-                                        }
-                                        let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 데이터코드값이 Y,N ; 전송 , 미전송  같은 문자열치환할때 사용
-                                        let selectOption = this.dataGridDetail.dataGrid.columControl[index].selectOptionApi // 옵션데이터를 받아와야하는경우
+                                        if (menuHeaderkey == Objectskey) {
+                                            if (this.dataGridDetail.dataGrid.columControl[index].type == 'checkBox') {  // 체크박스일경우 현재데이터를 체크박스에 담아논다
+                                                this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[index].id + '@$' + Objects[Objectskey] + '@$' + indexs + '@$' + this.dataGridDetail.dataGrid.columControl[index].returnKey)
+                                            }
+                                            let option = this.dataGridDetail.dataGrid.columControl[index].options // 옵션에있는 문자열 데이터코드값이 Y,N ; 전송 , 미전송  같은 문자열치환할때 사용
+                                            let selectOption = this.dataGridDetail.dataGrid.columControl[index].selectOptionApi // 옵션데이터를 받아와야하는경우
 
-                                        if(option){ // 문자열 치환옵션  사용시
-                                            option.filter(e=>{
-                                                if(e.value==Objects[Objectskey]){
-                                                    numberObject[menuHeaderkey] = e.change;
-                                                }
-                                            })
-                                        }
-                                        else{
-                                            numberObject[menuHeaderkey] = Objects[Objectskey];
-                                        }
-                                    }
-                                    else{ // 헤더가 체크박스일때   ID 가 신규일대 무조건 check_ 를 붙여서 만들어줘야한다
-                                        if(this.dataGridDetail.dataGrid.columControl[index].type=='checkBox'){
-                                            let heder = menuHeaderkey.split('_')[1]
-                                            if (heder == Objectskey) {
+                                            if (option) { // 문자열 치환옵션  사용시
+                                                option.filter(e => {
+                                                    if (e.value == Objects[Objectskey]) {
+                                                        numberObject[menuHeaderkey] = e.change;
+                                                    }
+                                                })
+                                            }
+                                            else {
                                                 numberObject[menuHeaderkey] = Objects[Objectskey];
                                             }
                                         }
-                                    }
-                                });
+                                        else { // 헤더가 체크박스일때   ID 가 신규일대 무조건 check_ 를 붙여서 만들어줘야한다
+                                            if (this.dataGridDetail.dataGrid.columControl[index].type == 'checkBox') {
+                                                let heder = menuHeaderkey.split('_')[1]
+                                                if (heder == Objectskey) {
+                                                    numberObject[menuHeaderkey] = Objects[Objectskey];
+                                                }
+                                            }
+                                        }
+                                    });
                                 }
                             });
                             // 예외 컬러처리에 필요한 로우데이터 생성
                             this.listData.push(numberObject);
 
                         });
-                      }
+                    }
                     else {
                     }
-                    if(result.totalRecords){
+                    if (result.totalRecords) {
                         this.totalCount = result.totalRecords;
-                    }else{
+                    } else {
                         this.totalCount = this.listData.length
                     }
                     this.loading = false;
@@ -755,7 +804,7 @@
                     this.loading = false;
                     // this.$Progress.finish();
                 }
-            ).catch(e=>{
+            ).catch(e => {
                 this.loading = false;
             });
 
@@ -787,10 +836,10 @@
 
         //계정 권한 관리의 승인처리
         accountAuth() {
-            let reqData : any = {};
-            let arayData : any = [];
-            if(this.checkBoxDatas != null && this.checkBoxDatas.length > 0){
-                for(let i=0; i<this.checkBoxDatas.length; i++){
+            let reqData: any = {};
+            let arayData: any = [];
+            if (this.checkBoxDatas != null && this.checkBoxDatas.length > 0) {
+                for (let i = 0; i < this.checkBoxDatas.length; i++) {
                     let sData = {};
                     //console.log(this.checkBoxDatas[i])
                     let splitData = this.checkBoxDatas[i].split('@$');
@@ -825,7 +874,7 @@
 
         }
 
-        getListData(){
+        getListData() {
             this.$emit('listData', this.listData)
         }
 
