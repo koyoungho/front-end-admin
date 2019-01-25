@@ -9,7 +9,7 @@
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->
       <template>
-      <span class="total">총 <strong>{{totalCount}} </strong>건</span>
+      <span class="total">총 <strong>{{totalCount}} </strong>건</span>  <span style="float: right">{{dataGridDetail.dataGrid.textSend}}</span>
       </template>
     </div>
     <!-- 20181112 수정 추가 -->
