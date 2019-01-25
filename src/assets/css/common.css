@@ -1294,15 +1294,16 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 
 @media print {
-  #header, #header2, #footer,h3 {display: none;}
+  #header, #header2, #footer,h3 {display: none !important;}
   .no_print {display: none !important;}
-  .print_area {width: 100% !important; margin-top: 5px}
+  .print_area {width: 60% !important; margin-top: 5px ;  }
  
   #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0);}
-  #popup_header,#bottom_area {display: none;}
+  #popup_header,#bottom_area {display: none !important;}
 
   @page {
-    size: 200mm 200mm;
+    size: A4;
+    size: 160mm 200mm;
   }
 }
 
