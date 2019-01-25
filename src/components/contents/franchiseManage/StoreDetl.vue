@@ -565,13 +565,13 @@
                             this.addr2 = result.saupjang.addr2;
                             this.upjong = this.nullCheck(result.saupjang.upjong);
                             if(result.saupjang.upjong == '002'||result.saupjang.upjong == '003'){ //병원,의원이면 요양기관 표시
-
+                                this.gikanId = result.saupjang.gikanId;
                             }
                             this.loadCodeList = result.saupjang.subSaup;
                             if(result.saupjang.subSaup != null && result.saupjang.subSaup.length > 0){
                                 this.subCompanyCnt = result.saupjang.subSaup.length;
                             }
-                            this.gikanId = result.saupjang.gikanId;
+
                         }
 
                         this.storeStatus = result.storSts; //매장 상태 storStsNm
