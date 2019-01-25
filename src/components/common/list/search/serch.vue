@@ -212,8 +212,8 @@
       <button type="button" class="btn_m01 bg02" @click="resetData">초기화</button>
       <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
     </div>
-    <GajiBox v-if="showModal1"  v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
-    <GajijumBox v-if="showModal2" v-bind:gajumNum="gajumNo" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
+    <GajiBox v-if="showModal1"  v-bind:soluId="soluId" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
+    <GajijumBox v-if="showModal2" v-bind:listInfo="listInfo" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
     <SaupBox v-if="showModal3"  v-on:selectedSaup="setSaupData" @saupClose="showModal3 = false"></SaupBox>
   </div>
 </template>
@@ -276,6 +276,8 @@
         // 사업장 검색 팝업
         showModal3 : boolean = false;
         gajumNo : string  = ''; //가맹점ID
+        listInfo : any = '';
+        soluId : any = '';
 
         dateChangeEvent(date){
             this.$emit('dateCheck' , date)
@@ -292,10 +294,18 @@
         }
 
         gajiPopupOpen(event, data){
-            if(data.id == 'jijumId'){
-                this.gajumNo = event.currentTarget.parentElement.parentElement.children['1'].children['1'].value; //가맹점 ID 넘기기
+            if(data.id == 'gajumId'){
+                let soluId1 = event.currentTarget.parentElement.parentElement.children['0'].children['1'].value; //suluId 넘기기
+                console.log(soluId1)
+                //this.listInfo = { soluId : soluId };
+                this.soluId = soluId1;
+                this.showModal1= true;
+            }else if(data.id == 'jijumId'){
+                let soluId = event.currentTarget.parentElement.parentElement.children['0'].children['1'].value; //suluId 넘기기
+                let gajumNo1 = event.currentTarget.parentElement.parentElement.children['1'].children['1'].value; //가맹점 ID 넘기기
+                this.listInfo = { soluId : soluId, gajumId : gajumNo1 };
+                this.showModal2= true;
             }
-            this.showModal2= true;
         }
 
         setDate(index){

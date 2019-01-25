@@ -15,7 +15,7 @@
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
-                        <select id="" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId">
+                        <select id="soluIdCon" name="" class="select form_w100" title="현금영수증 사업자" v-model="soluId">
                             <option value="">선택</option>
                             <template v-for="datas in receiptSaupList">
                                 <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -41,7 +41,7 @@
             <!-- //search reg box -->
             <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01 sch" v-on:click="gajiBox(postText)">가맹점 검색</button>
+                <button type="button" id="" class="btn_m01 bg01 sch" v-if="franchiseSearchGbn" v-on:click="gajiBox(postText)">가맹점 검색</button>
             </div>
 
             <h4>사업장 기본 정보
@@ -119,6 +119,15 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupUpjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_post" title="회사코드" v-model="saupSubSaupCnt" disabled="disabled"> 개
@@ -129,15 +138,6 @@
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>
                             </select>-->
-                        </td>
-                        <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in saupUpjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
                         </td>
                     </tr>
                     </tbody>
@@ -284,7 +284,7 @@
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
 
-            <GajiBox v-if="showModal1" v-bind:postData="postText1" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
+            <GajiBox v-if="showModal1" v-bind:soluId="soluId" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
 
             <CompanyCodePop v-if="companyCodeYn" v-bind:companyCodeVal="loadCodeList" @closeCompany="companyCodeYn=false"  v-on:listSend="getCodeList"></CompanyCodePop>
 
@@ -362,6 +362,8 @@
         aproIdx : number = 0;
         admIdx : number = 0;
 
+        franchiseSearchGbn : boolean = true; //가맹점 검색 버튼
+
         //돔생성전 호출자
         created() {
 
@@ -410,6 +412,25 @@
 
         //돔렌더링완료시 진행
         mounted() {
+
+            //현금영수증사업자 경우 자동 셋팅
+            if(sessionStorage.role == '0002'){
+                this.soluId = sessionStorage.soluId;
+                let soluIdCon = document.getElementById('soluIdCon');
+                if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
+            }else if(sessionStorage.role == '0004'){
+                this.soluId = sessionStorage.soluId;
+                let soluIdCon = document.getElementById('soluIdCon');
+                if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
+
+                this.gajumInfo();
+            }
+
+            if(sessionStorage.role == '0004'){
+                this.franchiseSearchGbn = false;
+            }
+
+
         }
 
         @Watch('repPhonenum') changeRepPhonenum(){
@@ -434,6 +455,16 @@
                 Vue.swal({ text: '숫자만가능합니다'});
                 this.lawNum = '';
             }
+        }
+
+        gajumInfo(){ //가맹점정보
+            CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/gajum',null).then(result=>{
+                if(result.status==200){
+                    this.gajumId = result.data.gajumId;
+                    this.saupNo = result.data.saupId;
+                    this.soluNm = result.data.shopNm;
+                }
+            })
         }
 
         //승인대역 유효성 체크
@@ -678,11 +709,11 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.saupSubSaupCnt == ''){
-                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
-                return;
             }else if(this.saupUpjong == ''){
                 alert('업종코드를 선택하세요.');
+                return;
+            }else if(this.saupSubSaupCnt == ''){
+                alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
                 return;
             }
 

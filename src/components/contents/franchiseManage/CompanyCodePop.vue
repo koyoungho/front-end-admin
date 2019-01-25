@@ -75,8 +75,8 @@
         created(){
             this.codeList()
 
-            console.log('회사코드 받은 값')
-            console.log(this.companyCodeVal)
+            //console.log('회사코드 받은 값')
+            //console.log(this.companyCodeVal)
 
             this.checkBoxList=this.companyCodeVal
         }
@@ -86,14 +86,14 @@
         }
 
         codeList(){
-            console.log('리스트 조회 전')
-            console.log(this.companyCodeVal.toString())
-            let str : string = '001'
-            console.log('111 : '+str.indexOf(this.companyCodeVal))
-            console.log('222 : '+this.companyCodeVal.indexOf(str))
+            //console.log('리스트 조회 전')
+            //console.log(this.companyCodeVal.toString())
+            //let str : string = '001'
+            //console.log('111 : '+str.indexOf(this.companyCodeVal))
+            //console.log('222 : '+this.companyCodeVal.indexOf(str))
 
             CommonBoardService.getListDatas('company',null,null).then(response=>{
-                if(response.status==200){
+                if(response!=null && response.status==200){
                     //this.companyCodeList = response.data
                     let rowData : any = {};
                     response.data.filter(data=>{
@@ -103,7 +103,7 @@
                         rowData['name'] = data.name;
 
                         if(this.companyCodeVal.indexOf(data.code) > -1){
-                            console.log(data.code)
+                            //console.log(data.code)
                             //console.log(data.code.indexOf(this.companyCodeVal))
                             //this.checkBoxList.push(data.code)
                             //this.companyCodeList
@@ -116,15 +116,15 @@
         }
 
         checkData(data){
-            console.log('선택한 회사코드')
+            //console.log('선택한 회사코드')
             /*if(event.currentTarget.checked == true){
 
             }else{
 
             }*/
 
-            console.log(data)
-            console.log('선택한 회사코드 전체 : ' + this.checkBoxList)
+            //console.log(data)
+            //console.log('선택한 회사코드 전체 : ' + this.checkBoxList)
             /*let remove = 'N'
             this.checkBoxList = this.checkBoxList;
             this.checkBoxList.find(e=>{
