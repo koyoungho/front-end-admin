@@ -503,7 +503,7 @@
                 this.listData.filter((e, index) => {
                     Object.keys(e).forEach((s, count) => {
                         if (indexs == count) {
-                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[indexs].id + '@$' + e[s] + '@$' + index + '@$' + this.dataGridDetail.dataGrid.columControl[indexs].returnKey);
+                            this.checkBoxDatas.push(this.dataGridDetail.dataGrid.columControl[indexs].id + '@$' + e[s] + '@$' + index + '@$' + this.dataGridDetail.dataGrid.columControl[indexs].returnKey + '@$' + e.role);
                         }
                     })
                 })
