@@ -66,7 +66,7 @@
                     <tr>
                         <th scope="row">내용</th>
                         <td class="con_write" >
-                            <tinymce id="d1" v-model="content"></tinymce>
+                            <tinymce id="d1" v-model="content" :other_options="{height:400}"></tinymce>
                         </td>
                     </tr>
                     </tbody>
