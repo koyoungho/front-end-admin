@@ -86,11 +86,12 @@
                             {columName : '신분확인' ,id : 'comfirm',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '고객명' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             // {columName : '메모' ,id : 'memo',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' },
+                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red',options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'}] },
                         ],
                         totalColum: 10,
                         apiUrl : 'receipt',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
+                        textSend : '* 처리예정 :  거래일 기준 익일 국세청 전송처리'  // 리스트 상단우측 내용
                         // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
                         // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalAmt' , value : '' },{totalTitle : '합계봉사료' , id: 'bong' , value : '' },{totalTitle : '합계공급가액' , id: 'amt' , value : '' },
                         //     {totalTitle : '합계부가세' , id: 'vat' , value : '' }]
