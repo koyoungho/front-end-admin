@@ -20,6 +20,7 @@
     "sass-loader": "^7.1.0",
     "stylus-loader": "^3.0.2",
     "v-charts": "^1.19.0",
+    "v-money": "^0.8.1",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-cli": "^2.9.6",

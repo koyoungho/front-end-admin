@@ -51,8 +51,8 @@ Vue.use(DatePicker);
 import VCharts from 'v-charts'
 Vue.use(VCharts);
 
-
-
+import money from 'v-money'
+Vue.use(money, {precision: 4});
 
 // import VueDragscroll from 'vue-dragscroll'
 // Vue.use(VueDragscroll)

@@ -116,11 +116,13 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" class="input form_price" title="거래금액 입력" v-model="totalAmt" maxlength="9">
+                                    <!--<input type="text" class="input form_price" title="거래금액 입력" v-model="totalAmt" maxlength="9">-->
+                                    <money v-model="totalAmt" v-bind="money" class="input form_price" maxlength="11" title="거래금액 입력"></money>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" class="input form_price" title="봉사료 입력" v-model="bong" maxlength="9">
+                                    <!--<input type="text" class="input form_price" title="봉사료 입력" v-model="bong" maxlength="9">-->
+                                    <money v-model="bong" v-bind="money" class="input form_price" maxlength="11" title="봉사료 입력"></money>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -151,11 +153,13 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" id="supplyAmt" name="" class="input form_price" value="10,000" readonly="" title="공급가액 입력" v-model="supplyAmt">
+                                    <!--<input type="text" id="supplyAmt" name="" class="input form_price" value="10,000" readonly="" title="공급가액 입력" v-model="supplyAmt">-->
+                                    <money v-model="supplyAmt" id="supplyAmt" v-bind="money" class="input form_price" title="공급가액 입력" readonly="readonly"></money>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" id="vat" name="" class="input form_price" readonly="" title="부가세 입력" v-model="vat">
+                                    <!--<input type="text" id="vat" name="" class="input form_price" readonly="" title="부가세 입력" v-model="vat">-->
+                                    <money v-model="vat" id="vat" v-bind="money" class="input form_price" title="부가세 입력" readonly="readonly"></money>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -242,6 +246,15 @@
         nowTime: any =[];
 
         receiptIssueBtn : boolean = true;
+
+        money : any = {
+            decimal: '.',
+            thousands: ',',
+            //prefix: 'R$ ',
+            //suffix: ' #',
+            precision: 0,
+            masked: false
+        }
 
         @Watch('positionGb') onChange(){
 
