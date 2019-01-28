@@ -57,6 +57,9 @@
             if(sessionStorage.role == '0002') { //현금영수증 사업자
                 this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
                 this.soluDis = true;
+            }else if(sessionStorage.role == '0004' || sessionStorage.role == '0005'){ //가맹점관리자,지점관리자 영수증사업자 셋팅
+                this.soluVal = sessionStorage.soluId == null ? '' : sessionStorage.soluId;
+                this.soluDis = true;
             }
 
             if(this.$store.state.searchList.menuId==this.$route.name){
