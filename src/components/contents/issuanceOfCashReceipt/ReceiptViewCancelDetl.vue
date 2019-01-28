@@ -165,12 +165,19 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <template v-if="bongsaBlock"><input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력" disabled></template>
-                                    <template v-else><input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력"></template>
+                                    <template v-if="bongsaBlock">
+                                            <!--<input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력" disabled>-->
+                                        <money v-model="canAceptTotal" v-bind="money" class="input form_price" maxlength="11" title="취소가능금액 입력" disabled></money>
+                                    </template>
+                                    <template v-else>
+                                            <!--<input type="text" v-model="canAceptTotal" class="input form_price" title="거래금액 입력">-->
+                                        <money v-model="canAceptTotal" v-bind="money" class="input form_price" maxlength="11" title="취소가능금액 입력"></money>
+                                    </template>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" v-model="canBong" class="input form_price" title="봉사료 입력" disabled>
+                                    <!--<input type="text" v-model="canBong" class="input form_price" title="봉사료 입력" disabled>-->
+                                    <money v-model="canBong" v-bind="money" class="input form_price" maxlength="11" title="봉사료 입력" disabled></money>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -207,11 +214,13 @@
                             <tbody>
                             <tr>
                                 <td class="center">
-                                    <input type="text" v-model="canTotal" class="input form_price"  title="공급가액 입력" readonly>
+                                    <!--<input type="text" v-model="canTotal" class="input form_price"  title="공급가액 입력" readonly>-->
+                                    <money v-model="canTotal" v-bind="money" class="input form_price" maxlength="11" title="공급가액 입력" readonly></money>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
-                                    <input type="text" v-model="canVat" class="input form_price"  title="봉사료 입력" readonly>
+                                    <!--<input type="text" v-model="canVat" class="input form_price"  title="봉사료 입력" readonly>-->
+                                    <money v-model="canVat" v-bind="money" class="input form_price" maxlength="11" title="부가세 입력" readonly></money>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -318,6 +327,14 @@
 
         loading222 : boolean = false
 
+        money : any = {
+            decimal: '.',
+            thousands: ',',
+            //prefix: 'R$ ',
+            //suffix: ' #',
+            precision: 0,
+            masked: false
+        }
 
         created(){
 
