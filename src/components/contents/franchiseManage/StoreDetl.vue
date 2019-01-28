@@ -11,7 +11,7 @@
             <h4 class="blind">기본정보</h4>
 
             <!-- search reg box -->
-            <div class="search_reg_box" v-if="topinfoShow">
+            <div class="search_reg_box">
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>

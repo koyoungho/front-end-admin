@@ -11,7 +11,7 @@
             <h4 class="blind">기본 정보</h4>
 
             <!-- search reg box -->
-            <div class="search_reg_box" v-if="topinfoShow">
+            <div class="search_reg_box">
                 <ul class="search_list col03">
                     <li>
                         <label for="">현금영수증 사업자</label>
@@ -500,7 +500,7 @@
                 ]
 
             //시스템관리자(0001), 콜센터관리자(0003)만 표시
-            if(sessionStorage.role == '0001' || sessionStorage.role == '0003'){
+            if(sessionStorage.role == '0001' || sessionStorage.role == '0003' || sessionStorage.role == '0004' || sessionStorage.role == '0005'){
                 this.topinfoShow = true;
             }
 
@@ -554,12 +554,15 @@
 
                         //사업자 정보
                         this.soluId = result.soluId; //현금영수증 사업자
+
                         this.gajumId = result.gajumId; // 가맹점 번호
                         this.gajumSaupId = result.gajumSaupId; // 가맹점 사업자번호
                         this.gajumShopNm = result.gajumShopNm; //가맹점명
+
                         this.jijumId = result.jijumId; // 지점 번호
                         this.jijumSaupId = result.jijumSaupId; // 가맹점 사업자번호
                         this.jijumShopNm = result.jijumShopNm; //지점명
+
                         //this.saupNo = result.saupId; //사업자 번호
                         this.saupId = result.jijumSaupId; //사업자등록번호
                         this.storeNm = result.jijumShopNm; //사업자명
@@ -653,8 +656,22 @@
                     }
                     //this.onLoadListView = true;
                 }).catch();
+
+
+                this.gajumInfo(); //가맹점 정보
+
             }
             //this.onLoadListView = false
+        }
+
+        gajumInfo(){ //가맹점정보
+            CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/gajum',null).then(result=>{
+                if(result.status==200){
+                    this.gajumId = result.data.gajumId;
+                    this.saupNo = result.data.saupId;
+                    this.soluNm = result.data.shopNm;
+                }
+            })
         }
 
         getSelectbox(){
