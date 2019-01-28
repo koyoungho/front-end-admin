@@ -146,8 +146,8 @@
             reqData['trgu'] =this.listItem.search[4].value; //거래구분(승인 : 0 , 취소 : 1)
             reqData['onlineYn']= this.listItem.search[5].value;//온라인여부(온라인 : Y, 오프라인 : N)
             reqData['searchDateType']= this.listItem.search[6].value;//검색일 종류
-            reqData['searchEndDate']=this.formatDates(this.listItem.search[7].searchStartDate[0]);//검색 종료일
-            reqData['searchStartDate']= this.formatDates(this.listItem.search[7].searchStartDate[1]);//검색 시작일
+            reqData['searchEndDate']=this.formatDates(this.listItem.search[7].searchStartDate[1]);//검색 종료일
+            reqData['searchStartDate']= this.formatDates(this.listItem.search[7].searchStartDate[0]);//검색 시작일
             reqData['searchType'] =this.listItem.search[8].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
             reqData['searchWord'] =this.listItem.search[9].value;//검색어
 
