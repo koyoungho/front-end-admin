@@ -21,7 +21,7 @@
                     </li>
                 </ul>
                 <ul class="search_list col03">
-                    <template v-if="gaInfo.gajumId">
+                    <template v-if="gajumInfo">
                     <li>
                         <label for="">가맹점 번호</label>
                         <input type="text" class="input form_w100" value="0000000000" title="가맹점번호" disabled="disabled" v-model="gaInfo.gajumId">
@@ -35,7 +35,7 @@
                         <input type="text" class="input form_w100" value="신일약국" title="가맹점명" disabled="disabled"  v-model="gaInfo.shopNm">
                     </li>
                     </template>
-                    <template v-if="jiInfo.jijumId">
+                    <template v-if="jijumInfo">
                     <li>
                         <label for="">지점 번호</label>
                         <input type="text" class="input form_w100" value="000-00-00000" title="지점번호" disabled="disabled"  v-model="jiInfo.jijumId" >
@@ -207,17 +207,33 @@
      delComplate : boolean = false;
      $modal : any;
 
+     gajumInfo : boolean = false;
+     jijumInfo : boolean = false;
+
      created(){
         this.accountInfo();
          this.saupInfo();
-         this.gajumInfo();
-         this.jijumInfo();
+         //this.gajumInfo();
+         //this.jijumInfo();
      }
 
      mounted(){
 
+         if(sessionStorage.role=='0004'||sessionStorage.role=='0005'){ //현금영수증사업자, 가맹점, 지점관리자
+             if(sessionStorage.gajumId!=null&&sessionStorage.gajumId!=''){
+                 this.gajumInfo = true;
+                 this.gaInfo.gajumId = (sessionStorage.gajumId ==null||sessionStorage.gajumId =='null') ? '' : sessionStorage.gajumId;
+                 this.gaInfo.saupId = (sessionStorage.gajumSaupId==null||sessionStorage.gajumSaupId=='null') ? '' : sessionStorage.gajumSaupId;
+                 this.gaInfo.shopNm = (sessionStorage.gajumNm==null||sessionStorage.gajumNm=='null') ? '' : sessionStorage.gajumNm;
 
-
+             }
+             if(sessionStorage.jijumId!=null&&sessionStorage.jijumId!=''){
+                 this.jijumInfo = true;
+                 this.jiInfo.jijumId = (sessionStorage.jijumId ==null||sessionStorage.jijumId =='null') ? '' : sessionStorage.jijumId;
+                 this.jiInfo.saupId = (sessionStorage.jijumSaupId==null||sessionStorage.jijumSaupId=='null') ? '' : sessionStorage.jijumSaupId;
+                 this.jiInfo.shopNm = (sessionStorage.jijumNm==null||sessionStorage.jijumNm=='null') ? '' : sessionStorage.jijumNm;
+             }
+         }
      }
 
     @Watch('account.phoneNum') changePhoneNum(){
@@ -249,7 +265,7 @@
             }
         })
     }
-    gajumInfo(){
+    /*gajumInfo(){
         CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/gajum',null).then(result=>{
             if(result.status==200){
                 this.gaInfo = result.data
@@ -262,7 +278,7 @@
                 this.jiInfo = result.data
             }
         })
-    }
+    }*/
     delAccount(){
         if(confirm('정말 해지 하시겠습니까?')){
             CommonBoardService.deleteListDatas('accounts','myself',null).then(result=>{
