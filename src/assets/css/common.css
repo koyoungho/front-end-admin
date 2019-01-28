@@ -1358,7 +1358,21 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   #header, #header2, #footer, h3 {display: none;}
   .no_print {display: none !important;}
   .print_area {width: 60% !important; margin-top: 0px;margin-left : 200px}
-  .print_area2 {width: 90% !important; margin-top: 0px;}
+  .print_area2 {width: 65% !important; margin-top: 0px;}
+  #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0); }
+  #popup_header,#bottom_area {display: none;}
+  @page {
+    size:A4;
+    size: 0mm 0mm;
+  }
+}
+
+@media print and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  #header, #header2, #footer, h3 {display: none;}
+  .no_print {display: none !important;}
+  .print_area {width: 60% !important; margin-top: 0px;margin-left : 50px}
+  .print_area2 {width: 75% !important; margin-top: 0px;}
   #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0); }
   #popup_header,#bottom_area {display: none;}
   @page {
