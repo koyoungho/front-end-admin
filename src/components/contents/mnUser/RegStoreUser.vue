@@ -172,6 +172,9 @@
                     </tr>-->
                     </tbody>
                 </table>
+                <p style="text-align: left; color: red; padding-left: 5px; margin-top: 4px">
+                    * 아이디는 영문,소문자와 숫자조합으로 8글자 ~ 16글자 이내로 구성해주세요.
+                </p>
             </div>
             <!-- //tbl view box -->
 
