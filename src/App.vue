@@ -20,6 +20,32 @@
     },
     created() {
       // 세션이 존재할때
+      var ua = navigator.userAgent.toLowerCase();
+      var isWinXP = ua.indexOf('windows nt 5.1') > 0;
+
+      // xp 일경우
+      if(ua.indexOf('windows nt 5.1') > -1 ){
+        this.$router.push({name:'noticeUpXp'})
+      }else if(ua.indexOf('windows nt 6.0') > -1 ){
+        this.$router.push({name:'noticeUpXp'})
+      }else if(ua.indexOf('windows nt 8.0') > -1 ) {
+        this.$router.push({name: 'noticeUpXp'})
+      }
+
+      // 브라우저일경우
+      if (navigator.userAgent.indexOf("MSIE 10") > -1) {
+        // this is internet explorer 10
+        this.$router.push({name:'noticeUp'})
+      }else if(navigator.userAgent.indexOf("MSIE 9") > -1){
+        this.$router.push({name:'noticeUp'})
+      }else if(navigator.userAgent.indexOf("MSIE 8") > -1){
+        this.$router.push({name:'noticeUp'})
+      }
+
+      if(window.location.pathname=='/index.html'){
+        window.location.href = '/'
+      }
+
 
       this.$router.beforeEach(function(to, from, next) {
         // to: 이동할 url에 해당하는 라우팅 객체

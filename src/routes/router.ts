@@ -74,6 +74,9 @@ import ModUser from "../components/contents/mnUser/ModUser.vue"//계정수정
 import PreviewBizLicense from "../components/contents/mnUser/previewBizLicense.vue"//사업자등록증 미리보기
 import RegStoreUser from "../components/contents/mnUser/RegStoreUser.vue"//사용자 계정등록
 import ModStoreUser from "../components/contents/mnUser/ModStoreUser.vue"//사용자 계정수정
+import noticeUp from "../components/contents/notice.vue" //비밀번호 등록
+import noticeUpXp from "../components/contents/noticeXp.vue" //비밀번호 등록
+
 
 import MnMenuList from "../components/contents/mnMenu/MnMenuList.vue"//메뉴관리
 import RegMenu from "../components/contents/mnMenu/RegMenu.vue"//메뉴등록
@@ -220,12 +223,15 @@ export default new Router({
         {path:'/regPass', name:'regPass', component: RegPass ,meta: {authRequired: false}}, //비밀번호 등록
         {path:'/kmcResult', name:'kmcResult', component: kmcResult ,meta: {authRequired: false}}, //Kmc 인증 결과
         {
-            path: "/secure",
-            name: "secure",
-            component: SecureComponent
+            path: '', redirect: "/login"
         },
         {
-            path: '', redirect: "/login"
+            path: '/noticeUp',name: "noticeUp",
+            component: noticeUp
+        },
+        {
+            path: '/noticeUpXp',name: "noticeUpXp",
+            component: noticeUpXp
         },
         {
             path: "**", redirect: "/login"

@@ -119,7 +119,17 @@
                 </div>
             </div>
             <!-- //main info box -->
-
+            <!--<ieShowFrm v-show="ieShowYn" @close="ieShowYn=false"></ieShowFrm>-->
+            <template v-if="listData.length > 0">
+                <template v-if="listData.length > 1">
+                    <div id="popup1" class="popup_wrapperModal3 medium2" tabindex="0"  style="width:390px"><popUp v-show="popUpShow1" :listSeq="listData[0].seq" @close="popUpShow1=false"></popUp></div>
+                    <div id="popup2" class="popup_wrapperModal3 medium2" tabindex="0" style="width:390px"><popUp v-show="popUpShow2" :listSeq="listData[1].seq" @close="popUpShow2=false"></popUp></div>
+                </template>
+                <template v-else>
+                    <div id="popup3" class="popup_wrapperModal3 medium2" tabindex="0" style="width:390px"><popUp v-show="popUpShow1" :listSeq="listData[0].seq"  @close="popUpShow1=false"></popUp></div>
+                </template>
+            </template>
+            <!--<div id="popup3" class="popup_wrapperModal1 medium2" tabindex="0" ><popUp v-show="popUpShow3" @close="popUpShow3=false"></popUp></div>-->
         </div>
         <!-- //main mid -->
     </section>
@@ -134,17 +144,22 @@
     import axios from 'axios';
     import {environment} from '@/utill/environment';
     // Vue.prototype.moment = moment;
+    import popUp from "@/components/contents/popUp.vue";
 
 
     @Component({
          components : {
-             Main
+             Main,popUp
          }
     })
     export default class Main extends Vue{
         noticeList: any = [];
+        listData : any = [];
+        popUpShow1:boolean =true;
+        popUpShow2:boolean =true;
+        popUpShow3:boolean =true;
         created(){
-
+            this.getNoticeDetail()
         }
 
         mounted(){
@@ -244,6 +259,29 @@
                 }, 100)
 
             })
+
+        }
+
+        /**
+         * 상세정보 호출
+         */
+        getNoticeDetail(){
+
+            CommonBoardService.getListDatas('notice?currentPage=1',null, null ).then((response) => {
+                    let result: any = response.data.data;
+                    if (result !=null) {
+                        result = result.filter(e=>{
+                            if(e.importantYn=='Y'){
+                                this.listData.push(e)
+                            }
+                        })
+                    }
+
+                }
+                , (error) => {
+                }).catch(e=>{
+
+            });
 
         }
 
