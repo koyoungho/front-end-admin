@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="popup_modal"></div>
-        <div id="popup_cash01" class="popup_wrapper large Pstyle" tabindex="0" style="display: block; margin-top: 500px">
+        <div id="popup_cash01" class="popup_wrapper5 large Pstyle" tabindex="0" style="display: block; margin-top: 500px">
             <!-- popup header -->
             <div class="popup_header no_print">
                 <!-- h2 -->
@@ -16,7 +16,7 @@
                     <!-- tbl grid wrap -->
                     <div class="tbl_grid_wrap">
                         <!-- tbl grid01 -->
-                        <table class="tbl_grid01 print_area">
+                        <table class="tbl_grid01 print_area2">
                             <caption>현금영수증</caption>
                             <colgroup>
                                 <col class="col_mob" width="50%">
