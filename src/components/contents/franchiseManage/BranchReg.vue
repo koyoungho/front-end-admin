@@ -418,7 +418,7 @@
                 this.soluId = sessionStorage.soluId;
                 let soluIdCon = document.getElementById('soluIdCon');
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
-            }else if(sessionStorage.role == '0004'){
+            }else if(sessionStorage.role == '0004' || sessionStorage.role == '0005'){ //가맹점,지점관리자 자동 셋팅
                 this.soluId = sessionStorage.soluId;
                 let soluIdCon = document.getElementById('soluIdCon');
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
@@ -426,7 +426,7 @@
                 this.gajumInfo();
             }
 
-            if(sessionStorage.role == '0004'){
+            if(sessionStorage.role == '0004'||sessionStorage.role == '0005'){
                 this.franchiseSearchGbn = false;
             }
 

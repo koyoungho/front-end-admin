@@ -411,6 +411,10 @@
                 this.soluId = sessionStorage.soluId;
                 let soluIdCon = document.getElementById('soluIdCon');
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
+            }else if(sessionStorage.role == '0004'||sessionStorage.role == '0005'){ //가맹점,지점관리자도 soluId 셋팅
+                this.soluId = sessionStorage.soluId;
+                let soluIdCon = document.getElementById('soluIdCon');
+                if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
             }
 
         }
