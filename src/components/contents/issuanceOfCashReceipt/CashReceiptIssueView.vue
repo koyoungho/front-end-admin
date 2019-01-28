@@ -11,7 +11,7 @@
             <!-- tbl grid wrap -->
             <div class="tbl_grid_wrap">
                 <!-- tbl grid01 -->
-                <table class="tbl_grid01">
+                <table class="tbl_grid01 print_area">
                     <caption>현금영수증</caption>
                     <colgroup>
                         <col class="col_mob" width="50%">

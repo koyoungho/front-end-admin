@@ -1293,6 +1293,50 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 #popup_receipt.popup_wrapper .popup_body .receipt > img {width:100%; height:auto; border:2px solid #7f7f7f;} /* 사업자등록증 사본 */
 
 
+.popup_wrapper5 {display: block; background:transparent; position: absolute; top:50%; left: 50%; border-radius:5px; border-top-left-radius: 0px; border-top-right-radius: 0px; box-shadow:0 2px 10px rgba(0,0,0,0.3); z-index: 1300; transform: translate(-50%, 0%);}
+.popup_wrapper5 .popup_header {display:block; height:50px; line-height:50px; background:#d32c25; border:1px solid #d32c25; border-radius:5px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding:0 15px; border-bottom:1px solid #ebebeb;}
+.popup_wrapper5 .popup_header > h2 {display:inline-block; font-family:'NanumB'; font-size:18px; color:#fff; margin:10px;}
+.popup_wrapper5 .popup_header .btn_close {position:absolute; display: inline-block; z-index: 101; top:15px; right:15px; width: 20px; height: 20px; line-height: 0; z-index:100;
+  text-indent: -9999px; background: url('../images/icon.png') no-repeat -28px -46px;}
+.popup_wrapper5 .popup_body {position: relative; padding:0; background: #fff; border-radius:5px; border-top-left-radius: 0px; border-top-right-radius: 0px;}
+.popup_wrapper5 .popup_body .popup_content {position: relative; padding:30px 30px 30px 30px; overflow-x:hidden; overflow-y:auto;}
+.popup_wrapper5 .popup_body .popup_content_post {position: relative; padding:15px 15px 30px 15px; overflow: hidden; min-height:215px; margin-top: 300px}
+.popup_wrapper5 .popup_body .popup_content.layer {position: relative; padding:15px 15px 30px 15px; overflow: hidden; min-height:215px;}
+.popup_wrapper5 .popup_body .popup_content .h_bottom {height:100px;}
+.popup_wrapper5 .popup_body .popup_content.scroll_no {overflow-x:hidden; overflow-y:hidden !important; height:auto !important;}
+.popup_wrapper5 .popup_body .popup_content.scroll_no .h_bottom {height:0px;}
+.popup_wrapper5 .popup_body .popup_content .complete_box { font-size:14px; line-height:20px; text-align:center;}
+.popup_wrapper5 .popup_body .popup_content .complete_box .complete_result {font-family:'NanumB'; padding:26px 0 1px 0;}
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_text {font-size: 13px; padding-bottom:10px; text-align: left;}
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_title {font-family:'NanumB'; font-size: 14px; padding-bottom:0px; text-align: center;}
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_box {overflow: hidden; background:#fafafa; border:1px solid #dedede; padding:15px 50px 15px; margin-top:10px; }
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_box .result_info {position: relative; width:100%; margin:0 auto;}
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_box .result_info > li {padding:10px 0 0 0; text-align: left; font-family:'NanumB';}
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_box .result_info > li:first-child {padding-top:0;}
+.popup_wrapper5 .popup_body .popup_content .complete_box .info_box .result_info > li .sub {display: inline-block; padding-right:5px;}
+.popup_wrapper5 .popup_body .bottom_area {background:#fff;padding:0 0 20px 0; margin-top:5px;margin-left:0px; border-top:1px solid #eeeeee; border-radius:5px; z-index:1000;}
+.popup_wrapper5 .popup_body .bottom_area .btn_bot {padding-top:20px;}
+.popup_wrapper5 .btn_b01, .popup_wrapper .btn_b02 {min-width:100px; height:38px; line-height:38px; margin-left:3px; margin-right:3px;}
+
+.popup_wrapper5 .popup_body .popup_content.page_sch { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:515px;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type01 .search_inner .search_list > li > label {width:80px;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .tbl_scroll {height:200px;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 {border-top:0; margin:-30px 0 30px 0; padding-left:55px;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 .sch_result {margin:0 0 0 0; padding:0 0 0 0;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 .sch_result li {padding:0 0 10px 0;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 .sch_result li > label {display:inline-block; font-family:'NanumB'; width:81px; line-height:15px; cursor:default;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 .sch_result li .form_code01 {width:140px;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 .sch_result li .form_code02 {width:194px;}
+.popup_wrapper5 .popup_body .popup_content.page_sch .search_box.type02 .btn_sch_area {padding:0 0 20px 0; text-align: center;}
+
+.popup_wrapper5 .popup_body .popup_content.page_storenumber { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:515px;}
+.popup_wrapper5 .popup_body .popup_content.page_storenumber .tbl_scroll {height:320px;}
+.popup_wrapper5 .popup_body .popup_content.page_cash01 { position: relative; padding:30px 15px 30px 15px; overflow: hidden;} /* 현금영수증 */
+
+/* layer small */
+.popup_wrapper5.small .popup_body .popup_content {height:auto; padding:26px 30px 22px 30px;}
+.popup_wrapper5.large {width:700px;}
+
 /* popup */
 .popup_wrapperModal3.small3 {width:420px;}
 .popup_wrapperModal3.alert3 {width:420px;}
@@ -1311,14 +1355,15 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 
 @media print {
-  #header, #header, #footer, h3 {display: none;}
+  #header, #header2, #footer, h3 {display: none;}
   .no_print {display: none !important;}
-  .print_area {width: 100% !important;}
-  /*.print_area2 {width: 60% !important; margin-top: 150px;margin-left : 120px}*/
+  .print_area {width: 90% !important; margin-top: 0px;margin-left : 50px}
+  .print_area2 {width: 70% !important; margin-top: 0px;}
   #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0); }
   #popup_header,#bottom_area {display: none;}
   @page {
-    size: A4
+    size:A4;
+    size: 160mm 200mm;
   }
 }
 
@@ -1382,6 +1427,9 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   .quick_banner .quick {position:fixed; left:calc(50% + 443px);}
   .quick_banner .page_top {position:fixed; left:calc(50% + 443px);}
 }
+
+
+
 
 /* Loading bar */
 #loading_bar {
