@@ -10,7 +10,7 @@
 #wrapper {position:relative; width:100%; background:#ffffff; z-index: 100;}
 #header {position: fixed; top:0; width:100%; background:#ffffff; border-bottom:1px solid #dedede; z-index:1100}
 .top_header {position: relative; width:1200px; height:70px; margin:0 auto;}
-.top_header .logo {position:absolute; top:21px; left:0; width:250px; height:30px; background:url('../images/img_logo.png') no-repeat 0 0;}
+.top_header .logo {position:absolute; top:21px; left:0; width:250px; height:30px; background:url('../images/bi.png') no-repeat 0 0;}
 .top_header .logo > a {display:block; width:250px; height:30px; font-size:0; line-height:0; text-indent: -999em;}
 
 .gnb {position: absolute; top:0; width:100%; height:42px; margin-top:70px; text-align:center; background: #fff; border-top:1px solid #dedede; border-bottom:1px solid #dedede; z-index:2000;}
@@ -88,7 +88,7 @@
 .icon_main.m02 {background-position:-58px 0;}
 .icon_main.m03 {background-position:-116px 0;}
 .icon_main.m04 {background-position:-174px 0;}
-.icon_main.m05 {background-position:-232px 0;}
+.icon_main.m05 {background-position:-179px -116px;}
 .icon_main.m06 {background-position:-290px 0;}
 .icon_main.m07 {background-position:-348px 0;}
 .icon_main.m08 {background-position:-406px 0;}
