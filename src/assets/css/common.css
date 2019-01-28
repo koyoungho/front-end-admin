@@ -1358,7 +1358,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   #header, #header2, #footer, h3 {display: none;}
   .no_print {display: none !important;}
   .print_area {width: 60% !important; margin-top: 0px;margin-left : 100px ; margin-top: 150px}
-  .print_area2 {width: 70% !important; margin-top: 0px;}
+  .print_area2 {width: 85% !important; margin-top: 0px;}
   #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0); }
   #popup_header,#bottom_area {display: none;}
   @page {
@@ -1372,7 +1372,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
   #header, #header2, #footer, h3 {display: none;}
   .no_print {display: none !important;}
   .print_area {width: 60% !important; margin-top: 0px;margin-left : 100px ; margin-top: 150px}
-  .print_area2 {width: 70% !important; margin-top: 0px;}
+  .print_area2 {width: 85% !important; margin-top: 0px;}
   #popup_cash01 {box-shadow:0 0px 0px rgba(0,0,0,0); }
   #popup_header,#bottom_area {display: none;}
   @page {
