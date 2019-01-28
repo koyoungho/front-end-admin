@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="popup_modal"></div>
-        <div id="popup_cash01" class="popup_wrapper5 large Pstyle" tabindex="0" style="display: block; margin-top: 500px">
+        <div id="popup_cash01" class="popup_wrapper5 large5 Pstyle5" tabindex="0" style="display: block;">
             <!-- popup header -->
             <div class="popup_header no_print">
                 <!-- h2 -->
