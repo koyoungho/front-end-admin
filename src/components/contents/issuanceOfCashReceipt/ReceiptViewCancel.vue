@@ -127,8 +127,6 @@
             this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[5].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
-
-
         updated(){
         }
 
