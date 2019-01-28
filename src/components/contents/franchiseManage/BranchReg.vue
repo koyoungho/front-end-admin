@@ -415,15 +415,20 @@
 
             //현금영수증사업자 경우 자동 셋팅
             if(sessionStorage.role == '0002'){
-                this.soluId = sessionStorage.soluId;
+                this.soluId = (sessionStorage.soluId==null||sessionStorage.soluId=='null') ? '' : sessionStorage.soluId;
                 let soluIdCon = document.getElementById('soluIdCon');
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
             }else if(sessionStorage.role == '0004' || sessionStorage.role == '0005'){ //가맹점,지점관리자 자동 셋팅
-                this.soluId = sessionStorage.soluId;
+                this.soluId = (sessionStorage.soluId==null||sessionStorage.soluId=='null') ? '' : sessionStorage.soluId;
                 let soluIdCon = document.getElementById('soluIdCon');
                 if (soluIdCon != null) { soluIdCon.setAttribute('disabled', 'disabled'); }
 
-                this.gajumInfo();
+                //this.gajumInfo();
+
+                //가명점 정보 셋팅
+                this.gajumId = (sessionStorage.gajumId==null||sessionStorage.gajumId=='null') ? '' : sessionStorage.gajumId;
+                this.saupNo = (sessionStorage.gajumSaupId==null||sessionStorage.gajumSaupId=='null') ? '' : sessionStorage.gajumSaupId;
+                this.soluNm = (sessionStorage.gajumNm==null||sessionStorage.gajumNm=='null') ? '' : sessionStorage.gajumNm;
             }
 
             if(sessionStorage.role == '0004'||sessionStorage.role == '0005'){
@@ -457,7 +462,7 @@
             }
         }
 
-        gajumInfo(){ //가맹점정보
+        /*gajumInfo(){ //가맹점정보
             CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/gajum',null).then(result=>{
                 if(result.status==200){
                     this.gajumId = result.data.gajumId;
@@ -465,7 +470,7 @@
                     this.soluNm = result.data.shopNm;
                 }
             })
-        }
+        }*/
 
         //승인대역 유효성 체크
         alrBandChk() {

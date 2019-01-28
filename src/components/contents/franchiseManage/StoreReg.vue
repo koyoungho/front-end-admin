@@ -445,36 +445,38 @@
 //this.gajumInfo(); //가맹점정보
 //this.jijumInfo(); //지점정보
             if(sessionStorage.role=='0002'){ //현금영수증사업자(영수증사업자 default)
-                this.soluId = '0002';
-                //this.soluId = sessionStorage.soluId;
+                //this.soluId = '0002';
+                this.soluId = (sessionStorage.soluId==null||sessionStorage.soluId=='null') ? '' : sessionStorage.soluId;
                 this.soluIdDis = true;
 
             }else if(sessionStorage.role=='0004'){ //가맹점관리자(가맹점 정보 default)
-                this.soluId = sessionStorage.soluId;
+                this.soluId = (sessionStorage.soluId==null||sessionStorage.soluId=='null') ? '' : sessionStorage.soluId;
                 this.soluIdDis = true;
 
-                this.gajumInfo(); //가맹점정보
+                //this.gajumInfo(); //가맹점정보
 
-                // this.gajumId = sessionStorage.gajumId;
-                // this.gajumSaupId = '';
-                // this.gajumNm = '';
+                //가맹점 정보 셋팅
+                this.gajumId = (sessionStorage.gajumId==null || sessionStorage.gajumId=='null') ? '' : sessionStorage.gajumId;              //가맹점번호
+                this.gajumSaupId = (sessionStorage.gajumSaupId==null || sessionStorage.gajumSaupId=='null') ? '' : sessionStorage.gajumSaupId;  //가맹점 사업자번호
+                this.gajumNm = (sessionStorage.gajumNm==null || sessionStorage.gajumNm=='null') ? '' : sessionStorage.gajumNm;              //가맹점명
+
             }else if(sessionStorage.role=='0005'){ //지점관리자(가맹점, 지점정보 default)
-                this.soluId = sessionStorage.soluId;
+                this.soluId = (sessionStorage.soluId==null||sessionStorage.soluId=='null') ? '' : sessionStorage.soluId;
                 this.soluIdDis = true;
 
-                this.gajumInfo(); //가맹점정보
-                this.jijumInfo(); //지점정보
+                //this.gajumInfo(); //가맹점정보
+                //this.jijumInfo(); //지점정보
 
                 this.franchiseSerchBtn = false; //가맹점 검색 버튼 hidden
 
-                // this.gajumId = '';          //가맹점번호
-                // this.gajumSaupId = '';      //가맹점 사업자번호
-                // this.gajumNm = '';          //가맹점명
-                // this.jijumId = '';          //지점번호
-                // this.jijumNo = '';          //지점 사업자번호
-                // this.jijumNm = '';          //지점명
+                //가맹점, 지점 정보 셋팅
+                this.gajumId = (sessionStorage.gajumId==null || sessionStorage.gajumId=='null') ? '' : sessionStorage.gajumId;              //가맹점번호
+                this.gajumSaupId = (sessionStorage.gajumSaupId==null || sessionStorage.gajumSaupId=='null') ? '' : sessionStorage.gajumSaupId;  //가맹점 사업자번호
+                this.gajumNm = (sessionStorage.gajumNm==null || sessionStorage.gajumNm=='null') ? '' : sessionStorage.gajumNm;              //가맹점명
+                this.jijumId = (sessionStorage.jijumId==null || sessionStorage.jijumId=='null') ? '' : sessionStorage.jijumId;              //지점번호
+                this.jijumNo = (sessionStorage.jijumSaupId==null || sessionStorage.jijumSaupId=='null') ? '' : sessionStorage.jijumSaupId;      //지점 사업자번호
+                this.jijumNm = (sessionStorage.jijumNm==null || sessionStorage.jijumNm=='null') ? '' : sessionStorage.jijumNm;              //지점명
             }
-
 
             //승인대역 정보
             this.approvalList = [
@@ -517,7 +519,7 @@
             this.getSelectList('SUBSAUP'); //회사코드(사업장)
         }
 
-        gajumInfo(){ //가맹점정보
+        /*gajumInfo(){ //가맹점정보
             CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/gajum',null).then(result=>{
                 if(result.status==200){
                     this.gajumId = result.data.gajumId;
@@ -525,9 +527,9 @@
                     this.gajumNm = result.data.shopNm;
                 }
             })
-        }
+        }*/
 
-        jijumInfo(){ //지점정보
+        /*jijumInfo(){ //지점정보
             CommonBoardService.getListDatas('accounts',sessionStorage.accountId+'/jijum',null).then(result=>{
                 if(result.status==200){
                     this.jijumId = result.data.jijumId;
@@ -535,7 +537,7 @@
                     this.jijumNm = result.data.shopNm;
                 }
             })
-        }
+        }*/
 
         @Watch('upjong') onChange(){
             if(this.upjong == '006' || this.upjong == '007') { //업종구분이 신문사(0002), 택배사(0003) 이면 회사코드 조회

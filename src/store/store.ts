@@ -57,8 +57,10 @@ export default new Vuex.Store({
             sessionStorage.accountId = accessToken.accountId; //계정ID
             sessionStorage.accountNm = accessToken.accountNm; //계정명
             sessionStorage.gajumId = accessToken.gajumId; //가점ID
+            sessionStorage.gajumSaupId = accessToken.gajumSaupId; //가점 사업자번호
             sessionStorage.gajumNm = accessToken.gajumNm; //가점명
             sessionStorage.jijumId = accessToken.jijumId; //지점ID
+            sessionStorage.jijumSaupId = accessToken.jijumSaupId; //지점 사업자번호
             sessionStorage.jijumNm = accessToken.jijumNm; //지점명
             sessionStorage.id = accessToken.id; //ID
             sessionStorage.lastConnDt = accessToken.lastConnDt; //마지막접속일자
