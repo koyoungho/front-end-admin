@@ -484,7 +484,7 @@
         aceptTotalCount(){
             this.loading222 = true;
 
-            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
+            CommonBoardService.getListDatas('receipt',this.objectKey.oriDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
                 this.canBong = response.data.remainBong;
@@ -562,7 +562,7 @@
             else{
                 // saleDate}/{perm}/cancel
                 // this.cancleReceipActionBtn = false;
-                CommonBoardService.updateListData('receipt', this.objectKey.saleDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
+                CommonBoardService.updateListData('receipt', this.objectKey.oriDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
                     this.openReceiptPop(response.data);
                 }).catch();
             }
@@ -608,7 +608,7 @@
 
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
-                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
+                url: environment.apiUrl + "/receipt/"+this.objectKey.oriDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
                 method: 'GET',
                 responseType : 'blob', // important
                 headers : { "x-auth-token" : sessionStorage.accessToken }
