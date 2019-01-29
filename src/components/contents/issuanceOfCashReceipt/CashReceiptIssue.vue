@@ -690,7 +690,7 @@
 
 
             this.getUpjongSelectList();
-            this.getSinbunSelectList();
+            //this.getSinbunSelectList();
 
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);

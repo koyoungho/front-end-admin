@@ -76,11 +76,17 @@
                     xls, xlsx 파일로 일괄발급이 가능합니다.
                     <button type="button" id="" class="btn_s01 bg02" v-on:click="downloadSample()"><i class="icon download"></i>샘플다운로드</button>
                 </p>
+                <p style="font-size: 12px; text-align: left; color: red; padding-left: 60px;">
+                    (엑셀 파일 등록은 5,000건 까지만 가능합니다.)
+                </p>
                 <p class="text_file">모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.</p>
             </div>
 
             <!-- tbl scroll box -->
             <div class="tbl_scroll_box">
+                <div id="loading_bar" v-show="loading">
+                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
+                </div>
                 <!-- tbl list02 -->
                 <table class="tbl_list02 page_cashissue">
                     <caption>현금영수증 발급</caption>
@@ -164,9 +170,12 @@
             </div>
 
             <!-- btn bot -->
-            <div class="btn_bot">
+            <div class="btn_bot" v-if="bulkReceiptBtn">
                 <button type="button" id="" class="btn_b02 bg01" v-on:click="cashReceiptIssue()">현금영수증 일괄 발급</button>
             </div>
+            <p v-if="errorMsg" style="font-size: 15px; text-align: center; color: red; margin-top: 10px;">
+                * 엑셀에 기입한 내용중 부정확한 정보가 입력되었습니다. 확인 후 재입력 하여 주십시오.
+            </p>
 
         </div>
 
@@ -185,11 +194,12 @@
     import axios from 'axios';
     import {environment} from '../../../utill/environment';
     import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
-    import moment from 'moment'
+    import moment from 'moment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            CashReceiptBulkIssue, SaupBox
+            CashReceiptBulkIssue, SaupBox, VueSimpleSpinner
         }
     })
     export default class CashReceiptBulkIssue extends Vue {
@@ -212,6 +222,10 @@
         subSaupList: any = {};
 
         showModal1 : boolean= false; // 팝업
+
+        loading : boolean = false; //로딩바
+        bulkReceiptBtn : boolean = false; //현금영수증 발급 버튼
+        errorMsg : boolean = false; //현금영수증 오류 문구 표시
 
         created(){
             this.getSelectList('subsaup');
@@ -246,6 +260,8 @@
                         ).catch();
             */
 
+            this.loading = true;
+
             let param = 'saupId='+this.saupId + '&subSaup='+this.subSaup;
 
             CommonBoardService.postListDatas('receipt/file?'+param, null, formData).then((response) => {
@@ -271,12 +287,16 @@
 
                         this.uploadPath = '';
 
+                        this.loading = false;
+
                     } else {
                         Vue.swal({text: '현금영수증 일괄등록이 실패되었습니다. 다시 시도 해 주세요.'});
+                        this.loading = false;
                     }
                 }
                 , (error) => {
                     //console.log(error);
+                    this.loading = false;
                 }
             ).catch();
 
@@ -383,15 +403,18 @@
             ).catch();
 */
 
+            this.loading = true;
+
             let param = 'saupId='+this.saupId + '&subSaup='+this.subSaup;
 
             CommonBoardService.postListDatas('receipt/file/check?'+param, null, formData).then((response) => {
+                console.log(response)
                     let result: any = response.data;
                     // data - list
                     // failCount
                     // totalCount
                     if (result.data.length > 0) {
-                        console.log('엑셀 파일 체크 성공');
+                        //console.log('엑셀 파일 체크 성공');
 
                         let rowData : any = {};
                         let arrData : any = [];
@@ -418,12 +441,24 @@
                         this.errorData = result.failCount; //오류 건수
                         this.normalData = result.totalCount - result.failCount; //정상 건수
                         this.possibleData = result.totalCount - result.failCount; //발급예정 건수
+
+                        if(Number(result.failCount) > 0){
+                            this.bulkReceiptBtn = false;
+                            this.errorMsg = true;
+                        }else{
+                            this.bulkReceiptBtn = true;
+                        }
+
+                        this.loading = false;
+
                     } else {
-                        console.log('엑셀 파일 체크 실패');
+                        //console.log('엑셀 파일 체크 실패');
+                        this.loading = false;
                     }
                 }
                 , (error) => {
                     //console.log(error)
+                    this.loading = false;
                 }
             ).catch();
 
