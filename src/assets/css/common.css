@@ -341,6 +341,7 @@ select.wide {width:100%;}
 .info_msg {font-size:12px; padding:10px 0 5px 0; color:#d32c25;}
 .info_msg.form {padding:10px 0 0 0; margin-right:-50px;}
 .info_msg.form > .chk_box > label {text-indent:-23px; padding-left:23px;}
+.info_msg2 {font-size:12px; color:#d32c25; line-height: 30px}
 
 .text_type01 {text-indent:-13px;padding-left:23px; padding-top:10px;}
 .text_type01:before{display:inline-block;content:'*';}

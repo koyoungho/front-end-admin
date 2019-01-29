@@ -22,21 +22,24 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름</th>
-                        <td><input type="text" class="input form_w100" title="이름" disabled="disabled" v-model="account.name" ></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="이름" disabled="disabled" v-model="account.name" ></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
                             <input type="text" class="input form_w100" title="휴대폰번호" v-model="account.phoneNum" maxlength="12">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">ID</th>
-                        <td>
+                        <td class="vtop">
                             <input type="text" class="input form_id" title="ID" disabled="disabled" v-model="account.id">
                             <!--<button type="button" id="" class="btn_s01 bg04" @click="validateForm()">중복확인</button>-->
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">이메일주소</th>
-                        <td>
+                        <td class="vtop">
                             <input type="text" class="input form_w100" title="이메일주소" v-model="account.email" maxlength="30">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -132,16 +135,18 @@
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" disabled="disabled">
                             <!--<button type="button" id="" class="btn_s01 bg04">중복확인</button>-->
                             <!--<p class="info_msg">이미 등록된 사업자 번호입니다.</p>-->
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">사업장명</th>
                         <td class="vtop"><input type="text" class="input form_w100" title="사업장명" disabled="disabled" v-model="saupjang.shopNm"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명</th>
-                        <td><input type="text" class="input form_w100" title="대표자명" disabled="disabled" v-model="saupjang.chipNm"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="대표자명" disabled="disabled" v-model="saupjang.chipNm"></td>
                         <th scope="row">전화번호</th>
                         <td>
                             <input type="text" class="input form_w100" title="전화번호" disabled="disabled" v-model="saupjang.telNum">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>

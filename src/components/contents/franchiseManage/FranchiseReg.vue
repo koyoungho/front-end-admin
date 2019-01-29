@@ -45,22 +45,23 @@
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
-                            <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="사업장명" v-model="storeNm" maxlength="20"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100"   title="전화번호" v-model="repPhonenum" maxlength="12">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">사업자구분<em class="form_req">*</em></th>
-                        <td>
+                        <td class="vtop">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
@@ -73,7 +74,10 @@
                         </td>
                         <template v-if="saupType=='1'">
                         <th scope="row">법인등록번호<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13"></td>
+                        <td>
+                            <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                        </td>
                         </template>
                         <template v-else>
                             <th scope="row"></th>
