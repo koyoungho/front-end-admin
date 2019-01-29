@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th scope="row">사업자구분</th>
-                        <td>
+                        <td class="vtop">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
                                 <option value="2">개인사업자</option>
@@ -85,7 +85,10 @@
                             </select>
                         </td>
                         <th scope="row">법인등록번호</th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled"></td>
+                        <td>
+                            <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">주소<em class="form_req">*</em></th>
