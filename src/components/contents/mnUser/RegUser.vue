@@ -22,23 +22,25 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="이름" v-model="name" maxlength="20"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="이름" v-model="name" maxlength="20"></td>
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="휴대폰번호" v-model="phoneNum" maxlength="12">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">ID<em class="form_req">*</em></th>
-                        <td>
+                        <td class="vtop">
                             <input type="text" class="input form_id" title="ID" v-model="id" v-on:keyup="idCh()" maxlength="16">
                             <input type="hidden" v-model="idChkYn">
                             <button type="button" id="" class="btn_s01 bg04" @click="idChk()">중복확인</button>
-                            <p class="info_msg" id="id_msg"></p>
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">이메일주소<em class="form_req">*</em></th>
-                        <td>
+                        <td class="vtop">
                             <input type="text" class="input form_w100" title="이메일주소" v-model="email" maxlength="30">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -117,16 +119,18 @@
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdCh()" maxlength="10">
                             <input type="hidden" v-model="saupIdChkYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="saupInfo(saupId)">찾기</button>
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">사업장명</th>
                         <td class="vtop"><input type="text" class="input form_w100" title="사업장명" v-model="saupjang.shopNm" disabled="disabled"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명</th>
-                        <td><input type="text" class="input form_w100" title="대표자명" v-model="saupjang.chipNm" disabled="disabled"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="대표자명" v-model="saupjang.chipNm" disabled="disabled"></td>
                         <th scope="row">전화번호</th>
                         <td>
                             <input type="text" class="input form_w100" title="전화번호" v-model="saupjang.telNum" disabled="disabled">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>

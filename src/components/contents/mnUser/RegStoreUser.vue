@@ -30,22 +30,23 @@
                             <input type="text" class="input form_industry" title="사업자등록번호 입력" id="inputSaupId" v-on:keyup="saupIdChk" v-model="saupId" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
                             <button type="button" class="btn_s01 bg04" id="btnRegConfirm" v-on:click="saupInfo(saupId)">등록확인</button>
-                            <p class="info_msg" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
                         <td class="vtop"><input type="text" class="input form_w100" title="사업장명 입력" v-model="storeNm" maxlength="30"></td>
                     </tr>
                     <tr>
                         <th scope="row">대표자명<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
+                        <td class="vtop"><input type="text" class="input form_w100" title="대표자명 입력" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" @keyup="changeRepPhonenum" maxlength="12">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">사업자구분<em class="form_req">*</em></th>
-                        <td>
+                        <td class="vtop">
                             <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType">
                                 <option value="">선택</option>
                                 <option value="2">개인</option>
@@ -56,7 +57,10 @@
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
-                        <td><input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" @keyup="changeLawNm" maxlength="13"></td>
+                        <td>
+                            <input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" @keyup="changeLawNm" maxlength="13">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_address">주소 <em class="form_req">*</em></th>
@@ -140,24 +144,26 @@
                     <tbody>
                     <tr>
                         <th scope="row">이름<em class="form_req">*</em></th>
-                        <td><input type="text" class="input form_name" title="이름"  v-model="name" maxlength="20"></td>
+                        <td class="vtop"><input type="text" class="input form_name" title="이름"  v-model="name" maxlength="20"></td>
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="휴대폰번호 입력" v-model="phoneNum" @keyup="changePhoneNum" maxlength="12">
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="sub_msg01">ID<em class="form_req">*</em></th>
-                        <td class="con_msg01">
+                        <td class="con_msg01 vtop">
                             <input type="text" class="input form_id" title="ID 입력" v-model="id" maxlength="16">
                             <input type="hidden" title="ID 중복확인 여부" v-model="idYn">
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="chkUserId(id)">중복확인</button>
-                            <p class="info_msg" id="id_msg"></p>
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row" class="sub_msg01">이메일주소<em class="form_req">*</em></th>
-                        <td class="con_msg01">
+                        <td class="con_msg01 vtop">
                             <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" maxlength="30">
                             <!--<p class="info_msg">이미 등록된 아이디 입니다.</p>-->
+                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <!--<tr>
