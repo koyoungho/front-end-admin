@@ -522,7 +522,7 @@
                 Vue.swal({text:'접근할수 없습니다'})
                 this.$router.push({name:'receiptViewCancel'});
             }else{
-                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
+                CommonBoardService.getListDatas('receipt', this.objectKey.oriDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
                     this.viewRowItem = response.data
                         // 과세확인
                         if(response.data.vat >= 1){
