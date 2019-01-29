@@ -369,7 +369,7 @@
                             {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                         ],
                         totalColum: 8,
-                        apiUrl : 'receipt/'+ this.objectKey.saleDate+'/'+ this.objectKey.oriAprv+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
+                        apiUrl : 'receipt/'+ this.objectKey.oriDate+'/'+ this.objectKey.oriAprv+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
                         onLoadList : true,  // onLoad 로딩 유무
                         mTotal : false , // 합계금액 란 활성화시 리슐트금액넣기
                         mTotalControl : [{totalTitle : '합계 금액' , id: 'totalCount' , value : '' },{totalTitle : '봉사료' , id: 'serviceCharge' , value : '' },{totalTitle : '공급가액' , id: 'supplyValue' , value : '' },
@@ -484,7 +484,7 @@
         aceptTotalCount(){
             this.loading222 = true;
 
-            CommonBoardService.getListDatas('receipt',this.objectKey.saleDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
+            CommonBoardService.getListDatas('receipt',this.objectKey.oriDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
                 this.canBong = response.data.remainBong;
@@ -522,7 +522,7 @@
                 Vue.swal({text:'접근할수 없습니다'})
                 this.$router.push({name:'receiptViewCancel'});
             }else{
-                CommonBoardService.getListDatas('receipt', this.objectKey.saleDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
+                CommonBoardService.getListDatas('receipt', this.objectKey.oriDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
                     this.viewRowItem = response.data
                         // 과세확인
                         if(response.data.vat >= 1){
@@ -562,7 +562,7 @@
             else{
                 // saleDate}/{perm}/cancel
                 // this.cancleReceipActionBtn = false;
-                CommonBoardService.updateListData('receipt', this.objectKey.saleDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
+                CommonBoardService.updateListData('receipt', this.objectKey.oriDate+'/'+this.objectKey.perm+'/cancel'  ,data).then((response) => {
                     this.openReceiptPop(response.data);
                 }).catch();
             }
@@ -608,7 +608,7 @@
 
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
-                url: environment.apiUrl + "/receipt/"+this.objectKey.saleDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
+                url: environment.apiUrl + "/receipt/"+this.objectKey.oriDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
                 method: 'GET',
                 responseType : 'blob', // important
                 headers : { "x-auth-token" : sessionStorage.accessToken }
