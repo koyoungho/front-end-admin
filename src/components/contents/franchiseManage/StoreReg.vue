@@ -996,6 +996,11 @@
             }else if(no.length != 10){
                 if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호 길이가 부적합 합니다.'; }
                 return;
+            }else if(no.length == 10){
+                if(no == '0000000000'){
+                    if(saupmsg!=null){ saupmsg.innerHTML = '유효하지 않는 사업자등록번호입니다.'; }
+                    return;
+                }
             }
 
             let reqData: any = {};
