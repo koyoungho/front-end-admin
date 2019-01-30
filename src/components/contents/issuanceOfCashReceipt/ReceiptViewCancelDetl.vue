@@ -260,8 +260,8 @@
                 <template v-if="cancleReceipActionBtn">
                     <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
                 </template>
-                <template v-else>
-                    <span><font color="red">"* 거래가능 금액이 0원이거나 3개월이 초과된 영수증은 취소가 불가능합니다"</font></span>
+                <template v-if="maxDateOut">
+                    <span><font color="red">"* 취소 가능 금액이 0원이거나 3개월이 초과된 영수증은 취소가 불가능합니다"</font></span>
                 </template>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
