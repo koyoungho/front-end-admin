@@ -257,7 +257,12 @@
 
             <!-- btn bot -->
             <div class="btn_bot type01" v-if="onlineYn == 'Y' ">
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow" v-if="cancleReceipActionBtn">발급취소</button>
+                <template v-if="cancleReceipActionBtn">
+                    <button type="button" id="" class="btn_b01 bg01" v-on:click="cancleReceipAction" v-show="regShow">발급취소</button>
+                </template>
+                <template v-else>
+                    <span><font color="red">"* 거래가능 금액이 0원이거나 3개월이 초과된 영수증은 취소가 불가능합니다"</font></span>
+                </template>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
             <div style="text-align:right">
@@ -326,6 +331,8 @@
         cancleReceipActionBtn : boolean = true;
 
         loading222 : boolean = false
+
+        maxDateOut : boolean = false;//추가함
 
         money : any = {
             decimal: '.',
@@ -484,6 +491,12 @@
         aceptTotalCount(){
             this.loading222 = true;
 
+            //추가함
+            if(this.maxDateOut){
+            }
+            else{
+
+
             CommonBoardService.getListDatas('receipt',this.objectKey.oriDate+'/'+this.objectKey.oriAprv+'/remain','').then((response) => {
                 this.canAceptTotalOrigin  = response.data.remainTotal
                 this.canAceptTotal  = response.data.remainTotal
@@ -508,6 +521,8 @@
                 this.receiptOk = true;
             }).catch();
 
+
+            }
             this.loading222 = false;
         }
 
@@ -530,8 +545,21 @@
                         }else{
                             this.ghase = "checked";
                         }
+
+                    //추가함
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+                    let  beforeOneDKo=  moment(nowKo).subtract(3, 'month') // 3개월전
+                    let  maxDate = moment(beforeOneDKo).format('YYYYMMDDHHMMSS')
+
+                    if( response.data.saleDate <= maxDate){ //3개월이 초과되면
+                        this.cancleReceipActionBtn = false;   // 버튼을막는다
+                        this.maxDateOut = true;
+                        this.onLoadListView = true;
+                    }else{
                         this.aceptTotalCount()
-                    this.onLoadListView = true;
+                        this.onLoadListView = true;
+                    }
                 }).catch();
             }
             this.onLoadListView = false

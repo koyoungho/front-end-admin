@@ -534,16 +534,17 @@
 </script>
 
 <style>
-  .mx-calendar-content .cell.actived {
-    background-color: #fa0b40 !important;
+  .mx-datepicker-btn-confirm {
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: white!important;
+    background: #da291c !important;
   }
-  /*.mx-calendar-content .cell.disabled {*/
-    /*cursor: not-allowed;*/
-    /*color: black!important;*/
-    /*background-color: white!important;*/
-  /*}*/
-  /*.mx-calendar-content .cell.inrange {*/
-    /*color: white;*/
-    /*background-color:  #fa7f9e!important;*/
-  /*}*/
+  .mx-calendar-content .cell.actived {
+    color: #fff !important;
+    background-color: #da291c !important;
+  }
+  .mx-calendar-content .cell.inrange {
+    background-color: #ffe2e4 !important;
+    border: #e9574d !important;
+  }
 </style>
