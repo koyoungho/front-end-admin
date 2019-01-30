@@ -93,7 +93,7 @@
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td colspan="1">
                             <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" maxlength="12">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg1"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -113,7 +113,7 @@
                         <th scope="row">법인등록번호<em class="form_req">*</em></th>
                         <td colspan="1">
                             <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
                         </td>
                         </template>
                         <template v-else>
@@ -1000,6 +1000,11 @@
             }else if(no.length != 10){
                 if(saupmsg!=null){ saupmsg.innerHTML = '사업자등록번호 길이가 부적합 합니다.'; }
                 return;
+            }else if(no.length == 10){
+                if(no == '0000000000'){
+                    if(saupmsg!=null){ saupmsg.innerHTML = '유효하지 않는 사업자등록번호입니다.'; }
+                    return;
+                }
             }
 
             let reqData: any = {};
