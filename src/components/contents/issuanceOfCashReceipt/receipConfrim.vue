@@ -120,7 +120,7 @@
                                 <th scope="col" colspan="2">사업장 주소</th>
                             </tr>
                             <tr>
-                                <td colspan="2" class="con01">{{ResultViewRowItem.saupCaddr}}</td>
+                                <td colspan="2" class="con01">{{ResultViewRowItem.saupCaddr}} {{ResultViewRowItem.saupAddr}}</td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="con01">
