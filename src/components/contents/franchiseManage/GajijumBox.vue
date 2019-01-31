@@ -84,7 +84,7 @@
                                     <template v-if="responseData.length > 0">
                                     <tbody v-for="datas in responseData">
                                     <tr>
-                                        <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
+                                        <td><span class="rdo_box"><input type="radio" name="chk" value="2"  v-on:click="selectedRow(datas)"><label ><span class="blind">선택</span></label></span></td>
                                         <td>{{datas.gajumId}}</td>
                                         <td>{{datas.saupId}}</td>
                                         <td class="left">{{datas.shopNm}}</td>
@@ -104,7 +104,7 @@
                                     <template v-if="responseData.length > 0">
                                         <tbody v-for="datas in responseData">
                                         <tr>
-                                            <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
+                                            <td><span class="rdo_box"><input type="radio" name="chk" value="2"  v-on:click="selectedRow(datas)"><label ><span class="blind">선택</span></label></span></td>
                                             <td>{{datas.jijumId}}</td>
                                             <td>{{datas.saupId}}</td>
                                             <td class="left">{{datas.shopNm}}</td>
@@ -189,7 +189,7 @@
                                 </colgroup>
                                 <tbody v-for="datas in responseData">
                                 <tr>
-                                    <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
+                                    <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa11"><span class="blind">선택</span></label></span></td>
                                     <td>{{datas.jijumId}}</td>
                                     <td>{{datas.saupId}}</td>
                                     <td class="left">{{datas.shopNm}}</td>

@@ -1028,7 +1028,7 @@ tr td.no_data {cursor: default;}
 
 .tbl_scroll_box {width: 100%; margin-bottom:0px;}
 .tbl_scroll {overflow-x:hidden; overflow-y:scroll; height:300px;}
-.tbl_list02 {border-top:1px solid #dedede; border-left:1px solid #dedede; table-layout:fixed;}
+.tbl_list02 {border-top:1px solid #dedede; border-left:1px solid #dedede; table-layout:fixed;position: relative}
 .tbl_list02.brd_none {border-top:0px solid #596270; border-bottom:0px solid #dedede;}
 .tbl_list02 thead th {color:#323232; font-family:'NanumB';padding:16px 10px 14px 10px; border-left:0; border-right:1px solid #dedede; border-bottom:1px solid #dedede;
   background:#fafafa;}
