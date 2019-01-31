@@ -821,7 +821,7 @@ select.wide {width:100%;}
 
 .tab_box .tab01 {display:flex; flex-direction:row; flex-wrap: wrap; justify-content:center; padding-top:1px; padding-left:1px; margin:0 auto 40px;}
 .tab_box .tab01 li {flex:1 1 auto; margin-top:-1px; margin-left:-1px; padding:10px; text-align:center; border:1px solid #dedede; transition:all 0.2s; cursor:pointer;}
-.tab_box .tab01 li a {font-family:NanumB; color:#939393}  
+.tab_box .tab01 li a {font-family:NanumB; color:#939393}
 .tab_box .tab01 li.on, .tab_box li:hover {background-color:#777;}
 .tab_box .tab01 li.on a, .tab_box li:hover a {color:#fff;}
 
@@ -849,6 +849,24 @@ select.wide {width:100%;}
 .system_row .text_type04 {font-size:13px; padding-bottom:2px;}
 .system_row .text_type04.fc_pt01 {font-family:'NanumB';}
 .system_row .system_col02 {float:right; width:30%; padding-top:5px; text-align: center;}
+
+/* system box2 추가 */
+.system_box2 {position: relative; width:100%; margin:0 auto;}
+.system_box2.w100 {width:100%; margin-bottom:30px;}
+.system_box2.w100 > .system_info {display: inline-block; width:280px; margin-left:8px;}
+.system_box2.w100 > .system_info:first-child {margin-left:0px;}
+.system_box2 > .system_info {display: inline-block;}
+.system_box2 > .system_info > .title {display:inline-block; width: 100%; height:40px; line-height:40px; padding:0 0 0 15px; margin-bottom:20px; font-family: 'NanumB'; border:1px solid #e0e0e0; background:#fafafa;}
+.system_box2 .system_list > li {padding:0 0 10px 0;}
+.system_row2 {overflow: hidden; background:#bababa; display: flex; justify-content: center; align-items: center;}
+.system_row2 h5.system {font-size: 16px; font-family:'NanumB'; margin:0; padding:0 0 5px 0; background:none;}
+.system_row2 .system_col01 {float:left; width:30%; padding:18px 15px 11px 15px;  border:1px solid #e0e0e0; background:#fff;}
+.system_row2 .system_col01 a {display: block;}
+.system_row2 .system_col01 h5 + .text_type04 {margin-top:5px;}
+.system_row2 .text_type04 {font-size:13px; padding-bottom:2px;}
+.system_row2 .text_type04.fc_pt01 {font-family:'NanumB';}
+.system_row2 .system_col02 {float:right; width:70%; padding-top:5px; text-align: center;}
+
 /*.system_row .system_col02 .number_list > li {color:#fff; text-align: center;}*/
 .system_row .system_col02 .total {display: block; font-family:'NanumB'; font-size:16px; color:#fff; padding:0 0 5px 0; }
 .system_row .system_col02 .num {display: block; font-size:13px; color:#fff;}
@@ -1497,3 +1515,14 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .text_center {text-align: center !important;}
 .text_left {text-align: left !important;}
 .placeLeft {left: 10px !important;}
+
+
+
+
+/* fcalendar css */
+.fcalendar{position:relative;}
+.fcalendar ul{padding-left:4px;}
+.fcalendar ul li{display:inline-block; width:300px; height:100px; border:1px solid #d8d8d8; box-sizing:border-box; margin:0 0 -1px -3px; vertical-align:top;}
+.fcalendar ul li .title{display:block; background: #fa96af; color:#fff; font-weight:bold; text-align:center; line-height:30px}
+.fcalendar ul li ul.con{display:block; padding:15px 25px 15px 25px; line-height:16px; clear:both}
+.fcalendar ul li ul.con li{height:26px; line-height:26px; border:none; width:100%;}

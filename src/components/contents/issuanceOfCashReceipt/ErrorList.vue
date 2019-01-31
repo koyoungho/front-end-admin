@@ -4,9 +4,67 @@
         <!-- content  -->
         <div class="content">
             <h2 class="blind">현금영수증관리</h2>
-
             <h3>오류 내역 조회</h3>
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:searchDateChange="dateCheck"></ListComponent>
+
+            <div class="search_box page_new">
+                <ul class="search_list">
+                    <li class="w25">
+                        <label for="">오류내역(년)</label>
+                        <span class="form_cal">
+                          <date-picker v-model="searchYear"  :lang="lang" :type="'year'"
+                                       :first-day-of-week="1"  format="YYYY" width="100" confirm ></date-picker>
+                          </span>
+                    </li>
+                    <li class="w25">
+                        <label for="">사업자구분</label>
+                        <select  class="select sch_w100" title="사업자구분" v-model="companyCode" >
+                            <option value="">전체</option>
+                            <template v-for="data in companyCodeList">
+                                <option  :value="data.code">{{data.name}}</option>
+                            </template>
+                        </select>
+                    </li>
+                    <li class="w25">
+                        <label for="">회사코드</label>
+                        <select  class="select sch_w100" title="회사코드" v-model="companyCode" >
+                            <option value="">전체</option>
+                            <template v-for="data in companyCodeList">
+                                <option  :value="data.code">{{data.name}}</option>
+                            </template>
+                        </select>
+                    </li>
+                    <li class="w25">
+                        <label for="aa">사업자등록번호</label>
+                        <input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>
+                        <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- btn mid -->
+            <div class="btn_mid">
+                <!--<button type="button" class="btn_m01 bg05" @click="excelDown"><i class="icon download01"></i> 엑셀 다운로드</button>-->
+                <button type="button" class="btn_m01 bg01" @click="compCodeChart()">조회</button>
+            </div>
+            <!-- system box -->
+          <div class="fcalendar">
+            <ul>
+              <template v-for="data,index in 12">
+              <li>
+                <span class="title">{{index+1}} 월</span>
+                <ul class="con">
+                  <li><td>정산 :</td><td>100</td></li>
+                  <li><td>정산 :</td><td>100</td></li>
+                </ul>
+              </li>
+              </template>
+            </ul>
+
+          </div>
+          <!-- //달력 -->
+
+
+          <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:searchDateChange="dateCheck"></ListComponent>-->
         <!-- //content -->
 
         <div class="btn_bot type03">
@@ -26,16 +84,36 @@
     import {Component, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
-    import moment from 'moment'
+    import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
+    import moment from 'moment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            ErrorList,ListComponent
+            ErrorList,ListComponent,SaupBox,VueSimpleSpinner
         }
     })
     export default class ErrorList extends Vue {
         message: any = '';
         regShow : boolean = false;
+        searchYear : string = moment(new Date).format('YYYY');  //선택연도
+        companyCodeList : any = [];
+        saupId  :string = "";
+        companyCode : any = "";
+        showModal1 : boolean = false;
+
+
+        lang : any =  {
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            placeholder: {
+                date: '선택',
+                dateRange: '범위 선택'
+            }
+        }
+
+
 
         listItem: any =  // 그리드 서치 페이징 옵션 처리 데이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
             {
@@ -140,6 +218,10 @@
         //조회
         goSearch(){
 
+        }
+
+        popupOpen(){
+            this.showModal1= true;
         }
 
         //엑셀 다운로드
