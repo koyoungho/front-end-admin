@@ -317,8 +317,10 @@
         created() {
 
             const  nowUTC =  moment().utc() ; //UTC시간
-            this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+            console.log(moment(nowUTC).format('YYYYMMDDHHMMSS'))
 
+            this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+            console.log(moment(this.nowDate).format('YYYYMMDDHHMMSS'))
 
             this.searchStyle = this.searchItemDetail.searchClass
             this.searchStyle2 = this.searchItemDetail.searchClass2
@@ -433,18 +435,18 @@
                 let name = this.$route.name
                 let object :Object= this.searchItem
 
-                const  beforeOneY = moment(this.nowDate).subtract(1, 'years');//1년전 날짜
+                let  beforeOneY = moment(this.nowDate).subtract(1, 'years');//1년전 날짜
                 if(name == 'receiptViewCancel') {//발급내역조회
 
-                  const searchEndDate = this.formatDates(object[7].searchStartDate[1]);
-                  const searchStartDate = this.formatDates(object[7].searchStartDate[0]);
-                  const range = moment(searchStartDate).isBetween(beforeOneY, this.nowDate); // true
+                    let searchEndDate = this.formatDates(object[7].searchStartDate[1]);
+                    let searchStartDate = this.formatDates(object[7].searchStartDate[0]);
+                    let range = moment(searchStartDate).isBetween(beforeOneY, this.nowDate); // true
 
                   if (range == false) {
                     Vue.swal({text:"현재일 기준 최대 검색가능기간은 1년이며 3개월 범위로 조회 가능합니다."})
                   } else {
-                      const endDateBeforeThreeM = moment(searchEndDate).subtract(3, 'months');// 3개월 전 날짜
-                      const rangeLimit = moment(searchStartDate).isBetween(endDateBeforeThreeM, searchEndDate); // true
+                      let endDateBeforeThreeM = moment(searchEndDate).subtract(3, 'months');// 3개월 전 날짜
+                      let rangeLimit = moment(searchStartDate).isBetween(endDateBeforeThreeM, searchEndDate); // true
 
                       if (rangeLimit == true || (searchEndDate == searchStartDate)) {
 
