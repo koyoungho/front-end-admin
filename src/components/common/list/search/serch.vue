@@ -296,7 +296,6 @@
         gajiPopupOpen(event, data){
             if(data.id == 'gajumId'){
                 let soluId1 = event.currentTarget.parentElement.parentElement.children['0'].children['1'].value; //suluId 넘기기
-                console.log(soluId1)
                 //this.listInfo = { soluId : soluId };
                 this.soluId = soluId1;
                 this.showModal1= true;
@@ -316,11 +315,9 @@
 
         created() {
 
-            const  nowUTC =  moment().utc() ; //UTC시간
-            console.log(moment(nowUTC).format('YYYYMMDDHHMMSS'))
+            let  nowUTC =  moment().utc() ; //UTC시간
 
             this.nowDate= nowUTC.add(9, 'hours')// 한국시간
-            console.log(moment(this.nowDate).format('YYYYMMDDHHMMSS'))
 
             this.searchStyle = this.searchItemDetail.searchClass
             this.searchStyle2 = this.searchItemDetail.searchClass2
