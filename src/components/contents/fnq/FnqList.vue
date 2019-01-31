@@ -106,9 +106,9 @@
         pagingUser : any =   { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10};
 
         created(){
-            const  nowUTC =  moment().utc() ; //UTC시간
-            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
-            const  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
+            let  nowUTC =  moment().utc() ; //UTC시간
+            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
             this.listItem={
                 dataGrid: {

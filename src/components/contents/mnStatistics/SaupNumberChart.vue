@@ -342,7 +342,7 @@
         }
 
         created(){ // api 데이터
-            const  nowUTC =  moment().utc() ; //UTC시간
+            let  nowUTC =  moment().utc() ; //UTC시간
             this.nowKo= nowUTC.add(9, 'hours')// 한국시간
 
             this.searchStartDate =[this.nowKo, this.nowKo]
@@ -375,12 +375,12 @@
                 return ;
             }
 
-            const  beforeOneYKo=  moment(this.nowKo).subtract(1, 'years') // 일년전
-            const  beforeOneYKoMm =moment(beforeOneYKo).format('YYYYMM')
-            const  nowKoMm =moment(this.nowKo).format('YYYYMM')
-            const  fromDate =moment(this.searchStartDate[0]).format('YYYYMM')
+            let  beforeOneYKo=  moment(this.nowKo).subtract(1, 'years') // 일년전
+            let  beforeOneYKoMm =moment(beforeOneYKo).format('YYYYMM')
+            let  nowKoMm =moment(this.nowKo).format('YYYYMM')
+            let  fromDate =moment(this.searchStartDate[0]).format('YYYYMM')
 
-            const range = moment(fromDate).isBetween(beforeOneYKoMm, nowKoMm); // true
+            let range = moment(fromDate).isBetween(beforeOneYKoMm, nowKoMm); // true
 
             if (range == false) {
                 Vue.swal({text:"현재일 기준 최대 검색가능기간은 1년입니다."})

@@ -1522,7 +1522,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 /* fcalendar css */
 .fcalendar{position:relative;}
 .fcalendar ul{padding-left:4px;}
-.fcalendar ul li{display:inline-block; width:300px; height:100px; border:1px solid #d8d8d8; box-sizing:border-box; margin:0 0 -1px -3px; vertical-align:top;}
-.fcalendar ul li .title{display:block; background: #fa96af; color:#fff; font-weight:bold; text-align:center; line-height:30px}
+.fcalendar ul li{display:inline-block; width:302px; height:120px; border:1px solid #d8d8d8; box-sizing:border-box; margin:0 0 -1px -3px; vertical-align:top;}
+.fcalendar ul li .title{display:block; background: rgba(56, 70, 86, 0.75); color:#fff; font-weight:bold; text-align:center; line-height:30px}
 .fcalendar ul li ul.con{display:block; padding:15px 25px 15px 25px; line-height:16px; clear:both}
 .fcalendar ul li ul.con li{height:26px; line-height:26px; border:none; width:100%;}
