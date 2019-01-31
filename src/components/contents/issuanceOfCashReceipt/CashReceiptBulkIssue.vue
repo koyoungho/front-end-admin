@@ -77,7 +77,7 @@
                     <button type="button" id="" class="btn_s01 bg02" v-on:click="downloadSample()"><i class="icon download"></i>샘플다운로드</button>
                 </p>
                 <p style="font-size: 12px; text-align: left; color: red; padding-left: 60px;">
-                    (엑셀 파일 등록은 5,000건 까지만 가능합니다.)
+                    (엑셀 파일 등록은 1,000건 까지만 가능합니다.)
                 </p>
                 <p class="text_file">모든 파일 업로드 시 DRM 해제 후 파일 업로드 하시기 바랍니다.</p>
             </div>
