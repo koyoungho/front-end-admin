@@ -171,11 +171,7 @@
             </div>
             <!-- tbl info bot -->
             <div class="tbl_info_bot">
-                <span class="chk_box" >
-                    <input type="checkbox" id="aa01" v-on:click="noTaxGbn" >
-                    <!--v-model="noTax" -->
-                    <label for="aa01">면세 및 간이과세자</label>
-                </span>
+                <span class="chk_box2"><input type="checkbox" id="aa01" v-on:click="noTaxGbn"><label for="aa01">면세 및 간이과세자 (※공급자 기준)</label></span>
             </div>
 
             <!-- btn bot -->
