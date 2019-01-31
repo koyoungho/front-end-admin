@@ -747,8 +747,8 @@
 
         dateSet(){
 
-            const  nowUTC =  moment().utc() ; //UTC시간
-            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  nowUTC =  moment().utc() ; //UTC시간
+            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
 
             this.nowDT = moment(nowKo).format('YYYY-MM-DD'),
                 this.curDate= moment(moment().startOf('month')).subtract(1,'month');

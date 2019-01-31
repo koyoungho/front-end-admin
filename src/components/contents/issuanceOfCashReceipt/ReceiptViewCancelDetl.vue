@@ -628,9 +628,9 @@
         }
 
         downExel(){
-            const  nowUTC =  moment().utc() ; //UTC시간
-            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
-            const nowKo_str =  this.formatDates(nowKo);
+            let  nowUTC =  moment().utc() ; //UTC시간
+            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let nowKo_str =  this.formatDates(nowKo);
 
             let fileOrigin = "cash_history_detail_"+nowKo_str+".xlsx"
 

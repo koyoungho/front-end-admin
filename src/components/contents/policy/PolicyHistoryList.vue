@@ -83,9 +83,9 @@
          * 페이지 분기 - 셀렉트 박스 리스트호출
          */
         pageDiv(){
-            const  nowUTC =  moment().utc() ; //UTC시간
-            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
-            const  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
+            let  nowUTC =  moment().utc() ; //UTC시간
+            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
             let routeNm = this.$route.name;
             if(routeNm == 'policyHistoryList' ) {

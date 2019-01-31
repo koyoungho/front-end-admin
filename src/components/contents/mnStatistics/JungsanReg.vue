@@ -740,7 +740,7 @@
         nowKo:any='';
 
         created(){
-            const  nowUTC =  moment().utc() ; //UTC시간
+            let  nowUTC =  moment().utc() ; //UTC시간
            this.nowKo= nowUTC.add(9, 'hours')// 한국시간
 
 

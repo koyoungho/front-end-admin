@@ -53,10 +53,9 @@
 
         created(){
 
-            const  nowUTC =  moment().utc() ; //UTC시간
-            const  nowKo= nowUTC.add(9, 'hours')// 한국시간
-            console.log(nowKo)
-            const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
+            let  nowUTC =  moment().utc() ; //UTC시간
+            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
 
             this.nowKo_str =  this.formatDates(nowKo);
 
