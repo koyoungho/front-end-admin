@@ -114,13 +114,14 @@
                 {
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                            {columName : '순번' ,id : 'rnum',type:'number', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
+                            {columName : '순번' ,id : 'rnum',type:'number', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                             {columName : '사업장명' ,id : 'shopNm',type:'text', width : '15%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
+                            {columName : 'ID' ,id : 'accountId',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '사업자등록번호' ,id : 'saupId',type:'text', width : '16%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '매장번호' ,id : 'storId',type:'text', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '업종' ,id : 'upjong',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '매장상태' ,id : 'storStsNm',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '12%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '매장번호' ,id : 'storId',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '업종' ,id : 'upjong',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '매장상태' ,id : 'storStsNm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : 'B/L 상태' ,id : 'blStatus',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '등록일' ,id : 'regiDate',type:'date', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat: 'YYYY.MM.DD'}
                         ],
                         totalColum: 8,
