@@ -76,7 +76,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [beforeOneYKo , nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: []},
+                    {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [beforeOneYKo , beforeOneYKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: []},
                     {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{name : '관리자' , value: 'ADM' },{name : '사용자' , value: 'USR' }]},
                     {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
                 ],
