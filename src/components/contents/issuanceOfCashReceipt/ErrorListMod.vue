@@ -6,90 +6,12 @@
             <h2 class="blind">현금영수증관리</h2>
             <h3>오류 내역 조회</h3>
 
-            <div class="search_box page_new">
-                <ul class="search_list">
-                    <li class="w25">
-                        <label for="">오류내역(년)</label>
-                        <span class="form_cal">
-                          <date-picker v-model="searchYear" :lang="lang" :type="'year'"
-                                       :first-day-of-week="1"  format="YYYY" width="100" confirm ></date-picker>
-                        </span>
-                    </li>
-                    <li class="w25">
-                        <label for="">사업자구분</label>
-                        <select  class="select sch_w100" title="사업자구분" v-model="companyCode" >
-                            <option value="">전체</option>
-                            <template v-for="data in companyCodeList">
-                                <option  :value="data.code">{{data.name}}</option>
-                            </template>
-                        </select>
-                    </li>
-                    <li class="w25">
-                        <label for="">회사코드</label>
-                        <select  class="select sch_w100" title="회사코드" v-model="companyCode" >
-                            <option value="">전체</option>
-                            <template v-for="data in companyCodeList">
-                                <option  :value="data.code">{{data.name}}</option>
-                            </template>
-                        </select>
-                    </li>
-                    <li class="w25">
-                        <label for="aa">사업자등록번호</label>
-                        <input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>
-                        <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
-                    </li>
+           <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:searchDateChange="dateCheck"></ListComponent>
 
-                </ul>
+            <div class="btn_bot type03">
+                <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
             </div>
-            <!-- btn mid -->
-            <div class="btn_mid">
-                <!--<button type="button" class="btn_m01 bg05" @click="excelDown"><i class="icon download01"></i> 엑셀 다운로드</button>-->
-                <button type="button" class="btn_m01 bg01" @click="compCodeChart()">조회</button>
-            </div>
-            <!-- system box -->
-          <div class="fcalendar">
-            <ul>
-              <template v-for="data,index in 12">
-              <li>
-                <span class="title">{{index+1}} 월</span>
-                <ul class="con">
-                  <li>
-                    <div>현재상태 : 제출불가</div>
-                  </li>
-                  <li>
-                    <div style="float:left">
-                      <button type="button" class="btn_s01 bg03" @click="showList()">수정</button>
-                    </div>
-                    <div style="float:left">
-                      <button type="button" class="btn_s01 bg01" @click="compCodeChart()">제출</button>
-                    </div>
-                    <div style="float:left">
-                      <button type="button" class="btn_s01 bg01" @click="compCodeChart()">국세</button>
-                    </div>
-                  </li>
-
-                </ul>
-              </li>
-              </template>
-            </ul>
-
-          </div>
-          <!-- //달력 -->
-
-
-          <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:searchDateChange="dateCheck"></ListComponent>-->
-        <!-- //content -->
-
-        <div class="btn_bot type03">
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentCancel"  v-show="regShow">제출취소</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentTax"  v-show="regShow">국세청제출</button>
         </div>
-        </div>
-
-        <ErrorListMode v-if="ErrorListModeView"></ErrorListMode>
-
     </section>
     <!-- //container -->
 
@@ -99,24 +21,19 @@
     import {format} from 'date-fns';
     import {Component, Vue, Watch} from 'vue-property-decorator';
     import {CommonBoardService} from '../../../api/common.service';
-    import SaupBox from '@/components/contents/issuanceOfCashReceipt/SaupList.vue'
+    import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import moment from 'moment';
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
-    import ErrorListMode from './ErrorListMod.vue'
 
     @Component({
         components: {
-            ErrorList,SaupBox,VueSimpleSpinner,ErrorListMode
+            ErrorListMod,ListComponent,VueSimpleSpinner
         }
     })
-    export default class ErrorList extends Vue {
+    export default class ErrorListMod extends Vue {
         message: any = '';
         regShow : boolean = false;
-        ErrorListModeView : boolean = false;
         searchYear : string = moment(new Date).format('YYYY');  //선택연도
-        companyCodeList : any = [];
-        saupId  :string = "";
-        companyCode : any = "";
         showModal1 : boolean = false;
         role: any = sessionStorage.getItem('role');
 
@@ -215,8 +132,6 @@
 
                     }
                 }
-
-
             if(this.role == '0001'){
                  // 버튼 및 권한용도
             }else if(this.role == '0002'){
@@ -225,10 +140,6 @@
 
             }
         }
-        showList(){
-            this.ErrorListModeView = true;
-        }
-
         dateCheck(data){
 
             let  nowUTC =  moment().utc() ; //UTC시간
@@ -250,80 +161,9 @@
 
         }
 
-        popupOpen(){
-            this.showModal1= true;
-        }
-
         //엑셀 다운로드
         excelDownload(){
 
-        }
-
-        //제출
-        goPresent(){
-            //
-
-            if(!this.listItem.search[4].searchStartDate){
-                Vue.swal({text: '오류발생월을 선택해주세요'});
-                return;
-            }else{
-                let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
-                let subSaup = this.listItem.search[0].value
-
-                Vue.swal({
-                    text: '제출하시겠습니까?',
-                    showCancelButton: true,
-                    showCloseButton: true,
-                }).then((result) => {
-                    CommonBoardService.putListData('receupt-error/innerfix', errorMonth + '/' + subSaup, null).then(result => {
-                        if (result.status == 200) {
-                            Vue.swal({text: '제출이 반영되었습니다'});
-                        }
-                        else {
-                        }
-                    }).catch(error => {
-                    })
-                })
-            }
-
-        }
-
-        goPresentCancel(){
-            let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
-            let subSaup = this.listItem.search[0].value
-            Vue.swal({
-                text: '제출취소하시겠습니까?',
-                showCancelButton: true,
-                showCloseButton: true,
-            }).then((result) => {
-                CommonBoardService.putListData('receupt-error/innerfix', errorMonth + '/' + subSaup, null).then(result => {
-                    if (result.status == 200) {
-                        Vue.swal({text: '제출이 취소 되었습니다'});
-                    }
-                    else {
-                    }
-                }).catch(error => {
-                })
-            })
-        }
-
-        goPresentTax(){
-            let errorMonth = moment(this.listItem.search[4].searchStartDate).format('YYYYMM')
-            Vue.swal({
-                text: '국세청 제출하시겠습니까?',
-                showCancelButton: true,
-                showCloseButton: true,
-            }).then((result) => {
-                CommonBoardService.putListData('receupt-error/innerfix', errorMonth, null).then(result => {
-                    if (result.status == 200) {
-                        Vue.swal({text: '국세청 제출이 반영되었습니다'});
-                    }
-                    else {
-                    }
-                }).catch(error => {
-
-                })
-            })
         }
 
         //임시저장
