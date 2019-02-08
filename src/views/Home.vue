@@ -60,27 +60,27 @@
         created() {
 
             //20분마다 sessionStorage.accessToken 갱신
-            setInterval(this.tokenRefresh, (1000 * 60) * 10 );
+            // setInterval(this.tokenRefresh, (1000 * 60) * 10 );
         }
         mounted() {
         }
 
         //20분마다 accessToken 갱신
-        tokenRefresh() {
-            if(sessionStorage.accessToken) { //로그인을 한 상태 확인
-                // api 데이터 호출
-                CommonBoardService.getListDatas('auth', null, '').then((response) => {
-                        let result: any = response.data;
-                        if (result != null) {
-                            sessionStorage.accessToken = result.accesstoken;
-                        } else {
-                        }
-                    }
-                    , (error) => {
-                    }
-                ).catch((response) => {
-                });
-            }
-        }
+        // tokenRefresh() {
+        //     if(sessionStorage.accessToken) { //로그인을 한 상태 확인
+        //         // api 데이터 호출
+        //         CommonBoardService.getListDatas('auth', null, '').then((response) => {
+        //                 let result: any = response.data;
+        //                 if (result != null) {
+        //                     sessionStorage.accessToken = result.accesstoken;
+        //                 } else {
+        //                 }
+        //             }
+        //             , (error) => {
+        //             }
+        //         ).catch((response) => {
+        //         });
+        //     }
+        // }
     }
 </script>

@@ -205,24 +205,42 @@
                                     <td v-on:click="rowView(datas,publicPageing,index,key)"
                                         v-bind:style="fontColor(indexs,rows)" style="text-align: left">
                                         <template v-if="listData[index].importantYn == 'Y'"><i
-                                                class="icon notice">공지</i></template>
+                                                class="icon notice">공지</i>
+                                        </template>
                                         <span v-bind:style="colColor(indexs)">{{rows}} </span>
                                         <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
                                     </td>
                                 </template>
-                                <template v-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                                <template v-else-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
+
+
+                                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].fileImage">
+                                  <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                      v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">
+                                    <template v-if="listData[index].fileYn=='Y'">
+                                      <i class="icon_file"></i>
+                                  </template></span>
+                                  </td>
+                                  </template>
+                                  <template v-else>
                                     <td v-on:click="rowView(datas,publicPageing,index,key)"
-                                        v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}</span>
+                                        v-bind:style="fontColor(indexs,rows)">
+                                      <span v-bind:style="colColor(indexs)">{{rows}}</span>
                                     </td>
+                                  </template>
+
                                 </template>
+
                             </template>
+
+
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
                                 <td v-on:click="rowView(datas,publicPageing,index,key)"
                                     v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}
-                  <template v-if="listData[index].saupFileNm">
-                  <br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font>
-                  </template>
-                </span></td>
+                                    <template v-if="listData[index].saupFileNm">
+                                  <br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font>
+                                  </template>
+                             </span></td>
                             </template>
 
 

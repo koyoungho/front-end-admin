@@ -6,136 +6,204 @@
         <div class="content no_print">
             <!--<resize-observer @notify="handleResize"/>-->
             <h3>{{subtitle}}</h3>
-            <h4>현금영수증 발급 조회</h4>   <!-- 20181112 수정 -->
-            <!-- tbl grid wrap -->
-            <div class="tbl_grid_wrap no_print" >
-                <!-- tbl grid01 -->
-                <table class="tbl_grid01 no_print">
-                    <caption>현금영수증</caption>
-                    <colgroup>
-                        <col class="col_mob" width="50%">
-                        <col class="col_mob" width="50%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" colspan="2" >현금영수증 (고객용)</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="left">
-                            <!-- tbl view02 -->
-                            <table class="tbl_view02">
-                                <caption>현금영수증</caption>
-                                <colgroup>
-                                    <col class="col_mob" width="100%">
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">신분확인번호</th>
-                                </tr>
-                                <tr>
-                                    <td>{{viewRowItem.comfirm}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">거래구분</th>
-                                </tr>
-                                <tr>
-                                    <td>{{viewRowItem.geoguNm}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">승인번호</th>
-                                </tr>
-                                <tr>
-                                    <td>{{viewRowItem.perm}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">사업장명</th>
-                                </tr>
-                                <tr>
-                                    <td>{{viewRowItem.shopNm}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">대표자명</th>
-                                </tr>
-                                <tr>
-                                    <td>{{viewRowItem.chipNm}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td class="right">
-                            <table class="tbl_view02">
-                                <caption>현금영수증</caption>
-                                <colgroup>
-                                    <col class="col_mob" width="35%">
-                                    <col class="col_mob" width="65%">
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th scope="row" colspan="2">거래일시</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">{{moment(viewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="bg01">공급가액</th>
-                                    <td class="right">{{ Number(viewRowItem.amt).toLocaleString()}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="bg01">부가세</th>
-                                    <td class="right">{{ Number(viewRowItem.vat).toLocaleString()}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="bg01">봉사료</th>
-                                    <td class="right">{{ Number(viewRowItem.bong).toLocaleString()}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="bg01">합계</th>
-                                    <td class="right">{{ Number(viewRowItem.totamt).toLocaleString()}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" colspan="2">사업자등록번호</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">{{String(viewRowItem.saupId).substring(0,3)}}-{{String(viewRowItem.saupId).substring(3,5)}}-{{String(viewRowItem.saupId).substring(5,10)}}</td>
+            <h4>현금영수증 상세 내역</h4>   <!-- 20181112 수정 -->
 
-                                </tr>
-                                <tr>
-                                    <th scope="row" colspan="2">사업장전화번호</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">{{viewRowItem.telNum}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col" colspan="2">사업장 주소</th>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="con01">{{viewRowItem.addr1}} {{viewRowItem.addr2}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="con01">
-                            <span class="text01">현금영수증 문의 ☎ 126-1-1 </span>
-                            <span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- //tbl grid01 -->
-                <!-- receipt info -->
-                <div class="receipt_info">
-                    <ul class="receipt">
-                        <li><span class="sub">지출구분 : </span> {{viewRowItem.cultGbNm}}</li>
-                        <li><span class="sub">메모 : </span> {{viewRowItem.memo}}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="btn_bot type02"> <!-- 20181112 수정 --></div>
+            <!-- tbl view01 -->
+            <table class="tbl_view03">
+                <caption>사업장 기본 정보</caption>
+                <colgroup>
+                    <col class="col_mob" width="18%">
+                    <col class="col_mob" width="32%">
+                    <col class="col_mob" width="18%">
+                    <col class="col_mob" width="32%">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">사업자등록번호</th>
+                    <td class="con_row01">
+                        <strong class="data_number">{{String(viewRowItem.saupId).substring(0,3)}}-{{String(viewRowItem.saupId).substring(3,5)}}-{{String(viewRowItem.saupId).substring(5,10)}}</strong>
+                    </td>
+                    <th scope="row">거래일자</th>
+                    <td class="con_row01"><strong>{{moment(viewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")}}</strong> </td>
+                </tr>
+                <tr>
+                    <th scope="row">발급용도<em class="form_req">*</em></th>
+                    <td class="con_row01">{{viewRowItem.geoguNm}}</td>
+                    <th scope="row" class="sub_form01">고객신분확인<em class="form_req">*</em></th>
+                    <td class="con_row01 info_msg2_th3">{{viewRowItem.comfirm}}</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="con_row02">지출구분<em class="form_req">*</em></th>
+                    <td colspan="3" class="con_row01">{{viewRowItem.cultGbNm}}</td>
+                </tr>
+                <!--<tr id="companyViewChk">-->
+                    <!--<th scope="row" class="com_code codenone">상품구분</th>-->
+                    <!--<td colspan="3" class="com_code codenone">-->
+                        <!--<select name="" class="select form_w50" title="상품구분 선택" v-model="productGbn">-->
+                            <!--<option value="">선택</option>-->
+                            <!--<template v-for="datas in productList">-->
+                                <!--<option v-bind:value=datas.code>{{datas.name}}</option>-->
+                            <!--</template>-->
+                        <!--</select>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <tr>
+                    <th scope="row">고객성명</th>
+                    <td class="con_row01">{{viewRowItem.chipNm}}</td>
+                    <th scope="row">메모</th>
+                    <td class="con_row01">{{viewRowItem.memo}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">합계</th>
+                    <td class="con_row01">{{ Number(viewRowItem.totamt).toLocaleString()}} 원</td>
+                    <th scope="row">봉사료</th>
+                    <td class="con_row01">{{Number(viewRowItem.bong).toLocaleString()}} 원</td>
+                </tr>
+                <tr>
+                    <th scope="row">공급가액</th>
+                    <td class="con_row01">{{Number(viewRowItem.amt).toLocaleString()}} 원</td>
+                    <th scope="row">부가세</th>
+                    <td class="con_row01">{{Number(viewRowItem.vat).toLocaleString()}} 원</td>
+                </tr>
+                <!--<tr>-->
+                <!--<th scope="row">취소사유</th>-->
+                <!--<td colspan="3" class="con_row01">{{viewRowItem.canSayuNm}}</td>-->
+                <!--</tr>-->
+                </tbody>
+            </table>
         </div>
+        <!-- //tbl view box -->
+        <!-- receipt info -->
+
+            <!-- tbl grid wrap -->
+            <!--<div class="tbl_grid_wrap no_print" >-->
+                <!--&lt;!&ndash; tbl grid01 &ndash;&gt;-->
+                <!--<table class="tbl_grid01 no_print">-->
+                    <!--<caption>현금영수증</caption>-->
+                    <!--<colgroup>-->
+                        <!--<col class="col_mob" width="50%">-->
+                        <!--<col class="col_mob" width="50%">-->
+                    <!--</colgroup>-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th scope="col" colspan="2" >현금영수증 (고객용)</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<td class="left">-->
+                            <!--&lt;!&ndash; tbl view02 &ndash;&gt;-->
+                            <!--<table class="tbl_view02">-->
+                                <!--<caption>현금영수증</caption>-->
+                                <!--<colgroup>-->
+                                    <!--<col class="col_mob" width="100%">-->
+                                <!--</colgroup>-->
+                                <!--<tbody>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row">신분확인번호</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>{{viewRowItem.comfirm}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row">거래구분</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>{{viewRowItem.geoguNm}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row">승인번호</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>{{viewRowItem.perm}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row">사업장명</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>{{viewRowItem.shopNm}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row">대표자명</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>{{viewRowItem.chipNm}}</td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</td>-->
+                        <!--<td class="right">-->
+                            <!--<table class="tbl_view02">-->
+                                <!--<caption>현금영수증</caption>-->
+                                <!--<colgroup>-->
+                                    <!--<col class="col_mob" width="35%">-->
+                                    <!--<col class="col_mob" width="65%">-->
+                                <!--</colgroup>-->
+                                <!--<tbody>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" colspan="2">거래일시</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td colspan="2">{{moment(viewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" class="bg01">공급가액</th>-->
+                                    <!--<td class="right">{{ Number(viewRowItem.amt).toLocaleString()}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" class="bg01">부가세</th>-->
+                                    <!--<td class="right">{{ Number(viewRowItem.vat).toLocaleString()}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" class="bg01">봉사료</th>-->
+                                    <!--<td class="right">{{ Number(viewRowItem.bong).toLocaleString()}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" class="bg01">합계</th>-->
+                                    <!--<td class="right">{{ Number(viewRowItem.totamt).toLocaleString()}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" colspan="2">사업자등록번호</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td colspan="2">{{String(viewRowItem.saupId).substring(0,3)}}-{{String(viewRowItem.saupId).substring(3,5)}}-{{String(viewRowItem.saupId).substring(5,10)}}</td>-->
+
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th scope="row" colspan="2">사업장전화번호</th>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td colspan="2">{{viewRowItem.telNum}}</td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th scope="col" colspan="2">사업장 주소</th>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td colspan="2" class="con01">{{viewRowItem.addr1}} {{viewRowItem.addr2}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td colspan="2" class="con01">-->
+                            <!--<span class="text01">현금영수증 문의 ☎ 126-1-1 </span>-->
+                            <!--<span class="text01">국세청 홈택스 : <a href="http://www.hometax.go.kr" target="_blank" title="새창열기" class="link02">www.hometax.go.kr</a></span>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+                <!--&lt;!&ndash; //tbl grid01 &ndash;&gt;-->
+                <!--&lt;!&ndash; receipt info &ndash;&gt;-->
+                <!--<div class="receipt_info">-->
+                    <!--<ul class="receipt">-->
+                        <!--<li><span class="sub">지출구분 : </span> {{viewRowItem.cultGbNm}}</li>-->
+                        <!--<li><span class="sub">메모 : </span> {{viewRowItem.memo}}</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="btn_bot type02"> &lt;!&ndash; 20181112 수정 &ndash;&gt;</div>-->
+        <!--</div>-->
         <div class="no_print">
             <!-- btn top -->
             <h4>현금영수증 발급 취소</h4>

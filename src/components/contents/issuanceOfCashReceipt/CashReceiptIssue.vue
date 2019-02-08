@@ -280,7 +280,6 @@
         }
         selectCcode(){     // 롯데
             let Object = this.productList;
-
             Object = this.productList.filter(e => {
                 return e.name.includes(this.compoanySearch)
             })
