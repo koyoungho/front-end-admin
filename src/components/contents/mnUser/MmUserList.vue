@@ -121,6 +121,7 @@
                             {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                             {columName : '등록일' ,id : 'regDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
+                            {columName : '첨부파일명' ,id : 'saupFileNm',type:'hidden', width : '1%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값
                             // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                         ],
                         totalColum: 12, //
@@ -194,13 +195,13 @@
 
                 }
 
-            }else if(data.key=='status' && data.row.status == '0'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
+            }else if(data.key=='statusNm' && data.row.status == '0'){ //상태 클릭시(상태가 승인대기인 경우 팝업창 확인)
                 this.fileDownLoad(data)
             }
 
         }
         fileDownLoad(data){
-            alert('1');
+            //alert('1');
             if(data.row.saupFileNm == null || data.row.saupFileNm == ''){
                 Vue.swal({text: '사업자등록증 파일이 없습니다.'});
                 return;
