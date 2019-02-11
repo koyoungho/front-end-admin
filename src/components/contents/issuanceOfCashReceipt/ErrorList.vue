@@ -58,13 +58,16 @@
                   </li>
                   <li>
                     <div style="float:left">
-                      <button type="button" class="btn_s01 bg03" @click="showList()">수정</button>
+                      <button type="button" class="btn_s011 bg031"  @click="showList()">보기</button>
                     </div>
                     <div style="float:left">
-                      <button type="button" class="btn_s01 bg01" @click="compCodeChart()">제출</button>
+                      <button type="button" class="btn_s011 bg011" @click="modList()">수정</button>
                     </div>
                     <div style="float:left">
-                      <button type="button" class="btn_s01 bg01" @click="compCodeChart()">국세</button>
+                      <button type="button" class="btn_s011 bg051" @click="compCodeChart()">제출</button>
+                    </div>
+                    <div style="float:left">
+                      <button type="button" class="btn_s011 bg051" @click="compCodeChart()">국세청</button>
                     </div>
                   </li>
 
@@ -80,15 +83,15 @@
           <!--<ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:searchDateChange="dateCheck"></ListComponent>-->
         <!-- //content -->
 
-        <div class="btn_bot type03">
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentCancel"  v-show="regShow">제출취소</button>
-            <button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentTax"  v-show="regShow">국세청제출</button>
-        </div>
+        <!--<div class="btn_bot type03">-->
+            <!--<button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>-->
+            <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="goPresent"  v-show="regShow">제출</button>-->
+            <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentCancel"  v-show="regShow">제출취소</button>-->
+            <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentTax"  v-show="regShow">국세청제출</button>-->
+        <!--</div>-->
         </div>
 
-        <ErrorListMode v-if="ErrorListModeView"></ErrorListMode>
+        <!--<ErrorListMode v-if="ErrorListModeView" style="width:1500px;height:600px;"></ErrorListMode>-->
 
     </section>
     <!-- //container -->
@@ -169,7 +172,7 @@
                     commonApiTwoUse : true,
                     commonApiTwo : 'code/rstcode',
                     commonSelectListTwo : [],
-                    tableClass:'tbl_scroll_x_box',
+                    tableClass:'',
                     tableClass2:'tbl_list04 page_cash03',
                     totalColum: 15, //
                     apiUrl : 'receipt-error',
@@ -226,6 +229,13 @@
             }
         }
         showList(){
+            // this.ErrorListModeView = true;
+            // this.$modal.show(ErrorListMode,{text:''},{draggable:true ,width:1400,height:700})
+            let routeData = this.$router.resolve({name: 'statAll', params: {data: "someData"}});
+            window.open(routeData.href,'');
+        }
+
+        modList(){
             this.ErrorListModeView = true;
         }
 

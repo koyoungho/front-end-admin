@@ -86,7 +86,7 @@
                     commonApiTwoUse : true,
                     commonApiTwo : 'code/rstcode',
                     commonSelectListTwo : [],
-                    tableClass:'tbl_scroll_x_box',
+                    tableClass:'',
                     tableClass2:'tbl_list04 page_cash03',
                     totalColum: 15, //
                     apiUrl : 'receipt-error',

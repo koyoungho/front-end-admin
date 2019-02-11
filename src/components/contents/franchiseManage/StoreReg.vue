@@ -12,7 +12,7 @@
 
             <!-- btn top -->
             <div class="btn_top" v-if="regbtnShow">
-                <button type="button" id="" class="btn_m01 bg02" v-on:click="bulkReg">매장 일괄 등록</button>
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="bulkReg">매장 일괄 등록</button>
             </div>
 
             <!-- search reg box -->

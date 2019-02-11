@@ -34,6 +34,9 @@
                             <span class="chk_box right">
                                 <input type="checkbox" id="aa01" v-model="importantYn"><label for="aa01">중요공지</label>
                             </span>
+                            <span class="chk_box right">
+                            <input type="checkbox" id="aa02" v-model="popupYn"><label for="aa02">팝업</label>
+                            </span>
                         </span>
                         </td>
                     </tr>
@@ -111,6 +114,7 @@
         attFileYn : string ="";
         //importantYnB : boolean =false;
         importantYn : boolean = false;
+        popupYn : boolean = false;
         files:any=[];
         uploadFileNames: any=[];
         regShow : boolean= false;
@@ -170,6 +174,10 @@
                         if(result.importantYn =='Y'){
                             //this.importantYnB = true;
                             this.importantYn = true;
+                        }
+                        if(result.popupYn =='Y'){
+                            //this.importantYnB = true;
+                            this.popupYn = true;
                         }
                     }
                 }
@@ -242,15 +250,20 @@
             let reqData ={};
 
             reqData['title'] = this.title;
-            reqData['viewType'] = this.viewType;
-            reqData['content'] = this.content;
-            reqData['uploadFileNames'] = this.uploadFileNames;
-            //qData['importantYn'] = this.importantYn;
-            if(this.importantYn == true){
-                reqData['importantYn'] = 'Y'
-            }else{
-                reqData['importantYn'] = 'N'
-            }
+    reqData['viewType'] = this.viewType;
+    reqData['content'] = this.content;
+    reqData['uploadFileNames'] = this.uploadFileNames;
+    //qData['importantYn'] = this.importantYn;
+    if(this.importantYn == true){
+        reqData['importantYn'] = 'Y'
+    }else{
+        reqData['importantYn'] = 'N'
+    }
+    if(this.popupYn == true){
+        reqData['popupYn'] = 'Y'
+    }else{
+        reqData['popupYn'] = 'N'
+    }
 
             if(this.seq == undefined ||  this.seq == '') {//등록
                 CommonBoardService.postListDatas('notice', null, reqData).then((response) => {
