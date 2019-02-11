@@ -662,7 +662,7 @@
                 }).catch();
 
 
-                this.gajumInfo(); //가맹점 정보
+                //this.gajumInfo(); //가맹점 정보
 
             }
             //this.onLoadListView = false
