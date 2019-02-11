@@ -68,7 +68,7 @@
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="전화번호" v-model="repPhonenum" @keyup="changeRepPhonenum" maxlength="12">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg1"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -87,7 +87,7 @@
                         <th scope="row">법인등록번호</th>
                         <td>
                             <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
