@@ -167,7 +167,7 @@
                                 </template>
                             </select>
                         </td>
-                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <th scope="row">회사코드</th>
                         <td>
                             <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
@@ -795,9 +795,9 @@
             }else if(this.addr2 == ''){
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.saupSubSaupCnt == ''){
+            /*}else if(this.saupSubSaupCnt == ''){
                 alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
-                 return;
+                 return;*/
             }else if(this.saupUpjong == null || this.saupUpjong == '') {
                  alert('업종코드를 선택하세요.');
                  return;
@@ -1015,7 +1015,9 @@
             //시스템관리자-0001, 현금영수증관리자-0002, 콜센터-0003, 가맹점-0004, 지점-0005
             //if(sessionStorage.role == '0001'){ //시스템 관리자는 인증 안함
 
-                reqData['accountId'] = sessionStorage.accountId; //로그인 ID
+            reqData['accountId'] = sessionStorage.accountId; //로그인 ID
+
+            if(confirm('가맹점 정보를 수정하시겠습니까?')) {
 
                 CommonBoardService.updateListData('gajum', this.gajumId, reqData).then((response) => {
                         //let result: any = response.data;
@@ -1032,11 +1034,7 @@
                     }
                 ).catch();
 
-            /*}else{ // 그외는 본인인증 필수
-
-                this.$router.push({ name:'phoneAuth' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-
-            }*/
+            }
 
         }
 

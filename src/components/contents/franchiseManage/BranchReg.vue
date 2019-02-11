@@ -132,7 +132,7 @@
                                 </template>
                             </select>
                         </td>
-                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <th scope="row">회사코드</th>
                         <td>
                             <input type="text" class="input form_post" title="회사코드" v-model="saupSubSaupCnt" disabled="disabled"> 개
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
@@ -721,10 +721,10 @@
             }else if(this.saupUpjong == ''){
                 alert('업종코드를 선택하세요.');
                 return;
-            }else if(this.saupSubSaupCnt == ''){
+            }/*else if(this.saupSubSaupCnt == ''){
                 alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
                 return;
-            }
+            }*/
 
 /* 임시 주석 처리 20190113
             //승인대역 정보 체크
