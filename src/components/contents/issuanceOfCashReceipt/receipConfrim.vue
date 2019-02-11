@@ -140,8 +140,17 @@
 
                         <!-- mail info box -->
                         <div class="mail_info_box no_print">
-                            <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId"> @
-                            <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany">
+                            <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId" placeholder="E-mail">@
+                            <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany" placeholder="선택" v-if="optionSelect=='' ? true : false">
+                            <select v-model="optionSelect" :onchange="selectedEmail" class="select w25" title="메일 선택" >
+                                <option value="">직접입력</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="hanmail.com">hanmail.com</option>
+                                <option value="hotmail.com">hotmail.com</option>
+                                <option value="yahoo.com">yahoo.com</option>
+                            </select>
                         </div>
                     </div>
 
@@ -187,6 +196,7 @@
         titleMail : string ="";
         originId : any = "header2";
         nowTime : string ="";
+        optionSelect : string = "";
 
         created(){
             this.makeHeader('hide');
@@ -206,6 +216,10 @@
         }
         closeAddrPop(){
             this.$emit('close');
+        }
+
+        selectedEmail(){
+            this.mailCompany = this.optionSelect
         }
 
         closeAddr(){

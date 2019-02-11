@@ -18,7 +18,7 @@
               </template>
               <template v-else="item.calenderCount==2">
                 <span class="form_cal" @click="setDate(index)">
-                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
+                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType" :shortcuts = shortcuts
                              :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
@@ -39,7 +39,7 @@
               </template>
               <template v-else="item.calenderCount==2">
                 <span class="form_cal">
-                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType"
+                <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType" :shortcuts = shortcuts
                              :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
@@ -261,12 +261,136 @@
         lang : any =  {
             days: ['일', '월', '화', '수', '목', '금', '토'],
             months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            pickers: ['다음주', '다음달', '이전주', '이전달'],
+            // pickers: ['다음주', '다음달', '이전주', '이전달'],
             placeholder: {
                 date: '선택',
                 dateRange: '범위 선택'
             }
         }
+
+        shortcuts : any = [
+            {
+                text: '1분기',
+                onClick :  ()=>{
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+                    let nowYear = moment(new Date()).format('YYYY')
+                    let nextYear = moment(new Date()).add(1,'years').format('YYYY')
+
+                    let quarter1First = moment(nowYear).quarter(1)
+                    let quarter2First = moment(nowYear).quarter(2)
+                    let quarter3First = moment(nowYear).quarter(3)
+                    let quarter4First = moment(nowYear).quarter(4)
+                    let quarter1Last = moment(quarter2First).subtract(1,'ms').endOf('day')
+                    let quarter2Last = moment(quarter3First).subtract(1,'ms').endOf('day')
+                    let quarter3Last = moment(quarter4First).subtract(1,'ms').endOf('day')
+                    let quarter4Last = moment(nextYear).subtract(1,'ms').endOf('day')
+
+
+                    this.searchItem.filter(e=>{
+                        if(e.type=='date2' && e.calenderCount==2){
+                            e.searchStartDate = [quarter1First,quarter1Last]
+                        }
+                    })
+                }
+            },
+            {
+                text: '2분기',
+                onClick :  ()=>{
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+                    let nowYear = moment(new Date()).format('YYYY')
+                    let nextYear = moment(new Date()).add(1,'years').format('YYYY')
+                    let quarter1First = moment(nowYear).quarter(1)
+                    let quarter2First = moment(nowYear).quarter(2)
+                    let quarter3First = moment(nowYear).quarter(3)
+                    let quarter4First = moment(nowYear).quarter(4)
+                    let quarter1Last = moment(quarter2First).subtract(1,'ms').endOf('day')
+                    let quarter2Last = moment(quarter3First).subtract(1,'ms').endOf('day')
+                    let quarter3Last = moment(quarter4First).subtract(1,'ms').endOf('day')
+                    let quarter4Last = moment(nextYear).subtract(1,'ms').endOf('day')
+
+                    this.searchItem.filter(e=>{
+                        if(e.type=='date2' && e.calenderCount==2){
+                            e.searchStartDate = [quarter2First,quarter2Last]
+                        }
+                    })
+                }
+            },
+            {
+                text: '3분기',
+                onClick :  ()=>{
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+                    let nowYear = moment(new Date()).format('YYYY')
+                    let nextYear = moment(new Date()).add(1,'years').format('YYYY')
+                    let quarter1First = moment(nowYear).quarter(1)
+                    let quarter2First = moment(nowYear).quarter(2)
+                    let quarter3First = moment(nowYear).quarter(3)
+                    let quarter4First = moment(nowYear).quarter(4)
+                    let quarter1Last = moment(quarter2First).subtract(1,'ms').endOf('day')
+                    let quarter2Last = moment(quarter3First).subtract(1,'ms').endOf('day')
+                    let quarter3Last = moment(quarter4First).subtract(1,'ms').endOf('day')
+                    let quarter4Last = moment(nextYear).subtract(1,'ms').endOf('day')
+
+                    this.searchItem.filter(e=>{
+                        if(e.type=='date2' && e.calenderCount==2){
+                            e.searchStartDate = [quarter3First,quarter3Last]
+                        }
+                    })
+                }
+            },
+            {
+                text: '4분기',
+                onClick :  ()=>{
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+                    let nowYear = moment(new Date()).format('YYYY')
+                    let nextYear = moment(new Date()).add(1,'years').format('YYYY')
+                    let quarter1First = moment(nowYear).quarter(1)
+                    let quarter2First = moment(nowYear).quarter(2)
+                    let quarter3First = moment(nowYear).quarter(3)
+                    let quarter4First = moment(nowYear).quarter(4)
+                    let quarter1Last = moment(quarter2First).subtract(1,'ms').endOf('day')
+                    let quarter2Last = moment(quarter3First).subtract(1,'ms').endOf('day')
+                    let quarter3Last = moment(quarter4First).subtract(1,'ms').endOf('day')
+                    let quarter4Last = moment(nextYear).subtract(1,'ms').endOf('day')
+
+                    this.searchItem.filter(e=>{
+                        if(e.type=='date2' && e.calenderCount==2){
+                            e.searchStartDate = [quarter4First,quarter4Last]
+                        }
+                    })
+                }
+            },
+            {
+                text: '이전주',
+                onClick :()=>{
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+
+                    this.searchItem.filter(e=>{
+                        if(e.type=='date2' && e.calenderCount==2){
+                            e.searchStartDate = [moment(this.nowDate).subtract(7,'days'),this.nowDate]
+                        }
+                    })
+                }
+            },
+            {
+                text: '이전달',
+                onClick :  ()=>{
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    this.nowDate= nowUTC.add(9, 'hours')// 한국시간
+                    let nowYear = moment(new Date()).format('YYYY')
+
+                    this.searchItem.filter(e=>{
+                        if(e.type=='date2' && e.calenderCount==2){
+                            e.searchStartDate = [moment(this.nowDate).subtract(1,'months'),this.nowDate]
+                        }
+                    })
+                }
+            },
+        ]
 
         // 가지팝업
         showModal1 : boolean = false;
