@@ -456,7 +456,7 @@
                                     Vue.swal({text: '메일이 발송되었습니다'});
                                     // 현금영수증 발급 완료 화면 이동
                                     // this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:this.perm}});
-                                    this.$router.push({name: "cashReceiptIssueView", params: {reqPerm: this.resultRecripKeyObj.perm, reqDate: this.resultRecripKeyObj.regiDate   }});
+                                    // this.$router.push({name: "cashReceiptIssueView", params: {reqPerm: this.resultRecripKeyObj.perm, reqDate: this.resultRecripKeyObj.regiDate   }});
                                 } else { //메일 전송 실패
                                     Vue.swal({text: '메일이 발송이 실패 되었습니다'});
                                 }
