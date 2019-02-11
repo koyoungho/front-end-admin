@@ -1224,6 +1224,21 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .btn_s01.add:after {content:''; position:absolute; top:10px; left:13px; width:16px; height:10px;background:url('../images/icon.png') no-repeat -58px -114px;}
 .btn_s01.del:after {content:''; position:absolute; top:10px; left:13px; width:16px; height:10px; background:url('../images/icon.png') no-repeat -74px -114px;}
 
+/* 버튼 스타일 더작은것 추가*/
+.btn_s011 {font-family:'NanumB'; cursor:pointer; white-space:nowrap; min-width:50px; height:32px; line-height:30px; padding:0 10px; font-size:13px; margin-left:5px;
+  display:-moz-inline-stack; display:inline-block; border-radius: 5px; position: relative;}
+.btn_s011.bg011 {background:#da291c; color:#ffffff; border: 1px solid #da291c;}
+.btn_s011.bg021 {background:#ffffff; color:#212121; border: 1px solid #c6c6c6;}
+.btn_s011.bg031 {background:#f8f8f8; color:#212121; border: 1px solid #c6c6c6;}
+.btn_s011.bg041 {background:#ffffff; color:#da291c; border: 1px solid #da291c;}
+.btn_s011.bg051 {background:#5aad73; color:#ffffff; border: 1px solid #5aad73; }
+.btn_s011.manual {padding:0 14px;}
+.btn_s011.add, .btn_s01.del {padding:0 14px 0 25px;}
+.btn_s011.add:after {content:''; position:absolute; top:10px; left:13px; width:16px; height:10px;background:url('../images/icon.png') no-repeat -58px -114px;}
+.btn_s011.del:after {content:''; position:absolute; top:10px; left:13px; width:16px; height:10px; background:url('../images/icon.png') no-repeat -74px -114px;}
+
+
+
 .btn_m01 {font-family:'NanumB'; cursor:pointer; white-space:nowrap; min-width:80px; height:34px; line-height:32px; padding:0 20px; font-size:13px; margin-left:5px;
   display:-moz-inline-stack; display:inline-block; border-radius: 5px; position: relative;}
 .btn_m01.bg01 {background:#da291c; color:#ffffff; border: 1px solid #da291c;}

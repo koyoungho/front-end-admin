@@ -15,7 +15,7 @@ export default class WebApi<T>{
             return response
         }, function (error) {
 
-            if ( error.response.status === 401 || error.response.code === 401 || error.code === 401 || error.status === 401) { // if the error is 401 and hasent already been retried
+            if ( error.response.status === 403 || error.response.code === 403 || error.code === 403 || error.status === 403) { // if the error is 401 and hasent already been retried
                 store.commit('TIMEOUT')
             }
         })
