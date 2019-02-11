@@ -133,7 +133,7 @@
             <!-- //tbl view box -->
 
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01" v-on:click="getEncrptId">비밀번호 초기화</button>
+                <button type="button" id="" class="btn_m01 bg01" v-on:click="sendPassSms">비밀번호 초기화</button>
             </div>
 
             <h4>사용자 정보</h4>
@@ -310,8 +310,8 @@
                 this.$router.push('/home/mnUser');
             }
 
-            console.log('넘어온값 확인')
-            console.log(this.objectKey)
+            //console.log('넘어온값 확인')
+            //console.log(this.objectKey)
 
             //this.getSelectList('0001'); //사업자구분
             this.getSelectList('UPJONG'); //업종구분
@@ -355,7 +355,7 @@
             CommonBoardService.getListDatas('accounts/storemember/'+reqId, null, reqData).then((response) => {
                     //console.log('1111111111111')
                     let result: any = response.data;
-                    console.log(result)
+                    //console.log(result)
                     if (result != null) {
                         //console.log('조회 성공');
 
@@ -687,7 +687,7 @@
                 , (error) => {
                 }
             ).catch((response) => {
-                console.log(response);
+                //console.log(response);
             });
 
         }
@@ -710,8 +710,8 @@
 
             let reqData : any = { id : reqId , role : reqRole };
 
-            console.log('최종 param')
-            console.log(reqData)
+            //console.log('최종 param')
+            //console.log(reqData)
 
             // api 데이터 호출
             CommonBoardService.deleteListDatas('accounts/'+reqId, null, reqData).then((response) => {
@@ -728,10 +728,10 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch((response) => {
-                console.log(response);
+                //console.log(response);
             });
         }
 
@@ -777,14 +777,14 @@
             };
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
-                    console.log(response);
+                    //console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
                         Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch();
 
@@ -849,7 +849,7 @@
 
         downloadFile(){
 
-            console.log('사업자등록증 파일 다운로드');
+            //console.log('사업자등록증 파일 다운로드');
             //this.rowData = data.row;            //파일 다운로드
             let fileName : string = this.saupFileNm;
             axios({
@@ -858,7 +858,7 @@
                 responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response)
+                //console.log(response)
                 // It is necessary to create a new blob object with mime-type explicitly set
                 // otherwise only Chrome works like it should
                 var newBlob = new Blob([response.data],{type: 'application/xlsx'})
@@ -908,6 +908,39 @@
             ).catch((response) => {
                 //console.log(response);
             });
+
+        }
+
+        //비밀번호 초기화 SMS 발송
+        sendPassSms(){
+
+            Vue.swal({
+                text: '비밀번호를 초기화 하시겠습니까?',
+                showCancelButton: true,
+                showCloseButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                //console.log(result.value)
+                if(result.value){
+                    CommonBoardService.updateListData('accounts/user', this.id+'/password/random', null).then((response) => {
+                            let result: any = response.data;
+                            //console.log(response);
+                            //console.log(result);
+                            if (response.status == 200 || response.status == 201) {
+                                Vue.swal({text:'비밀번호가 SMS문자로 전송되었습니다. SMS문자를 확인후 로그인하세요.'});
+                            } else {
+                                Vue.swal({text:'비밀번호 초기화에 실패하였습니다. 다시 시도하세요.'});
+                            }
+                        }
+                        , (error) => {
+                            //console.log(error);
+                        }
+                    ).catch((response) => {
+                        //console.log(response);
+                    });
+                }
+            })
 
         }
 
@@ -1033,14 +1066,14 @@
             };
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
-                    console.log(response);
+                    //console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
                         Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch();
 
@@ -1147,14 +1180,14 @@
             };
             // api 데이터 호출
             CommonBoardService.postListDatas('mail', null, reqData).then((response) => {
-                    console.log(response);
+                    //console.log(response);
                     if (response.status.toString() == '201'|| response.status.toString() == '200') { //메일 전송 완료
                         //Vue.swal({text: '비밀번호 초기화 관련 메일 발송이 완료되었습니다.\n발송된 메일을 확인하세요.'});
                     }
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch();
 
