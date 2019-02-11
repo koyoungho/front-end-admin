@@ -102,7 +102,16 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">회사코드<em class="form_req">*</em></th>
+                        <th scope="row">업종구분<em class="form_req">*</em></th>
+                        <td>
+                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
+                                <option value="">선택</option>
+                                <template v-for="datas in saupUpjongList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
+                            </select>
+                        </td>
+                        <th scope="row">회사코드</th>
                         <td>
                             <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
@@ -112,15 +121,6 @@
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
                                 </template>
                             </select>-->
-                        </td>
-                        <th scope="row">업종구분<em class="form_req">*</em></th>
-                        <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
-                                <option value="">선택</option>
-                                <template v-for="datas in saupUpjongList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
-                                </template>
-                            </select>
                         </td>
                     </tr>
                     </tbody>
@@ -711,9 +711,9 @@
             }else if(this.addr2 == '') {
                 alert('상세주소를 입력하세요.');
                 return;
-            }else if(this.saupSubSaupCnt == ''){
+            /*}else if(this.saupSubSaupCnt == ''){
                 alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
-                return;
+                return;*/
             }else if(this.saupUpjong == '') {
                 alert('업종구분를 선택하세요.');
                 return;

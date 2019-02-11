@@ -97,7 +97,7 @@
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td colspan="1">
                             <input type="text" class="input form_w100" title="전화번호" v-model="telNum" @keyup="changeTelNum" maxlength="20">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg1"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -116,7 +116,7 @@
                         <th scope="row">법인등록번호</th>
                         <td colspan="1">
                             <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -811,26 +811,24 @@
 
             reqData['saupFileNm'] = 'attachFileNm.jpg'; //관리자 정보 셋팅
 
-            // api 데이터 호출(매장 tnwjd)
-            CommonBoardService.updateListData('store/'+this.saupId, null, reqData).then((response) => {
-                    let result: any = response.data;
-                    if (result != null) {
-                        alert('매장 정보가 수정되었습니다.');
-                        this.$router.push({name:'storeList'});
-                    } else {
-                        alert('매장 정보 수정이 실패하였습니다.\n다시 시도하세요.');
-                        return;
+            if(confirm('매장 정보를 수정하시겠습니까?')){
+
+                // api 데이터 호출(매장 수정)
+                CommonBoardService.updateListData('store/'+this.saupId, null, reqData).then((response) => {
+                        let result: any = response.data;
+                        if (result != null) {
+                            alert('매장 정보가 수정되었습니다.');
+                            this.$router.push({name:'storeList'});
+                        } else {
+                            alert('매장 정보 수정이 실패하였습니다.\n다시 시도하세요.');
+                            return;
+                        }
                     }
-                }
-                , (error) => {
-                }
-            ).catch((response) => {
-            });
-
-            //지점등록 완료 화면으로 이동
-            //this.$router.push({ name:'branchRegCmpl' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-
-
+                    , (error) => {
+                    }
+                ).catch((response) => {
+                });
+            }
         }
 
         //승인대역 추가
