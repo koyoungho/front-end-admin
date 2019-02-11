@@ -13,14 +13,18 @@
             <div class="popup_body">
                 <!-- popup content -->
                 <div class="popup_content page_code scroll_no">
-
                     <!-- content  -->
                     <div class="comcode_box">
+
                         <ul class="comcode_list">
+                            <li>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>코드</strong>   </td><td>&nbsp;&nbsp;&nbsp;&nbsp; <strong>회사명</strong></td>
+                            </li>
                             <template v-for="ar in companyCodeList">
+
                                 <li>
                                     <span class="chk_box">
-                                        <input type="checkbox"  v-model="checkBoxList" :value="ar.code" :id="ar.code" @change="checkData(ar.code)"><label :for="ar.code">{{ar.code}}<span class="company">{{ar.name}}</span></label>
+                                        <input type="checkbox"  v-model="checkBoxList" :value="ar.code" :id="ar.code" @change="checkData(ar.code)"> <label :for="ar.code">{{ar.code}} <span class="company">&nbsp;&nbsp;&nbsp;&nbsp;{{ar.name}}</span></label>
                                         <!--<input type="checkbox"  v-model="ar.favYn"  :checked="ar.favYn=='Y'"  @click="checkData(ar.code,index)">{{ar.code}}<span class="company">{{ar.name}}|{{ar.code}}|{{ar.favYn}}</span>-->
                                     </span>
                                 </li>

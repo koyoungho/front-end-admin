@@ -112,7 +112,7 @@
             <!-- //tbl view box -->
             <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01" v-on:click="initPassword">비밀번호 초기화</button>
+                <button type="button" id="" class="btn_m01 bg01" v-on:click="sendPassSms">비밀번호 초기화</button>
             </div>
 
             <h4>가맹점 사업자등록정보</h4>
@@ -788,6 +788,40 @@
                     //this.$Progress.finish();
                 }
             ).catch();
+
+        }
+
+        sendPassSms(){
+
+            let account : any = this.account;
+
+            Vue.swal({
+                text: '비밀번호를 초기화 하시겠습니까?',
+                showCancelButton: true,
+                showCloseButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                //console.log(result.value)
+                if(result.value){
+                    CommonBoardService.updateListData('accounts/admin', account.id+'/password/random', null).then((response) => {
+                            let result: any = response.data;
+                            //console.log(response);
+                            //console.log(result);
+                            if (response.status == 200 || response.status == 201) {
+                                Vue.swal({text:'비밀번호가 SMS문자로 전송되었습니다. SMS문자를 확인후 로그인하세요.'});
+                            } else {
+                                Vue.swal({text:'비밀번호 초기화에 실패하였습니다. 다시 시도하세요.'});
+                            }
+                        }
+                        , (error) => {
+                            //console.log(error);
+                        }
+                    ).catch((response) => {
+                        //console.log(response);
+                    });
+                }
+            })
 
         }
 

@@ -91,8 +91,8 @@ export default new Vuex.Store({
         TIMEOUT (state) {
             Vue.swal({text:'세션이 종료 되었습니다'})
             sessionStorage.clear(); //세션스토리지 삭제
-            window.location.href ="/#/login"
-            window.location.reload();
+            window.location.href ="/"
+            //window.location.reload();
         },
         INFO_SET(state, data) {
             sessionStorage.role = data.role;
