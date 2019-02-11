@@ -139,7 +139,7 @@
                 <div class="mail_info_box no_print">
                     <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId" placeholder="E-mail">@
                     <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany" placeholder="선택" v-if="optionSelect=='' ? true : false">
-                    <select v-model="optionSelect" :onchange="selectedEmail" class="select w25" title="메일 선택" >
+                    <select v-model="optionSelect" class="select w25" title="메일 선택" >
                         <option value="">직접입력</option>
                         <option value="gmail.com">gmail.com</option>
                         <option value="naver.com">naver.com</option>
@@ -148,14 +148,16 @@
                         <option value="hotmail.com">hotmail.com</option>
                         <option value="yahoo.com">yahoo.com</option>
                     </select>
-                    <button type="button" class="btn_m01 bg03" v-on:click="sendMail">메일로 전송</button>
+
                 </div>
             </div>
 
             <!-- btn bot -->
             <div class="btn_bot no_print">
                 <button type="button" class="btn_b01 bg01" v-on:click="receiptPrint">영수증 출력</button>
+                <button type="button" class="btn_b01 bg02" v-on:click="sendMail">메일로 전송</button>
                 <button type="button" class="btn_b01 bg02" v-on:click="receiptConfirm">확인</button>
+
             </div>
 
         </div>
@@ -225,9 +227,6 @@
             ).catch();
         }
 
-        selectedEmail(){
-            this.mailCompany = this.optionSelect
-        }
 
         created() {
             this.getNow();
@@ -248,7 +247,6 @@
             // api 데이터 호출
             CommonBoardService.getListDatas('receipt' , this.saleDate+"/"+this.perm, '').then((response) => {
                     let result: any = response.data;
-                    console.log(result)
 
                     if (result != null) {
                         this.amt = this.amtComma(result.amt); //공급가액
@@ -324,14 +322,16 @@
         }
 
         sendMail() { //메일 발송
-
+            if(this.optionSelect){
+                this.mailCompany = this.optionSelect
+            }
             // let dt = new Date();
             // let sendDate = moment(dt).format('YYYY-MM-DD HH:mm:ss'); //메일 발송일자
             if(this.mailId == ''){
                 Vue.swal({text: '이메일 주소를 입력하세요.'});
                 return;
             }else if(this.mailCompany == ''){
-                Vue.swal({text: '이메일 주소를 입력하세요.'});
+                Vue.swal({text: '이메일 주소를 입력하세요2.'});
                 return;
             }
 

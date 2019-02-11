@@ -142,7 +142,7 @@
                         <div class="mail_info_box no_print">
                             <input type="text" class="input form_mailid" title="아이디 입력" v-model="mailId" placeholder="E-mail">@
                             <input type="text" class="input form_mailcom" title="회사 입력" v-model="mailCompany" placeholder="선택" v-if="optionSelect=='' ? true : false">
-                            <select v-model="optionSelect" :onchange="selectedEmail" class="select w25" title="메일 선택" >
+                            <select v-model="optionSelect"  class="select w25" title="메일 선택" >
                                 <option value="">직접입력</option>
                                 <option value="gmail.com">gmail.com</option>
                                 <option value="naver.com">naver.com</option>
@@ -218,9 +218,7 @@
             this.$emit('close');
         }
 
-        selectedEmail(){
-            this.mailCompany = this.optionSelect
-        }
+
 
         closeAddr(){
             this.makeHeader('show')
@@ -273,7 +271,9 @@
         }
 
         sendMail() { //메일 발송
-
+            if(this.optionSelect){
+                this.mailCompany = this.optionSelect
+            }
             if(this.mailId == ''){
                 Vue.swal({text: '이메일 주소를 입력하세요.'});
                 return;

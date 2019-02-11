@@ -77,6 +77,8 @@
         attachFiles:any=[];
         objectKey : any = "";
         regShow: boolean = false;
+        role: any = sessionStorage.getItem('role');
+        modOk : boolean = false;
 
         mounted() {
             this.objectKey = this.$route.params.objectKey;
@@ -118,6 +120,10 @@
 
                         if (result != null) {
                             this.listData = result;
+                            let rl = Number(result.regRole)
+                            if(Number(this.role) <= rl){
+                                this.modOk = true;
+                            }
                         }
                     }
                     , (error) => {
@@ -135,7 +141,12 @@
          * 이동 - 수정
          */
         goRegNotice(){
+            if(this.modOk==true){
             this.$router.push({name:'regNotice',  params:{seq:this.seq}});
+            }
+            else{
+                Vue.swal({text: '수정권한이 없습니다'});
+            }
         }
 
         /**
