@@ -23,24 +23,14 @@
       var ua = navigator.userAgent.toLowerCase();
       var isWinXP = ua.indexOf('windows nt 5.1') > 0;
 
-      // xp 일경우
-      if(ua.indexOf('windows nt 5.0') > -1 ){
-        if(navigator.userAgent.indexOf('chrome')>-1) {
-        }
-        else{
-          this.$router.push({name:'noticeUpXp'})
-        }
-      }else if(ua.indexOf('windows nt 5.1') > -1 ){
-        if(navigator.userAgent.indexOf('chrome')>-1) {
-        }
-        else{
-          this.$router.push({name:'noticeUpXp'})
-        }
-      }else if(ua.indexOf('windows nt 6.0') > -1 ){
-        if(navigator.userAgent.indexOf('chrome')>-1) {
-        }
-        else{
-          this.$router.push({name:'noticeUpXp'})
+      if(ua.indexOf('chrome') !=-1){ // 크롬이아닐때
+      }else {
+        if (ua.indexOf('windows nt 5.0') > -1) {
+          this.$router.push({name: 'noticeUpXp'})
+        } else if (ua.indexOf('windows nt 5.1') > -1) {
+          this.$router.push({name: 'noticeUpXp'})
+        } else if (ua.indexOf('windows nt 6.0') > -1) {
+          this.$router.push({name: 'noticeUpXp'})
         }
       }
 
