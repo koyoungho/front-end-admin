@@ -918,7 +918,7 @@ select.wide {width:100%;}
 .error_wrap.error01 .error_text {color:#939393; padding:20px 0 57px 0;}
 
 .info_loading {font-family: 'NanumB'; font-size:16px; height:500px; padding:90px 0 0 0; display: flex; justify-content: center; align-items: center; background:url('../images/img_load01.png') no-repeat 50% 45%;}
-.info_loading2 {font-family: 'NanumB'; font-size:14px; height:500px; padding:90px 0 0 0; display: flex; justify-content: center; align-items: center; background:url('../images/img_load01.png') no-repeat 50% 45%;}
+.info_loading2 {font-family: 'NanumB'; font-size:12px; height:500px; padding:90px 0 0 0; display: flex; justify-content: center; align-items: center; background:url('../images/img_load01.png') no-repeat 50% 45%;}
 
 .cash_total_box {border-top:1px solid #212121; margin-bottom:20px;}
 .cash_total_box .cash_total {width:100%;}
