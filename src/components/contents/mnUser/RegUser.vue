@@ -61,7 +61,7 @@
                             <input type="input" class="select form_w100" title="계정상태" value="승인" disabled="disabled">
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <th scope="row">주소</th>
                         <td colspan="3">
                             <ul class="address_list">
@@ -77,7 +77,7 @@
                                 </li>
                             </ul>
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td colspan="1">
@@ -534,9 +534,9 @@
             reqData['email'] = this.email;
             reqData['role'] = this.accountLevel; //계정등급
             reqData['status'] = this.accountStatus; //계정상태
-            reqData['zipCode'] = this.zipCode;
-            reqData['addr1'] = this.addr1;
-            reqData['addr2'] = this.addr2;
+            //reqData['zipCode'] = this.zipCode;
+            //reqData['addr1'] = this.addr1;
+            //reqData['addr2'] = this.addr2;
             reqData['subSaup'] = this.subSaupCode;
             reqData['accessIpFrom'] = this.accessIpFrom;
             reqData['accessIpTo'] = this.accessIpTo;
