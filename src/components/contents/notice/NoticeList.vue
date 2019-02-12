@@ -58,33 +58,64 @@
             let  nowKo= nowUTC.add(9, 'hours')// 한국시간
             let  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
-            this.listItem= {
-                dataGrid: {
-                    columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                        {columName : '제목' ,type:'text', id : 'title', width : '50%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :''  , imageUse : true},
-                        {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
-                        {columName : '첨부파일'  ,type:'text', id : 'fileYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , fileImage : true },
-                        {columName : '등록일' ,type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
-                        {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : '공지'  ,type:'textNone', id : 'importantYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
-                        {columName : 'new'  ,type:'textNone', id : 'newYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
+            if(Number(this.role) <=4 ){
+                this.listItem= {
+                    dataGrid: {
+                        columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                            {columName : '제목' ,type:'text', id : 'title', width : '50%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :''  , imageUse : true},
+                            // {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
+                            {columName : '첨부파일'  ,type:'text', id : 'fileYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , fileImage : true },
+                            {columName : '등록일' ,type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
+                            // {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            // {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '공지'  ,type:'textNone', id : 'importantYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
+                            {columName : 'new'  ,type:'textNone', id : 'newYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
+                        ],
+                        totalColum: 5,
+                        apiUrl : 'notice',
+                        onLoadList : true,  // onLoad 로딩 유무
+                    },
+                    // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                    search: [
+                        {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [beforeOneYKo , nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: []},
+                        {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{name : '관리자' , value: 'ADM' },{name : '사용자' , value: 'USR' }]},
+                        {type: 'input2' ,placeholder:'제목+내용', title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
                     ],
-                    totalColum: 5,
-                    apiUrl : 'notice',
-                    onLoadList : true,  // onLoad 로딩 유무
-                },
-                // 아이디는 실제 컬럼값을 넣어주면됩니다.
-                search: [
-                    {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [beforeOneYKo , nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: []},
-                    {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{name : '관리자' , value: 'ADM' },{name : '사용자' , value: 'USR' }]},
-                    {type: 'input2' ,placeholder:'제목+내용', title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
-                ],
 
-                paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
-                goSearch : "iocSearch",
-                searchClass : 'search_box page_customer02',
-                searchClass2 : 'search_list col0301'
+                    paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+                    goSearch : "iocSearch",
+                    searchClass : 'search_box page_customer02',
+                    searchClass2 : 'search_list col0301'
+                }
+            }else{
+                this.listItem= {
+                    dataGrid: {
+                        columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
+                            {columName : '제목' ,type:'text', id : 'title', width : '50%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :''  , imageUse : true},
+                            {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
+                            {columName : '첨부파일'  ,type:'text', id : 'fileYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , fileImage : true },
+                            {columName : '등록일' ,type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
+                            {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '공지'  ,type:'textNone', id : 'importantYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
+                            {columName : 'new'  ,type:'textNone', id : 'newYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
+                        ],
+                        totalColum: 5,
+                        apiUrl : 'notice',
+                        onLoadList : true,  // onLoad 로딩 유무
+                    },
+                    // 아이디는 실제 컬럼값을 넣어주면됩니다.
+                    search: [
+                        {type: 'date2', title :'등록일', id: 'date' , name:'date',  searchStartDate: [beforeOneYKo , nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: []},
+                        {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{name : '관리자' , value: 'ADM' },{name : '사용자' , value: 'USR' }]},
+                        {type: 'input2' ,placeholder:'제목+내용', title :'검색어',id: 'searchWord', name:'searchWord' , value: '' },
+                    ],
+
+                    paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
+                    goSearch : "iocSearch",
+                    searchClass : 'search_box page_customer02',
+                    searchClass2 : 'search_list col0301'
+                }
             }
 
             this.originItem  = this.listItem.dataGrid.columControl
