@@ -20,8 +20,8 @@
     },
     created() {
       // 세션이 존재할때
-      var ua = navigator.userAgent.toLowerCase();
-      var isWinXP = ua.indexOf('windows nt 5.1') > 0;
+      let ua = navigator.userAgent.toLowerCase();
+      let isWinXP = ua.indexOf('windows nt 5.1') > 0;
 
       if(ua.indexOf('chrome') !=-1){ // 크롬이아닐때
       }else {

@@ -16,25 +16,31 @@
                         </span>
                     </li>
                     <li class="w25">
-                        <label for="">사업자구분</label>
-                        <select  class="select sch_w100" title="사업자구분" v-model="companyCode" >
-                            <option value="">전체</option>
-                            <template v-for="data in companyCodeList">
-                                <option  :value="data.code">{{data.name}}</option>
-                            </template>
-                        </select>
+                        <td style="vertical-align: middle"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사업자구분&nbsp;</label></td>
+                        <td>
+                          <model-list-select :list="saupUpjongList"
+                                             v-model="saupUpjongCode"
+                                             option-value="code"
+                                             option-text="codeNm"
+                                             style="height :10px;width:160px;float:left"
+                          >
+                          </model-list-select >
+                        </td>
+                    </li>
+                    <li class="w25" style="text-align: center">
+                        <td style="vertical-align: middle"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;회사코드&nbsp;</label></td>
+                        <td>
+                        <model-list-select :list="companyCodeList"
+                                           v-model="companyCode"
+                                           option-value="code"
+                                           option-text="name"
+                                           style="height :10px;width:170px;float:left"
+                        >
+                        </model-list-select >
+                        </td>
                     </li>
                     <li class="w25">
-                        <label for="">회사코드</label>
-                        <select  class="select sch_w100" title="회사코드" v-model="companyCode" >
-                            <option value="">전체</option>
-                            <template v-for="data in companyCodeList">
-                                <option  :value="data.code">{{data.name}}</option>
-                            </template>
-                        </select>
-                    </li>
-                    <li class="w25">
-                        <label for="aa">사업자등록번호</label>
+                        <label for="">사업자등록번호</label>
                         <input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>
                         <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
                     </li>
@@ -91,7 +97,7 @@
         <!--</div>-->
         </div>
 
-        <!--<ErrorListMode v-if="ErrorListModeView" style="width:1500px;height:600px;"></ErrorListMode>-->
+      <SaupBox v-if="showModal1"  v-on:selectedSaup="setSaupData" @saupClose="showModal1 = false"></SaupBox>
 
     </section>
     <!-- //container -->
@@ -126,6 +132,8 @@
         gukseYn : boolean  = false;
         modYn : boolean  = false;
         saveYn : boolean  = false;
+        saupUpjongList : any = [];
+        saupUpjongCode : string = "";
 
 
         lang : any =  {
@@ -172,6 +180,7 @@
                 this.saveYn = true;
             }
 
+            this.companyList();
         }
         showList(){
             // this.ErrorListModeView = true;
@@ -196,6 +205,10 @@
             }
         }
 
+        setSaupData(data){
+            this.saupId = data.saupId
+        }
+
         //돔렌더링완료시 진행
         mounted() {
         }
@@ -207,6 +220,29 @@
 
         popupOpen(){
             this.showModal1= true;
+        }
+
+        companyList(){
+            CommonBoardService.getListDatas('company',null,null).then(result=>{
+                if(result.status==200){
+                    this.companyCodeList = result.data
+                }
+            }).catch(e=>{
+            })
+
+            // api 데이터 호출
+            let reqData: any = {};
+            CommonBoardService.getListDatas('code/issuer', null, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result)
+                    if (result.length > 0) {
+                        this.saupUpjongList = result;
+                        console.log(result);
+                    }
+                }
+                , (error) => {
+                }
+            ).catch();
         }
 
         //엑셀 다운로드

@@ -5,7 +5,7 @@
         <div class="content">
             <h2 class="blind">시스템관리</h2>
 
-            <h3>계정 권한 관리</h3>
+            <h3>계정 관리</h3>
 
             <!-- btn top -->
             <div class="btn_top" v-if="regbtnShow">

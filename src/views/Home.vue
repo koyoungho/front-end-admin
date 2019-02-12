@@ -38,11 +38,11 @@
         routerHistory :any = "";
         // 메뉴 콤포넌트에서 이벤트 처리
         updateView (e: string) {
-            if(e=='receipSaupCount' || e=='errorList'){
-                alert('준비중입니다')
-            }else{
+            // if(e=='receipSaupCount' || e=='errorList'){
+            //     alert('준비중입니다')
+            // }else{
             this.$router.push('/home/'+e);
-            }
+            // }
         }
 
         // 라우터 경로 변경시 이벤트 발생
