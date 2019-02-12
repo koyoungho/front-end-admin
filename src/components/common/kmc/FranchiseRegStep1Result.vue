@@ -5,7 +5,7 @@
     <div class="popup_content layer">
       <div class="info_loading2">
         <br>
-        해당 화면이 30~1분이상 지속 될경우
+        해당 화면이 30초~1분이상 지속 될경우
         <br> 창 종료 후 재시도 부탁드립니다<br>
         고객센터 : 02-2074-0340
       </div>
