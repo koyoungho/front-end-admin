@@ -22,10 +22,12 @@
               <!-- cert box -->
               <div class="cert_box">
                 <p class="form_cert row01">
-                  <input type="text" id="" name="" size="" maxlength="" autofocus="autofocus" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber" v-on:keyup.enter="optCallConfirm(otpNumber)">
-                  <span class="time_count2" style="right: 228px">{{message}}</span>
-                  <!--<a><span style="margin-left: 10px" v-on:click="reTrans">재전송</span></a>-->
+                  <input type="text" id="otpNumberId" name="" size="" maxlength="" autofocus="autofocus" placeholder="인증번호 입력" class="cert" title="인증번호 입력" v-model="otpNumber" v-on:keyup.enter="optCallConfirm(otpNumber)">
+                  <span class="time_count" style="right: 240px">{{message}}</span>
+                  <a><span style="margin-left: 10px" v-on:click="otpRetry">재전송</span></a>
+                  <!--<button type="button" class="btn_m01 bg02" v-on:click="otpRetry">재전송</button>-->
                 </p>
+
               </div>
               <div class="cert_box">
                 <p class="form_cert row01">
@@ -75,10 +77,13 @@
         id : string = this.loginId;
 
         created(){
-          this.accountGet()
+          this.accountGet();
         }
         mounted(){
             this.startTimer();
+
+            let otp_Id = document.getElementById('otpNumberId');
+            if(otp_Id!=null) otp_Id.focus();
         }
         goMain() { //메인이동
             this.$router.push('home/main')
@@ -193,15 +198,16 @@
                     .catch(({message}) => this.otpFail());
             }
             else{
-                alert('otp번호를 입력해주세요')
+                alert('OTP번호를 입력해주세요')
             }
 
         }
 
         reset(){
-            this.timer=180;
-            this.message = ""
+            this.timer = 180;
             this.counter = false;
+            this.interval = 0;
+            this.message = "";
         }
 
         countDown() {
@@ -235,25 +241,32 @@
             sessionStorage.clear();
         }
 
-      reTrans(){
+        otpRetry(){
+
+            //this.reset();
+
+            /*
         let otp = {
           id: this.loginId,
           name: this.inputName,
           saupId:this.saupId,
           phoneNum : this.phoneNum
-        }
+        }*/
 
-        CommonBoardService.postListDatas('otp',null,otp)
-                .then(result => {
-                  if(result.data.code=='000'){
-                    this.startTimer();
-                  }
-                  else{
-                    clearInterval(this.interval)
-                  }
+        CommonBoardService.getListDatas('otp/retry',this.id, '').then(result => {
+              if(result.status==200){
+                  alert('OTP번호가 재전송 되었습니다.');
+                  this.reset();
 
-                }).catch(e=>{
-          alert('본인인증정보가 불일치합니다')
+                  let otp_Id = document.getElementById('otpNumberId');
+                  if(otp_Id!=null) otp_Id.focus();
+                  //this.startTimer();
+              }
+              else{
+                  clearInterval(this.interval)
+              }
+            }).catch(e=>{
+              alert('본인인증정보가 불일치합니다')
         })
       }
 
