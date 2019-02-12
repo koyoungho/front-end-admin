@@ -81,12 +81,13 @@
                     <tr>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
                         <td colspan="1">
-                            <select name="" class="select form_w100" title="회사코드" v-model="subSaupCode">
-                                <option value="">선택</option>
-                                <template v-for="datas in subSaupList">
-                                    <option v-bind:value=datas.code>{{datas.name}}</option>
-                                </template>
-                            </select>
+                            <model-list-select :list="subSaupList"
+                                               v-model="subSaupCode"
+                                               option-value="code"
+                                               option-text="name"
+                                               style="height :10px"
+                            >
+                            </model-list-select >
                         </td>
                         <th scope="row">접속IP 대역</th>
                         <td colspan="1">
@@ -216,6 +217,7 @@
     import ListComponent from '../../common/list/list.vue';  // 공용리스트 콤포넌트
     import {Saupjang} from '../../../model/account/saupjang';
     import {environment} from '../../../utill/environment';
+    import { ModelListSelect } from 'vue-search-select'
 
     @Component({
         components: {
@@ -248,7 +250,7 @@
 
         saupjang : Saupjang[]=[];
 
-        subSaupList : any = {};
+        subSaupList : any = [];
 
         model : any = [];
         auth : any = "";
