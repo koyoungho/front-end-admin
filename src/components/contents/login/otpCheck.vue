@@ -78,9 +78,10 @@
 
         created(){
           this.accountGet();
+
+          this.startTimer();
         }
         mounted(){
-            this.startTimer();
 
             let otp_Id = document.getElementById('otpNumberId');
             if(otp_Id!=null) otp_Id.focus();
