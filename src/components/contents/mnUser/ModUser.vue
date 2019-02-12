@@ -75,7 +75,7 @@
                             <a href="#" class="link02" v-on:click="downloadFile">사업자등록증 다운로드</a>
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <th scope="row">주소</th>
                         <td colspan="3">
                             <ul class="address_list">
@@ -91,7 +91,7 @@
                                 </li>
                             </ul>
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <th scope="row">접속IP 대역</th>
                         <td colspan="3">
@@ -638,9 +638,9 @@
             reqData['oldRole'] = this.oldRole; //이전계정등급
             reqData['status'] = account.status; //계정상태
             reqData['telNum'] = account.telNum;
-            reqData['zipCode'] = account.zipCode;
-            reqData['addr1'] = account.addr1;
-            reqData['addr2'] = account.addr2;
+            // reqData['zipCode'] = account.zipCode;
+            // reqData['addr1'] = account.addr1;
+            // reqData['addr2'] = account.addr2;
             reqData['accessIpFrom'] = account.accessIpFrom;
             reqData['accessIpTo'] = account.accessIpTo;
             reqData['phoneNum'] = account.phoneNum;
