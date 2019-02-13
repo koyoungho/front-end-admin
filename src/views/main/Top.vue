@@ -5,11 +5,6 @@
     <!-- util wrap -->
     <div class="util_wrap">
 			<ul class="util" id="topLoginInfo">
-				<li><span class="btn_area" style="bottom: 5px">
-					* 접속 유지시간 : {{message}}
-				<span class="btn_util bg01" v-on:click="tokenRefresh">접속연장</span>
-			</span>
-				</li>
 				<li class="user"><span class="name">{{loginName}}</span>님 </li>
 			<li class="user_info">
 				<span class="company">{{loginRoleNm}}</span>
@@ -17,6 +12,7 @@
 		</ul>
 		<!-- btn_area -->
 		<span class="btn_area">
+			<template v-if="sessionCheck"><span class="btn_util bg01" v-on:click="tokenRefresh"> {{message}} 연장</span></template>
 			<a class="btn_util bg01 " id="topInfoUpd" v-on:click="infoModity">정보변경</a>
 			<a class="btn_util bg01 " id="topLogout" v-on:click="loginOut">로그아웃</a>
 			<a class="btn_util bg01 " id="topLogin" v-on:click="loginPage">로그인</a>
@@ -42,7 +38,7 @@
 
         loginName : any = ''; //로그인 사용자 성명
         loginRoleNm : any = ''; //사용자 등급
-
+        sessionCheck : boolean = sessionStorage.accessToken ? true : false
 			// 세션타임 카운트
         timer : number = 1770;
         counter : boolean = false;
@@ -100,7 +96,7 @@
         tokenRefresh() {
             if(sessionStorage.accessToken) { //로그인을 한 상태 확인
                 // api 데이터 호출
-                CommonBoardService.getListDatas('auth', null, '').then((response) => {
+              return  CommonBoardService.getListDatas('auth', null, '').then((response) => {
                         let result: any = response.data;
                         if (result != null) {
                             sessionStorage.accessToken = result.accesstoken;

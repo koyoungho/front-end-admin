@@ -55,7 +55,7 @@
         created(){
 
             let  nowUTC =  moment().utc() ; //UTC시간
-            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  nowKo= nowUTC// 한국시간
             let  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
             if(Number(this.role) <=4 ){
@@ -63,11 +63,11 @@
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '제목' ,type:'text', id : 'title', width : '50%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :''  , imageUse : true},
-                            // {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
+                            {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
                             {columName : '첨부파일'  ,type:'text', id : 'fileYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , fileImage : true },
                             {columName : '등록일' ,type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
-                            // {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            // {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '공지'  ,type:'textNone', id : 'importantYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
                             {columName : 'new'  ,type:'textNone', id : 'newYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
                         ],
@@ -92,11 +92,11 @@
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '제목' ,type:'text', id : 'title', width : '50%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :''  , imageUse : true},
-                            {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
+                            // {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
                             {columName : '첨부파일'  ,type:'text', id : 'fileYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , fileImage : true },
                             {columName : '등록일' ,type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
-                            {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
+                            // {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            // {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '공지'  ,type:'textNone', id : 'importantYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
                             {columName : 'new'  ,type:'textNone', id : 'newYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
                         ],

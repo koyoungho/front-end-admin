@@ -66,7 +66,7 @@
 
             //this.getSelectList('RECEIPT');
             let  nowUTC =  moment().utc() ; //UTC시간
-            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  nowKo= nowUTC// 한국시간
             let  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
 
             //메뉴별 권한 확인

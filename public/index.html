@@ -126,10 +126,10 @@
 
 
   var os = OSInfoDev()
+  var ex = navigator.appName
 
   var result = os.split(',')
-
-  if(uanaVigatorOs.indexOf('Chrome') !=-1 || uanaVigatorOs.indexOf('MSIE 11') !=-1) {  // 크롬일때
+  if(uanaVigatorOs.indexOf('Chrome') !=-1 || uanaVigatorOs.indexOf('MSIE 11') !=-1 || ex=='Netscape') {  // 크롬이나 익스플로어일경우
   }else{
     if(result[0]=='Windows XP'){  // chrome 안내
       if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다' )){
