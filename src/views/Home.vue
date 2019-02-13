@@ -55,6 +55,7 @@
             else{
                 this.routerMenuChange = this.$route.path.slice(this.$route.path.lastIndexOf('/')+1);
             }
+            this.$children['0'].tokenRefresh();
         }
 
         created() {
