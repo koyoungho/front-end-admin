@@ -49,7 +49,7 @@
                 <!--</tr>-->
                 <tr>
                     <th scope="row">고객성명</th>
-                    <td class="con_row01">{{viewRowItem.chipNm}}</td>
+                    <td class="con_row01">{{viewRowItem.custName}}</td>
                     <th scope="row">메모</th>
                     <td class="con_row01">{{viewRowItem.memo}}</td>
                 </tr>
