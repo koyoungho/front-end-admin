@@ -567,27 +567,39 @@
             let accountId : string = this.objectKey.row.id;
             //accountId = 'minitest';
 
-            // // api 데이터 호출
-            CommonBoardService.putListData('accounts/storemember/'+accountId, null, reqData).then((response) => {
-                    let result: any = response.data;
-                    //console.log(result)
-                    if (result != null) {
-                        Vue.swal({text:'사용자 계정 정보가 변경되었습니다.'});
-                        if(this.status == '1' && this.oldStatus == '0'){ //계정 승인 처리시
-                            this.sendMailAprv();
+            Vue.swal({
+                text: '계정 정보를 변경하시겠습니까?',
+                showCancelButton: true,
+                showCloseButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+
+                if(result.value){
+
+                    // // api 데이터 호출
+                    CommonBoardService.putListData('accounts/storemember/'+accountId, null, reqData).then((response) => {
+                            let result: any = response.data;
+                            //console.log(result)
+                            if (result != null) {
+                                Vue.swal({text:'사용자 계정 정보가 변경되었습니다.'});
+                                if(this.status == '1' && this.oldStatus == '0'){ //계정 승인 처리시
+                                    this.sendMailAprv();
+                                }
+                                this.$router.push({name:'mnUserList'})
+                                //this.confirmResult = false; //다시 수정시 본인인증 진행
+                            } else {
+                                Vue.swal({text:'사용자 정보 변경 중 오류가 발생하였습니다.'});
+                                //this.confirmResult = false; //다시 수정시 본인인증 진행
+                            }
                         }
-                        this.$router.push({name:'mnUserList'})
-                        //this.confirmResult = false; //다시 수정시 본인인증 진행
-                    } else {
-                        Vue.swal({text:'사용자 정보 변경 중 오류가 발생하였습니다.'});
-                        //this.confirmResult = false; //다시 수정시 본인인증 진행
-                    }
+                        , (error) => {
+                            //console.log(error);
+                            Vue.swal({text:'사용자 정보 변경 중 오류가 발생하였습니다.'});
+                        }
+                    ).catch();
                 }
-                , (error) => {
-                    //console.log(error);
-                    Vue.swal({text:'사용자 정보 변경 중 오류가 발생하였습니다.'});
-                }
-            ).catch();
+            })
 
         }
         //정보 변경시 validation 체크

@@ -113,7 +113,7 @@
                                     <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)">우편번호</button>
                                 </li>
                                 <li class="con02">
-                                    <input type="text" class="input form_address01" title="주소" v-model="addr1" maxlength="30">
+                                    <input type="text" class="input form_address01" title="주소" v-model="addr1" maxlength="30" disabled="disabled">
                                 </li>
                                 <li class="con03">
                                     <input type="text" class="input form_address02" title="상세 주소" v-model="addr2" maxlength="30">
