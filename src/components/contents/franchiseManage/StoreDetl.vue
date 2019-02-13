@@ -183,7 +183,7 @@
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
                         </td>
                     </tr>
-                    <tr v-if="upjong=='002'||upjong=='003'">
+                    <tr v-if="upjong=='002'||upjong=='003'||upjong=='004'">
                         <th scope="row">요양기관기호<em class="form_req">*</em></th>
                         <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId" maxlength="10"></td>
                     </tr>
@@ -568,7 +568,7 @@
                             this.addr1 = result.saupjang.addr1;
                             this.addr2 = result.saupjang.addr2;
                             this.upjong = this.nullCheck(result.saupjang.upjong);
-                            if(result.saupjang.upjong == '002'||result.saupjang.upjong == '003'){ //병원,의원이면 요양기관 표시
+                            if(result.saupjang.upjong == '002'||result.saupjang.upjong == '003'||result.saupjang.upjong == '004'){ //병원,의원,약국이면 요양기관 표시
                                 this.gikanId = result.saupjang.gikanId;
                             }
                             this.loadCodeList = result.saupjang.subSaup;
@@ -923,7 +923,7 @@
             }else if(this.upjong == ''){
                 alert('업종구분을 선택하세요.');
                 return;
-            }else if((this.upjong == '002' || this.upjong == '003') && (this.gikanId == null || this.gikanId == '')){ // 업종구분이 병원, 의원인 경우 필수입력
+            }else if((this.upjong == '002' || this.upjong == '003' || this.upjong == '004') && (this.gikanId == null || this.gikanId == '')){ // 업종구분이 병원, 의원인 경우 필수입력
                 alert('요양기관기호를 입력하세요.');
                 return;
             }
