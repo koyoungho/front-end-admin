@@ -190,11 +190,17 @@
                     </colgroup>
                     <thead>
                     <tr>
-                        <th scope="col">메뉴</th>
+                        <th scope="col" rowspan="2">메뉴</th>
                         <th scope="col">조회</th>
                         <th scope="col">등록</th>
                         <th scope="col">수정</th>
                         <th scope="col">삭제</th>
+                    </tr>
+                    <tr>
+                        <th scope="col"><span class="chk_box"><input type="checkbox"  @click="checkAll('readYn')"><label for=""><span class="blind"></span></label></span></th>
+                        <th scope="col"><span class="chk_box"><input type="checkbox" @click="checkAll('createYn')"><label for=""><span class="blind"></span></label></span></th>
+                        <th scope="col"><span class="chk_box"><input type="checkbox" @click="checkAll('updateYn')"><label for=""><span class="blind"></span></label></span></th>
+                        <th scope="col"><span class="chk_box"><input type="checkbox" @click="checkAll('deleteYn')"><label for=""><span class="blind"></span></label></span></th>
                     </tr>
                     </thead>
                     <tbody v-for="(datas,index) in  menuList">
@@ -284,6 +290,11 @@
         }
     })
     export default class ModUser extends Vue {
+
+        ct : boolean = false;
+        rd : boolean = false;
+        ut : boolean = false;
+        dt : boolean = false;
 
         gajum1 : any = '';
         gajum2 : any = '';
@@ -409,6 +420,58 @@
             if(!regNumber.test(account.phoneNum)){
                 Vue.swal({ text: '숫자만가능합니다'});
                 account.phoneNum = '';
+            }
+        }
+
+        checkAll(e){
+            if(e=='readYn'){
+                if(this.rd){ // 체크풀때
+                    this.rd = false
+                    this.menuList.filter(e=>{
+                        e.readGbn=false
+                    })
+                }else{ // 체크할때
+                    this.rd = true
+                    this.menuList.filter(e=>{
+                        e.readGbn=true
+                    })
+                }
+            }else if(e=='createYn'){
+                if(this.ct){ // 체크풀때
+                    this.ct = false
+                    this.menuList.filter(e=>{
+                        e.createGbn=false
+                    })
+                }else{ // 체크할때
+                    this.ct = true
+                    this.menuList.filter(e=>{
+                        e.createGbn=true
+                    })
+                }
+            }else if(e=='updateYn'){
+                if(this.ut){ // 체크풀때
+                    this.ut = false
+                    this.menuList.filter(e=>{
+                        e.updateGbn=false
+                    })
+                }else{ // 체크할때
+                    this.ut = true
+                    this.menuList.filter(e=>{
+                        e.updateGbn=true
+                    })
+                }
+            }else if(e=='deleteYn'){
+                if(this.dt){ // 체크풀때
+                    this.dt = false
+                    this.menuList.filter(e=>{
+                        e.deleteGbn=false
+                    })
+                }else{ // 체크할때
+                    this.dt = true
+                    this.menuList.filter(e=>{
+                        e.deleteGbn=true
+                    })
+                }
             }
         }
 
