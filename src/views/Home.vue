@@ -41,7 +41,9 @@
             if(e=='receipSaupCount' || e=='errorList'){
                 alert('준비중입니다')
             }else{
-            this.$router.push('/home/'+e);
+                (this.$children['0'].tokenRefresh()).then(s=>{
+                    this.$router.push('/home/'+e);
+                })
             }
         }
 
@@ -55,7 +57,6 @@
             else{
                 this.routerMenuChange = this.$route.path.slice(this.$route.path.lastIndexOf('/')+1);
             }
-            this.$children['0'].tokenRefresh();
         }
 
         created() {
