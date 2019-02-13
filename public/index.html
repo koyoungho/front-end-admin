@@ -129,7 +129,7 @@
 
   var result = os.split(',')
 
-  if(uanaVigatorOs.indexOf('chrome') !=-1) {  // 크롬일때
+  if(uanaVigatorOs.indexOf('Chrome') !=-1 || uanaVigatorOs.indexOf('MSIE 11') !=-1) {  // 크롬일때
   }else{
     if(result[0]=='Windows XP'){  // chrome 안내
       if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다' )){
@@ -152,29 +152,31 @@
         window.location.href='https://www.google.com/chrome/'
       }
     }
+
+    if (navigator.userAgent.indexOf("MSIE 10") > -1) {
+      if(confirm('현재 고객님의 OS 는 '+ os + 'Explorer 10 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' EXPLORER11 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+        window.location.href='https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads'
+      }  // this is internet explorer 10
+    }else if(navigator.userAgent.indexOf("MSIE 9") > -1){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 9 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' EXPLORER11 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+        window.location.href='https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads'
+      }
+    }else if(navigator.userAgent.indexOf("MSIE 8") > -1){
+      if(confirm('현재 고객님의 OS 는 '+ os + 'Explorer 8 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+        window.location.href='https://www.google.com/chrome/'
+      }
+    }else if(navigator.userAgent.indexOf("MSIE 7") > -1){
+      if(confirm('현재 고객님의 OS 는 '+ os + 'Explorer 7 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+        window.location.href='https://www.google.com/chrome/'
+      }
+    }else if(navigator.userAgent.indexOf("MSIE 6") > -1){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 6 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+        window.location.href='https://www.google.com/chrome/'
+      }
+    }
+
   }
 
-  if (navigator.userAgent.indexOf("MSIE 10") > -1) {
-    if(confirm('현재 고객님의 OS 는 '+ os + 'Explorer 10 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' EXPLORER11 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
-      window.location.href='https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads'
-    }  // this is internet explorer 10
-  }else if(navigator.userAgent.indexOf("MSIE 9") > -1){
-    if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 9 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' EXPLORER11 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
-      window.location.href='https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads'
-    }
-  }else if(navigator.userAgent.indexOf("MSIE 8") > -1){
-    if(confirm('현재 고객님의 OS 는 '+ os + 'Explorer 8 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
-      window.location.href='https://www.google.com/chrome/'
-    }
-  }else if(navigator.userAgent.indexOf("MSIE 7") > -1){
-    if(confirm('현재 고객님의 OS 는 '+ os + 'Explorer 7 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
-      window.location.href='https://www.google.com/chrome/'
-    }
-  }else if(navigator.userAgent.indexOf("MSIE 6") > -1){
-    if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 6 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
-      window.location.href='https://www.google.com/chrome/'
-    }
-  }
 </script>
 <body>
 <!-- skip navi -->
