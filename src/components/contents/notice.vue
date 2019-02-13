@@ -5,7 +5,7 @@
     <div id="popup1" class="popup_wrapper2 medium" tabindex="0" >
       <div class="popup_header">
         <!-- h2 -->
-        <h2>Brower 호환 안내</h2>
+        <h2>호환 안내</h2>
       </div>
       <div class="popup_body">
         <!-- popup content -->
