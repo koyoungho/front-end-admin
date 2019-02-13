@@ -19,7 +19,7 @@
               <template v-else="item.calenderCount==2">
                 <span class="form_cal" @click="setDate(index)">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType" :shortcuts = shortcuts
-                             :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
+                             :first-day-of-week="1"   range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
             </li>
@@ -34,13 +34,13 @@
               <template v-if="item.calenderCount==1">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate" v-on:change="dateChangeEvent"  :lang="lang" :type="item.dateType"
-                             :first-day-of-week="1"  :format="item.default" :width="item.width"  confirm></date-picker>
+                             :first-day-of-week="1"   :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
               <template v-else="item.calenderCount==2">
                 <span class="form_cal">
                 <date-picker v-model="item.searchStartDate"  :lang="lang" :type="item.dateType" :shortcuts = shortcuts
-                             :first-day-of-week="1" range :format="item.default" :width="item.width"  confirm></date-picker>
+                             :first-day-of-week="1"  range :format="item.default" :width="item.width"  confirm></date-picker>
                 </span>
               </template>
             </li>

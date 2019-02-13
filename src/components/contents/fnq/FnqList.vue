@@ -107,7 +107,7 @@
 
         created(){
             let  nowUTC =  moment().utc() ; //UTC시간
-            let  nowKo= nowUTC.add(9, 'hours')// 한국시간
+            let  nowKo= nowUTC// 한국시간
             let  beforeOneYKo=  moment(nowKo).subtract(1, 'years') // 일년전
 
             this.listItem={
