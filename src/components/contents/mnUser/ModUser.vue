@@ -680,32 +680,42 @@
             });
             reqData['menuList'] = arrData
 
+            Vue.swal({
+                text: '계정 정보를 변경하시겠습니까?',
+                showCancelButton: true,
+                showCloseButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
 
-            // api 데이터 호출(계정 정보 수정)
-            CommonBoardService.updateListData('accounts', account.id, reqData).then((response) => {
-                    let result: any = response.data;
-                    //console.log(result);
-                    if (result.code == '000') {
-                        //계정 수정 완료
-                        //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
-                        //this.$router.push({name:'mnUserList'})
+                if(result.value){
 
-                        Vue.swal({text:'변경이 정상 처리 되었습니다.' }).then((result) => {
-                            // 리스트로 이동
-                            this.$router.push('/home/mnUser');
-                        });
+                    // api 데이터 호출(계정 정보 수정)
+                    CommonBoardService.updateListData('accounts', account.id, reqData).then((response) => {
+                            let result: any = response.data;
+                            //console.log(result);
+                            if (result.code == '000') {
+                                //계정 수정 완료
+                                //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+                                //this.$router.push({name:'mnUserList'})
 
+                                Vue.swal({text:'변경이 정상 처리 되었습니다.' }).then((result) => {
+                                    // 리스트로 이동
+                                    this.$router.push('/home/mnUser');
+                                });
 
-                    } else {
-                        Vue.swal({text:'계정 정보 수정에 실패하였습니다. 다시 시도하세요.'});
-                        return;
-                    }
+                            } else {
+                                Vue.swal({text:'계정 정보 변경이 실패하였습니다. 다시 시도하세요.'});
+                                return;
+                            }
+                        }
+                        , (error) => {
+                        }
+                    ).catch((response) => {
+                    });
                 }
-                , (error) => {
-                }
-            ).catch((response) => {
-            });
 
+            })
 
         }
 
