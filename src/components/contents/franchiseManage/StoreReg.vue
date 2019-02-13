@@ -154,7 +154,7 @@
                             <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
                         </td>
                     </tr>
-                    <tr v-if="upjong=='002'||upjong=='003'">
+                    <tr v-if="upjong=='002'||upjong=='003'||upjong=='004'">
                         <th scope="row">요양기관기호<em class="form_req">*</em></th>
                         <td colspan="3"><input type="text" class="input form_w50" title="요양기관기호" v-model="gikanId" maxlength="20"></td>
                     </tr>
@@ -883,7 +883,7 @@
             /*}else if((this.upjong == '006' || this.upjong == '007') && this.subCompanyCnt == ''){ //택배사, 학원은 회사코드 필수
                 alert('회사코드 등록버튼을 클릭하여 회사코드를 선택하세요.');
                 return;*/
-            }else if((this.upjong == '002' || this.upjong == '003') && (this.gikanId == '' || this.gikanId == null)){ //병원, 위원은 요양기관입력 필수
+            }else if((this.upjong == '002' || this.upjong == '003' || this.upjong == '004') && (this.gikanId == '' || this.gikanId == null)){ //병원, 위원은 요양기관입력 필수
                 alert('요양기관기호를 입력하세요.');
                 return;
             }
