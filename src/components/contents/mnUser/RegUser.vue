@@ -197,7 +197,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02">취소</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="regCancel()">취소</button>
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk()" v-show="regShow">등록</button>
             </div>
 
@@ -513,9 +513,37 @@
                 Vue.swal({text: '사업자등록번호를 입력 후 찾기 버튼을 클릭하세요.'});
                 return;
             }else{
-                this.insertInfo();
+                //this.insertInfo();
+                this.phonenumberChk();
             }
 
+        }
+
+//휴대폰번호 등록여부 체크
+        phonenumberChk(){
+            let reqData: any = {};
+            reqData['checkString'] = this.phoneNum;
+            reqData['checkSum'] = '';
+            reqData['checkType'] = 'ADMIN';
+
+            // api 데이터 호출(사업자등록번호 유효성 체크)
+            CommonBoardService.postListDatas('validation/phonenum', null, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result);
+                    if (result != null && result.code == '000') {
+                        //휴대폰번호 유효성 체크에 이상이 없으면 가맹점등록
+                        //this.franchiseFileReg();
+                        this.insertInfo();
+                    } else {
+                        Vue.swal({text:result.message});
+                    }
+                }
+                , (error) => {
+                    //console.log(error);
+                }
+            ).catch((response) => {
+                //console.log(response);
+            });
         }
 
         //계정 등록
@@ -597,7 +625,7 @@
                     }
                 }
                 , (error) => {
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch((response) => {
             });
@@ -615,8 +643,8 @@
 
             CommonBoardService.getListDatas('menu/role/'+role, null, null).then(result=>{
                 if(result.status==200){
-                    console.log('메뉴 정보 조회 결과')
-                    console.log(result.data)
+                    //console.log('메뉴 정보 조회 결과')
+                    //console.log(result.data)
 
                     let mList = result.data;
                     let rowData : any = {};
@@ -662,7 +690,7 @@
 
             CommonBoardService.getListDatas('saupjang',saupId,null).then(result=>{
                 if(result.status==200 && result.data!=null){
-                    console.log(result.data)
+                    //console.log(result.data)
                     this.saupjang = result.data;
                     this.saupIdChkYn = 'Y';
                 }else{
@@ -781,7 +809,7 @@
                 }
                 , (error) => {
                     //this.$Progress.finish();
-                    console.log(error);
+                    //console.log(error);
                 }
             ).catch();
 
@@ -843,6 +871,9 @@
 
         }
 
+        regCancel(){
+            this.$router.push('/home/mnUser');
+        }
 
     }
 
