@@ -96,7 +96,7 @@
         tokenRefresh() {
             if(sessionStorage.accessToken) { //로그인을 한 상태 확인
                 // api 데이터 호출
-                CommonBoardService.getListDatas('auth', null, '').then((response) => {
+              return  CommonBoardService.getListDatas('auth', null, '').then((response) => {
                         let result: any = response.data;
                         if (result != null) {
                             sessionStorage.accessToken = result.accesstoken;
