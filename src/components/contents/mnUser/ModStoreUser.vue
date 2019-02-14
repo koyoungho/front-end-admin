@@ -47,8 +47,8 @@
                         <td class="vtop">
                             <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="2">개인</option>
-                                <option value="1">법인</option>
+                                <option value="2">개인사업자</option>
+                                <option value="1">법인사업자</option>
                                 <!--<template v-for="datas in saupGbnList">
                                     <option v-bind:value=datas.code>{{datas.codeName}}</option>
                                 </template>-->
