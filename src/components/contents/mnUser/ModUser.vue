@@ -576,7 +576,7 @@
                     this.saupjang = result.data
                     this.saupId = this.saupnoFormat( result.data.saupId)
                 }else{
-                    alert('에러')
+                    //alert('에러')
                 }
             })
         }

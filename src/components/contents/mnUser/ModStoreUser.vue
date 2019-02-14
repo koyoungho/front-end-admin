@@ -39,7 +39,7 @@
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="전화번호 입력" v-model="repPhonenum" @keyup="changeRepPhonenum" maxlength="12">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -54,10 +54,10 @@
                                 </template>-->
                             </select>
                         </td>
-                        <th scope="row"><template v-if="saupType=='1'">법인등록번호<em class="form_req">*</em></template></th>
+                        <th scope="row"><template v-if="saupType=='1'">법인등록번호</template></th>
                         <td>
-                            <input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" disabled="disabled">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <input type="text" class="input form_w100" title="법인등록번호 입력" v-model="lawNum" v-bind:disabled="lawDisYn" maxlength="13" v-on:keyup="inputValidationChk('lawNum')">
+                            <p class="info_msg2" id="saupid_msg3"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -155,19 +155,19 @@
                         <th scope="row">휴대폰번호<em class="form_req">*</em></th>
                         <td>
                             <input type="text" class="input form_w100" title="휴대폰번호 입력" disabled="disabled" v-model="phoneNum">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg4"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">ID<em class="form_req">*</em></th>
                         <td class="vtop">
                             <input type="text" class="input form_w100" title="ID 입력" disabled="disabled" v-model="id">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="id_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">이메일주소<em class="form_req">*</em></th>
                         <td class="vtop">
                             <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" maxlength="30">
-                            <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
+                            <p class="info_msg2" id="saupid_msg6"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
                     <tr>
@@ -300,6 +300,8 @@
 
         encryptId : string = ''; //암호화된 ID
 
+        lawDisYn : boolean = true;
+
         created() {
 
             this.objectKey = this.$route.params.reqParams;
@@ -387,6 +389,12 @@
                         let upjong : any = '001,002,003,004,005,006,007,008';
                         if(upjong.indexOf(result.upjongCode) < 0){
                             this.upjongCode = '000';
+                        }
+
+                        if(result.saupType=='1'){ //법인사업자인경우 법인번호 수정 가능
+                            this.lawDisYn = false;
+                        }else{ //개인사업자는 수정 못함
+                            this.lawDisYn = true;
                         }
 
                         //this.blGbNm = result.blGbNm;
@@ -556,6 +564,7 @@
             reqData['repNm'] = this.repNm; //대표자명
             reqData['repPhonenum'] = this.repPhonenum; //대표자 전화번호
             reqData['status'] = this.status; //계정상태
+            reqData['lawNum'] = this.lawNum; //법인등록번호
             reqData['zipCode'] = this.zipCode; //우편번호
             reqData['addr1'] = this.addr1; //주소
             reqData['addr2'] = this.addr2; //상세주소
@@ -638,6 +647,18 @@
                     alert('법인등록번호를 입력하세요.');
                     return false;
                 */
+            }else if(this.saupType == '1' && this.lawNum != '' && this.lawNum != null && !regNumber.test(this.lawNum)) { //사업자구분이 법인인 경우 체크
+                Vue.swal({text:'법인등록번호는 숫자만 입력하세요.'});
+                return false;
+            }else if(this.saupType == '1' && this.lawNum != '' && this.lawNum != null && this.lawNum.length != 13) { //사업자구분이 법인인 경우 체크
+                Vue.swal({text:'법인등록번호는 13자리로 입력하세요.'});
+                return false;
+            }else if(this.saupType == '1' && this.lawNum == '0000000000000') {
+                Vue.swal({text:'법인등록번호를 바르게 입력하세요.'});
+                return false;
+            }else if(this.saupType == '1' && this.lawNum.length == 13 && !this.lawnumChk()) {
+                Vue.swal({text:'부적합한 법인등록번호입니다.'});
+                return false;
             }else if(this.addr1 == '') {
                 Vue.swal({text:'사업장 주소를 입력하세요.'});
                 return false;
@@ -1213,6 +1234,119 @@
             return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
         }
 
+        inputValidationChk(gbn){
+
+            let specialExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; //정규식 구문(공백은 허용)
+            //let RegExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; //정규식 구문
+            let emailAddr = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+            let passPattern = /(?=.*[0-9])(?=.*[a-z])(?=.*[!@$%^&*])(?=\S+$).{8,16}$/;
+
+            if(gbn == 'storeNm'){ //사업장명
+                if(specialExp.test(this.storeNm)){
+                    this.storeNm = this.storeNm.substring(0, this.storeNm.length - 1); //특수문자 지우기
+                }
+            }else if(gbn == 'repNm'){ //대표자명
+                if(specialExp.test(this.repNm)){
+                    this.repNm = this.repNm.substring(0, this.repNm.length - 1); //특수문자 지우기
+                }
+            }else if(gbn == 'repPhonenum'){ //전화번호
+                let phone_msg = document.getElementById('saupid_msg2');
+
+                if(phone_msg != null){
+                    if(this.repPhonenum == ''){
+                        phone_msg.innerHTML = '';
+                    }else if(this.repPhonenum.length < 9){
+                        phone_msg.innerHTML = '전화번호는 9~11자리로 입력하세요.';
+                    }else if(this.repPhonenum.indexOf('0') != 0){
+                        phone_msg.innerHTML = '전화번호를 바르게 입력하세요.';
+                    }else if(this.repPhonenum.indexOf('000000000') != -1){
+                        phone_msg.innerHTML = '전화번호를 바르게 입력하세요.';
+                    }else{
+                        phone_msg.innerHTML = '';
+                    }
+                }
+            }else if(gbn == 'lawNum'){ //법인등록번호
+                let law_msg = document.getElementById('saupid_msg3');
+
+                if(law_msg != null){
+                    if(this.lawNum == ''){
+                        law_msg.innerHTML = '';
+                    }else if(this.lawNum.length != 13){
+                        law_msg.innerHTML = '법인등록번호는 13자리로 입력하세요.';
+                    }else if(this.lawNum == '0000000000000'){
+                        law_msg.innerHTML = '법인등록번호를 바르게 입력하세요.';
+                    }else if(!this.lawnumChk()){
+                        law_msg.innerHTML = '부적합한 법인등록번호입니다.';
+                    }else{
+                        law_msg.innerHTML = '';
+                    }
+                }
+            }else if(gbn == 'email'){
+                let email_msg = document.getElementById('saupid_msg6');
+
+                if(email_msg!=null){
+                    if(this.email == ''){
+                        email_msg.innerHTML = '';
+                    }else if(!emailAddr.test(this.email) && email_msg != null) {
+                        email_msg.innerHTML = '메일주소를 바르게 입력하세요.';
+                    }else{
+                        email_msg.innerHTML = '';
+                    }
+                }
+            }
+        }
+
+        //법인등록번호 유효성 체크
+        lawnumChk() {
+
+            let varCk = this.lawNum;
+
+            /*if ( varCk.length < 13 ) {
+                alert('법인등록번호의 자릿수가 잘못 입력되었습니다.');
+                return false;
+            }*/
+
+            let checkNum : any = new Array("1","2","1","2","1","2","1","2","1","2","1","2");
+
+            //등기관서별 분류번호, 법인종류별 분류번호 및 일련번호를 차례로 연결한 12자리
+            //의 숫자를 만든다.
+            let newNum = new Array();
+            for(let i = 0; i < varCk.length -1; i++)
+                newNum[i] = varCk.charAt(i);
+
+            //각 숫자에 차례로 1과 2를 곱한 다.값을 모두 더하여 합을 구한다.
+            let multiNum = new Array();
+            for(let k = 0; k < newNum.length; k++)
+                multiNum[k] = checkNum[k] * newNum[k];
+
+            //alert("각 숫자에 차례로 1과 2를 곱한 다: "+ multiNum[11]);
+            //곱한 값을 모두 더하여 합을 구한다.
+            let addNum = 0;
+            for(let y = 0; y < multiNum.length; y++)
+                addNum = addNum + Number(multiNum[y]);
+
+            //alert("곱한 값을 모두 더하여 합을 구한다: "+ addNum);
+            //합을 10으로 나누어 몫과 나머지를 구한다.
+            let remainder;
+            let quota;
+            remainder = Number(addNum) % 10;
+            quota = Number(addNum) / 10;
+            //10에서 나머지를 뺀 값을 오류검색번호로 한다. 다만, 10에서 나머지를 뺀 값이
+            //10인 때에는 0을 오류검색번호로 한다.
+            let failCheckNum;
+            if( (10 - Number(remainder)) == 10 ) {
+                failCheckNum = 0;
+            } else {
+                failCheckNum = 10 - Number(remainder);
+            }
+            //alert("오류검색번호: "+ failCheckNum);
+            if(failCheckNum != varCk.charAt(12)) {
+                //alert ("잘못된 법인번호입니다. 다시 확인해 주십시오");
+                return false;
+            }
+            return true;
+        }
 
 
     }

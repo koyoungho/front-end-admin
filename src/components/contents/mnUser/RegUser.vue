@@ -353,7 +353,7 @@
             let id = this.id
 
             if(regExp.test(id)){
-                alert('ID 는 숫자와 문자만 입력해주세요');
+                Vue.swal({text: 'ID 는 숫자와 문자만 입력해주세요'});
                 return ;
             }
 
