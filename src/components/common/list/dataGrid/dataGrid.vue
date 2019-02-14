@@ -200,8 +200,8 @@
                   </span>
                                 </td>
                             </template>
-                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'">
-                                <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse">
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'"> <!--텍스트 타입-->
+                                <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse"> <!--텍스트이면서 이미지사용-->
                                     <td v-on:click="rowView(datas,publicPageing,index,key)"
                                         v-bind:style="fontColor(indexs,rows)" style="text-align: left">
                                         <template v-if="listData[index].importantYn == 'Y'"><i
@@ -211,10 +211,8 @@
                                         <i class="icon new" v-if="listData[index].newYn == 'Y'">new</i>
                                     </td>
                                 </template>
-                                <template v-else-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse">
-
-
-                                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].fileImage">
+                                <template v-else-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse"> <!--텍스트 이면서 이미지 사용안함-->
+                                  <template v-if="dataGridDetail.dataGrid.columControl[indexs].fileImage"> <!-- 텍스트이면서 파일이미지사용-->
                                   <td v-on:click="rowView(datas,publicPageing,index,key)"
                                       v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">
                                     <template v-if="listData[index].fileYn=='Y'">
@@ -222,11 +220,19 @@
                                   </template></span>
                                   </td>
                                   </template>
-                                  <template v-else>
+                                  <template v-else> <!-- 순수 타입이 그냥 텍스트 인것-->
+                                    <template v-if="dataGridDetail.dataGrid.columControl[indexs].id=='taxSend'">
                                     <td v-on:click="rowView(datas,publicPageing,index,key)"
-                                        v-bind:style="fontColor(indexs,rows)">
+                                        v-bind:style="fontColor(indexs,rows)" :title="datas.errorMsg">
                                       <span v-bind:style="colColor(indexs)">{{rows}}</span>
                                     </td>
+                                    </template>
+                                    <template v-else>
+                                      <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                          v-bind:style="fontColor(indexs,rows)" >
+                                        <span v-bind:style="colColor(indexs)">{{rows}}</span>
+                                      </td>
+                                    </template>
                                   </template>
 
                                 </template>

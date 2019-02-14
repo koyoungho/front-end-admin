@@ -18,21 +18,20 @@
                     <div class="search_box code01">
                         <div class="search_inner">
                             <ul class="search_list">
+                              <template v-if="type">
                                 <li>
-                                    <label>{{div_str}} 코드</label>
+                                  <label>{{div_str}} 코드</label>
                                   <template v-if="fuct=='add'">
                                     <input type="text" class="input sch_code" title="코드명" v-model="getCodes" >
                                   </template>
                                   <template v-else>
                                     <input type="text" class="input sch_code" title="코드명" v-model="getCodes" readonly>
                                   </template>
-
                                 </li>
                                 <li>
-                                    <label>{{div_str}} 코드명</label>
-                                    <input type="text" class="input sch_code" title="코드명" v-model="getNames">
+                                  <label>{{div_str}} 코드명</label>
+                                  <input type="text" class="input sch_code" title="코드명" v-model="getNames">
                                 </li>
-                              <template v-if="type">
                                 <li>
                                   <label> 사업자아이디</label>
                                   <input type="text" class="input sch_code" title="코드명" v-model="getSaupId">
@@ -41,6 +40,27 @@
                                   <label> 업종 코드</label>
                                   <input type="text" class="input sch_code" title="코드명" v-model="getUpjong">
                                 </li>
+                              </template>
+                              <template v-else>
+                                <li>
+                                  <label>{{div_str}} 코드</label>
+                                  <template v-if="fuct=='add'">
+                                    <input type="text" class="input sch_code" title="코드명" v-model="getCodes" >
+                                  </template>
+                                  <template v-else>
+                                    <input type="text" class="input sch_code" title="코드명" v-model="getCodes" readonly>
+                                  </template>
+                                </li>
+                                <li>
+                                  <label>{{div_str}} 코드명</label>
+                                  <input type="text" class="input sch_code" title="코드명" v-model="getNames">
+                                </li>
+                                <template v-if="div=='sub'">
+                                <li>
+                                  <label> 구분</label>
+                                  <input type="text" class="input sch_code" title="코드명" v-model="getViewGb">
+                                </li>
+                                </template>
                               </template>
                             </ul>
                         </div>
@@ -95,6 +115,7 @@
         getUpjong : string =!this.dataObject.upjongCode ? '':this.dataObject.upjongCode
         getSaupId : string =!this.dataObject.saupId ? '':this.dataObject.saupId
         getGroupCode : string =this.dataObject.groupCode
+        getViewGb : string = !this.dataObject.viewGb ? '':this.dataObject.viewGb
         div_str :string ="";
         action : string = "";
         regShow:boolean = false;
@@ -141,7 +162,7 @@
             }
             else{
                 apiAddr = 'code';
-                Object = {code : this.getCodes , codeNm: this.getNames , groupCode : this.getGroupCode};
+                Object = {code : this.getCodes , codeNm: this.getNames , groupCode : this.getGroupCode , viewGb : this.getViewGb};
                 // 공통  그룹부모는 ROOT 차일드는 부모코드
             }
 
@@ -176,7 +197,7 @@
             }
             else{
                 apiAddr = 'code';
-                Object = {code : this.getCodes , codeNm: this.getNames , groupCode : this.getGroupCode};
+                Object = {code : this.getCodes , codeNm: this.getNames , groupCode : this.getGroupCode , viewGb : this.getViewGb};
                 // 공통  그룹부모는 ROOT 차일드는 부모코드
             }
 
