@@ -593,7 +593,7 @@
                             if (result != null) {
                                 Vue.swal({text:'사용자 계정 정보가 변경되었습니다.'});
                                 if(this.status == '1' && this.oldStatus == '0'){ //계정 승인 처리시
-                                    //this.sendMailAprv();
+                                    this.sendMailAprv();
                                 }
                                 this.$router.push({name:'mnUserList'})
                                 //this.confirmResult = false; //다시 수정시 본인인증 진행
