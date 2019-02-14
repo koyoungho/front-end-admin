@@ -77,9 +77,10 @@
         content : string ="";
         regShow:boolean = false;
         delShow:boolean = false;
-
+        role: any = sessionStorage.getItem('role');
         objectKey : any = "";
-
+        modOk : boolean = false;
+        delOk : boolean = false;
 
         mounted(){
             // this.seq = this.$route.params.seq;
@@ -130,6 +131,12 @@
                             this.title = result.title;
                             this.viewType = result.viewType;
                             this.content = result.content;
+
+                                let rl = Number(result.regRole)
+                                if(Number(this.role) <= rl){
+                                    this.modOk = true;
+                                    this.delOk = true;
+                                }
                         }
                     }
                     , (error) => {
@@ -160,6 +167,8 @@
 
             if(this.objectKey != null || this.objectKey !=undefined){ //수정일때
                 // api 데이터 호출
+
+                if(this.modOk){
                 CommonBoardService.updateListData('faq', this.seq, reqData).then((response) => {
                         if (response.status.toString() == '200') { //성공
                             Vue.swal({
@@ -179,6 +188,9 @@
                         console.log(error);
                     }
                 ).catch();
+                }else{
+                    Vue.swal({ text: '수정 권한이 없습니다'});
+                }
 
             }else{//등록일때
                 CommonBoardService.postListDatas('faq', null, reqData).then((response) => {
@@ -220,6 +232,9 @@
          * 삭제
           */
         del(){
+
+            if(this.delOk){
+
             if (window.confirm("삭제하시겠습니까?")) {
                 Vue.swal({
                     text: '삭제하시겠습니까',
@@ -249,6 +264,9 @@
                         console.log(error);
                     }).catch();
                  })
+            }
+            }else{
+                Vue.swal({text: '삭제권한이 없습니다'});
             }
         }
 
