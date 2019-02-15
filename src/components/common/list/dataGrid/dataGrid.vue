@@ -192,12 +192,12 @@
                             </template>
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='date'">
                                 <td>
-                  <span v-bind:style="colColor(indexs)">
-                    <template v-if="rows != null">
-                         {{moment(rows,'YYYYMMDDHHmmss').format(dataGridDetail.dataGrid.columControl[indexs].dateFormat)}}
-                    </template>
-                    <template v-else> - </template>
-                  </span>
+                                <span v-bind:style="colColor(indexs)">
+                                  <template v-if="rows != null">
+                                       {{moment(rows,'YYYYMMDDHHmmss').format(dataGridDetail.dataGrid.columControl[indexs].dateFormat)}}
+                                  </template>
+                                  <template v-else> - </template>
+                                </span>
                                 </td>
                             </template>
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'"> <!--텍스트 타입-->
