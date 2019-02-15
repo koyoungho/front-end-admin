@@ -132,45 +132,44 @@
   if(uanaVigatorOs.indexOf('Chrome') !=-1 || uanaVigatorOs.indexOf('MSIE 11') !=-1 || ex=='Netscape') {  // 크롬이나 익스플로어일경우
   }else{
     if(result[0]=='Windows XP'){  // chrome 안내
-      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다' )){
-        window.location.href='https://www.google.com/chrome/'
+      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n\n" + '저희 현금영수증 웹 사이트에서는 지원하지 않는 OS입니다. ' + '\n\n'+ ' 국세청 ARS 통해 현금영수증 발급이 가능하오니'+'\n\n'+' 126번으로 전화하시기 바랍니다' )){
       }
     }else if(result[0]=='Windows Vista'){ // chrome 안내
-      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }else if(result[0]=='Windows 7'){ // chrome 안내
-      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }else if(result[0]=='Windows 8'){ // chrome
-      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }else if(result[0]=='Windows 8.1'){ // explorer 안내
-      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + '입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }
 
     if (navigator.userAgent.indexOf("MSIE 10") > -1) {
-      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 10 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' EXPLORER11 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 10 입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' EXPLORER11 브라우져를 설치하시면 원활한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads'
       }  // this is internet explorer 10
     }else if(navigator.userAgent.indexOf("MSIE 9") > -1){
-      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 9 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' EXPLORER11 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 9 입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' EXPLORER11 브라우져를 설치하시면 원활한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads'
       }
     }else if(navigator.userAgent.indexOf("MSIE 8") > -1){
-      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 8 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 8 입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원활한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }else if(navigator.userAgent.indexOf("MSIE 7") > -1){
-      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 7 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 7 입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원활한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }else if(navigator.userAgent.indexOf("MSIE 6") > -1){
-      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 6 입니다' + "\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n'+ ' Chrome 브라우져를 설치하시면 원할한 사용이 가능합니다 .'+'\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
+      if(confirm('현재 고객님의 OS 는 '+ os + ' Explorer 6 입니다' + "\n\n" + '브라우져의 버전이 낮아 원활한 사용이 불가능합니다' + '\n\n'+ ' Chrome 브라우져를 설치하시면 원활한 사용이 가능합니다 .'+'\n\n'+' 확인을 누르시면 설치페이지로 이동합니다')){
         window.location.href='https://www.google.com/chrome/'
       }
     }
