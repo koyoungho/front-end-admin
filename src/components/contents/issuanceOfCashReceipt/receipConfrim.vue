@@ -147,7 +147,7 @@
                                 <option value="gmail.com">gmail.com</option>
                                 <option value="naver.com">naver.com</option>
                                 <option value="nate.com">nate.com</option>
-                                <option value="hanmail.com">hanmail.com</option>
+                                <option value="hanmail.net">hanmail.net</option>
                                 <option value="hotmail.com">hotmail.com</option>
                                 <option value="yahoo.com">yahoo.com</option>
                             </select>
