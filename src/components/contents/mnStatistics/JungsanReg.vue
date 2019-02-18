@@ -689,6 +689,7 @@
 					</select>
 				</span>
                 <button type="button" @click="reg" class="btn_b01 bg01">저장</button>
+                <button type="button" @click="listGo" class="btn_b01 bg03">돌아가기</button>
             </div>
 
         </div>
@@ -1033,6 +1034,10 @@
                 }
             })
 
+        }
+
+        listGo(){
+            this.$router.push({path:'receipSaupCount' });
         }
 
     }

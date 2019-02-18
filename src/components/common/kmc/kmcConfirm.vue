@@ -52,6 +52,7 @@
         originId: any = 'header2';
         hostUrl: string = environment.selfCertificationUrl;
         resultValue : any = "";
+        resultValue2 : any = "";
         result : boolean = false;
         tr_cert: any = '';
         tr_url: any = '';
@@ -76,7 +77,8 @@
 
         eventGet(){
             if(this.result == false){
-                this.resultValue = setInterval(this.wating,2000)
+                this.resultValue = setInterval(this.wating,3000)
+                this.resultValue2 =  setInterval(this.wating,2000)
                 this.result=true;
             }
 
@@ -86,8 +88,9 @@
                 let val = sessionStorage.getItem('resultKey')
                 let fail = sessionStorage.getItem('failKey')
                 if (val) {
-                    sessionStorage.removeItem('resultKey')
                     clearInterval(this.resultValue)
+                    clearInterval(this.resultValue2)
+                    sessionStorage.removeItem('resultKey')
                     this.result = false;
                     this.closeKcm('Y', JSON.parse(val))
 
@@ -96,6 +99,8 @@
                         clearInterval(this.resultValue)
                         sessionStorage.removeItem('failKey')
                         this.result = false;
+                        clearInterval(this.resultValue)
+                        clearInterval(this.resultValue2)
                         this.closeKcm('N', fail)
                     }
                 }

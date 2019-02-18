@@ -128,6 +128,7 @@
             <!-- btn bot -->
             <div class="btn_bot">
                 <button type="button"  class="btn_b01 bg01" @click="saveData">등록</button>
+                <button type="button"  class="btn_b01 bg03" @click="cancle">돌아가기</button>
             </div>
 
         </div>
@@ -200,6 +201,10 @@
                     }
                 })
             }
+
+        cancle(){
+            this.$router.push({ name:'jungsanRuleSearch' })
+        }
 
     }
 </script>
