@@ -226,6 +226,7 @@
                     if(result.data.code=='000'){
                         this.startTimer();
                         this.confirmButton = true;
+                        this.accesstoken = result.data.extra;
                         alert('인증번호를 발송하였습니다')
                     }
                     else{
