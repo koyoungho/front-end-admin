@@ -301,8 +301,9 @@
                     console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
 
                     //this.$router.push({name:"regPass", params:{ reqData }});
-
                     this.termsAgree();
+
+                    this.$router.push({name:'main'})
                 }
                 else {
 
