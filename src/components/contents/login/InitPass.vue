@@ -163,11 +163,7 @@
         accesstoken : string = ''; //비밀번호 등록시 필요한 토큰
 
         searchCancel() {
-
-            if(sessionStorage.kmc_id){
-                sessionStorage.kmc_id = '';
-                sessionStorage.kmc_saupId = '';
-            }
+            sessionStorage.clear();
 
             clearInterval(this.interval);
             this.$router.push('/login')
@@ -260,6 +256,8 @@
                             this.resultId = result.data.extra;
                             clearInterval(this.interval)
                             this.reset();
+
+                            this.changePwd();
                         }
                         else{
                             clearInterval(this.interval)
