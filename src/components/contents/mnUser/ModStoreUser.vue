@@ -8,6 +8,53 @@
 
             <h3>사용자 계정 조회</h3>
 
+            <h4>사용자 정보</h4>
+            <!-- tbl view box -->
+            <div class="tbl_view_box">
+                <!-- tbl view01 -->
+                <table class="tbl_view01">
+                    <caption>사용자 정보</caption>
+                    <colgroup>
+                        <col class="col_mob" width="18%">
+                        <col class="col_mob" width="32%">
+                        <col class="col_mob" width="18%">
+                        <col class="col_mob" width="32%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">이름<em class="form_req">*</em></th>
+                        <td class="vtop"><input type="text" class="input form_name" title="이름" disabled="disabled" v-model="name"></td>
+                        <th scope="row">휴대폰번호<em class="form_req">*</em></th>
+                        <td>
+                            <input type="text" class="input form_w100" title="휴대폰번호 입력" disabled="disabled" v-model="phoneNum">
+                            <p class="info_msg2" id="saupid_msg4"></p> <!-- 메시지 표시 -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ID<em class="form_req">*</em></th>
+                        <td class="vtop">
+                            <input type="text" class="input form_w100" title="ID 입력" disabled="disabled" v-model="id">
+                            <p class="info_msg2" id="id_msg"></p> <!-- 메시지 표시 -->
+                        </td>
+                        <th scope="row">이메일주소<em class="form_req">*</em></th>
+                        <td class="vtop">
+                            <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" maxlength="30">
+                            <p class="info_msg2" id="saupid_msg6"></p> <!-- 메시지 표시 -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">사용자 등록일</th>
+                        <td><input type="text" class="input form_w100" title="사용자 등록일 입력" disabled="disabled" v-model="accRegDt"></td>
+                        <th scope="row">최종접속일시</th>
+                        <td><input type="text" class="input form_w100" title="최종접속일시" disabled="disabled" v-model="lastConnDt"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btn_tbl_bot">
+                <button type="button" id="" class="btn_m01 bg01" v-on:click="sendData(id)">발급내역 이관</button> <button type="button" id="" class="btn_m01 bg01" v-on:click="sendPassSms">비밀번호 초기화</button>
+            </div>
+
             <h4>사업장 기본 정보 <span class="sub_cf">(사업자 등록증 상의 정보)</span></h4>
 
             <p class="req_info type01">(<em class="form_req">*</em>)는 필수항목입니다.</p>
@@ -132,53 +179,9 @@
             </div>
             <!-- //tbl view box -->
 
-            <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01" v-on:click="sendPassSms">비밀번호 초기화</button>
-            </div>
 
-            <h4>사용자 정보</h4>
-            <!-- tbl view box -->
-            <div class="tbl_view_box">
-                <!-- tbl view01 -->
-                <table class="tbl_view01">
-                    <caption>사용자 정보</caption>
-                    <colgroup>
-                        <col class="col_mob" width="18%">
-                        <col class="col_mob" width="32%">
-                        <col class="col_mob" width="18%">
-                        <col class="col_mob" width="32%">
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                        <th scope="row">이름<em class="form_req">*</em></th>
-                        <td class="vtop"><input type="text" class="input form_name" title="이름" disabled="disabled" v-model="name"></td>
-                        <th scope="row">휴대폰번호<em class="form_req">*</em></th>
-                        <td>
-                            <input type="text" class="input form_w100" title="휴대폰번호 입력" disabled="disabled" v-model="phoneNum">
-                            <p class="info_msg2" id="saupid_msg4"></p> <!-- 메시지 표시 -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">ID<em class="form_req">*</em></th>
-                        <td class="vtop">
-                            <input type="text" class="input form_w100" title="ID 입력" disabled="disabled" v-model="id">
-                            <p class="info_msg2" id="id_msg"></p> <!-- 메시지 표시 -->
-                        </td>
-                        <th scope="row">이메일주소<em class="form_req">*</em></th>
-                        <td class="vtop">
-                            <input type="text" class="input form_w100" title="이메일주소 입력" v-model="email" maxlength="30">
-                            <p class="info_msg2" id="saupid_msg6"></p> <!-- 메시지 표시 -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">사용자 등록일</th>
-                        <td><input type="text" class="input form_w100" title="사용자 등록일 입력" disabled="disabled" v-model="accRegDt"></td>
-                        <th scope="row">최종접속일시</th>
-                        <td><input type="text" class="input form_w100" title="최종접속일시" disabled="disabled" v-model="lastConnDt"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+
+
             <!-- //tbl view box -->
 
             <!-- btn tbl bot -->
@@ -228,6 +231,7 @@
         </div>
         <!--<KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>-->
         <!-- //content -->
+        <DataSend v-if="showDataSend" :sendId="sendId" v-on:closeData="closeDataSend" v-on:dataSendGo="dataSendResult"></DataSend>
     </section>
     <!-- //container -->
 
@@ -238,6 +242,7 @@
     import {Component, Vue, Watch} from 'vue-property-decorator'; // 뷰 cli;
     import {CommonBoardService} from "../../../api/common.service"; // 본인인증
     import AddressBox from '@/components/common/addressBox/addressBox.vue';
+    import DataSend from './dataSend.vue'
     //import KmcConfirm from '../../common/kmc/kmcConfirm.vue';
     import axios from 'axios';
     import {environment} from '../../../utill/environment';
@@ -246,13 +251,15 @@
 
     @Component({
         components: {
-            AddressBox
+            AddressBox,DataSend
         }
     })
     export default class  ModStoreUser  extends  Vue{
 
         //본인인증
         showConfirm: boolean = false;
+        showDataSend : boolean = false;
+        sendId : string = "";
         confirmResult: boolean = false;
         checkVal : boolean = false;
         saupId : any = ''; //사업자등록번호
@@ -322,6 +329,17 @@
 
             this.infoDetail(); //상세조회
 
+        }
+
+        closeDataSend(){
+            this.showDataSend = false;
+        }
+
+        dataSendResult(data){
+            if(data.ok){ // 이관동의
+                Vue.swal({text:'이관신청 완료 되었습니다 (최대 1주일정도 시간이 소요됩니다'})
+                this.closeDataSend();
+            }
         }
 
         mounted() {
@@ -942,6 +960,11 @@
                 //console.log(response);
             });
 
+        }
+
+        sendData(id){
+            this.sendId = id;
+            this.showDataSend = true;
         }
 
         //비밀번호 초기화 SMS 발송
