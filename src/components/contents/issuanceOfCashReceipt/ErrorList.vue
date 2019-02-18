@@ -50,12 +50,14 @@
             <!-- btn mid -->
             <div class="btn_mid">
                 <!--<button type="button" class="btn_m01 bg05" @click="excelDown"><i class="icon download01"></i> 엑셀 다운로드</button>-->
-                <button type="button" class="btn_m01 bg01" @click="compCodeChart()">조회</button>
+                <button type="button" class="btn_m01 bg01" @click="goSearch()">조회</button>
             </div>
             <!-- system box -->
           <div class="fcalendar">
             <ul>
-              <template v-for="data,index in 12">
+              <template v-if="allList.length > 0">
+
+              <template v-for="data,index in allList">
               <li>
                 <span class="title">{{index+1}} 월</span>
                 <ul class="con">
@@ -79,6 +81,17 @@
 
                 </ul>
               </li>
+              </template>
+              </template>
+              <template v-else>
+
+               <table style="width: 100%; text-align: center">
+                 <tr>
+                     <!-- 계정 권한 관리 화면은 columControl에 hidden이 있기때문 totalColum 으로 함 -->
+                   <td class="no_data"><font color="#dcdcdc">조회된 내용이 없습니다</font></td>
+                 </tr>
+               </table>
+
               </template>
             </ul>
 
@@ -122,7 +135,7 @@
         message: any = '';
         regShow : boolean = false;
         ErrorListModeView : boolean = false;
-        searchYear : string = moment(new Date).format('YYYY');  //선택연도
+        searchYear : string = moment().format('YYYY');  //선택연도
         companyCodeList : any = [];
         saupId  :string = "";
         companyCode : any = "";
@@ -134,6 +147,7 @@
         saveYn : boolean  = false;
         saupUpjongList : any = [];
         saupUpjongCode : string = "";
+        allList : any = [];
 
 
         lang : any =  {
@@ -215,7 +229,17 @@
 
         //조회
         goSearch(){
-
+            let Object = {
+                saupId : this.saupId,
+                soluId : this.saupUpjongCode,
+                subSaup : this.companyCode,
+            };
+            CommonBoardService.getListDatas('receipt-error',moment(this.searchYear).format('YYYY'),Object).then(result=>{
+                if(result.status==200){
+                    this.allList = result.data
+                }
+            }).catch(e=>{
+            })
         }
 
         popupOpen(){
@@ -237,7 +261,6 @@
                     //console.log(result)
                     if (result.length > 0) {
                         this.saupUpjongList = result;
-                        console.log(result);
                     }
                 }
                 , (error) => {

@@ -88,7 +88,7 @@
             const  nowUTC =  moment().utc() ; //UTC시간
             this.nowKo= nowUTC.add(9, 'hours')// 한국시간
 
-            let now = moment(this.nowKo).subtract(11, 'month');
+            let now = moment(this.nowKo).subtract(5, 'month');
             this.searchDate = [now,this.nowKo]
 
         }
@@ -104,14 +104,14 @@
 
             if(div == 'chart'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(this.nowKo).subtract(11, 'month');
+                    this.searchDate[0] = moment(this.nowKo).subtract(5, 'month');
                 }
                 this.chartShow =true;
                 this.listShow =false;
                 this.tabShow =false;
             }else if(div == 'list'){
                 if(this.tabShow){
-                    this.searchDate[0] = moment(this.nowKo).subtract(11, 'month');
+                    this.searchDate[0] = moment(this.nowKo).subtract(5, 'month');
                 }
                 this.chartShow =false;
                 this.listShow =true;
@@ -148,9 +148,9 @@
                 this.$children['2'].gajumStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
                 this.$children['2'].receuptStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
             }else{ // 요약
-                let timeChange = moment(this.nowKo).subtract(7, 'day')
-                this.searchDate = [timeChange,this.nowKo]
-                this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(this.nowKo).format("YYYYMMDD"));
+                // let timeChange = moment(this.nowKo).subtract(7, 'day')
+                // this.searchDate = [timeChange,this.nowKo]
+                this.$children['3'].searchCount(moment(this.searchDate[0]).format("YYYYMMDD"),moment(this.searchDate[1]).format("YYYYMMDD"));
             }
         }
 
