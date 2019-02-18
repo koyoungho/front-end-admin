@@ -31,9 +31,9 @@
                 </template>
                 <th scope="row">{{changeVal(data.TYPE)}}</th>
                 <template v-for="da,indexs in dateArray">
-                <td class="right">{{data[dateArray[indexs]]}}</td>
+                <td class="right">{{amtComma(data[dateArray[indexs]])}}</td>
                 </template>
-                <td>{{data.total}}</td>
+                <td class="right">{{amtComma(data.total)}}</td>
                 </tr>
             </template>
 
@@ -71,9 +71,9 @@
                     <th scope="row" rowspan="2">{{checkOner(data.SOLU)}}</th>
                   </template>
                     <template v-for="da,indexs in dateArray2">
-                        <td class="right">{{data[dateArray2[indexs]]}}</td>
+                        <td class="right">{{amtComma(data[dateArray2[indexs]])}}</td>
                     </template>
-                    <td>{{data.total}}</td>
+                    <td class="right">{{amtComma(data.total)}}</td>
                 </tr>
             </template>
             </tbody>
@@ -141,6 +141,21 @@
 
         mounted(){
 
+        }
+
+        /**
+         * 포맷팅 -
+         * ex) -2,000 /
+         * @param num
+         */
+        amtComma(num){
+            if(num == null || num == ''){
+                return '0';
+            }else if(num == 0 || num == '0'){
+                return '0';
+            }else{
+                    return Number(num).toLocaleString();
+            }
         }
 
         gajumStatistics(date1,date2){
