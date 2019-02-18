@@ -137,6 +137,7 @@
         }
 
         created(){
+            this.loading=false
         }
 
         mounted(){
@@ -197,6 +198,7 @@
 
              }).catch(e=>{
              })
+            this.loading=false
         }
 
         receuptStatistics(date1,date2){
@@ -235,6 +237,7 @@
                 }
             }).catch(e=>{
             })
+            this.loading=false
         }
 
     }

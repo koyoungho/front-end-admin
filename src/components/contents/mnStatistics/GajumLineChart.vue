@@ -119,8 +119,7 @@
         }
 
         created(){
-            this.loading1 = true;
-            this.loading2 = true;
+
         }
 
         mounted(){

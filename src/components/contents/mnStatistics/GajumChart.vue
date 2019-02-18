@@ -128,15 +128,15 @@
 
         tabClick(){
             if(this.listShow){ // 리스트쇼우
-                this.$children['1'].gajumStatistics(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
-                this.$children['1'].receuptStatistics(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
+                // this.$children['1'].gajumStatistics(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
+                // this.$children['1'].receuptStatistics(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
             } else if(this.chartShow){ //차트
-                this.$children['2'].gajumStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
-                this.$children['2'].receuptStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
+                // this.$children['2'].gajumStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
+                // this.$children['2'].receuptStatisticsChart(moment(this.searchDate[0]).format("YYYYMM"),moment(this.searchDate[1]).format("YYYYMM"));
             }else{ // 요약
                 let timeChange = moment(this.nowKo).subtract(7, 'day')
                 this.searchDate = [timeChange,this.nowKo]
-                this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(this.nowKo).format("YYYYMMDD"));
+                // this.$children['3'].searchCount(moment(timeChange).format("YYYYMMDD"),moment(this.nowKo).format("YYYYMMDD"));
             }
         }
 
