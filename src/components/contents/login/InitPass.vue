@@ -368,7 +368,7 @@
             sessionStorage.accessToken = this.accesstoken; //토큰
 
             // api 데이터 호출
-            CommonBoardService.updateListData('accounts',this.resultId+'/password', initPass).then((response) => {
+            CommonBoardService.updateListData('accounts','admin/password', initPass).then((response) => {
                     if (response.data.code == '000') {
                         sessionStorage.clear();
 

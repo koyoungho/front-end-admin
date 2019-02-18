@@ -220,10 +220,10 @@
         loginChk() { //로그인 코드별 화면 분기
             let nextPage = '';
 
-            /*if(sessionStorage.termsYn != null && sessionStorage.termsYn != 'Y'){ //약관동의 화면 이동
-                this.$router.push({name:'termsCheck', query:{ id:sessionStorage.accountId }})
+            if(sessionStorage.termsYn != null && sessionStorage.termsYn != 'Y'){ //약관동의 화면 이동
+                this.$router.push({name:'termsCheck'})
                 return;
-            }*/
+            }
 
             /*if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초로그인시
                 this.$router.push({name:'termsCheck'});
@@ -248,8 +248,8 @@
                 alert(alertMsg);
 
             } else if (sessionStorage.code == '001') { // 90일동안 비밀번호 변경 않음 -> 비밀번호 변경 페이지 이동
-                nextPage = 'chgPass';
-
+                this.$router.push('/chgPass');
+                return;
             } else if (sessionStorage.code == '002') { //휴면계정 -> 비밀번호 초기화 화면 이동
                 //nextPage = 'phoneAuth'
 

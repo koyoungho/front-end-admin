@@ -157,11 +157,13 @@
 
         created(){
 
-            this.paramId = this.$route.query.id; //url로 들어온 id값 받기
+            //this.paramId = this.$route.query.id; //url로 들어온 id값 받기
 
-            console.log("들어온 Id 확인");
-            console.log(this.paramId)
-            if(this.paramId == null || this.paramId == ''){
+            //console.log("들어온 Id 확인");
+            //console.log(this.paramId)
+            //console.log('session Id :: ' + sessionStorage.accountId);
+
+            if(sessionStorage.accountId == null || sessionStorage.accountId == ''){
                 alert('잘못된 접근입니다.')
                 this.$router.push('/login');
             }
@@ -191,15 +193,15 @@
                             this.customerList = result;
                         }
                     }else{
-                        console.log('약관 조회 오류')
+                        //console.log('약관 조회 오류')
                     }
                 }
                 , (error) => {
                     //console.log('가맹점 등록 오류');
-                    console.log('약관 조회 오류');
+                    //console.log('약관 조회 오류');
                 }
             ).catch((response) => {
-                console.log('약관 조회 오류');
+                //console.log('약관 조회 오류');
             });
         }
 
@@ -230,20 +232,12 @@
                 return;
             }
 
-//            this.showConfirm = true; //본인인증 화면 보이기
-            /*
-             let reqData: any = {};
-             reqData['birthday'] = '20010101'; //생년월일
-             reqData['gender'] = '0'; //성별
-             reqData['name'] = '금나래'; //이름
-             reqData['phoneNum'] = '01027047329'; //전화번호
-             reqData['id'] = 'keumnara12'; //아이디
-            */
+            this.showConfirm = true; //본인인증 화면 보이기
 
              //this.termsAgree();
 
-            let reqData : any = { id: this.paramId };
-            this.$router.push({name:'regPass', params:{reqParams:reqData }});
+            //let reqData : any = { id: this.paramId };
+            //this.$router.push({name:'regPass', params:{reqParams:reqData }});
 
             //약관동의
             /*CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
@@ -262,7 +256,7 @@
 
         termsAgree(){
             //약관동의
-            CommonBoardService.postListData('accounts',this.paramId+'/terms', null).then((response) => {
+            CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
                     if (response.status == 200 || response.status == 200) {
                         //alert('변경이 완료되었습니다')
                         console.log('약관등록완료!!')
@@ -303,10 +297,13 @@
                     reqData['phoneNum'] = response.phoneNo; //전화번호
                     reqData['id'] = response.id; //아이디
                     //this.idCallApi(reqData)*/
-                    //console.log('본인인증 후 값 넘기기전')
+                    console.log('본인인증 후 값 넘기기전')
                     console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
 
-                    this.$router.push({name:"regPass", params:{ reqData }});
+                    //this.$router.push({name:"regPass", params:{ reqData }});
+                    this.termsAgree();
+
+                    this.$router.push({name:'main'})
                 }
                 else {
 
