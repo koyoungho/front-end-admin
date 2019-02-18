@@ -45,6 +45,9 @@
     <h4>현금영수증 발행 현황</h4>
     <!-- tbl list box -->
     <div class="tbl_scroll_x_box">
+        <div id="loading_bar" v-show="loading2">
+            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
+        </div>
         <!-- tbl list01 -->
         <table class="tbl_list04 type03 page_stats04">
             <caption>현금영수증 발행 현황</caption>
@@ -110,6 +113,7 @@
         dateArray2 : any = [];
         dateArray2Count : number = 0;
         loading :boolean = false;
+        loading2 :boolean = false;
 
         dateFormats(date) {
             let dates = '';
@@ -137,7 +141,6 @@
         }
 
         created(){
-            this.loading=false
         }
 
         mounted(){
@@ -198,10 +201,10 @@
 
              }).catch(e=>{
              })
-            this.loading=false
         }
 
         receuptStatistics(date1,date2){
+            this.loading2=true;
             CommonBoardService.getListDatas('statistics','receipt',{responseType:'GRID',searchStartDate: date1 , searchEndDate: date2}).then(result=>{
                 if(result.status==200){
                     this.receiptList =[];
@@ -234,10 +237,11 @@
                         })
                         e['total'] = totalCount
                     })
+                    this.loading2=false
                 }
             }).catch(e=>{
             })
-            this.loading=false
+
         }
 
     }
