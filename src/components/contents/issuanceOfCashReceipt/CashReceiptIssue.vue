@@ -827,12 +827,14 @@
                 }
             } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
 
-            if ((11 - (tempSum % 11)) % 10 != arrNum2[6]) {
-                //alert("올바른 주민번호가 아닙니다.");
-                //num1.value = "";
-                //num2.value = "";
-                //num1.focus();
-                return false;
+            if (((11 - (tempSum % 11)) % 10 != arrNum2[6])) { //내국인 주민번호 체크
+
+                if(((11 - (tempSum % 11)) % 10 + 2) % 10 != arrNum2[6]){ //외국인 주민번호 체크
+                    return false;
+                }else{
+                    return true;
+                }
+
             } else {
                 //alert("올바른 주민등록번호 입니다.");
                 return true;
