@@ -219,7 +219,7 @@
                     let result = response.data;
                     if(result.code == '000'){
                         this.passChangChk = true;
-                        alert('비밀번호 변경 완료되었습니다.');
+                        alert('비밀번호 변경이 완료되었습니다.');
 
                         this.$store.dispatch('LOGOUT')
                             .then(() =>
