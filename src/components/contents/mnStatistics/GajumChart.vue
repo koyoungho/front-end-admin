@@ -86,7 +86,7 @@
         created(){
 
             const  nowUTC =  moment().utc() ; //UTC시간
-            this.nowKo= nowUTC.add(9, 'hours')// 한국시간
+            this.nowKo= nowUTC// 한국시간
 
             let now = moment(this.nowKo).subtract(5, 'month');
             this.searchDate = [now,this.nowKo]
