@@ -746,7 +746,7 @@
                 "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">저희 KT 롯데정보통신 현금 영수증 서비스를 이용해 주시는 회원님께 감사 드립니다.<br>투명한 거래를 위한 KT 롯데 정보통신 현금영수증 사이트 신규 회원 가입이 완료되었습니다.</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">아래 링크 주소를 클릭하여 비밀번호를 설정 하신 후 서비스를 이용해 주시기 바랍니다.</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:20px;\">휴대폰 SMS로 임시 비밀번호를 발송하였으니 사이트 접속후 서비스 이용이 가능합니다.</td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
@@ -769,7 +769,7 @@
                 "\t\t\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin-top:0px; margin-bottom:150px;\">\n" +
                 "\t\t\t\t<tbody>\n" +
                 "\t\t\t\t<tr>\n" +
-                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\">PW 등록 링크 주소 :  <a :href="+termsUrl+" target=\"_blank\" style=\"color:#008aff;\">"+termsUrl+"</a> (패스워드 등록 주소링크)</td>\n" +
+                "\t\t\t\t\t<td style=\"font-size:14px;font-family:'나눔고딕',NanumGothic,'맑은고딕',Malgun Gothic,'돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;color:#939393; padding-top:15px;\"></td>\n" +
                 "\t\t\t\t</tr>\n" +
                 "\t\t\t\t</tbody>\n" +
                 "\t\t\t\t</table>\n" +
