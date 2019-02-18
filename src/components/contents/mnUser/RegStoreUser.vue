@@ -1191,7 +1191,7 @@
 
             CommonBoardService.postListDatas('validation/saupid',null, reqData).then(result=>{
                 console.log(result)
-                if(result != null && result.data.code == '000'){
+                if(result != null && (result.data.code == '000' || result.data.code == '001')){
 
                     this.saupInfo(saupId);
 
