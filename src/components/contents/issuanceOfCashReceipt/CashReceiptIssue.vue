@@ -367,7 +367,7 @@
                 this.supplyAmt = amt2; //공급가액
                 this.vat = vat2; //부가세
             }
-            console.log(3,this.noTax  )
+            //console.log(3,this.noTax  )
         }
 
         bulkIssue() { //대량발송 화면 이동
