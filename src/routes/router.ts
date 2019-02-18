@@ -13,6 +13,7 @@ import MnUserOtp from "../components/contents/login/MnUserOtp.vue" //휴대폰 �
 import TermsCheck from "../components/contents/login/TermsCheck.vue" //약관동의
 import FranchiseOtp from "../components/contents/login/FranchiseOtp.vue" //가맹점관리 본인인증
 import RegPass from "../components/contents/login/RegPass.vue" //비밀번호 등록
+import ChgPass from "../components/contents/login/ChgPass.vue" //비밀번호 수정
 
 // 정보변경
 import MyPage from "../components/contents/login/myPage.vue" //아이디 찾기 결과
@@ -224,6 +225,7 @@ export default new Router({
         {path:'/termsCheck', name:'termsCheck', component: TermsCheck ,meta: {authRequired: false}}, //약관동의
         {path:'/regPass', name:'regPass', component: RegPass ,meta: {authRequired: false}}, //비밀번호 등록
         {path:'/kmcResult', name:'kmcResult', component: kmcResult ,meta: {authRequired: false}}, //Kmc 인증 결과
+        {path:'/chgPass',name:'chgPass', component: ChgPass ,meta: {authRequired: false}}, //비밀번호 변경
         {
             path: '', redirect: "/login"
         },
