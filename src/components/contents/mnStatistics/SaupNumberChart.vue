@@ -382,7 +382,7 @@
 
             let range = moment(fromDate).isBetween(beforeOneYKoMm, nowKoMm); // true
 
-            if (range == false) {
+            if (range == false && nowKoMm != fromDate) {
                 Vue.swal({text:"현재일 기준 최대 검색가능기간은 1년입니다."})
                 return;
             }
