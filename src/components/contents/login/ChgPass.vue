@@ -72,12 +72,6 @@
             </div>
 
             <div class="footer_wrap">
-                <ul class="footer_links">
-                    <li><a href="https://www.kt.com/">(주) 케이티</a></li>
-                    <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
-                    <li><a v-on:click="policyDiv('site')">이용약관</a></li>
-                    <li><a v-on:click="policyDiv('user')">개인정보처리방침</a></li>
-                </ul>
                 <div class="footer_address">
                     <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
                         <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
