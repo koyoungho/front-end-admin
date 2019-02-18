@@ -259,7 +259,7 @@
             CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
                     if (response.status == 200 || response.status == 200) {
                         //alert('변경이 완료되었습니다')
-                        console.log('약관등록완료!!')
+                        //console.log('약관등록완료!!')
                         //this.$router.push({name:'main'})
                     }
                 }
@@ -297,8 +297,8 @@
                     reqData['phoneNum'] = response.phoneNo; //전화번호
                     reqData['id'] = response.id; //아이디
                     //this.idCallApi(reqData)*/
-                    console.log('본인인증 후 값 넘기기전')
-                    console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
+                    //console.log('본인인증 후 값 넘기기전')
+                    //console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
 
                     //this.$router.push({name:"regPass", params:{ reqData }});
                     this.termsAgree();
