@@ -99,6 +99,7 @@ export default new Vuex.Store({
             sessionStorage.code = data.code;
             sessionStorage.message = data.message;
             sessionStorage.failCnt = data.failCnt;
+            sessionStorage.accessToken = data.accesstoken; //token
         },
         SEARCHLISTINPUT(state,{menu}){
             state.searchList = menu

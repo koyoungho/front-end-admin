@@ -110,12 +110,6 @@
             </div>
 
             <div class="footer_wrap">
-                <ul class="footer_links">
-                    <li><a href="https://www.kt.com/">(주) 케이티</a></li>
-                    <li><a href="https://www.ldcc.co.kr/">롯데정보통신 (주)</a></li>
-                    <li><a v-on:click="policyDiv('site')">이용약관</a></li>
-                    <li><a v-on:click="policyDiv('user')">개인정보처리방침</a></li>
-                </ul>
                 <div class="footer_address">
                     <p class="footer_text01"><span class="company">(주)케이티  대표이사 황창규</span>
                         <span class="address">(우)13606 경기도 성남시 분당구 불정로 90(정자동 206번지)</span>
@@ -259,7 +253,7 @@
             CommonBoardService.postListData('accounts',sessionStorage.accountId+'/terms', null).then((response) => {
                     if (response.status == 200 || response.status == 200) {
                         //alert('변경이 완료되었습니다')
-                        console.log('약관등록완료!!')
+                        //console.log('약관등록완료!!')
                         //this.$router.push({name:'main'})
                     }
                 }
@@ -297,8 +291,8 @@
                     reqData['phoneNum'] = response.phoneNo; //전화번호
                     reqData['id'] = response.id; //아이디
                     //this.idCallApi(reqData)*/
-                    console.log('본인인증 후 값 넘기기전')
-                    console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
+                    //console.log('본인인증 후 값 넘기기전')
+                    //console.log('생년월일: '+response.birthday + ' | 성별: ' + response.gender + ' | 이름: ' + response.name + ' | 폰번호: ' + response.phoneNo + ' | ID: ' + response.id);
 
                     //this.$router.push({name:"regPass", params:{ reqData }});
                     this.termsAgree();

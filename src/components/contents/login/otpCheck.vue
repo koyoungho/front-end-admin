@@ -186,7 +186,8 @@
                 //보안로직포함할곳
                 this.$store.dispatch('OTP_LOGIN', {auth_opt, id})
                     .then((result) => {
-                        if (result == 'success') {
+                        //console.log(result);
+                        if (result == 'success'||result == 'noinfo') {
                             sessionStorage.setItem('sisMgtToken',sessionStorage.accountId)
 
                             this.$emit('menuChk');
