@@ -28,7 +28,7 @@
                         <!-- login -->
                         <ul class="login">
                             <li class="form_name">
-                                <input type="text"  size="" maxlength="" placeholder="이름" class="name" title="이름 입력" v-model="inputName">
+                                <input type="text"  size="" maxlength="" placeholder="아이디" class="name" title="아이디 입력" v-model="inputName">
                             </li>
                             <li class="form_tel">
                                 <input type="text"  size="" maxlength="" placeholder="휴대폰 번호" class="tel" title="휴대폰 입력" v-model="phoneNum">
@@ -162,12 +162,18 @@
 
 
         searchCancel() {
+
+            if(sessionStorage.kmc_id){
+                sessionStorage.kmc_id = '';
+                sessionStorage.kmc_saupId = '';
+            }
+
             clearInterval(this.interval);
             this.$router.push('/login')
         }
         changePwd() {
             if(this.inputName == ''){
-                alert('이름을 입력하세요.');
+                alert('아이디를 입력하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
@@ -202,7 +208,7 @@
 
         optCall(){
             if(this.inputName == ''){
-                alert('이름을 입력하세요.');
+                alert('아이디를 입력하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
@@ -213,8 +219,8 @@
             }
 
             let otp = {
-                id: "",
-                name: this.inputName,
+                id: this.inputName,
+                //name: this.inputName,
                 saupId:this.saupId,
                 phoneNum : this.phoneNum
             }
@@ -238,8 +244,8 @@
 
         optCallConfirm(){
             let otp = {
-                id: "",
-                name: this.inputName,
+                id: this.inputName,
+                //name: this.inputName,
                 saupId:this.saupId,
                 phoneNum : this.phoneNum
             }
@@ -304,6 +310,18 @@
         }
 
         kcmPop(){
+
+            if(this.inputName == ''){
+                alert('아이디를 입력하세요.');
+                return;
+            }else if(this.saupId == ''){
+                alert('사업자등록번호를 입력하세요.');
+                return;
+            }
+
+            sessionStorage.kmc_id = this.inputName;
+            sessionStorage.kmc_saupId = this.saupId;
+
             this.showConfirm = true;
         }
 

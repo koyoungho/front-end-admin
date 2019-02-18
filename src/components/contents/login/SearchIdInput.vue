@@ -296,6 +296,19 @@
         }
 
         kcmPop(){
+
+            if(this.inputName == ''){
+                alert('이름을 입력하세요.');
+                return;
+            }
+            if(this.saupId == ''){
+                alert('사업자등록번호를 입력하세요.');
+                return;
+            }
+
+            sessionStorage.kmc_name =this.inputName
+            sessionStorage.kmc_saupId = this.saupId
+
             // this.$modal.show(KmcConfirm);
             this.showConfirm = true;
         }
