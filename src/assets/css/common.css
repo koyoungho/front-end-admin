@@ -1430,7 +1430,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapperModal3 .popup_header3 .btn_close {position:absolute; display: inline-block; z-index: 101; top:15px; right:15px; width: 20px; height: 20px; line-height: 0; z-index:100;
   text-indent: -9999px; background: url('../images/icon.png') no-repeat -28px -46px;}
 .popup_wrapperModal3 .popup_body3 {position: relative; padding:0; background: #fff; border-radius:5px; border-top-left-radius: 0px; border-top-right-radius: 0px;}
-
+.popup_wrapperModal3 .popup_body3 .popup_content_post {position: relative; padding:30px 30px 30px 30px; overflow-x:hidden; overflow-y:auto;}
 
 
 @media print {
