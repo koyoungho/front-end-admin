@@ -52,7 +52,8 @@
                 </table>
             </div>
             <div class="btn_tbl_bot">
-                <button type="button" id="" class="btn_m01 bg01" v-on:click="sendData(id)">발급내역 이관</button> <button type="button" id="" class="btn_m01 bg01" v-on:click="sendPassSms">비밀번호 초기화</button>
+                <!--<button type="button" id="" class="btn_m01 bg01" v-on:click="sendData(id)">발급내역 이관</button> -->
+                <button type="button" id="" class="btn_m01 bg01" v-on:click="sendPassSms">비밀번호 초기화</button>
             </div>
 
             <h4>사업장 기본 정보 <span class="sub_cf">(사업자 등록증 상의 정보)</span></h4>
