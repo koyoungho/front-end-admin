@@ -549,7 +549,7 @@
         phonenumberChk(){
             let reqData: any = {};
             reqData['checkString'] = this.phoneNum;
-            reqData['checkSum'] = '';
+            reqData['checkSum'] = this.saupId;
             reqData['checkType'] = 'USER';
 
             // api 데이터 호출(사업자등록번호 유효성 체크)

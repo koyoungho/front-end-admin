@@ -41,20 +41,37 @@
 
         }
         getBlaindLoding() {
-            this.defaultParams = this.$route.query;
+            //this.defaultParams = this.$route.query;
+
+            let decertData : any = {};
+            decertData['certNum'] = this.$route.query.certNum;
+            decertData['rec_cert'] = this.$route.query.rec_cert;
+            decertData['name'] = sessionStorage.kmc_name; //입력받은 이름
+            decertData['id'] = sessionStorage.kmc_id; //입력받은 ID
+            decertData['saupId'] =  sessionStorage.kmc_saupId; //입력받은 사업자번호
+
             if(this.$route.query){
                 // api 요청코드 암호화 요청
-                CommonBoardService.postListDatas('kmc/decert', null ,this.defaultParams)
+                CommonBoardService.postListDatas('kmc/decert', null ,decertData)
                     .then((response) => {
                             let resultData = response.data;
                             if(response.status==200){
+                                sessionStorage.kmc_name = '';
+                                sessionStorage.kmc_id = '';
+                                sessionStorage.kmc_saupId = '';
                                 sessionStorage.setItem("resultKey",JSON.stringify(resultData))
                             }
                             else{
+                                sessionStorage.kmc_name = '';
+                                sessionStorage.kmc_id = '';
+                                sessionStorage.kmc_saupId = '';
                                 sessionStorage.setItem("failKey",'Fail')
                             }
                         }
                         , error => {
+                            sessionStorage.kmc_name = '';
+                            sessionStorage.kmc_id = '';
+                            sessionStorage.kmc_saupId = '';
                             sessionStorage.setItem("failKey",'Fail')
                         }
                     ).catch();

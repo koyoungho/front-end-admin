@@ -28,7 +28,7 @@
                         <!-- login -->
                         <ul class="login">
                             <li class="form_name">
-                                <input type="text"  size="" maxlength="" placeholder="이름" class="name" title="이름 입력" v-model="inputName">
+                                <input type="text"  size="" maxlength="" placeholder="아이디" class="name" title="아이디 입력" v-model="inputName">
                             </li>
                             <li class="form_tel">
                                 <input type="text"  size="" maxlength="" placeholder="휴대폰 번호" class="tel" title="휴대폰 입력" v-model="phoneNum">
@@ -160,14 +160,17 @@
         interval : number = 0;
         message : string = "";
 
+        accesstoken : string = ''; //비밀번호 등록시 필요한 토큰
 
         searchCancel() {
+            sessionStorage.clear();
+
             clearInterval(this.interval);
             this.$router.push('/login')
         }
         changePwd() {
             if(this.inputName == ''){
-                alert('이름을 입력하세요.');
+                alert('아이디를 입력하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
@@ -202,7 +205,7 @@
 
         optCall(){
             if(this.inputName == ''){
-                alert('이름을 입력하세요.');
+                alert('아이디를 입력하세요.');
                 return;
             }else if(this.saupId == ''){
                 alert('사업자등록번호를 입력하세요.');
@@ -213,8 +216,8 @@
             }
 
             let otp = {
-                id: "",
-                name: this.inputName,
+                id: this.inputName,
+                //name: this.inputName,
                 saupId:this.saupId,
                 phoneNum : this.phoneNum
             }
@@ -223,6 +226,7 @@
                     if(result.data.code=='000'){
                         this.startTimer();
                         this.confirmButton = true;
+                        this.accesstoken = result.data.extra;
                         alert('인증번호를 발송하였습니다')
                     }
                     else{
@@ -238,8 +242,8 @@
 
         optCallConfirm(){
             let otp = {
-                id: "",
-                name: this.inputName,
+                id: this.inputName,
+                //name: this.inputName,
                 saupId:this.saupId,
                 phoneNum : this.phoneNum
             }
@@ -253,6 +257,8 @@
                             this.resultId = result.data.extra;
                             clearInterval(this.interval)
                             this.reset();
+
+                            this.changePwd();
                         }
                         else{
                             clearInterval(this.interval)
@@ -304,6 +310,18 @@
         }
 
         kcmPop(){
+
+            if(this.inputName == ''){
+                alert('아이디를 입력하세요.');
+                return;
+            }else if(this.saupId == ''){
+                alert('사업자등록번호를 입력하세요.');
+                return;
+            }
+
+            sessionStorage.kmc_id = this.inputName;
+            sessionStorage.kmc_saupId = this.saupId;
+
             this.showConfirm = true;
         }
 
@@ -315,6 +333,7 @@
                     this.title='아이디 조회완료'
                     this.otpTrue = true;
                     this.resultId = response.id
+                    this.accesstoken = response.token; //토큰
                 }
                 else {
                 }
@@ -345,23 +364,34 @@
             let initPass ={}
             initPass['id'] = this.resultId; //이름
             initPass['newPass'] = this.pwdConfirm; //패스워드
+
+            sessionStorage.accessToken = this.accesstoken; //토큰
+
             // api 데이터 호출
             CommonBoardService.updateListData('accounts',this.resultId+'/password', initPass).then((response) => {
                     if (response.data.code == '000') {
+                        sessionStorage.clear();
+
                         alert('비밀번호 변경이 완료 되었습니다')
                         this.$router.push({name:'login'})
                     } else {
+                        sessionStorage.clear();
+
                         //alert(response.data.message);
                         this.valueChecks = response.data.message;
                         return;
                     }
                 }
                 , (error) => {
+                    sessionStorage.clear();
+
                     //alert(error.data.message);
                     this.valueChecks = error.data.message;
                     return;
                 }
             ).catch((response) =>  {
+                sessionStorage.clear();
+
                 alert('비밀번호 변경중 오류가 발생하였습니다.\n다시 시도하세요.')
             });
         }

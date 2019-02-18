@@ -149,7 +149,7 @@
                         {type: 'selectCode' ,class:'w33 ',liNull:true, title :'BL 상태',id: 'blGb', name:'blGb' , value: '' ,  api : 'code/bl' , option : [{ codeNm : '' , code: '' }]},
                         {type: 'radio' ,class:'w25',liNull:false, title :'', id: 'searchDateType', name: 'radioBox' , value: 'REG' , option : [{ name : '수정일' , value: 'UP' },{ name : '등록일' , value: 'REG' }] },
                         {type: 'date2',class:'w25',liNull:false, title :'', id: 'date', name:'date', searchStartDate: [] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD', setDates: [beforeOneDKo,nowKo]},
-                        {type: 'select' ,class:'w25',liNull:false, title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' },{ name : '아이디' , value: 'id' }]},
+                        {type: 'select' ,class:'w25',liNull:false, title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '사업장명' , value: 'shopNm' },{ name : '사업자등록번호' , value: 'saupId' }]},
                         {type: 'input',class:'w25 text_left',liNull:false, title :'', id: 'searchWord', name:'searchWord' , value: '',   api : '' , option : '' }
                     ],
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
