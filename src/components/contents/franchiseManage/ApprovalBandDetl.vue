@@ -469,7 +469,7 @@
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
-                apiUrl = 'code/aprvcode';
+                apiUrl = 'code/approvalcode';
             }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드 -- get
                 apiUrl = 'code/issuer';
             }
