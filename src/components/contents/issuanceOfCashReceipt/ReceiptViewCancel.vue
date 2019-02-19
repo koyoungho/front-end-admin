@@ -52,6 +52,7 @@
         nowKo_str: any ='';
 
         onlineVal(val){
+            // 온라인 Yn 값이 변할경우 컬럼 히든처리  및 오픈
             if(val=='N'){
             this.listItem.dataGrid.columControl[7].type='hidden'
             this.listItem.dataGrid.columControl[9].type='hidden'
@@ -152,17 +153,17 @@
             reqData['currentPage'] =  this.listItem.paging.currentPage ;//검색페이지
             reqData['perPage'] = this.listItem.paging.perPage ; //페이지당 row 수
 
-            reqData['subSaup'] =this.listItem.search[0].value; //회사코드
-            reqData['saupId'] =this.listItem.search[1].value;//사업자등록번호
+            reqData['subSaup'] =this.listItem.search[1].value; //회사코드
+            reqData['saupId'] =this.listItem.search[2].value;//사업자등록번호
 
-            reqData['geogu'] =this.listItem.search[3].value; //발급 용도
-            reqData['trgu'] =this.listItem.search[4].value; //거래구분(승인 : 0 , 취소 : 1)
-            reqData['onlineYn']= this.listItem.search[5].value;//온라인여부(온라인 : Y, 오프라인 : N)
-            reqData['searchDateType']= this.listItem.search[6].value;//검색일 종류
-            reqData['searchEndDate']=this.formatDates(this.listItem.search[7].searchStartDate[1]);//검색 종료일
-            reqData['searchStartDate']= this.formatDates(this.listItem.search[7].searchStartDate[0]);//검색 시작일
-            reqData['searchType'] =this.listItem.search[8].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
-            reqData['searchWord'] =this.listItem.search[9].value;//검색어
+            reqData['geogu'] =this.listItem.search[4].value; //발급 용도
+            reqData['trgu'] =this.listItem.search[5].value; //거래구분(승인 : 0 , 취소 : 1)
+            reqData['onlineYn']= this.listItem.search[0].value;//온라인여부(온라인 : Y, 오프라인 : N)
+            reqData['searchDateType']= this.listItem.search[8].value;//검색일 종류
+            reqData['searchEndDate']=this.formatDates(this.listItem.search[9].searchStartDate[1]);//검색 종료일
+            reqData['searchStartDate']= this.formatDates(this.listItem.search[9].searchStartDate[0]);//검색 시작일
+            reqData['searchType'] =this.listItem.search[10].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
+            reqData['searchWord'] =this.listItem.search[11].value;//검색어
 
             let fileOrigin = "cash_history_"+this.nowKo_str+".xlsx"
 
