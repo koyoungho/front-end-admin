@@ -33,8 +33,14 @@
                     <td class="con_row01 info_msg2_th3">{{viewRowItem.comfirm}}</td>
                 </tr>
                 <tr>
-                    <th scope="row" class="con_row02">지출구분<em class="form_req">*</em></th>
-                    <td colspan="3" class="con_row01">{{viewRowItem.cultGbNm}}</td>
+                    <th scope="row">승인번호<em class="form_req">*</em></th>
+                    <td class="con_row01">{{viewRowItem.perm}}</td>
+                    <th scope="row" class="sub_form01">지출구분<em class="form_req">*</em></th>
+                    <td class="con_row01 info_msg2_th3">{{viewRowItem.cultGbNm}}</td>
+
+                    <!--<th scope="row" class="con_row02">지출구분<em class="form_req">*</em></th>-->
+                    <!--<td colspan="3" class="con_row01">{{viewRowItem.cultGbNm}}</td>-->
+
                 </tr>
                 <!--<tr id="companyViewChk">-->
                     <!--<th scope="row" class="com_code codenone">상품구분</th>-->

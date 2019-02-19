@@ -11,7 +11,7 @@
                 <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
             </div>
 
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:eventOnline="onlineVal"></ListComponent>
         </div>
         <!-- //content -->
     </section>
@@ -51,6 +51,17 @@
         show : boolean = true;
         nowKo_str: any ='';
 
+        onlineVal(val){
+            if(val=='N'){
+            this.listItem.dataGrid.columControl[7].type='hidden'
+            this.listItem.dataGrid.columControl[9].type='hidden'
+            this.listItem.dataGrid.totalColum = 8
+            }else{
+            this.listItem.dataGrid.columControl[7].type='text'
+            this.listItem.dataGrid.columControl[9].type='text'
+            this.listItem.dataGrid.totalColum = 10
+            }
+        }
 
         created(){
 
@@ -100,12 +111,14 @@
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'selectObjectSearchList' ,class:'w30', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
-                        {type: 'popup',class:'w30 ', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
-                        {type: 'inputPop',class:'w30 text_left', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
-                        {type: 'select' ,class:'w30', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : '' , option : [{ name : '현금(소득공제)' , value: '0' },{name : '현금(지출증빙)' , value: '1' }]},
-                        {type: 'select' ,class:'w30', title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : '' , option : [{ name : '승인' , value: '0' },{name : '취소' , value: '1' }]},
-                        {type: 'select2' ,class:'w30', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
+                        {type: 'select2' ,class:'w25 ', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
+                        {type: 'selectObjectSearchList' ,class:'w25 ', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
+                        {type: 'popup',class:'w25 ', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
+                        {type: 'inputPop',class:'w25 text_left', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
+                        {type: 'selectCode' ,class:'w25 ', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : 'code/?groupCode=0002' , option : []},
+                        {type: 'selectCode' ,class:'w25 ', title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : 'code/?groupCode=0003' , option : []},
+                        {type: 'selectCode' ,class:'w25 ', title :'지출구분',id: 'cultGb', name:'cultGb' , value: '' ,  api : 'code/?groupCode=0005' , option : []},
+                        {type: 'linull',class:'w25 text_left', title :'', id: '123', name:'매장정보' , value: this.shopNm,   api : '' },
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'approval' , option : [{ name : '거래일' , value: 'approval' },{ name : '취소일' , value: 'cancel' }] },
                         {type: 'date2',class:'w25 text_left', title :'', id: 'date', name:'date', searchStartDate: [nowKo, nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD' , setDates:[nowKo, nowKo]},
                         {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
@@ -126,7 +139,7 @@
         }
         // 뷰페이지 클릭이벤트 받아서 여는곳
         listViewEvent(row){
-            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[5].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+            this.$router.push({ name:'receiptViewCancelDetl', params: { current : row.searchOption , objectKey : row.row , onlineYn: this.listItem.search[0].value} }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
         updated(){

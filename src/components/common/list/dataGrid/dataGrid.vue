@@ -72,8 +72,8 @@
                                     <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
                                         <span class="chk_box"><input type="checkbox"
                                                                      v-on:click="checkAlls(columNames.id,index)"
-                                                                     v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label
-                                                id=""><span class="blind">전체선택</span></label></span>
+                                                                     v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label id=""><span class="blind">전체선택</span></label></span>
+
                                     </template>
                                     <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
                                         {{columNames.columName}}
@@ -129,10 +129,11 @@
                             <template v-if="dataGridDetail.dataGrid.columControl[index].type==='checkBox'">
                                 <th scope="col">
                                     <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==true">
-                                        <span class="chk_box"><input type="checkbox"
-                                                                     v-on:click="checkAlls(columNames.id,index)"
-                                                                     v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label
-                                                id=""><span class="blind">전체선택</span></label></span>
+                                        <span class="chk_box">
+                                          <input type="checkbox"
+                                         v-on:click="checkAlls(columNames.id,index)"
+                                         v-model="dataGridDetail.dataGrid.columControl[index].checkVal"><label id=""><span class="blind">전체선택</span></label></span>
+
                                     </template>
                                     <template v-if="dataGridDetail.dataGrid.columControl[index].allCheck==''">
                                         {{columNames.columName}}
@@ -346,6 +347,8 @@
         selectAll: boolean = false; // 전체선택옵션
         tableOriginCss = this.dataGridDetail.dataGrid.tableClass == null ? 'tbl_scroll_box' : this.dataGridDetail.dataGrid.tableClass  // 테이블 스크롤 없는것
         tableOriginCss2 = this.dataGridDetail.dataGrid.tableClass2 == null ? 'tbl_list01 page_inquiry' : this.dataGridDetail.dataGrid.tableClass2 // 테이블 스크롤 있는것
+
+        hiddenColum :  boolean = true;
 
         // 토탈합계
         mTotalCount: number = 0;
@@ -619,8 +622,13 @@
             //     this.dataGridDetail.search = searchBox
             // }
 
+
+
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
+                if(e.value=='N'){
+                       this.hiddenColum = false;
+                }
                 if (e.type == 'date') {  //날짜
                     searchData['searchStartDate'] = e.searchStartDate
                     searchData['searchEndDate'] = e.searchEndDate

@@ -49,6 +49,10 @@
             </template>
           </template>
 
+          <template v-if="item.type=='linull'" >
+            <li :class="item.class" style=height:50px><label for="aa"></label></li>
+          </template>
+
           <template v-if="item.type=='input'">
             <li :class="item.class">
               <template v-if="item.title !=''"><label for="aa">{{item.title}}</label></template>
@@ -82,10 +86,19 @@
           </template>
           <template v-if="item.type=='select2'">
             <li :class="item.class">
+
               <label for="aa">{{item.title}}</label>
-              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+              <template v-if="item.id=='onlineYn'">
+              <select v-model="item.value"  class="select form_w50" title="발급용도 선택" :onclick="eventClick(item.value)">
                 <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
+              </template>
+              <template v-else>
+                <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+                  <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
+                </select>
+              </template>
+
             </li>
             <template v-if="item.liNull">
               <li :class="item.class" style=height:50px><label for="aa"></label></li>
@@ -407,6 +420,10 @@
             this.$emit('dateCheck' , date)
         }
 
+        eventClick(val){
+            this.$emit('eventOnline' , val)
+        }
+
         formatDates(date) {
             let formattedDates = ''
             formattedDates = format(date, this.dateFormat)
@@ -559,8 +576,8 @@
                 let  beforeOneY = moment(this.nowDate).subtract(1, 'years');//1년전 날짜
                 if(name == 'receiptViewCancel') {//발급내역조회
 
-                    let searchEndDate = this.formatDates(object[7].searchStartDate[1]);
-                    let searchStartDate = this.formatDates(object[7].searchStartDate[0]);
+                    let searchEndDate = this.formatDates(object[9].searchStartDate[1]);
+                    let searchStartDate = this.formatDates(object[9].searchStartDate[0]);
                     let range = moment(searchStartDate).isBetween(beforeOneY, this.nowDate); // true
 
                   if (range == false) {
