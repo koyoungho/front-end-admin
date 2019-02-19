@@ -44,7 +44,7 @@
                                     <option value="0">현금(소득공제)</option>
                                     <option value="1">현금(지출증빙)</option>
                             </select>
-                            <font size="2px" color="#999">(※소득공제: 연말정산용, 지출증빙: 세금신고용)</font>
+                            <!--<font size="2px" color="#999">(※소득공제: 연말정산용, 지출증빙: 세금신고용)</font>-->
                         </td>
                         <th scope="row">고객신분확인<em class="form_req">*</em></th>
                         <td>

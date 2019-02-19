@@ -59,8 +59,14 @@
 
               <template v-for="data,index in allList">
               <li>
-                <span class="title">{{index+1}} 월</span>
+                <span class="title"><font color="white">{{data.errorYearMonth}}월</font></span>
                 <ul class="con">
+                  <li>
+                    <div>건수 :  {{data.fixErrorCount}} / {{data.totalErrorCount}}</div>
+                  </li>
+                  <li>
+                    <div>회사코드 : {{data.fixSubSaupCount}} / {{data.totalSubSaupCount}}</div>
+                  </li>
                   <li>
                     <div>현재상태 : 제출불가</div>
                   </li>
@@ -68,15 +74,24 @@
                     <div style="float:left">
                       <button type="button" class="btn_s011 bg031"  @click="showList()">보기</button>
                     </div>
-                    <div style="float:left">
+                    <div style="float:left" v-if="data.fixErrorCount >= 1">
                       <button type="button" class="btn_s011 bg011" @click="modList()">수정</button>
                     </div>
+                    <template v-if="data.fixErrorCount >= 1">
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg051" @click="compCodeChart()">제출</button>
+                      <button type="button" class="btn_s011 bg051" @click="jeculCancelButton()">제출</button>
                     </div>
+                    </template>
+                    <template v-else>
+                      <div style="float:left">
+                        <button type="button" class="btn_s011 bg051" @click="jeculButton()">제출취소</button>
+                      </div>
+                    </template>
+                    <template v-if="role=='0001'">
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg051" @click="compCodeChart()">국세청</button>
+                      <button type="button" class="btn_s011 bg051" @click="kukseButton()">국세청</button>
                     </div>
+                    </template>
                   </li>
 
                 </ul>
@@ -199,12 +214,24 @@
         showList(){
             // this.ErrorListModeView = true;
             // this.$modal.show(ErrorListMode,{text:''},{draggable:true ,width:1400,height:700})
-            let routeData = this.$router.resolve({name: 'statAll', params: {data: "someData"}});
+            let routeData = this.$router.resolve({name: 'statAll', params: {data: "readOnly"}});
             window.open(routeData.href,'');
         }
 
         modList(){
             this.ErrorListModeView = true;
+        }
+
+        jeculButton(){
+
+        }
+
+        jeculCancelButton(){
+
+        }
+
+        kukseButton(){
+
         }
 
         dateCheck(data){
