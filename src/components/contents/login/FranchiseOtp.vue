@@ -27,9 +27,15 @@
                         <!-- cert box -->
                         <div class="cert_box">
                             <p class="form_cert row01">
-                                <input type="text" class="tel" title="수신자ID" placeholder="수신자ID" v-model="id">
-                                <input type="text" class="tel" title="사업자등록번호" placeholder="사업자등록번호" v-model="saupId">
-                                <input type="hidden" title="받은 사업자등록번호" v-model="reqSaupId">
+                                <!--<input type="text" class="tel" title="수신자ID" placeholder="수신자ID" v-model="id">-->
+                                <template v-if="accountArr.length > 0">
+                                    <select v-model="id"  class="select form_accountlist" title="수신자ID 선택">
+                                        <option value="">선택</option>
+                                        <option v-for="idArr in accountArr" :value="idArr">{{idArr}}</option>
+                                    </select>
+                                </template>
+                                <input type="text" class="tel" title="사업자등록번호" placeholder="사업자등록번호" v-model="saupId" disabled="disabled">
+                                <!--<input type="hidden" title="받은 사업자등록번호" v-model="reqSaupId">-->
                                 <input type="text" class="tel" title="휴대폰번호 입력" placeholder="휴대폰번호 입력" v-model="phoneNum">
                                 <button type="button" id="" class="btn_m01 bg03" v-on:click="optCall">인증번호 전송</button>
                             </p>
@@ -42,12 +48,6 @@
                             </p>
                         </div>
                     </fieldset>
-
-                    <!-- info bot -->
-                    <div class="info_bot" v-show="otpTrue==false">
-                        <span class="text_type03">휴대폰 번호가 바뀌었을 시 휴대폰 본인인증으로 변경해 주세요.</span>
-                        <span class="btn_cert_area"><button type="button"  class="btn_s01 bg03" v-on:click="kcmPop">휴대폰 본인인증</button></span>
-                    </div>
                 </div>
                 <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
                 <!-- //login_box -->
@@ -126,6 +126,8 @@
         reqSaupId : any = ''; //전달받은 사업장번호
         sendOtpYn : boolean = false; //otp전송 여부
 
+        accountArr : any = '';
+
         created(){
 
             this.reqParam = this.$route.params.reqParams;
@@ -137,9 +139,41 @@
                 console.log('받은 값')
                 console.log(this.reqParam)
 
+                //OTP인증 여부 확인
+                CommonBoardService.getListDatas('validation/callcenter/saupIds',this.reqParam.row.saupId, null).then((response) => {
+                        let result: any = response.data;
+                        if (result.code == '000') { //인증건 있음
+
+                            //인증 완료후 상세 화면으로 이동
+                            this.$router.push({ name:this.reqParam.nextUrl , params: { current : this.reqParam.searchOption , objectKey : this.reqParam.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
+                        }else{
+
+                            //OTP인증 여부 확인
+                            CommonBoardService.getListDatas('accounts/ids', this.reqParam.row.saupId, null).then((response) => {
+                                    if (response != null && response.status == 200) { //인증건 있음
+                                        this.accountArr = response.data;
+                                    }
+                                }
+                                , (error) => {
+
+                                }
+                            ).catch((response) =>  {
+
+                            });
+
+                        }
+                    }
+                    , (error) => {
+
+                    }
+                ).catch((response) =>  {
+
+                });
+
                 //this.name = this.reqParam.row.name;
                 //this.id = this.reqParam.row.id;
-                //this.reqSaupId = this.reqParam.row.saupId; //전달받은 사업자번호
+                this.saupId = this.reqParam.row.saupId; //전달받은 사업자번호
             }
 
             clearInterval(this.interval)
@@ -219,9 +253,9 @@
                 saupId: this.saupId,
                 phoneNum : this.phoneNum
             }
-            CommonBoardService.postListDatas('otp',null,otp)
+            CommonBoardService.postListDatas('otp/callcenter/user', this.id, null)
                 .then(result => {
-                    if(result.data.code=='000'){
+                    if(result.status==200){
                         alert('인증번호가 발송되었습니다.')
                         this.sendOtpYn = true;
                         this.startTimer();
@@ -257,7 +291,7 @@
                 phoneNum : this.phoneNum
             }
             if(this.otpNumber){
-                CommonBoardService.postListDatas('otp/', this.otpNumber, otp)
+                CommonBoardService.postListDatas('otp/callcenter/user/verify', this.otpNumber+'/'+this.id, null)
                     .then(result => {
                         if(result.data.code=='000'){
                             alert('인증되었습니다' )
