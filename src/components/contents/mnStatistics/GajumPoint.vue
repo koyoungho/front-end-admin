@@ -16,7 +16,7 @@
         <h4>현금영수증 계정 현황</h4>
         <!-- store list -->
         <ul class="store_list">
-            <li><span class="sub">신규</span> <span class="cont" >{{searchCountData.newAccount}}건</span></li>
+            <li><span class="sub">신규</span> <span class="cont" >{{searchCountData.newAccount}} 건</span></li>
             <li><span class="sub">해지</span> <span class="cont">{{searchCountData.cancelAccount}} 건</span></li>
             <li><span class="sub">누적</span> <span class="cont">{{searchCountData.stackAccount}} 건</span></li>
         </ul>
