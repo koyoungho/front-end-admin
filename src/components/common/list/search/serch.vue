@@ -88,16 +88,16 @@
             <li :class="item.class">
 
               <label for="aa">{{item.title}}</label>
-              <template v-if="item.id=='onlineYn'">
-              <select v-model="item.value"  class="select form_w50" title="발급용도 선택" :onclick="eventClick(item.value)">
-                <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
-              </select>
-              </template>
-              <template v-else>
+              <!--<template v-if="item.id=='onlineYn'">-->
+              <!--<select v-model="item.value"  class="select form_w50" title="발급용도 선택" :onclick="eventClick(item.value)">-->
+                <!--<option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>-->
+              <!--</select>-->
+              <!--</template>-->
+              <!--<template v-else>-->
                 <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
                   <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
                 </select>
-              </template>
+              <!--</template>-->
 
             </li>
             <template v-if="item.liNull">

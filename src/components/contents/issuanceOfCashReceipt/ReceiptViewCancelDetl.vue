@@ -71,6 +71,12 @@
                     <th scope="row">부가세</th>
                     <td class="con_row01">{{Number(viewRowItem.vat).toLocaleString()}} 원</td>
                 </tr>
+                <tr v-if="onlineYn=='N'">
+                    <th scope="row">대표자</th>
+                    <td class="con_row01">{{viewRowItem.chipNm}}</td>
+                    <th scope="row">상호</th>
+                    <td class="con_row01">{{viewRowItem.shopNm}}</td>
+                </tr>
                 <!--<tr>-->
                 <!--<th scope="row">취소사유</th>-->
                 <!--<td colspan="3" class="con_row01">{{viewRowItem.canSayuNm}}</td>-->
@@ -210,7 +216,7 @@
             <!--</div>-->
             <!--<div class="btn_bot type02"> &lt;!&ndash; 20181112 수정 &ndash;&gt;</div>-->
         <!--</div>-->
-        <div class="no_print">
+        <div class="no_print" v-if="onlineYn=='Y'">
             <!-- btn top -->
             <h4>현금영수증 발급 취소</h4>
             <!-- grid box -->
@@ -434,6 +440,9 @@
 
             this.onlineYn= this.$route.params.onlineYn;
 
+            if(this.onlineYn=='N'){
+            this.onlyDetail();
+            }else{
             this.cancleReceipView();
             // this.exceptColum  = [{name : '거래일자' , id : 'saleDate'}] // 리사이즈 됬을경우 숨겨져야할 컬럼
             this.listItem =  // 그리드 서치 페이징 옵션 처리 데\이터 매우중요 이룰을 어기면 화면깨짐이 발생합니다
@@ -462,6 +471,7 @@
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 10},
                     goDirect : ""
                 }
+            }
         }
 
         @Watch('canAceptTotal') onTotalamtChange(){ //합계 변경시
@@ -556,6 +566,15 @@
         }
 
 
+        onlyDetail(){
+            this.objectKey = this.$route.params.objectKey
+            CommonBoardService.getListDatas('receipt', this.objectKey.oriDate+'/'+ this.objectKey.oriAprv,'').then((response) => {
+                if(response.status==200){
+                this.viewRowItem = response.data
+                }
+            }).catch();
+        }
+
         iocViewEvent(data){
             this.resultRecrip = data.row;
             this.popOn = true;
@@ -601,6 +620,7 @@
         }
 
         cancleReceipView(){
+
             this.objectKey = this.$route.params.objectKey
 
             let keyVal = '';

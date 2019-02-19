@@ -11,7 +11,7 @@
                 <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
             </div>
 
-            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" v-on:eventOnline="onlineVal"></ListComponent>
+            <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent" ></ListComponent>
         </div>
         <!-- //content -->
     </section>
@@ -51,18 +51,20 @@
         show : boolean = true;
         nowKo_str: any ='';
 
-        onlineVal(val){
-            // 온라인 Yn 값이 변할경우 컬럼 히든처리  및 오픈
-            if(val=='N'){
-            this.listItem.dataGrid.columControl[7].type='hidden'
-            this.listItem.dataGrid.columControl[9].type='hidden'
-            this.listItem.dataGrid.totalColum = 8
-            }else{
-            this.listItem.dataGrid.columControl[7].type='text'
-            this.listItem.dataGrid.columControl[9].type='text'
-            this.listItem.dataGrid.totalColum = 10
-            }
-        }
+        // onlineVal(val){
+        //     // 온라인 Yn 값이 변할경우 컬럼 히든처리  및 오픈
+        //     if(val=='N'){
+        //         this.listItem.dataGrid.columControl[7].id='jumcode'
+        //         this.listItem.dataGrid.columControl[7].columName='점코드'
+        //         this.listItem.dataGrid.columControl[9].id='posno'
+        //         this.listItem.dataGrid.columControl[9].columName='posNo'
+        //     }else{
+        //     this.listItem.dataGrid.columControl[7].id='loginid'
+        //         this.listItem.dataGrid.columControl[7].columName='ID명'
+        //     this.listItem.dataGrid.columControl[9].id='cusName'
+        //         this.listItem.dataGrid.columControl[9].columName='고객명'
+        //     }
+        // }
 
         created(){
 

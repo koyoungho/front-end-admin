@@ -626,9 +626,21 @@
 
             // 검색조건 객체생성
             this.dataGridDetail.search.filter(e => {
-                if(e.value=='N'){
-                       this.hiddenColum = false;
+                if(e.id=='onlineYn'){ // 웹일반 검색시 컬럼 변경 특수한 케이스 임의로 편집
+                      if(e.value=='N'){
+                        this.dataGridDetail.dataGrid.columControl[7].id='jumcode'
+                            this.dataGridDetail.dataGrid.columControl[7].columName='점코드'
+                            this.dataGridDetail.dataGrid.columControl[9].id='posno'
+                            this.dataGridDetail.dataGrid.columControl[9].columName='posNo'
+
+                        }else{
+                        this.dataGridDetail.dataGrid.columControl[7].id='loginid'
+                            this.dataGridDetail.dataGrid.columControl[7].columName='ID명'
+                        this.dataGridDetail.dataGrid.columControl[9].id='cusName'
+                            this.dataGridDetail.dataGrid.columControl[9].columName='고객명'
+                    }
                 }
+
                 if (e.type == 'date') {  //날짜
                     searchData['searchStartDate'] = e.searchStartDate
                     searchData['searchEndDate'] = e.searchEndDate
@@ -731,6 +743,7 @@
                         this.mSurtax = (result.extra.vat).toLocaleString();
                     }
 
+                    this.menuHeader = [];
                     this.dataGridDetail.dataGrid.columControl.filter(e => { // 헤더를 먼저 만들어준다
                         this.menuHeader[e.id] = e.id;
                     });
