@@ -108,23 +108,24 @@
                 {
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                            {columName : '체크박스' ,id :'check_id',type:'checkBox', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck:true  , returnKey : 'role'}, // 올체크 투르 펄스에따라 전체체크박스생성 //checkval 디폴트값주기
+                            {columName : '체크박스' ,id :'check_id',type:'checkBox', width : '3%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,checkVal :  false , allCheck:true  , returnKey : 'role'}, // 올체크 투르 펄스에따라 전체체크박스생성 //checkval 디폴트값주기
                             {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '아이디' ,id :'id',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
                             {columName : '이름' ,id : 'name',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '휴대폰번호' ,id : 'phoneNum',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '휴대폰번호' ,id : 'phoneNum',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '사업자번호' ,id : 'saupId',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '사업장명' ,id : 'shopNm',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '회사코드' ,id : 'subSaup',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '등급명' ,id : 'roleNm',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '사업장명' ,id : 'shopNm',type:'text', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '회사코드' ,id : 'subSaup',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '등급명' ,id : 'roleNm',type:'text', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '등급' ,id : 'role',type:'hidden', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
-                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
+                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                             {columName : '등록일' ,id : 'regDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
-                            {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
+                            {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
+                            {columName : '승인일' ,id : 'aprvDt',type:'date', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '첨부파일명' ,id : 'saupFileNm',type:'hidden', width : '1%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값
                             // {columName : '처리결과' ,id : 'taxErr', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , options : [{ value : 'Y' , change : '전송'},{ value : 'N' , change : '미전송'}] ,fontColors :'color: red' },
                         ],
-                        totalColum: 12, //
+                        totalColum: 13, //
                         apiUrl : 'accounts',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음

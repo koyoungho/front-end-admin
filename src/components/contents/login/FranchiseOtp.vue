@@ -28,12 +28,12 @@
                         <div class="cert_box">
                             <p class="form_cert row01">
                                 <!--<input type="text" class="tel" title="수신자ID" placeholder="수신자ID" v-model="id">-->
-                                <template v-if="accountArr.length > 0">
-                                    <select v-model="id"  class="select form_accountlist" title="수신자ID 선택">
-                                        <option value="">선택</option>
+                                <select v-model="id"  class="select form_accountlist" title="수신자ID 선택">
+                                    <option value="">수신자ID 선택</option>
+                                    <template v-if="accountArr.length > 0">
                                         <option v-for="idArr in accountArr" :value="idArr">{{idArr}}</option>
-                                    </select>
-                                </template>
+                                    </template>
+                                </select>
                                 <input type="text" class="tel" title="사업자등록번호" placeholder="사업자등록번호" v-model="saupId" disabled="disabled">
                                 <!--<input type="hidden" title="받은 사업자등록번호" v-model="reqSaupId">-->
                                 <input type="text" class="tel" title="휴대폰번호 입력" placeholder="휴대폰번호 입력" v-model="phoneNum">
@@ -231,7 +231,7 @@
 
         optCall(){
             if(this.id == ''){
-                alert('수신자ID를 입력하세요.');
+                alert('수신자ID를 선택하세요.');
                 return;
             }
             if(this.saupId == ''){
