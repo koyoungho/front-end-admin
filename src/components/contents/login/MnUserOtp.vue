@@ -306,7 +306,7 @@
             if(this.otpNumber){
                 CommonBoardService.postListDatas(apiUrl, null, otp)
                     .then(result => {
-                        console.log(result)
+                        //console.log(result)
 
                         if(result.status==200){
                             alert('인증되었습니다' )

@@ -136,8 +136,8 @@
                 alert('접근할수 없습니다')
                 this.$router.push({name:this.reqParam.entranceUrl});
             }else{
-                console.log('받은 값')
-                console.log(this.reqParam)
+                //console.log('받은 값')
+                //console.log(this.reqParam)
 
                 //OTP인증 여부 확인
                 CommonBoardService.getListDatas('validation/callcenter/saupIds',this.reqParam.row.saupId, null).then((response) => {
