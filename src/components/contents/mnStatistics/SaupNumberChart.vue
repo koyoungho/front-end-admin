@@ -15,8 +15,8 @@
                     <li>
                         <label for="">기간</label>
                         <span class="form_cal">
-                          <date-picker v-model="searchStartDate"  :lang="lang" :type="'month'"
-                                       :first-day-of-week="1" range  format="YYYY-MM" width="200" confirm ></date-picker>
+                          <date-picker v-model="searchStartDate"  :lang="lang" :type="'day'"
+                                       :first-day-of-week="1" range  format="YYYY-MM-DD" width="220" confirm ></date-picker>
                           </span>
                     </li>
                     <li>
@@ -376,9 +376,9 @@
             }
 
             let  beforeOneYKo=  moment(this.nowKo).subtract(1, 'years') // 일년전
-            let  beforeOneYKoMm =moment(beforeOneYKo).format('YYYYMM')
-            let  nowKoMm =moment(this.nowKo).format('YYYYMM')
-            let  fromDate =moment(this.searchStartDate[0]).format('YYYYMM')
+            let  beforeOneYKoMm =moment(beforeOneYKo).format('YYYYMMDD')
+            let  nowKoMm =moment(this.nowKo).format('YYYYMMDD')
+            let  fromDate =moment(this.searchStartDate[0]).format('YYYYMMDD')
 
             let range = moment(fromDate).isBetween(beforeOneYKoMm, nowKoMm); // true
 
@@ -388,7 +388,7 @@
             }
 
             this.loading =true;
-            let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMM') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMM') , subSaup : this.companyCode ,saupId: this.saupId}
+            let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMMDD') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMMDD') , subSaup : this.companyCode ,saupId: this.saupId}
             CommonBoardService.getListDatas('statistics','saupid',Object).then(result=>{
                 if(result.status==200){
                     this.ChartModel = result.data;
