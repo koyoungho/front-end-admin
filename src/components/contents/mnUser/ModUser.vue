@@ -1154,12 +1154,9 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result.length > 0) {
-                        if(code == 'SUBSAUP'){
-                            this.subSaupList = result;
-                        }else if(code == 'ROLE'){
+                        if(code == 'ROLE'){
                             this.roleList = result;
                         }
-                    } else {
                     }
                 }
                 , (error) => {
