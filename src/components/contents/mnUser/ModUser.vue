@@ -44,7 +44,7 @@
                     <tr>
                         <th scope="row">계정등급</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role">
+                            <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role" v-on:change="roleChange">
                                 <option value="">선택</option>
                                 <template v-for="datas in roleList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -413,7 +413,14 @@
 
         }
 
-        @Watch('account.role') onLevelChange(){
+        /*@Watch('account.role') onLevelChange(){
+            let account : any = this.account;
+            if(account.role != ''){
+                this.authMenuList(account.role);
+            }
+        }*/
+
+        roleChange(){
             let account : any = this.account;
             if(account.role != ''){
                 this.authMenuList(account.role);
