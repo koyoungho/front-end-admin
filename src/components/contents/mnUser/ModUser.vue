@@ -559,7 +559,7 @@
 
         //취소
         cancelUpdate(){
-            this.$router.push('/home/mnUserList');
+            this.$router.push('/home/mnUser');
         }
 
 /*
