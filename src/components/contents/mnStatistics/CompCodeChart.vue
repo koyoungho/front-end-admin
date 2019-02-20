@@ -21,8 +21,8 @@
                     <li>
                         <label for="">기간</label>
                       <span class="form_cal">
-                      <date-picker v-model="searchStartDate"  :lang="lang" :type="'month'"
-                                   :first-day-of-week="1" range  format="YYYY-MM" width="200" confirm ></date-picker>
+                      <date-picker v-model="searchStartDate"  :lang="lang" :type="'day'"
+                                   :first-day-of-week="1" range  format="YYYY-MM-DD" width="220" confirm ></date-picker>
                       </span>
                     </li>
                   <li>
@@ -357,7 +357,7 @@
 
         formatDates(date) {
             let formattedDates = ''
-            formattedDates = format(date, 'YYYYMM')
+            formattedDates = format(date, 'YYYYMMDD')
             return formattedDates
         }
 
@@ -441,9 +441,9 @@
         compCodeChart(){
 
             let  beforeOneYKo=  moment(this.nowKo).subtract(1, 'years') // 일년전
-            let  beforeOneYKoMm =moment(beforeOneYKo).format('YYYYMM')
-            let  nowKoMm =moment(this.nowKo).format('YYYYMM')
-            let  fromDate =moment(this.searchStartDate[0]).format('YYYYMM')
+            let  beforeOneYKoMm =moment(beforeOneYKo).format('YYYYMMDD')
+            let  nowKoMm =moment(this.nowKo).format('YYYYMMDD')
+            let  fromDate =moment(this.searchStartDate[0]).format('YYYYMMDD')
 
             let range = moment(fromDate).isBetween(beforeOneYKoMm, nowKoMm); // true
 
@@ -460,7 +460,7 @@
                 this.loadCodeList.push(this.companyCode)
             }
             console.log(this.loadCodeList);
-            let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMM') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMM') , subSaups : this.loadCodeList.toString() , upjong : this.upjongCode}
+            let Object = {searchStartDate : moment(this.searchStartDate[0]).format('YYYYMMDD') , searchEndDate : moment(this.searchStartDate[1]).format('YYYYMMDD') , subSaups : this.loadCodeList.toString() , upjong : this.upjongCode}
             CommonBoardService.getListDatas('statistics','subsaup',Object).then(result=>{
                     if(result.status==200){
                         this.ChartModel = result.data;
