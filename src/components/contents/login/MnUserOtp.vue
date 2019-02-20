@@ -43,10 +43,10 @@
                     </fieldset>
 
                     <!-- info bot -->
-                    <div class="info_bot" v-show="otpTrue==false">
-                        <span class="text_type03">휴대폰 번호가 바뀌었을 시 휴대폰 본인인증으로 변경해 주세요.</span>
-                        <span class="btn_cert_area"><button type="button"  class="btn_s01 bg03" v-on:click="kcmPop">휴대폰 본인인증</button></span>
-                    </div>
+                    <!--<div class="info_bot" v-show="otpTrue==false">-->
+                        <!--<span class="text_type03">휴대폰 번호가 바뀌었을 시 휴대폰 본인인증으로 변경해 주세요.</span>-->
+                        <!--<span class="btn_cert_area"><button type="button"  class="btn_s01 bg03" v-on:click="kcmPop">휴대폰 본인인증</button></span>-->
+                    <!--</div>-->
                 </div>
                 <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
                 <!-- //login_box -->
@@ -142,6 +142,24 @@
                 this.id = this.reqParam.row.id;
                 this.role = this.reqParam.row.role;
             }
+
+            //OTP인증 여부 확인
+            CommonBoardService.getListDatas('validation/callcenter/ids',this.id, null).then((response) => {
+                    //let result: any = response.data;
+                    if (response != null && response.data.code == '000') { //인증건 있음
+
+                        //계정정보 상세화면 이동
+                        this.$router.push({ name:this.reqParam.nextUrl , params: { reqParams : this.reqParam , current : this.reqParam.searchOption , val : this.reqParam.row.id , val2 : this.reqParam.row.role } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
+
+                    }
+                }
+                , (error) => {
+
+                }
+            ).catch((response) =>  {
+
+            });
+
 
             clearInterval(this.interval)
         }

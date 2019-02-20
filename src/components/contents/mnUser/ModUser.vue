@@ -44,14 +44,11 @@
                     <tr>
                         <th scope="row">계정등급</th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role" disabled="disabled">
+                            <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role">
                                 <option value="">선택</option>
-                                <option value="0001">시스템관리자</option>
-                                <option value="0002">현금영수증사업자</option>
-                                <option value="0003">콜센터관리자</option>
-                                <option value="0004">가맹점관리자</option>
-                                <option value="0005">지점관리자</option>
-                                <option value="0006">매장관리자</option>
+                                <template v-for="datas in roleList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                         </td>
                         <th scope="row">계정상태</th>
@@ -321,6 +318,8 @@
         sbulk3 : any = '';
         sbulk4 : any = '';
 
+        roleList : any = [];
+
         menuList : any = [];
         regShow : boolean = false;
 
@@ -412,6 +411,13 @@
                 }
             }
 
+        }
+
+        @Watch('account.role') onLevelChange(){
+            let account : any = this.account;
+            if(account.role != ''){
+                this.authMenuList(account.role);
+            }
         }
 
         changePhoneNum(){
@@ -553,7 +559,7 @@
 
         //취소
         cancelUpdate(){
-            this.$router.push('/home/mnUserList');
+            this.$router.push('/home/mnUser');
         }
 
 /*
@@ -786,6 +792,9 @@
 
         }
         commonCode(){
+
+            this.getSelectList('ROLE');
+
             // CommonBoardService.postListDatas('validattion','null',this.model).then(e=>{
             //   디폴트 코드 로딩하기
             // })
@@ -1075,6 +1084,86 @@
             return (email != '' && email != 'undefined' && regex.test(email));
         }
 
+        //메뉴 사용 권한 리스트 뿌리기
+        authMenuList(role){
+
+            if(role==''){
+                return;
+            }
+
+            //let role = sessionStorage.role;
+
+            CommonBoardService.getListDatas('menu/role/'+role, null, null).then(result=>{
+                if(result.status==200){
+                    //console.log('메뉴 정보 조회 결과')
+                    //console.log(result.data)
+
+                    let mList = result.data;
+                    let rowData : any = {};
+                    let arrData : any = [];
+                    let rowCnt : number = 0;
+                    mList.filter(e => {
+                        rowData = {};
+                        rowCnt++;
+                        rowData['groupCode'] = e.groupCode;
+                        rowData['menuCode'] = e.menuCode;
+                        rowData['name'] = e.name;
+                        rowData['readYn'] = e.readYn;
+                        rowData['createYn'] = e.createYn;
+                        rowData['updateYn'] = e.updateYn;
+                        rowData['deleteYn'] = e.deleteYn;
+                        rowData['readGbn'] = true;
+                        rowData['createGbn'] = true;
+                        rowData['updateGbn'] = true;
+                        rowData['deleteGbn'] = true;
+                        rowData['readId'] = e.menuCode + rowCnt;
+                        rowData['createId'] = e.menuCode + rowCnt;
+                        rowData['updateId'] = e.menuCode + rowCnt;
+                        rowData['deleteId'] = e.menuCode + rowCnt;
+
+                        arrData.push(rowData);
+                    });
+
+                    this.menuList = arrData;
+
+                }else{
+                    //Vue.swal({text: '에러'});
+                }
+            })
+
+        }
+
+        //공통 select box 조회
+        getSelectList(code: string){
+            if(code == ''){
+                return;
+            }
+
+            let reqData: any = {};
+            let apiUrl : string = '';
+
+            if(code == 'SUBSAUP') { //회사코드(사업장정보)
+                reqData['searchType'] = 'SEARCH';
+                apiUrl = 'company';
+            }else if(code == 'ROLE'){
+                apiUrl = 'code?groupCode=0015';
+            }
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas(apiUrl, null, reqData).then((response) => {
+                    let result: any = response.data;
+                    //console.log(result)
+                    if (result.length > 0) {
+                        if(code == 'ROLE'){
+                            this.roleList = result;
+                        }
+                    }
+                }
+                , (error) => {
+                }
+            ).catch();
+
+        }
 
     }
 </script>

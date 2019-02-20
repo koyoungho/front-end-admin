@@ -291,7 +291,7 @@
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
-                apiUrl = 'code/aprvcode';
+                apiUrl = 'code/approvalcode';
             }
 
             // api 데이터 호출

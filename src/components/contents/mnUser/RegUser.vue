@@ -48,12 +48,9 @@
                         <td>
                             <select id="" name="" class="select form_w100" title="계정등급" v-model="accountLevel">
                                 <option value="">선택</option>
-                                <!--<option value="0001">시스템 관리자</option>-->
-                                <option value="0002">사업자 관리자</option>
-                                <option value="0003">콜센터 관리자</option>
-                                <option value="0004">가맹점 관리자</option>
-                                <option value="0005">지점 관리자</option>
-                                <!--<option value="0006">매장관리자</option>-->
+                                <template v-for="datas in roleList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                         </td>
                         <th scope="row">계정상태</th>
@@ -251,6 +248,7 @@
         saupjang : Saupjang[]=[];
 
         subSaupList : any = [];
+        roleList : any = [];
 
         model : any = [];
         auth : any = "";
@@ -340,6 +338,7 @@
         commonCode(){
 
             this.getSelectList('SUBSAUP');
+            this.getSelectList('ROLE');
 
             // CommonBoardService.postListDatas('validattion','null',this.model).then(e=>{
             //   디폴트 코드 로딩하기
@@ -840,7 +839,7 @@
             return check_boolean;
         }
 
-//공통 select box 조회
+        //공통 select box 조회
         getSelectList(code: string){
             if(code == ''){
                 return;
@@ -852,6 +851,8 @@
             if(code == 'SUBSAUP') { //회사코드(사업장정보)
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
+            }else if(code == 'ROLE'){
+                apiUrl = 'code?groupCode=0015';
             }
 
             // api 데이터 호출
@@ -861,6 +862,8 @@
                     if (result.length > 0) {
                         if(code == 'SUBSAUP'){
                             this.subSaupList = result;
+                        }else if(code == 'ROLE'){
+                            this.roleList = result;
                         }
                     } else {
                     }

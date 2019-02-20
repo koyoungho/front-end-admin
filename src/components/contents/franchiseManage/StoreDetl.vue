@@ -96,7 +96,7 @@
                         <td class="vtop" colspan="1"><input type="text" class="input form_w100" title="대표자명" v-model="repNm" maxlength="20"></td>
                         <th scope="row">전화번호<em class="form_req">*</em></th>
                         <td colspan="1">
-                            <input type="text" class="input form_w100" title="전화번호" v-model="telNum" @keyup="changeTelNum" maxlength="20">
+                            <input type="text" class="input form_w100" title="전화번호" v-model="telNum" @keyup="changeTelNum" maxlength="11">
                             <p class="info_msg2" id="saupid_msg1"></p> <!-- 메시지 표시 -->
                         </td>
                     </tr>
@@ -105,18 +105,17 @@
                         <td class="vtop" colspan="1">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="2">개인사업자</option>
-                                <option value="1">법인사업자</option>
-                                <!--<option value="">선택</option>
                                 <template v-for="datas in saupGbnList">
-                                    <option v-bind:value=datas.code>{{datas.name}}</option>
-                                </template>-->
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                         </td>
-                        <th scope="row">법인등록번호</th>
+                        <th scope="row"><template v-if="saupType=='1'">법인등록번호</template></th>
                         <td colspan="1">
-                            <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled">
-                            <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
+                            <template v-if="saupType=='1'">
+                                <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" disabled="disabled">
+                                <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
+                            </template>
                         </td>
                     </tr>
                     <tr>
@@ -666,6 +665,7 @@
             this.getSelectList('APRO'); //승인코드
             this.getSelectList('UPJONG'); //업종코드
             this.getSelectList('SUBSAUP'); //회사코드(사업장)
+            this.getSelectList('0016'); //사업자구분
         }
 
         @Watch('upjong') onChange(){
@@ -904,6 +904,15 @@
                 return;
             }else if(this.telNum == ''){
                 alert('전화번호를 입력하세요.');
+                return;
+            }else if(this.telNum.length < 9){
+                alert('전화번호는 9~11자리로 입력하세요.');
+                return;
+            }else if(this.telNum.indexOf('0') != 0){
+                alert('전화번호를 바르게 입력하세요.');
+                return;
+            }else if(this.telNum.indexOf('000000000') != -1){
+                alert('전화번호를 바르게 입력하세요.');
                 return;
             /*}else if(this.saupType == ''){
                 alert('사업자구분을 선택하세요.');
@@ -1179,6 +1188,9 @@
             }else if(code == 'SUBSAUP'){ //SW제공회사
                 //reqData['upjongCode'] = this.upjong;
                 apiUrl = 'company';
+            }else if(code == '0016'){ //사업자구분(개인,법인)
+                reqData['groupCode'] = '0016';
+                apiUrl = 'code';
             }
 
             // api 데이터 호출
@@ -1196,6 +1208,8 @@
                             this.upjongList = result; //업종코드
                         }else if(code == 'SUBSAUP'){
                             this.subCompanyList = result; //회사코드
+                        }else if(code = '0016'){ //사업자 구분;
+                            this.saupGbnList = result;
                         }
                     } else {
                     }

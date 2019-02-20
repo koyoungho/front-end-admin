@@ -100,7 +100,7 @@
                 search: [
                     {type: 'date2', title :'등록일', id: 'date', name:'date', searchStartDate: [beforeOneDKo,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     //{type: 'selectObject',title: '회사코드',id: 'subSaup',name: 'subSaup',value: '',api: 'company',option: [{name: '', value: ''}]},
-                    {type: 'selectCode',title: '승인코드',id: 'aprvCode',name: 'aprvCode',value: '',api: 'code/aprvcode', option: [{name: '', value: ''}]},
+                    {type: 'selectCode',title: '승인코드',id: 'aprvCode',name: 'aprvCode',value: '',api: 'code/approvalcode', option: [{name: '', value: ''}]},
                     // {type: 'check' , title :'체크해', id: 'checkType', name: 'checkType' ,  value: '' , option : [{ name : '선택' , id: 'cho1', value: true },{ name : '선택2' ,id: 'cho2', value: false}] },
                     // {type: 'radio' , title :'선택해', id: 'radioBox', name: 'radioBox' , value: '' , option : [{ name : '선택' , value: '111' },{ name : '선택2' , value: '222' }] },
                 ],

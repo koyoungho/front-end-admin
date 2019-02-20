@@ -190,6 +190,7 @@ input.sch_indcode01 {text-align: center;}
 /* select form */
 select.form_w100 {width:100%;}
 select.form_w50 {width:36.5%;}
+select.form_accountlist {width:36.5%; height:5%;}
 select.form_comcode {width:180px;} /* 회사코드 */
 select.form_state {width:200px;} /* 상태 */
 

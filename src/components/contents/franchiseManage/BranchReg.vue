@@ -85,19 +85,16 @@
                         <td class="vtop">
                             <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="2">개인사업자</option>
-                                <option value="1">법인사업자</option>
-                                <!--<option value="">선택</option>
                                 <template v-for="datas in saupGbnList">
-                                    <option v-bind:value=datas.code>{{datas.name}}</option>
-                                </template>-->
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                         </td>
                         <template v-if="saupType=='1'">
                         <th scope="row">법인등록번호</th>
                         <td>
-                            <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13">
-                            <p class="info_msg2" id="saupid_msg2"></p> <!-- 메시지 표시 -->
+                            <input type="text" class="input form_w100" title="법인등록번호" v-model="lawNum" maxlength="13" v-on:keyup="inputValidationChk('lawNum')">
+                            <p class="info_msg2" id="saupid_msg3"></p> <!-- 메시지 표시 -->
                         </td>
                         </template>
                         <template v-else>
@@ -412,6 +409,7 @@
             this.getSelectList('APRO'); //승인코드
             this.getSelectList('SUBSAUP'); //회사코드(사업장정보)
             this.getSelectList('UPJONG'); //업종구분(사업장정보)
+            this.getSelectList('0016'); //사업자구분
         }
 
         //돔렌더링완료시 진행
@@ -708,8 +706,10 @@
             }else if(this.saupType == '1' && this.lawNum.length != 13) { //사업자구분이 법인인
                 alert('법인사업자의 자리수가 맞지않습니다');
                 return;
-            }
-            else if(this.zipCode == ''){
+            }else if(this.saupType == '1' && this.lawNum != '' && this.lawNum == '0000000000000') {
+                alert('법인등록번호를 바르게 입력하세요');
+                return;
+            }else if(this.zipCode == ''){
                 alert('우편번호를 입력하세요.');
                 return;
             }else if(this.addr1 == ''){
@@ -994,7 +994,7 @@
                 reqData['searchType'] = 'SEARCH';
                 apiUrl = 'company';
             }else if(code == 'APRO'){ //승인코드 -- get
-                apiUrl = 'code/aprvcode';
+                apiUrl = 'code/approvalcode';
             }else if(code == 'RECEIPT'){ //현금영수증 사업자 코드 -- get
                 apiUrl = 'code/issuer';
             }else if(code == 'SUBSAUP'){ //회사코드(사업장정보)
@@ -1002,6 +1002,9 @@
                 apiUrl = 'company';
             }else if(code == 'UPJONG'){ //업종코드
                 apiUrl = 'code/upjong';
+            }else if(code == '0016'){ //사업자구분(개인,법인)
+                reqData['groupCode'] = '0016';
+                apiUrl = 'code';
             }
 
             // api 데이터 호출
@@ -1019,6 +1022,8 @@
                             this.saupSubSaupList = result;
                         }else if(code == 'UPJONG'){
                             this.saupUpjongList = result;
+                        }else if(code = '0016'){ //사업자 구분;
+                            this.saupGbnList = result;
                         }
                     } else {
                     }
@@ -1113,6 +1118,31 @@
             }
             else{
             }
+        }
+
+        inputValidationChk(gbn){
+
+            let specialExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; //정규식 구문(공백은 허용)
+            //let RegExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; //정규식 구문
+            let emailAddr = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            let passPattern = /(?=.*[0-9])(?=.*[a-z])(?=.*[!@$%^&*])(?=\S+$).{8,16}$/;
+
+            if(gbn == 'lawNum'){ //법인등록번호
+                let law_msg = document.getElementById('saupid_msg3');
+
+                if(law_msg != null){
+                    if(this.lawNum == ''){
+                        law_msg.innerHTML = '';
+                    }else if(this.lawNum.length != 13){
+                        law_msg.innerHTML = '법인등록번호는 13자리로 입력하세요.';
+                    }else if(this.lawNum == '0000000000000'){
+                        law_msg.innerHTML = '법인등록번호를 바르게 입력하세요.';
+                    }else{
+                        law_msg.innerHTML = '';
+                    }
+                }
+            }
+
         }
 
     }

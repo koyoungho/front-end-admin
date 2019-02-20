@@ -705,7 +705,7 @@
             }else if(this.saupType == '1' && this.lawNum == '0000000000000') {
                 Vue.swal({text:'법인등록번호를 바르게 입력하세요.'});
                 return false;
-            }else if(this.saupType == '1' && this.lawNum.length == 13 && !this.lawnumChk()) {
+            }else if(this.saupType == '1' && this.lawNum != null && this.lawNum != '' && this.lawNum.length == 13 && !this.lawnumChk()) {
                 Vue.swal({text:'부적합한 법인등록번호입니다.'});
                 return false;
             }else if(this.addr1 == '') {
