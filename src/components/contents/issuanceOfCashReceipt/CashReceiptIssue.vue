@@ -41,8 +41,9 @@
                         <td>
                             <select name="" class="select form_w100" title="발급용도 선택" v-model="geogu">
                                 <option value="">선택</option>
-                                    <option value="0">현금(소득공제)</option>
-                                    <option value="1">현금(지출증빙)</option>
+                                <template v-for="datas in geoguList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                             <!--<font size="2px" color="#999">(※소득공제: 연말정산용, 지출증빙: 세금신고용)</font>-->
                         </td>
@@ -268,7 +269,7 @@
                 if (confirmID != null) { confirmID.setAttribute('maxlength', '12') }
             }
 
-            if(this.positionGb == '6') { //자진발급이면 0100001234로 자동 입력
+            if(this.positionGb == '0') { //자진발급이면 0100001234로 자동 입력
                 this.confirm = '0100001234';
                 let confirmID = document.getElementById('confirmID')
                 if(confirmID!=null){ confirmID.setAttribute('disabled', 'disabled') }
@@ -312,10 +313,12 @@
             this.positionGb = '';
             if(this.geogu == '0'){ //소득공제
                 this.confirm = '';
-                this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{codeNm : '주민등록번호' , code: '2' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' },{codeNm : '자진발급' , code: '6' }];
+                this.getSelectList(this.geogu); //신분확인타입
+                //this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{codeNm : '주민등록번호' , code: '2' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' },{codeNm : '자진발급' , code: '6' }];
             }else if(this.geogu == '1'){ //지출증빙
                 this.confirm = '';
-                this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{ codeNm : '사업자등록번호' , code: '3' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' }];
+                this.getSelectList(this.geogu); //신분확인타입
+                //this.confirmList = [{ codeNm : '휴대폰번호' , code: '1' },{ codeNm : '사업자등록번호' , code: '3' },{codeNm : '카드번호' , code: '4' },{codeNm : 'QR코드' , code: '5' }];
             }else{
                 this.confirm = '';
                 this.confirmList = [];
@@ -403,7 +406,7 @@
                 }else if(this.positionGb == '5'){ //QR번호
                     Vue.swal({text: '고객신분확인에 QR번호를 입력하세요.'});
                     return;
-                }else if(this.positionGb == '6'){ //자진발급
+                }else if(this.positionGb == '0'){ //자진발급
                     this.confirm =  '0100001234';
                 }
             }
@@ -663,6 +666,9 @@
             //this.$router.push({name:"cashReceiptIssueView", params:{reqPerm:'C39044964'}});
         }
         mounted() {
+
+            this.getSelectList('0002'); //발급용도
+
             if(this.role == '0001' || this.role == '0003' ){
                 this.show =true;
             }else{
@@ -857,6 +863,34 @@
             return false;
         }
 
+        //공통 select box 조회
+        getSelectList(code: string){
+            if(code == ''){
+                return;
+            }
+
+            let apiUrl : string = '';
+            if(code == '0002'){ //발급용도
+                apiUrl = 'code?groupCode=0002';
+            }else if(code == '0' || code == '1'){
+                apiUrl = 'code/positiongb/'+code;
+            }
+
+            // api 데이터 호출
+            CommonBoardService.getListDatas(apiUrl, null, '').then((response) => {
+                    let result: any = response.data;
+                    //console.log(result)
+                    if (result.length > 0) {
+                        if(code == '0002'){ //사업자구분
+                            this.geoguList = result;
+                        }else if(code == '0' || code == '1'){
+                            this.confirmList = result;
+                        }
+                    }
+                }
+            ).catch();
+
+        }
 
     }
 </script>
