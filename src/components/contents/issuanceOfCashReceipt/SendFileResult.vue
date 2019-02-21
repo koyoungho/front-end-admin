@@ -70,16 +70,16 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    //{type: 'selectObject' , title :'회사코드',id: 'upjongCode', name:'upjongCode' , value: '' ,  api : 'company',  optNm : 'name', optVal: 'code', option : []},
+                    {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company',  optNm : 'name', optVal: 'code', option : []},
                     {type: 'date2', title :'처리일', id: 'date' , name:'date', searchStartDate:[beforeOneDKo, nowKo]  , calenderCount : 2, dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
-                    {type: 'input2' ,placeholder:'', title :'파일명',id: 'fileNm', name:'fileNm' , value: '' },
                     {type: 'select' , title :'처리결과',id: 'procYn', name:'procYn' , value: '' , option : [{ name : '성공' , value: 'Y' },{ name : '실패' , value: 'N' }]},
+                    {type: 'input2' ,placeholder:'', title :'파일명',id: 'fileNm', name:'fileNm' , value: '' },
                 ],
 
                 paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
                 goSearch : "iocSearch",
                 searchClass : 'search_box page_customer02',
-                searchClass2 : 'search_list col0301'
+                searchClass2 : 'search_list col0302'
             };
 
         }
