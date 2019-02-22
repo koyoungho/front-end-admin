@@ -95,11 +95,9 @@
                         <td class="vtop">
                             <select id="" name="" class="select form_w100" title="사업자 선택" v-model="saupType" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="2">개인사업자</option>
-                                <option value="1">법인사업자</option>
-                                <!--<template v-for="datas in saupGbnList">
-                                    <option v-bind:value=datas.code>{{datas.codeName}}</option>
-                                </template>-->
+                                <template v-for="datas in saupGbnList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                         </td>
                         <th scope="row"><template v-if="saupType=='1'">법인등록번호</template></th>
@@ -323,7 +321,7 @@
             //console.log('넘어온값 확인')
             //console.log(this.objectKey)
 
-            //this.getSelectList('0001'); //사업자구분
+            this.getSelectList('0016'); //사업자구분
             this.getSelectList('UPJONG'); //업종구분
             this.getSelectList('SUBSAUP'); //회사코드
             this.getSelectList('BL'); //BL코드
@@ -468,7 +466,9 @@
             }
 
             let apiUrl : string = '';
-            if(code == '0001' || code == '1000'){ //사업자구분:0001, 업종구분:1000
+            if(code == '0016'){ //사업자구분:0016
+                apiUrl = 'code?groupCode=0016';
+            }else if(code == '1000'){ //업종구분:1000
                 apiUrl = 'pcodes/'+code+'/codes';
             }else if(code == '0003' || code == '0002'){ //회사코드(택배사:0003, 신문사:0002)
                 apiUrl = 'company-codes/upjong/'+code;
@@ -486,7 +486,7 @@
                     let result: any = response.data;
                     //console.log(result)
                     if (result.length > 0) {
-                        if(code == '0001'){ //사업자구분
+                        if(code == '0016'){ //사업자구분
                             this.saupGbnList = result;
                         }else if(code == '1000'){ //업종구분
                             //this.upjongList = result;
