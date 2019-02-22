@@ -481,7 +481,7 @@
                     }
 
                 }else if(e.type=='input'){
-                      e.value='';
+                      // e.value='';
                 }else if(e.type=='input2'){
                     this.title = e.title;
                     this.placeholder = e.placeholder;
@@ -590,6 +590,7 @@
 
                         let name = this.$route.name
                         let object: Object = this.searchItem
+                          console.log(object);
                         let menu = {menuId: name, listDt: object}
                         this.$store.commit('SEARCHLISTINPUT', {menu})
                         this.$emit('SearchToList', this.searchItem);

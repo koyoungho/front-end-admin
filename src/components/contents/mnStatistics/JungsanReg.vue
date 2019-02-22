@@ -718,6 +718,15 @@
         countTotal : any = [];
         jungsanData :any = [];
         jungsanRate : any = [];
+        junhsanRateOk : boolean = false;
+        saupJaJungSanSummaryAddDto : any = {curStandardDate: '',jungsanMonth: '',jungsanType: '',previewStandardDate: '',
+            regId: '',status: '',
+            finalAtm: 0,finalCount: 0,finalTotal: 0,finalVat: 0,receiptAmt: 0,receiptCancelAmt: 0,receiptCancelCount: 0,
+            receiptCancelTotal: 0,receiptCancelVat: 0,receiptCount: 0,receiptRetAmt: 0,receiptRetCount: 0,receiptRetTotal: 0,
+            receiptRetVat: 0,receiptTotal: 0,receiptVat: 0 }
+        saupJaJungSanlList : any = []
+        saupjaJungSanTaxList : any = [];
+
         taxList : any = "";
         nowDT :any = "";
         sendType : string = "";
@@ -754,14 +763,17 @@
             this.curDate= moment(moment().startOf('month')).subtract(1,'month');
             this.preDate= moment(this.curDate).subtract(1, 'month')
             this.nowDate= moment(this.curDate).subtract(1, 'month')
-
         }
 
         getRate(){
             let date = moment(this.curDate).format('YYYYMMDD')
             CommonBoardService.getListDatas('statistics/jungsanrate/'+date,'rate',null).then(result=>{
                  if(result.status==200){
+                     if (result.data > 0){
                      this.jungsanRate = result.data
+                     this.junhsanRateOk = true;
+                     }
+                 }else{
                  }
             })
         }
@@ -771,6 +783,8 @@
         }
 
         roadData(){
+
+            if(this.junhsanRateOk){
             let loadDatas :any = {
                 curStandardDate : moment(this.curDate).format('YYYYMMDD') ,
                 previewStandardDate : moment(this.preDate).format('YYYYMMDD'),
@@ -793,6 +807,9 @@
                 }
 
             })
+            }else{
+                Vue.swal({text:"정산률이 존재하지 않습니다"})
+            }
 
         }
 
@@ -969,6 +986,7 @@
          * 임시저장
          */
         tempReg(){
+
             if(this.sendType==''){
                 alert('저장 타입을 선택해주세요')
                 return ;
@@ -976,28 +994,36 @@
                 this.countTotal.jungsanType=this.sendType
             }
 
+
+            console.log(this.realList['25'].data['total'])
+
             let listReal : any = [];
             this.realList.filter((e,index)=>{
                 if(index >4){
+                    if(index < 25){
                     listReal.push(e.data)
+                    }
                 }
             })
 
-            let object = {
-                curStandardDate : moment(this.curDate).format('YYYYMMDD'),
-                jungSanMonth : moment(this.nowDate).format('YYYYMM'),
-                previewStandardDate :  moment(this.preDate).format('YYYYMMDD'),
-                saupJaJungSanSummaryAddDto :  this.countTotal,
-                saupJaJungSanlList: listReal,
-                saupjaJungSanTaxList : this.taxList
-            }
+            console.log(listReal);
 
-            CommonBoardService.postListDatas('statistics/saupjajungsan','temp',object).then(result=>{
-                if(result.status==201){
-                    alert('전송완료')
-                    // this.$router.push({path:'receipSaupCount' });
-                }
-            })
+            // let object = {
+            //     curStandardDate : moment(this.curDate).format('YYYYMMDD'),
+            //     jungSanMonth : moment(this.nowDate).format('YYYYMM'),
+            //     previewStandardDate :  moment(this.preDate).format('YYYYMMDD'),
+            //     saupJaJungSanSummaryAddDto :  this.realList['25'],
+            //     saupJaJungSanlList: listReal,
+            //     saupjaJungSanTaxList : ''
+            // }
+
+
+            // CommonBoardService.postListDatas('statistics/saupjajungsan','temp',object).then(result=>{
+            //     if(result.status==201){
+            //         alert('전송완료')
+            //         // this.$router.push({path:'receipSaupCount' });
+            //     }
+            // })
         }
 
         /**
@@ -1018,6 +1044,8 @@
                 }
             })
 
+
+
             let object = {
                 curStandardDate : moment(this.curDate).format('YYYYMMDD'),
                 jungSanMonth : moment(this.nowDate).format('YYYYMM'),
@@ -1026,13 +1054,13 @@
                 saupJaJungSanlList: listReal,
                 saupjaJungSanTaxList : this.taxList
             }
-
-            CommonBoardService.postListDatas('statistics/saupjajungsan','ready',object).then(result=>{
-                if(result.status==201){
-                    alert('전송완료')
-                    // this.$router.push({path:'receipSaupCount' });
-                }
-            })
+            //
+            // CommonBoardService.postListDatas('statistics/saupjajungsan','ready',object).then(result=>{
+            //     if(result.status==201){
+            //         alert('전송완료')
+            //         // this.$router.push({path:'receipSaupCount' });
+            //     }
+            // })
 
         }
 

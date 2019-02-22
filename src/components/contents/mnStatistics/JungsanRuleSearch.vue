@@ -15,7 +15,9 @@
             <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </div>
             <!-- //tbl list box -->
-
+            <div class="btn_bot">
+                <button type="button"  class="btn_b01 bg03" @click="cancle">돌아가기</button>
+            </div>
         </div>
         <!-- //content -->
     </section>
@@ -60,17 +62,17 @@
                     columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                         {columName : '시작일' ,id : 'startDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
                         {columName : '종료일' ,id : 'endDate',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  , dateFormat : 'YYYY-MM-DD'},
-                        {columName : '비온라인' ,id : 'taxOffline',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                        {columName : '온라인' ,id : 'taxOnline', type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , } ,
-                        {columName : '자진발급' ,id : 'taxSelf',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                        {columName : 'KT' ,id : 'ktKtNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'LDCC' ,id : 'ktLdccNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : 'KT' ,id : 'ktKtConven',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'LDCC' ,id : 'ktLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : 'LDCC' ,id : 'ldccLdccNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'KT' ,id : 'ldccKtNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
-                        {columName : 'LDCC' ,id : 'ldccLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'  }, // 라인컬러와 라인벨류는 오직하나만
-                        {columName : 'KT' ,id : 'ldccKtConven',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소'   },
+                        {columName : '비온라인' ,id : 'taxOffline',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red' },
+                        {columName : '온라인' ,id : 'taxOnline', type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'  } ,
+                        {columName : '자진발급' ,id : 'taxSelf',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red' },
+                        {columName : 'KT' ,id : 'ktKtNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'    }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'LDCC' ,id : 'ktLdccNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'   },
+                        {columName : 'KT' ,id : 'ktKtConven',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red' }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'LDCC' ,id : 'ktLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'   },
+                        {columName : 'LDCC' ,id : 'ldccLdccNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'   }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'KT' ,id : 'ldccKtNor',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'   },
+                        {columName : 'LDCC' ,id : 'ldccLdccConven',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'   }, // 라인컬러와 라인벨류는 오직하나만
+                        {columName : 'KT' ,id : 'ldccKtConven',type:'text', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: red'   },
                         {columName : '등록일' ,id : 'regDt',type:'date', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat : 'YYYY-MM-DD'},
 
                     ],
@@ -91,7 +93,9 @@
 
         }
 
-
+        cancle(){
+            this.$router.push({ name:'receipSaupCount' })
+        }
         mounted(){
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -113,7 +117,6 @@
         jungsanRuleReg(){
             this.$router.push({path:'jungsanRuleReg' });
         }
-
     }
 </script>
 

@@ -72,7 +72,7 @@
                   </li>
                   <li>
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg031"  @click="showList()">보기</button>
+                      <button type="button" class="btn_s011 bg031"  @click="showList(data.errorYearMonth)">보기</button>
                     </div>
                     <div style="float:left" v-if="data.fixErrorCount >= 1">
                       <button type="button" class="btn_s011 bg011" @click="modList()">수정</button>
@@ -211,11 +211,17 @@
 
             this.companyList();
         }
-        showList(){
-            // this.ErrorListModeView = true;
-            // this.$modal.show(ErrorListMode,{text:''},{draggable:true ,width:1400,height:700})
-            let routeData = this.$router.resolve({name: 'statAll', params: {data: "readOnly"}});
-            window.open(routeData.href,'');
+        showList(date){
+            if(Number(this.role) ==1){
+            let routeData = this.$router.resolve({name: 'statAll', query: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode }});
+            window.open(routeData.href)
+            }else if(Number(this.role)==2){
+                let routeData = this.$router.resolve({name: 'statAll', query: {date: date, companyCode : this.companyCode }});
+                window.open(routeData.href);
+            }else{
+                let routeData = this.$router.resolve({name: 'statAll', query: {date: date}});
+                window.open(routeData.href);
+            }
         }
 
         modList(){

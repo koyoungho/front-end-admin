@@ -150,10 +150,12 @@
                     searchClass : 'search_box page_new',
                     searchClass2 : 'search_list'
                 }
+
             this.originItem  = this.listItem.dataGrid.columControl
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.listItem.search  = this.$store.state.searchList.listDt
             }
+            console.log(this.$store.state.searchList.listDt);
 
         }
 
