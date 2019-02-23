@@ -37,6 +37,7 @@
         showModal1 : boolean = false;
         role: any = sessionStorage.getItem('role');
         getData : any = {};
+        receiveDate:string = "";
 
         lang : any =  {
             days: [ '월', '화', '수', '목', '금', '토','일'],
@@ -48,14 +49,13 @@
             }
         }
 
-
-
         listItem: any =  {}
 
         //돔생성전 호출자
         created() {
             // 메뉴별 권한 확인
             this.getData = this.$route.query
+            this.receiveDate = this.getData['date'];
 
             let menuList = JSON.parse(sessionStorage.authMenu);
             let programId = 'cashReceiptIssue'; //메뉴ID
@@ -83,7 +83,7 @@
                         ],
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '순번' ,id : 'num', type:'number', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  },
-                            {columName : '오류발생일자' ,id :'sendDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                            {columName : '오류발생일자' ,id :'errorDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '오류코드' ,id :'retCode',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  , colColors : 'color: #008aff' },
                             {columName : '오류내용' ,id :'retCodeNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '승인번호' ,id :'errorAprvPerm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
@@ -116,7 +116,7 @@
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'date3',class:'w33 text_center', title :'원거래승인일자',  id: 'searchOriSaleStartsDate',id2:'searchOriSaleEndDate', name:'searchDate', searchStartDate: [] , calenderCount : 2 , dateType : 'date' , width : 220 , default :'YYYY-MM-DD'},
+                        {type: 'date3',class:'w33 text_center', title :'원거래승인일자',  id: 'searchOriSaleStartDate',id2:'searchOriSaleEndDate', name:'searchDate', searchStartDate: [] , calenderCount : 2 , dateType : 'date' , width : 220 , default :'YYYY-MM-DD'},
                         {type: 'popup',class:'w33 ', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: '',   api : '' },
                         {type: 'inputPop',class:'w33 text_left', title :'', id: 'shopNm', name:'매장정보' , value: '',   api : ''  },
 
@@ -131,7 +131,7 @@
                         {type: 'input2',class:'w25 text_center', title :'원거래승인번호', id: 'oriPerm', name:'inputType' , value: '',   api : '' , option : '' },
 
                         {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'saupUpjongCode', name:'inputType' , value: this.getData['saupUpjongCode'],   api : '' , option : '' },
-                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'searchErrorYearMonth', name:'inputType' , value: this.getData['date'],   api : '' , option : '' },
+                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'searchErrorYearMonth', name:'inputType' , value: this.receiveDate,   api : '' , option : '' },
                         {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'companyCode', name:'inputType' , value: this.getData['companyCode'],   api : '' , option : '' },
 
 

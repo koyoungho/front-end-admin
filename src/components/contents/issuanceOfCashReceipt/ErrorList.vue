@@ -39,12 +39,11 @@
                         </model-list-select >
                         </td>
                     </li>
-                    <li class="w25">
-                        <label for="">사업자등록번호</label>
-                        <input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>
-                        <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
-                    </li>
-
+                    <!--<li class="w25">-->
+                        <!--<label for="">사업자등록번호</label>-->
+                        <!--<input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>-->
+                        <!--<button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>-->
+                    <!--</li>-->
                 </ul>
             </div>
             <!-- btn mid -->
@@ -209,18 +208,19 @@
                 this.saveYn = true;
             }
 
+
             this.companyList();
         }
         showList(date){
             if(Number(this.role) ==1){
             let routeData = this.$router.resolve({name: 'statAll', query: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode }});
-            window.open(routeData.href)
+                window.open(routeData.href,"count");
             }else if(Number(this.role)==2){
                 let routeData = this.$router.resolve({name: 'statAll', query: {date: date, companyCode : this.companyCode }});
-                window.open(routeData.href);
+                window.open(routeData.href , "count");
             }else{
                 let routeData = this.$router.resolve({name: 'statAll', query: {date: date}});
-                window.open(routeData.href);
+                window.open(routeData.href , "count");
             }
         }
 
