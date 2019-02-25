@@ -628,16 +628,16 @@
             this.dataGridDetail.search.filter(e => {
                 if(e.id=='onlineYn'){ // 웹일반 검색시 컬럼 변경 특수한 케이스 임의로 편집
                       if(e.value=='N'){
-                        this.dataGridDetail.dataGrid.columControl[8].id='jumcode'
-                            this.dataGridDetail.dataGrid.columControl[8].columName='점코드'
-                            this.dataGridDetail.dataGrid.columControl[7].id='posno'
-                            this.dataGridDetail.dataGrid.columControl[7].columName='posNo'
+                        this.dataGridDetail.dataGrid.columControl[7].id='jumcode'
+                            this.dataGridDetail.dataGrid.columControl[7].columName='점코드'
+                            this.dataGridDetail.dataGrid.columControl[6].id='posno'
+                            this.dataGridDetail.dataGrid.columControl[6].columName='posNo'
 
                         }else{
-                        this.dataGridDetail.dataGrid.columControl[8].id='loginid'
-                            this.dataGridDetail.dataGrid.columControl[8].columName='ID'
-                        this.dataGridDetail.dataGrid.columControl[7].id='cusName'
-                            this.dataGridDetail.dataGrid.columControl[7].columName='고객명'
+                        this.dataGridDetail.dataGrid.columControl[7].id='loginid'
+                            this.dataGridDetail.dataGrid.columControl[7].columName='ID'
+                        this.dataGridDetail.dataGrid.columControl[6].id='cusName'
+                            this.dataGridDetail.dataGrid.columControl[6].columName='고객명'
                     }
                 }
 
