@@ -8,7 +8,7 @@
             <h3>현금영수증 발급</h3>
             <!-- btn top -->
             <div class="btn_top">
-                <button type="button" id="" class="btn_m01 bg05" v-on:click="bulkIssue">Excel 일괄 등록</button>
+                <button type="button" id="" class="btn_m01 bg05" v-on:click="bulkIssue" title="Excel 일괄 등록">Excel 일괄 등록</button>
             </div>
 
             <p class="req_info">(<em class="form_req">*</em>)는 필수항목입니다.</p>
@@ -29,8 +29,8 @@
                         <th scope="row">사업자등록번호</th>
                         <td>
                             <input type="text" class="input sch_indcode01" v-model="saupId" title="사업자등록번호" readonly>
-                            <input type="text" class="input sch_indcode02" v-model="shopNm" title="가맹점명" readonly>
-                            <button type="button" id="" class="btn_sch01" @click="popupOpen" v-show="show">검색</button>
+                            <input type="text" class="input sch_indcode02" v-model="shopNm" title="사업장명" readonly>
+                            <button type="button" id="" class="btn_sch01" @click="popupOpen" v-show="show" title="사업자정보 검색">검색</button>
                         </td>
                         <th scope="row">거래일자</th>
                         <td class="con_row01"><strong>{{moment(nowTime, 'YYYYMMDDHHmmss').format('YYYY.MM.DD')}}</strong> </td>
@@ -61,8 +61,8 @@
                     <tr>
                         <th scope="row">지출구분<em class="form_req">*</em></th>
                         <td>
-                            <span class="rdo_box"><input type="radio" name="chk" value="0" id="aa11" checked="checked" v-model="cultGb"><label for="aa11">일반</label></span>
-                            <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa12" v-model="cultGb"><label for="aa12">도서/공연</label></span>
+                            <span class="rdo_box"><input type="radio" name="chk" value="0" id="aa11" checked="checked" v-model="cultGb" title="일반 선택"><label for="aa11">일반</label></span>
+                            <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa12" v-model="cultGb" title="도서/공연 선택"><label for="aa12">도서/공연</label></span>
                             <!--<span class="rdo_box"><input type="radio" name="chk" value="2" id="aa13" v-model="cultGb"><label for="aa13">대중교통</label></span>-->
                         </td>
                         <th scope="row">회사코드<em class="form_req">*</em></th>
@@ -72,6 +72,7 @@
                                                    option-value="code"
                                                    option-text="name"
                                                    style="height :10px"
+                                                   title="회사코드"
                                                     >
                                 </model-list-select >
                             <!--<select id="" name="" class="select form_w100" title="회사코드" v-model="compoanyCode">-->
@@ -84,9 +85,9 @@
                     </tr>
                     <tr>
                         <th scope="row">고객성명</th>
-                        <td><input type="text" class="input form_w100" title="고객성명 입력" maxlength="20" v-model="custNm"></td>
+                        <td><input type="text" class="input form_w100" title="고객성명" maxlength="20" v-model="custNm"></td>
                         <th scope="row">메모</th>
-                        <td><input type="text" class="input form_w100" title="메모 입력" maxlength="12" v-model="memo"></td>
+                        <td><input type="text" class="input form_w100" title="메모" maxlength="12" v-model="memo"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -118,12 +119,12 @@
                             <tr>
                                 <td class="center">
                                     <!--<input type="text" class="input form_price" title="거래금액 입력" v-model="totalAmt" maxlength="9">-->
-                                    <money v-model="totalAmt" v-bind="money" class="input form_price" maxlength="11" title="거래금액 입력"></money>
+                                    <money v-model="totalAmt" v-bind="money" class="input form_price" maxlength="11" title="거래금액"></money>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
                                     <!--<input type="text" class="input form_price" title="봉사료 입력" v-model="bong" maxlength="9">-->
-                                    <money v-model="bong" v-bind="money" class="input form_price" maxlength="11" title="봉사료 입력"></money>
+                                    <money v-model="bong" v-bind="money" class="input form_price" maxlength="11" title="봉사료"></money>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -155,12 +156,12 @@
                             <tr>
                                 <td class="center">
                                     <!--<input type="text" id="supplyAmt" name="" class="input form_price" value="10,000" readonly="" title="공급가액 입력" v-model="supplyAmt">-->
-                                    <money v-model="supplyAmt" id="supplyAmt" v-bind="money" class="input form_price" title="공급가액 입력" readonly="readonly"></money>
+                                    <money v-model="supplyAmt" id="supplyAmt" v-bind="money" class="input form_price" title="공급가액" readonly="readonly"></money>
                                     <em class="text_price">원</em>
                                 </td>
                                 <td class="center">
                                     <!--<input type="text" id="vat" name="" class="input form_price" readonly="" title="부가세 입력" v-model="vat">-->
-                                    <money v-model="vat" id="vat" v-bind="money" class="input form_price" title="부가세 입력" readonly="readonly"></money>
+                                    <money v-model="vat" id="vat" v-bind="money" class="input form_price" title="부가세" readonly="readonly"></money>
                                     <em class="text_price">원</em>
                                 </td>
                             </tr>
@@ -172,13 +173,13 @@
             </div>
             <!-- tbl info bot -->
             <div class="tbl_info_bot">
-                <span class="chk_box2"><input type="checkbox" id="aa01" v-on:click="noTaxGbn"><label for="aa01">면세 및 간이과세자 (※공급자 기준)</label></span>
+                <span class="chk_box2"><input type="checkbox" id="aa01" v-on:click="noTaxGbn" title="면세 및 간이과세자 선택"><label for="aa01">면세 및 간이과세자 (※공급자 기준)</label></span>
             </div>
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" class="btn_b01 bg02" v-on:click="receiptInit()">초기화</button>
-                <button type="button" class="btn_b01 bg01" v-on:click="receiptIssue()" v-show="regShow" v-if="receiptIssueBtn">발급</button>
+                <button type="button" class="btn_b01 bg02" v-on:click="receiptInit()" title="초기화">초기화</button>
+                <button type="button" class="btn_b01 bg01" v-on:click="receiptIssue()" v-show="regShow" v-if="receiptIssueBtn" title="현금영수증 발급">발급</button>
             </div>
 
         </div>
