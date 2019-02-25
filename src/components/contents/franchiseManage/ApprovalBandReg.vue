@@ -25,14 +25,14 @@
                         <td class="con_indcode" colspan="3">
                             <input type="text" class="input sch_indcode01" value="000-00-00000" title="사업자등록번호" v-model="saupId" disabled="disabled">
                             <button type="button" id="" class="btn_sch01" @click="searchSaupPop">검색</button>
-                            <input type="text" class="input form_store02" value="롯데백화점 강남점" title="가맹점명" v-model="shopNm" disabled="disabled">
+                            <input type="text" class="input form_store02" value="롯데백화점 강남점" title="사업장명" v-model="shopNm" disabled="disabled">
                             <input type="hidden" title="매장번호" v-model="storeId">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">회사코드</th>
                         <td class="con_comcode">
-                            <select id="" name="" class="select form_comcode" title="회사코드" v-model="companyCode">
+                            <select id="" name="" class="select form_comcode" title="회사코드명" v-model="companyCode">
                                 <option value="">선택</option>
                                 <template v-for="datas in companyCodeList">
                                     <option v-bind:value=datas.code>{{datas.name}}</option>
@@ -44,7 +44,7 @@
                         <td>
                             <input type="text" class="input form_branchcode" title="점코드" v-model="jumCode" maxlength="10">
                             <input type="hidden" v-model="jumCodeYn">
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode">중복확인</button>
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="chkJumCode" title="점코드 중복확인">중복확인</button>
                             <p class="info_msg" id="jumcode_msg"></p>
                         </td>
                     </tr>
@@ -65,14 +65,14 @@
                         <th scope="row">승인 대역</th>
                         <td colspan="3">
                             <div class="form_col approval">
-                                <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa11" checked="checked" v-model="aproGbn"><label for="aa11">대역폭</label></span>
+                                <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa11" checked="checked" v-model="aproGbn" title="대역폭 선택"><label for="aa11">대역폭</label></span>
                                 <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="aproBandFrom" maxlength="7">
                                 <span class="period_form">-</span>
                                 <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="aproBandTo" maxlength="7">
                             </div>
                             <div class="form_col approval">
-                                <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="aproGbn"><label for="aa12">건수</label></span>
-                                <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 시작점" v-model="aproCnt" maxlength="7">
+                                <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="aproGbn" title="건수 선택"><label for="aa12">건수</label></span>
+                                <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 건수" v-model="aproCnt" maxlength="7">
                             </div>
                         </td>
                     </tr>
@@ -83,11 +83,11 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo" title="승인대역 등록 취소">취소</button>
                 <!--<button type="button" id="" class="btn_b01 bg03">승인대역 수정</button>-->
                 <!--<button type="button" id="" class="btn_b01 bg01">승인대역 신청</button>-->
                 <!--<button type="button" id="" class="btn_b01 bg03">승인대역 삭제</button>-->
-                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">승인대역 등록</button>
+                <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk" title="승인대역 등록">승인대역 등록</button>
             </div>
 
         </div>

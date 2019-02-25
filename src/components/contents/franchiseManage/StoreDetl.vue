@@ -124,7 +124,7 @@
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="zipCode" disabled="disabled">
-                                    <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)">우편번호</button>
+                                    <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)" title="주소 검색">우편번호</button>
                                 </li>
                                 <li class="con02">
                                     <input type="text" class="input form_address01" title="주소" v-model="addr1" maxlength="30" disabled="disabled">
@@ -150,7 +150,7 @@
                     </tr>
                     <tr>
                         <th scope="row">사업장 등록일</th>
-                        <td colspan="1"><input type="text" class="input form_w100" title="등록일" disabled="disabled" v-model="regiDate"></td>
+                        <td colspan="1"><input type="text" class="input form_w100" title="사업장 등록일" disabled="disabled" v-model="regiDate"></td>
                         <th scope="row">사업장 수정일</th>
                         <td colspan="1"><input type="text" class="input form_w100 fc_pt01" value="2018.11.20" title="사업장 해지일" disabled="disabled" v-model="canDate"></td>
                     </tr>
@@ -169,7 +169,7 @@
                     <tr>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td colspan="1">
-                            <select id="" name="" class="select form_w100" title="업종" v-model="upjong">
+                            <select id="" name="" class="select form_w100" title="업종구분" v-model="upjong">
                                 <option value="">선택</option>
                                 <template v-for="datas in upjongList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -315,8 +315,8 @@
 -->
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <button type="button" id="" class="btn_b01 bg01" v-if="btnUpdShow" v-on:click="validationChk">정보 변경</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo" title="매장 정보 변경 취소">취소</button>
+                <button type="button" id="" class="btn_b01 bg01" v-if="btnUpdShow" v-on:click="validationChk" title="매장 정보 변경">정보 변경</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>

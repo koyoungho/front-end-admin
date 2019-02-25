@@ -38,7 +38,7 @@
                     </li>
                     <li>
                         <label for="">지점 번호</label>
-                        <input type="text" class="input form_w100" value="0000000000" title="가맹점번호" disabled="disabled" v-model="jijumId">
+                        <input type="text" class="input form_w100" value="0000000000" title="지점번호" disabled="disabled" v-model="jijumId">
                     </li>
                     <li>
                         <label for="">사업자 번호</label>
@@ -46,7 +46,7 @@
                     </li>
                     <li>
                         <label for="">지점명</label>
-                        <input type="text" class="input form_w100" value="신일약국" title="가맹점명" disabled="disabled" v-model="jijumShopNm">
+                        <input type="text" class="input form_w100" value="신일약국" title="지점명" disabled="disabled" v-model="jijumShopNm">
                     </li>
                 </ul>
             </div>
@@ -109,7 +109,7 @@
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="zipCode" disabled="disabled">
-                                    <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)">우편번호</button>
+                                    <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)" title="주소 검색">우편번호</button>
                                 </li>
                                 <li class="con02">
                                     <input type="text" class="input form_address01" title="주소" v-model="addr1" maxlength="30" disabled="disabled">
@@ -143,7 +143,7 @@
                     <tr>
                         <th scope="row">지점 상태</th>
                         <td colspan="3">
-                            <select id="jijumStatusID" name="" class="select form_w50" title="가맹점" disabled="disabled" v-model="jijumStatus">
+                            <select id="jijumStatusID" name="" class="select form_w50" title="지점 상태" disabled="disabled" v-model="jijumStatus">
                                 <option value="">선택</option>
                                 <template v-for="datas in storeStatList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -154,7 +154,7 @@
                     </tr>
                     <tr>
                         <th scope="row">사업장 등록일</th>
-                        <td><input type="text" class="input form_w100" title="등록일" disabled="disabled" v-model="regiDate"></td>
+                        <td><input type="text" class="input form_w100" title="사업장 등록일" disabled="disabled" v-model="regiDate"></td>
                         <th scope="row">사업장 해지일</th>
                         <td><input type="text" class="input form_w100 fc_pt01" value="2018.11.20" title="사업장 해지일" disabled="disabled" v-model="canDate"></td>
                     </tr>
@@ -182,8 +182,8 @@
                         </td>
                         <th scope="row">회사코드</th>
                         <td>
-                            <input type="text" class="input form_post" title="우편번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                            <input type="text" class="input form_post" title="회사코드" v-model="saupSubSaupCnt" disabled="disabled"> 개
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop" title="회사코드 등록">회사코드 등록</button>
                             <!--<select id="" name="" class="select form_w100" title="회사코드" v-model="saupSubSaup">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupSubSaupList">
@@ -344,8 +344,8 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
-                <button type="button" class="btn_b01 bg01" v-if="btnUpdShow" v-on:click="validationChk">정보 변경</button>
+                <button type="button" class="btn_b01 bg02" v-on:click="cancelInfo" title="지점 정보 변경 취소">취소</button>
+                <button type="button" class="btn_b01 bg01" v-if="btnUpdShow" v-on:click="validationChk" title="지점 정보 변경">정보 변경</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>

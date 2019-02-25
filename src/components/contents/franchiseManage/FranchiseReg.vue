@@ -44,7 +44,7 @@
                         <td>
                             <input type="text" class="input form_industry" title="사업자등록번호" v-model="saupId" v-on:keyup="saupIdChk" maxlength="10">
                             <input type="hidden" v-model="saupIdYn">
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)">중복확인</button>
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="chkSaupNo(saupId)" title="사업자등록번호 중복확인">중복확인</button>
                             <p class="info_msg2" id="saupid_msg"></p> <!-- 메시지 표시 -->
                         </td>
                         <th scope="row">사업장명<em class="form_req">*</em></th>
@@ -87,7 +87,7 @@
                             <ul class="address_list">
                                 <li class="con01">
                                     <input type="text" class="input form_post" title="우편번호" v-model="zipCode" disabled="disabled">
-                                    <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)">우편번호</button>
+                                    <button type="button" id="" class="btn_s01 bg03" v-on:click="addressBox(postText)" title="주소 검색">우편번호</button>
                                 </li>
                                 <li class="con02">
                                     <input type="text" class="input form_address01" title="주소" v-model="addr1" maxlength="30" disabled="disabled">
@@ -101,7 +101,7 @@
                     <tr>
                         <th scope="row">업종구분<em class="form_req">*</em></th>
                         <td>
-                            <select id="" name="" class="select form_w100" title="사업자구분" v-model="saupUpjong">
+                            <select id="" name="" class="select form_w100" title="업종구분" v-model="saupUpjong">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupUpjongList">
                                     <option v-bind:value=datas.code>{{datas.codeNm}}</option>
@@ -110,8 +110,8 @@
                         </td>
                         <th scope="row">회사코드</th>
                         <td>
-                            <input type="text" class="input form_post" title="사업자등록번호" v-model="saupSubSaupCnt" disabled="disabled"> 개
-                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop">회사코드 등록</button>
+                            <input type="text" class="input form_post" title="회사코드" v-model="saupSubSaupCnt" disabled="disabled"> 개
+                            <button type="button" id="" class="btn_s01 bg04" v-on:click="subSaupPop" title="회사코드">회사코드 등록</button>
                             <!--<select id="" name="" class="select form_w100" title="사업자구분" v-model="saupSubSaup">
                                 <option value="">선택</option>
                                 <template v-for="datas in saupSubSaupList">
@@ -273,7 +273,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" class="btn_b01 bg01" v-if="regbtnShow" v-on:click="validationChk">가맹점 등록</button>
+                <button type="button" class="btn_b01 bg01" v-if="regbtnShow" v-on:click="validationChk" title="가맹점 등록">가맹점 등록</button>
             </div>
 
             <AddressBox v-if="showModal" v-bind:postData="postText" v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
