@@ -66,7 +66,7 @@
                             {columName : '팝업'  ,type:'text', id : 'popupYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,options : [{ value : 'Y' , change : '팝업'},{ value : 'N' , change : ''}] },
                             {columName : '첨부파일'  ,type:'text', id : 'fileYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , fileImage : true },
                             {columName : '등록일' ,type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
-                            {columName : '등록자'  ,type:'text', id : 'regRoleNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '등록자'  ,type:'text', id : 'regNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '구분'  ,type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}]}, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '공지'  ,type:'textNone', id : 'importantYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
                             {columName : 'new'  ,type:'textNone', id : 'newYn', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   },
