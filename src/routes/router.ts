@@ -215,7 +215,7 @@ export default new Router({
                 {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: true}}, //시스템모니터링
             ]
         },
-        {path: "/statAll", name: "statAll",  component: ErrorListMod ,meta: {authRequired: false}},
+        {path: "/statAll", name: "statAll",  component: ErrorListMod ,meta: {authRequired: true}},
         {path: "/login", name: "login",  component: Login ,meta: {authRequired: false}},
         {path:'/searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
         {path:'/searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과

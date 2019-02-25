@@ -39,12 +39,11 @@
                         </model-list-select >
                         </td>
                     </li>
-                    <li class="w25">
-                        <label for="">사업자등록번호</label>
-                        <input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>
-                        <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
-                    </li>
-
+                    <!--<li class="w25">-->
+                        <!--<label for="">사업자등록번호</label>-->
+                        <!--<input type="text"  v-model="saupId"   class="input sch_appnum"  title="고객명 입력" readonly>-->
+                        <!--<button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>-->
+                    <!--</li>-->
                 </ul>
             </div>
             <!-- btn mid -->
@@ -72,7 +71,7 @@
                   </li>
                   <li>
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg031"  @click="showList()">보기</button>
+                      <button type="button" class="btn_s011 bg031"  @click="showList(data.errorYearMonth)">보기</button>
                     </div>
                     <div style="float:left" v-if="data.fixErrorCount >= 1">
                       <button type="button" class="btn_s011 bg011" @click="modList()">수정</button>
@@ -209,13 +208,20 @@
                 this.saveYn = true;
             }
 
+
             this.companyList();
         }
-        showList(){
-            // this.ErrorListModeView = true;
-            // this.$modal.show(ErrorListMode,{text:''},{draggable:true ,width:1400,height:700})
-            let routeData = this.$router.resolve({name: 'statAll', params: {data: "readOnly"}});
-            window.open(routeData.href,'');
+        showList(date){
+            if(Number(this.role) ==1){
+            let routeData = this.$router.resolve({name: 'statAll', query: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode }});
+                window.open(routeData.href,"count");
+            }else if(Number(this.role)==2){
+                let routeData = this.$router.resolve({name: 'statAll', query: {date: date, companyCode : this.companyCode }});
+                window.open(routeData.href , "count");
+            }else{
+                let routeData = this.$router.resolve({name: 'statAll', query: {date: date}});
+                window.open(routeData.href , "count");
+            }
         }
 
         modList(){

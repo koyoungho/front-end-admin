@@ -127,8 +127,15 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button"  class="btn_b01 bg01" @click="saveData">등록</button>
-                <button type="button"  class="btn_b01 bg03" @click="cancle">돌아가기</button>
+                <template v-if="$route.params.type=='mod'">
+                    <button type="button"  class="btn_b01 bg01" @click="modData">수정</button>
+                    <button type="button"  class="btn_b01 bg03" @click="cancle">돌아가기</button>
+                </template>
+                <template v-else>
+                    <button type="button"  class="btn_b01 bg01" @click="saveData">등록</button>
+                    <button type="button"  class="btn_b01 bg03" @click="cancle">돌아가기</button>
+                </template>
+
             </div>
 
         </div>
@@ -162,45 +169,49 @@
         }
 
         jungsanRule : any = {startDate :'' , endDate :'' , taxOffline :0 , taxOnline :0 , taxSelf :0
-            , ktKtNor :0 , ktLdccNor :0, ktKtConven :0, ktLdccConven :0 , ldccLdccNor :0, ldccKtNor :0 , ldccLdccConven : 0 , ldccKtConven : 0 , regDt : ''}
+            , ktKtNor :0 , ktLdccNor :0, ktKtConven :0, ktLdccConven :0 , ldccLdccNor :0, ldccKtNor :0 , ldccLdccConven : 0 , ldccKtConven : 0 , regDt : ''};
 
 
             created(){
-                let  nowUTC =  moment().utc() ; //UTC시간
-               this.nowKo= nowUTC.add(9, 'hours')// 한국시간
-                // const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
+                    let  nowUTC =  moment().utc() ; //UTC시간
+                    // this.nowKo= nowUTC.add(9, 'hours')// 한국시간
+                    this.nowKo= nowUTC// 한국시간
+                    // const  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
 
-                this.searchStartDate=[this.nowKo, this.nowKo]
+                    this.searchStartDate=[this.nowKo, this.nowKo]
 
-                this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
-                this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
-                this.jungsanRule.regDt = moment(this.nowKo).format('YYYYMMDD') // 등록날짜를 보내야되나요?
-
+                    this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
+                    this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
+                    this.jungsanRule.regDt = moment(this.nowKo).format('YYYYMMDD') // 등록날짜를 보내야되나요?
             }
 
         /**
          * 정산룰등록
          */
 
-            saveData(){
-            this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
-            this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
-            this.jungsanRule.regDt = moment(this.nowKo).format('YYYYMMDD') //
+        saveData(){
+        this.jungsanRule.startDate = moment(this.searchStartDate[0]).format('YYYYMMDD')
+        this.jungsanRule.endDate = moment(this.searchStartDate[1]).format('YYYYMMDD')
+        this.jungsanRule.regDt = moment(this.nowKo).format('YYYYMMDD') //
 
-                CommonBoardService.postListDatas('statistics' ,'jungsanrate', this.jungsanRule).then(result=>{
-                    if(result.status ==200 || result.status==201){
-                        Vue.swal({
-                            text: '등록되었습니다',
-                        }).then((result) => {
-                            // 리스트로 이동
-                            this.$router.push({ name:'jungsanRuleSearch' })
-                        });
+            CommonBoardService.postListDatas('statistics' ,'jungsanrate', this.jungsanRule).then(result=>{
+                if(result.status==201){
+                    Vue.swal({
+                        text: '등록되었습니다',
+                    }).then((result) => {
+                        // 리스트로 이동
+                        this.$router.push({ name:'jungsanRuleSearch' })
+                    });
 
-                    } else {
-                        Vue.swal({ text: '등록 실패 되었습니다.'});
-                    }
-                })
-            }
+                } else {
+                    alert(1);
+                    Vue.swal({ text: '등록 실패 되었습니다.'});
+                }
+            }).catch(e=>{
+                alert(e)
+                Vue.swal({ text: e.message});
+            })
+        }
 
         cancle(){
             this.$router.push({ name:'jungsanRuleSearch' })

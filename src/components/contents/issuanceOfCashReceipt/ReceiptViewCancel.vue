@@ -51,20 +51,6 @@
         show : boolean = true;
         nowKo_str: any ='';
 
-        // onlineVal(val){
-        //     // 온라인 Yn 값이 변할경우 컬럼 히든처리  및 오픈
-        //     if(val=='N'){
-        //         this.listItem.dataGrid.columControl[7].id='jumcode'
-        //         this.listItem.dataGrid.columControl[7].columName='점코드'
-        //         this.listItem.dataGrid.columControl[9].id='posno'
-        //         this.listItem.dataGrid.columControl[9].columName='posNo'
-        //     }else{
-        //     this.listItem.dataGrid.columControl[7].id='loginid'
-        //         this.listItem.dataGrid.columControl[7].columName='ID명'
-        //     this.listItem.dataGrid.columControl[9].id='cusName'
-        //         this.listItem.dataGrid.columControl[9].columName='고객명'
-        //     }
-        // }
 
         created(){
 
@@ -92,19 +78,20 @@
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '거래일자' ,id : 'saleDate',type:'date', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' , dateFormat:'YYYY.MM.DD'},
                             {columName : '승인번호' ,id : 'perm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff' },
-                            {columName : '금액' ,id : 'totamt', type:'money', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'text-align: right' } ,
-                            {columName : '발급용도' ,id : 'geoguNm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '거래구분' ,id : 'trgu',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소' , options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }]  }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '회사코드' ,id : 'subSaup',type:'text', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
-                            {columName : '사업자번호' ,id : 'saupId',type:'bizNum', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  },
-                            {columName : 'ID명' ,id : 'loginid',type:'text', width : '5%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '신분확인' ,id : 'comfirm',type:'text', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '고객명' ,id : 'cusName',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '거래금액' ,id : 'totamt', type:'money', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'text-align: right' } ,
+                            {columName : '발급용도' ,id : 'geoguNm',type:'text', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '거래구분' ,id : 'trgu',type:'text', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '취소' , options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }]  }, // 라인컬러와 라인벨류는 오직하나만
+                            // {columName : '취소상태' ,id : 'geogu', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '신분확인' ,id : 'comfirm',type:'text', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '고객명' ,id : 'cusName',type:'text', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : 'ID' ,id : 'loginid',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
+                            {columName : '사업자번호' ,id : 'saupId',type:'bizNum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  },
+                            {columName : '회사코드' ,id : 'subSaupNm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
                             // {columName : '메모' ,id : 'memo',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
-                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
-                            {columName : '' ,id : 'errorMsg', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',type : 'hiddens'},
+                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
+                            {columName : '' ,id : 'errorMsg', width : '' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',type : 'hiddens'},
                         ],
-                        totalColum: 10,
+                        totalColum: 9,
                         apiUrl : 'receipt',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
                         textSend : '* 처리예정 :  거래일 기준 익일 국세청 전송처리'  // 리스트 상단우측 내용

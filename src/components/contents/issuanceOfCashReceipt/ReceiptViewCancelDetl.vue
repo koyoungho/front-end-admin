@@ -22,6 +22,7 @@
                     <th scope="row">사업자등록번호</th>
                     <td class="con_row01">
                         <strong class="data_number">{{String(viewRowItem.saupId).substring(0,3)}}-{{String(viewRowItem.saupId).substring(3,5)}}-{{String(viewRowItem.saupId).substring(5,10)}}</strong>
+                        [회사코드 : {{viewRowItem.saupId}} ]
                     </td>
                     <th scope="row">거래일자</th>
                     <td class="con_row01"><strong>{{moment(viewRowItem.saleDate,'YYYYMMDDHHmmss').format("YYYY.MM.DD HH:mm:ss")}}</strong> </td>
@@ -449,14 +450,22 @@
                 {
                     dataGrid: {
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
-                            {columName : '거래일자' ,id : 'regiDate', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , type:'date', dateFormat:'YYYY.MM.DD'},
-                            {columName : '승인번호' ,id : 'perm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff', type:'text', },
-                            {columName : '금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
-                            {columName : '발급용도' ,id : 'geoguNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '거래구분' ,id : 'trgu', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
-                            {columName : '신분확인' ,id : 'comfirm', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '거래일자' ,id : 'regiDate', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , type:'date', dateFormat:'YYYY.MM.DD'},
+                            {columName : '승인번호' ,id : 'perm', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff', type:'text', },
+                            {columName : '공급가액' ,id : 'amt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            {columName : '부가세' ,id : 'bong', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            {columName : '봉사료' ,id : 'vat', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            {columName : '거래금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            // {columName : '발급용도' ,id : 'geoguNm', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '거래구분' ,id : 'trgu', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
+                            // {columName : '지출구분' ,id : 'cultGbNm', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '신분확인' ,id : 'comfirm', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '취소사유' ,id : 'canSayuNm', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '처리내용' ,id : 'taxSend', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
+                            {columName : '' ,id : 'errorMsg', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',type : 'hiddens'},
+
+                            // {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            // {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                         ],
                         totalColum: 8,
                         apiUrl : 'receipt/'+ this.objectKey.oriDate+'/'+ this.objectKey.oriAprv+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
