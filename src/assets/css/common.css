@@ -1563,7 +1563,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .search_box.page_new .search_list > li {text-align: right;}
 .search_box.page_new .search_list  > li:first-child {}
 
-.w15 {width: 15%}
+.w15 {width: 15%;height: 50px}
 .w20 {width: 20%;height: 50px}
 .w25 {width: 25% ;height: 50px}
 .w30 {width: 30% ;height: 50px}
