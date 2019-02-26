@@ -605,7 +605,6 @@
                   let menu = {menuId: name ,listDt : object}
                   this.$store.commit('SEARCHLISTINPUT', {menu})
                   this.$emit('SearchToList', this.searchItem);
-
                   this.$store.commit('SEARCHLISTOUT')
                 }
             }

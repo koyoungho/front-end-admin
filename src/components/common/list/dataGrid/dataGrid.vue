@@ -292,7 +292,7 @@
                             <td v-bind:colspan="dataGridDetail.dataGrid.totalColum" class="no_data">조회된 내용이 없습니다.</td>
                         </template>
                         <template v-if="dataGridDetail.dataGrid.apiUrl != 'accounts'">
-                            <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length" class="no_data">조회된 내용이
+                            <td v-bind:colspan="dataGridDetail.dataGrid.columControl.length " class="no_data">조회된 내용이
                                 없습니다.
                             </td>
                         </template>

@@ -1073,6 +1073,8 @@ tr td.no_data {cursor: default;}
 
 .tbl_scroll_box {width: 100%; margin-bottom:0px;}
 .tbl_scroll {overflow-x:hidden; overflow-y:scroll; height:300px;}
+.tbl_scrollnew {overflow-x:scroll; overflow-y:scroll; height:280px;}
+.tbl_scrollnew2 {overflow-x:scroll; overflow-y:scroll; height:280px;}
 .tbl_list02 {border-top:1px solid #dedede; border-left:1px solid #dedede; table-layout:fixed;position: relative}
 .tbl_list02.brd_none {border-top:0px solid #596270; border-bottom:0px solid #dedede;}
 .tbl_list02 thead th {color:#323232; font-family:'NanumB';padding:16px 10px 14px 10px; border-left:0; border-right:1px solid #dedede; border-bottom:1px solid #dedede;
@@ -1320,6 +1322,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper.alert {width:420px;}
 .popup_wrapper.medium {width:550px;}
 .popup_wrapper.large {width:700px;}
+.popup_wrapper.biglarge {width:1400px;}
 .Pstyle {background:#fff; display: none; position: relative; width: auto; margin:10px 10px;}
 /* #popup_cash01 {top:700px;} */
 
@@ -1353,6 +1356,7 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 .popup_wrapper .btn_b01, .popup_wrapper .btn_b02 {min-width:100px; height:38px; line-height:38px; margin-left:3px; margin-right:3px;}
 
 .popup_wrapper .popup_body .popup_content.page_sch { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:515px;}
+.popup_wrapper .popup_body .popup_content.page_sch2 { position: relative; padding:30px 15px 30px 15px; overflow: hidden; height:715px;}
 .popup_wrapper .popup_body .popup_content.page_sch .search_box.type01 .search_inner .search_list > li > label {width:80px;}
 .popup_wrapper .popup_body .popup_content.page_sch .tbl_scroll {height:200px;}
 .popup_wrapper .popup_body .popup_content.page_sch .search_box.ptype02 {border-top:0; margin:-30px 0 30px 0; padding-left:55px;}
