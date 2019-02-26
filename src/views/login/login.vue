@@ -283,6 +283,9 @@
             } else if (sessionStorage.code == '009') { //승인 대기
                 alert('승인 대기 중 입니다.');
                 return;
+            } else if (sessionStorage.code == '011') { //허가되지 않은 IP
+                alert(sessionStorage.message);
+                return;
             } else {
                 alert('잘못된 로그인 정보입니다. 로그인 정보를 확인하세요.');
                 return;
