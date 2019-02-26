@@ -66,19 +66,9 @@
 
         created(){
 
-            // if( window.innerWidth < 482){
-            //     this.handleResize()
-            // }else{
-            //     this.windowResize = false;
-            //     this.handleResize()
-            // }
-            //this.listItem.search[1].searchStartDate = '20180101';
             let  nowUTC =  moment().utc() ; //UTC시간
             let  nowKo= nowUTC// 한국시간
             let  beforeOneDKo=  moment(nowKo).subtract(1, 'days') // 하루전
-
-
-
 
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
@@ -115,10 +105,10 @@
                             {columName : '휴대폰번호' ,id : 'phoneNum',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '사업자번호' ,id : 'saupId',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '사업장명' ,id : 'shopNm',type:'text', width : '14%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
-                            {columName : '회사코드' ,id : 'subSaup',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
+                            {columName : '회사코드명' ,id : 'subSaupNm',type:'text', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''   }, // 라인컬러와 라인벨류는 오직하나만
                             {columName : '등급명' ,id : 'roleNm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '등급' ,id : 'role',type:'hidden', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''}, //hidden으로 가지고 있는 값(role 코드값)
-                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
+                            {columName : '상태' ,id : 'statusNm',type:'fileDown', width : '3%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인대기'},
                             {columName : '등록일' ,id : 'regDt',type:'date', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '최종접속' ,id : 'lastConnDt',type:'date', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
                             {columName : '승인일' ,id : 'aprvDt',type:'date', width : '6%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD HH:mm:ss'},
@@ -155,7 +145,6 @@
             if(this.$store.state.searchList.menuId==this.$route.name){
                 this.listItem.search  = this.$store.state.searchList.listDt
             }
-            console.log(this.$store.state.searchList.listDt);
 
         }
 
@@ -243,24 +232,6 @@
                         window.URL.revokeObjectURL(data)
                     }, 100)
                 })
-
-                /*
-                let server: any = environment.apiUrl;
-                let param: any = '/file/' + data.row.saupFileNm;
-                //파일 다운로드
-                axios({
-                    url: server + param,
-                    method: 'GET',
-                    responseType: 'blob', // important
-                    headers: {"x-auth-token": sessionStorage.accessToken}
-                }).then((response) => {
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', data.row.saupFileNm); //or any other extension
-                    document.body.appendChild(link);
-                    link.click();
-                });*/
 
             }
         }
