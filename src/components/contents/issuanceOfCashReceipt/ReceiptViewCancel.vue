@@ -115,7 +115,7 @@
                         {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
                         {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
                         {type: 'selectCode', class:'w25', title :'등록구분',id: 'fileGb', name:'fileGb' , value: '' ,  api : 'code/?groupCode=0020' , option : [{ codeName : '일괄등록' , code: 'EL' },{codeName : '단건등록' , code: 'WP' }]},
-                        {type: 'checkbox' ,class:'w25 text_center' , title :'전체조회',id: 'isAll', name:'isAll' , value: '' ,  api : '' , option : [{ name : '(사업자번호 전체조회)' , value: 'Y' }]},
+                        //{type: 'checkbox' ,class:'w25 text_center' , title :'전체조회',id: 'isAll', name:'isAll' , value: '' ,  api : '' , option : [{ name : '(사업자번호 전체조회)' , value: 'Y' }]},
                     ],
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 20},
                     goSearch : "iocSearch",
@@ -157,7 +157,7 @@
             reqData['searchType'] =this.listItem.search[10].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
             reqData['searchWord'] =this.listItem.search[11].value;//검색어
             reqData['fileGb'] = this.listItem.search[12].value ; //등록구분
-            reqData['isAll'] = this.listItem.search[13].value ; //전체조회
+            //reqData['isAll'] = this.listItem.search[13].value ; //전체조회
 
             let fileOrigin = "cash_history_"+this.nowKo_str+".xlsx"
 
