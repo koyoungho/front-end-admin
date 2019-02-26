@@ -226,6 +226,8 @@
                 return;
             }
 
+            sessionStorage.kmc_id = sessionStorage.accountId; // id
+
             this.showConfirm = true; //본인인증 화면 보이기
 
              //this.termsAgree();
