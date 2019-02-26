@@ -156,6 +156,8 @@
             reqData['searchStartDate']= this.formatDates(this.listItem.search[9].searchStartDate[0]);//검색 시작일
             reqData['searchType'] =this.listItem.search[10].value;//검색타입(승인번호 : PERM, 신분확인 : COMFIRM, 고객명:CUSNAME, 아이디:LOGINID)
             reqData['searchWord'] =this.listItem.search[11].value;//검색어
+            reqData['fileGb'] = this.listItem.search[12].value ; //등록구분
+            reqData['isAll'] = this.listItem.search[13].value ; //전체조회
 
             let fileOrigin = "cash_history_"+this.nowKo_str+".xlsx"
 
