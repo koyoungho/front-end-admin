@@ -87,7 +87,7 @@
                             {columName : '사업자번호' ,id : 'saupId',type:'bizNum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  },
                             {columName : '회사코드' ,id : 'subSaupNm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
                             {columName : '취소상태' ,id : 'cancelStatus', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
+                            {columName : '처리내용' ,id : 'taxSend',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
                             {columName : '' ,id : 'errorMsg', width : '' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',type : 'hiddens'},
                         ],
                         totalColum: 9,
