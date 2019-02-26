@@ -600,7 +600,6 @@
 
                         let name = this.$route.name
                         let object: Object = this.searchItem
-                          console.log(object);
                         let menu = {menuId: name, listDt: object}
                         this.$store.commit('SEARCHLISTINPUT', {menu})
                         this.$emit('SearchToList', this.searchItem);

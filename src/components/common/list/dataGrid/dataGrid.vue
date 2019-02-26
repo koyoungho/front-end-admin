@@ -141,6 +141,12 @@
                                     <th>{{columNames.columName}}</th>
                                 </template>
                             </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='time'">
+                              <template
+                                  v-if="headerCheck(dataGridDetail.dataGrid.columControl[index].columName) !=true">
+                                <th>{{columNames.columName}}</th>
+                              </template>
+                            </template>
 
                         </template>
                         <!-- top 헤더가 없을경우 -->
@@ -183,6 +189,9 @@
                             <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='bizNum'">
                                 <th>{{columNames.columName}}</th>
                             </template>
+                            <template v-else-if="dataGridDetail.dataGrid.columControl[index].type==='time'">
+                              <th>{{columNames.columName}}</th>
+                            </template>
                         </template>
                     </template>
                 </tr>
@@ -204,6 +213,9 @@
                             </template>
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='bizNum'">
                                 <td>{{saupnoFormat(rows)}}</td>
+                            </template>
+                            <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='time'">
+                              <td>{{timeFormat(rows)}}</td>
                             </template>
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
                                 <td v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right">
@@ -1000,6 +1012,10 @@
 
         saupnoFormat(val) {
             return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+        }
+        timeFormat(val) {
+            // return val.substring(7, 2) + '시' + val.substring(8, 1) + '분' + val.substring(10, 1);
+            return val.substring(6, 8) + '시' + val.substring(9, 11) +'분'
         }
     }
 

@@ -185,6 +185,17 @@
 
         //돔생성전 호출자
         created() {
+
+            if(sessionStorage.searchYear){
+                this.searchYear = sessionStorage.searchYear
+            }
+            if(sessionStorage.saupUpjongCode){
+                this.saupUpjongCode = sessionStorage.saupUpjongCode
+            }
+            if(sessionStorage.companyCode){
+                this.companyCode = sessionStorage.companyCode
+            }
+
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
             let programId = 'cashReceiptIssue'; //메뉴ID
@@ -315,9 +326,10 @@
 
         //조회
         goSearch(){
+
             this.loading = true;
 
-            sessionStorage.errSaupId =this.saupId
+            sessionStorage.searchYear =this.searchYear
             sessionStorage.saupUpjongCode  = this.saupUpjongCode
             sessionStorage.companyCode  = this.companyCode
 

@@ -97,11 +97,11 @@
                             // {columName : '오류내용' ,id :'retCodeNm',type:'hidden', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '승인번호' ,id :'errorAprvPerm',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '거래일자' ,id :'saleDate',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                            {columName : '거래일시' ,id :'geodate',type:'text', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                            {columName : '거래금액' ,id :'totamt',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                            {columName : '거래일시' ,id :'geodate',type:'time', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                            {columName : '거래금액' ,id :'totamt',type:'money', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             // {columName : '원거래승인번호' ,id :'oriAprvPerm',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             // {columName : '원거래승일일자' ,id :'oriSaleDate',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
-                            {columName : '사업자번호' ,id :'saupId',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                            {columName : '사업자번호' ,id :'saupId',type:'bizNum', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '회사코드' ,id :'subSaup',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '가맹점' ,id :'shopNm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                             {columName : '승인번호' ,id :'fixPerm',type:'input', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,value: '' , colColors: ''},
@@ -194,6 +194,8 @@
 
         //임시저장
         goInsert(){
+
+
                 let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
                 let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
 
