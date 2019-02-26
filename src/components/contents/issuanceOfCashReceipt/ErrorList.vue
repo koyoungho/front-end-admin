@@ -23,6 +23,7 @@
                                              option-value="code"
                                              option-text="codeNm"
                                              style="height :10px;width:160px;float:left"
+                                             :isDisabled = "upjongDisable"
                           >
                           </model-list-select >
                         </td>
@@ -35,6 +36,7 @@
                                            option-value="code"
                                            option-text="name"
                                            style="height :10px;width:170px;float:left"
+                                           :isDisabled = "companyDisable"
                         >
                         </model-list-select >
                         </td>
@@ -52,6 +54,9 @@
                 <button type="button" class="btn_m01 bg01" @click="goSearch()">조회</button>
             </div>
             <!-- system box -->
+          <div id="loading_bar" v-show="loading">
+            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
+          </div>
           <div class="fcalendar">
             <ul>
               <template v-if="allList.length > 0">
@@ -71,19 +76,19 @@
                   </li>
                   <li>
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg031"  @click="showList(data.errorYearMonth)">보기</button>
+                      <button type="button" class="btn_s011 bg031"  @click="showList(data.errorYearMonth,'read')">보기</button>
                     </div>
                     <div style="float:left" v-if="data.fixErrorCount >= 1">
-                      <button type="button" class="btn_s011 bg011" @click="modList()">수정</button>
+                      <button type="button" class="btn_s011 bg011" @click="modList(data.errorYearMonth,'update')">수정</button>
                     </div>
                     <template v-if="data.fixErrorCount >= 1">
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg051" @click="jeculCancelButton()">제출</button>
+                      <button type="button" class="btn_s011 bg051" @click="jeculButton(data.errorYearMonth)">제출</button>
                     </div>
                     </template>
                     <template v-else>
                       <div style="float:left">
-                        <button type="button" class="btn_s011 bg051" @click="jeculButton()">제출취소</button>
+                        <button type="button" class="btn_s011 bg051" @click="jeculCancelButton(data.errorYearMonth)">제출취소</button>
                       </div>
                     </template>
                     <template v-if="role=='0001'">
@@ -123,7 +128,6 @@
             <!--<button type="button" id="" class="btn_b01 bg01" v-on:click="goPresentTax"  v-show="regShow">국세청제출</button>-->
         <!--</div>-->
         </div>
-
       <SaupBox v-if="showModal1"  v-on:selectedSaup="setSaupData" @saupClose="showModal1 = false"></SaupBox>
 
     </section>
@@ -140,6 +144,7 @@
     import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
     import ErrorListMode from './ErrorListMod.vue'
 
+
     @Component({
         components: {
             ErrorList,SaupBox,VueSimpleSpinner,ErrorListMode
@@ -147,12 +152,13 @@
     })
     export default class ErrorList extends Vue {
         message: any = '';
+        loading : boolean = false;
         regShow : boolean = false;
         ErrorListModeView : boolean = false;
         searchYear : string = moment().format('YYYY');  //선택연도
         companyCodeList : any = [];
-        saupId  :string = "";
-        companyCode : any = "";
+        saupId  :string = '';
+        companyCode : string = "";
         showModal1 : boolean = false;
         role: any = sessionStorage.getItem('role');
         readYn : boolean = false;
@@ -160,8 +166,10 @@
         modYn : boolean  = false;
         saveYn : boolean  = false;
         saupUpjongList : any = [];
-        saupUpjongCode : string = "";
+        saupUpjongCode : string = '';
         allList : any = [];
+        companyDisable : boolean = false;
+        upjongDisable : boolean = false;
 
 
         lang : any =  {
@@ -177,6 +185,17 @@
 
         //돔생성전 호출자
         created() {
+
+            if(sessionStorage.searchYear){
+                this.searchYear = sessionStorage.searchYear
+            }
+            if(sessionStorage.saupUpjongCode){
+                this.saupUpjongCode = sessionStorage.saupUpjongCode
+            }
+            if(sessionStorage.companyCode){
+                this.companyCode = sessionStorage.companyCode
+            }
+
             // 메뉴별 권한 확인
             let menuList = JSON.parse(sessionStorage.authMenu);
             let programId = 'cashReceiptIssue'; //메뉴ID
@@ -210,29 +229,74 @@
 
 
             this.companyList();
+
+            if(sessionStorage.role == '0002') { //현금영수증 사업자
+                this.saupUpjongCode = sessionStorage.soluId == null ? "" : sessionStorage.soluId;
+                this.upjongDisable = true;
+            }else if(sessionStorage.role == '0004'){ //가맹점관리자
+                this.saupUpjongCode =  sessionStorage.soluId == null ? "" : sessionStorage.soluId;
+                this.companyCode = sessionStorage.upjong == null ? "" : sessionStorage.upjong;
+                this.companyDisable = true;
+                this.upjongDisable = true;
+
+            }else if(sessionStorage.role == '0005') { //지점관리자
+                this.saupUpjongCode = sessionStorage.soluId == null ? "" : sessionStorage.soluId;
+                this.companyCode = sessionStorage.upjong == null ? "" : sessionStorage.upjong;
+                this.companyDisable = true;
+                this.upjongDisable = true;
+            }
+
+
+
         }
-        showList(date){
+        showList(date,mode){
             if(Number(this.role) ==1){
-            let routeData = this.$router.resolve({name: 'statAll', query: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode }});
-                window.open(routeData.href,"count");
+               this.$router.push({name: 'statAll', params: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode ,mode : mode}});
             }else if(Number(this.role)==2){
-                let routeData = this.$router.resolve({name: 'statAll', query: {date: date, companyCode : this.companyCode }});
-                window.open(routeData.href , "count");
+                this.$router.push({name: 'statAll', params: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode ,mode : mode}});
             }else{
-                let routeData = this.$router.resolve({name: 'statAll', query: {date: date}});
-                window.open(routeData.href , "count");
+                this.$router.push({name: 'statAll', params: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode,mode : mode }});
             }
         }
 
-        modList(){
-            this.ErrorListModeView = true;
+
+        modList(date,mode){
+            if(Number(this.role) ==1){
+                this.$router.push({name: 'statAll', params: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode ,mode : mode}});
+            }else if(Number(this.role)==2){
+                this.$router.push({name: 'statAll', params: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode ,mode : mode}});
+            }else{
+                this.$router.push({name: 'statAll', params: {date: date, saupUpjongCode : this.saupUpjongCode , companyCode : this.companyCode,mode : mode }});
+            }
         }
 
-        jeculButton(){
+        jeculButton(data){
+            if(this.companyCode==''){
+                Vue.swal({text: '회사 코드가 존재하지 않습니다'});
+            }else{
+                CommonBoardService.putListData('/receipt-error/innerfix/',data+'/'+this.companyCode,null).then(result=>{
+                    if(result.status==200){
+                        Vue.swal({text: '제출이 완료 되었습니다'});
+                    }
+                }).catch(e=>{
 
+                })
+            }
         }
 
-        jeculCancelButton(){
+        jeculCancelButton(data){
+             if(this.companyCode==''){
+                 Vue.swal({text: '회사 코드가 존재하지 않습니다'});
+             }else{
+              CommonBoardService.putListData('/receipt-error/innerfix',data+'/cancel/'+this.companyCode,null).then(result=>{
+                      if(result.status==200){
+                          Vue.swal({text: '제출이 취소 되었습니다'});
+                      }
+              }).catch(e=>{
+
+              })
+                 this.goSearch();
+             }
 
         }
 
@@ -262,6 +326,13 @@
 
         //조회
         goSearch(){
+
+            this.loading = true;
+
+            sessionStorage.searchYear =this.searchYear
+            sessionStorage.saupUpjongCode  = this.saupUpjongCode
+            sessionStorage.companyCode  = this.companyCode
+
             let Object = {
                 saupId : this.saupId,
                 soluId : this.saupUpjongCode,
@@ -270,9 +341,15 @@
             CommonBoardService.getListDatas('receipt-error',moment(this.searchYear).format('YYYY'),Object).then(result=>{
                 if(result.status==200){
                     this.allList = result.data
+                    this.loading = false;
+                }
+                else{
+                    this.loading = false;
                 }
             }).catch(e=>{
+                this.loading = false;
             })
+
         }
 
         popupOpen(){

@@ -154,6 +154,7 @@ export default new Router({
                 {path:'receiptViewCancel', name:'receiptViewCancel', component: ReceiptViewCancel ,meta: {authRequired: true}}, //발급 내역 조회/취소
                 {path:'receiptViewCancelDetl', name:'receiptViewCancelDetl', component: ReceiptViewCancelDetl ,meta: {authRequired: true}}, //현금영수증 발급 조회 및 취소
                 {path:'errorList', name:'errorList', component: ErrorList ,meta: {authRequired: true}}, //오류 내역 조회
+                {path: "statAll", name: "statAll",  component: ErrorListMod ,meta: {authRequired: true}},
                 {path:'approvalFileSend', name:'approvalFileSend', component: ApprovalFileSend ,meta: {authRequired: true}}, //승인파일전송
                 {path:'errorCheck', name:'errorCheck', component: ErrorCheck ,meta: {authRequired: true}},//전문 오류 체크
                 {path:'sendFileResult', name:'sendFileResult', component: SendFileResult ,meta: {authRequired: true}}, //전송 파일 처리결과
@@ -215,7 +216,6 @@ export default new Router({
                 {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: true}}, //시스템모니터링
             ]
         },
-        {path: "/statAll", name: "statAll",  component: ErrorListMod ,meta: {authRequired: true}},
         {path: "/login", name: "login",  component: Login ,meta: {authRequired: false}},
         {path:'/searchIdInput', name:'searchIdInput', component: SearchIdInput ,meta: {authRequired: false}}, //아이디 찾기
         {path:'/searchIdResult', name:'searchIdResult', component: SearchIdResult ,meta: {authRequired: false}}, //아이디 찾기 결과
