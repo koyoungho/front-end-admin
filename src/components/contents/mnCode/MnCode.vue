@@ -44,8 +44,8 @@
                                     <div class="title">코드명</div>
                                 </template>
                                 <template v-else>
-                                    <div class="title">업종코드</div>
-                                    <div class="title">업종명</div></template>
+                                    <div class="title">공통코드</div>
+                                    <div class="title">공통코드명</div></template>
                             </div>
                             <!-- code body -->
                             <div class="code_body tbl_scroll">
@@ -81,12 +81,12 @@
                             <div class="code_head">
                                 <template v-if="company == true">
                                     <div class="title2">회사 서브코드</div>
-                                    <div class="title2">코드명</div>
+                                    <div class="title2">회사 서브코드명</div>
                                     <div class="title2">구분</div>
                                 </template>
                                 <template v-else>
-                                    <div class="title2">업종 서브코드</div>
-                                    <div class="title2">업종명</div>
+                                    <div class="title2">공통 서브코드</div>
+                                    <div class="title2">공통 서브코드명</div>
                                     <div class="title2">구분</div>
                                 </template>
                             </div>

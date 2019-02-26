@@ -57,7 +57,7 @@
                                       </li>
                                       <li>
                                           <label> 업종 코드</label>
-                                          <input type="text" class="input sch_code" title="코드명" v-model="getUpjong" disabled="disabled">
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getUpjong">
                                       </li>
                                       <li>
                                           <label> 구분</label>
@@ -217,7 +217,7 @@
             if(this.type){
                 // 컴퍼니
                 apiAddr = 'company'+'/'+ this.getCodes;
-                Object = {name: this.getNames, viewGb: this.getViewGb}
+                Object = {name: this.getNames, viewGb: this.getViewGb, upjongCode: this.getUpjong}
             }
             else{
                 apiAddr = 'code';
