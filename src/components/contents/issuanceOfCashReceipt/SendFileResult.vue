@@ -70,7 +70,7 @@
                 },
                 // 아이디는 실제 컬럼값을 넣어주면됩니다.
                 search: [
-                    {type: 'selectObject' , title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company',  optNm : 'name', optVal: 'code', option : []},
+                    {type: 'selectCode' , title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'code/approvalcompanycode',  optNm : 'name', option : [{ codeNm : 'LTS' , code: '001' }] },
                     {type: 'date2', title :'처리일', id: 'date' , name:'date', searchStartDate:[beforeOneDKo, nowKo]  , calenderCount : 2, dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'select' , title :'처리결과',id: 'procYn', name:'procYn' , value: '' , option : [{ name : '성공' , value: 'Y' },{ name : '실패' , value: 'N' }]},
                     {type: 'input2' ,placeholder:'', title :'파일명',id: 'fileNm', name:'fileNm' , value: '' },
