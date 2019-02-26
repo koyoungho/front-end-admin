@@ -86,32 +86,36 @@
                             {columName : 'ID' ,id : 'loginid',type:'text', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''},
                             {columName : '사업자번호' ,id : 'saupId',type:'bizNum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  },
                             {columName : '회사코드' ,id : 'subSaupNm',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,   },
-                            // {columName : '취소상태' ,id : 'geogu', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '취소상태' ,id : 'cancelStatus', width : '4%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '처리내용' ,id : 'taxSend',type:'text', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
                             {columName : '' ,id : 'errorMsg', width : '' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',type : 'hiddens'},
                         ],
                         totalColum: 9,
                         apiUrl : 'receipt',
                         onLoadList : this.onLoadListView,  // onLoad 로딩 유무
-                        textSend : '* 처리예정 :  거래일 기준 익일 국세청 전송처리'  // 리스트 상단우측 내용
-                        // mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                        cancelStatusText : '* 취소상태 : ○-취소없음, △-부분취소, X-전체취소',
+                        textSend : '* 처리예정 :  거래일 기준 익일 국세청 전송처리',  // 리스트 상단우측 내용
+                        mTotal : true , // 합계금액 란 활성화여부  합계가 존재하는 페이지도 있음
+                        shapeMark : true, //취소상태 표시
                         // mTotalControl : [{totalTitle : '합계 금액' , id: 'totalAmt' , value : '' },{totalTitle : '합계봉사료' , id: 'bong' , value : '' },{totalTitle : '합계공급가액' , id: 'amt' , value : '' },
                         //     {totalTitle : '합계부가세' , id: 'vat' , value : '' }]
                     },
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
-                        {type: 'select2' ,class:'w25 ', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
-                        {type: 'selectObjectSearchList' ,class:'w25 ', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
-                        {type: 'popup',class:'w25 ', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
+                        {type: 'select2' ,class:'w25', title :'발급경로',id: 'onlineYn', name:'onlineYn' , value: 'Y' ,  api : '' , option : [{ name : '웹' , value: 'Y' },{name : '일반' , value: 'N' }]},
+                        {type: 'selectObjectSearchList' ,class:'w25', title :'회사코드',id: 'subSaup', name:'subSaup' , value: '' ,  api : 'company' , option : []},
+                        {type: 'popup',class:'w25', title :'사업자등록번호', id: 'saupId', name:'사업자번호' , value: this.saupId,   api : '' ,},
                         {type: 'inputPop',class:'w25 text_left', title :'', id: 'shopNm', name:'매장정보' , value: this.shopNm,   api : '' , disable : this.show},
-                        {type: 'selectCode' ,class:'w25 ', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : 'code/?groupCode=0002' , option : []},
-                        {type: 'selectCode' ,class:'w25 ', title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : 'code/?groupCode=0003' , option : []},
-                        {type: 'selectCode' ,class:'w25 ', title :'지출구분',id: 'cultGb', name:'cultGb' , value: '' ,  api : 'code/?groupCode=0005' , option : []},
+                        {type: 'selectCode' ,class:'w25', title :'발급용도',id: 'geogu', name:'geogu' , value: '' ,  api : 'code/?groupCode=0002' , option : []},
+                        {type: 'selectCode' ,class:'w25', title :'거래구분',id: 'trgu', name:'trgu' , value: '' ,  api : 'code/?groupCode=0003' , option : []},
+                        {type: 'selectCode' ,class:'w25', title :'지출구분',id: 'cultGb', name:'cultGb' , value: '' ,  api : 'code/?groupCode=0005' , option : []},
                         {type: 'linull',class:'w25 text_left', title :'', id: '123', name:'매장정보' , value: this.shopNm,   api : '' },
-                        {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'approval' , option : [{ name : '거래일' , value: 'approval' },{ name : '취소일' , value: 'cancel' }] },
+                        {type: 'radio' ,class:'w25 text_center', title :'', id: 'searchDateType', name: 'radioBox' , value: 'approval' , option : [{ name : '거래일' , value: 'approval' },{ name : '취소일' , value: 'cancel' }] },
                         {type: 'date2',class:'w25 text_left', title :'', id: 'date', name:'date', searchStartDate: [nowKo, nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD' , setDates:[nowKo, nowKo]},
                         {type: 'select' ,class:'w25', title :'검색',id: 'searchType', name:'searchType' , value: '' ,  api : '' , option : [{ name : '승인번호' , value: 'perm' },{name : '신분확인번호' , value: 'comfirm' },{name : '고객명' , value: 'cusName' },{name : 'ID명' , value: 'loginid' }]},
                         {type: 'input',class:'w25 text_left', title :'', id: 'searchWord', name:'inputType' , value: '',   api : '' , option : '' },
+                        {type: 'selectCode', class:'w25', title :'등록구분',id: 'fileGb', name:'fileGb' , value: '' ,  api : 'code/?groupCode=0020' , option : [{ codeName : '일괄등록' , code: 'EL' },{codeName : '단건등록' , code: 'WP' }]},
+                        {type: 'checkbox' ,class:'w25 text_center' , title :'전체조회',id: 'isAll', name:'isAll' , value: '' ,  api : '' , option : [{ name : '(사업자번호 전체조회)' , value: 'Y' }]},
                     ],
                     paging: { currentPage : 1 , lastPage : 0 ,viewPageSize : 10 ,totalRecords : 0 , from : 0 , to : 0 , perPage : 20},
                     goSearch : "iocSearch",
