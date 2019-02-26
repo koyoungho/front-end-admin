@@ -9,7 +9,8 @@
       </div>
       <!--<vue-progress-bar></vue-progress-bar>-->
       <template>
-      <span class="total">총 <strong>{{totalCount}} </strong>건</span>  <span style="float: right">{{dataGridDetail.dataGrid.textSend}}</span>
+        <span style="float: right">{{dataGridDetail.dataGrid.textSend}}</span><br>
+      <span class="total">총 <strong>{{totalCount}} </strong>건</span>  <span style="float: right">{{dataGridDetail.dataGrid.cancelStatusText}}</span>
       </template>
     </div>
     <!-- 20181112 수정 추가 -->
@@ -18,23 +19,41 @@
     <template v-if="dataGridDetail.dataGrid.mTotal">
     <div class="cash_total_box" >
       <dl class="cash_total">
-        <dt>합계금액</dt>
+        <dt>승인금액합</dt>
         <dd>
           <input type="text" v-model="mTotalCount" value="5,000" class="input form_price" title="합계금액" readonly=""> 원
         </dd>
-        <dt>합계봉사료</dt>
+        <dt>봉사료</dt>
         <dd>
           <input type="text" v-model="mServiceCharge" class="input form_price" title="봉사료" readonly=""> 원
         </dd>
-        <dt>합계공급가액</dt>
+        <dt>공급가액</dt>
         <dd>
           <input type="text" v-model="mSupplyValue" class="input form_price" title="공급가액" readonly=""> 원
         </dd>
-        <dt>합계부가세</dt>
+        <dt>부가세</dt>
         <dd>
           <input type="text" v-model="mSurtax" class="input form_price" title="부가세" readonly=""> 원
         </dd>
       </dl>
+        <dl class="cash_total" v-if="totalCountCan > 0">
+            <dt>취소금액합</dt>
+            <dd>
+                <input type="text" v-model="mCanTotalCount" value="0" class="input form_price" title="합계금액" readonly=""> 원
+            </dd>
+            <dt>봉사료</dt>
+            <dd>
+                <input type="text" v-model="mCanServiceCharge" class="input form_price" title="봉사료" readonly=""> 원
+            </dd>
+            <dt>공급가액</dt>
+            <dd>
+                <input type="text" v-model="mCanSupplyValue" class="input form_price" title="공급가액" readonly=""> 원
+            </dd>
+            <dt>부가세</dt>
+            <dd>
+                <input type="text" v-model="mCanSurtax" class="input form_price" title="부가세" readonly=""> 원
+            </dd>
+        </dl>
     </div>
     </template>
 
@@ -228,6 +247,15 @@
                                       <span v-bind:style="colColor(indexs)">{{rows}}</span>
                                     </td>
                                     </template>
+                                    <template v-else-if="dataGridDetail.dataGrid.columControl[indexs].id=='cancelStatus'">
+                                        <template v-if="dataGridDetail.dataGrid.shapeMark">
+                                            <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)" ><span v-bind:style="colColor(indexs)">
+                                                <template v-if="rows=='0'">○</template>
+                                                <template v-else-if="rows=='1'">△</template>
+                                                <template v-else-if="rows=='2'">X</template>
+                                            </span></td>
+                                        </template>
+                                    </template>
                                     <template v-else>
                                       <td v-on:click="rowView(datas,publicPageing,index,key)"
                                           v-bind:style="fontColor(indexs,rows)" >
@@ -335,6 +363,7 @@
         listOragin: any = [];  // 오리지널데이터
         listData: any = [];    // 실제 가공해서 뿌리는데이터
         totalCount: any = '0';  // 리스트 전체 카운트
+        totalCountCan: any = '0';
         $Progress: any;  // 프로그래스바
         windowSize: any = '';  // 윈도우 사이즈 체크
         publicPageing: any = '';  // 페이징
@@ -351,10 +380,16 @@
         hiddenColum :  boolean = true;
 
         // 토탈합계
-        mTotalCount: number = 0;
-        mServiceCharge: number = 0;
-        mSupplyValue: number = 0;
-        mSurtax: number = 0;
+        mTotalCount: any = '0';
+        mServiceCharge: any = '0';
+        mSupplyValue: any = '0';
+        mSurtax: any = '0';
+
+        // 취소토탈합계
+        mCanTotalCount: string = '0';
+        mCanServiceCharge: string = '0';
+        mCanSupplyValue: string = '0';
+        mCanSurtax: string = '0';
 
         authButton: boolean = false; //승인버튼 보이기
         //인풋 벨리데이션 체크
@@ -402,6 +437,14 @@
                 return '-' + data
             } else {
                 return data
+            }
+        }
+
+        TotalMinusCheck(data){
+            if(data == '0'){
+                return data
+            }else{
+                return '-'+data
             }
         }
 
@@ -737,10 +780,42 @@
 
                     // 토탈금액 인풋
                     if (this.dataGridDetail.dataGrid.mTotal == true) {
-                        this.mTotalCount = (result.extra.totalAmt).toLocaleString();
-                        this.mServiceCharge = (result.extra.bong).toLocaleString();
-                        this.mSupplyValue = (result.extra.amt).toLocaleString();
-                        this.mSurtax = (result.extra.vat).toLocaleString();
+
+                        if (result.extra != null && result.extra.length > 0) { //합계가 있으면
+                            for (let i = 0; i < result.extra.length; i++) {
+
+                                if (result.extra[i].trgu == '0') { //승인
+                                    this.mTotalCount = result.extra[i].totamt;
+                                    this.mServiceCharge = result.extra[i].bong;
+                                    this.mSupplyValue = result.extra[i].amt;
+                                    this.mSurtax = result.extra[i].vat;
+
+                                    if(result.extra.length == 1){ //취소금액 초기화
+                                        this.mCanTotalCount = '0';
+                                        this.mCanServiceCharge = '0';
+                                        this.mCanSupplyValue = '0';
+                                        this.mCanSurtax = '0';
+                                    }
+
+                                } else if (result.extra[i].trgu == '1') { //취소
+
+                                    this.totalCountCan = 1;
+                                    this.mCanTotalCount = this.TotalMinusCheck(result.extra[i].totamt);
+                                    this.mCanServiceCharge = this.TotalMinusCheck(result.extra[i].bong);
+                                    this.mCanSupplyValue = this.TotalMinusCheck(result.extra[i].amt);
+                                    this.mCanSurtax = this.TotalMinusCheck(result.extra[i].vat);
+
+                                    if(result.extra.length == 1){ //승인금액 초기화
+                                        this.mTotalCount = 0;
+                                        this.mServiceCharge = 0;
+                                        this.mSupplyValue = 0;
+                                        this.mSurtax = 0;
+                                    }
+
+                                }
+                            }
+                        }
+
                     }
 
                     this.menuHeader = [];

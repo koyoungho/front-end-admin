@@ -215,7 +215,17 @@
               <li :class="item.class" style=height:50px><label for="aa"></label></li>
             </template>
           </template>
+          <template v-if="item.type=='checkbox'">
+            <li :class="item.class">
+              <label for="aa">{{item.title}}</label>
+              <span class="chk_box" v-for="checkItem in item.option">
+                <input type="checkbox" v-model="item.value" v-bind:value="checkItem.value"><label for="aa01">{{checkItem.name}}</label>
+            </span>
+            </li>
+          </template>
+
         </template>
+
       </ul>
       <!--</div>-->
       <!-- //tbl search box -->

@@ -22,7 +22,7 @@
             <div class="login_wrap">
                 <!-- login_box -->
                 <div class="login_box type01" v-show="otpTrue==false">
-                    <p class="login_text" >비밀번호를 초기화 하기 위해서는 가입시 등록하신 이름과 <br>휴대폰 번호화 사업자등록번호를 입력해주시기 바랍니다</p>
+                    <p class="login_text" >비밀번호를 초기화 하기 위해서는 가입시 등록하신 아이디와 <br>휴대폰 번호와 사업자등록번호를 입력해주시기 바랍니다</p>
                     <fieldset class="login_form" >
                         <legend> 로그인 </legend>
                         <!-- login -->

@@ -39,9 +39,12 @@
                         <div class="code_list_box">
                             <!-- code head -->
                             <div class="code_head">
-                                <template v-if="company == true"><div class="title">회사코드</div>
-                                    <div class="title">코드명</div></template>
-                                <template v-else><div class="title">업종코드</div>
+                                <template v-if="company == true">
+                                    <div class="title">회사코드</div>
+                                    <div class="title">코드명</div>
+                                </template>
+                                <template v-else>
+                                    <div class="title">업종코드</div>
                                     <div class="title">업종명</div></template>
                             </div>
                             <!-- code body -->
@@ -76,10 +79,16 @@
                         <div class="code_list_box">
                             <!-- code head -->
                             <div class="code_head">
-                                <template v-if="company == true"><div class="title">회사 서브코드</div>
-                                    <div class="title">코드명</div></template>
-                                <template v-else><div class="title2">업종 서브코드</div>
-                                    <div class="title2">업종명</div><div class="title2">구분</div></template>
+                                <template v-if="company == true">
+                                    <div class="title2">회사 서브코드</div>
+                                    <div class="title2">코드명</div>
+                                    <div class="title2">구분</div>
+                                </template>
+                                <template v-else>
+                                    <div class="title2">업종 서브코드</div>
+                                    <div class="title2">업종명</div>
+                                    <div class="title2">구분</div>
+                                </template>
                             </div>
                             <!-- code body -->
                             <div class="code_body tbl_scroll">
@@ -87,13 +96,14 @@
                                     <a >
                                         <!--<div :class="cCode.cssClass" @click="onSelected(cCode.code)">{{cCode.code}}</div>-->
                                         <template v-if="company==true">
-                                        <div class='cont' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)">{{cCode.code}}</div>
-                                        <div class='cont' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)" v-on:dblclick="counter += 1, viewPopCompany('upd','sub', cCode.code , cCode.name , cCode.upjongCode , cCode.saupId )" >{{cCode.name}}</div>
+                                        <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)">{{cCode.code}}</div>
+                                        <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)" v-on:dblclick="counter += 1, viewPopCompany('upd','sub', cCode.code , cCode.name , cCode.upjongCode , cCode.saupId, cCode.viewGb)" >{{cCode.name}}</div>
+                                        <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)">&nbsp;&nbsp;&nbsp;&nbsp;{{cCode.viewGb!=null?cCode.viewGb:'-'}}</div>
                                         </template>
                                         <template v-if="company==false">
                                             <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code)">{{cCode.code}}</div>
                                             <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code,cCode.groupCode)" v-on:dblclick="counter += 1, viewPopCommon('upd','sub',cCode.code , cCode.codeNm, cCode.groupCode,cCode.viewGb)"  >{{cCode.codeNm}}</div>
-                                            <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code,cCode.groupCode)" v-on:dblclick="counter += 1, viewPopCommon('upd','sub',cCode.code , cCode.codeNm, cCode.groupCode,cCode.viewGb)"  >&nbsp;&nbsp;&nbsp;&nbsp;{{cCode.viewGb}}</div>
+                                            <div class='cont2' :class="{highlight:cCode.code == selecteds}" @click="onSelectedSub(cCode.code,cCode.groupCode)">&nbsp;&nbsp;&nbsp;&nbsp;{{cCode.viewGb!=null?cCode.viewGb:'-'}}</div>
                                         </template>
                                     </a>
                                 </template>
@@ -281,8 +291,8 @@
             this.popupYn = true;
         }
 
-        viewPopCompany(fc,div,code,name,upjoinCode,saupId){
-        this.dataSet = {fc: fc, div:div ,type: this.company , code : code , name : name , upjongCode : upjoinCode , saupId : saupId };
+        viewPopCompany(fc,div,code,name,upjoinCode,saupId,viewGb){
+        this.dataSet = {fc: fc, div:div ,type: this.company , code : code , name : name , upjongCode : upjoinCode , saupId : saupId, viewGb : viewGb };
         this.popupYn = true;
         }
 

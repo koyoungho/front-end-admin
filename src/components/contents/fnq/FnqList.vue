@@ -116,7 +116,7 @@
                         {columName : '순번', type:'number', id : 'rnum', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'' },
                         {columName : '제목', type:'text', id : 'title', width : '60%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,rowColors :'', imageUse : true },
                         {columName : '등록일', type:'date', id : 'regDt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , dateFormat:'YYYY.MM.DD'},
-                        {columName : '등록자', type:'text', id : 'regId', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
+                        {columName : '등록자', type:'text', id : 'regNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' },
                         {columName : '구분', type:'text', id : 'viewType', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : ''  ,options : [{ value : 'ALL' , change : '공통'},{ value : 'ADM' , change : '관리자'},{ value : 'USR' , change : '사용자'}] }, // 라인컬러와 라인벨류는 오직하나만
                     ],
                     totalColum: 5,

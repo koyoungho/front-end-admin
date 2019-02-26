@@ -28,18 +28,42 @@
                                     <input type="text" class="input sch_code" title="코드명" v-model="getCodes" readonly>
                                   </template>
                                 </li>
-                                <li>
-                                  <label>{{div_str}} 코드명</label>
-                                  <input type="text" class="input sch_code" title="코드명" v-model="getNames">
-                                </li>
-                                <li>
-                                  <label> 사업자아이디</label>
-                                  <input type="text" class="input sch_code" title="코드명" v-model="getSaupId">
-                                </li>
-                                <li>
-                                  <label> 업종 코드</label>
-                                  <input type="text" class="input sch_code" title="코드명" v-model="getUpjong">
-                                </li>
+                                  <template v-if="fuct=='add'">
+                                      <li>
+                                          <label>{{div_str}} 코드명</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getNames">
+                                      </li>
+                                      <li>
+                                          <label> 사업자번호</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getSaupId">
+                                      </li>
+                                      <li>
+                                          <label> 업종 코드</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getUpjong">
+                                      </li>
+                                      <li>
+                                          <label> 구분</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getViewGb" maxlength="1">
+                                      </li>
+                                  </template>
+                                  <template v-else>
+                                      <li>
+                                          <label>{{div_str}} 코드명</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getNames">
+                                      </li>
+                                      <li>
+                                          <label> 사업자번호</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getSaupId" disabled="disabled">
+                                      </li>
+                                      <li>
+                                          <label> 업종 코드</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getUpjong" disabled="disabled">
+                                      </li>
+                                      <li>
+                                          <label> 구분</label>
+                                          <input type="text" class="input sch_code" title="코드명" v-model="getViewGb" maxlength="1">
+                                      </li>
+                                  </template>
                               </template>
                               <template v-else>
                                 <li>
@@ -158,7 +182,7 @@
             if(this.type){
                 // 컴퍼니
                 apiAddr = 'company';
-                Object = {code : this.getCodes , name: this.getNames , saupId : this.getSaupId , upjongCode : this.getUpjong}
+                Object = {code : this.getCodes , name: this.getNames , saupId : this.getSaupId , upjongCode : this.getUpjong, viewGb : this.getViewGb}
             }
             else{
                 apiAddr = 'code';
@@ -193,7 +217,7 @@
             if(this.type){
                 // 컴퍼니
                 apiAddr = 'company'+'/'+ this.getCodes;
-                Object = {name: this.getNames}
+                Object = {name: this.getNames, viewGb: this.getViewGb}
             }
             else{
                 apiAddr = 'code';
