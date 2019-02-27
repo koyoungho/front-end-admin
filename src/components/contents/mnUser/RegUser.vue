@@ -724,14 +724,15 @@
                         rowData['createYn'] = e.createYn;
                         rowData['updateYn'] = e.updateYn;
                         rowData['deleteYn'] = e.deleteYn;
-                        rowData['readGbn'] = true;
-                        rowData['createGbn'] = true;
-                        rowData['updateGbn'] = true;
-                        rowData['deleteGbn'] = true;
                         rowData['readId'] = e.menuCode + rowCnt;
                         rowData['createId'] = e.menuCode + rowCnt;
                         rowData['updateId'] = e.menuCode + rowCnt;
                         rowData['deleteId'] = e.menuCode + rowCnt;
+
+                        if(e.createYn == 'Y'){ rowData['createGbn'] = true; }else{ rowData['createGbn'] = false; }
+                        if(e.readYn == 'Y'){ rowData['readGbn'] = true; }else{ rowData['readGbn'] = false; }
+                        if(e.updateYn == 'Y'){ rowData['updateGbn'] = true; }else{ rowData['updateGbn'] = false; }
+                        if(e.deleteYn == 'Y'){ rowData['deleteGbn'] = true; }else{ rowData['deleteGbn'] = false; }
 
                         arrData.push(rowData);
                     });
