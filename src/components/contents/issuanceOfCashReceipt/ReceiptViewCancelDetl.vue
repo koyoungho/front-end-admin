@@ -452,10 +452,11 @@
                         columControl:[  // 반드시 받는 컬럼명과 이 ID 가 같아야데이터가 나옵니다..
                             {columName : '거래일자' ,id : 'regiDate', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , type:'date', dateFormat:'YYYY.MM.DD'},
                             {columName : '승인번호' ,id : 'perm', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' , colColors : 'color: #008aff', type:'text', },
-                            {columName : '공급가액' ,id : 'amt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
-                            {columName : '부가세' ,id : 'bong', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
-                            {columName : '봉사료' ,id : 'vat', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
                             {columName : '거래금액' ,id : 'totalAmt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            {columName : '봉사료' ,id : 'bong', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            {columName : '공급가액' ,id : 'amt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+                            {columName : '부가세' ,id : 'vat', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
+
                             // {columName : '발급용도' ,id : 'geoguNm', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '거래구분' ,id : 'trgu', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
                             // {columName : '지출구분' ,id : 'cultGbNm', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},

@@ -46,6 +46,8 @@
         role: any = sessionStorage.getItem('role');
         getData : any = {};
         receiveDate:string = "";
+        saupUpjongCode : string = "";
+        companyCode : string = "";
         viewData : any = [];
 
         lang : any =  {
@@ -65,6 +67,8 @@
             // 메뉴별 권한 확인
             this.getData = this.$route.params
             this.receiveDate = this.getData['date'];
+            this.saupUpjongCode = this.getData['saupUpjongCode']
+            this.companyCode = this.getData['companyCode']
 
             let menuList = JSON.parse(sessionStorage.authMenu);
             let programId = 'cashReceiptIssue'; //메뉴ID
@@ -139,9 +143,9 @@
                         {type: 'input2',class:'w15 text_center', title :'거래금액', id: 'totAmt', name:'inputType' , value: '',   api : '' , option : '' },
 
 
-                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'saupUpjongCode', name:'inputType' , value: this.getData['saupUpjongCode'],   api : '' , option : '' },
+                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'saupUpjongCode', name:'inputType' , value: this.saupUpjongCode,   api : '' , option : '' },
                         {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'searchErrorYearMonth', name:'inputType' , value: this.receiveDate,   api : '' , option : '' },
-                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'companyCode', name:'inputType' , value: this.getData['companyCode'],   api : '' , option : '' },
+                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'companyCode', name:'inputType' , value: this.companyCode,   api : '' , option : '' },
 
 
                         // {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },
