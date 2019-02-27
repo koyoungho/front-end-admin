@@ -1015,7 +1015,7 @@
         }
         timeFormat(val) {
             // return val.substring(7, 2) + '시' + val.substring(8, 1) + '분' + val.substring(10, 1);
-            return val.substring(6, 8) + '시' + val.substring(9, 11) +'분'
+            return val.substring(6, 8) + '시' + val.substring(9, 11) +'분' + val
         }
     }
 
