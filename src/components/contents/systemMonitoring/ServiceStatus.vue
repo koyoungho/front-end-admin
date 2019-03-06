@@ -107,7 +107,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import {CommonBoardService} from "../../../api/common.service";
 
     @Component({
@@ -117,6 +117,8 @@
         }
     })
     export default class ServiceStatus extends Vue {
+
+        @Prop() serviceGbn !: any;
 
         feq1Css:any='';
         fep1Message:any='';
@@ -149,7 +151,7 @@
 
         created(){
 
-            this.interval = setInterval(this.serviceStatusApi, 3000);
+            this.interval = setInterval(this.serviceStatusApi, 5000);
         }
 
         mounted(){
@@ -160,91 +162,95 @@
 
         serviceStatusApi(){
 
-            CommonBoardService.getListDatas('monitoring/pings', null, null).then(result=>{
-                if(result.status==200){
+            if(this.serviceGbn){
 
-                    //정상-system_row st_color04
-                    //비정상-system_row st_color05
-                    for(let i=0; i<result.data.length; i++){
+                CommonBoardService.getListDatas('monitoring/pings', null, null).then(result=>{
+                    if(result.status==200){
 
-                        if(result.data[i].hostName == 'CASH_FEP1'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.fep1Message = '정상';
-                                this.feq1Css='system_row st_color04';
-                            }else{
-                                this.fep1Message = '비정상';
-                                this.feq1Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'CASH_FEP2'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.fep2Message = '정상';
-                                this.feq2Css='system_row st_color04';
-                            }else{
-                                this.fep2Message = '비정상';
-                                this.feq2Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'CASH_FEP3'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.fep3Message = '정상';
-                                this.feq3Css='system_row st_color04';
-                            }else{
-                                this.fep3Message = '비정상';
-                                this.feq3Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'CASH_WEB1'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.web1Message = '정상';
-                                this.web1Css='system_row st_color04';
-                            }else{
-                                this.web1Message = '비정상';
-                                this.web1Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'CASH_WEB2'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.web2Message = '정상';
-                                this.web2Css='system_row st_color04';
-                            }else{
-                                this.web2Message = '비정상';
-                                this.web2Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'CASH_WAS1'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.was1Message = '정상';
-                                this.was1Css='system_row st_color04';
-                            }else{
-                                this.was1Message = '비정상';
-                                this.was1Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'CASH_WAS2'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.was2Message = '정상';
-                                this.was2Css='system_row st_color04';
-                            }else{
-                                this.was2Message = '비정상';
-                                this.was2Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'NEW_APP1'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.app1Message = '정상';
-                                this.app1Css='system_row st_color04';
-                            }else{
-                                this.app1Message = '비정상';
-                                this.app1Css='system_row st_color05';
-                            }
-                        }else if(result.data[i].hostName == 'NEW_APP2'){
-                            if(result.data[i].status == 'LIVE'){
-                                this.app2Message = '정상';
-                                this.app2Css='system_row st_color04';
-                            }else{
-                                this.app2Message = '비정상';
-                                this.app2Css='system_row st_color05';
+                        //정상-system_row st_color04
+                        //비정상-system_row st_color05
+                        for(let i=0; i<result.data.length; i++){
+
+                            if(result.data[i].hostName == 'CASH_FEP1'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.fep1Message = '정상';
+                                    this.feq1Css='system_row st_color04';
+                                }else{
+                                    this.fep1Message = '비정상';
+                                    this.feq1Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'CASH_FEP2'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.fep2Message = '정상';
+                                    this.feq2Css='system_row st_color04';
+                                }else{
+                                    this.fep2Message = '비정상';
+                                    this.feq2Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'CASH_FEP3'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.fep3Message = '정상';
+                                    this.feq3Css='system_row st_color04';
+                                }else{
+                                    this.fep3Message = '비정상';
+                                    this.feq3Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'CASH_WEB1'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.web1Message = '정상';
+                                    this.web1Css='system_row st_color04';
+                                }else{
+                                    this.web1Message = '비정상';
+                                    this.web1Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'CASH_WEB2'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.web2Message = '정상';
+                                    this.web2Css='system_row st_color04';
+                                }else{
+                                    this.web2Message = '비정상';
+                                    this.web2Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'CASH_WAS1'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.was1Message = '정상';
+                                    this.was1Css='system_row st_color04';
+                                }else{
+                                    this.was1Message = '비정상';
+                                    this.was1Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'CASH_WAS2'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.was2Message = '정상';
+                                    this.was2Css='system_row st_color04';
+                                }else{
+                                    this.was2Message = '비정상';
+                                    this.was2Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'NEW_APP1'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.app1Message = '정상';
+                                    this.app1Css='system_row st_color04';
+                                }else{
+                                    this.app1Message = '비정상';
+                                    this.app1Css='system_row st_color05';
+                                }
+                            }else if(result.data[i].hostName == 'NEW_APP2'){
+                                if(result.data[i].status == 'LIVE'){
+                                    this.app2Message = '정상';
+                                    this.app2Css='system_row st_color04';
+                                }else{
+                                    this.app2Message = '비정상';
+                                    this.app2Css='system_row st_color05';
+                                }
                             }
                         }
+
                     }
 
-                }
+                })
 
-            })
+            }
 
         }
 

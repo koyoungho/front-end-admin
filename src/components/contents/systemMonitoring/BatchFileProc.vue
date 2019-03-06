@@ -91,7 +91,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import {CommonBoardService} from "../../../api/common.service";
     import  moment from 'moment'
 
@@ -101,6 +101,8 @@
         }
     })
     export default class BatchFileProc extends Vue {
+
+        @Prop() batchGbn  !: any;
 
         vWebType:string="";
         buttonShow:boolean=false;
@@ -122,7 +124,7 @@
 
         created(){
 
-            this.interval = setInterval(this.batchFileSummaryApi, 3000);
+            this.interval = setInterval(this.batchFileSummaryApi, 5000);
         }
 
         mounted(){
@@ -163,30 +165,33 @@
 
         batchFileSummaryApi(){
 
-            let  nowUTC =  moment().utc() ; //UTC시간
-            let  nowKo= nowUTC.add(9, 'hours'); //한국시간
-            let searchDate = moment(nowKo).format('YYYYMMDD');
-            //searchDate = '20180225'
+            if(this.batchGbn){
 
-            CommonBoardService.getListDatas('approval/file/'+searchDate, 'summary', null).then(result=>{
-                if(result.status==200){
+                let  nowUTC =  moment().utc() ; //UTC시간
+                let  nowKo= nowUTC.add(9, 'hours'); //한국시간
+                let searchDate = moment(nowKo).format('YYYYMMDD');
+                //searchDate = '20180225'
 
-                    this.doneFileCount = this.amtComma(result.data.doneFileCount);
-                    this.doneProcNum = this.amtComma(result.data.doneProcNum);
-                    this.doneSum = this.amtComma(Number(this.doneFileCount.replace(/,/gi,"")) + Number(this.doneProcNum.replace(/,/gi,"")));
-                    this.readyFileCount = this.amtComma(result.data.readyFileCount);
-                    this.readyProcNum = this.amtComma(result.data.readyProcNum);
-                    this.readySum = this.amtComma(Number(this.readyFileCount.replace(/,/gi,"")) + Number(this.readyProcNum.replace(/,/gi,"")));
-                    this.succFileCount = this.amtComma(result.data.succFileCount);
-                    this.succProcNum = this.amtComma(result.data.succProcNum);
-                    this.succSum = this.amtComma(Number(this.succFileCount.replace(/,/gi,"")) + Number(this.succProcNum.replace(/,/gi,"")));
-                    this.failFileCount = this.amtComma(result.data.failFileCount);
-                    this.failprocnum = this.amtComma(result.data.failprocnum);
-                    this.failSum = this.amtComma(Number(this.failFileCount.replace(/,/gi,"")) + Number(this.failprocnum.replace(/,/gi,"")));
+                CommonBoardService.getListDatas('approval/file/'+searchDate, 'summary', null).then(result=>{
+                    if(result.status==200){
 
-                }
-            })
+                        this.doneFileCount = this.amtComma(result.data.doneFileCount);
+                        this.doneProcNum = this.amtComma(result.data.doneProcNum);
+                        this.doneSum = this.amtComma(Number(this.doneFileCount.replace(/,/gi,"")) + Number(this.doneProcNum.replace(/,/gi,"")));
+                        this.readyFileCount = this.amtComma(result.data.readyFileCount);
+                        this.readyProcNum = this.amtComma(result.data.readyProcNum);
+                        this.readySum = this.amtComma(Number(this.readyFileCount.replace(/,/gi,"")) + Number(this.readyProcNum.replace(/,/gi,"")));
+                        this.succFileCount = this.amtComma(result.data.succFileCount);
+                        this.succProcNum = this.amtComma(result.data.succProcNum);
+                        this.succSum = this.amtComma(Number(this.succFileCount.replace(/,/gi,"")) + Number(this.succProcNum.replace(/,/gi,"")));
+                        this.failFileCount = this.amtComma(result.data.failFileCount);
+                        this.failprocnum = this.amtComma(result.data.failprocnum);
+                        this.failSum = this.amtComma(Number(this.failFileCount.replace(/,/gi,"")) + Number(this.failprocnum.replace(/,/gi,"")));
 
+                    }
+                })
+
+            }
         }
 
         destroyed(){

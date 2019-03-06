@@ -441,7 +441,7 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import {CommonBoardService} from "../../../api/common.service";
 
     @Component({
@@ -450,6 +450,8 @@
         }
     })
     export default class ResourceSystem extends Vue {
+
+        @Prop() resourceGbn !: any;
 
         fep1Cpu : any = '0';
         fep1Mem : any = '0';
@@ -498,7 +500,7 @@
 
         created(){
 
-            this.interval = setInterval(this.systemResourceApi, 3000);
+            this.interval = setInterval(this.systemResourceApi, 5000);
         }
 
         mounted(){
@@ -509,115 +511,119 @@
 
         systemResourceApi(){
 
-            CommonBoardService.getListDatas('monitoring/performance', null, null).then(result=>{
-                if(result.status==200){
+            if(this.resourceGbn){
 
-                    for(let i=0; i<result.data.length; i++){
+                CommonBoardService.getListDatas('monitoring/performance', null, null).then(result=>{
+                    if(result.status==200){
 
-                        if(result.data[i] != null){
+                        for(let i=0; i<result.data.length; i++){
 
-                            if(result.data[i].objName == '/CASH-FEP1'){
+                            if(result.data[i] != null){
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.fep1Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.fep1Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.fep1NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.fep1NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                if(result.data[i].objName == '/CASH-FEP1'){
 
-                            }else if(result.data[i].objName == '/CASH-FEP2'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.fep1Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.fep1Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.fep1NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.fep1NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.fep2Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.fep2Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.fep2NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.fep2NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/CASH-FEP2'){
 
-                            }else if(result.data[i].objName == '/CASH-FEP3'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.fep2Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.fep2Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.fep2NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.fep2NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.fep3Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.fep3Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.fep3NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.fep3NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/CASH-FEP3'){
 
-                            }else if(result.data[i].objName == '/CASH-WAS1'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.fep3Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.fep3Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.fep3NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.fep3NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.was1Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.was1Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.was1NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.was1NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/CASH-WAS1'){
 
-                            }else if(result.data[i].objName == '/CASH-WAS2'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.was1Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.was1Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.was1NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.was1NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.was2Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.was2Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.was2NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.was2NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/CASH-WAS2'){
 
-                            }else if(result.data[i].objName == '/CASH-WEB1'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.was2Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.was2Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.was2NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.was2NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.web1Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.web1Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.web1NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.web1NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/CASH-WEB1'){
 
-                            }else if(result.data[i].objName == '/CASH-WEB2'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.web1Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.web1Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.web1NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.web1NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.web2Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.web2Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetRxBytes'){
-                                    this.web2NetRx = Math.floor(result.data[i].value/1024);
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.web2NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/CASH-WEB2'){
 
-                            }else if(result.data[i].objName == '/new-app1'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.web2Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.web2Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetRxBytes'){
+                                        this.web2NetRx = Math.floor(result.data[i].value/1024);
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.web2NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.app1Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.app1Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.app1NetTx = Math.floor(result.data[i].value/1024);
-                                }
+                                }else if(result.data[i].objName == '/new-app1'){
 
-                            }else if(result.data[i].objName == '/new-app2'){
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.app1Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.app1Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.app1NetTx = Math.floor(result.data[i].value/1024);
+                                    }
 
-                                if(result.data[i].type == 'Cpu'){
-                                    this.app2Cpu = result.data[i].value;
-                                }else if(result.data[i].type == 'Mem'){
-                                    this.app2Mem = result.data[i].value;
-                                }else if(result.data[i].type == 'NetTxBytes'){
-                                    this.app2NetTx = Math.floor(result.data[i].value/1024);
+                                }else if(result.data[i].objName == '/new-app2'){
+
+                                    if(result.data[i].type == 'Cpu'){
+                                        this.app2Cpu = result.data[i].value;
+                                    }else if(result.data[i].type == 'Mem'){
+                                        this.app2Mem = result.data[i].value;
+                                    }else if(result.data[i].type == 'NetTxBytes'){
+                                        this.app2NetTx = Math.floor(result.data[i].value/1024);
+                                    }
+
                                 }
 
                             }
@@ -625,9 +631,9 @@
                         }
 
                     }
+                })
 
-                }
-            })
+            }
 
         }
 

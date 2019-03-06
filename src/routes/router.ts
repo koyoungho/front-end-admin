@@ -213,7 +213,7 @@ export default new Router({
                 //시스템관리>코드관리
                 {path:'mnCode',component: MnCode, name:'mnCode' ,meta: {authRequired: true}}, //
                 //시스템관리>시스템 모니터링,
-                {path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: false}}, //시스템모니터링
+                //{path:'systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: false}}, //시스템모니터링
             ]
         },
         {path: "/login", name: "login",  component: Login ,meta: {authRequired: false}},
@@ -226,6 +226,7 @@ export default new Router({
         {path:'/regPass', name:'regPass', component: RegPass ,meta: {authRequired: false}}, //비밀번호 등록
         {path:'/kmcResult', name:'kmcResult', component: kmcResult ,meta: {authRequired: false}}, //Kmc 인증 결과
         {path:'/chgPass',name:'chgPass', component: ChgPass ,meta: {authRequired: false}}, //비밀번호 변경
+        {path:'/systemMonitoring',component: SystemMonitoring, name:'systemMonitoring' ,meta: {authRequired: false}}, //시스템모니터링
         {
             path: '', redirect: "/login"
         },

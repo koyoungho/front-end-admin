@@ -144,7 +144,7 @@
 
     export default class ApprovalStatus extends Vue {
 
-        @Prop() reload  !: boolean;
+        @Prop() approvalGbn  !: any;
 
         realTime:boolean =true;//실시간승인
         taxService:boolean =true;//국세청승인
@@ -189,7 +189,7 @@
 
         created(){
 
-            this.interval = setInterval(this.approvalStatusApi, 3000);
+            this.interval = setInterval(this.approvalStatusApi, 5000);
         }
 
         updated(){
@@ -361,52 +361,58 @@
 
         approvalStatusApi(){
 
-            CommonBoardService.getListDatas('monitoring/approval', null, null).then(result=>{
-                if(result.status==200){
+            if(this.approvalGbn){
 
-                    for(let i=0; i<result.data.length; i++){
+                CommonBoardService.getListDatas('monitoring/approval', null, null).then(result=>{
+                    if(result.status==200){
 
-                        if(result.data[i].objType != null){
+                        for(let i=0; i<result.data.length; i++){
 
-                            //실시간 승인
-                            if(result.data[i].objType == 'realTimeAprv' && result.data[i].objName == 'fep'){
-                                this.realTimeAprvFep = this.amtComma(result.data[i].value);
-                            }else if(result.data[i].objType == 'realTimeAprv' && result.data[i].objName == 'tmax'){
-                                this.realTimeAprvTmax = this.amtComma(result.data[i].value);
-                            }
-                            this.realTimeAprvTotal = this.amtComma(Number(this.realTimeAprvFep.replace(/,/gi,"")) + Number(this.realTimeAprvTmax.replace(/,/gi,"")));
+                            if(result.data[i].objType != null){
 
-                            //국세청 승인 거절 건수
-                            if(result.data[i].objType == 'taxAprvError' && result.data[i].objName == 'kt'){
-                                this.taxAprvErrorKt = this.amtComma(result.data[i].value);
-                            }else if(result.data[i].objType == 'taxAprvError' && result.data[i].objName == 'ldcc'){
-                                this.taxAprvErrorLdcc = this.amtComma(result.data[i].value);
-                            }
-                            this.taxAprvErrorTotal = this.amtComma(Number(this.taxAprvErrorKt.replace(/,/gi,"")) + Number(this.taxAprvErrorLdcc.replace(/,/gi,"")));
+                                //실시간 승인
+                                if(result.data[i].objType == 'realTimeAprv' && result.data[i].objName == 'fep'){
+                                    this.realTimeAprvFep = this.amtComma(result.data[i].value);
+                                }else if(result.data[i].objType == 'realTimeAprv' && result.data[i].objName == 'tmax'){
+                                    this.realTimeAprvTmax = this.amtComma(result.data[i].value);
+                                }
+                                this.realTimeAprvTotal = this.amtComma(Number(this.realTimeAprvFep.replace(/,/gi,"")) + Number(this.realTimeAprvTmax.replace(/,/gi,"")));
 
-                            //내부 승인 거절 건수
-                            if(result.data[i].objType == 'innerAprvError' && result.data[i].objName == 'kt'){
-                                this.innerAprvErrorKt = this.amtComma(result.data[i].value);
-                            }else if(result.data[i].objType == 'innerAprvError' && result.data[i].objName == 'ldcc'){
-                                this.innerAprvErrorLdcc = this.amtComma(result.data[i].value);
-                            }
-                            this.innerAprvErrorTotal = this.amtComma(Number(this.innerAprvErrorKt.replace(/,/gi,"")) + Number(this.innerAprvErrorLdcc.replace(/,/gi,"")));
+                                //국세청 승인 거절 건수
+                                if(result.data[i].objType == 'taxAprvError' && result.data[i].objName == 'kt'){
+                                    this.taxAprvErrorKt = this.amtComma(result.data[i].value);
+                                }else if(result.data[i].objType == 'taxAprvError' && result.data[i].objName == 'ldcc'){
+                                    this.taxAprvErrorLdcc = this.amtComma(result.data[i].value);
+                                }
+                                this.taxAprvErrorTotal = this.amtComma(Number(this.taxAprvErrorKt.replace(/,/gi,"")) + Number(this.taxAprvErrorLdcc.replace(/,/gi,"")));
 
-                            //국세청 전송 현황
-                            if(result.data[i].objType == 'taxTransSum'){
-                                this.taxTransSum = this.amtComma(result.data[i].value);
-                            }else if(result.data[i].objType == 'taxTransGajum'){
-                                this.taxTransGajum = this.amtComma(result.data[i].value);
-                            }else if(result.data[i].objType == 'taxTransReceipt'){
-                                this.taxTransReceipt = this.amtComma(result.data[i].value);
+                                //내부 승인 거절 건수
+                                if(result.data[i].objType == 'innerAprvError' && result.data[i].objName == 'kt'){
+                                    this.innerAprvErrorKt = this.amtComma(result.data[i].value);
+                                }else if(result.data[i].objType == 'innerAprvError' && result.data[i].objName == 'ldcc'){
+                                    this.innerAprvErrorLdcc = this.amtComma(result.data[i].value);
+                                }
+                                this.innerAprvErrorTotal = this.amtComma(Number(this.innerAprvErrorKt.replace(/,/gi,"")) + Number(this.innerAprvErrorLdcc.replace(/,/gi,"")));
+
+                                //국세청 전송 현황
+                                if(result.data[i].objType == 'taxTransSum'){
+                                    this.taxTransSum = this.amtComma(result.data[i].value);
+                                }else if(result.data[i].objType == 'taxTransGajum'){
+                                    this.taxTransGajum = this.amtComma(result.data[i].value);
+                                }else if(result.data[i].objType == 'taxTransReceipt'){
+                                    this.taxTransReceipt = this.amtComma(result.data[i].value);
+                                }
+
                             }
 
                         }
 
                     }
+                })
 
-                }
-            })
+            }
+
+
 
         }
 
