@@ -16,7 +16,9 @@
                             </a>
                         </div>
                         <div class="system_col02">
-                            <span class="total">10</span>
+                            <span class="total">{{realTimeAprvTotal}}</span>
+                            <span class="num">{{realTimeAprvFep}}</span>
+                            <span class="num">{{realTimeAprvTmax}}</span>
                         </div>
                     </div>
 
@@ -50,9 +52,9 @@
                             </a>
                         </div>
                         <div class="system_col02">
-                            <span class="total">10</span>
-                            <span class="num">5</span>
-                            <span class="num">5</span>
+                            <span class="total">{{taxAprvErrorTotal}}</span>
+                            <span class="num">{{taxAprvErrorKt}}</span>
+                            <span class="num">{{taxAprvErrorLdcc}}</span>
                         </div>
                     </div>
 
@@ -80,9 +82,9 @@
                             </a>
                         </div>
                         <div class="system_col02">
-                            <span class="total">10</span>
-                            <span class="num">5</span>
-                            <span class="num">5</span>
+                            <span class="total">{{innerAprvErrorTotal}}</span>
+                            <span class="num">{{innerAprvErrorKt}}</span>
+                            <span class="num">{{innerAprvErrorLdcc}}</span>
                         </div>
                     </div>
 
@@ -102,10 +104,14 @@
                         <div class="system_col01">
                             <a>
                                 <h5 class="system">국세청 전송 현황</h5>
+                                <span class="text_type04">가맹점 정보</span>
+                                <span class="text_type04">발급내역</span>
                             </a>
                         </div>
                         <div class="system_col02">
-                            <span class="total">10</span>
+                            <span class="total">{{taxTransSum}}</span>
+                            <span class="num">{{taxTransGajum}}</span>
+                            <span class="num">{{taxTransReceipt}}</span>
                         </div>
                     </div>
 
@@ -127,7 +133,8 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Vue, Prop} from "vue-property-decorator";
+    import {CommonBoardService} from "../../../api/common.service";
 
     @Component({
         components: {
@@ -136,6 +143,8 @@
     })
 
     export default class ApprovalStatus extends Vue {
+
+        @Prop() reload  !: boolean;
 
         realTime:boolean =true;//실시간승인
         taxService:boolean =true;//국세청승인
@@ -154,6 +163,39 @@
         innerChartSettings : any  ={};
         transferChartSettings : any  ={};
 
+        //실시간 승인
+        realTimeAprvTotal : any = '0';
+        realTimeAprvTmax : any = '0';
+        realTimeAprvFep : any = '0';
+
+        //국세청 승인 거절 건수
+        taxAprvErrorTotal : any = '0';
+        taxAprvErrorKt : any = '0';
+        taxAprvErrorLdcc : any = '0';
+
+        //내부 승인 거절 건수
+        innerAprvErrorTotal : any = '0';
+        innerAprvErrorKt : any = '0';
+        innerAprvErrorLdcc : any = '0';
+
+        //국세청 전송 현황
+        taxTransSum : any = '0';
+        taxTransGajum : any = '0';
+        taxTransReceipt : any = '0';
+
+        tempValue : any = '';
+
+        interval:any = '';
+
+        created(){
+
+            this.interval = setInterval(this.approvalStatusApi, 3000);
+        }
+
+        updated(){
+
+        }
+
         mounted () {
 
             this.realTimeSec()
@@ -165,6 +207,9 @@
             this.taxService =false;//국세청승인
             this.inner =false;//내부승인
             this.transfer=false;//국세청전송
+
+            this.approvalStatusApi()
+
         }
 
         realTimeSec(){
@@ -274,7 +319,7 @@
          */
         getDetail(div){
 
-            if(div == 'realTime'){
+            /*if(div == 'realTime'){
                 if(this.realTime ==true){
                     this.realTime = false;
                 }else{
@@ -301,7 +346,72 @@
                 } else {
                     this.transfer = true;
                 }
+            }*/
+        }
+
+        amtComma(num){
+            if(num == null || num == ''){
+                return '0';
+            }else if(num == 0 || num == '0'){
+                return '0';
+            }else{
+                return Number(num).toLocaleString();
             }
+        }
+
+        approvalStatusApi(){
+
+            CommonBoardService.getListDatas('monitoring/approval', null, null).then(result=>{
+                if(result.status==200){
+
+                    for(let i=0; i<result.data.length; i++){
+
+                        if(result.data[i].objType != null){
+
+                            //실시간 승인
+                            if(result.data[i].objType == 'realTimeAprv' && result.data[i].objName == 'fep'){
+                                this.realTimeAprvFep = this.amtComma(result.data[i].value);
+                            }else if(result.data[i].objType == 'realTimeAprv' && result.data[i].objName == 'tmax'){
+                                this.realTimeAprvTmax = this.amtComma(result.data[i].value);
+                            }
+                            this.realTimeAprvTotal = this.amtComma(Number(this.realTimeAprvFep.replace(/,/gi,"")) + Number(this.realTimeAprvTmax.replace(/,/gi,"")));
+
+                            //국세청 승인 거절 건수
+                            if(result.data[i].objType == 'taxAprvError' && result.data[i].objName == 'kt'){
+                                this.taxAprvErrorKt = this.amtComma(result.data[i].value);
+                            }else if(result.data[i].objType == 'taxAprvError' && result.data[i].objName == 'ldcc'){
+                                this.taxAprvErrorLdcc = this.amtComma(result.data[i].value);
+                            }
+                            this.taxAprvErrorTotal = this.amtComma(Number(this.taxAprvErrorKt.replace(/,/gi,"")) + Number(this.taxAprvErrorLdcc.replace(/,/gi,"")));
+
+                            //내부 승인 거절 건수
+                            if(result.data[i].objType == 'innerAprvError' && result.data[i].objName == 'kt'){
+                                this.innerAprvErrorKt = this.amtComma(result.data[i].value);
+                            }else if(result.data[i].objType == 'innerAprvError' && result.data[i].objName == 'ldcc'){
+                                this.innerAprvErrorLdcc = this.amtComma(result.data[i].value);
+                            }
+                            this.innerAprvErrorTotal = this.amtComma(Number(this.innerAprvErrorKt.replace(/,/gi,"")) + Number(this.innerAprvErrorLdcc.replace(/,/gi,"")));
+
+                            //국세청 전송 현황
+                            if(result.data[i].objType == 'taxTransSum'){
+                                this.taxTransSum = this.amtComma(result.data[i].value);
+                            }else if(result.data[i].objType == 'taxTransGajum'){
+                                this.taxTransGajum = this.amtComma(result.data[i].value);
+                            }else if(result.data[i].objType == 'taxTransReceipt'){
+                                this.taxTransReceipt = this.amtComma(result.data[i].value);
+                            }
+
+                        }
+
+                    }
+
+                }
+            })
+
+        }
+
+        destroyed(){
+            clearInterval(this.interval);
         }
 
     }

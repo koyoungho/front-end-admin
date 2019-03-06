@@ -655,6 +655,12 @@ select.wide {width:100%;}
 .search_list.col0302 > li:nth-of-type(3) {width:25%; text-align: right;}
 .search_list.col0302 > li:nth-of-type(4) {width:25%; text-align: right;}
 
+/* 시스템모니터링 - 배치파일처리현황 */
+.search_list.col0303 > li:nth-of-type(1) {width:25%;}
+.search_list.col0303 > li:nth-of-type(2) {width:25%; text-align: right;}
+.search_list.col0303 > li:nth-of-type(3) {width:25%; text-align: right;}
+.search_list.col0303 > li:nth-of-type(4) {width:25%; text-align: right;}
+
 .search_box.type01 {position:relative; width:100%; text-align: center; margin-bottom:30px; border:1px solid #d8d8d8; padding:20px 30px 0 30px; background: #fafafa;}
 .search_box.type01 .search_inner {display: flex; justify-content: center; align-items: center;}
 .search_box.type01 .search_inner .search_list {position: relative; float:left;}
