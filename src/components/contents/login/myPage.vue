@@ -383,15 +383,8 @@
         // this.$emit('close','');
         if(response){
             if (response.success == 'Y') {
-
                 this.account['phoneNum'] = response.phoneNo; //변경된 휴대폰번호 셋팅
-
                 alert('휴대폰번호가 변경되었습니다.');
-
-                // this.title='아이디 조회완료'
-                // this.otpTrue = true;
-                // this.resultId = response.id
-                // this.accesstoken = response.token; //토큰
             }
             else {
             }
