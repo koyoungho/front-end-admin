@@ -22,6 +22,7 @@
                                         <option value="">선택</option>
                                         <option value="saupId">사업자등록번호</option>
                                         <option value="shopNm">사업장명</option>
+                                        <option value="id">아이디</option>
                                     </select>
                                     <input type="text" class="input sch_appuser" title="고객명" v-model="searchWord" v-on:keyup.enter="searchSaup">
                                 </li>
@@ -41,7 +42,7 @@
                             <caption>검색 목록</caption>
                             <colgroup>
                                 <col width="68px">
-                                <col width="100px">
+                                <col width="120px">
                                 <col width="100px">
                                 <col width="100px">
                                 <col width="300px">
@@ -49,7 +50,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">선택</th>
-                                <th scope="col">매장 번호</th>
+                                <th scope="col">아이디</th>
                                 <th scope="col">회사</th>
                                 <th scope="col">사업자번호</th>
                                 <th scope="col">사업장명</th>
@@ -62,7 +63,7 @@
                                 <caption>검색 목록</caption>
                                 <colgroup>
                                     <col width="68px">
-                                    <col width="100px">
+                                    <col width="120px">
                                     <col width="100px">
                                     <col width="100px">
                                     <col width="283">
@@ -72,7 +73,7 @@
                                     <template v-for="datas in responseData">
                                     <tr>
                                         <td><span class="rdo_box"><input type="radio" name="chk" value="2" id="aa11" v-on:click="selectedRow(datas)"><label for="aa41"><span class="blind">선택</span></label></span></td>
-                                        <td>{{datas.storeId}}</td>
+                                        <td>{{datas.id}}</td>
                                         <td>{{datas.subSaupNm}}</td>
                                         <td>{{datas.saupId}}</td>
                                         <td class="left">{{datas.shopNm}}</td>
