@@ -76,7 +76,7 @@
                         <td><input type="text"  class="input form_w100"  title="이름" disabled="disabled" v-model="account.name" maxlength="20"></td>
                         <th scope="row">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input form_w100"  title="휴대폰번호" v-model="account.phoneNum" maxlength="12">
+                            <input type="text" class="input form_w100"  title="휴대폰번호" v-model="account.phoneNum" maxlength="12" disabled="disabled">
                         </td>
                     </tr>
                     <tr>
@@ -142,6 +142,7 @@
 
             <!-- btn tbl bot -->
             <div class="btn_tbl_bot">
+                <button type="button" class="btn_m01 bg01" v-on:click="changePhone">휴대폰번호 변경</button>
                 <button type="button" id="" class="btn_m01 bg01" @click="delAccount">ID 계정 해지</button>
             </div>
 
@@ -178,6 +179,7 @@
             </div>
         </template>
         <AddressBox v-if="showModal"  v-on:selectedValue="setDataAddr" @close="showModal = false"></AddressBox>
+        <KmcConfirm v-if="showConfirm" v-on:closeKcm="closeMove"></KmcConfirm>
         <!-- //content -->
     </section>
     <!-- //container -->
@@ -189,12 +191,13 @@
     import {CommonBoardService} from "../../../api/common.service";
     import {Account} from '../../../model/account/account';
     import AddressBox from '@/components/common/addressBox/addressBox.vue'
+    import KmcConfirm from '../../common/kmc/kmcConfirm.vue';
     import moment from 'moment'
     Vue.prototype.moment = moment;
 
     @Component({
         components: {
-            MyPage,AddressBox
+            MyPage,AddressBox,KmcConfirm
         }
     })
     export default class  MyPage  extends  Vue{
@@ -209,6 +212,8 @@
 
      gajumInfo : boolean = false;
      jijumInfo : boolean = false;
+
+     showConfirm : boolean = false;
 
      created(){
         this.accountInfo();
@@ -357,6 +362,39 @@
             return '';
         }else{
             return moment(val, 'YYYYMMDDHHmmss').format('YYYY.MM.DD HH:mm:ss')
+        }
+    }
+
+    changePhone(){
+        let account : any = this.account;
+
+        //휴대폰 번호 변경에 필요한 값 셋팅
+        sessionStorage.kmc_name = account.name;
+        sessionStorage.kmc_saupId = account.saupId;
+        sessionStorage.kmc_id = account.id;
+        //
+        // this.kmcGbn = '1'; //휴대폰번호 변경
+
+        this.showConfirm = true;
+    }
+
+    closeMove(response) {
+        this.showConfirm = false;
+        // this.$emit('close','');
+        if(response){
+            if (response.success == 'Y') {
+
+                this.account['phoneNum'] = response.phoneNo; //변경된 휴대폰번호 셋팅
+
+                alert('휴대폰번호가 변경되었습니다.');
+
+                // this.title='아이디 조회완료'
+                // this.otpTrue = true;
+                // this.resultId = response.id
+                // this.accesstoken = response.token; //토큰
+            }
+            else {
+            }
         }
     }
 
