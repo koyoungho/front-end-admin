@@ -57,7 +57,7 @@
           return routeInfo.meta.authRequired;
         });
 
-        if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy' || menuName == 'termsCheck' || menuName == 'regPass' || menuName == 'kmcResult' || menuName == 'chgPass' ) { // 공용페이지 접근시 통과
+        if (menuName == 'error' || menuName == 'home' || menuName == 'login' || menuName == 'searchIdInput' || menuName == 'searchIdResult' || menuName == 'initPass' || menuName == 'policy' || menuName == 'termsCheck' || menuName == 'regPass' || menuName == 'kmcResult' || menuName == 'chgPass' || menuName == 'systemMonitoring' ) { // 공용페이지 접근시 통과
           next();
         } else {
           if (sessionStorage.accessToken) { // 토큰

@@ -86,12 +86,18 @@
 				}
 
         loginOut() {
-            alert('세션이 종료되어 로그인화면으로 이동합니다');
-            this.$store.dispatch('LOGOUT')
-                .then(() =>
-										this.$router.push({name: 'login'}) )
-                .catch()
-				}
+            //console.log(window.location.href)
+			if(window.location.href.indexOf('systemMonitoring') > -1){
+
+			}else{
+                alert('세션이 종료되어 로그인화면으로 이동합니다');
+                this.$store.dispatch('LOGOUT')
+                    .then(() =>
+                        this.$router.push({name: 'login'}) )
+                    .catch()
+			}
+
+		}
 
         tokenRefresh() {
             if(sessionStorage.accessToken) { //로그인을 한 상태 확인

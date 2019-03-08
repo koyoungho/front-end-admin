@@ -133,7 +133,7 @@
                                     <input type="text" class="input form_address01" title="주소 입력" v-model="addr1" maxlength="40">
                                 </li>
                                 <li class="con03">
-                                    <input type="text" class="input form_address02" title="상세 주소 입력" v-model="addr2" maxlength="40">
+                                    <input type="text" class="input form_address02" title="상세 주소 입력" v-model="addr2" maxlength="30">
                                 </li>
                             </ul>
                         </td>

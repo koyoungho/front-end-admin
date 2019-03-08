@@ -51,7 +51,11 @@
         }
 
         created() {
-            this.menuItem = JSON.parse(sessionStorage.authMenu)
+            if(sessionStorage.authMenu){
+                this.menuItem = JSON.parse(sessionStorage.authMenu)
+
+                this.menuHeight();
+            }
 /*
             let menuList = JSON.parse(sessionStorage.authMenu);
             let programId = 'franchiseList'; //메뉴ID (가맹점 관리)
@@ -125,7 +129,7 @@
                 ];
             }
             */
-            this.menuHeight();
+
         }
 
         mounted() {

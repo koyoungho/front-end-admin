@@ -23,11 +23,11 @@
                         <li v-on:click="getTemp('Service')" v-bind:class="{'on': (showService == true)}" ><a>서비스 상태</a></li>
                     </ul>
                 </div>
-                <ApprovalStatus v-show="showApproval"></ApprovalStatus>
-                <BatchFileProc v-show="showBatchFile" v-on:toList="getTemp"></BatchFileProc>
+                <ApprovalStatus v-show="showApproval" v-bind:approvalGbn="showApproval"></ApprovalStatus>
+                <BatchFileProc v-show="showBatchFile" v-on:toList="getTemp" v-bind:batchGbn="showBatchFile"></BatchFileProc>
                 <BatchFileProcList v-show="showBatchFileList" ></BatchFileProcList>
-                <ResourceSystem v-show="showResource"></ResourceSystem>
-                <ServiceStatus v-show="showService"></ServiceStatus>
+                <ResourceSystem v-show="showResource" v-bind:resourceGbn="showResource"></ResourceSystem>
+                <ServiceStatus v-show="showService" v-bind:serviceGbn="showService"></ServiceStatus>
 
 
 

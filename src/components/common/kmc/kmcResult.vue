@@ -55,6 +55,17 @@
                 CommonBoardService.postListDatas('kmc/decert', null ,decertData)
                     .then((response) => {
                             let resultData = response.data;
+
+                            let authInfo : any = JSON.parse(JSON.stringify(resultData));
+                            if(authInfo != null && authInfo.code == '001'){ //본인 인증 정보가 다릅니다.
+                                alert(authInfo.message);
+                                sessionStorage.kmc_name = '';
+                                sessionStorage.kmc_id = '';
+                                sessionStorage.kmc_saupId = '';
+                                sessionStorage.setItem("failKey",'Fail')
+                                return;
+                            }
+
                             if(response.status==200){
                                 sessionStorage.kmc_name = '';
                                 sessionStorage.kmc_id = '';
