@@ -435,7 +435,7 @@
 
             let reqData = {
                 checkString : this.id,
-                checkSum : ''
+                checkSum : this.saupId
             }
             CommonBoardService.postListDatas('validation/id', null, reqData).then((response) => {
                     let result: any = response.data;
@@ -675,7 +675,7 @@
             // api 데이터 호출(계정 정보 수정)
             CommonBoardService.postListData('accounts', null, reqData).then((response) => {
                     let result: any = response.data;
-                    if (result != null) {
+                    if (result != null && result.code == '000') {
                         //계정 수정 완료
                         //this.$router.push({ name:'mnUserList' , params: { objectKey : reqData } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
                         //this.$router.push({name:'mnUserList'})
@@ -684,7 +684,11 @@
                         this.$router.push('/home/mnUser');
                         //this.$router.push({name:'policyTempList'});
                     } else {
-                        Vue.swal({text: '계정 정보 등록에 실패하였습니다. 다시 시도하세요.'});
+                        if(result.code == '001' || result.code == '400'){
+                            Vue.swal({text: result.message});
+                        }else{
+                            Vue.swal({text: '계정 정보 등록에 실패하였습니다. 다시 시도하세요.'});
+                        }
                         return;
                     }
                 }
