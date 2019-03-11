@@ -58,7 +58,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02">취소</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
                 <!--<button type="button" id="" class="btn_b01 bg03">승인대역 범위 수정</button>-->
                 <!--<button type="button" id="" class="btn_b01 bg03" v-on:click="deleteScope">승인대역 범위 삭제</button>-->
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">승인대역 범위 등록</button>
@@ -108,8 +108,10 @@
         }
 
         cancelInfo(){
-            this.$router.push('/home/approvalBandList')
+            this.$router.push('/home/approvalBandScopeList')
+            //this.$router.push('/home/approvalBandList')
         }
+
 
         //등록
         insertInfo(){

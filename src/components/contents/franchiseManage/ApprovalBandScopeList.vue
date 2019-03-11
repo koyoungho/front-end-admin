@@ -71,7 +71,7 @@
 
                     //권한(조회-readYn/ 등록-createYn/ 수정-updateYn/ 삭제-deleteYn)
                     if(menuList[i].subMenuDtos[j].progId == programId && menuList[i].subMenuDtos[j].createYn == 'Y') {
-                        //this.regbtnShow = true;
+                        this.regbtnShow = true;
                     }
                 }
             }
