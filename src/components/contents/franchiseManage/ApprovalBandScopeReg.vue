@@ -45,10 +45,10 @@
                     <tr>
                         <th scope="row">승인대역</th>
                         <td colspan="3">
-                            <input type="text" class="input form_app01" title="승인대역 시작점" v-model="aproBandFrom">
+                            <input type="text" class="input form_app01" title="승인대역 시작점" v-model="aproBandFrom" maxlength="7">
                             <span class="period_cal">-</span>
-                            <input type="text" class="input form_app01" title="승인대역 끝점" v-model="aproBandTo">
-                            (단일 최대 건수 <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="건수" v-model="aproCnt"> )
+                            <input type="text" class="input form_app01" title="승인대역 끝점" v-model="aproBandTo" maxlength="7">
+                            (단일 최대 건수 <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="건수" v-model="aproCnt" maxlength="4"> )
                         </td>
                     </tr>
                     </tbody>
