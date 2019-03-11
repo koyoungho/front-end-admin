@@ -2,7 +2,9 @@
 
     <section id="container">
         <!--<resize-observer @notify="handleResize"/>-->
-
+        <div id="loading_bar" v-show="list_loading">
+            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
+        </div>
         <div class="content">
             <h2 class="blind">{{titles}}</h2>
             <h3>{{subTitle}} </h3>
@@ -27,10 +29,11 @@
     import moment from 'moment';
     import axios from 'axios'
     import {environment} from '@/utill/environment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            ReceiptViewCancel,ListComponent
+            ReceiptViewCancel,ListComponent,VueSimpleSpinner
         }
     })
     export default class ReceiptViewCancel extends Vue {
@@ -51,6 +54,7 @@
         show : boolean = true;
         nowKo_str: any ='';
 
+        list_loading: boolean = false;
 
         created(){
 
@@ -162,6 +166,8 @@
 
             let fileOrigin = "cash_history_"+this.nowKo_str+".xlsx"
 
+            this.list_loading = true;
+
             axios({
                 url: environment.apiUrl + "/receipt/excel",
                 method: 'GET',
@@ -194,6 +200,7 @@
                     window.URL.revokeObjectURL(data)
                 }, 100)
 
+                this.list_loading = false;
             })
 
         }

@@ -346,6 +346,13 @@
                 </template>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
+
+            <template>
+                <div id="loading_bar" v-show="detail_loading">
+                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
+                </div>
+            </template>
+
             <div style="text-align:right">
                 <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
             </div>
@@ -374,10 +381,11 @@
     import  moment from 'moment'
     import axios from 'axios'
     import {environment} from '@/utill/environment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            ListComponent,ReceipConfirm
+            ListComponent,ReceipConfirm,VueSimpleSpinner
         }
     })
     export default class ReceiptViewCancelDetl extends Vue {
@@ -412,6 +420,8 @@
         cancleReceipActionBtn : boolean = true;
 
         loading222 : boolean = false
+
+        detail_loading: boolean = false; //엑셀다운로드 로딩바
 
         maxDateOut : boolean = false;//추가함
 
@@ -737,6 +747,8 @@
 
             let fileOrigin = "cash_history_detail_"+nowKo_str+".xlsx"
 
+            this.detail_loading = true;
+
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
                 url: environment.apiUrl + "/receipt/"+this.objectKey.oriDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
@@ -769,6 +781,7 @@
                     window.URL.revokeObjectURL(data)
                 }, 100)
 
+                this.detail_loading = false;
             })
         }
 
