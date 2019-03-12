@@ -190,7 +190,27 @@
                         if (result == 'success'||result == 'noinfo') {
                             sessionStorage.setItem('sisMgtToken',sessionStorage.accountId)
 
-                            this.$emit('menuChk');
+                            if(sessionStorage.code=='006'){
+                              let sameConMsg = '현재 접속중인 사용자 정보입니다.\n\n접속정보\n접속 IP 주소 : '+ sessionStorage.lastIp +'\n최종접속 시간 : '+ sessionStorage.lastConnDt + '\n\n종료후 접속하시겠습니까?';
+                              if(confirm(sameConMsg)){
+                                  CommonBoardService.updateListData('auth/force', sessionStorage.accountId+'/token' ,{token : sessionStorage.accessToken}).then((response) => {
+                                      if(response.status == 200){
+                                          this.$emit('menuChk');
+                                      }
+                                  }).catch(e=>{
+                                          sessionStorage.clear()
+                                          alert('오류가 발생하였습니다 잠시후에 시도해주세요')
+                                      }
+                                  );
+                              }else{
+                                  sessionStorage.clear()
+                                  return;
+                              }
+                            }else{
+                                this.$emit('menuChk');
+                            }
+
+
                             //메뉴권한 부분 추가
                             //this.$router.push({name:'main'})
                         } else {
