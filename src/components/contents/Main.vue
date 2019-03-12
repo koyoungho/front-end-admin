@@ -160,7 +160,43 @@
         }
 
         menuChk(menuId: string) {
+                if(menuId=='fnqList' || menuId=='noticeList')
                 this.$router.push('/home/'+menuId )
+                else{
+                    if(sessionStorage.accessToken) { //로그인을 한 상태 확인
+                        // api 데이터 호출
+                        return  CommonBoardService.getListDatas('auth', null, '').then((response) => {
+                                let result: any = response.data;
+                                if (result != null) {
+                                    sessionStorage.accessToken = result.accesstoken;
+                                    this.$router.push('/home/'+menuId )
+                                } else {
+                                }
+                            }
+                            , (error) => {
+                            }
+                        ).catch((response) => {
+                        });
+                    }
+                    else{
+                        this.loginOut()
+                    }
+
+                }
+        }
+        loginOut() {
+            //console.log(window.location.href)
+            if(window.location.href.indexOf('systemMonitoring') > -1){
+            }else{
+                this.$store.dispatch('LOGOUT')
+                    .then(() =>
+                        this.$router.push({name: 'login'}) )
+                    .catch()
+            }
+
+        }
+
+        sessionCheck(){
         }
 
         /**
