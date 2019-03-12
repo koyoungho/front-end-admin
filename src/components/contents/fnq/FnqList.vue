@@ -138,11 +138,13 @@
                     {type: 'date2', title :'등록일', id: 'date' , name:'date',searchStartDate: [beforeOneYKo ,nowKo] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD'},
                     {type: 'select' , title :'구분',id: 'viewType', name:'viewType' , value: '' ,  api : '' , option : [{ name : '공통' , value: 'ALL' },{ name : '사용자' , value: 'USR' },{name : '관리자' , value: 'ADM' }]},
                     {type: 'input2' , title :'검색어',id: 'searchWord', name:'searchWord' , value: '' ,placeholder:'제목+내용',  },
+                    {type: 'hidden' , title :'검색어',id: 'categoryId', name:'categoryId' , value: '' ,placeholder:'',  },
                 ],
                 searchClass: 'search_box page_customer04',
                 searchClass2: 'search_list col0301',
                 paging: { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10},
-                goDirect : ""
+                goDirect : "",
+                tapSearch : true,
             }
 
 

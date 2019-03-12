@@ -223,6 +223,11 @@
             </span>
             </li>
           </template>
+            <template v-if="item.type=='hidden'">
+                <li :class="item.class">
+                    <input type="hidden"  v-model="item.value"   class="input sch_appnum"  :title="item.title">
+                </li>
+            </template>
 
         </template>
 
@@ -235,6 +240,17 @@
       <button type="button" class="btn_m01 bg02" @click="resetData">초기화</button>
       <button type="button" class="btn_m01 bg01" @click="SearchButton">조회</button>
     </div>
+
+      <template v-if="searchItemDetail.tapSearch">
+          <div class="tab_box">
+              <ul class="tab01 col04">
+                  <li v-on:click="getTemp('reg')" v-bind:class="{'on': (tap01 == true) } "><a>가입관련</a></li>
+                  <li v-on:click="getTemp('use')" v-bind:class="{'on': (tap02 == true)}" ><a>이용문의</a></li>
+                  <li v-on:click="getTemp('etc')" v-bind:class="{'on': (tap03 == true)}" ><a>기타문의</a></li>
+              </ul>
+          </div>
+      </template>
+
     <GajiBox v-if="showModal1"  v-bind:soluId="soluId" v-on:selectedGaji="setGajiData" @gajiClose="showModal1 = false"></GajiBox>
     <GajijumBox v-if="showModal2" v-bind:listInfo="listInfo" v-on:selectedGaJijum="setGaJijumData" @gajiumClose="showModal2 = false"></GajijumBox>
     <SaupBox v-if="showModal3"  v-on:selectedSaup="setSaupData" @saupClose="showModal3 = false"></SaupBox>
@@ -290,6 +306,10 @@
                 dateRange: '범위 선택'
             }
         }
+
+        tap01:boolean=true;
+        tap02:boolean=false;
+        tap03:boolean=false;
 
         shortcuts : any = [
             {
@@ -609,6 +629,26 @@
                         Vue.swal({text:"검색가능기간은 3개월입니다."})
                       }
                   }
+
+                }else if(name=='fnqList'){//자주묻는질문
+
+                    let catagory = '1';
+                    if(this.tap01==true){
+                        catagory = '1';
+                    }else if(this.tap02==true){
+                        catagory = '2';
+                    }else if(this.tap03==true){
+                        catagory = '3';
+                    }else{
+                        catagory = '1';
+                    }
+                    this.searchItem[3] .value = catagory;
+
+                    let menu = {menuId: name ,listDt : object}
+                    this.$store.commit('SEARCHLISTINPUT', {menu})
+                    this.$emit('SearchToList', this.searchItem);
+                    this.$store.commit('SEARCHLISTOUT')
+
                 }else{//다른 페이지
 
                   let menu = {menuId: name ,listDt : object}
@@ -677,6 +717,28 @@
                 }
             })
         }
+
+        /**
+         * 탭변경
+         * @param comp
+         */
+        getTemp(comp){
+
+            this.tap01 =false;
+            this.tap02 =false;
+            this.tap03 =false;
+
+            if(comp == 'reg' ){
+                this.tap01 =true;
+            }else if(comp =='use'){
+                this.tap02 =true;
+            }else if(comp =='etc'){
+                this.tap03 =true;
+            }
+
+            this.SearchButton();
+        }
+
     }
 
 

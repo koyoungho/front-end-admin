@@ -346,6 +346,13 @@
                 </template>
             </div>
             <h4>관련 발급 내역 및 출력</h4>
+
+            <template>
+                <div id="loading_bar" v-show="detail_loading">
+                    <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
+                </div>
+            </template>
+
             <div style="text-align:right">
                 <button type="button" id="" class="btn_m01 bg05" v-on:click="downExel"><i data-v-a75fdae8="" class="icon download01"></i>엑셀 다운로드</button>
             </div>
@@ -374,10 +381,11 @@
     import  moment from 'moment'
     import axios from 'axios'
     import {environment} from '@/utill/environment';
+    import VueSimpleSpinner from 'vue-simple-spinner/src/components/Spinner.vue';
 
     @Component({
         components: {
-            ListComponent,ReceipConfirm
+            ListComponent,ReceipConfirm,VueSimpleSpinner
         }
     })
     export default class ReceiptViewCancelDetl extends Vue {
@@ -412,6 +420,8 @@
         cancleReceipActionBtn : boolean = true;
 
         loading222 : boolean = false
+
+        detail_loading: boolean = false; //엑셀다운로드 로딩바
 
         maxDateOut : boolean = false;//추가함
 
@@ -456,19 +466,18 @@
                             {columName : '봉사료' ,id : 'bong', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
                             {columName : '공급가액' ,id : 'amt', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
                             {columName : '부가세' ,id : 'vat', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'money',},
-
                             // {columName : '발급용도' ,id : 'geoguNm', width : '9%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '거래구분' ,id : 'trgu', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '' ,  lineValue: '승인', type:'text', options:[{value:'0' , change:'승인' },{value:'1' , change:'취소' }] },
                             // {columName : '지출구분' ,id : 'cultGbNm', width : '7%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
-                            {columName : '신분확인' ,id : 'comfirm', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            //{columName : '신분확인' ,id : 'comfirm', width : '13%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '취소사유' ,id : 'canSayuNm', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
+                            {columName : '회사코드' ,id : 'subSaupNm', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             {columName : '처리내용' ,id : 'taxSend', width : '8%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text' , textValue: '오류', fontColors :'color: red' ,options:[{value:'전송전' ,change:'처리예정'},{value:'전송' ,change:'처리완료'},{value:'오류' ,change:'오류'}]},
                             {columName : '' ,id : 'errorMsg', width : '11%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '',type : 'hiddens'},
-
                             // {columName : '고객명' ,id : 'custNm', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                             // {columName : '메모' ,id : 'memo', width : '10%' , height : '' , size : '' , mobile : 'N' , cols : '' , rows : '', type:'text',},
                         ],
-                        totalColum: 8,
+                        totalColum: 10,
                         apiUrl : 'receipt/'+ this.objectKey.oriDate+'/'+ this.objectKey.oriAprv+ '/cancels?onlineYn='+this.$route.params.onlineYn ,
                         onLoadList : true,  // onLoad 로딩 유무
                         mTotal : false , // 합계금액 란 활성화시 리슐트금액넣기
@@ -738,6 +747,8 @@
 
             let fileOrigin = "cash_history_detail_"+nowKo_str+".xlsx"
 
+            this.detail_loading = true;
+
             axios({
                 // url: environment.apiUrl + "/receipts/excel",
                 url: environment.apiUrl + "/receipt/"+this.objectKey.oriDate+"/"+this.objectKey.oriAprv+"/cancels/excel?onlineYn=Y",
@@ -770,6 +781,7 @@
                     window.URL.revokeObjectURL(data)
                 }, 100)
 
+                this.detail_loading = false;
             })
         }
 

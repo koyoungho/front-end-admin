@@ -45,10 +45,10 @@
                     <tr>
                         <th scope="row">승인대역</th>
                         <td colspan="3">
-                            <input type="text" class="input form_app01" title="승인대역 시작점" v-model="aproBandFrom">
+                            <input type="text" class="input form_app01" title="승인대역 시작점" v-model="aproBandFrom" maxlength="7">
                             <span class="period_cal">-</span>
-                            <input type="text" class="input form_app01" title="승인대역 끝점" v-model="aproBandTo">
-                            (단일 최대 건수 <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="건수" v-model="aproCnt"> )
+                            <input type="text" class="input form_app01" title="승인대역 끝점" v-model="aproBandTo" maxlength="7">
+                            (단일 최대 건수 <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="건수" v-model="aproCnt" maxlength="4"> )
                         </td>
                     </tr>
                     </tbody>
@@ -58,7 +58,7 @@
 
             <!-- btn bot -->
             <div class="btn_bot">
-                <button type="button" id="" class="btn_b01 bg02">취소</button>
+                <button type="button" id="" class="btn_b01 bg02" v-on:click="cancelInfo">취소</button>
                 <!--<button type="button" id="" class="btn_b01 bg03">승인대역 범위 수정</button>-->
                 <!--<button type="button" id="" class="btn_b01 bg03" v-on:click="deleteScope">승인대역 범위 삭제</button>-->
                 <button type="button" id="" class="btn_b01 bg01" v-on:click="validationChk">승인대역 범위 등록</button>
@@ -108,8 +108,10 @@
         }
 
         cancelInfo(){
-            this.$router.push('/home/approvalBandList')
+            this.$router.push('/home/approvalBandScopeList')
+            //this.$router.push('/home/approvalBandList')
         }
+
 
         //등록
         insertInfo(){

@@ -15,12 +15,14 @@
                     <caption>자주묻는 질문 </caption>
                     <colgroup>
                         <col width="10%">
-                        <col width="90%">
+                        <col width="40%">
+                        <col width="10%">
+                        <col width="40%">
                     </colgroup>
                     <tbody>
                     <tr>
                         <th scope="row">제목</th>
-                        <td><input type="text" class="input form_w100" title="제목"  v-model="title" maxlength="80" ></td>
+                        <td colspan="3"><input type="text" class="input form_w100" title="제목"  v-model="title" maxlength="80" ></td>
                     </tr>
                     <tr>
                         <th scope="row">구분</th>
@@ -31,10 +33,18 @@
                                 <option value="ADM">관리자</option>
                             </select>
                         </td>
+                        <th scope="row">카테고리 구분</th>
+                        <td>
+                            <select id="" name="" class="select form_notice" v-model="categoryId">
+                                <option value="1">가입관련</option>
+                                <option value="2">이용문의</option>
+                                <option value="3">기타문의</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">내용</th>
-                        <td class="con_write" >
+                        <td class="con_write" colspan="3">
                             <tinymce id="d1" v-model="content" :other_options="{height:400}"></tinymce>
                         </td>
                     </tr>
@@ -74,6 +84,7 @@
         seq : string ="";
         title : string ="";
         viewType : string ="ALL";
+        categoryId : string = '1';
         content : string ="";
         regShow:boolean = false;
         delShow:boolean = false;
@@ -131,6 +142,7 @@
                             this.title = result.title;
                             this.viewType = result.viewType;
                             this.content = result.content;
+                            this.categoryId = result.categoryId;
 
                                 let rl = Number(result.regRole)
                                 if(Number(this.role) <= rl){
@@ -164,6 +176,7 @@
             reqData['title'] = this.title;
             reqData['viewType'] = this.viewType;
             reqData['content'] = this.content;
+            reqData['categoryId'] = this.categoryId;
 
             if(this.objectKey != null || this.objectKey !=undefined){ //수정일때
                 // api 데이터 호출
