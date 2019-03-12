@@ -65,13 +65,13 @@
                         <th scope="row">승인 대역</th>
                         <td colspan="3">
                             <div class="form_col approval">
-                                <span class="rdo_box"><input type="radio" name="chk" value="1" id="aa11" checked="checked" v-model="aproGbn" title="대역폭 선택"><label for="aa11">대역폭</label></span>
+                                <span class="rdo_box2"><input type="radio" name="chk" value="1" id="aa11" checked="checked" v-model="aproGbn" title="대역폭 선택"><label for="aa11"> 대역폭 </label></span>
                                 <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="aproBandFrom" maxlength="7">
                                 <span class="period_form">-</span>
                                 <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="aproBandTo" maxlength="7">
                             </div>
                             <div class="form_col approval">
-                                <span class="rdo_box"><input type="radio" name="chk" value="2" id="aa12" v-model="aproGbn" title="건수 선택"><label for="aa12">건수</label></span>
+                                <span class="rdo_box2"><input type="radio" name="chk" value="2" id="aa12" v-model="aproGbn" title="건수 선택"><label for="aa12"> 건수 </label></span>
                                 <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 건수" v-model="aproCnt" maxlength="7">
                             </div>
                         </td>
@@ -213,9 +213,10 @@
         }
 
         @Watch('jumCode') changeJumcode(){
-            let regNumber = /^[0-9]*$/;
+            let regNumber = /^[A-Za-z0-9]*$/;
             if(!regNumber.test(this.jumCode)){
-                Vue.swal({ text: '숫자만가능합니다'});
+                Vue.swal({ text: '숫자와 문자만 가능합니다'});
+                this.jumCode ='';
             }
             //console.log('회사코드')
             let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
@@ -225,6 +226,7 @@
         //점코드 유효성 체크
         chkJumCode() {
             let regNumber = /^[0-9]*$/;
+
             let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
 
             if(this.saupId == ''){
