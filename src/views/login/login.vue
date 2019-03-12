@@ -274,13 +274,13 @@
                 nextPage = 'saupLogin';
             } else if (sessionStorage.code == '006') { //동일IP로 로그인
                 nextPage = 'main';
-                let alertMsg : string = '';
-                if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초 로그인
-                    alertMsg = '최종 접속정보\n현재 접속 IP 주소 : ' + sessionStorage.currentIp;
-                }else{
-                    alertMsg = '최종 접속정보\n현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n최종 접속 IP 주소 : '+sessionStorage.lastIp;
-                }
-                alert(alertMsg);
+                // let alertMsg : string = '';
+                // if(sessionStorage.lastIp == 'null' ||  sessionStorage.lastConnDt == 'null'){ //최초 로그인
+                //     alertMsg = '최종 접속정보\n현재 접속 IP 주소 : ' + sessionStorage.currentIp;
+                // }else{
+                //     alertMsg = '최종 접속정보\n현재 접속 IP 주소 : ' + sessionStorage.currentIp + '\n최종접속 시간 : ' + sessionStorage.lastConnDt +  '\n최종 접속 IP 주소 : '+sessionStorage.lastIp;
+                // }
+                // alert(alertMsg);
 
             } else if (sessionStorage.code == '007') { //IP 불일치
                 alert('다른 곳에서 계정이 사용중 입니다. 기존 접속 계정을 로그아웃 후 다시 시도해 주기시 바랍니다.');

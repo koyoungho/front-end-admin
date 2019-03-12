@@ -191,7 +191,7 @@
                             sessionStorage.setItem('sisMgtToken',sessionStorage.accountId)
 
                             if(sessionStorage.code=='006'){
-                              let sameConMsg = '현재 접속중인 사용자 정보입니다.\n\n접속정보\n접속 IP 주소 : '+ sessionStorage.lastIp +'\n최종접속 시간 : '+ sessionStorage.lastConnDt + '\n\n종료후 접속하시겠습니까?';
+                              let sameConMsg = '현재 접속중인 사용자 정보입니다.\n\n접속정보\n접속 IP 주소 : '+ sessionStorage.lastIp +'\n최종접속 시간 : '+ sessionStorage.lastConnDt + '\n 현재 접속 IP : '+ sessionStorage.currentIp + '\n\n종료후 접속하시겠습니까?';
                               if(confirm(sameConMsg)){
                                   CommonBoardService.updateListData('auth/force', sessionStorage.accountId+'/token' ,{token : sessionStorage.accessToken}).then((response) => {
                                       if(response.status == 200){
