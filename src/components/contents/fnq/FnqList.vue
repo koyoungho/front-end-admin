@@ -12,6 +12,7 @@
                 <button type="button" class="btn_m01 bg02" v-on:click="regFnq">자주묻는 질문 등록</button>
             </div>
 
+
             <template v-if="role == '0001' || role == '0003' ||  role == '0002'">
                 <!--리스트-->
                 <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
@@ -41,6 +42,15 @@
                     </ul>
                 </div>
                 <!-- //search bbs box -->
+
+                <!--<div class="tab_box">-->
+                    <!--<ul class="tab01 col04">-->
+                        <!--<li v-on:click="getTemp('Approval')" v-bind:class="{'on': (showApproval == true) } "><a>승인 현황</a></li>-->
+                        <!--&lt;!&ndash;<li v-on:click="getTemp('BatchFile')" v-bind:class="{'on': (showBatchFile == true || showBatchFileList == true)}" ><a>배치 파일 처리 현황</a></li>&ndash;&gt;-->
+                        <!--<li v-on:click="getTemp('Resource')" v-bind:class="{'on': (showResource == true)}" ><a>시스템 자원</a></li>-->
+                        <!--<li v-on:click="getTemp('Service')" v-bind:class="{'on': (showService == true)}" ><a>서비스 상태</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
 
                 <div class="faq_box">
                     <dl class="faq_list">
