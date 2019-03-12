@@ -225,7 +225,7 @@
 
         //점코드 유효성 체크
         chkJumCode() {
-            let regNumber = /^[0-9]*$/;
+            let regNumber = /^[A-Za-z0-9]*$/;
 
             let saupmsg = document.getElementById('jumcode_msg'); //중복 확인한 메시지
 
@@ -238,7 +238,7 @@
                 return;
             }else if(!regNumber.test(this.jumCode)){
                 //alert('점코드는 숫자만 입력가능합니다.');
-                if(saupmsg != null){ saupmsg.innerHTML = "점코드는 숫자만 입력가능합니다."; }
+                if(saupmsg != null){ saupmsg.innerHTML = "점코드는 숫자와 문자만 입력가능합니다."; }
                 return;
             }else if(this.jumCode.length != 10){
                 //alert('점코드는 10자리로 입력하세요.');
