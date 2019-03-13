@@ -317,7 +317,7 @@
                 responseType: 'blob', // important
                 headers: {"x-auth-token": sessionStorage.accessToken}
             }).then((response) => {
-                console.log(response)
+                //console.log(response)
                 // It is necessary to create a new blob object with mime-type explicitly set
                 // otherwise only Chrome works like it should
                 var newBlob = new Blob([response.data],{type: 'application/xlsx'})
@@ -412,7 +412,7 @@
             let param = 'saupId='+this.saupId + '&subSaup='+this.subSaup;
 
             CommonBoardService.postListDatas('receipt/file/check?'+param, null, formData).then((response) => {
-                console.log(response)
+                //console.log(response)
                     let result: any = response.data;
                     // data - list
                     // failCount
