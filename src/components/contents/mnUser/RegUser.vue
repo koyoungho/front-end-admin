@@ -49,7 +49,9 @@
                             <select id="" name="" class="select form_w100" title="계정등급" v-model="accountLevel">
                                 <option value="">선택</option>
                                 <template v-for="datas in roleList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                    <template v-if="datas.code!=='0006'">
+                                        <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                    </template>
                                 </template>
                             </select>
                         </td>
