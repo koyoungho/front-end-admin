@@ -218,7 +218,7 @@
                               <td>{{timeFormat(rows)}}</td>
                             </template>
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='money'">
-                                <td v-on:click="rowView(datas,publicPageing,index,key)" style="text-align: right">
+                                <td v-on:click="rowView(datas,publicPageing,index,key,$event)" style="text-align: right">
                                     <span v-bind:style="colColor(indexs)">{{ minusCheck(Number(rows).toLocaleString(),index)}}</span>
                                 </td>
                             </template>
@@ -234,7 +234,7 @@
                             </template>
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='text'"> <!--텍스트 타입-->
                                 <template v-if="dataGridDetail.dataGrid.columControl[indexs].imageUse"> <!--텍스트이면서 이미지사용-->
-                                    <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                    <td v-on:click="rowView(datas,publicPageing,index,key,$event)"
                                         v-bind:style="fontColor(indexs,rows)" style="text-align: left">
                                         <template v-if="listData[index].importantYn == 'Y'"><i
                                                 class="icon notice">공지</i>
@@ -245,7 +245,7 @@
                                 </template>
                                 <template v-else-if="!dataGridDetail.dataGrid.columControl[indexs].imageUse"> <!--텍스트 이면서 이미지 사용안함-->
                                   <template v-if="dataGridDetail.dataGrid.columControl[indexs].fileImage"> <!-- 텍스트이면서 파일이미지사용-->
-                                  <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                  <td v-on:click="rowView(datas,publicPageing,index,key,$event)"
                                       v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">
                                     <template v-if="listData[index].fileYn=='Y'">
                                       <i class="icon_file"></i>
@@ -254,14 +254,14 @@
                                   </template>
                                   <template v-else> <!-- 순수 타입이 그냥 텍스트 인것-->
                                     <template v-if="dataGridDetail.dataGrid.columControl[indexs].id=='taxSend'">
-                                    <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                    <td v-on:click="rowView(datas,publicPageing,index,key,$event)"
                                         v-bind:style="fontColor(indexs,rows)" :title="datas.errorMsg">
                                       <span v-bind:style="colColor(indexs)">{{rows}}</span>
                                     </td>
                                     </template>
                                     <template v-else-if="dataGridDetail.dataGrid.columControl[indexs].id=='cancelStatus'">
                                         <template v-if="dataGridDetail.dataGrid.shapeMark">
-                                            <td v-on:click="rowView(datas,publicPageing,index,key)" v-bind:style="fontColor(indexs,rows)" ><span v-bind:style="colColor(indexs)">
+                                            <td v-on:click="rowView(datas,publicPageing,index,key,$event)" v-bind:style="fontColor(indexs,rows)" ><span v-bind:style="colColor(indexs)">
                                                 <template v-if="rows=='0'">○</template>
                                                 <template v-else-if="rows=='1'">△</template>
                                                 <template v-else-if="rows=='2'">X</template>
@@ -269,7 +269,7 @@
                                         </template>
                                     </template>
                                     <template v-else>
-                                      <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                      <td v-on:click="rowView(datas,publicPageing,index,key,$event)"
                                           v-bind:style="fontColor(indexs,rows)" >
                                         <span v-bind:style="colColor(indexs)">{{rows}}</span>
                                       </td>
@@ -282,7 +282,7 @@
 
 
                             <template v-if="dataGridDetail.dataGrid.columControl[indexs].type=='fileDown'">
-                                <td v-on:click="rowView(datas,publicPageing,index,key)"
+                                <td v-on:click="rowView(datas,publicPageing,index,key,$event)"
                                     v-bind:style="fontColor(indexs,rows)"><span v-bind:style="colColor(indexs)">{{rows}}
                                     <template v-if="listData[index].saupFileNm">
                                   <br><font color="blue" v-if="rows=='승인대기'">(사업자등록증확인)</font>
@@ -957,9 +957,9 @@
 
         }
 
-        rowView(row, searchData, index, key) {  // 로우클릭시 검색데이터 로우열 전체 데이터를 이벤트로 전송한다
+        rowView(row, searchData, index, key , event) {  // 로우클릭시 검색데이터 로우열 전체 데이터를 이벤트로 전송한다
             let rowData = this.listOragin[index];
-            let publicDatas = {row: rowData, searchOption: searchData, key: key};
+            let publicDatas = {row: rowData, searchOption: searchData, key: key , event : event};
             this.$emit('rowClick', publicDatas);
         }
 

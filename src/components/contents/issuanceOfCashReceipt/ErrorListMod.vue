@@ -1,10 +1,14 @@
 <template>
     <section id="container" style="width:1580px">
       <!-- content  -->
+      <div>
+        <errorModPopup v-if="showModal1"  :viewData="viewData"  @saupClose="showModal1 = false"></errorModPopup>
+      </div>
       <div class="content" style="width:1580px">
         <div id="loading_bar" v-show="loading">
           <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
         </div>
+
         <h2 class="blind">현금영수증관리</h2>
         <h3>오류 내역 조회</h3>
 
@@ -22,7 +26,7 @@
         </div>
       </div>
 
-      <errorModPopup v-if="showModal1"  :viewData="viewData"  @saupClose="showModal1 = false"></errorModPopup>
+
     </section>
 </template>
 
