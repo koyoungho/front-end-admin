@@ -215,7 +215,7 @@
         @Watch('jumCode') changeJumcode(){
             let regNumber = /^[A-Za-z0-9]*$/;
             if(!regNumber.test(this.jumCode)){
-                Vue.swal({ text: '숫자와 문자만 가능합니다'});
+                Vue.swal({ text: '숫자와 영문자만 가능합니다'});
                 this.jumCode ='';
             }
             //console.log('회사코드')
@@ -238,7 +238,7 @@
                 return;
             }else if(!regNumber.test(this.jumCode)){
                 //alert('점코드는 숫자만 입력가능합니다.');
-                if(saupmsg != null){ saupmsg.innerHTML = "점코드는 숫자와 문자만 입력가능합니다."; }
+                if(saupmsg != null){ saupmsg.innerHTML = "점코드는 숫자와 영문자만 입력가능합니다."; }
                 return;
             }else if(this.jumCode.length != 10){
                 //alert('점코드는 10자리로 입력하세요.');
