@@ -91,29 +91,31 @@
                 <table class="tbl_list02 page_cashissue">
                     <caption>현금영수증 발급</caption>
                     <colgroup>
-                        <col width="100px">
-                        <col width="100px">
-                        <col width="100px">
-                        <col width="80px">
-                        <col width="80px">
-                        <col width="80px">
-                        <col width="130px">
-                        <col width="80px">
+                        <col width="110px">
+                        <col width="110px">
+                        <col width="110px">
+                        <col width="110px">
                         <col width="90px">
-                        <col width="144px">
+                        <col width="90px">
+                        <col width="90px">
+                        <col width="140px">
+                        <col width="90px">
+                        <col width="115px">
+                        <col width="145px">
                     </colgroup>
                     <thead>
                     <tr>
-                        <th scope="col">거래일자</th>
-                        <th scope="col">총액</th>
+                        <th scope="col">발급용도</th>
+                        <th scope="col">지출구분</th>
+                        <th scope="col">거래금액</th>
+                        <th scope="col">봉사료</th>
                         <th scope="col">공급가액</th>
                         <th scope="col">부가세</th>
-                        <th scope="col">봉사료</th>
-                        <th scope="col">발급용도</th>
+                        <th scope="col">면세/<br>간이과세</th>
                         <th scope="col">신분확인</th>
                         <th scope="col">고객명</th>
                         <th scope="col">메모</th>
-                        <th scope="col">오류내역</th>
+                        <th scope="col">처리결과</th>
                     </tr>
                     </thead>
                 </table>
@@ -122,27 +124,29 @@
                     <table class="tbl_list02 brd_none page_cashissue">
                         <caption>현금영수증 발급</caption>
                         <colgroup>
-                            <col width="100px">
-                            <col width="100px">
-                            <col width="100px">
-                            <col width="80px">
-                            <col width="80px">
-                            <col width="80px">
-                            <col width="130px">
-                            <col width="80px">
+                            <col width="110px">
+                            <col width="110px">
+                            <col width="110px">
+                            <col width="110px">
                             <col width="90px">
-                            <col width="127px">
+                            <col width="90px">
+                            <col width="90px">
+                            <col width="140px">
+                            <col width="90px">
+                            <col width="115px">
+                            <col width="145px">
                         </colgroup>
                         <tbody>
                         <template v-if="listData.length > 1">
                             <template v-for="datas in listData">
                                 <tr v-bind:class="datas.className">
-                                    <td>{{datas.saleDate}}</td>
+                                    <td>{{datas.geogu}}</td>
+                                    <td>{{datas.cultNm}}</td>
                                     <td class="right">{{datas.totalAmt}}</td>
+                                    <td class="right">{{datas.bong}}</td>
                                     <td class="right">{{datas.amt}}</td>
                                     <td class="right">{{datas.vat}}</td>
-                                    <td class="right">{{datas.bong}}</td>
-                                    <td>{{datas.geogu}}</td>
+                                    <td>{{datas.taxFreeYn}}</td>
                                     <td>{{datas.confirm}}</td>
                                     <td>{{datas.custNm}}</td>
                                     <td class="left">{{datas.memo}}</td>
@@ -152,7 +156,7 @@
                         </template>
                         <template v-if="listData.length < 1">
                             <tr>
-                                <td colspan="10" class="no_data">조회된 내용이 없습니다.</td>
+                                <td colspan="11" class="no_data">조회된 내용이 없습니다.</td>
                             </tr>
                         </template>
                         </tbody>
@@ -266,7 +270,7 @@
 
             CommonBoardService.postListDatas('receipt/file?'+param, null, formData).then((response) => {
                     let result: any = response.data;
-                    console.log(response);
+                    //console.log(response);
 
                     // response.data 값
                     // data : []
@@ -427,10 +431,13 @@
                             rowData['vat'] = this.numberWithCommas(e.vat);
                             rowData['bong'] = this.numberWithCommas(e.bong);
                             rowData['geogu'] = e.geogu;
+                            rowData['cultNm'] = e.cultNm;
                             rowData['confirm'] = e.confirm;
                             rowData['custNm'] = e.custNm;
                             rowData['memo'] = e.memo;
                             rowData['error'] = e.error;
+                            rowData['taxFreeYn'] = e.taxFreeYn;
+
                             if(e.error != null && e.error != ''){
                                 rowData['className'] = 'date_error';
                             }
