@@ -783,7 +783,11 @@
                                 });
 
                             } else {
-                                Vue.swal({text:'계정 정보 변경이 실패하였습니다. 다시 시도하세요.'});
+                                if(result.code == '001'){
+                                    Vue.swal({text:result.message});
+                                }else{
+                                    Vue.swal({text:'계정 정보 변경이 실패하였습니다. 다시 시도하세요.'});
+                                }
                                 return;
                             }
                         }
