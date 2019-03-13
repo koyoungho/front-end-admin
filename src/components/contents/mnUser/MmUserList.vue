@@ -126,7 +126,7 @@
                     // 아이디는 실제 컬럼값을 넣어주면됩니다.
                     search: [
                         // {type: 'input', title :'입력해', id: 'inputType', name:'inputType' , value: '',   api : '' , option : '' },
-                        {type: 'selectCode' ,class:'w30 text_center', title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : '' , code: '0006', option : [{ codeNm : '시스템관리자' , code: '0001' },{codeNm : '사업자관리자' , code: '0002' },{codeNm : '콜센터관리자' , code: '0003' },{codeNm : '가맹점관리자' , code: '0004' },{codeNm : '지점관리자' , code: '0005' },{codeNm : '매장관리자' , code: '0006' }]},
+                        {type: 'selectCode' ,class:'w30 text_center', title :'등급',id: 'role', name:'role' , value: this.callVal , disable : this.callDis ,  api : 'code?groupCode=0015' , code: '', option : [{ codeNm : '' , code: '' }]},
                         {type: 'selectCode' ,class:'w30 text_left',liNull:true, title :'상태',id: 'status', name:'aprvStatus' , value: '' ,  api : 'code?groupCode=0014' , option : [{ codeNm : '승인대기' , code: '0' }]},
                         {type: 'radio' ,class:'w25', title :'', id: 'searchDateType', name: 'radioBox' , value: 'regDt' , option : [{ name : '최종접속일' , value: 'lastConnDt' },{ name : '등록일' , value: 'regDt' }] },
                         {type: 'date2',class:'w25', title :'', id: 'date', name:'date', searchStartDate:[] , calenderCount : 2 , dateType : 'date' , width : 220  , default :'YYYY-MM-DD' , setDates: [beforeOneDKo,nowKo]},
