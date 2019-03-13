@@ -115,7 +115,7 @@ export default new Vuex.Store({
             // 로그인결과 리턴해줌
             return CommonBoardService.postListDatas('auth', null,{id, password})
                 .then(({data}) => {
-                    if(data.code=='000'){
+                    if(data.code=='000' || data.code=='006' ){
                         commit('LOGIN', data)
                         //commit('INFO_SET', data)
                         return "success"
@@ -133,7 +133,7 @@ export default new Vuex.Store({
             let apiUrl = 'otp/'+auth_opt+'/login';
             return CommonBoardService.postListDatas(apiUrl, null,{id})
                 .then(({data}) => {
-                    if(data.code=='000'){
+                    if(data.code=='000' || data.code=='006'){
                         //commit('LOGIN', data)
                         commit('OTP_LOGIN', data)
                         return "success"

@@ -31,7 +31,7 @@
                                  <date-picker v-model="curDate"  :lang="lang1" :type="'day'"
                                               :first-day-of-week="7"  format="YYYY-MM-DD" width="150" confirm ></date-picker>
                             </span>
-                            <button type="button" class="btn_m01 bg03" @click="roadData">데이터 수집</button>
+                            <button type="button" class="btn_m01 bg03" @click="getRate">데이터 수집</button>
                         </li>
                     </ul>
 
@@ -682,18 +682,20 @@
             <div class="btn_bot">
                 <button type="button" @click="tempReg" class="btn_b01 bg02">임시저장</button>
                 <span class="form_sch">
-					<select  class="select sch_save" title="저장" v-model="sendType">
-						<option value="">선택</option>
-						<option value="TEMP">가정산 저장</option>
-						<option value="TAX">국세청 저장</option>
-					</select>
-				</span>
+                  <select  class="select sch_save" title="저장" v-model="sendType">
+                    <option value="">선택</option>
+                    <option value="TEMP">가정산 저장</option>
+                    <option value="TAX">국세청 저장</option>
+                  </select>
+			          	</span>
+                <button type="button" @click="modifyData" class="btn_b01 bg01">수정</button>
                 <button type="button" @click="reg" class="btn_b01 bg01">저장</button>
                 <button type="button" @click="listGo" class="btn_b01 bg03">돌아가기</button>
             </div>
 
         </div>
         <!-- //content -->
+        <JungsanMod v-show="modifyPopup" @close="modifyPopup=false"></JungsanMod>
     </section>
     <!-- //container -->
 </template>
@@ -703,11 +705,12 @@
     import {Component, Vue} from 'vue-property-decorator';
     import moment from "moment"
     import {CommonBoardService} from '../../../api/common.service';
+    import JungsanMod from './JungsanMod.vue'
 
     @Component({
 
         components: {
-            JungsanReg
+            JungsanReg,JungsanMod
         }
     })
     export default class JungsanReg extends Vue {
@@ -749,13 +752,15 @@
         }
         nowKo:any='';
 
+        modifyPopup : boolean = false;
+
         created(){
             let  nowUTC =  moment().utc() ; //UTC시간
            this.nowKo= nowUTC.add(9, 'hours')// 한국시간
 
 
             this.dateSet()
-            this.getRate()
+            // this.getRate()
         }
 
         dateSet(){
@@ -766,13 +771,13 @@
         }
 
         getRate(){
-            let date = moment(this.curDate).format('YYYYMMDD')
+
+            let date = moment(this.nowDate).format('YYYYMM')
             CommonBoardService.getListDatas('statistics/jungsanrate/'+date,'rate',null).then(result=>{
                  if(result.status==200){
-                     if (result.data > 0){
                      this.jungsanRate = result.data
-                     this.junhsanRateOk = true;
-                     }
+                     this.junhsanRateOk= true;
+                     this.roadData();
                  }else{
                  }
             })
@@ -783,7 +788,6 @@
         }
 
         roadData(){
-
             if(this.junhsanRateOk){
             let loadDatas :any = {
                 curStandardDate : moment(this.curDate).format('YYYYMMDD') ,
@@ -1062,6 +1066,11 @@
             //     }
             // })
 
+        }
+
+
+        modifyData(){
+                this.modifyPopup = true;
         }
 
         listGo(){
