@@ -768,6 +768,12 @@
                         }
                     }
                 }
+                else if (e.type == 'hiddenSearch') {  //hidden
+                    //자주묻는질문 탭별 조회
+                        if (e.value != '') {
+                            searchData[e.id] = e.value;
+                        }
+                }
                 else { // 그외 인풋 라디오
                     if (e.value != '') {
                         searchData[e.id] = e.value;
@@ -1024,7 +1030,7 @@
         }
         timeFormat(val) {
             // return val.substring(7, 2) + '시' + val.substring(8, 1) + '분' + val.substring(10, 1);
-            return val.substring(6, 8) + '시' + val.substring(9, 11) +'분' + val
+            return val.substring(6, 8) + '시' + val.substring(8, 10) +'분'
         }
     }
 

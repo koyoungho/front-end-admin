@@ -2,6 +2,9 @@
     <section id="container" style="width:1580px">
       <!-- content  -->
       <div class="content" style="width:1580px">
+        <div id="loading_bar" v-show="loading">
+          <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요" />
+        </div>
         <h2 class="blind">현금영수증관리</h2>
         <h3>오류 내역 조회</h3>
 
@@ -20,7 +23,6 @@
       </div>
 
       <errorModPopup v-if="showModal1"  :viewData="viewData"  @saupClose="showModal1 = false"></errorModPopup>
-
     </section>
 </template>
 
@@ -49,6 +51,7 @@
         saupUpjongCode : string = "";
         companyCode : string = "";
         viewData : any = [];
+        loading : boolean = false;
 
         lang : any =  {
             days: [ '월', '화', '수', '목', '금', '토','일'],
@@ -65,6 +68,8 @@
         //돔생성전 호출자
         created() {
             // 메뉴별 권한 확인
+            console.log(this.$route.params);
+
             this.getData = this.$route.params
             this.receiveDate = this.getData['date'];
             this.saupUpjongCode = this.getData['saupUpjongCode']
@@ -143,9 +148,9 @@
                         {type: 'input2',class:'w15 text_center', title :'거래금액', id: 'totAmt', name:'inputType' , value: '',   api : '' , option : '' },
 
 
-                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'saupUpjongCode', name:'inputType' , value: this.saupUpjongCode,   api : '' , option : '' },
-                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'searchErrorYearMonth', name:'inputType' , value: this.receiveDate,   api : '' , option : '' },
-                        {type: 'hidden',class:'w25 text_center', title :'원거래승인번호', id: 'companyCode', name:'inputType' , value: this.companyCode,   api : '' , option : '' },
+                        {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'saupUpjongCode', name:'inputType' , value: this.saupUpjongCode,   api : '' , option : '' },
+                        {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'searchErrorYearMonth', name:'inputType' , value: this.receiveDate,   api : '' , option : '' },
+                        {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'companyCode', name:'inputType' , value: this.companyCode,   api : '' , option : '' },
 
 
                         // {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },
@@ -198,10 +203,9 @@
 
         //임시저장
         goInsert(){
-
-
-                let ObjectData = this.$children['0'].$children['1'].listData // 리스트데이터
-                let checkTrue = this.$children['0'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
+            this.loading = true;
+                let ObjectData = this.$children['1'].$children['1'].listData // 리스트데이터
+                let checkTrue = this.$children['1'].$children['1'].lineCheckOk // 오류없으면 true 하나라도있을시 false
 
                 if(ObjectData) {
 
@@ -209,20 +213,28 @@
                         if(checkTrue){
                             CommonBoardService.putListData('receipt-error', null, ObjectData).then(result => {
                                 if (result.status == 200) {
+                                    this.loading = false;
                                     Vue.swal({text: '임시 저장을 완료 하였습니다'});
                                 }
+                            }).catch(e=>{
+                                this.loading = false;
                             })
                         }else{
+                            this.loading = false;
                             Vue.swal({text: '오류 내역이 존재하지 않아야합니다'});
                         }
 
                     }else{
+                        this.loading = false;
                         Vue.swal({text: '데이터가 존재하지않습니다'});
                     }
                 }else{
+                    this.loading = false;
                     Vue.swal({text: '데이터가 존재하지않습니다'});
                 }
+
             }
+
 
     }
 
