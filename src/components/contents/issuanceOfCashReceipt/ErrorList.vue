@@ -66,7 +66,7 @@
                 <span class="title"><font color="white">{{data.errorYearMonth}}월</font></span>
                 <ul class="con">
                   <li>
-                    <div>건수 :  {{data.fixErrorCount}} / {{data.totalErrorCount}}</div>
+                    <div>건수 :  {{data.errorCount}} / {{data.totalErrorCount}}</div>
                   </li>
                   <li>
                     <div>회사코드 : {{data.fixSubSaupCount}} / {{data.totalSubSaupCount}}</div>
@@ -78,10 +78,10 @@
                     <div style="float:left">
                       <button type="button" class="btn_s011 bg031"  @click="showList(data.errorYearMonth,'read')">보기</button>
                     </div>
-                    <div style="float:left" v-if="data.fixErrorCount >= 1">
+                    <div style="float:left" v-if="data.errorCount >= 1">
                       <button type="button" class="btn_s011 bg011" @click="modList(data.errorYearMonth,'update')">수정</button>
                     </div>
-                    <template v-if="data.fixErrorCount >= 1">
+                    <template v-if="data.errorCount >= 1">
                     <div style="float:left">
                       <button type="button" class="btn_s011 bg051" @click="jeculButton(data.errorYearMonth)">제출</button>
                     </div>
@@ -93,7 +93,7 @@
                     </template>
                     <template v-if="role=='0001'">
                     <div style="float:left">
-                      <button type="button" class="btn_s011 bg051" @click="kukseButton()">국세청</button>
+                      <button type="button" class="btn_s011 bg051" @click="kukseButton(data.errorYearMonth)">국세청</button>
                     </div>
                     </template>
                   </li>
@@ -281,6 +281,7 @@
                 }).catch(e=>{
 
                 })
+                this.goSearch();
             }
         }
 
@@ -300,8 +301,15 @@
 
         }
 
-        kukseButton(){
+        kukseButton(data){
+            CommonBoardService.putListData('/receipt-error/taxfix',data,null).then(result=>{
+                if(result.status==200){
+                    Vue.swal({text: '국세청 제출이 완료되었습니다'});
+                }
+            }).catch(e=>{
 
+            })
+            this.goSearch();
         }
 
         dateCheck(data){
