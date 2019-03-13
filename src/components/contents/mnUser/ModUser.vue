@@ -47,7 +47,9 @@
                             <select id="" name="" class="select form_w100" title="계정등급" v-model="account.role" v-on:change="roleChange">
                                 <option value="">선택</option>
                                 <template v-for="datas in roleList">
-                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                    <template v-if="datas.code!=='0006'">
+                                        <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                    </template>
                                 </template>
                             </select>
                         </td>
@@ -92,9 +94,9 @@
                     <tr>
                         <th scope="row">접속IP 대역</th>
                         <td colspan="3">
-                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpFrom" disabled="disabled">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpFrom">
                             <span class="period_form">-</span>
-                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpTo" disabled="disabled">
+                            <input type="text" class="input form_conip" title="접속IP 대역" v-model="account.accessIpTo">
                         </td>
                     </tr>
                     <tr>
