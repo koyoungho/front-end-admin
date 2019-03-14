@@ -55,6 +55,10 @@
                         <td colspan="3"><input type="text" class="input form_w100" title="메뉴 경로" v-model="menuPath" maxlength="30"></td>
                     </tr>
                     <tr>
+                        <th scope="row">프로그램 ID<em class="form_req">*</em></th>
+                        <td colspan="3"><input type="text" class="input form_w100" title="프로그램 ID" v-model="progId" maxlength="30"></td>
+                    </tr>
+                    <tr>
                         <th scope="row">메뉴 설명</th>
                         <td colspan="3"><input type="text" class="input form_w100" title="메뉴 설명" v-model="memo" maxlength="30"></td>
                     </tr>
@@ -160,6 +164,7 @@
         menuCode: any = '';
         useYn: any = '';
         menuPath: any = '';
+        progId: any = '';
         memo: any = '';
 
         //menuAuth : MenuAuth[]=[]; //메뉴권한
@@ -254,7 +259,10 @@
                 Vue.swal({text:'사용 여부를 선택하세요.'});
                 return;
             }else if(this.menuPath == ''){
-                    Vue.swal({text:'메뉴경로를 입력하세요.'});
+                Vue.swal({text:'메뉴경로를 입력하세요.'});
+                return;
+            }else if(this.progId == ''){
+                Vue.swal({text:'프로그램ID를 입력하세요.'});
                 return;
             }else{
 
@@ -274,6 +282,7 @@
             reqData['menuCode'] = this.menuCode; //메뉴코드
             reqData['useYn'] = this.useYn; //사용여부
             reqData['menuPath'] = this.menuPath; //메뉴경로
+            reqData['progId'] = this.progId; //프로그램id
             reqData['memo'] = this.memo; //메뉴설명
 /*
             let menuAuth : any = ['system','saupja','call','gajum','jijum']; //체크박스 아이디(시스템, 사업자, 콜센터, 가맹점, 지점) 관리자 순으로

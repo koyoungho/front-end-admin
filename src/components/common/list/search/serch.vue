@@ -698,10 +698,17 @@
         //선택한 가맹점,지점 정보 셋팅(지점 등록화면 상단의 지점 정보)
         setGaJijumData(data) {
             this.searchItem.filter(e=>{
-                if(e.id=='gajumId'){
-                    e.value=data.gajumId;
-                }else if(e.id=='jijumId'){
-                    e.value = data.jijumId;
+
+                if(sessionStorage.role == '0004'){
+                    if(e.id=='jijumId'){
+                        e.value = data.jijumId;
+                    }
+                }else{
+                    if(e.id=='gajumId'){
+                        e.value=data.gajumId;
+                    }else if(e.id=='jijumId'){
+                        e.value = data.jijumId;
+                    }
                 }
             })
         }

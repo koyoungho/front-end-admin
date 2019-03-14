@@ -55,6 +55,10 @@
                         <td colspan="3"><input type="text" class="input form_w100" title="메뉴 경로" v-model="menuPath" maxlength="30"></td>
                     </tr>
                     <tr>
+                        <th scope="row">프로그램ID<em class="form_req">*</em></th>
+                        <td colspan="3"><input type="text" class="input form_w100" title="메뉴 경로" v-model="progId" maxlength="30"></td>
+                    </tr>
+                    <tr>
                         <th scope="row">메뉴 설명</th>
                         <td colspan="3"><input type="text" class="input form_w100" title="메뉴 설명" v-model="memo" maxlength="30"></td>
                     </tr>
@@ -162,6 +166,7 @@
         menuCode: any = '';
         useYn: any = '';
         menuPath: any = '';
+        progId: any = '';
         memo: any = '';
 
         menuAray : any = [];
@@ -255,6 +260,7 @@
                         this.useYn = result.useYn;
                         this.memo = result.memo;
                         this.menuPath = result.menuPath;
+                        this.progId = result.progId;
 
                         //this.menuAray = result.menuRole;
                         //let menuId = ['system', 'saupja', 'call', 'gajum', 'jijum']
@@ -377,6 +383,9 @@
             }else if(this.menuPath == ''){
                 Vue.swal({text:'메뉴경로를 입력하세요.'});
                 return;
+            }else if(this.progId == ''){
+                Vue.swal({text:'프로그램ID를 입력하세요.'});
+                return;
             }else{
                 this.insertInfo();
             }
@@ -391,6 +400,7 @@
             reqData['menuCode'] = this.menuCode; //메뉴코드
             reqData['useYn'] = this.useYn; //사용여부
             reqData['menuPath'] = this.menuPath; //메뉴경로
+            reqData['progId'] = this.progId; //프로그램id
             reqData['memo'] = this.memo; //메뉴설명
 
             /*
