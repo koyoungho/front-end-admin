@@ -75,7 +75,7 @@
           <template v-if="item.type=='select'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+              <select v-model="item.value"  class="select form_w50" v-bind:title="item.title">
                 <option value="">선택</option>
                 <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
@@ -94,7 +94,7 @@
               <!--</select>-->
               <!--</template>-->
               <!--<template v-else>-->
-                <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+                <select v-model="item.value"  class="select form_w50" v-bind:title="item.title">
                   <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
                 </select>
               <!--</template>-->
@@ -123,7 +123,7 @@
           <template v-if="item.type=='selectObject'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+              <select v-model="item.value"  class="select form_w50" v-bind:title="item.title">
                 <option value="">선택</option>
                 <option v-for="tt in item.option" :value="tt.code" >{{tt.name}}</option>
               </select>
@@ -135,7 +135,7 @@
           <template v-if="item.type=='selectCode'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-                <select v-model="item.value"  class="select form_w100" title="발급용도 선택" v-bind:disabled="item.disable">
+                <select v-model="item.value"  class="select form_w100" v-bind:title="item.title" v-bind:disabled="item.disable">
                   <option value="">선택</option>
                   <option v-for="tt in item.option" :value="tt.code">{{tt.codeNm}}</option>
                 </select>
@@ -178,7 +178,7 @@
           <template v-if="item.type=='inputPop'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  v-bind:title="item.title" readonly>
               <template v-if="!item.disable"> <!-- 가맹점관리자는 검색 못함(자신것만 볼수 있음) -->
                 <button type="button" id="" class="btn_sch01" @click="popupOpen">검색</button>
               </template>
@@ -190,7 +190,7 @@
           <template v-if="item.type=='inputPop2'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-              <input type="text"  v-model="item.value"   class="input sch_appnum"  title="고객명 입력" readonly>
+              <input type="text"  v-model="item.value"   class="input sch_appnum"  v-bind:title="item.title" readonly>
               <template v-if="!item.disable"> <!-- 지점관리자는 검색 못함(자신것만 볼수 있음) -->
                 <button type="button" id="" class="btn_sch01" @click="gajiPopupOpen($event, item)">검색</button>
               </template>
@@ -202,11 +202,11 @@
           <template v-if="item.type=='selectYYMM'">
             <li :class="item.class">
               <label for="aa">{{item.title}}</label>
-              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+              <select v-model="item.value"  class="select form_w50" v-bind:title="item.title">
                 <option value="">선택</option>
                 <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
-              <select v-model="item.value"  class="select form_w50" title="발급용도 선택">
+              <select v-model="item.value"  class="select form_w50" v-bind:title="item.title">
                 <option value="">선택</option>
                 <option v-for="tt in item.option" :value="tt.value" >{{tt.name}}</option>
               </select>
