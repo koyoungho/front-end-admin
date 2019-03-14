@@ -13,7 +13,7 @@
             </div>
 
 
-            <template v-if="role == '0001' || role == '0003' ||  role == '0002'">
+            <template v-if="role == '0001' || role == '0003' ||  role == '0002' ||  role == '0004' ||  role == '0005'">
                 <!--리스트-->
                 <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </template>
