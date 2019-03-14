@@ -72,7 +72,6 @@
         //돔생성전 호출자
         created() {
             // 메뉴별 권한 확인
-            console.log(this.$route.params);
 
             this.getData = this.$route.params
             this.receiveDate = this.getData['date'];
@@ -154,7 +153,7 @@
 
                         {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'saupUpjongCode', name:'inputType' , value: this.saupUpjongCode,   api : '' , option : '' },
                         {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'searchErrorYearMonth', name:'inputType' , value: this.receiveDate,   api : '' , option : '' },
-                        {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'companyCode', name:'inputType' , value: this.companyCode,   api : '' , option : '' },
+                        {type: 'hiddenSearch',class:'w25 text_center', title :'원거래승인번호', id: 'subSaup', name:'inputType' , value: this.companyCode,   api : '' , option : '' },
 
 
                         // {type: 'radio' , title :'', id: 'searchDateType', name: 'radioBox' , value: 'saleDate' , option : [{ name : '거래일' , value: 'saleDate' },{ name : '등록일' , value: 'sendDate' }] },

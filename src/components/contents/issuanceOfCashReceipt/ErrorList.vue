@@ -277,11 +277,12 @@
                 CommonBoardService.putListData('/receipt-error/innerfix/',data+'/'+this.companyCode,null).then(result=>{
                     if(result.status==200){
                         Vue.swal({text: '제출이 완료 되었습니다'});
+                        this.goSearch();
                     }
                 }).catch(e=>{
 
                 })
-                this.goSearch();
+
             }
         }
 
@@ -292,11 +293,11 @@
               CommonBoardService.putListData('/receipt-error/innerfix',data+'/cancel/'+this.companyCode,null).then(result=>{
                       if(result.status==200){
                           Vue.swal({text: '제출이 취소 되었습니다'});
+                          this.goSearch();
                       }
               }).catch(e=>{
 
               })
-                 this.goSearch();
              }
 
         }
@@ -305,6 +306,7 @@
             CommonBoardService.putListData('/receipt-error/taxfix',data,null).then(result=>{
                 if(result.status==200){
                     Vue.swal({text: '국세청 제출이 완료되었습니다'});
+                    this.goSearch();
                 }
             }).catch(e=>{
 
