@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- popup large -->
-        <div id="popup1" class="popup_wrapper biglarge" tabindex="0" style="display: block;" >
+        <div id="popup1" class="popup_wrapper biglarge" tabindex="0" :style="clientY">
             <!-- popup header -->
             <div class="popup_header">
                 <!-- h2 -->
@@ -86,22 +86,22 @@
                                 <template v-if="responseData != null && responseData.length > 0">
                                     <template v-for="datas in responseData">
                                     <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                        <td>5</td>
+                                        <td>{{datas.saleDate}}</td>
+                                        <td>{{datas.perm}}</td>
+                                        <td>{{datas.totamt}}</td>
+                                        <td>{{datas.amt}}</td>
+                                        <td>{{datas.vat}}</td>
+                                        <td>{{datas.bong}}</td>
+                                        <td>{{datas.geoguNm}}</td>
+                                        <td>{{datas.saupId}}</td>
+                                        <td>{{datas.subSaup}}</td>
+                                        <td>{{datas.cultGbNm}}</td>
+                                        <td>{{datas.comfirm}}</td>
+                                        <td>지출구분?</td>
+                                        <td>{{datas.canSayuNm}}</td>
+                                        <td>{{datas.saleDate}}</td>
+                                        <td>{{datas.trguNm}}</td>
+                                        <td>{{datas.taxSend}}</td>
                                     </tr>
                                     </template>
                                 </template>
@@ -118,15 +118,15 @@
 
                         <table class="tbl_list02">
                             <colgroup>
-                                <col width="68px">
-                                <col width="100px">
-                                <col width="100px">
-                                <col width="100px">
-                                <col width="68px">
-                                <col width="68px">
-                                <col width="68px">
-                                <col width="68px">
-                                <col width="68px">
+                                <col width="10%">
+                                <col width="15%">
+                                <col width="15%">
+                                <col width="15%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="7%">
+                                <col width="8%">
                             </colgroup>
                             <thead>
                             <tr>
@@ -147,29 +147,35 @@
                             <table class="tbl_list02 brd_none page_store03">
                                 <caption>검색 목록</caption>
                                 <colgroup>
-                                    <col width="68px">
-                                    <col width="100px">
-                                    <col width="100px">
-                                    <col width="100px">
-                                    <col width="283">
+                                    <col width="10%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="7%">
+                                    <col width="8%">
                                 </colgroup>
                                 <tbody>
                                 <template v-if="responseDataError != null && responseDataError.length > 0">
                                     <template v-for="datas in responseDataError">
                                         <tr>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
-                                            <td>4</td>
-                                            <td>5</td>
-                                            <td>6</td>
-                                            <td>7</td>
+                                            <td>{{datas.sendDate}}</td>
+                                            <td>{{datas.retcodeNm}}</td>
+                                            <td>{{datas.perm}}</td>
+                                            <td>{{datas.geodate}}</td>
+                                            <td>{{datas.geodate}}</td>
+                                            <td>{{datas.totamt}}</td>
+                                            <td>{{datas.saupId}}</td>
+                                            <td>{{datas.subSaup}}</td>
+                                            <td>가맹점?</td>
                                         </tr>
                                     </template>
                                 </template>
                                 <template v-else>
                                     <tr>
-                                        <td colspan="5" style="text-align: center">데이터가 없습니다.</td>
+                                        <td colspan="9" style="text-align: center">데이터가 없습니다.</td>
                                     </tr>
                                 </template>
                                 </tbody>
@@ -216,11 +222,16 @@
         responseData : any = [];
         responseDataError : any = [];
         loading :boolean= false;
+        clientY : string = '';
+
 
         //돔생성전 호출자
         created() {
-            // this.searchView()
-            // this.searchError()
+            this.clientY =  'top : ' +this.viewData.event.layerY+'px !important'
+            console.log(this.viewData)
+            console.log('top : ' +this.viewData.layerY+'px !important')
+            this.searchView()
+            this.searchError()
         }
         //돔렌더링완료시 진행
         mounted(){
@@ -233,7 +244,7 @@
 
         searchView() {
             this.loading = true;
-            CommonBoardService.getListData('receipt/'+this.viewData.row.oriSaleDate+'/'+this.viewData.row.oriAprvPerm+'/cancels?onlineYn=Y', null, null).then((response) => {
+            CommonBoardService.getListData('receipt-error/receipts/'+this.viewData.row.oriAprvPerm+'/'+this.viewData.row.oriSaleDate, null, null).then((response) => {
                     this.responseData = response.data;
                     this.loading = false;
                 }
@@ -245,7 +256,7 @@
 
         searchError() {
             this.loading = true;
-            CommonBoardService.getListData('receipt/'+this.viewData.row.oriSaleDate+'/'+this.viewData.row.oriAprvPerm+'/cancels?onlineYn=Y', null, null).then((response) => {
+            CommonBoardService.getListData('receipt-error/history/'+this.viewData.row.oriAprvPerm+'/'+this.viewData.row.oriSaleDate, null, null).then((response) => {
                     this.responseDataError = response.data;
                     this.loading = false;
                 }
