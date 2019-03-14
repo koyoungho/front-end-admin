@@ -763,8 +763,8 @@
                     if(this.dataGridDetail.tapSearch){
                         if (e.value != '') {
                             searchData[e.id] = e.value;
-                        }else{
-                            searchData[e.id] = '1';
+                        }else{ //없으면 전체
+                            searchData[e.id] = '';
                         }
                     }
                 }

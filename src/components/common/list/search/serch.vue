@@ -244,7 +244,8 @@
       <template v-if="searchItemDetail.tapSearch">
           <div class="tab_box">
               <ul class="tab01 col04">
-                  <li v-on:click="getTemp('reg')" v-bind:class="{'on': (tap01 == true) } "><a>가입관련</a></li>
+                  <li v-on:click="getTemp('tot')" v-bind:class="{'on': (tap00 == true)}"><a>전체</a></li>
+                  <li v-on:click="getTemp('reg')" v-bind:class="{'on': (tap01 == true)}"><a>가입관련</a></li>
                   <li v-on:click="getTemp('use')" v-bind:class="{'on': (tap02 == true)}" ><a>이용문의</a></li>
                   <li v-on:click="getTemp('etc')" v-bind:class="{'on': (tap03 == true)}" ><a>기타문의</a></li>
               </ul>
@@ -307,7 +308,8 @@
             }
         }
 
-        tap01:boolean=true;
+        tap00:boolean=true;
+        tap01:boolean=false;
         tap02:boolean=false;
         tap03:boolean=false;
 
@@ -632,7 +634,7 @@
 
                 }else if(name=='fnqList'){//자주묻는질문
 
-                    let catagory = '1';
+                    let catagory = '';
                     if(this.tap01==true){
                         catagory = '1';
                     }else if(this.tap02==true){
@@ -640,7 +642,7 @@
                     }else if(this.tap03==true){
                         catagory = '3';
                     }else{
-                        catagory = '1';
+                        catagory = '';
                     }
                     this.searchItem[3] .value = catagory;
 
@@ -724,6 +726,7 @@
          */
         getTemp(comp){
 
+            this.tap00 =false;
             this.tap01 =false;
             this.tap02 =false;
             this.tap03 =false;
@@ -734,6 +737,8 @@
                 this.tap02 =true;
             }else if(comp =='etc'){
                 this.tap03 =true;
+            }else{
+                this.tap00 =true;
             }
 
             this.SearchButton();
