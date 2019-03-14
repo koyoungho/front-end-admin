@@ -252,13 +252,13 @@
                         <td colspan="3">
                             <div class="form_col approval">
                                 <span class="rdo_box"><input type="radio" value="1" v-bind:id="apro.aproRadio" v-model="apro.aproGbn" checked="checked" v-on:change="aproBandChk(index, 'B')" v-bind:disabled="apro.inputDisGbn"><label for="aa11">대역폭</label></span>
-                                <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="apro.aproBandFrom" v-bind:disabled="apro.inputDisGbn">
+                                <input type="text" class="input form_app01" placeholder="시작점(0000000)" title="승인대역 시작점" v-model="apro.aproBandFrom" v-bind:disabled="apro.inputDisGbn" maxlength="7">
                                 <span class="period_form">-</span>
-                                <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="apro.aproBandTo" v-bind:disabled="apro.inputDisGbn">
+                                <input type="text" class="input form_app01" placeholder="끝점(1000000)" title="승인대역 끝점" v-model="apro.aproBandTo" v-bind:disabled="apro.inputDisGbn" maxlength="7">
                             </div>
                             <div class="form_col approval">
                                 <span class="rdo_box"><input type="radio" value="2" v-bind:id="apro.aproRadio" v-model="apro.aproGbn" v-on:change="aproBandChk(index, 'C')" v-bind:disabled="apro.inputDisGbn"><label for="aa12">건수</label></span>
-                                <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 시작점" v-model="apro.aproCnt" v-bind:disabled="apro.inputDisGbn">
+                                <input type="text" class="input form_app02" placeholder="건수(1000건 단위)" value="" title="승인대역 시작점" v-model="apro.aproCnt" v-bind:disabled="apro.inputDisGbn" maxlength="7">
                             </div>
                         </td>
                     </tr>
@@ -291,23 +291,23 @@
                             <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름</th>
-                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn"></td>
+                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn" maxlength="20"></td>
                                 <th scope="row">휴대폰번호</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn">
+                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn" maxlength="11">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">ID</th>
                                 <td>
-                                    <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn">
+                                    <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn" maxlength="16">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)" v-bind:style="adm.admDupBtn">중복확인</button>
                                     <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
                                 <th scope="row">이메일주소</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail">
+                                    <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail" maxlength="30">
                                 </td>
                             </tr>
                             <tr>
@@ -551,7 +551,7 @@
 
                 CommonBoardService.getListDatas('jijum/'+this.gajumId+'/'+this.jijumId, null, null).then((response) => {
                     let result: any =  response.data;
-                    console.log(result)
+                    //console.log(result)
                     if(result != null){
                         this.getSelectList('APRO'); //승인코드
 
@@ -592,7 +592,8 @@
                             let blGb = document.getElementById('blGbID');
                             //if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
                             if(blGb!=null){ blGb.removeAttribute('disabled'); }
-
+                        }
+                        if(sessionStorage.role == '0001'||sessionStorage.role == '0002'||sessionStorage.role == '0003') {
                             let jijumStsID = document.getElementById('jijumStatusID')
                             if(jijumStsID!=null){ jijumStsID.removeAttribute('disabled'); }
                         }
@@ -618,15 +619,15 @@
                             this.approvalList[a].aproBandFrom = result.aprvBands[a].aprvPermFrom; //접속대역 시작점
                             this.approvalList[a].aproBandTo = result.aprvBands[a].aprvPermTo; //접속대역 끝점
                             this.approvalList[a].jumCodeYn = 'Y'; //기존 등록건은 점코드 중복확인을 한것으로 함
-                            this.approvalList[a].aproStat = result.aprvBands[a].aprvYn; //승인상태
+                            this.approvalList[a].aproStat = result.aprvBands[a].aprvYn=='Y'?'정상':'비정상'; //승인상태
                             if(result.aprvBands[a].aprvPermFrom != null && result.aprvBands[a].aprvPermFrom != '') { //대역폭이 있으면 라디오버튼 대역폭에 체크
                                 this.approvalList[a].aproGbn = '1';
                             }else{ //없으면 라디오버튼 건수에 체크
                                 this.approvalList[a].aproGbn = '2';
                             }
 
-                            console.log('승인대역 정보 있음');
-                            console.log(this.approvalList.length)
+                            //console.log('승인대역 정보 있음');
+                            //console.log(this.approvalList.length)
                         }
 
                         //관리자 정보
@@ -649,8 +650,8 @@
                             this.adminList[a].adminIdYn = 'Y'; //기존 등록건은 ID 중복확인을 한것으로 함
                             this.adminList[a].lastConnDate = '2018.12.01 15:35:13'; //변경해야해!!
 
-                            console.log('관리자 정보 있음');
-                            console.log(this.adminList.length)
+                            //console.log('관리자 정보 있음');
+                            //console.log(this.adminList.length)
                         }
 임시 주석 처리 20190113 */
 
@@ -1006,6 +1007,7 @@
             saupData['addr2'] = this.addr2; //사업장 상세주소
             saupData['subSaup'] = this.loadCodeList; //this.saupSubSaup; //회사코드
             saupData['upjong'] = this.saupUpjong; //업종구분
+            saupData['storSts'] = this.jijumStatus; //지점상태
 
             reqData['gajumId'] = this.gajumId; //가맹점 ID
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
@@ -1084,18 +1086,21 @@
             if(confirm('지점 정보를 수정하시겠습니까?')){
 
                 CommonBoardService.updateListData('jijum/'+this.gajumId+'/'+this.jijumId, null, reqData).then((response) => {
-                        //console.log('수정 API 결과 11')
-                        //console.log(response)
-                        //let result: any = response.data;
-                        //console.log('수정 API 결과 22')
-                        //console.log(result)
-                        //if (result.code === '000' || ) { //성공
-                        if (response.status == 200) { //성공
+                        let result: any = response.data;
+
+                        if(result.code && result.code == '001') {
+                            alert(result.message);
+                            return;
+                        }else{
+                            alert('지점 정보가 수정되었습니다.');
+                            this.$router.push({name:'branchList'});
+                        }
+                        /*if (response.status == 200) { //성공
                             alert('지점 정보가 수정되었습니다.');
                             this.$router.push({name:'branchList'});
                         } else { //실패
                             alert('지점 정보 수정이 실패하였습니다.\n다시 시도하세요.')
-                        }
+                        }*/
                     }
                     , (error) => {
                     }
@@ -1221,7 +1226,7 @@
 
         //관리자 ID 변경시 ID중복확인 여부값 초기화
         chkIdCh(idx: number){
-            console.log('중복확인할 index :: ' + idx)
+            //console.log('중복확인할 index :: ' + idx)
             this.adminList[idx].adminIdYn = '';
 
             let admid_msg = document.getElementById('adminid_msg'+idx); //중복 확인한 ROW 메시지
@@ -1328,9 +1333,9 @@
 
         }
         getCodeList(data){ // 회사코드 선택 데이터 받는다
-            console.log('받은 회사코드')
-            console.log(data)
-            console.log('받은 회사코드 수 :: ' +data.length);
+            //console.log('받은 회사코드')
+            //console.log(data)
+            //console.log('받은 회사코드 수 :: ' +data.length);
 
             if(data!=null){
                 this.saupSubSaupCnt = data.length;

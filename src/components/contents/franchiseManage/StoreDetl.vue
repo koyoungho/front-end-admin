@@ -141,10 +141,9 @@
                             <!--<input type="text" class="input form_w50" title="지점" v-model="storeStatus" disabled="disabled">-->
                             <select id="storeStatusID" name="" class="select form_bl" title="매장 상태" v-model="storeStatus" disabled="disabled">
                                 <option value="">선택</option>
-                                <option value="0">승인신청</option>
-                                <option value="1">해지신청</option>
-                                <option value="2">정상</option>
-                                <option value="3">해지</option>
+                                <template v-for="datas in storeStsList">
+                                    <option v-bind:value=datas.code>{{datas.codeNm}}</option>
+                                </template>
                             </select>
                         </td>
                     </tr>
@@ -285,10 +284,10 @@
                             <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름</th>
-                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn"></td>
+                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn" maxlength="20"></td>
                                 <th scope="row">휴대폰번호</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn">
+                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn" maxlength="11">
                                 </td>
                             </tr>
                             <tr>
@@ -301,7 +300,7 @@
                                 </td>
                                 <th scope="row">이메일주소</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail">
+                                    <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail" maxlength="30">
                                 </td>
                             </tr>
                             </tbody>
@@ -417,7 +416,7 @@
         subCompanyList: any = {}; //회사코드
         aproCodeList: any = {}; //승인코드
         upjongList: any = {}; //업종코드
-
+        storeStsList: any = {}; //매장상태
 
         aproIdx : number = 0;
         admIdx : number = 0;
@@ -584,11 +583,12 @@
                         this.blGbNm = result.blStatus; //BL상태
                         this.blDate = result.blDate; //BL등록일
 
-                        if(sessionStorage.role == '0001') { //시스템관리자만 변경 가능
+                        if(sessionStorage.role == '0001') { //시스템관리자만 변경 가능. BL정보
                             let blGb = document.getElementById('blGbID');
                             //if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
                             if (blGb != null) { blGb.removeAttribute('disabled'); }
-
+                        }
+                        if(sessionStorage.role == '0001'||sessionStorage.role == '0002'||sessionStorage.role == '0003') { //매장상태
                             let storeSts = document.getElementById('storeStatusID');
                             if (storeSts != null) { storeSts.removeAttribute('disabled'); }
                         }
@@ -666,6 +666,7 @@
             this.getSelectList('UPJONG'); //업종코드
             this.getSelectList('SUBSAUP'); //회사코드(사업장)
             this.getSelectList('0016'); //사업자구분
+            this.getSelectList('0013'); //매장상태
         }
 
         @Watch('upjong') onChange(){
@@ -816,13 +817,20 @@
                 // api 데이터 호출(매장 수정)
                 CommonBoardService.updateListData('store/'+this.saupId, null, reqData).then((response) => {
                         let result: any = response.data;
-                        if (result != null) {
+                        if(result.code && result.code == '001'){
+                            alert(result.message);
+                            return;
+                        }else{
+                            alert('매장 정보가 수정되었습니다.');
+                            this.$router.push({name:'storeList'});
+                        }
+                        /*if (result != null) {
                             alert('매장 정보가 수정되었습니다.');
                             this.$router.push({name:'storeList'});
                         } else {
                             alert('매장 정보 수정이 실패하였습니다.\n다시 시도하세요.');
                             return;
-                        }
+                        }*/
                     }
                     , (error) => {
                     }
@@ -1191,6 +1199,9 @@
             }else if(code == '0016'){ //사업자구분(개인,법인)
                 reqData['groupCode'] = '0016';
                 apiUrl = 'code';
+            }else if(code == '0013'){ //매장상태
+                reqData['groupCode'] = '0013';
+                apiUrl = 'code';
             }
 
             // api 데이터 호출
@@ -1208,8 +1219,10 @@
                             this.upjongList = result; //업종코드
                         }else if(code == 'SUBSAUP'){
                             this.subCompanyList = result; //회사코드
-                        }else if(code = '0016'){ //사업자 구분;
+                        }else if(code == '0016'){ //사업자 구분;
                             this.saupGbnList = result;
+                        }else if(code == '0013'){ //매장상태;
+                            this.storeStsList = result;
                         }
                     } else {
                     }

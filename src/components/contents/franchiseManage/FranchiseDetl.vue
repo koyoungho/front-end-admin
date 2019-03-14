@@ -277,23 +277,23 @@
                             <tbody v-for="(adm, index) in adminList" class="bottom_space">
                             <tr>
                                 <th scope="row">이름</th>
-                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn"></td>
+                                <td><input type="text" class="input form_w100" title="이름" v-model="adm.adminNm" v-bind:disabled="adm.inputDisGbn" maxlength="20"></td>
                                 <th scope="row">휴대폰번호</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn">
+                                    <input type="text" class="input form_w100" title="휴대폰번호" v-model="adm.adminPhonenum" v-bind:disabled="adm.inputDisGbn" maxlength="11">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">ID</th>
                                 <td>
-                                    <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn">
+                                    <input type="text" class="input form_id" title="ID" v-model="adm.adminId" v-on:keyup="chkIdCh(index)" v-bind:disabled="adm.inputDisGbn" maxlength="16">
                                     <input type="hidden" v-model="adm.adminIdYn" title="idcheckYn">
                                     <button type="button" id="" class="btn_s01 bg04" v-on:click="chkAdminId(index)" v-bind:style="adm.admDupBtn">중복확인</button>
                                     <p class="info_msg" v-bind:id="adm.adminIdMsg" ></p>
                                 </td>
                                 <th scope="row">이메일주소</th>
                                 <td>
-                                    <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail">
+                                    <input type="text" class="input form_w100" title="이메일주소" v-model="adm.adminEmail" maxlength="30">
                                 </td>
                             </tr>
                             <tr>
@@ -485,7 +485,6 @@
 
             this.getSelectbox(); //공통사용 selectbox 조회
             this.franchiseView(); //가맹점 정보 조회
-
         }
 
         //돔렌더링완료시 진행
@@ -559,10 +558,13 @@
                             let blGb = document.getElementById('blGbID');
                             //if (blGb != null) { blGb.setAttribute('disabled', 'disabled'); }
                             if(blGb!=null){ blGb.removeAttribute('disabled'); }
+                        }
 
+                        if(sessionStorage.role == '0001'||sessionStorage.role == '0002'||sessionStorage.role == '0003') { //상태
                             let gajumStsID = document.getElementById('gajumStatusID')
                             if(gajumStsID!=null){ gajumStsID.removeAttribute('disabled'); }
                         }
+
                         //승인대역 정보
                         //console.log(result.aprvBands.length);
 /* 임시 주석 처리 20190113
@@ -585,14 +587,14 @@
                             this.approvalList[a].aproBandFrom = result.aprvBands[a].aprvPermFrom; //접속대역 시작점
                             this.approvalList[a].aproBandTo = result.aprvBands[a].aprvPermTo; //접속대역 끝점
                             this.approvalList[a].jumCodeYn = 'Y'; //기존 등록건은 점코드 중복확인을 한것으로 함
-
+                            this.approvalList[a].aproStat = result.aprvBands[a].aprvYn=='Y'?'정상':'비정상'; //승인상태
                             if(result.aprvBands[a].aprvPermFrom != null && result.aprvBands[a].aprvPermFrom != '') { //대역폭이 있으면 라디오버튼 대역폭에 체크
                                 this.approvalList[a].aproGbn = '1';
                             }else{ //없으면 라디오버튼 건수에 체크
                                 this.approvalList[a].aproGbn = '2';
                             }
-                            console.log('승인대역 정보 있음');
-                            console.log(this.approvalList.length)
+                            //console.log('승인대역 정보 있음');
+                            //console.log(this.approvalList.length)
                         }
 
                         //관리자 정보
@@ -814,12 +816,12 @@
                     //console.log(this.approvalList[i].aproBandTo);
 
                     //기존 등록건은 체크 안하고(true) 회사코드를 리스트에서 선택하면 승인대역 정보가 필수가 됨
-                    console.log('diasbled :: '+this.approvalList[i].inputDisGbn)
-                    console.log('회사코드 :: '+this.approvalList[i].companyCodeNm)
+                    //console.log('diasbled :: '+this.approvalList[i].inputDisGbn)
+                    //console.log('회사코드 :: '+this.approvalList[i].companyCodeNm)
                     if(this.approvalList[i].inputDisGbn != true && (this.approvalList[i].companyCodeNm != undefined && this.approvalList[i].companyCodeNm != '')){
 
                         if(this.approvalList[i].jumCode == undefined || this.approvalList[i].jumCode == '') {
-                            console.log('123485654564545')
+                            //console.log('123485654564545')
                             alert('점코드를 입력하세요.')
                             return;
                         }
@@ -912,12 +914,12 @@
                     reqData['approvedbandTo'] = arayBand[i].approvedbandTo;
                     reqData['subSaup'] = arayBand[i].subSaup;
 
-                    console.log('대역폭 사용가능 여부 체크')
+                    //console.log('대역폭 사용가능 여부 체크')
                     CommonBoardService.postListDatas('validation/approvedband', null, aproBand).then((response) => {
                             let result: any = response.data;
-                            console.log(result)
+                            //console.log(result)
                             if (result.code === '000') { //대역폭 사용가능
-                                console.log('대역폭 사용 가능')
+                                //console.log('대역폭 사용 가능')
                                 this.updateInfo();
                             } else { //대역폭 사용 못함
                                 alert(result.message);
@@ -956,6 +958,7 @@
             saupData['addr2'] = this.addr2; //사업장 상세주소
             saupData['subSaup'] = this.loadCodeList; //회사코드
             saupData['upjong'] = this.saupUpjong; //업종코드
+            saupData['storSts'] = this.gajumStatus; //가맹점상태
 
             reqData['gajumId'] = this.gajumId; //가맹점 ID
             reqData['saupjangDto'] = saupData; //사업장 정보 셋팅
@@ -1025,15 +1028,21 @@
             if(confirm('가맹점 정보를 수정하시겠습니까?')) {
 
                 CommonBoardService.updateListData('gajum', this.gajumId, reqData).then((response) => {
-                        //let result: any = response.data;
-                        //console.log(result)
-                        //if (result.code === '000' || ) { //성공
-                        if (response.status == 200) { //성공
+                        let result: any = response.data;
+
+                        if(result.code && result.code == '001') {
+                            alert(result.message);
+                            return;
+                        }else{
+                            alert('가맹점 정보가 수정되었습니다.');
+                            this.$router.push({name:'franchiseList'});
+                        }
+                        /*if (response.status == 200) { //성공
                             alert('가맹점 정보가 수정되었습니다.');
                             this.$router.push({name:'franchiseList'});
                         } else { //실패
                             alert('가맹점 정보 수정이 실패하였습니다.\n다시 시도하세요.')
-                        }
+                        }*/
                     }
                     , (error) => {
                     }
