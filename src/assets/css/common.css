@@ -1298,6 +1298,9 @@ tbody tr td.price, tfoot tr td.price {text-align: right;}
 
 .btn_sch01 {font-size:0; line-height: 0; width:20px; height:20px; margin:8px 0 0 -35px; position: absolute; background:url('../images/icon.png') no-repeat -22px -112px;}
 
+.search_bbs_box .btn_area .faq_btn_sch01 {font-size:0; line-height: 0; width:20px; height:20px; margin-top:0px; background:url('../images/icon.png') no-repeat -22px -112px;}
+.search_bbs_box .btn_area .faq_btn_sch02 {font-size:0; line-height: 0; width:20px; height:20px; margin:0px 0 0 3px; background:url('../images/icon_reset.png') no-repeat;}
+
 /* 버튼 위치 */
 .btn_top {text-align:right; margin-top:-70px; margin-bottom:36px;}
 .btn_top.type01 {text-align:right; margin-top:-50px; margin-bottom:20px;}

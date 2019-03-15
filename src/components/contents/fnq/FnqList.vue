@@ -13,7 +13,7 @@
             </div>
 
 
-            <template v-if="role == '0001' || role == '0003' ||  role == '0002' ||  role == '0004' ||  role == '0005'">
+            <template v-if="role == '0001' || role == '0003' ||  role == '0002'">
                 <!--리스트-->
                 <ListComponent v-bind:listObject="listItem" v-bind:onLoadList="listItem.dataGrid.onLoadList" v-on:listView="listViewEvent"></ListComponent>
             </template>
@@ -31,26 +31,26 @@
                         </li>
                         <li>
                             <span class="btn_area">
-                                <button type="button"  class="btn_sch01" v-on:click="searchFaq">검색</button>
+                                <button type="button"  class="faq_btn_sch01" v-on:click="searchFaq">검색</button>
                             </span>
                         </li>
                         <li>
                             <span class="btn_area">
-                                <button type="button" class="btn_sch02" v-on:click="searchReset">리셋</button>
+                                <button type="button" class="faq_btn_sch02" v-on:click="searchReset">리셋</button>
                             </span>
                         </li>
                     </ul>
                 </div>
                 <!-- //search bbs box -->
 
-                <!--<div class="tab_box">-->
-                    <!--<ul class="tab01 col04">-->
-                        <!--<li v-on:click="getTemp('Approval')" v-bind:class="{'on': (showApproval == true) } "><a>승인 현황</a></li>-->
-                        <!--&lt;!&ndash;<li v-on:click="getTemp('BatchFile')" v-bind:class="{'on': (showBatchFile == true || showBatchFileList == true)}" ><a>배치 파일 처리 현황</a></li>&ndash;&gt;-->
-                        <!--<li v-on:click="getTemp('Resource')" v-bind:class="{'on': (showResource == true)}" ><a>시스템 자원</a></li>-->
-                        <!--<li v-on:click="getTemp('Service')" v-bind:class="{'on': (showService == true)}" ><a>서비스 상태</a></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
+                <div class="tab_box">
+                    <ul class="tab01 col04">
+                        <li v-on:click="getTemp('tot')" v-bind:class="{'on': (tap00 == true)}"><a>전체</a></li>
+                        <li v-on:click="getTemp('reg')" v-bind:class="{'on': (tap01 == true)}"><a>가입관련</a></li>
+                        <li v-on:click="getTemp('use')" v-bind:class="{'on': (tap02 == true)}" ><a>이용문의</a></li>
+                        <li v-on:click="getTemp('etc')" v-bind:class="{'on': (tap03 == true)}" ><a>기타문의</a></li>
+                    </ul>
+                </div>
 
                 <div class="faq_box">
                     <dl class="faq_list">
@@ -115,6 +115,13 @@
         rownum:number=999;
         pagingUser : any =   { currentPage : 1 , lastPage : 3 ,viewPageSize : 10 ,totalRecords : 3 , from : 1 , to : 3 , perPage : 10};
 
+        searchWord:any = '';
+
+        tap00:boolean=true;
+        tap01:boolean=false;
+        tap02:boolean=false;
+        tap03:boolean=false;
+
         created(){
             let  nowUTC =  moment().utc() ; //UTC시간
             let  nowKo= nowUTC// 한국시간
@@ -173,6 +180,10 @@
         //조회
         searchFaq() {
 
+            this.rownum=999;
+            this.isActive =false;
+            this.listData=[];
+
             let searchData: any = {};
 
             searchData['viewType'] = 'ADM';
@@ -182,6 +193,18 @@
             // 페이징요청건
             searchData['currentPage'] = this.pagingUser.currentPage;
             searchData['perPage'] = this.pagingUser.perPage;
+
+            let catagory = '';
+            if(this.tap01==true){
+                catagory = '1';
+            }else if(this.tap02==true){
+                catagory = '2';
+            }else if(this.tap03==true){
+                catagory = '3';
+            }else {
+                catagory = '';
+            }
+            searchData['categoryId'] = catagory;
 
             // api 데이터 호출
             CommonBoardService.getListDatas('faq', null, searchData).then((response) => {
@@ -277,6 +300,29 @@
             this.$router.push({ name:'regFnq' , params: { current : row.searchOption , objectKey : row.row } }) // 라우터 주소를 넣어줘야 히스토리모드 인식
         }
 
+        /**
+         * 탭변경
+         * @param comp
+         */
+        getTemp(comp){
+
+            this.tap00 =false;
+            this.tap01 =false;
+            this.tap02 =false;
+            this.tap03 =false;
+
+            if(comp == 'reg' ){
+                this.tap01 =true;
+            }else if(comp =='use'){
+                this.tap02 =true;
+            }else if(comp =='etc'){
+                this.tap03 =true;
+            }else{
+                this.tap00 =true;
+            }
+
+            this.searchFaq();
+        }
 
     }
 </script>
