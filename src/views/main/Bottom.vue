@@ -1,9 +1,9 @@
 <template>
     <!-- footer -->
-    <footer id="footer">
+    <footer id="footer" >
         <!-- quick banner -->
-        <div class="quick_banner">
-            <div class="quick">
+        <div class="quick_banner" v-show="footerShow">
+            <div class="quick" >
                 <span class="sub">고객센터</span>
                 <p class="cont">
                     <span class="tel"><strong>(02)</strong><strong>2074-0340</strong></span>
@@ -41,6 +41,9 @@
     })
     export default class Bottom extends Vue {
         @Prop() private msg!: string;
+        @Prop() private footerShow!: boolean;
+
+        showFooter : boolean = false;
 
         top(){
             window.scrollTo(0,0)
@@ -48,6 +51,9 @@
 
         policyDiv(titleNm){
             this.$router.push({path:'/home/policy', name:'policy', query:{ titleNm:titleNm }})
+        }
+
+        created(){
         }
 
     }

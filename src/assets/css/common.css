@@ -45,7 +45,7 @@
 .util_wrap .btn_area .btn_util.bg01 {background:#fff; color:#212121; border:1px solid #c6c6c6;}
 .util_wrap .btn_area .btn_util.bg02 {background:#da291c; color:#fff; border:1px solid #da291c;}
 
-#container {position: relative; width:1200px; min-height:800px; padding:125px 0px 0 0px; margin:0 auto; background:#ffffff;}
+#container {position: relative; width:1200px; min-height:1100px; padding:125px 0px 0 0px; margin:0 auto; background:#ffffff;}
 #container:after {display:block;clear:both;content:''}
 #container .content {width:100%; padding:0 0 150px 0;}
 

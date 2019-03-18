@@ -14,12 +14,12 @@
                 <div class="popup_content page_sch2">
                     <!-- tbl scroll box -->
                     <div class="tbl_scroll_box">
-                        <div id="loading_bar" v-show="loading">
-                            <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
-                        </div>
                         <H2>관련내역</H2>
                         <div class="tbl_scrollnew">
                         <!-- tbl list02 -->
+                            <div id="loading22_bar" v-show="loading22">
+                                <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
+                            </div>
                         <table class="tbl_list02" style="width:2000px">
                             <colgroup>
                                 <col width="6%">
@@ -30,9 +30,9 @@
                                 <col width="6%">
                                 <col width="6%"> <!--거래구분-->
                                 <col width="8%">
+                                <col width="5%">
+                                <col width="5%">
                                 <col width="8%">
-                                <col width="5%">
-                                <col width="5%">
                                 <col width="5%">
                                 <col width="5%">
                                 <col width="5%">
@@ -73,9 +73,9 @@
                                     <col width="6%">
                                     <col width="6%"> <!--거래구분-->
                                     <col width="8%">
+                                    <col width="5%">
+                                    <col width="5%">
                                     <col width="8%">
-                                    <col width="5%">
-                                    <col width="5%">
                                     <col width="5%">
                                     <col width="5%">
                                     <col width="5%">
@@ -88,16 +88,16 @@
                                     <tr>
                                         <td>{{datas.saleDate}}</td>
                                         <td>{{datas.perm}}</td>
-                                        <td>{{datas.totamt}}</td>
-                                        <td>{{datas.amt}}</td>
-                                        <td>{{datas.vat}}</td>
-                                        <td>{{datas.bong}}</td>
+                                        <td>{{Number(datas.totamt).toLocaleString()}}</td>
+                                        <td>{{Number(datas.amt).toLocaleString()}}</td>
+                                        <td>{{Number(datas.vat).toLocaleString()}}</td>
+                                        <td>{{Number(datas.bong).toLocaleString()}}</td>
                                         <td>{{datas.geoguNm}}</td>
-                                        <td>{{datas.saupId}}</td>
+                                        <td>{{saupnoFormat(datas.saupId)}}</td>
                                         <td>{{datas.subSaup}}</td>
-                                        <td>{{datas.cultGbNm}}</td>
+                                        <td>{{datas.trguNm}}</td>
                                         <td>{{datas.comfirm}}</td>
-                                        <td>지출구분?</td>
+                                        <td>{{datas.cultGbNm}}</td>
                                         <td>{{datas.canSayuNm}}</td>
                                         <td>{{datas.saleDate}}</td>
                                         <td>{{datas.trguNm}}</td>
@@ -115,18 +115,22 @@
                         </div>
 
                         <H2>오류내역</H2>
-
+                        <!-- tbl scroll -->
+                        <div class="tbl_scrollnew2">
+                            <div id="loading22_bar" v-show="loading33">
+                                <vue-simple-spinner size="medium" line-fg-color="#D0021B" message="처리중입니다 잠시만기다려주세요!" />
+                            </div>
                         <table class="tbl_list02">
                             <colgroup>
                                 <col width="10%">
                                 <col width="15%">
                                 <col width="15%">
-                                <col width="15%">
+                                <col width="10%">
                                 <col width="10%">
                                 <col width="10%">
                                 <col width="10%">
                                 <col width="7%">
-                                <col width="8%">
+                                <col width="13%">
                             </colgroup>
                             <thead>
                             <tr>
@@ -142,20 +146,19 @@
                             </tr>
                             </thead>
                         </table>
-                        <!-- tbl scroll -->
-                        <div class="tbl_scrollnew2">
+
                             <table class="tbl_list02 brd_none page_store03">
                                 <caption>검색 목록</caption>
                                 <colgroup>
                                     <col width="10%">
                                     <col width="15%">
                                     <col width="15%">
-                                    <col width="15%">
+                                    <col width="10%">
                                     <col width="10%">
                                     <col width="10%">
                                     <col width="10%">
                                     <col width="7%">
-                                    <col width="8%">
+                                    <col width="13%">
                                 </colgroup>
                                 <tbody>
                                 <template v-if="responseDataError != null && responseDataError.length > 0">
@@ -164,12 +167,12 @@
                                             <td>{{datas.sendDate}}</td>
                                             <td>{{datas.retcodeNm}}</td>
                                             <td>{{datas.perm}}</td>
-                                            <td>{{datas.geodate}}</td>
-                                            <td>{{datas.geodate}}</td>
-                                            <td>{{datas.totamt}}</td>
-                                            <td>{{datas.saupId}}</td>
+                                            <td>{{(datas.geodate).substring(0,6)}}</td>
+                                            <td>{{timeFormat(datas.geodate)}}</td>
+                                            <td>{{Number(datas.totamt).toLocaleString()}}</td>
+                                            <td>{{saupnoFormat(datas.saupId)}}</td>
                                             <td>{{datas.subSaup}}</td>
-                                            <td>가맹점?</td>
+                                            <td>{{datas.subSaupNm}}</td>
                                         </tr>
                                     </template>
                                 </template>
@@ -221,7 +224,8 @@
         @Prop() viewData !:any;
         responseData : any = [];
         responseDataError : any = [];
-        loading :boolean= false;
+        loading22 :boolean= false;
+        loading33 :boolean= false;
         clientY : string = '';
 
 
@@ -243,27 +247,31 @@
         }
 
         searchView() {
-            this.loading = true;
+            this.loading22 = true;
             CommonBoardService.getListData('receipt-error/receipts/'+this.viewData.row.oriAprvPerm+'/'+this.viewData.row.oriSaleDate, null, null).then((response) => {
                     this.responseData = response.data;
-                    this.loading = false;
+                    this.loading22 = false;
                 }
                 , (error) => {
-                    this.loading = false;
+                    this.loading22 = false;
                 }
-            ).catch();
+            ).catch(e=>{
+                this.loading22 = false;
+            });
         }
 
         searchError() {
-            this.loading = true;
+            this.loading33 = true;
             CommonBoardService.getListData('receipt-error/history/'+this.viewData.row.oriAprvPerm+'/'+this.viewData.row.oriSaleDate, null, null).then((response) => {
                     this.responseDataError = response.data;
-                    this.loading = false;
+                    this.loading33 = false;
                 }
                 , (error) => {
-                    this.loading = false;
+                    this.loading33 = false;
                 }
-            ).catch();
+            ).catch(e=>{
+                this.loading33 = false;
+            });
         }
 
 
@@ -271,6 +279,14 @@
             this.$nextTick(function () {
             });
             // data 값 변조하면됨 Y / N   1,2? 이런값들 변경시 필요함
+        }
+
+        saupnoFormat(val) {
+            return val.substring(0, 3) + '-' + val.substring(3, 5) + '-' + val.substring(5, 10);
+        }
+        timeFormat(val) {
+            // return val.substring(7, 2) + '시' + val.substring(8, 1) + '분' + val.substring(10, 1);
+            return val.substring(6, 8) + '시' + val.substring(8, 10) +'분'
         }
 
     }

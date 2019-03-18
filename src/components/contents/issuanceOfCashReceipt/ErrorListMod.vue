@@ -17,7 +17,6 @@
         <div class="btn_bot type03">
           <template v-if="getData['mode']=='read'">
           <button type="button" id="" class="btn_b01 bg03" v-on:click="goBack()" >돌아가기</button>
-            <button type="button" id="" class="btn_b01 bg03" v-on:click="goInsert" >임시저장</button>
           </template>
           <template v-if="getData['mode']=='update'">
             <button type="button" id="" class="btn_b01 bg03" v-on:click="goBack()" >돌아가기</button>
@@ -201,7 +200,7 @@
         }
 
         goBack(){
-
+            this.$router.push({name:'errorList'})
         }
 
         //임시저장

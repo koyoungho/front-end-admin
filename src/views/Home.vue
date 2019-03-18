@@ -9,7 +9,7 @@
       <!-- //menu -->
     </header>
     <router-view></router-view>
-    <bottom msg="로그인페이지 데코레이터"/>
+    <bottom msg="로그인페이지 데코레이터" :footerShow="footerShow"/>
   </div>
 </template>
 
@@ -33,12 +33,13 @@
         //@Prop() private menuShow: boolean = true;
         menuShow: any = true;
         routerMenuChange : any = '';
+      footerShow  :boolean = true;
         routerPath : any = {};
         //menuShow = this.menuShow
         routerHistory :any = "";
         // 메뉴 콤포넌트에서 이벤트 처리
         updateView (e: string) {
-            if(e=='receipSaupCount' || e=='errorList'){
+            if(e=='receipSaupCount'){
                 alert('준비중입니다')
             }else{
                 (this.$children['0'].tokenRefresh()).then(result=>
@@ -50,12 +51,17 @@
         // 라우터 경로 변경시 이벤트 발생
         @Watch('$route') onChange(now,pre){
             window.scrollTo(0,0);
-
             if(this.$route.path.slice(this.$route.path.lastIndexOf('/')+1) =='main'){
                 this.routerMenuChange = 'main';
             }
             else{
                 this.routerMenuChange = this.$route.path.slice(this.$route.path.lastIndexOf('/')+1);
+            }
+
+            if(this.$route.name=='statAll'){
+              this.footerShow=false;
+            }else{
+              this.footerShow=true;
             }
         }
 
